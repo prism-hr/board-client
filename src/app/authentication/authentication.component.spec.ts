@@ -1,9 +1,6 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
-import { AuthenticationComponent } from './authentication.component';
+import {async, ComponentFixture, TestBed} from "@angular/core/testing";
+import {AuthenticationComponent} from "./authentication.component";
 import {StormpathModule} from "angular-stormpath";
 
 describe('AuthenticationComponent', () => {
@@ -12,10 +9,10 @@ describe('AuthenticationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AuthenticationComponent ],
-      imports: [ StormpathModule ]
+      declarations: [AuthenticationComponent],
+      imports: [StormpathModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

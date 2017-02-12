@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Stormpath, Account } from 'angular-stormpath';
-import { Observable } from 'rxjs';
+import {Component, OnInit} from "@angular/core";
+import {Stormpath, Account} from "angular-stormpath";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-authentication',
