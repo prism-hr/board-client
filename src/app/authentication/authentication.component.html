@@ -1,0 +1,13 @@
+<h1>{{title}}</h1>
+<div ngIf="(user$ | async)" class="row text-center">
+  <h2 class="">
+    Welcome, ({{ ( user$ | async ).fullName }}).
+  </h2>
+  <hr/>
+
+  <ul class="nav nav-pills nav-stacked text-centered">
+    <li role="presentation" (click)="logout()"><a href="#">Logout</a></li>
+  </ul>
+</div>
+
+<sp-authport></sp-authport>
