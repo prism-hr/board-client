@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { AuthenticationComponent } from './authentication.component';
+import {StormpathModule} from "angular-stormpath";
 
 describe('AuthenticationComponent', () => {
   let component: AuthenticationComponent;
@@ -11,7 +12,8 @@ describe('AuthenticationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AuthenticationComponent ]
+      declarations: [ AuthenticationComponent ],
+      imports: [ StormpathModule ]
     })
     .compileComponents();
   }));
@@ -25,4 +27,11 @@ describe('AuthenticationComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should contain the stormpath authport', async(() => {
+    const fixture = TestBed.createComponent(AuthenticationComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('sp-authport')).toBeDefined();
+  }));
 });

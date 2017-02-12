@@ -1,6 +1,6 @@
 <h1>{{title}}</h1>
 <div *ngIf="(user$ | async)" class="row text-center">
-  <h2 class="">
+  <h2>
     Welcome, ({{ ( user$ | async ).fullName }}).
   </h2>
   <hr/>
