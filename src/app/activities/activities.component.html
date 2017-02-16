@@ -1,0 +1,155 @@
+<div class="page-wrap activities">
+    <div layout="row" layout-align="center center">
+        <div flex="80" flex-sm="100" flex-xs="100" class="left-side-block" layout="column"
+             layout-align="center stretch">
+            <div class="header" layout-padding>
+                <h1>Activities</h1>
+            </div>
+            <div class="activities-stream">
+                <ul>
+                    <!--<li ng-repeat="activity in $ctrl.activities" class="{{activity.activity.category | lowercase}} new">-->
+                        <!--<div ng-switch="activity.activity.category">-->
+                            <!--<div ng-switch-when="ORGANIZATION_JOIN" layout="row">-->
+                                <!--<div class="activity-left" flex="10" layout="column" layout-align="center center">-->
+                                    <!--<div class="icon">-->
+                                        <!--<i class="icon-user"></i>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="activity-body" flex="90">-->
+                                    <!--<div layout="row" layout-align="center center">-->
+                                        <!--<h4>Request Access to {{activity.activity.userRole.organizationImplementation.name}}</h4>-->
+                                        <!--<span class="flex"></span>-->
+                                        <!--<span class="badge">NEW</span>-->
+                                    <!--</div>-->
+                                    <!--<div class="activity-detail" layout="row" layout-align="center">-->
+                                        <!--<span>by <a>{{activity.activity.userCreate.firstName}} {{activity.activity.userCreate.lastName}}</a></span>-->
+                                        <!--<span flex></span>-->
+                                        <!--<span class="when">24 Aug 2016 at 17:54 TODO</span>-->
+                                    <!--</div>-->
+                                    <!--<div class="activity-actions" layout="row" layout-align="center">-->
+                                        <!--<div>-->
+                                            <!--<md-button class="md-accent md-raised md-hue-2 small-xs" ng-click="$ctrl.responseToActivity(activity, 'accept')">Accept</md-button>-->
+                                            <!--<md-button class="md-warn md-raised small-xs" ng-click="$ctrl.responseToActivity(activity, 'reject')">Reject</md-button>-->
+                                        <!--</div>-->
+                                        <!--<span flex></span>-->
+                                        <!--<md-button class="md-primary md-raised small-xs">View Event</md-button>-->
+
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div ng-switch-when="PROMOTION_CREATE">-->
+                                <!--{{activity.activity.userCreate.firstName}}-->
+                                <!--{{activity.activity.userCreate.lastName}} created-->
+                                <!--{{activity.activity.promotion.name}}-->
+                                <!--<button ng-click="$ctrl.responseToActivity(activity, 'accept')">Accept</button>-->
+                                <!--<button ng-click="$ctrl.responseToActivity(activity, 'reject')">Reject</button>-->
+                            <!--</div>-->
+                            <!--<div ng-switch-when="PROMOTION_UPDATE">-->
+                                <!--{{activity.activity.userCreate.firstName}}-->
+                                <!--{{activity.activity.userCreate.lastName}} updated-->
+                                <!--{{activity.activity.promotion.name}}-->
+                                <!--<button ng-click="$ctrl.responseToActivity(activity, 'accept')">Accept</button>-->
+                                <!--<button ng-click="$ctrl.responseToActivity(activity, 'reject')">Reject</button>-->
+                            <!--</div>-->
+                            <!--<div ng-switch-default>-->
+                                <!--Unknown activity category: {{activity.activity.category}}-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="event new" layout="row">-->
+                        <!--<div class="activity-left" flex="10" layout="column" layout-align="center center">-->
+                            <!--<div class="icon">-->
+                                <!--<i class="icon-calendar"></i>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="activity-body" flex="90">-->
+                            <!--<div layout="row" layout-align="center center">-->
+                                <!--<h4>UCL start-up creation</h4>-->
+                                <!--<span class="flex"></span>-->
+                                <!--<span class="badge"></span>-->
+                            <!--</div>-->
+                            <!--<div class="activity-detail" layout="row" layout-align="center">-->
+                                <!--<span>by <a>Cambridge Consultants Ltd</a></span>-->
+                                <!--<span flex></span>-->
+                                <!--<span class="when">24 Aug 2016</span>-->
+                            <!--</div>-->
+                            <!--<div class="activity-actions" layout="row" layout-align="center">-->
+                                <!--<md-button class="md-primary md-raised small-xs">View Event</md-button>-->
+                                <!--<span flex></span>-->
+                                <!--<div>-->
+                                    <!--<md-button class="md-accent md-raised md-hue-2 small-xs">Attend Event</md-button>-->
+                                    <!--<md-button class="md-warn md-raised small-xs">Hide Event</md-button>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="message new" layout="row">-->
+                        <!--<div class="activity-left" flex="10" layout="column" layout-align="center center">-->
+                            <!--<div class="icon">-->
+                                <!--<i class="icon-envelope"></i>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="activity-body" flex="90">-->
+                            <!--<h4>Introduction to UCB</h4>-->
+                            <!--<div class="activity-detail" layout="row" layout-align="center">-->
+                                <!--<span>by <a>Iris Luke</a></span>-->
+                                <!--<span flex></span>-->
+                                <!--<span class="when">22 Aug 2016</span>-->
+                            <!--</div>-->
+                            <!--<div class="activity-actions" layout="row" layout-align="center">-->
+                                <!--<md-button class="md-primary md-raised small-xs">View Message</md-button>-->
+                                <!--<span flex></span>-->
+                                <!--<div>-->
+                                    <!--<md-button class="md-raised md-accent md-hue-2 small-xs">Archive Message</md-button>-->
+                                    <!--<md-button class="md-raised md-warn small-xs">Delete Message</md-button>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="position new" layout="row">-->
+                        <!--<div class="activity-left" flex="10" layout="column" layout-align="center center">-->
+                            <!--<div class="icon">-->
+                                <!--<i class="icon-briefcase"></i>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="activity-body" flex="90">-->
+                            <!--<h4>Postdoctoral Research Associate</h4>-->
+                            <!--<div class="activity-detail" layout="row" layout-align="center">-->
+                                <!--<span>by <a>Bethnal Green Ventures</a></span>-->
+                                <!--<span flex></span>-->
+                                <!--<span class="when">21 Aug 2016</span>-->
+                            <!--</div>-->
+                            <!--<div class="activity-actions" layout="row" layout-align="center">-->
+                                <!--<md-button class="md-primary md-raised small-xs">View Position</md-button>-->
+                                <!--<span flex></span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="message" layout="row">-->
+                        <!--<div class="activity-left" flex="10" layout="column" layout-align="center center">-->
+                            <!--<div class="icon">-->
+                                <!--<i class="icon-envelope-open"></i>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="activity-body" flex="90">-->
+                            <!--<h4>References Required</h4>-->
+                            <!--<div class="activity-detail" layout="row" layout-align="center">-->
+                                <!--<span>by <a>Iris Luke</a></span>-->
+                                <!--<span flex></span>-->
+                                <!--<span class="when">18 Aug 2016</span>-->
+                            <!--</div>-->
+                            <!--<div class="activity-actions" layout="row" layout-align="center">-->
+                                <!--<md-button class="md-primary md-raised small-xs">View Message</md-button>-->
+                                <!--<span flex></span>-->
+                                <!--<div>-->
+                                    <!--<md-button class="md-raised md-accent md-hue-2 small-xs">Archive Message</md-button>-->
+                                    <!--<md-button class="md-raised md-warn small-xs">Delete Message</md-button>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
