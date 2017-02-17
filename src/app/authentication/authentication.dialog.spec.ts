@@ -1,22 +1,22 @@
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
-import {AuthenticationComponent} from "./authentication.component";
+import {AuthenticationDialog} from "./authentication.component";
 import {StormpathModule} from "angular-stormpath";
 
-describe('AuthenticationComponent', () => {
-  let component: AuthenticationComponent;
-  let fixture: ComponentFixture<AuthenticationComponent>;
+describe('AuthenticationDialog', () => {
+  let component: AuthenticationDialog;
+  let fixture: ComponentFixture<AuthenticationDialog>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AuthenticationComponent],
+      declarations: [AuthenticationDialog],
       imports: [StormpathModule]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AuthenticationComponent);
+    fixture = TestBed.createComponent(AuthenticationDialog);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -26,7 +26,7 @@ describe('AuthenticationComponent', () => {
   });
 
   it('should contain the stormpath authport', async(() => {
-    const fixture = TestBed.createComponent(AuthenticationComponent);
+    const fixture = TestBed.createComponent(AuthenticationDialog);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('sp-authport')).toBeDefined();

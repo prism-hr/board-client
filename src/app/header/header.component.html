@@ -1,0 +1,18 @@
+<md-toolbar layout="column" layout-align="center center">
+  <div layout="row" class="md-toolbar-tools" layout-align="center center">
+    <span class="nav-container">
+      <div *ngIf="(user$ | async)">
+        Welcome, ({{ ( user$ | async ).fullName }})!
+        <button md-button (click)="logout()">Log out</button>
+      </div>
+      <div *ngIf="(user$ | async) === false">
+          <button md-button class="md-raised md-warn">
+              Advertise
+          </button>
+          <button md-button>Sign up</button>
+          <button md-button (click)="showLogin()">Log in</button>
+      </div>
+    </span>
+  </div>
+</md-toolbar>
+

@@ -1,0 +1,106 @@
+<div ng-class="{'error-enter' : error}">
+  <md-progress-bar class="md-warn" *ngIf="loading"></md-progress-bar>
+  <h3 class="text-aline-center hide-xs hide-sm">
+    Authenticate
+  </h3>
+  <div *ngIf="error" role="alert">
+    <div layout-padding>
+      <div class="info-badge red">
+        <i class="icon-info"></i> {{error}}
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="view === 'LOGIN'">
+    <div class="social-login md-button-group" layout="row" layout-align="center">
+      <button md-button class="md-raised linkedin">
+        <i class="icon-social-linkedin"></i> linkedin
+      </button>
+      <button md-button class="md-raised facebook">
+        <i class="icon-social-facebook"></i> facebook
+      </button>
+    </div>
+    <div class="divider-or"><span>OR</span></div>
+
+    <form #form="ngForm" (ngSubmit)="login(form.value)" autocomplete="off">
+      <div class="index-padding">
+        <md-input-container class="md-block">
+          <input md-input placeholder="Email" name="login" [(ngModel)]="loginFormModel.login" required type="email">
+        </md-input-container>
+        <md-input-container class="md-block">
+          <input md-input placeholder="Password" name="password" [(ngModel)]="loginFormModel.password" required
+                 type="password">
+        </md-input-container>
+      </div>
+      <div layout="column" layout-align="space-between stretch">
+        <button md-button type="submit" class="md-warn md-raised">Submit</button>
+      </div>
+      <div layout="row" layout-align="space-between center" flex="100">
+        <button md-button class="md-warn" type="button" (click)="setView('FORGOT')">Forgot password?</button>
+        <button md-button class="md-warn" type="button" (click)="setView('REGISTER')">Register</button>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="view === 'REGISTER'">
+    <div class="social-login  md-button-group" layout="row" layout-align="center">
+      <button md-button class="md-raised linkedin">
+        <i class="icon-social-linkedin"></i> linkedin
+      </button>
+      <button md-button class="md-raised facebook">
+        <i class="icon-social-facebook"></i> facebook
+      </button>
+    </div>
+    <div class="divider-or"><span>OR</span></div>
+    <form #form="ngForm" (ngSubmit)="register(form.value)" autocomplete="off">
+      <div class="index-padding">
+        <md-input-container class="md-block">
+          <input md-input placeholder="Email" name="email" [(ngModel)]="registrationFormModel.email" required type="email">
+        </md-input-container>
+        <md-input-container class="md-block">
+          <input md-input placeholder="First Name" name="givenName" [(ngModel)]="registrationFormModel.givenName" required>
+        </md-input-container>
+        <md-input-container class="md-block">
+          <input md-input placeholder="Last Name" name="surname" [(ngModel)]="registrationFormModel.surname" required>
+        </md-input-container>
+        <md-input-container class="md-block">
+          <input md-input placeholder="Password" name="password" [(ngModel)]="registrationFormModel.password" required
+                 type="password" md-no-float>
+        </md-input-container>
+      </div>
+      <div class="info-box" layout-padding>
+        <div class="info-badge blue" layout="row" layout-aling="start center">
+          <i class="icon-exclamation"></i>
+          <span>By registering, you agree to NoticeBoard's User Agreement, Privacy Policy, and Cookie Policy.</span>
+        </div>
+      </div>
+      <div layout="column" layout-align="space-between stretch">
+        <button md-button type="submit" class="md-warn md-raised">Submit</button>
+      </div>
+      <div layout="row" layout-align="space-between center" flex="100">
+        <button md-button class="md-warn" type="button" (click)="setView('LOGIN')">Already Registered?</button>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="view === 'FORGOT'">
+    <form *ngIf="!forgottenSent" #form="ngForm" (ngSubmit)="sendForgotten(form.value)" autocomplete="off">
+      <div class="index-padding">
+        <md-input-container class="md-block">
+          <input md-input placeholder="Email" name="email" [(ngModel)]="forgotPasswordFormModel.email" required type="email">
+        </md-input-container>
+      </div>
+      <div layout="column" layout-align="space-between stretch">
+        <button md-button type="submit" class="md-warn md-raised">Reset Password</button>
+      </div>
+      <div layout-gt-xs="row" layout-align="end center">
+        <button md-button class="md-warn" (click)="setView('LOGIN')">Back</button>
+      </div>
+    </form>
+    <div *ngIf="forgottenSent">
+      We have sent a password reset link to the email address of the account that you specified.
+      Please check your email for this message, then click on the link.
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,196 @@
+@import '../../assets/variables';
+
+welcome {
+  .splash-container {
+    padding: 60px 0 40px;
+    .splash-box-container {
+      .box-item {
+        position: relative;
+        min-height: 368px;
+        margin: 5px -10px;
+        text-align: center;
+        color: white;
+        &.university {
+          margin: 5px -15px;
+          h2 {
+            color: $uclgreen;
+          }
+        }
+        &.student {
+          h2 {
+            color: $uclblue;
+          }
+        }
+        .box-icon {
+          padding: 10px 0 0;
+          span {
+            display: block;
+            margin: 10px auto 0;
+            width: 65%;
+            height: 180px;
+          }
+        }
+        h2 {
+          font-weight: 300;
+          margin: 30px auto 30px;
+          letter-spacing: 0.1rem;
+        }
+        .box-content {
+          padding: 0 11% 30px;
+        }
+      }
+      .box-arrow {
+        position: absolute;
+        z-index: 4;
+        top: 80px;
+        &:after, &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-style: solid;
+        }
+        &.right {
+          right: 0;
+          &:after {
+            left: 100%;
+            top: 2px;
+            border-color: transparent transparent transparent white;
+            border-width: 23px;
+          }
+          &:before {
+            left: 100%;
+            top: 0;
+            border-color: transparent transparent transparent $uclred;
+            border-width: 25px;
+          }
+        }
+        &.left {
+          left: 0;
+          &:after {
+            right: 100%;
+            top: 2px;
+            border-color:  transparent white transparent transparent ;
+            border-width: 23px;
+          }
+          &:before {
+            right: 100%;
+            top: 0;
+            border-color:  transparent $uclblue transparent transparent;
+            border-width: 25px;
+          }
+        }
+
+      }
+    }
+  }
+  hr {
+    padding:0 60px;
+    margin:30px 120px 60px;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba($uclblue, 0), rgba($uclblue, 1), rgba($uclblue, 0));
+  }
+  .app-intro {
+    h2 {
+      font-size:2rem;
+      margin-bottom: 10px;
+    }
+    h3 {
+      color: $uclfooter;
+      font-weight:700;
+    }
+    .badges-box {
+      margin-top:20px;
+    }
+    .hand-container {
+      margin-top:-20px;
+      margin-bottom:-20px;
+      width: 70%;
+      margin-left: 30%;
+      text-align: right;
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .prices-box {
+    padding: 20px 40px 40px;
+    md-card md-card-title + md-card-content {
+      padding-top:16px;
+      p {
+        margin-top:0;
+      }
+      hr {
+        padding:0 10px;
+        margin:20px 0;
+      }
+    }
+    .price-item {
+      background: #fafafa;
+      text-align: center;
+      margin: 20px;
+      md-card-title {
+        padding-top:16px !important;
+        border-bottom:3px solid $uclred;
+        border-top:3px solid $uclred;
+        max-height: 51px;
+        background: white;
+      }
+      &.university {
+        h2 {
+          color: $uclgreen;
+        }
+        hr {
+          background-image: linear-gradient(to right, rgba($uclgreen, 0), rgba($uclgreen, 1), rgba($uclgreen, 0));
+        }
+        md-card-title {
+          border-bottom:3px solid $uclgreen;
+          border-top:3px solid $uclgreen;
+        }
+      }
+      &.employer {
+        hr {
+          background-image: linear-gradient(to right, rgba($uclred, 0), rgba($uclred, 1), rgba($uclred, 0));
+        }
+      }
+      &.student {
+        h2 {
+          color: $uclblue;
+        }
+        md-card-title {
+          border-bottom:3px solid $uclblue;
+          border-top:3px solid $uclblue;
+        }
+      }
+      md-card-actions {
+        margin-bottom:8px;
+        .md-button {
+          width: 86%;
+        }
+      }
+      h3, h4 {
+        color: $uclfooter;
+        font-weight:400;
+      }
+      h4 {
+        font-weight:600;
+        margin-bottom:6px;
+      }
+    }
+  }
+}
+.strap-line {
+  font-size: 2.4rem;
+  font-weight: 300;
+  text-align: center;
+  color: $uclred;
+  margin-bottom: 30px;
+  b {
+    font-weight: 400;
+  }
+}
+.big-padding{
+  padding: 40px 120px;
+}
