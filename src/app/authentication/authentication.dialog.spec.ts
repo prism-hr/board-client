@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
-import {AuthenticationDialog} from "./authentication.component";
+import {AuthenticationDialog} from "./authentication.dialog";
 import {StormpathModule} from "angular-stormpath";
 
 describe('AuthenticationDialog', () => {

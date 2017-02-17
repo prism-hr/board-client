@@ -2,7 +2,7 @@
 
 import {TestBed, async} from "@angular/core/testing";
 import {AppComponent} from "./app.component";
-import {AuthenticationDialog} from "./authentication/authentication.component";
+import {AuthenticationDialog} from "./authentication/authentication.dialog";
 import {StormpathModule} from "angular-stormpath";
 
 describe('AppComponent', () => {
