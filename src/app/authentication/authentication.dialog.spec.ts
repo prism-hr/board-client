@@ -1,34 +1,40 @@
 /* tslint:disable:no-unused-variable */
-import {async, ComponentFixture, TestBed} from "@angular/core/testing";
-import {AuthenticationDialog} from "./authentication.dialog";
-import {StormpathModule} from "angular-stormpath";
+import {AuthenticationDialog} from './authentication.dialog';
+import {StormpathModule} from 'angular-stormpath';
+import {MaterialModule, MdDialogModule, MdDialog} from '@angular/material';
+import {FormsModule} from '@angular/forms';
+import {TestBed, async} from '@angular/core/testing';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+
+@NgModule({
+  imports: [StormpathModule, MaterialModule, MdDialogModule, FormsModule, CommonModule],
+  exports: [AuthenticationDialog],
+  declarations: [AuthenticationDialog],
+  entryComponents: [AuthenticationDialog]
+})
+class TestModule {
+}
 
 describe('AuthenticationDialog', () => {
   let component: AuthenticationDialog;
-  let fixture: ComponentFixture<AuthenticationDialog>;
+  let dialog: MdDialog;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AuthenticationDialog],
-      imports: [StormpathModule]
+      imports: [TestModule]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AuthenticationDialog);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    dialog = TestBed.get(MdDialog);
+    let dialogRef = dialog.open(AuthenticationDialog);
+    component = dialogRef.componentInstance;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should contain the stormpath authport', async(() => {
-    const fixture = TestBed.createComponent(AuthenticationDialog);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('sp-authport')).toBeDefined();
-  }));
 });

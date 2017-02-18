@@ -1,17 +1,18 @@
 /* tslint:disable:no-unused-variable */
-
-import {TestBed, async} from "@angular/core/testing";
-import {AppComponent} from "./app.component";
-import {AuthenticationDialog} from "./authentication/authentication.dialog";
-import {StormpathModule} from "angular-stormpath";
+import {TestBed, async} from '@angular/core/testing';
+import {AppComponent} from './app.component';
+import {StormpathModule} from 'angular-stormpath';
+import {HeaderComponent} from './header/header.component';
+import {RouterTestingModule} from '@angular/router/testing';
+import {MaterialModule} from '@angular/material';
 
 describe('AppComponent', () => {
   let app: AppComponent;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AppComponent, AuthenticationDialog],
-      imports: [StormpathModule]
+      declarations: [AppComponent, HeaderComponent],
+      imports: [RouterTestingModule, StormpathModule, MaterialModule]
     });
     TestBed.compileComponents();
   });
