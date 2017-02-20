@@ -15,11 +15,13 @@ import {ActivitiesComponent} from './activities/activities.component';
 import {AuthedComponent} from './authentication/authed.component';
 import {WelcomeComponent} from './welcome/welcome.component';
 import {AuthGuard} from './authentication/auth-guard.service';
+import {MotivationCheckDialog} from './header/motivation-check.dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    MotivationCheckDialog,
     AuthenticationDialog,
     NotFoundComponent,
     HomeComponent,
@@ -44,7 +46,7 @@ import {AuthGuard} from './authentication/auth-guard.service';
     StormpathModule
   ],
   providers: [{provide: StormpathConfiguration, useFactory: stormpathConfig}, AuthGuard],
-  entryComponents: [AuthenticationDialog],
+  entryComponents: [AuthenticationDialog, MotivationCheckDialog],
   bootstrap: [AppComponent]
 })
 export class AppModule {

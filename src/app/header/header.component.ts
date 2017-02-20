@@ -4,6 +4,7 @@ import {ViewContainerRef, Component, OnInit} from '@angular/core';
 import {Stormpath, Account} from 'angular-stormpath';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
+import {MotivationCheckDialog} from './motivation-check.dialog';
 
 @Component({
   selector: 'header-component',
@@ -21,26 +22,24 @@ export class HeaderComponent implements OnInit {
     this.user$ = this.stormpath.user$;
   }
 
-  showLogin(ev: any) {
+  showLogin() {
     let dialogRef: MdDialogRef<AuthenticationDialog>;
     let config = new MdDialogConfig();
     config.viewContainerRef = this.viewContainerRef;
 
     dialogRef = this.dialog.open(AuthenticationDialog, config);
-
     return dialogRef.afterClosed();
   }
 
-  // showRegister(ev: any) {
-  //     this.$mdDialog.show({
-  //         template: '<motivation-check></motivation-check>',
-  //         parent: angular.element(document.body),
-  //         targetEvent: ev,
-  //         clickOutsideToClose: true,
-  //         fullscreen: true
-  //     });
-  // }
-  //
+  showMotivationCheck() {
+    let dialogRef: MdDialogRef<MotivationCheckDialog>;
+    let config = new MdDialogConfig();
+    config.viewContainerRef = this.viewContainerRef;
+
+    dialogRef = this.dialog.open(MotivationCheckDialog, config);
+    return dialogRef.afterClosed();
+  }
+
   // advertise() {
   //     this.$state.go('register');
   // }
