@@ -25,10 +25,10 @@
     <form #form="ngForm" (ngSubmit)="login(form.value)" autocomplete="off">
       <div class="index-padding">
         <md-input-container class="md-block">
-          <input md-input placeholder="Email" name="login" [(ngModel)]="loginFormModel.login" required type="email">
+          <input mdInput placeholder="Email" name="login" [(ngModel)]="loginFormModel.login" required type="email">
         </md-input-container>
         <md-input-container class="md-block">
-          <input md-input placeholder="Password" name="password" [(ngModel)]="loginFormModel.password" required
+          <input mdInput placeholder="Password" name="password" [(ngModel)]="loginFormModel.password" required
                  type="password">
         </md-input-container>
       </div>
@@ -55,16 +55,16 @@
     <form #form="ngForm" (ngSubmit)="register(form.value)" autocomplete="off">
       <div class="index-padding">
         <md-input-container class="md-block">
-            <input md-input placeholder="Email" name="email" [(ngModel)]="registrationFormModel.email" required type="email">
+            <input mdInput placeholder="Email" name="email" [(ngModel)]="registrationFormModel.email" required type="email">
         </md-input-container>
         <md-input-container class="md-block">
-          <input md-input placeholder="First Name" name="givenName" [(ngModel)]="registrationFormModel.givenName" required>
+          <input mdInput placeholder="First Name" name="givenName" [(ngModel)]="registrationFormModel.givenName" required>
         </md-input-container>
         <md-input-container class="md-block">
-          <input md-input placeholder="Last Name" name="surname" [(ngModel)]="registrationFormModel.surname" required>
+          <input mdInput placeholder="Last Name" name="surname" [(ngModel)]="registrationFormModel.surname" required>
         </md-input-container>
         <md-input-container class="md-block">
-          <input md-input placeholder="Password" name="password" [(ngModel)]="registrationFormModel.password" required
+          <input mdInput placeholder="Password" name="password" [(ngModel)]="registrationFormModel.password" required
                  type="password" md-no-float>
         </md-input-container>
       </div>
@@ -87,7 +87,7 @@
     <form *ngIf="!forgottenSent" #form="ngForm" (ngSubmit)="sendForgotten(form.value)" autocomplete="off">
       <div class="index-padding">
         <md-input-container class="md-block">
-          <input md-input placeholder="Email" name="email" [(ngModel)]="forgotPasswordFormModel.email" required type="email">
+          <input mdInput placeholder="Email" name="email" [(ngModel)]="forgotPasswordFormModel.email" required type="email">
         </md-input-container>
       </div>
       <div layout="column" layout-align="space-between stretch">

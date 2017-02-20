@@ -12,9 +12,9 @@ import {MaterialModule} from '@angular/material';
 import {stormpathConfig} from './stormpath.config';
 import {HeaderComponent} from './header/header.component';
 import {ActivitiesComponent} from './activities/activities.component';
-import {AuthedComponent} from './authed/authed.component';
+import {AuthedComponent} from './authentication/authed.component';
 import {WelcomeComponent} from './welcome/welcome.component';
-import {AuthGuard} from './authed/auth-guard.service';
+import {AuthGuard} from './authentication/auth-guard.service';
 
 @NgModule({
   declarations: [

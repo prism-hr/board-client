@@ -3,6 +3,7 @@ import {AuthenticationDialog} from '../authentication/authentication.dialog';
 import {ViewContainerRef, Component, OnInit} from '@angular/core';
 import {Stormpath, Account} from 'angular-stormpath';
 import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'header-component',
@@ -13,7 +14,7 @@ export class HeaderComponent implements OnInit {
 
   private user$: Observable<Account | boolean>;
 
-  constructor(private dialog: MdDialog, private viewContainerRef: ViewContainerRef, public stormpath: Stormpath) {
+  constructor(private dialog: MdDialog, private viewContainerRef: ViewContainerRef, private router: Router, private stormpath: Stormpath) {
   }
 
   ngOnInit(): void {
@@ -44,7 +45,8 @@ export class HeaderComponent implements OnInit {
   //     this.$state.go('register');
   // }
 
-  logout(): void {
+  logout() {
     this.stormpath.logout();
+    return this.router.navigate(['']);
   }
 }

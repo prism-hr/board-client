@@ -42,7 +42,7 @@ export class AuthenticationDialog implements OnInit {
     this.loading = true;
     this.stormpath.login(this.loginFormModel)
       .subscribe(() => {
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       }, (error: StormpathErrorResponse) => {
         this.loading = false;
         this.error = error.message;
@@ -62,7 +62,7 @@ export class AuthenticationDialog implements OnInit {
 
           this.stormpath.login(loginAttempt)
             .subscribe(() => {
-              this.dialogRef.close();
+              this.dialogRef.close(true);
             });
         }
       }, error => this.error = error.message);
