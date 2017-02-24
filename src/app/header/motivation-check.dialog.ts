@@ -8,13 +8,13 @@ import {Router} from '@angular/router';
       Select User
     </h3>
     <div layout="column" layout-align="space-between stretch">
-        <button md-button class="md-primary md-raised" (click)="navigateTo('/welcome')">
+        <button md-button class="md-primary md-raised" (click)="navigateTo('/boards')">
             Student
         </button>
-        <button md-button class="md-accent md-hue-2 md-raised" (click)="navigateTo('/welcome')">
+        <button md-button class="md-accent md-hue-2 md-raised" (click)="navigateTo('/boards')">
             University
         </button>
-        <button md-button class="md-warn md-raised" (click)="navigateTo('/welcome')">
+        <button md-button class="md-warn md-raised" (click)="navigateTo('/boards')">
             Employer
         </button>
     </div>

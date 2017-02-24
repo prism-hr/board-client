@@ -2,12 +2,16 @@
   <div layout="row" layout-align="center center" ng-cloak>
     <div flex="60" flex-xs="100" class="left-side-block" layout="column" layout-align="center stretch">
       <div class="header" layout-padding>
-        <h1>Welcome Advertiser</h1>
-        <h3>Create a company and position to start using PRiSM.</h3>
+        <h1>Boards</h1>
+        <ul>
+          <li *ngFor="let board of boards">
+            {{board.name}}
+          </li>
+        </ul>
+        <button md-button routerLink="/new-board" class="md-primary md-raised big">
+           New board
+        </button>
       </div>
-    </div>
-    <div flex="40" class="right-side-block hide-xs">
-      <div class="custom-icon employer"></div>
     </div>
   </div>
 </div>

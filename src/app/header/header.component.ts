@@ -28,7 +28,9 @@ export class HeaderComponent implements OnInit {
     config.viewContainerRef = this.viewContainerRef;
 
     dialogRef = this.dialog.open(AuthenticationDialog, config);
-    return dialogRef.afterClosed();
+    dialogRef.afterClosed().subscribe(() => {
+      this.router.navigate(['/boards']);
+    });
   }
 
   showMotivationCheck() {

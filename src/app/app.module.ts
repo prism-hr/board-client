@@ -13,9 +13,12 @@ import {stormpathConfig} from './stormpath.config';
 import {HeaderComponent} from './header/header.component';
 import {ActivitiesComponent} from './activities/activities.component';
 import {AuthedComponent} from './authentication/authed.component';
-import {WelcomeComponent} from './welcome/welcome.component';
+import {BoardsComponent} from './boards/boards.component';
 import {AuthGuard} from './authentication/auth-guard.service';
 import {MotivationCheckDialog} from './header/motivation-check.dialog';
+import {BoardsResolver} from './boards/boards-resolver.service';
+import {DepartmentsResolver} from './new-board/departments-resolver.service';
+import {NewBoardComponent} from './new-board/new-board.component';
 
 @NgModule({
   declarations: [
@@ -26,15 +29,30 @@ import {MotivationCheckDialog} from './header/motivation-check.dialog';
     NotFoundComponent,
     HomeComponent,
     AuthedComponent,
-    WelcomeComponent,
+    BoardsComponent,
+    NewBoardComponent,
     ActivitiesComponent
   ],
   imports: [
     RouterModule.forRoot([
       {path: '', component: HomeComponent},
+      {path: 'activities', component: ActivitiesComponent},
       {
         path: '', component: AuthedComponent, canActivate: [AuthGuard], children: [
-        {path: 'welcome', component: WelcomeComponent}
+        {
+          path: 'boards',
+          component: BoardsComponent,
+          resolve: {
+            boards: BoardsResolver
+          }
+        },
+        {
+          path: 'new-board',
+          component: NewBoardComponent,
+          resolve: {
+            boards: DepartmentsResolver
+          }
+        }
       ]
       },
       {path: '**', component: NotFoundComponent}
@@ -45,7 +63,7 @@ import {MotivationCheckDialog} from './header/motivation-check.dialog';
     HttpModule,
     StormpathModule
   ],
-  providers: [{provide: StormpathConfiguration, useFactory: stormpathConfig}, AuthGuard],
+  providers: [{provide: StormpathConfiguration, useFactory: stormpathConfig}, AuthGuard, BoardsResolver, DepartmentsResolver],
   entryComponents: [AuthenticationDialog, MotivationCheckDialog],
   bootstrap: [AppComponent]
 })
