@@ -11,7 +11,9 @@ import BoardWithDepartmentDTO = b.BoardWithDepartmentDTO;
 })
 export class NewBoardComponent implements OnInit {
   private departments: DepartmentDTO[];
+  private selectedDepartment: DepartmentDTO;
   private model: BoardWithDepartmentDTO;
+  private newDepartment: DepartmentDTO;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: Http) {
     this.model = {department: {}, board: {}};
@@ -19,6 +21,7 @@ export class NewBoardComponent implements OnInit {
 
   ngOnInit() {
     this.departments = this.route.snapshot.data['departments'];
+    this.departments.push({name: "Create a new department"});
   }
 
   submit() {
@@ -27,4 +30,14 @@ export class NewBoardComponent implements OnInit {
         this.router.navigate(['/boards']);
       });
   }
+
+  departmentSelected() {
+    if(this.selectedDepartment.id) {
+      this.model.department = this.selectedDepartment;
+    } else {
+      this.newDepartment = {};
+      this.model.department = this.newDepartment;
+    }
+  }
+
 }

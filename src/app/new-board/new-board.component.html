@@ -6,14 +6,27 @@
 
         <form #form="ngForm" (ngSubmit)="submit()" autocomplete="off">
           <div class="index-padding">
-            <md-input-container class="md-block">
-              <input mdInput placeholder="Department Name" name="departmentName" [(ngModel)]="model.department.name" required>
-            </md-input-container>
+            <div *ngIf="!newDepartment">
+              <md-select placeholder="Department" [(ngModel)]="selectedDepartment" name="department"
+                         (change)="departmentSelected()">
+                <md-option *ngFor="let department of departments" [value]="department">
+                  {{department.name}}
+                </md-option>
+              </md-select>
+            </div>
+
+            <div *ngIf="newDepartment">
+              <md-input-container class="md-block">
+                <input mdInput placeholder="Department Name" name="departmentName" [(ngModel)]="newDepartment.name"
+                       required>
+              </md-input-container>
+            </div>
             <md-input-container class="md-block">
               <input mdInput placeholder="Board Name" name="boardName" [(ngModel)]="model.board.name" required>
             </md-input-container>
             <md-input-container class="md-block">
-              <textarea mdInput placeholder="Board Purpose" name="boardPurpose" [(ngModel)]="model.board.purpose" required>
+              <textarea mdInput placeholder="Board Purpose" name="boardPurpose" [(ngModel)]="model.board.purpose"
+                        required>
               </textarea>
             </md-input-container>
           </div>

@@ -50,7 +50,7 @@ import {NewBoardComponent} from './new-board/new-board.component';
           path: 'new-board',
           component: NewBoardComponent,
           resolve: {
-            boards: DepartmentsResolver
+            departments: DepartmentsResolver
           }
         }
       ]
