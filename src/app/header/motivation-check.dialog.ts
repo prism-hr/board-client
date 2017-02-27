@@ -4,17 +4,17 @@ import {Router} from '@angular/router';
 
 @Component({
   template: `
-    <h3 class="text-aline-center hide-xs hide-sm">
+    <h3 class="center">
       Select User
     </h3>
-    <div layout="column" layout-align="space-between stretch">
-        <button md-button class="md-primary md-raised" (click)="navigateTo('/boards')">
+    <div fxLayout="column">
+        <button md-raised-button color="primary" (click)="navigateTo('/boards')">
             Student
         </button>
-        <button md-button class="md-accent md-hue-2 md-raised" (click)="navigateTo('/boards')">
+        <button md-raised-button color="accent" (click)="navigateTo('/boards')">
             University
         </button>
-        <button md-button class="md-warn md-raised" (click)="navigateTo('/boards')">
+        <button md-raised-button color="warn" (click)="navigateTo('/boards')">
             Employer
         </button>
     </div>

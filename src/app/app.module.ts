@@ -22,6 +22,7 @@ import {NewBoardComponent} from './new-board/new-board.component';
 import {UniLogoComponent} from './home/uni-logo.component';
 import {EmployerLogoComponent} from './home/employer-logo.component';
 import {StudentLogoComponent} from './home/student-logo.component';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import {StudentLogoComponent} from './home/student-logo.component';
       {path: '**', component: NotFoundComponent}
     ]),
     MaterialModule,
+    FlexLayoutModule,
     BrowserModule,
     FormsModule,
     HttpModule,

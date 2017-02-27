@@ -41,6 +41,7 @@ export class HeaderComponent implements OnInit {
     let dialogRef: MdDialogRef<MotivationCheckDialog>;
     let config = new MdDialogConfig();
     config.viewContainerRef = this.viewContainerRef;
+    config.width = '400px';
 
     dialogRef = this.dialog.open(MotivationCheckDialog, config);
     return dialogRef.afterClosed();

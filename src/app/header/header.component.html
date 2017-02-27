@@ -1,18 +1,23 @@
-<md-toolbar layout="column" layout-align="center center">
-  <div layout="row" class="md-toolbar-tools" layout-align="center center">
-    <span class="nav-container">
-      <div *ngIf="(user$ | async)">
-        Welcome, ({{ ( user$ | async ).fullName }})!
-        <button md-button (click)="logout()">Log out</button>
-      </div>
-      <div *ngIf="(user$ | async) === false">
-          <button md-button class="md-raised md-warn">
-              Advertise
-          </button>
-          <button md-button (click)="showMotivationCheck()">Sign up</button>
-          <button md-button (click)="showLogin()">Log in</button>
-      </div>
-    </span>
+<md-toolbar>
+  <a style="height: 80%" fxFlex fxHide="false" fxHide.xs>
+    <img src="assets/logo-nico.svg" style="height: 100%" alt="PRiSM">
+  </a>
+  <a style="height: 80%" fxFlex fxHide="false" fxHide.gt-xs>
+    <img src="assets/bfj-ico-white.svg" style="height: 100%" alt="PRiSM">
+  </a>
+
+  <div *ngIf="(user$ | async)">
+    Welcome, ({{ ( user$ | async ).fullName }})!
+    <button md-button (click)="logout()">Log out</button>
+  </div>
+
+  <div *ngIf="(user$ | async) === false"
+       class="flex-container" fxLayoutAlign="end" class="full-width">
+    <button md-raised-button color="warn">
+      Advertise
+    </button>
+    <button md-button (click)="showMotivationCheck()">Sign up</button>
+    <button md-button (click)="showLogin()">Log in</button>
   </div>
 </md-toolbar>
 

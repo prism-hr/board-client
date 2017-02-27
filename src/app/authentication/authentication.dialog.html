@@ -12,18 +12,14 @@
   </div>
 
   <div *ngIf="view === 'LOGIN'">
-    <md-grid-list class="social-login" rowHeight="70px" cols="2">
-      <md-grid-tile>
-        <button md-raised-button class="linkedin">
-          <i class="icon-social-linkedin"></i> linkedin
-        </button>
-      </md-grid-tile>
-      <md-grid-tile>
-        <button md-raised-button class="facebook">
-          <i class="icon-social-facebook"></i> facebook
-        </button>
-      </md-grid-tile>
-    </md-grid-list>
+    <div class="flex-container full-width social-login" fxLayoutAlign="space-around">
+      <button md-raised-button class="linkedin" fxFlex="44%">
+        <i class="icon-social-linkedin"></i> linkedin
+      </button>
+      <button md-raised-button class="facebook" fxFlex="44%">
+        <i class="icon-social-facebook"></i> facebook
+      </button>
+    </div>
     <div class="divider-or"><span>OR</span></div>
 
     <form #form="ngForm" (ngSubmit)="login(form.value)" autocomplete="off">

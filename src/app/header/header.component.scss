@@ -1,46 +1,6 @@
 @import '../../assets/variables';
 
-prism-header, .header {
-  .prism-logo {
-    width: 130px;
-    height: 33px;
-    display: block;
-    img {
-      width:100%;
-    }
-  }
-  .notifications {
-    position: relative;
-    overflow: visible;
-    label{
-      position: absolute;
-      left: -3px;
-      top: 25px;
-      width: 16px;
-      height: 16px;
-      text-align: center;
-      line-height: 16px;
-      font-size: 10px;
-      background: $uclred;
-      color: white;
-      border-radius: 2px;
-      z-index: 4;
-    }
-    .icon-menu {
-      font-size: 1.3rem;
-      line-height:24px;
-    }
-  }
-  .toolbar-title {
-    background: $fadeGrey;
-    position: relative;
-    z-index: 1;
-    h2 {
-      font-size: 26px;
-      color: $uclblue;
-    }
-    .md-toolbar-tools > .md-button:last-child {
-      margin-right:0;
-    }
-  }
+md-toolbar {
+  background: $uclblue;
+  color: white;
 }

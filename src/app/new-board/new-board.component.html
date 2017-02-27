@@ -1,40 +1,30 @@
-<div class="page-wrap step-page">
-  <div layout="row" layout-align="center center" ng-cloak>
-    <div flex="60" flex-xs="100" class="left-side-block" layout="column" layout-align="center stretch">
-      <div class="header" layout-padding>
-        <h1>Create a new Board</h1>
+<h1>Create a new Board</h1>
 
-        <form #form="ngForm" (ngSubmit)="submit()" autocomplete="off">
-          <div class="index-padding">
-            <div *ngIf="!newDepartment">
-              <md-select placeholder="Department" [(ngModel)]="selectedDepartment" name="department"
-                         (change)="departmentSelected()">
-                <md-option *ngFor="let department of departments" [value]="department">
-                  {{department.name}}
-                </md-option>
-              </md-select>
-            </div>
+<form #form="ngForm" (ngSubmit)="submit()" autocomplete="off">
+    <div *ngIf="!newDepartment">
+      <md-select placeholder="Department" [(ngModel)]="selectedDepartment" name="department"
+                 (change)="departmentSelected()" class="full-width">
+        <md-option *ngFor="let department of departments" [value]="department">
+          {{department.name}}
+        </md-option>
+      </md-select>
+    </div>
 
-            <div *ngIf="newDepartment">
-              <md-input-container class="md-block">
-                <input mdInput placeholder="Department Name" name="departmentName" [(ngModel)]="newDepartment.name"
-                       required>
-              </md-input-container>
-            </div>
-            <md-input-container class="md-block">
-              <input mdInput placeholder="Board Name" name="boardName" [(ngModel)]="model.board.name" required>
-            </md-input-container>
-            <md-input-container class="md-block">
+    <div *ngIf="newDepartment">
+      <md-input-container class="md-block">
+        <input mdInput placeholder="Department Name" name="departmentName" [(ngModel)]="newDepartment.name"
+               required>
+      </md-input-container>
+    </div>
+    <md-input-container class="md-block">
+      <input mdInput placeholder="Board Name" name="boardName" [(ngModel)]="model.board.name" required>
+    </md-input-container>
+    <md-input-container class="md-block">
               <textarea mdInput placeholder="Board Purpose" name="boardPurpose" [(ngModel)]="model.board.purpose"
                         required>
               </textarea>
-            </md-input-container>
-          </div>
-          <div layout="column" layout-align="space-between stretch">
-            <button md-button type="submit" class="md-warn md-raised">Submit</button>
-          </div>
-        </form>
-      </div>
-    </div>
+    </md-input-container>
+  <div layout="column" layout-align="space-between stretch">
+    <button md-button type="submit" class="md-warn md-raised">Submit</button>
   </div>
-</div>
+</form>
