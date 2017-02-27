@@ -1,6 +1,10 @@
 @import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
-@import '~https://fonts.googleapis.com/icon?family=Material+Icons';
+@import '~simple-line-icons/css/simple-line-icons.css';
 
-.centre {
+.center {
   text-align: center;
+}
+
+.full-width {
+  width: 100%;
 }

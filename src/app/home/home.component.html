@@ -1,54 +1,58 @@
-<div class="page-wrap">
-  <section class="hero" layout-align="space-around center">
-    <div class="splash-container">
-      <h1 class="strap-line">
-        THE MARKETPLACE FOR <br/><b>STUDENT</b> AND <b>GRADUATE</b> CAREERS
-      </h1>
-      <div class="splash-box-container">
-        <div layout="row" layout-align="space-around center">
-          <div class="box-item student">
-            <div class="box-content">
-              <div class="box-icon">
-                <span class="custom-icon student"></span>
-              </div>
-              <h2>STUDENTS & GRADUATES</h2>
-              <div class="md-button-group">
-                <button md-button routerLink="/boards" class="md-primary md-raised big">
-                  <i class="icon-user"></i> Join
-                </button>
-              </div>
+<section>
+  <div class="splash-container">
+    <h1 class="strap-line">
+      THE MARKETPLACE FOR <br/><b>STUDENT</b> AND <b>GRADUATE</b> CAREERS
+    </h1>
+    <div class="splash-box-container">
+      <md-grid-list cols="3">
+        <md-grid-tile class="box-item student">
+          <div class="box-content">
+            <div class="box-icon">
+              <span class="custom-icon student">
+                <student-logo></student-logo>
+              </span>
+            </div>
+            <h2>STUDENTS & GRADUATES</h2>
+            <div class="md-button-group">
+              <button md-raised-button routerLink="/boards">
+                <i class="icon-user"></i> Join
+              </button>
             </div>
           </div>
-          <div class="box-item university">
-            <div class="box-arrow left"></div>
-            <div class="box-content">
-              <div class="box-icon">
-                <span class="custom-icon university"></span>
-              </div>
-              <h2>UNIVERSITIES & COLLEGES</h2>
-              <div class="md-button-group">
-                <button md-button routerLink="/boards" class="md-accent md-hue-2 md-raised big">
-                  <i class="icon-user"></i> Join
-                </button>
-              </div>
+        </md-grid-tile>
+        <md-grid-tile class="box-item university">
+          <div class="box-arrow left"></div>
+          <div class="box-content">
+            <div class="box-icon">
+              <span class="custom-icon university">
+                <uni-logo></uni-logo>
+              </span>
             </div>
-            <div class="box-arrow right"></div>
-          </div>
-          <div class="box-item employer">
-            <div class="box-content">
-              <div class="box-icon">
-                <span class="custom-icon employer"></span>
-              </div>
-              <h2>EMPLOYERS & RECRUITERS</h2>
-              <div class="md-button-group">
-                <button md-button routerLink="/boards" class="md-warn md-raised big">
-                  <i class="icon-plus"></i> Advertise
-                </button>
-              </div>
+            <h2>UNIVERSITIES & COLLEGES</h2>
+            <div class="md-button-group">
+              <button md-raised-button routerLink="/boards">
+                <i class="icon-user"></i> Join
+              </button>
             </div>
           </div>
-        </div>
-      </div>
+          <div class="box-arrow right"></div>
+        </md-grid-tile>
+        <md-grid-tile class="box-item employer">
+          <div class="box-content">
+            <div class="box-icon">
+              <span class="custom-icon employer">
+                <employer-logo></employer-logo>
+              </span>
+            </div>
+            <h2>EMPLOYERS & RECRUITERS</h2>
+            <div class="md-button-group">
+              <button md-raised-button routerLink="/boards">
+                <i class="icon-plus"></i> Advertise
+              </button>
+            </div>
+          </div>
+        </md-grid-tile>
+      </md-grid-list>
     </div>
-  </section>
-</div>
+  </div>
+</section>

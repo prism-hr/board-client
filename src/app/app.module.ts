@@ -19,6 +19,9 @@ import {MotivationCheckDialog} from './header/motivation-check.dialog';
 import {BoardsResolver} from './boards/boards-resolver.service';
 import {DepartmentsResolver} from './new-board/departments-resolver.service';
 import {NewBoardComponent} from './new-board/new-board.component';
+import {UniLogoComponent} from './home/uni-logo.component';
+import {EmployerLogoComponent} from './home/employer-logo.component';
+import {StudentLogoComponent} from './home/student-logo.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,9 @@ import {NewBoardComponent} from './new-board/new-board.component';
     AuthenticationDialog,
     NotFoundComponent,
     HomeComponent,
+    UniLogoComponent,
+    EmployerLogoComponent,
+    StudentLogoComponent,
     AuthedComponent,
     BoardsComponent,
     NewBoardComponent,

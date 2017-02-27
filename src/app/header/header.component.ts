@@ -29,7 +29,11 @@ export class HeaderComponent implements OnInit {
 
     dialogRef = this.dialog.open(AuthenticationDialog, config);
     dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['/boards']);
+      this.user$.subscribe(user => {
+        if (user) {
+          return this.router.navigate(['/boards']);
+        }
+      });
     });
   }
 

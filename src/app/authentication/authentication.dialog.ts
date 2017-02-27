@@ -9,7 +9,7 @@ import {MdDialogRef} from '@angular/material';
 @Component({
   selector: 'app-authentication',
   templateUrl: './authentication.dialog.html',
-  styleUrls: ['./authentication.dialog.css']
+  styleUrls: ['./authentication.dialog.scss']
 })
 export class AuthenticationDialog implements OnInit {
 

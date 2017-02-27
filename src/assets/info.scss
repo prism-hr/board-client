@@ -1,0 +1,22 @@
+@import 'variables';
+
+// Badges
+.info-badge {
+  font-size: 14px;
+  color: white;
+  padding: 10px;
+  border-radius: 2px;
+  &.red {
+    background-color: $uclred;
+  }
+  &.blue {
+    background-color: $uclblue;
+  }
+}
+.info-box {
+  i {
+    margin-top: 7px;
+    font-size: 20px;
+    margin-right: 10px;
+  }
+}
