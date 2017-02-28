@@ -1,6 +1,6 @@
 import { BoardFrontendPage } from './app.po';
 
-describe('board-frontend App', function() {
+describe('board-frontend App', () => {
   let page: BoardFrontendPage;
 
   beforeEach(() => {
@@ -9,6 +9,6 @@ describe('board-frontend App', function() {
 
   it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getParagraphText()).toEqual('Noticeboard');
   });
 });
