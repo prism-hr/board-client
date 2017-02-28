@@ -1,14 +1,11 @@
 <md-toolbar>
-  <a style="height: 80%" fxFlex fxHide="false" fxHide.xs>
-    <img src="assets/logo-nico.svg" style="height: 100%">
-  </a>
-  <a style="height: 80%" fxFlex fxHide="false" fxHide.gt-xs>
-    <img src="assets/bfj-ico-white.svg" style="height: 100%">
-  </a>
-
-  <div *ngIf="(user$ | async)">
-    Welcome, ({{ ( user$ | async ).fullName }})!
-    <button md-button (click)="logout()">Log out</button>
+  <div *ngIf="!(user$ | async)">
+    <a class="bf-logo" fxHide.xs>
+      <img src="assets/logo-nico.svg">
+    </a>
+    <a class="bf-icon" fxHide.gt-xs>
+      <img src="assets/bfj-ico-white.svg">
+    </a>
   </div>
 
   <div *ngIf="(user$ | async) === false"

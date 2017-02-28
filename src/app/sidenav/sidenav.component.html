@@ -1,0 +1,49 @@
+<md-toolbar>
+  <a class="bf-logo" fxHide.xs routerLink="/activities">
+    <img src="assets/logo-nico.svg">
+  </a>
+</md-toolbar>
+
+<div class="user-block flex-container" fxLayout="row" fxLayoutAlign="center center">
+  <div class="avatar-holder">
+    <div class="no-user-image">
+      <i class="icon-user"></i>
+    </div>
+  </div>
+
+  <div class="contact-container flex-container" fxLayout="column" fxLayoutAlign="center start">
+    <a>{{(user$ | async).fullName}}</a>
+    <a>Profile</a>
+    <span>TODO user Role</span>
+  </div>
+
+  <button md-icon-button class="notifications">
+    <i class="icon-bell"></i>
+    <label>0</label>
+  </button>
+</div>
+
+<div class="board-list">
+  <button md-mini-fab routerLink="/new-board" class="add-board">
+    <md-icon>add</md-icon>
+  </button>
+
+  <md-list>
+    <div>
+      <h3 md-subheader class="main-subheader">Department 1</h3>
+      <md-list-item *ngFor="let board of boards | async">
+        <i class="icon-briefcase"></i>
+        <p>{{board.name}}</p>
+      </md-list-item>
+    </div>
+  </md-list>
+
+
+</div>
+
+<md-toolbar class="md-toolbar-tools ucl-footer">
+    <button md-button (click)="logout()">
+      <i class="icon-logout"></i> Log out
+    </button>
+</md-toolbar>
+

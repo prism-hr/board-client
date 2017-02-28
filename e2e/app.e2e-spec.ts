@@ -9,6 +9,6 @@ describe('board-frontend App', () => {
 
   it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Noticeboard');
+    expect(page.getParagraphText()).toContain('THE MARKETPLACE');
   });
 });

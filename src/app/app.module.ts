@@ -13,21 +13,22 @@ import {stormpathConfig} from './stormpath.config';
 import {HeaderComponent} from './header/header.component';
 import {ActivitiesComponent} from './activities/activities.component';
 import {AuthedComponent} from './authentication/authed.component';
-import {BoardsComponent} from './boards/boards.component';
 import {AuthGuard} from './authentication/auth-guard.service';
 import {MotivationCheckDialog} from './header/motivation-check.dialog';
-import {BoardsResolver} from './boards/boards-resolver.service';
-import {DepartmentsResolver} from './new-board/departments-resolver.service';
-import {NewBoardComponent} from './new-board/new-board.component';
+import {BoardsService} from './boards/boards.service';
+import {DepartmentsResolver} from './boards/new-board/departments-resolver.service';
+import {NewBoardComponent} from './boards/new-board/new-board.component';
 import {UniLogoComponent} from './home/uni-logo.component';
 import {EmployerLogoComponent} from './home/employer-logo.component';
 import {StudentLogoComponent} from './home/student-logo.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {SidenavComponent} from './sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    SidenavComponent,
     MotivationCheckDialog,
     AuthenticationDialog,
     NotFoundComponent,
@@ -36,7 +37,6 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     EmployerLogoComponent,
     StudentLogoComponent,
     AuthedComponent,
-    BoardsComponent,
     NewBoardComponent,
     ActivitiesComponent
   ],
@@ -46,13 +46,6 @@ import {FlexLayoutModule} from '@angular/flex-layout';
       {path: 'activities', component: ActivitiesComponent},
       {
         path: '', component: AuthedComponent, canActivate: [AuthGuard], children: [
-        {
-          path: 'boards',
-          component: BoardsComponent,
-          resolve: {
-            boards: BoardsResolver
-          }
-        },
         {
           path: 'new-board',
           component: NewBoardComponent,
@@ -71,7 +64,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     HttpModule,
     StormpathModule
   ],
-  providers: [{provide: StormpathConfiguration, useFactory: stormpathConfig}, AuthGuard, BoardsResolver, DepartmentsResolver],
+  providers: [{provide: StormpathConfiguration, useFactory: stormpathConfig}, AuthGuard, BoardsService, DepartmentsResolver],
   entryComponents: [AuthenticationDialog, MotivationCheckDialog],
   bootstrap: [AppComponent]
 })

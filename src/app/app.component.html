@@ -1,5 +1,8 @@
-<header-component></header-component>
-<h1 class="center">
-  {{title}}
-</h1>
-<router-outlet></router-outlet>
+<md-sidenav-container fullscreen>
+  <md-sidenav #sidenav mode="side" opened="true" *ngIf="(user$ | async)">
+    <sidenav></sidenav>
+  </md-sidenav>
+  <header-component></header-component>
+  <router-outlet></router-outlet>
+</md-sidenav-container>
+

@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => {
       this.user$.subscribe(user => {
         if (user) {
-          return this.router.navigate(['/boards']);
+          return this.router.navigate(['/activities']);
         }
       });
     });
@@ -47,12 +47,4 @@ export class HeaderComponent implements OnInit {
     return dialogRef.afterClosed();
   }
 
-  // advertise() {
-  //     this.$state.go('register');
-  // }
-
-  logout() {
-    this.stormpath.logout();
-    return this.router.navigate(['']);
-  }
 }

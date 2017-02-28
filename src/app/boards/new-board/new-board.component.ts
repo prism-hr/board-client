@@ -3,16 +3,16 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Http} from '@angular/http';
 import DepartmentDTO = b.DepartmentDTO;
 import BoardDTO = b.BoardDTO;
-import BoardWithDepartmentDTO = b.BoardWithDepartmentDTO;
+import DepartmentBoardDTO = b.DepartmentBoardDTO;
 
 @Component({
-  templateUrl: './new-board.component.html',
-  styleUrls: ['./new-board.component.scss']
+  templateUrl: 'new-board.component.html',
+  styleUrls: ['new-board.component.scss']
 })
 export class NewBoardComponent implements OnInit {
   private departments: DepartmentDTO[];
   private selectedDepartment: DepartmentDTO;
-  private model: BoardWithDepartmentDTO;
+  private model: DepartmentBoardDTO;
   private newDepartment: DepartmentDTO;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: Http) {
@@ -27,7 +27,7 @@ export class NewBoardComponent implements OnInit {
   submit() {
     this.http.post('/api/boards', this.model)
       .subscribe(() => {
-        this.router.navigate(['/boards']);
+        this.router.navigate(['/activities']);
       });
   }
 
