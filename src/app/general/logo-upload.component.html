@@ -1,0 +1,17 @@
+<div>
+  <label for="uploader-input" ng2FileDrop
+         [uploader]="uploader"
+         (fileOver)="fileOver($event)"
+         [ngClass]="{'dragover': isDragOver}"
+         class="drop-area logo">
+    <span *ngIf="!model">Drop your Logo here</span>
+    <div *ngIf="model" class="logo-flex">
+      <div class="logo">
+        <cl-image public-id="{{model.cloudinaryId}}" class="img">
+          <cl-transformation height="250" width="400" crop="mfit"></cl-transformation>
+        </cl-image>
+      </div>
+    </div>
+  </label>
+  <input type="file" ng2FileSelect [uploader]="uploader" id="uploader-input" style="display:none"/>
+</div>

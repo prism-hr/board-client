@@ -1,0 +1,52 @@
+@import '../../assets/variables';
+
+.drop-area {
+  margin-top: 4px;
+  &.logo {
+    border: 3px dashed $inactiveGrey;
+    width: 206px;
+    height: 206px;
+    .logo-flex {
+      border: none;
+      background: transparent;
+    }
+  }
+  &.background {
+    border: 1px dashed $inactiveGrey;
+    background-size: cover;
+    height: 320px;
+    width: 100%;
+  }
+  &.dragover {
+    border: 3px dashed $uclblue;
+  }
+  &.dragover-err, &.ng-invalid-pattern, &.ng-invalid {
+    border: 3px dashed $error;
+  }
+}
+
+.logo-flex {
+  border: 1px solid #ececec;
+  background: #ffffff;
+  display: flex;
+  border-radius: 1px;
+  margin-top: 0px;
+  width: 200px;
+  height: 125px;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  .logo {
+    background: blue;
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center;
+    img {
+      max-height: 125px;
+      max-width: 200px;
+      position: relative;
+      vertical-align: middle;
+    }
+  }
+}

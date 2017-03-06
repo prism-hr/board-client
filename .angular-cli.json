@@ -22,7 +22,8 @@
         "styles.scss"
       ],
       "scripts": [
-        "../node_modules/lodash/lodash.js"
+        "../node_modules/lodash/lodash.js",
+        "../node_modules/cloudinary-core/cloudinary-core.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

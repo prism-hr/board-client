@@ -1,1 +1,1 @@
-import 'board';
+declare module 'cloudinary-core';

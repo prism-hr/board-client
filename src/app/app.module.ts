@@ -15,14 +15,21 @@ import {ActivitiesComponent} from './activities/activities.component';
 import {AuthedComponent} from './authentication/authed.component';
 import {AuthGuard} from './authentication/auth-guard.service';
 import {MotivationCheckDialog} from './header/motivation-check.dialog';
+import {LogoUploadComponent} from './general/logo-upload.component';
 import {BoardsService} from './boards/boards.service';
-import {DepartmentsResolver} from './boards/new-board/departments-resolver.service';
-import {NewBoardComponent} from './boards/new-board/new-board.component';
+import {DepartmentsResolver} from './boards/manage/departments-resolver.service';
+import {BoardManageComponent} from './boards/manage/board-manage.component';
 import {UniLogoComponent} from './home/uni-logo.component';
 import {EmployerLogoComponent} from './home/employer-logo.component';
 import {StudentLogoComponent} from './home/student-logo.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {SidenavComponent} from './sidenav/sidenav.component';
+import {CloudinaryModule} from '@cloudinary/angular';
+import * as Cloudinary from 'cloudinary-core';
+import {FileUploadModule} from 'ng2-file-upload';
+import {BoardResolver} from './boards/manage/board-resolver.service';
+import {BoardViewComponent} from './boards/manage/view/board-view.component';
+import {BoardSettingsComponent} from './boards/manage/settings/board-settings.component';
 
 @NgModule({
   declarations: [
@@ -36,8 +43,11 @@ import {SidenavComponent} from './sidenav/sidenav.component';
     UniLogoComponent,
     EmployerLogoComponent,
     StudentLogoComponent,
+    LogoUploadComponent,
     AuthedComponent,
-    NewBoardComponent,
+    BoardManageComponent,
+    BoardViewComponent,
+    BoardSettingsComponent,
     ActivitiesComponent
   ],
   imports: [
@@ -47,11 +57,24 @@ import {SidenavComponent} from './sidenav/sidenav.component';
       {
         path: '', component: AuthedComponent, canActivate: [AuthGuard], children: [
         {
-          path: 'new-board',
-          component: NewBoardComponent,
+          path: 'manage/board/:id',
+          component: BoardManageComponent,
           resolve: {
-            departments: DepartmentsResolver
-          }
+            board: BoardResolver
+          },
+          children: [
+            {
+              path: 'view',
+              component: BoardViewComponent,
+              resolve: {
+                departments: DepartmentsResolver
+              }
+            },
+            {
+              path: 'settings',
+              component: BoardSettingsComponent
+            }
+          ]
         }
       ]
       },
@@ -62,9 +85,14 @@ import {SidenavComponent} from './sidenav/sidenav.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    StormpathModule
+    StormpathModule,
+    CloudinaryModule.forRoot(Cloudinary, {cloud_name: 'bitfoot'}),
+    FileUploadModule
   ],
-  providers: [{provide: StormpathConfiguration, useFactory: stormpathConfig}, AuthGuard, BoardsService, DepartmentsResolver],
+  providers: [{
+    provide: StormpathConfiguration,
+    useFactory: stormpathConfig
+  }, AuthGuard, BoardsService, DepartmentsResolver, BoardResolver],
   entryComponents: [AuthenticationDialog, MotivationCheckDialog],
   bootstrap: [AppComponent]
 })

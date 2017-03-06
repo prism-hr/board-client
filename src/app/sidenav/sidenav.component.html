@@ -24,7 +24,7 @@
 </div>
 
 <div class="board-list">
-  <button md-mini-fab routerLink="/new-board" class="add-board">
+  <button md-mini-fab routerLink="/manage/board/new/view" class="add-board">
     <md-icon>add</md-icon>
   </button>
 
@@ -33,7 +33,7 @@
       <h3 md-subheader class="main-subheader">Department 1</h3>
       <md-list-item *ngFor="let board of boards | async">
         <i class="icon-briefcase"></i>
-        <p>{{board.name}}</p>
+        <a routerLink="/manage/board/{{board.id}}/view">{{board.name}}</a>
       </md-list-item>
     </div>
   </md-list>
