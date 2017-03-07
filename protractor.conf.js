@@ -26,5 +26,9 @@ exports.config = {
   },
   onPrepare() {
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-  }
+  },
+  plugins: [{
+    package: 'protractor-console',
+    logLevels: ['severe']
+  }]
 };

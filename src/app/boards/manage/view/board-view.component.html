@@ -16,6 +16,8 @@
         <input mdInput placeholder="Department Name" name="departmentName" [(ngModel)]="newDepartment.name"
                required>
       </md-input-container>
+
+      <logo-upload name="departmentLogo" [(ngModel)]="newDepartment.documentLogo"></logo-upload>
     </div>
   </div>
 
@@ -23,7 +25,6 @@
     Department: {{board.department.name}}
   </p>
 
-  <logo-upload name="boardLogo" [(ngModel)]="board.department.documentLogo"></logo-upload>
 
   <md-input-container class="md-block">
     <input mdInput placeholder="Board Name" name="boardName" [(ngModel)]="board.name" required>
@@ -35,6 +36,6 @@
   </md-input-container>
 
   <div layout="column" layout-align="space-between stretch">
-    <button md-button type="submit" class="md-warn md-raised">Submit</button>
+    <button md-raised-button type="submit">Submit</button>
   </div>
 </form>

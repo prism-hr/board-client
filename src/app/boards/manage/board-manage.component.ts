@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import DepartmentDTO = b.DepartmentDTO;
 import BoardDTO = b.BoardDTO;
 
 @Component({

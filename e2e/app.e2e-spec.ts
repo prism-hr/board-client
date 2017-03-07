@@ -1,4 +1,4 @@
-import { BoardFrontendPage } from './app.po';
+import {BoardFrontendPage} from './app.po';
 
 describe('board-frontend App', () => {
   let page: BoardFrontendPage;
@@ -12,3 +12,4 @@ describe('board-frontend App', () => {
     expect(page.getParagraphText()).toContain('THE MARKETPLACE');
   });
 });
+

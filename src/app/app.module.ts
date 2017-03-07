@@ -30,6 +30,8 @@ import {FileUploadModule} from 'ng2-file-upload';
 import {BoardResolver} from './boards/manage/board-resolver.service';
 import {BoardViewComponent} from './boards/manage/view/board-view.component';
 import {BoardSettingsComponent} from './boards/manage/settings/board-settings.component';
+import {DepartmentResolver} from './departments/department-resolver.service';
+import {DepartmentViewComponent} from './departments/department-view.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import {BoardSettingsComponent} from './boards/manage/settings/board-settings.co
     BoardManageComponent,
     BoardViewComponent,
     BoardSettingsComponent,
+    DepartmentViewComponent,
     ActivitiesComponent
   ],
   imports: [
@@ -75,6 +78,13 @@ import {BoardSettingsComponent} from './boards/manage/settings/board-settings.co
               component: BoardSettingsComponent
             }
           ]
+        },
+        {
+          path: 'manage/department/:id/view',
+          component: DepartmentViewComponent,
+          resolve: {
+            department: DepartmentResolver
+          }
         }
       ]
       },
@@ -92,7 +102,7 @@ import {BoardSettingsComponent} from './boards/manage/settings/board-settings.co
   providers: [{
     provide: StormpathConfiguration,
     useFactory: stormpathConfig
-  }, AuthGuard, BoardsService, DepartmentsResolver, BoardResolver],
+  }, AuthGuard, BoardsService, DepartmentsResolver, DepartmentResolver, BoardResolver],
   entryComponents: [AuthenticationDialog, MotivationCheckDialog],
   bootstrap: [AppComponent]
 })

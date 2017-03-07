@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Http} from '@angular/http';
 import BoardDTO = b.BoardDTO;
-import BoardRepresentation = b.BoardRepresentation;
+import DepartmentRepresentation = b.DepartmentRepresentation;
 
 @Injectable()
 export class BoardsService {
@@ -10,8 +10,8 @@ export class BoardsService {
   constructor(private http: Http) {
   }
 
-  getBoards(): Observable<BoardRepresentation[]> {
-    return this.http.get('/api/boards').map(res => res.json());
+  getGroupedBoards(): Observable<DepartmentRepresentation[]> {
+    return this.http.get('/api/groupedBoards').map(res => res.json());
   }
 
 }

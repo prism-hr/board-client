@@ -3,19 +3,16 @@ import {Resolve, ActivatedRouteSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Http} from '@angular/http';
 import DepartmentDTO = b.DepartmentDTO;
-import BoardDTO = b.BoardDTO;
 
 @Injectable()
-export class BoardResolver implements Resolve<BoardDTO> {
+export class DepartmentResolver implements Resolve<DepartmentDTO> {
 
   constructor(private http: Http) {
   }
 
-  resolve(route: ActivatedRouteSnapshot): Observable<BoardDTO> {
+  resolve(route: ActivatedRouteSnapshot): Observable<DepartmentDTO> {
     const id = route.params['id'];
-    if (id !== 'new') {
-      return this.http.get('/api/boards/' + id).map(res => res.json());
-    }
+    return this.http.get('/api/departments/' + id).map(res => res.json());
   }
 
 }
