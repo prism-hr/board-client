@@ -1,0 +1,34 @@
+<h1>Create a new Board</h1>
+
+<form #form="ngForm" (ngSubmit)="submit()" autocomplete="off">
+  <div *ngIf="!newDepartment">
+    <md-select placeholder="Department" [(ngModel)]="selectedDepartment" name="department"
+               (change)="departmentSelected()" class="full-width">
+      <md-option *ngFor="let department of departments" [value]="department">
+        {{department.name}}
+      </md-option>
+    </md-select>
+  </div>
+
+  <div *ngIf="newDepartment">
+    <md-input-container class="md-block">
+      <input mdInput placeholder="Department Name" name="departmentName" [(ngModel)]="newDepartment.name"
+             required>
+    </md-input-container>
+
+    <logo-upload name="departmentLogo" [(ngModel)]="newDepartment.documentLogo"></logo-upload>
+  </div>
+
+  <md-input-container class="md-block">
+    <input mdInput placeholder="Board Name" name="boardName" [(ngModel)]="board.name" required>
+  </md-input-container>
+
+  <md-input-container class="md-block">
+    <textarea mdInput placeholder="Board Purpose" name="boardPurpose" [(ngModel)]="board.purpose"
+              required></textarea>
+  </md-input-container>
+
+  <div layout="column" layout-align="space-between stretch">
+    <button md-raised-button type="submit">Submit</button>
+  </div>
+</form>

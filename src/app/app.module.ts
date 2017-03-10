@@ -32,6 +32,8 @@ import {BoardViewComponent} from './boards/manage/view/board-view.component';
 import {BoardSettingsComponent} from './boards/manage/settings/board-settings.component';
 import {DepartmentResolver} from './departments/department-resolver.service';
 import {DepartmentViewComponent} from './departments/department-view.component';
+import {BoardNewComponent} from './boards/new/board-new.component';
+import {RlTagInputModule} from 'angular2-tag-input/dist';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import {DepartmentViewComponent} from './departments/department-view.component';
     StudentLogoComponent,
     LogoUploadComponent,
     AuthedComponent,
+    BoardNewComponent,
     BoardManageComponent,
     BoardViewComponent,
     BoardSettingsComponent,
@@ -60,6 +63,13 @@ import {DepartmentViewComponent} from './departments/department-view.component';
       {
         path: '', component: AuthedComponent, canActivate: [AuthGuard], children: [
         {
+          path: 'newBoard',
+          component: BoardNewComponent,
+          resolve: {
+            departments: DepartmentsResolver
+          }
+        },
+        {
           path: 'manage/board/:id',
           component: BoardManageComponent,
           resolve: {
@@ -68,10 +78,7 @@ import {DepartmentViewComponent} from './departments/department-view.component';
           children: [
             {
               path: 'view',
-              component: BoardViewComponent,
-              resolve: {
-                departments: DepartmentsResolver
-              }
+              component: BoardViewComponent
             },
             {
               path: 'settings',
@@ -97,7 +104,8 @@ import {DepartmentViewComponent} from './departments/department-view.component';
     HttpModule,
     StormpathModule,
     CloudinaryModule.forRoot(Cloudinary, {cloud_name: 'bitfoot'}),
-    FileUploadModule
+    FileUploadModule,
+    RlTagInputModule
   ],
   providers: [{
     provide: StormpathConfiguration,

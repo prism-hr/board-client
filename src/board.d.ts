@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.17.284 on 2017-03-02 21:52:59.
+// Generated using typescript-generator version 1.17.284 on 2017-03-10 15:05:13.
 
 declare namespace b {
 
@@ -9,11 +9,8 @@ declare namespace b {
     department?: DepartmentDTO;
   }
 
-  interface BoardRepresentation {
-    id?: number;
-    name?: string;
-    purpose?: string;
-    department?: DepartmentRepresentation;
+  interface BoardSettingsDTO {
+    postCategories?: string[];
   }
 
   interface DepartmentDTO {
@@ -22,16 +19,26 @@ declare namespace b {
     documentLogo?: DocumentDTO;
   }
 
-  interface DepartmentRepresentation {
-    id?: number;
-    name?: string;
-    documentLogo?: DocumentRepresentation;
-  }
-
   interface DocumentDTO {
     cloudinaryId?: string;
     cloudinaryUrl?: string;
     fileName?: string;
+  }
+
+  interface BoardRepresentation {
+    id?: number;
+    name?: string;
+    purpose?: string;
+    department?: DepartmentRepresentation;
+    postCategories?: string[];
+  }
+
+  interface DepartmentRepresentation {
+    id?: number;
+    name?: string;
+    documentLogo?: DocumentRepresentation;
+    boards?: BoardRepresentation[];
+    memberCategories?: string[];
   }
 
   interface DocumentRepresentation {

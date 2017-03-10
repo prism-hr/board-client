@@ -1,30 +1,9 @@
-<h1>Create/Edit a new Board</h1>
+<h1>Edit Board</h1>
 
 <form #form="ngForm" (ngSubmit)="submit()" autocomplete="off">
-  <div *ngIf="!board.id">
-    <div *ngIf="!newDepartment">
-      <md-select placeholder="Department" [(ngModel)]="selectedDepartment" name="department"
-                 (change)="departmentSelected()" class="full-width">
-        <md-option *ngFor="let department of departments" [value]="department">
-          {{department.name}}
-        </md-option>
-      </md-select>
-    </div>
-
-    <div *ngIf="newDepartment">
-      <md-input-container class="md-block">
-        <input mdInput placeholder="Department Name" name="departmentName" [(ngModel)]="newDepartment.name"
-               required>
-      </md-input-container>
-
-      <logo-upload name="departmentLogo" [(ngModel)]="newDepartment.documentLogo"></logo-upload>
-    </div>
-  </div>
-
   <p>
-    Department: {{board.department.name}}
+    Department: <a routerLink="/manage/board/{{board.department.id}}/view">{{board.department.name}}</a>
   </p>
-
 
   <md-input-container class="md-block">
     <input mdInput placeholder="Board Name" name="boardName" [(ngModel)]="board.name" required>
@@ -35,7 +14,5 @@
               required></textarea>
   </md-input-container>
 
-  <div layout="column" layout-align="space-between stretch">
-    <button md-raised-button type="submit">Submit</button>
-  </div>
+  <button md-raised-button type="submit">Submit</button>
 </form>

@@ -1,1 +1,7 @@
 <h1>Settings</h1>
+
+<form #form="ngForm" (ngSubmit)="submit()">
+  <rl-tag-input name="postCategories" [(ngModel)]="boardSettings.postCategories" placeholder="Add Post category"></rl-tag-input>
+
+  <button md-raised-button type="submit">Submit</button>
+</form>
