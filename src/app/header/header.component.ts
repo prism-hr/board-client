@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => {
       this.user$.subscribe(user => {
         if (user) {
-          return this.router.navigate(['/activities']);
+          return this.router.navigate(['/']);
         }
       });
     });
@@ -45,6 +45,11 @@ export class HeaderComponent implements OnInit {
 
     dialogRef = this.dialog.open(MotivationCheckDialog, config);
     return dialogRef.afterClosed();
+  }
+
+  logout() {
+    this.stormpath.logout();
+    return this.router.navigate(['']);
   }
 
 }

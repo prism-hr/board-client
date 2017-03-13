@@ -1,8 +1,2 @@
-<md-sidenav-container fullscreen>
-  <md-sidenav #sidenav mode="side" opened="true" *ngIf="(user$ | async)">
-    <sidenav></sidenav>
-  </md-sidenav>
-  <header-component></header-component>
-  <router-outlet></router-outlet>
-</md-sidenav-container>
-
+<header-component></header-component>
+<router-outlet></router-outlet>

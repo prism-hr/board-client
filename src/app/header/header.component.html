@@ -1,12 +1,10 @@
 <md-toolbar>
-  <div *ngIf="!(user$ | async)">
-    <a class="bf-logo" fxHide.xs>
-      <img src="assets/logo-nico.svg">
-    </a>
-    <a class="bf-icon" fxHide.gt-xs>
-      <img src="assets/bfj-ico-white.svg">
-    </a>
-  </div>
+  <a class="prism-logo" fxHide.xs routerLink="/">
+    <img src="assets/prism-white.png">
+  </a>
+  <a class="prism-icon" fxHide.gt-xs routerLink="/">
+    <img src="assets/prism-logo.png">
+  </a>
 
   <div *ngIf="(user$ | async) === false"
        class="flex-container" fxLayoutAlign="end" class="full-width">
@@ -15,6 +13,9 @@
     </button>
     <button md-button (click)="showMotivationCheck()">Sign up</button>
     <button md-button (click)="showLogin()">Log in</button>
+  </div>
+  <div *ngIf="user$ | async">
+    <button md-button (click)="logout()">Log out</button>
   </div>
 </md-toolbar>
 
