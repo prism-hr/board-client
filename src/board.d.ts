@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.17.284 on 2017-03-13 18:35:27.
+// Generated using typescript-generator version 1.17.284 on 2017-03-14 13:36:52.
 
 declare namespace b {
 
@@ -12,6 +12,7 @@ declare namespace b {
 
   interface BoardSettingsDTO {
     postCategories?: string[];
+    defaultPostVisibility?: PostVisibility;
   }
 
   interface DepartmentDTO {
@@ -33,6 +34,7 @@ declare namespace b {
     purpose?: string;
     department?: DepartmentRepresentation;
     postCategories?: string[];
+    defaultPostVisibility?: PostVisibility;
   }
 
   interface DepartmentRepresentation {
@@ -47,6 +49,12 @@ declare namespace b {
     cloudinaryId?: string;
     cloudinaryUrl?: string;
     fileName?: string;
+  }
+
+  enum PostVisibility {
+    PUBLIC,
+    PRIVATE,
+    PART_PRIVATE,
   }
 
 }

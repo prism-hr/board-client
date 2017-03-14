@@ -1,0 +1,9 @@
+{
+  "definitions": {
+    "postVisibility": {
+      "PUBLIC": "Public",
+      "PRIVATE": "Private",
+      "PART_PRIVATE": "Part-private"
+    }
+  }
+}
