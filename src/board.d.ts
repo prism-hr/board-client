@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.17.284 on 2017-03-10 15:05:13.
+// Generated using typescript-generator version 1.17.284 on 2017-03-13 18:35:27.
 
 declare namespace b {
 
@@ -7,6 +7,7 @@ declare namespace b {
     name?: string;
     purpose?: string;
     department?: DepartmentDTO;
+    settings?: BoardSettingsDTO;
   }
 
   interface BoardSettingsDTO {
@@ -17,6 +18,7 @@ declare namespace b {
     id?: number;
     name?: string;
     documentLogo?: DocumentDTO;
+    memberCategories?: string[];
   }
 
   interface DocumentDTO {

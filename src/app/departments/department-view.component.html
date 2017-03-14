@@ -5,6 +5,9 @@
     <input mdInput placeholder="Department Name" name="departmentName" [(ngModel)]="department.name" required>
   </md-input-container>
 
+  <rl-tag-input name="memberCategories" [(ngModel)]="department.memberCategories"
+                placeholder="Add Member category"></rl-tag-input>
+
   <!--<logo-upload name="departmentLogo" [(ngModel)]="department.documentLogo"></logo-upload>-->
 
   <div layout="column" layout-align="space-between stretch">

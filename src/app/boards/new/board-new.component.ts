@@ -21,7 +21,7 @@ export class BoardNewComponent implements OnInit {
   ngOnInit() {
     this.departments = this.route.snapshot.data['departments'];
     this.departments.push({name: "Create a new department"});
-    this.board = this.board || {department: {}};
+    this.board = {settings: {postCategories: []}};
   }
 
   submit() {
@@ -35,7 +35,7 @@ export class BoardNewComponent implements OnInit {
     if (this.selectedDepartment.id) {
       this.board.department = this.selectedDepartment;
     } else {
-      this.newDepartment = {};
+      this.newDepartment = {memberCategories: []};
       this.board.department = this.newDepartment;
     }
   }
