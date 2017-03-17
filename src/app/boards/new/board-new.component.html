@@ -1,6 +1,6 @@
 <h1>Create a new Board</h1>
 
-<form #form="ngForm" (ngSubmit)="submit()" autocomplete="off">
+<form #boardForm="ngForm" (ngSubmit)="submit()" autocomplete="off">
   <div *ngIf="!newDepartment">
     <md-select placeholder="Department" [(ngModel)]="selectedDepartment" name="department"
                (change)="departmentSelected()" class="full-width">
@@ -27,6 +27,12 @@
     <textarea mdInput placeholder="Board Purpose" name="boardPurpose" [(ngModel)]="board.purpose"
               required></textarea>
   </md-input-container>
+
+  <div *ngIf="newDepartment || selectedDepartment">
+    <board-aliases [boardSettings]="board.settings" [department]="board.department" [form]="boardForm"></board-aliases>
+  </div>
+
+  {{board | json}}
 
   <rl-tag-input name="postCategories" [(ngModel)]="board.settings.postCategories"
                 placeholder="Add Post category"></rl-tag-input>

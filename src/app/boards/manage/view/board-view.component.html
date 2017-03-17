@@ -1,6 +1,6 @@
 <h1>Edit Board</h1>
 
-<form #form="ngForm" (ngSubmit)="submit()" autocomplete="off">
+<form #boardForm="ngForm" (ngSubmit)="submit()" autocomplete="off">
   <p>
     Department: <a routerLink="/manage/board/{{board.department.id}}/view">{{board.department.name}}</a>
   </p>

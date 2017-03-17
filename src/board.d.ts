@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.17.284 on 2017-03-14 13:36:52.
+// Generated using typescript-generator version 1.17.284 on 2017-03-17 13:24:28.
 
 declare namespace b {
 
@@ -11,6 +11,7 @@ declare namespace b {
   }
 
   interface BoardSettingsDTO {
+    handle?: string;
     postCategories?: string[];
     defaultPostVisibility?: PostVisibility;
   }
@@ -19,6 +20,7 @@ declare namespace b {
     id?: number;
     name?: string;
     documentLogo?: DocumentDTO;
+    handle?: string;
     memberCategories?: string[];
   }
 
@@ -32,6 +34,7 @@ declare namespace b {
     id?: number;
     name?: string;
     purpose?: string;
+    handle?: string;
     department?: DepartmentRepresentation;
     postCategories?: string[];
     defaultPostVisibility?: PostVisibility;
@@ -41,6 +44,7 @@ declare namespace b {
     id?: number;
     name?: string;
     documentLogo?: DocumentRepresentation;
+    handle?: string;
     boards?: BoardRepresentation[];
     memberCategories?: string[];
   }
@@ -51,7 +55,7 @@ declare namespace b {
     fileName?: string;
   }
 
-  enum PostVisibility {
+  const enum PostVisibility {
     PUBLIC,
     PRIVATE,
     PART_PRIVATE,

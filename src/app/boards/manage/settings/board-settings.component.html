@@ -1,7 +1,8 @@
 <h1>Settings</h1>
 
-<form #form="ngForm" (ngSubmit)="submit()">
-  <rl-tag-input name="postCategories" [(ngModel)]="boardSettings.postCategories" placeholder="Add Post category"></rl-tag-input>
+<form #settingsForm="ngForm" (ngSubmit)="submit()">
+  <rl-tag-input name="postCategories" [(ngModel)]="boardSettings.postCategories"
+                placeholder="Add Post category"></rl-tag-input>
 
   Default post visibility:
   <md-radio-group name="defaultPostVisibility" [(ngModel)]="boardSettings.defaultPostVisibility">
@@ -9,6 +10,11 @@
       {{'definitions.postVisibility.' + postVisibility | translate}}
     </md-radio-button>
   </md-radio-group>
+
+  <div>
+    <board-aliases [boardSettings]="boardSettings" [department]="board.department"
+                   [form]="settingsForm"></board-aliases>
+  </div>
 
   <button md-raised-button type="submit">Submit</button>
 </form>

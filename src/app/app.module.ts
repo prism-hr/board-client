@@ -36,6 +36,7 @@ import {HomePublicComponent} from './home/home-public.component';
 import {DefinitionsService, DefinitionsLoader} from './services/definitions.service';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {createTranslateLoader} from './services/translate.service';
+import {BoardAliasesComponent} from './boards/board-aliases.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import {createTranslateLoader} from './services/translate.service';
     StudentLogoComponent,
     LogoUploadComponent,
     AuthedComponent,
+    BoardAliasesComponent,
     BoardNewComponent,
     BoardManageComponent,
     BoardViewComponent,
