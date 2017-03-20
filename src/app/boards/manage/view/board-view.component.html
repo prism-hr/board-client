@@ -1,17 +1,16 @@
 <h1>Edit Board</h1>
 
-<form #boardForm="ngForm" (ngSubmit)="submit()" autocomplete="off">
+<form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
   <p>
     Department: <a routerLink="/manage/board/{{board.department.id}}/view">{{board.department.name}}</a>
   </p>
 
   <md-input-container class="md-block">
-    <input mdInput placeholder="Board Name" name="boardName" [(ngModel)]="board.name" required>
+    <input mdInput formControlName="name" placeholder="Board Name" required>
   </md-input-container>
 
   <md-input-container class="md-block">
-    <textarea mdInput placeholder="Board Purpose" name="boardPurpose" [(ngModel)]="board.purpose"
-              required></textarea>
+    <textarea mdInput formControlName="purpose" placeholder="Board Purpose" required></textarea>
   </md-input-container>
 
   <button md-raised-button type="submit">Submit</button>

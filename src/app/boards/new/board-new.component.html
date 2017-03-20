@@ -15,7 +15,7 @@
     <md-input-container class="md-block">
       <input mdInput formControlName="name" placeholder="Department Name" required>
     </md-input-container>
-
+    <button md-button (click)="cancelNewDepartment()">Cancel</button>
     <!--<logo-upload name="departmentLogo" [(ngModel)]="newDepartment.documentLogo"></logo-upload>-->
   </div>
 
@@ -28,11 +28,9 @@
     <textarea mdInput formControlName="purpose" placeholder="Board Purpose" required></textarea>
   </md-input-container>
 
-  <div *ngIf="boardForm.value.selectedDepartment">
-    <board-aliases formGroupName="handles"></board-aliases>
+  <div *ngIf="newDepartment !== null">
+    <board-aliases formGroupName="handles" [disableDepartment]="!newDepartment"></board-aliases>
   </div>
-
-  {{boardForm.value | json}}
 
   <div formGroupName="settings">
     <rl-tag-input formControlName="postCategories" placeholder="Add Post category"></rl-tag-input>

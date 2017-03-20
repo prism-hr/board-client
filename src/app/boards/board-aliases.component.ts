@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {DefinitionsService} from '../services/definitions.service';
 import {FormGroupName, NG_VALUE_ACCESSOR} from '@angular/forms';
 
@@ -27,7 +27,8 @@ import {FormGroupName, NG_VALUE_ACCESSOR} from '@angular/forms';
   ]
 })
 export class BoardAliasesComponent implements OnInit {
-  private applicationUrl: string;
+  @Input() disableDepartment: boolean;
+  applicationUrl: string;
 
   constructor(private definitionsService: DefinitionsService, public formGroupName: FormGroupName) {
   }

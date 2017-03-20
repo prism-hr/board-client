@@ -8,7 +8,8 @@ export class ValidationService {
       'email': 'Invalid email address',
       'password': 'Invalid password. Password must be at least 6 characters long and contain a number.',
       'minlength': `Minimum length ${validatorValue.requiredLength}`,
-      'maxlength': `Maximum length ${validatorValue.requiredLength}`
+      'maxlength': `Maximum length ${validatorValue.requiredLength}`,
+      'duplicateHandle': `The alias is already taken`
     };
 
     return config[validatorName];
