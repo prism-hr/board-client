@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule, APP_INITIALIZER} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule, Http} from '@angular/http';
 import {StormpathModule, StormpathConfiguration} from 'angular-stormpath';
 import {AppComponent} from './app.component';
@@ -37,10 +37,12 @@ import {DefinitionsService, DefinitionsLoader} from './services/definitions.serv
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {createTranslateLoader} from './services/translate.service';
 import {BoardAliasesComponent} from './boards/board-aliases.component';
+import {ControlMessagesComponent} from './validation/control-messages.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ControlMessagesComponent,
     HeaderComponent,
     MotivationCheckDialog,
     AuthenticationDialog,
@@ -103,6 +105,7 @@ import {BoardAliasesComponent} from './boards/board-aliases.component';
     FlexLayoutModule,
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     StormpathModule,
     CloudinaryModule.forRoot(Cloudinary, {cloud_name: 'bitfoot'}),

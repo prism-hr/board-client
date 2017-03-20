@@ -1,12 +1,12 @@
 <h1>Edit Department</h1>
 
-<form #form="ngForm" (ngSubmit)="submit()">
+<form [formGroup]="departmentForm" (ngSubmit)="submit()" autocomplete="off">
   <md-input-container class="md-block">
-    <input mdInput placeholder="Department Name" name="departmentName" [(ngModel)]="department.name" required>
+    <input mdInput formControlName="name" placeholder="Department Name" required>
   </md-input-container>
+  <control-messages [control]="departmentForm.controls.name"></control-messages>
 
-  <rl-tag-input name="memberCategories" [(ngModel)]="department.memberCategories"
-                placeholder="Add Member category"></rl-tag-input>
+  <rl-tag-input formControlName="memberCategories" placeholder="Add Member category"></rl-tag-input>
 
   <!--<logo-upload name="departmentLogo" [(ngModel)]="department.documentLogo"></logo-upload>-->
 

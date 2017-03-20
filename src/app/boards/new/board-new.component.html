@@ -1,48 +1,48 @@
 <h1>Create a new Board</h1>
 
-<form #boardForm="ngForm" (ngSubmit)="submit()" autocomplete="off">
+<form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
   <div *ngIf="!newDepartment">
-    <md-select placeholder="Department" [(ngModel)]="selectedDepartment" name="department"
+    <md-select formControlName="selectedDepartment" placeholder="Department" name="department"
                (change)="departmentSelected()" class="full-width">
       <md-option *ngFor="let department of departments" [value]="department">
         {{department.name}}
       </md-option>
     </md-select>
+    <control-messages [control]="boardForm.controls.selectedDepartment"></control-messages>
   </div>
 
-  <div *ngIf="newDepartment">
+  <div *ngIf="newDepartment" formGroupName="department">
     <md-input-container class="md-block">
-      <input mdInput placeholder="Department Name" name="departmentName" [(ngModel)]="newDepartment.name"
-             required>
+      <input mdInput formControlName="name" placeholder="Department Name" required>
     </md-input-container>
 
     <!--<logo-upload name="departmentLogo" [(ngModel)]="newDepartment.documentLogo"></logo-upload>-->
   </div>
 
   <md-input-container class="md-block">
-    <input mdInput placeholder="Board Name" name="boardName" [(ngModel)]="board.name" required>
+    <input mdInput formControlName="name" placeholder="Board Name" required>
   </md-input-container>
+  <control-messages [control]="boardForm.controls.name"></control-messages>
 
   <md-input-container class="md-block">
-    <textarea mdInput placeholder="Board Purpose" name="boardPurpose" [(ngModel)]="board.purpose"
-              required></textarea>
+    <textarea mdInput formControlName="purpose" placeholder="Board Purpose" required></textarea>
   </md-input-container>
 
-  <div *ngIf="newDepartment || selectedDepartment">
-    <board-aliases [boardSettings]="board.settings" [department]="board.department" [form]="boardForm"></board-aliases>
+  <div *ngIf="boardForm.value.selectedDepartment">
+    <board-aliases formGroupName="handles"></board-aliases>
   </div>
 
-  {{board | json}}
+  {{boardForm.value | json}}
 
-  <rl-tag-input name="postCategories" [(ngModel)]="board.settings.postCategories"
-                placeholder="Add Post category"></rl-tag-input>
+  <div formGroupName="settings">
+    <rl-tag-input formControlName="postCategories" placeholder="Add Post category"></rl-tag-input>
+  </div>
 
-  <div *ngIf="newDepartment">
-    <rl-tag-input name="memberCategories" [(ngModel)]="board.department.memberCategories"
-                  placeholder="Add Member category"></rl-tag-input>
+  <div *ngIf="newDepartment" formGroupName="department">
+    <rl-tag-input formControlName="memberCategories" placeholder="Add Member category"></rl-tag-input>
   </div>
 
   <div layout="column" layout-align="space-between stretch">
-    <button md-raised-button type="submit">Submit</button>
+    <button md-raised-button type="submit" [disabled]="boardForm.invalid">Submit</button>
   </div>
 </form>
