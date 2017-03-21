@@ -1,12 +1,12 @@
 <nav md-tab-nav-bar>
   <a md-tab-link
-     [routerLink]="'/manage/board/' + (board?.id || 'new') + '/view'"
+     [routerLink]="navigationUrl + '/edit'"
      routerLinkActive #view="routerLinkActive"
      [active]="view.isActive">
     View
   </a>
   <a md-tab-link
-     [routerLink]="'/manage/board/' + (board?.id || 'new') + '/settings'"
+     [routerLink]="navigationUrl + '/settings'"
      routerLinkActive #settings="routerLinkActive"
      [active]="settings.isActive">
     Settings

@@ -2,7 +2,7 @@
 
 <form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
   <p>
-    Department: <a routerLink="/manage/board/{{board.department.id}}/view">{{board.department.name}}</a>
+    Department: <a routerLink="/{{board.department.handle}}/edit">{{board.department.name}}</a>
   </p>
 
   <md-input-container class="md-block">

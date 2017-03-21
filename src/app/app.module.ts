@@ -38,10 +38,12 @@ import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {createTranslateLoader} from './services/translate.service';
 import {BoardAliasesComponent} from './boards/board-aliases.component';
 import {ControlMessagesComponent} from './validation/control-messages.component';
+import {BlankComponent} from './general/blank.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    BlankComponent,
     ControlMessagesComponent,
     HeaderComponent,
     MotivationCheckDialog,
@@ -74,28 +76,34 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
           }
         },
         {
-          path: 'manage/board/:id',
-          component: BoardManageComponent,
-          resolve: {
-            board: BoardResolver
-          },
+          path: ':departmentHandle',
+          component: BlankComponent,
           children: [
             {
-              path: 'view',
-              component: BoardViewComponent
+              path: 'edit',
+              component: DepartmentViewComponent,
+              resolve: {
+                department: DepartmentResolver
+              }
             },
             {
-              path: 'settings',
-              component: BoardSettingsComponent
+              path: ':boardHandle',
+              component: BoardManageComponent,
+              resolve: {
+                board: BoardResolver
+              },
+              children: [
+                {
+                  path: 'edit',
+                  component: BoardViewComponent
+                },
+                {
+                  path: 'settings',
+                  component: BoardSettingsComponent
+                }
+              ]
             }
           ]
-        },
-        {
-          path: 'manage/department/:id/view',
-          component: DepartmentViewComponent,
-          resolve: {
-            department: DepartmentResolver
-          }
         }
       ]
       },

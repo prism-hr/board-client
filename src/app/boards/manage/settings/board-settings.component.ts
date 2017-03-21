@@ -40,7 +40,7 @@ export class BoardSettingsComponent implements OnInit {
   }
 
   submit() {
-    const settings: BoardSettingsDTO = _.pick(this.board, ['postCategories', 'defaultPostVisibility']);
+    const settings: BoardSettingsDTO = _.pick(this.settingsForm.value, ['postCategories', 'defaultPostVisibility']);
     settings.handle = this.settingsForm.value.handles.boardHandle;
     this.http.put('/api/boards/' + this.board.id + '/settings', settings)
       .subscribe(() => {

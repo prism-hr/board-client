@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Http} from '@angular/http';
 import {MdSnackBar} from '@angular/material';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import * as _ from 'lodash';
 import DepartmentDTO = b.DepartmentDTO;
 
 @Component({
@@ -17,19 +18,26 @@ export class DepartmentViewComponent implements OnInit {
   constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder, private snackBar: MdSnackBar) {
     this.departmentForm = this.fb.group({
       name: ['', [Validators.minLength(3), Validators.required, Validators.maxLength(255)]],
-      memberCategories: []
+      memberCategories: [],
+      handles: this.fb.group({
+        departmentHandle: ['', [Validators.required, Validators.maxLength(15)]]
+      })
     });
   }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.department = data['department'];
-      this.departmentForm.reset(this.department);
+      const value: any = Object.assign({}, this.department);
+      value.handles = {departmentHandle: this.department.handle};
+      this.departmentForm.reset(value);
     });
   }
 
   submit() {
-    Object.assign(this.department, this.departmentForm.value);
+    const department: DepartmentDTO = _.pick(this.departmentForm.value, ['postCategories', 'defaultPostVisibility']);
+    department.handle = this.departmentForm.value.handles.departmentHandle;
+    Object.assign(this.department, department);
     this.http.put('/api/departments/' + this.department.id, this.department)
       .subscribe(() => {
         this.snackBar.open("Department Saved!");
