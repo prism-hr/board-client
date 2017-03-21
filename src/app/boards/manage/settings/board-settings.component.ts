@@ -33,7 +33,7 @@ export class BoardSettingsComponent implements OnInit {
   ngOnInit() {
     this.route.parent.data.subscribe(data => {
       this.board = data['board'];
-      const value = _.pick(this.board, ['postCategories', 'defaultPostVisibility']);
+      const value: any = _.pick(this.board, ['postCategories', 'defaultPostVisibility']);
       value.handles = {departmentHandle: this.board.department.handle, boardHandle: this.board.handle};
       this.settingsForm.setValue(value);
     });
