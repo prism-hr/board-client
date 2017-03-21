@@ -23,7 +23,7 @@
       ],
       "scripts": [
         "../node_modules/lodash/lodash.js",
-        "../node_modules/cloudinary-core/cloudinary-core.js"
+        "../node_modules/cloudinary-core/cloudinary-core-shrinkwrap.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
