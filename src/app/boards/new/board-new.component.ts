@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import DepartmentDTO = b.DepartmentDTO;
 import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
+import BoardRepresentation = b.BoardRepresentation;
 
 @Component({
   templateUrl: 'board-new.component.html',
@@ -30,7 +31,8 @@ export class BoardNewComponent implements OnInit {
       }),
       department: this.fb.group({
         name: ['', [Validators.minLength(3), Validators.required, Validators.maxLength(255)]],
-        memberCategories: [[]]
+        memberCategories: [[]],
+        documentLogo: []
       }),
       selectedDepartment: ['', Validators.required],
       handles: this.fb.group({
@@ -59,7 +61,8 @@ export class BoardNewComponent implements OnInit {
     board.settings.handle = this.boardForm.value.handles.boardHandle;
     this.http.post('/api/boards', board)
       .subscribe(res => {
-        this.router.navigate(['/manage/board', res.json().id, 'view']);
+        const saved: BoardRepresentation = res.json();
+        this.router.navigate([saved.department.handle, saved.handle, 'edit']);
       }, (error: Response | any) => {
         if (error.status === 422) {
           if(error.json().exceptionCode === 'DUPLICATE_DEPARTMENT_HANDLE') {
