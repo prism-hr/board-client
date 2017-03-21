@@ -144,6 +144,9 @@ import {BlankComponent} from './general/blank.component';
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor() {
+    console.log('Cloudinary: ' + Cloudinary)
+  }
 }
 
 
