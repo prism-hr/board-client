@@ -36,7 +36,7 @@ export class DepartmentViewComponent implements OnInit {
   }
 
   submit() {
-    const department: DepartmentDTO = _.pick(this.departmentForm.value, ['postCategories', 'defaultPostVisibility', 'documentLogo']);
+    const department: DepartmentDTO = _.pick(this.departmentForm.value, ['name', 'memberCategories', 'documentLogo']);
     department.handle = this.departmentForm.value.handles.departmentHandle;
     Object.assign(this.department, department);
     this.http.put('/api/departments/' + this.department.id, this.department)
