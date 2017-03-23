@@ -4,7 +4,7 @@ import {Http, Response} from '@angular/http';
 import * as _ from 'lodash';
 import {MdSnackBar} from '@angular/material';
 import {DefinitionsService} from '../../../services/definitions.service';
-import {FormGroup, Validators, FormBuilder} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import BoardRepresentation = b.BoardRepresentation;
 import BoardSettingsDTO = b.BoardSettingsDTO;
 
