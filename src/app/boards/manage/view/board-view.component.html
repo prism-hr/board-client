@@ -8,10 +8,12 @@
   <md-input-container class="md-block">
     <input mdInput formControlName="name" placeholder="Board Name" required>
   </md-input-container>
+  <control-messages [control]="boardForm.controls.name"></control-messages>
 
   <md-input-container class="md-block">
     <textarea mdInput formControlName="purpose" placeholder="Board Purpose" required></textarea>
   </md-input-container>
+  <control-messages [control]="boardForm.controls.purpose"></control-messages>
 
   <button md-raised-button type="submit">Submit</button>
 </form>

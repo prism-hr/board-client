@@ -34,12 +34,13 @@ export class BoardNewComponent implements OnInit {
         memberCategories: [[]],
         documentLogo: []
       }),
-      selectedDepartment: ['', Validators.required],
+      // selectedDepartment: ['', Validators.required],
       handles: this.fb.group({
         departmentHandle: ['', [Validators.required, Validators.maxLength(15)]],
         boardHandle: ['', [Validators.required, Validators.maxLength(15)]]
       })
-    })
+    });
+    this.newDepartment = true; // department select turned off
   }
 
   ngOnInit() {

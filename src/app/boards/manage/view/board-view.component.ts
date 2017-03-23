@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Http} from '@angular/http';
+import {Http, Response} from '@angular/http';
 import {MdSnackBar} from '@angular/material';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import * as _ from 'lodash';
@@ -34,6 +34,12 @@ export class BoardViewComponent implements OnInit {
     this.http.put('/api/boards/' + this.board.id, this.boardForm.value)
       .subscribe(() => {
         this.snackBar.open("Board Saved!");
+      }, (error: Response | any) => {
+        if (error.status === 422) {
+          if (error.json().exceptionCode === 'DUPLICATE_BOARD') {
+            this.boardForm.controls['name'].setErrors({duplicateBoard: true});
+          }
+        }
       });
   }
 }

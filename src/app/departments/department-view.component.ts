@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Http} from '@angular/http';
+import {Http, Response} from '@angular/http';
 import {MdSnackBar} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as _ from 'lodash';
@@ -42,6 +42,12 @@ export class DepartmentViewComponent implements OnInit {
     this.http.put('/api/departments/' + this.department.id, this.department)
       .subscribe(() => {
         this.snackBar.open("Department Saved!");
+      }, (error: Response | any) => {
+        if (error.status === 422) {
+          if (error.json().exceptionCode === 'DUPLICATE_DEPARTMENT') {
+            this.departmentForm.controls['name'].setErrors({duplicateDepartment: true});
+          }
+        }
       });
   }
 }

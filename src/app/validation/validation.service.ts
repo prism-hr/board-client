@@ -9,7 +9,9 @@ export class ValidationService {
       'password': 'Invalid password. Password must be at least 6 characters long and contain a number.',
       'minlength': `Minimum length ${validatorValue.requiredLength}`,
       'maxlength': `Maximum length ${validatorValue.requiredLength}`,
-      'duplicateHandle': `The alias is already taken`
+      'duplicateHandle': `The alias is already taken.`,
+      'duplicateDepartment': `Another department with this name already exists.`,
+      'duplicateBoard': `Another board with this name already exists.`
     };
 
     return config[validatorName];

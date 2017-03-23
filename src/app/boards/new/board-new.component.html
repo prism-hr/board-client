@@ -1,21 +1,23 @@
 <h1>Create a new Board</h1>
 
 <form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
-  <div *ngIf="!newDepartment">
-    <md-select formControlName="selectedDepartment" placeholder="Department" name="department"
-               (change)="departmentSelected()" class="full-width">
-      <md-option *ngFor="let department of departments" [value]="department">
-        {{department.name}}
-      </md-option>
-    </md-select>
-    <control-messages [control]="boardForm.controls.selectedDepartment"></control-messages>
-  </div>
+  <!--<div *ngIf="!newDepartment">-->
+    <!--<md-select formControlName="selectedDepartment" placeholder="Department" name="department"-->
+               <!--(change)="departmentSelected()" class="full-width">-->
+      <!--<md-option *ngFor="let department of departments" [value]="department">-->
+        <!--{{department.name}}-->
+      <!--</md-option>-->
+    <!--</md-select>-->
+    <!--<control-messages [control]="boardForm.controls.selectedDepartment"></control-messages>-->
+  <!--</div>-->
 
   <div *ngIf="newDepartment" formGroupName="department">
     <md-input-container class="md-block">
       <input mdInput formControlName="name" placeholder="Department Name" required>
     </md-input-container>
-    <button md-button (click)="cancelNewDepartment()">Cancel</button>
+    <control-messages [control]="boardForm.get('department').get('name')"></control-messages>
+
+    <!--<button md-button (click)="cancelNewDepartment()">Cancel</button>-->
     <logo-upload formControlName="documentLogo"></logo-upload>
   </div>
 
@@ -27,6 +29,7 @@
   <md-input-container class="md-block">
     <textarea mdInput formControlName="purpose" placeholder="Board Purpose" required></textarea>
   </md-input-container>
+  <control-messages [control]="boardForm.controls.purpose"></control-messages>
 
   <div *ngIf="newDepartment !== null">
     <board-aliases formGroupName="handles" [disableDepartment]="!newDepartment"></board-aliases>
