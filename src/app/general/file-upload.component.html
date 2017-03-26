@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="type === 'logo'">
   <label for="uploader-input" ng2FileDrop
          [uploader]="uploader"
          (fileOver)="fileOver($event)"
@@ -13,5 +13,14 @@
       </div>
     </div>
   </label>
-  <input type="file" ng2FileSelect [uploader]="uploader" id="uploader-input" style="display:none"/>
 </div>
+
+<div *ngIf="type === 'document'">
+  <label for="uploader-input">Upload...</label>
+  <a *ngIf="model" href="{{model.cloudinaryUrl}}" target="_blank">
+    Uploaded: {{model.fileName}}
+  </a>
+</div>
+
+<span *ngIf="progressPercentage !== null">Progress: {{progressPercentage}}</span>
+<input type="file" ng2FileSelect [uploader]="uploader" id="uploader-input" style="display:none"/>

@@ -84,6 +84,7 @@ export class LocationAutocompleteComponent implements ControlValueAccessor, OnIn
   }
 
   writeValue(obj: any): void {
+    this.model = obj;
   }
 
   registerOnChange(fn: any): void {

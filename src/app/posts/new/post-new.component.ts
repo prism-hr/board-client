@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Http} from '@angular/http';
-import {DefinitionsService} from '../../services/definitions.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ValidationService} from '../../validation/validation.service';
+import * as _ from 'lodash';
+import {MdSnackBar} from '@angular/material';
 import DepartmentDTO = b.DepartmentDTO;
 import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
@@ -16,11 +18,11 @@ import PostRepresentation = b.PostRepresentation;
 })
 export class PostNewComponent implements OnInit {
   board: BoardRepresentation;
-  post: PostDTO;
+  post: PostRepresentation;
   postForm: FormGroup;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: Http, private fb: FormBuilder,
-              private definitionsService: DefinitionsService) {
+              private snackBar: MdSnackBar) {
     this.postForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
       description: ['', [Validators.required, Validators.maxLength(2000)]],
@@ -30,29 +32,60 @@ export class PostNewComponent implements OnInit {
       existingRelation: [null],
       postCategories: [[]],
       memberCategories: [[]],
-      // applyWebsite: [null, Validators.maxLength(255)],
-      // applyDocument: [],
-      // applyEmail: [null, Validators.maxLength(254)]
+      applyType: [null, Validators.required],
+      applyWebsite: [null, Validators.maxLength(255)],
+      applyDocument: [],
+      applyEmail: [null, Validators.maxLength(254)]
     });
   }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      this.board = data['board'];
+      if (data['board']) {
+        this.board = data['board'];
+      } else if (data['post']) {
+        this.post = data['post'];
+        this.board = this.post.board;
+        const formValue: any = Object.assign({}, this.post);
+        formValue.existingRelationSpecify = !!formValue.existingRelationSpecify;
+        formValue.applyType = formValue.applyWebsite ? 'website' : (formValue.applyDocument ? 'document' : (formValue.applyEmail ? 'email' : null));
+        this.postForm.reset(formValue);
+      }
     });
     this.postForm.get('existingRelationSpecify').valueChanges
       .subscribe((specify: boolean) => {
-        const f = this.postForm;
         this.postForm.get('existingRelation').setValidators(specify ? Validators.required : null);
         this.postForm.get('existingRelation').setValue(null);
+        this.postForm.get('existingRelation').updateValueAndValidity();
+      });
+    this.postForm.get('applyType').valueChanges
+      .subscribe((applyType: string) => {
+        this.postForm.get('applyWebsite').setValidators(applyType === 'website' && [Validators.required, Validators.maxLength(255)]);
+        this.postForm.get('applyDocument').setValidators(applyType === 'document' && Validators.required);
+        this.postForm.get('applyEmail').setValidators(applyType === 'email' && [Validators.required, ValidationService.emailValidator]);
+        this.postForm.get('applyWebsite').updateValueAndValidity();
+        this.postForm.get('applyDocument').updateValueAndValidity();
+        this.postForm.get('applyEmail').updateValueAndValidity();
       });
   }
 
   submit() {
-    this.http.post('/api/boards/' + this.board.id + '/posts', this.postForm.value)
-      .subscribe(res => {
-        this.router.navigate([this.board.department.handle, this.board.handle]);
-      });
+    const post = _.pick(this.postForm.value, ['name', 'description', 'organizationName', 'location', 'existingRelation',
+      'postCategories', 'memberCategories']);
+    const applyProperty = 'apply' + _.capitalize(this.postForm.value.applyType);
+    post[applyProperty] = this.postForm.value[applyProperty];
+
+    if (this.post) {
+      this.http.put('/api/posts/' + this.post.id, post)
+        .subscribe(() => {
+          this.snackBar.open("Board Saved!");
+        });
+    } else {
+      this.http.post('/api/boards/' + this.board.id + '/posts', post)
+        .subscribe(() => {
+          this.router.navigate([this.board.department.handle, this.board.handle]);
+        });
+    }
   }
 
 }

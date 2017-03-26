@@ -14,7 +14,7 @@ import {HeaderComponent} from './header/header.component';
 import {AuthedComponent} from './authentication/authed.component';
 import {AuthGuard} from './authentication/auth-guard.service';
 import {MotivationCheckDialog} from './header/motivation-check.dialog';
-import {LogoUploadComponent} from './general/logo-upload.component';
+import {FileUploadComponent} from './general/file-upload.component';
 import {ResourceService} from './services/resource.service';
 import {DepartmentsResolver} from './boards/manage/departments-resolver.service';
 import {BoardManageComponent} from './boards/manage/board-manage.component';
@@ -60,7 +60,7 @@ import {PlacesModule} from './general/places/places.module';
     UniLogoComponent,
     EmployerLogoComponent,
     StudentLogoComponent,
-    LogoUploadComponent,
+    FileUploadComponent,
     AuthedComponent,
     BoardAliasesComponent,
     BoardNewComponent,
@@ -118,7 +118,7 @@ import {PlacesModule} from './general/places/places.module';
                 },
                 {
                   path: ':postId',
-                  component: PostViewComponent,
+                  component: PostNewComponent,
                   resolve: {
                     post: PostResolver
                   },

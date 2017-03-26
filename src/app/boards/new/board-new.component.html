@@ -18,7 +18,7 @@
     <control-messages [control]="boardForm.get('department').get('name')"></control-messages>
 
     <!--<button md-button (click)="cancelNewDepartment()">Cancel</button>-->
-    <logo-upload formControlName="documentLogo"></logo-upload>
+    <file-upload formControlName="documentLogo" type="logo"></file-upload>
   </div>
 
   <md-input-container class="md-block">

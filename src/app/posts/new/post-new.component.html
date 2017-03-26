@@ -1,4 +1,5 @@
-<h1>Create a new post</h1>
+<h1 *ngIf="!post">Create a new post</h1>
+<h1 *ngIf="post">Edit Post</h1>
 
 <form [formGroup]="postForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
 
@@ -41,14 +42,44 @@
 
   <div *ngIf="postForm.value.existingRelationSpecify">
     <md-input-container class="md-block">
-      <textarea mdInput formControlName="existingRelation" placeholder="Briefly summarise your relationship" required></textarea>
+      <textarea mdInput formControlName="existingRelation" placeholder="Briefly summarise your relationship"
+                required></textarea>
     </md-input-container>
     <control-messages [control]="postForm.controls.existingRelation"></control-messages>
   </div>
 
-  <rl-tag-input formControlName="memberCategories" placeholder="Add Member category" [autocomplete]="true"
+  <rl-tag-input formControlName="memberCategories" placeholder="Add a Member category" [autocomplete]="true"
                 [autocompleteItems]="this.board.department.memberCategories"
                 [autocompleteMustMatch]="true"></rl-tag-input>
+
+  <div>
+    How will people respond?
+    <md-radio-group formControlName="applyType">
+      <md-radio-button value="website">By visiting a webpage</md-radio-button>
+      <md-radio-button value="document">By following instructions in a document</md-radio-button>
+      <md-radio-button value="email">By sending an email</md-radio-button>
+    </md-radio-group>
+    <control-messages [control]="postForm.controls.applyType"></control-messages>
+  </div>
+
+  <div *ngIf="postForm.value.applyType === 'website'">
+    <md-input-container class="md-block">
+      <input mdInput formControlName="applyWebsite" placeholder="Your website address" required>
+    </md-input-container>
+    <control-messages [control]="postForm.controls.applyWebsite"></control-messages>
+  </div>
+
+  <div *ngIf="postForm.value.applyType === 'document'">
+    <file-upload formControlName="applyDocument" type="document"></file-upload>
+    <control-messages [control]="postForm.controls.applyDocument"></control-messages>
+  </div>
+
+  <div *ngIf="postForm.value.applyType === 'email'">
+    <md-input-container class="md-block">
+      <input mdInput formControlName="applyEmail" placeholder="e.g. apply@example.com" required>
+    </md-input-container>
+    <control-messages [control]="postForm.controls.applyEmail"></control-messages>
+  </div>
 
   <div layout="column" layout-align="space-between stretch">
     <button md-raised-button type="submit" [disabled]="postForm.invalid">Submit</button>

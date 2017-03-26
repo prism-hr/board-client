@@ -1,28 +1,32 @@
-import {Component, forwardRef} from '@angular/core';
+import {Component, forwardRef, Input} from '@angular/core';
 import {Cloudinary} from '@cloudinary/angular';
-import {FileUploader, ParsedResponseHeaders, FileItem} from 'ng2-file-upload';
-import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
+import {FileItem, FileUploader, ParsedResponseHeaders} from 'ng2-file-upload';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {environment} from '../../environments/environment';
 import DocumentDTO = b.DocumentDTO;
 
 @Component({
-  selector: 'logo-upload',
-  templateUrl: './logo-upload.component.html',
-  styleUrls: ['logo-upload.component.scss'],
+  selector: 'file-upload',
+  templateUrl: './file-upload.component.html',
+  styleUrls: ['file-upload.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => LogoUploadComponent),
+      useExisting: forwardRef(() => FileUploadComponent),
       multi: true
     }
   ]
 })
-export class LogoUploadComponent implements ControlValueAccessor {
-  private uploader: FileUploader;
-  private propagateChange: any;
-  private progressPercentage: Number;
-  private isDragOver: boolean;
-  private model: DocumentDTO;
+export class FileUploadComponent implements ControlValueAccessor {
+
+  @Input("type")
+  type: string;
+
+  uploader: FileUploader;
+  propagateChange: any;
+  progressPercentage: Number = null;
+  isDragOver: boolean;
+  model: DocumentDTO;
 
   constructor(private cloudinary: Cloudinary) {
     this.uploader = new FileUploader({
@@ -33,17 +37,19 @@ export class LogoUploadComponent implements ControlValueAccessor {
   }
 
   ngOnInit(): void {
-    this.uploader.onBeforeUploadItem = fileItem => {
+      this.uploader.onBeforeUploadItem = fileItem => {
       fileItem.withCredentials = false;
+      this.progressPercentage = 0;
       return {fileItem};
     };
     this.uploader.onProgressItem = (item: FileItem, progress: any) => {
-      console.log(progress);
+      this.progressPercentage = progress;
     };
     this.uploader.onCompleteItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+      this.progressPercentage = null;
       const result = JSON.parse(response);
       this.model = {cloudinaryId: result.public_id, cloudinaryUrl: result.url, fileName: item.file.name};
-      if(this.propagateChange) {
+      if (this.propagateChange) {
         this.propagateChange(this.model);
       }
       return {item, response, status, headers};
