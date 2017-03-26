@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Http, Response} from '@angular/http';
 import {MdSnackBar} from '@angular/material';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import BoardRepresentation = b.BoardRepresentation;
 import BoardDTO = b.BoardDTO;
+import PostRepresentation = b.PostRepresentation;
 
 @Component({
   templateUrl: 'board-view.component.html',
@@ -13,6 +14,7 @@ import BoardDTO = b.BoardDTO;
 })
 export class BoardViewComponent implements OnInit {
   board: BoardRepresentation;
+  posts: PostRepresentation[];
   boardForm: FormGroup;
 
   constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder,
@@ -28,6 +30,10 @@ export class BoardViewComponent implements OnInit {
       this.board = data['board'];
       this.boardForm.setValue(_.pick(this.board, ['name', 'purpose']));
     });
+    this.http.get('/api/boards/' + this.board.id + '/posts')
+      .subscribe((posts: Response) => {
+        this.posts = posts.json();
+      });
   }
 
   submit() {

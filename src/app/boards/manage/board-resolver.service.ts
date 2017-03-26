@@ -12,7 +12,7 @@ export class BoardResolver implements Resolve<BoardDTO> {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<BoardDTO> {
-    const id = route.params['id'];
+    const id = route.params['boardId'];
     if (id) {
       return this.http.get('/api/boards/' + id).map(res => res.json());
     }

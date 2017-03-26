@@ -63,7 +63,7 @@ export class BoardNewComponent implements OnInit {
     this.http.post('/api/boards', board)
       .subscribe(res => {
         const saved: BoardRepresentation = res.json();
-        this.router.navigate([saved.department.handle, saved.handle, 'edit']);
+        this.router.navigate([saved.department.handle, saved.handle]);
       }, (error: Response | any) => {
         if (error.status === 422) {
           if(error.json().exceptionCode === 'DUPLICATE_DEPARTMENT_HANDLE') {

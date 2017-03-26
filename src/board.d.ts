@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.17.284 on 2017-03-17 13:24:28.
+// Generated using typescript-generator version 1.17.284 on 2017-03-23 17:22:06.
 
 declare namespace b {
 
@@ -30,6 +30,28 @@ declare namespace b {
     fileName?: string;
   }
 
+  interface LocationDTO {
+    name?: string;
+    domicile?: string;
+    googleId?: string;
+    latitude?: number;
+    longitude?: number;
+  }
+
+  interface PostDTO {
+    id?: number;
+    name?: string;
+    description?: string;
+    organizationName?: string;
+    location?: LocationDTO;
+    existingRelation?: boolean;
+    postCategories?: string[];
+    memberCategories?: string[];
+    applyWebsite?: string;
+    applyDocument?: DocumentDTO;
+    applyEmail?: string;
+  }
+
   interface BoardRepresentation {
     id?: number;
     name?: string;
@@ -53,6 +75,29 @@ declare namespace b {
     cloudinaryId?: string;
     cloudinaryUrl?: string;
     fileName?: string;
+  }
+
+  interface LocationRepresentation {
+    name?: string;
+    domicile?: string;
+    googleId?: string;
+    latitude?: number;
+    longitude?: number;
+  }
+
+  interface PostRepresentation {
+    id?: number;
+    name?: string;
+    description?: string;
+    organizationName?: string;
+    location?: LocationRepresentation;
+    existingRelation?: boolean;
+    postCategories?: string[];
+    memberCategories?: string[];
+    applyWebsite?: string;
+    applyDocument?: DocumentRepresentation;
+    applyEmail?: string;
+    board?: BoardRepresentation;
   }
 
   const enum PostVisibility {

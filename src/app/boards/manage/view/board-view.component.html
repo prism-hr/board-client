@@ -2,7 +2,7 @@
 
 <form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
   <p>
-    Department: <a routerLink="/{{board.department.handle}}/edit">{{board.department.name}}</a>
+    Department: <a routerLink="/{{board.department.handle}}">{{board.department.name}}</a>
   </p>
 
   <md-input-container class="md-block">
@@ -17,3 +17,12 @@
 
   <button md-raised-button type="submit">Submit</button>
 </form>
+
+<ul>
+  <li *ngFor="let post of posts">
+    <a [routerLink]="post.id">{{post.name}}</a>
+  </li>
+  <li>
+    <a [routerLink]="['/newPost', {boardId: board.id}]">Add new post</a>
+  </li>
+</ul>

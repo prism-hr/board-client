@@ -6,7 +6,7 @@
         Departments:
         <ul>
           <li *ngFor="let department of departments">
-            <a routerLink="/{{department.handle}}/edit">{{department.name}}</a>
+            <a routerLink="/{{department.handle}}">{{department.name}}</a>
           </li>
         </ul>
       </div>
@@ -14,7 +14,7 @@
         Boards:
         <ul>
           <li *ngFor="let board of boards">
-            <a routerLink="/{{board.department.handle}}/{{board.handle}}/edit">{{board.name}}</a>
+            <a routerLink="/{{board.department.handle}}/{{board.handle}}">{{board.department.handle}}/{{board.name}}</a>
           </li>
         </ul>
       </div>

@@ -1,0 +1,56 @@
+<h1>Create a new post</h1>
+
+<form [formGroup]="postForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
+
+  <md-input-container class="md-block">
+    <input mdInput formControlName="name" placeholder="Title of your post" required>
+  </md-input-container>
+  <control-messages [control]="postForm.controls.name"></control-messages>
+
+  <div>
+    <md-input-container class="md-block">
+      <textarea mdInput formControlName="description" placeholder="Content of your post" required></textarea>
+    </md-input-container>
+    <control-messages [control]="postForm.controls.description"></control-messages>
+  </div>
+
+  <rl-tag-input formControlName="postCategories" placeholder="Add a Post category" [autocomplete]="true"
+                [autocompleteItems]="this.board.postCategories" [autocompleteMustMatch]="true">
+  </rl-tag-input>
+
+  <div>
+    <md-input-container class="md-block">
+      <input mdInput formControlName="organizationName" placeholder="Your organization" required>
+    </md-input-container>
+    <control-messages [control]="postForm.controls.organizationName"></control-messages>
+  </div>
+
+  <div>
+    <places-autocomplete formControlName="location"></places-autocomplete>
+    <control-messages [control]="postForm.controls.location"></control-messages>
+  </div>
+
+  <div>
+    Do you have an existing relationship with our department?
+    <md-radio-group formControlName="existingRelationSpecify">
+      <md-radio-button [value]="false">No</md-radio-button>
+      <md-radio-button [value]="true">Yes</md-radio-button>
+    </md-radio-group>
+    <control-messages [control]="postForm.controls.existingRelationSpecify"></control-messages>
+  </div>
+
+  <div *ngIf="postForm.value.existingRelationSpecify">
+    <md-input-container class="md-block">
+      <textarea mdInput formControlName="existingRelation" placeholder="Briefly summarise your relationship" required></textarea>
+    </md-input-container>
+    <control-messages [control]="postForm.controls.existingRelation"></control-messages>
+  </div>
+
+  <rl-tag-input formControlName="memberCategories" placeholder="Add Member category" [autocomplete]="true"
+                [autocompleteItems]="this.board.department.memberCategories"
+                [autocompleteMustMatch]="true"></rl-tag-input>
+
+  <div layout="column" layout-align="space-between stretch">
+    <button md-raised-button type="submit" [disabled]="postForm.invalid">Submit</button>
+  </div>
+</form>

@@ -1,8 +1,8 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, APP_INITIALIZER} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpModule, Http} from '@angular/http';
-import {StormpathModule, StormpathConfiguration} from 'angular-stormpath';
+import {Http, HttpModule} from '@angular/http';
+import {StormpathConfiguration, StormpathModule} from 'angular-stormpath';
 import {AppComponent} from './app.component';
 import {AuthenticationDialog} from './authentication/authentication.dialog';
 import {HomeComponent} from './home/home.component';
@@ -33,12 +33,18 @@ import {DepartmentViewComponent} from './departments/department-view.component';
 import {BoardNewComponent} from './boards/new/board-new.component';
 import {RlTagInputModule} from 'angular2-tag-input/dist';
 import {HomePublicComponent} from './home/home-public.component';
-import {DefinitionsService, DefinitionsLoader} from './services/definitions.service';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {DefinitionsLoader, DefinitionsService} from './services/definitions.service';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {createTranslateLoader} from './services/translate.service';
 import {BoardAliasesComponent} from './boards/board-aliases.component';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {BlankComponent} from './general/blank.component';
+import {PostNewComponent} from './posts/new/post-new.component';
+import {PostViewComponent} from './posts/view/post-view.component';
+import {PostResolver} from './posts/post-resolver.service';
+import {AgmCoreModule} from 'angular2-google-maps/core';
+import {environment} from '../environments/environment';
+import {PlacesModule} from './general/places/places.module';
 
 @NgModule({
   declarations: [
@@ -61,7 +67,9 @@ import {BlankComponent} from './general/blank.component';
     BoardManageComponent,
     BoardViewComponent,
     BoardSettingsComponent,
-    DepartmentViewComponent
+    DepartmentViewComponent,
+    PostNewComponent,
+    PostViewComponent
   ],
   imports: [
     RouterModule.forRoot([
@@ -76,11 +84,18 @@ import {BlankComponent} from './general/blank.component';
           }
         },
         {
+          path: 'newPost',
+          component: PostNewComponent,
+          resolve: {
+            board: BoardResolver
+          }
+        },
+        {
           path: ':departmentHandle',
           component: BlankComponent,
           children: [
             {
-              path: 'edit',
+              path: '',
               component: DepartmentViewComponent,
               resolve: {
                 department: DepartmentResolver
@@ -94,12 +109,19 @@ import {BlankComponent} from './general/blank.component';
               },
               children: [
                 {
-                  path: 'edit',
+                  path: '',
                   component: BoardViewComponent
                 },
                 {
                   path: 'settings',
                   component: BoardSettingsComponent
+                },
+                {
+                  path: ':postId',
+                  component: PostViewComponent,
+                  resolve: {
+                    post: PostResolver
+                  },
                 }
               ]
             }
@@ -125,7 +147,12 @@ import {BlankComponent} from './general/blank.component';
         useFactory: createTranslateLoader,
         deps: [Http]
       }
-    })
+    }),
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleApiKey,
+      libraries: ['places']
+    }),
+    PlacesModule
   ],
   providers: [
     {
@@ -138,7 +165,7 @@ import {BlankComponent} from './general/blank.component';
       useFactory: DefinitionsLoader,
       deps: [DefinitionsService],
       multi: true
-    }, AuthGuard, ResourceService, DepartmentsResolver, DepartmentResolver, BoardResolver
+    }, AuthGuard, ResourceService, DepartmentsResolver, DepartmentResolver, BoardResolver, PostResolver
   ],
   entryComponents: [AuthenticationDialog, MotivationCheckDialog],
   bootstrap: [AppComponent]

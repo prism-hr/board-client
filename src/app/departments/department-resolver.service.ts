@@ -1,18 +1,18 @@
 import {Injectable} from '@angular/core';
-import {Resolve, ActivatedRouteSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Http, URLSearchParams} from '@angular/http';
-import DepartmentDTO = b.DepartmentDTO;
+import DepartmentRepresentation = b.DepartmentRepresentation;
 
 @Injectable()
-export class DepartmentResolver implements Resolve<DepartmentDTO> {
+export class DepartmentResolver implements Resolve<DepartmentRepresentation> {
 
   constructor(private http: Http) {
   }
 
-  resolve(route: ActivatedRouteSnapshot): Observable<DepartmentDTO> {
+  resolve(route: ActivatedRouteSnapshot): Observable<DepartmentRepresentation> {
     const id = route.params['id'];
-    if(id) {
+    if (id) {
       return this.http.get('/api/departments/' + id).map(res => res.json());
     }
     const departmentHandle = route.parent.params['departmentHandle'];

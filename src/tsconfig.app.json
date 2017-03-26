@@ -14,7 +14,8 @@
     "module": "es2015",
     "baseUrl": "",
     "types": [
-      "cloudinary-core"
+      "cloudinary-core",
+      "googlemaps"
     ]
   },
   "exclude": [
