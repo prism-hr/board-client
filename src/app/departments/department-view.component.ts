@@ -42,7 +42,7 @@ export class DepartmentViewComponent implements OnInit {
     this.http.put('/api/departments/' + this.department.id, this.department)
       .subscribe(() => {
         this.snackBar.open("Department Saved!");
-      }, (error: Response | any) => {
+      }, (error: Response) => {
         if (error.status === 422) {
           if (error.json().exceptionCode === 'DUPLICATE_DEPARTMENT') {
             this.departmentForm.controls['name'].setErrors({duplicateDepartment: true});

@@ -11,7 +11,7 @@ import AutocompletePrediction = google.maps.places.AutocompletePrediction;
   template: `
     <md-input-container>
       <input type="text" mdInput [(ngModel)]="model" (ngModelChange)="modelChanged($event)" [mdAutocomplete]="auto"
-             (blur)="onTouch($event)">
+             (blur)="onTouch($event)" placeholder="Lookup your location">
     </md-input-container>
 
     <md-autocomplete #auto="mdAutocomplete" [displayWith]="displayFn">

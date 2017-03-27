@@ -64,7 +64,7 @@ export class BoardNewComponent implements OnInit {
       .subscribe(res => {
         const saved: BoardRepresentation = res.json();
         this.router.navigate([saved.department.handle, saved.handle]);
-      }, (error: Response | any) => {
+      }, (error: Response) => {
         if (error.status === 422) {
           if(error.json().exceptionCode === 'DUPLICATE_DEPARTMENT_HANDLE') {
             (this.boardForm.controls['handles'] as FormGroup).controls['departmentHandle'].setErrors({duplicateHandle: true});

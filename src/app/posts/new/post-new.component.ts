@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Http} from '@angular/http';
+import {Http, Response} from '@angular/http';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ValidationService} from '../../validation/validation.service';
 import * as _ from 'lodash';
@@ -11,6 +11,7 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
 import BoardRepresentation = b.BoardRepresentation;
 import PostDTO = b.PostDTO;
 import PostRepresentation = b.PostRepresentation;
+import Role = b.Role;
 
 @Component({
   templateUrl: 'post-new.component.html',
@@ -20,6 +21,7 @@ export class PostNewComponent implements OnInit {
   board: BoardRepresentation;
   post: PostRepresentation;
   postForm: FormGroup;
+  showExistingRelationSpecify: boolean;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: Http, private fb: FormBuilder,
               private snackBar: MdSnackBar) {
@@ -51,6 +53,9 @@ export class PostNewComponent implements OnInit {
         formValue.applyType = formValue.applyWebsite ? 'website' : (formValue.applyDocument ? 'document' : (formValue.applyEmail ? 'email' : null));
         this.postForm.reset(formValue);
       }
+      if(_.intersection(this.board.roles as any as string[], ['ADMINISTRATOR', 'CONTRIBUTOR']).length === 0) {
+        this.showExistingRelationSpecify = true;
+      }
     });
     this.postForm.get('existingRelationSpecify').valueChanges
       .subscribe((specify: boolean) => {
@@ -75,16 +80,24 @@ export class PostNewComponent implements OnInit {
     const applyProperty = 'apply' + _.capitalize(this.postForm.value.applyType);
     post[applyProperty] = this.postForm.value[applyProperty];
 
+    const errorHandler = (error: Response) => {
+      if (error.status === 422) {
+        if(error.json().exceptionCode === 'MISSING_RELATION_DESCRIPTION') {
+          this.postForm.get('existingRelationSpecify').setErrors({missingRelationDescription: true});
+        }
+      }
+    };
+
     if (this.post) {
       this.http.put('/api/posts/' + this.post.id, post)
         .subscribe(() => {
           this.snackBar.open("Board Saved!");
-        });
+        }, errorHandler);
     } else {
       this.http.post('/api/boards/' + this.board.id + '/posts', post)
         .subscribe(() => {
           this.router.navigate([this.board.department.handle, this.board.handle]);
-        });
+        }, errorHandler);
     }
   }
 

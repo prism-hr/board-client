@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.17.284 on 2017-03-23 17:22:06.
+// Generated using typescript-generator version 1.17.284 on 2017-03-27 10:33:28.
 
 declare namespace b {
 
@@ -44,7 +44,7 @@ declare namespace b {
     description?: string;
     organizationName?: string;
     location?: LocationDTO;
-    existingRelation?: boolean;
+    existingRelation?: string;
     postCategories?: string[];
     memberCategories?: string[];
     applyWebsite?: string;
@@ -60,6 +60,7 @@ declare namespace b {
     department?: DepartmentRepresentation;
     postCategories?: string[];
     defaultPostVisibility?: PostVisibility;
+    roles?: Role[];
   }
 
   interface DepartmentRepresentation {
@@ -69,6 +70,7 @@ declare namespace b {
     handle?: string;
     boards?: BoardRepresentation[];
     memberCategories?: string[];
+    roles?: Role[];
   }
 
   interface DocumentRepresentation {
@@ -91,19 +93,25 @@ declare namespace b {
     description?: string;
     organizationName?: string;
     location?: LocationRepresentation;
-    existingRelation?: boolean;
+    existingRelation?: string;
     postCategories?: string[];
     memberCategories?: string[];
     applyWebsite?: string;
     applyDocument?: DocumentRepresentation;
     applyEmail?: string;
     board?: BoardRepresentation;
+    roles?: Role[];
   }
 
   const enum PostVisibility {
     PUBLIC,
     PRIVATE,
     PART_PRIVATE,
+  }
+
+  const enum Role {
+    ADMINISTRATOR,
+    CONTRIBUTOR,
   }
 
 }

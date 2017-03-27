@@ -40,7 +40,7 @@ export class BoardViewComponent implements OnInit {
     this.http.put('/api/boards/' + this.board.id, this.boardForm.value)
       .subscribe(() => {
         this.snackBar.open("Board Saved!");
-      }, (error: Response | any) => {
+      }, (error: Response) => {
         if (error.status === 422) {
           if (error.json().exceptionCode === 'DUPLICATE_BOARD') {
             this.boardForm.controls['name'].setErrors({duplicateBoard: true});

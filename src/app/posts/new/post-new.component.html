@@ -31,7 +31,7 @@
     <control-messages [control]="postForm.controls.location"></control-messages>
   </div>
 
-  <div>
+  <div *ngIf="showExistingRelationSpecify">
     Do you have an existing relationship with our department?
     <md-radio-group formControlName="existingRelationSpecify">
       <md-radio-button [value]="false">No</md-radio-button>
