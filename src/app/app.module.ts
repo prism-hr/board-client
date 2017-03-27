@@ -149,7 +149,7 @@ import {PlacesModule} from './general/places/places.module';
       }
     }),
     AgmCoreModule.forRoot({
-      apiKey: environment.googleApiKey,
+      apiKey: 'AIzaSyDmaVzQjUgftYVHNfTfoSszjaUe8hie8e8',
       libraries: ['places']
     }),
     PlacesModule

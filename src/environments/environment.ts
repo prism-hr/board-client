@@ -6,6 +6,5 @@
 export const environment = {
   production: false,
   cloudinaryCloudName: 'bitfoot',
-  cloudinaryFolder: 'local',
-  googleApiKey: 'AIzaSyDmaVzQjUgftYVHNfTfoSszjaUe8hie8e8'
+  cloudinaryFolder: 'local'
 };
