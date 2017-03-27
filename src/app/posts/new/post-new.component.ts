@@ -30,8 +30,8 @@ export class PostNewComponent implements OnInit {
       description: ['', [Validators.required, Validators.maxLength(2000)]],
       organizationName: ['', [Validators.required, Validators.maxLength(255)]],
       location: [null, Validators.required],
-      existingRelationSpecify: [null, Validators.required],
-      existingRelation: [null],
+      existingRelationSpecify: [],
+      existingRelation: [],
       postCategories: [[]],
       memberCategories: [[]],
       applyType: [null, Validators.required],
@@ -55,6 +55,7 @@ export class PostNewComponent implements OnInit {
       }
       if(_.intersection(this.board.roles as any as string[], ['ADMINISTRATOR', 'CONTRIBUTOR']).length === 0) {
         this.showExistingRelationSpecify = true;
+        this.postForm.get('existingRelationSpecify').setValidators(Validators.required);
       }
     });
     this.postForm.get('existingRelationSpecify').valueChanges
