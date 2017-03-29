@@ -51,3 +51,103 @@ $twitter-color: #00aced;
 $font-size: 1.6rem !default;
 
 $button-border-radius:1.5px !default;
+
+$black-87-opacity: rgba(black, 0.87);
+$white-87-opacity: rgba(white, 0.87);
+
+$mat-prism-blue: (
+  50: #d9edf5,
+  100: #9dd2e4,
+  200: #70bdd8,
+  300: #38a3c9,
+  400: #3191b2,
+  500: #2a7d9a,
+  600: #236982,
+  700: #1d566a,
+  800: #164252,
+  900: #102f3a,
+  A100: #d9edf5,
+  A200: #9dd2e4,
+  A400: #3191b2,
+  A700: #1d566a,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: $black-87-opacity,
+    A200: $black-87-opacity,
+    A400: white,
+    A700: white,
+  )
+);
+$mat-prism-green: (
+  50: #f0f7ee,
+  100: #c1dfb9,
+  200: #9fce93,
+  300: #74b762,
+  400: #62ac4f,
+  500: #569745,
+  600: #4a823b,
+  700: #3e6d32,
+  800: #325828,
+  900: #26431f,
+  A100: #f0f7ee,
+  A200: #c1dfb9,
+  A400: #62ac4f,
+  A700: #3e6d32,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: $black-87-opacity,
+    A200: $black-87-opacity,
+    A400: white,
+    A700: white,
+  )
+);
+$mat-prism-red: (
+  50: #ffffff,
+  100: #fad8cd,
+  200: #f4b09b,
+  300: #ed7d5a,
+  400: #ea683f,
+  500: #e75223,
+  600: #d44417,
+  700: #b93c14,
+  800: #9d3311,
+  900: #812a0e,
+  A100: #ffffff,
+  A200: #fad8cd,
+  A400: #ea683f,
+  A700: #b93c14,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: $black-87-opacity,
+    A200: $black-87-opacity,
+    A400: white,
+    A700: white,
+  )
+);

@@ -1,14 +1,66 @@
-@import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
+@import url('https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,900');
+@import 'assets/variables';
+@import '~@angular/material/core/theming/all-theme';
+@include mat-core();
+$board-app-primary: mat-palette($mat-prism-blue);
+$board-app-accent:  mat-palette($mat-prism-green, 500, 100, 400);
+
+$board-app-warn:    mat-palette($mat-prism-red);
+
+$board-app-theme: mat-light-theme($board-app-primary, $board-app-accent, $board-app-warn);
+@include angular-material-theme($board-app-theme);
+
 @import '~simple-line-icons/css/simple-line-icons.css';
 
+body {
+  font-family:$font-family;
+  margin: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+  color: $uclred;
+  font-weight:400;
+  margin: 0;
+}
 .center {
   text-align: center;
 }
-
+a {
+  -webkit-transition: all 200ms;
+  -moz-transition: all 200ms;
+  -o-transition: all 200ms;
+  transition: all 200ms;
+  cursor: pointer;
+  &:hover {
+    text-decoration: none;
+  }
+}
+button {
+  cursor: pointer;
+  &.mat-raised-button {
+    font-weight:700 !important;
+  }
+  &.small {
+    min-height: 28px;
+    line-height:28px;
+    font-size:12px;
+  }
+  &.small-xs {
+    min-width: 40px;
+    min-height: 22px;
+    height: 22px;
+    line-height: 22px;
+    font-size: 12px;
+  }
+  &.big {
+    min-height:42px;
+    line-height:42px;
+    padding: 0 20px;
+    font-weight: 900 !important;
+  }
+}
 .full-width {
   width: 100%;
 }
-
 .prism-icon {
   height: 40px;
   width: auto;
