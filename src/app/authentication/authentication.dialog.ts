@@ -29,7 +29,7 @@ export class AuthenticationDialog implements OnInit {
   }
 
   ngOnInit() {
-    this.setView('LOGIN');
+    this.setView(this.dialogRef.config.data.showRegister ? 'REGISTER' : 'LOGIN');
     this.user$ = this.stormpath.user$;
   }
 

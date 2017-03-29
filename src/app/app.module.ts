@@ -16,7 +16,6 @@ import {AuthGuard} from './authentication/auth-guard.service';
 import {MotivationCheckDialog} from './header/motivation-check.dialog';
 import {FileUploadComponent} from './general/file-upload.component';
 import {ResourceService} from './services/resource.service';
-import {DepartmentsResolver} from './boards/manage/departments-resolver.service';
 import {BoardManageComponent} from './boards/manage/board-manage.component';
 import {UniLogoComponent} from './home/uni-logo.component';
 import {EmployerLogoComponent} from './home/employer-logo.component';
@@ -38,18 +37,15 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {createTranslateLoader} from './services/translate.service';
 import {BoardAliasesComponent} from './boards/board-aliases.component';
 import {ControlMessagesComponent} from './validation/control-messages.component';
-import {BlankComponent} from './general/blank.component';
 import {PostNewComponent} from './posts/new/post-new.component';
 import {PostViewComponent} from './posts/view/post-view.component';
 import {PostResolver} from './posts/post-resolver.service';
 import {AgmCoreModule} from 'angular2-google-maps/core';
-import {environment} from '../environments/environment';
 import {PlacesModule} from './general/places/places.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BlankComponent,
     ControlMessagesComponent,
     HeaderComponent,
     MotivationCheckDialog,
@@ -78,10 +74,7 @@ import {PlacesModule} from './general/places/places.module';
         path: '', component: AuthedComponent, canActivate: [AuthGuard], children: [
         {
           path: 'newBoard',
-          component: BoardNewComponent,
-          resolve: {
-            departments: DepartmentsResolver
-          }
+          component: BoardNewComponent
         },
         {
           path: 'newPost',
@@ -92,7 +85,6 @@ import {PlacesModule} from './general/places/places.module';
         },
         {
           path: ':departmentHandle',
-          component: BlankComponent,
           children: [
             {
               path: '',
@@ -165,7 +157,7 @@ import {PlacesModule} from './general/places/places.module';
       useFactory: DefinitionsLoader,
       deps: [DefinitionsService],
       multi: true
-    }, AuthGuard, ResourceService, DepartmentsResolver, DepartmentResolver, BoardResolver, PostResolver
+    }, AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver
   ],
   entryComponents: [AuthenticationDialog, MotivationCheckDialog],
   bootstrap: [AppComponent]

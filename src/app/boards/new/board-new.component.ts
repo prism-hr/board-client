@@ -1,15 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {Http, Response} from '@angular/http';
 import {DefinitionsService} from '../../services/definitions.service';
-import {FormGroup, Validators, FormBuilder, FormControl} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import * as _ from 'lodash';
+import {AuthGuard} from '../../authentication/auth-guard.service';
 import DepartmentDTO = b.DepartmentDTO;
 import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import BoardRepresentation = b.BoardRepresentation;
 
 @Component({
+  selector: 'board-new',
   templateUrl: 'board-new.component.html',
   styleUrls: ['board-new.component.scss']
 })
@@ -21,8 +23,8 @@ export class BoardNewComponent implements OnInit {
   boardForm: FormGroup;
   applicationUrl: string;
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: Http, private fb: FormBuilder,
-              private definitionsService: DefinitionsService) {
+  constructor(private router: Router, private http: Http, private fb: FormBuilder,
+              private definitionsService: DefinitionsService, private authGuard: AuthGuard) {
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
       purpose: ['', [Validators.required, Validators.maxLength(2000)]],
@@ -44,8 +46,8 @@ export class BoardNewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.departments = this.route.snapshot.data['departments'];
-    this.departments.push({name: "Create a new department"});
+    // this.departments = this.route.snapshot.data['departments'];
+    // this.departments.push({name: "Create a new department"});
     this.applicationUrl = this.definitionsService.getDefinitions().applicationUrl;
   }
 
@@ -60,18 +62,24 @@ export class BoardNewComponent implements OnInit {
     board = Object.assign({}, board);
     board.department.handle = this.boardForm.value.handles.departmentHandle;
     board.settings.handle = this.boardForm.value.handles.boardHandle;
-    this.http.post('/api/boards', board)
-      .subscribe(res => {
-        const saved: BoardRepresentation = res.json();
-        this.router.navigate([saved.department.handle, saved.handle]);
-      }, (error: Response) => {
-        if (error.status === 422) {
-          if(error.json().exceptionCode === 'DUPLICATE_DEPARTMENT_HANDLE') {
-            (this.boardForm.controls['handles'] as FormGroup).controls['departmentHandle'].setErrors({duplicateHandle: true});
-          } else if(error.json().exceptionCode === 'DUPLICATE_BOARD_HANDLE') {
-            (this.boardForm.controls['handles'] as FormGroup).controls['boardHandle'].setErrors({duplicateHandle: true});
-          }
+    this.authGuard.ensureAuthenticated(true) // open dialog if not authenticated
+      .subscribe(authenticated => {
+        if (!authenticated) {
+          return;
         }
+        this.http.post('/api/boards', board)
+          .subscribe(res => {
+            const saved: BoardRepresentation = res.json();
+            this.router.navigate([saved.department.handle, saved.handle]);
+          }, (error: Response) => {
+            if (error.status === 422) {
+              if (error.json().exceptionCode === 'DUPLICATE_DEPARTMENT_HANDLE') {
+                (this.boardForm.controls['handles'] as FormGroup).controls['departmentHandle'].setErrors({duplicateHandle: true});
+              } else if (error.json().exceptionCode === 'DUPLICATE_BOARD_HANDLE') {
+                (this.boardForm.controls['handles'] as FormGroup).controls['boardHandle'].setErrors({duplicateHandle: true});
+              }
+            }
+          });
       });
   }
 

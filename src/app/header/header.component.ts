@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit {
   showLogin() {
     let dialogRef: MdDialogRef<AuthenticationDialog>;
     let config = new MdDialogConfig();
+    config.data = {showRegister: false};
     config.viewContainerRef = this.viewContainerRef;
 
     dialogRef = this.dialog.open(AuthenticationDialog, config);
