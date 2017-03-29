@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,900');
 @import 'assets/variables';
+@import 'assets/grid';
 @import '~@angular/material/core/theming/all-theme';
 @include mat-core();
 $board-app-primary: mat-palette($mat-prism-blue);
@@ -58,9 +59,6 @@ button {
     font-weight: 900 !important;
   }
 }
-.full-width {
-  width: 100%;
-}
 .prism-icon {
   height: 40px;
   width: auto;
@@ -76,5 +74,19 @@ button {
   display: block;
   img {
     width: 100%;
+  }
+}
+.page-width {
+  @include clearfix();
+  max-width: $width-site;
+  margin: 0 auto;
+}
+
+.main-content {
+  display: block;
+  padding-top: $section-spacing-small;
+
+  @include media-query($medium-up) {
+    padding-top: $section-spacing;
   }
 }
