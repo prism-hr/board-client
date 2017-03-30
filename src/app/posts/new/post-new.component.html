@@ -15,9 +15,14 @@
     <control-messages [control]="postForm.controls.description"></control-messages>
   </div>
 
-  <rl-tag-input formControlName="postCategories" placeholder="Add a Post category" [autocomplete]="true"
-                [autocompleteItems]="this.board.postCategories" [autocompleteMustMatch]="true">
-  </rl-tag-input>
+  <p>What is your post about?</p>
+  <div formArrayName="postCategoriesMap">
+    <label *ngFor="let category of board.postCategories; let i = index">
+      <input type="checkbox"
+            formControlName="{{i}}"/>
+      {{category}}
+    </label>
+  </div>
 
   <div>
     <md-input-container class="md-block">
@@ -48,14 +53,19 @@
     <control-messages [control]="postForm.controls.existingRelation"></control-messages>
   </div>
 
-  <rl-tag-input formControlName="memberCategories" placeholder="Add a Member category" [autocomplete]="true"
-                [autocompleteItems]="this.board.department.memberCategories"
-                [autocompleteMustMatch]="true"></rl-tag-input>
+  <p>Who do you want to share your post with?</p>
+  <div formArrayName="memberCategoriesMap">
+    <label *ngFor="let category of board.department.memberCategories; let i = index">
+      <input type="checkbox"
+             formControlName="{{i}}"/>
+      {{category}}
+    </label>
+  </div>
 
   <div>
     How will people respond?
     <md-radio-group formControlName="applyType">
-      <md-radio-button value="website">By visiting a webpage</md-radio-button>
+      <md-radio-button value="website">By visiting a web page</md-radio-button>
       <md-radio-button value="document">By following instructions in a document</md-radio-button>
       <md-radio-button value="email">By sending an email</md-radio-button>
     </md-radio-group>

@@ -25,20 +25,6 @@ export class PostNewComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private http: Http, private fb: FormBuilder,
               private snackBar: MdSnackBar) {
-    this.postForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-      description: ['', [Validators.required, Validators.maxLength(2000)]],
-      organizationName: ['', [Validators.required, Validators.maxLength(255)]],
-      location: [null, Validators.required],
-      existingRelationSpecify: [],
-      existingRelation: [],
-      postCategories: [[]],
-      memberCategories: [[]],
-      applyType: [null, Validators.required],
-      applyWebsite: [null, Validators.maxLength(255)],
-      applyDocument: [],
-      applyEmail: [null, Validators.maxLength(254)]
-    });
   }
 
   ngOnInit() {
@@ -48,22 +34,47 @@ export class PostNewComponent implements OnInit {
       } else if (data['post']) {
         this.post = data['post'];
         this.board = this.post.board;
+      }
+
+      const existingPostCategories = this.post ? this.post.postCategories : [];
+      const existingMemberCategories = this.post ? this.post.memberCategories : [];
+
+      this.postForm = this.fb.group({
+        name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+        description: ['', [Validators.required, Validators.maxLength(2000)]],
+        organizationName: ['', [Validators.required, Validators.maxLength(255)]],
+        location: [null, Validators.required],
+        existingRelationSpecify: [],
+        existingRelation: [],
+        postCategoriesMap: this.fb.array(this.board.postCategories.map(c => this.fb.control(existingPostCategories.includes(c)))),
+        memberCategoriesMap: this.fb.array(this.board.department.memberCategories.map(c => this.fb.control(existingMemberCategories.includes(c)))),
+        applyType: [null, Validators.required],
+        applyWebsite: [null, Validators.maxLength(255)],
+        applyDocument: [],
+        applyEmail: [null, Validators.maxLength(254)]
+      });
+
+      if (this.post) {
         const formValue: any = Object.assign({}, this.post);
         formValue.existingRelationSpecify = !!formValue.existingRelationSpecify;
         formValue.applyType = formValue.applyWebsite ? 'website' : (formValue.applyDocument ? 'document' : (formValue.applyEmail ? 'email' : null));
-        this.postForm.reset(formValue);
+        this.postForm.patchValue(formValue);
       }
-      if(_.intersection(this.board.roles as any as string[], ['ADMINISTRATOR', 'CONTRIBUTOR']).length === 0) {
+
+      if (_.intersection(this.board.roles as any as string[], ['ADMINISTRATOR', 'CONTRIBUTOR']).length === 0) {
+        // user has no department rights, has to specify relation type
         this.showExistingRelationSpecify = true;
         this.postForm.get('existingRelationSpecify').setValidators(Validators.required);
       }
     });
+
     this.postForm.get('existingRelationSpecify').valueChanges
       .subscribe((specify: boolean) => {
         this.postForm.get('existingRelation').setValidators(specify ? Validators.required : null);
         this.postForm.get('existingRelation').setValue(null);
         this.postForm.get('existingRelation').updateValueAndValidity();
       });
+
     this.postForm.get('applyType').valueChanges
       .subscribe((applyType: string) => {
         this.postForm.get('applyWebsite').setValidators(applyType === 'website' && [Validators.required, Validators.maxLength(255)]);
@@ -76,14 +87,15 @@ export class PostNewComponent implements OnInit {
   }
 
   submit() {
-    const post = _.pick(this.postForm.value, ['name', 'description', 'organizationName', 'location', 'existingRelation',
-      'postCategories', 'memberCategories']);
+    const post: PostDTO = _.pick(this.postForm.value, ['name', 'description', 'organizationName', 'location', 'existingRelation']);
+    post.postCategories = _.without(this.postForm.value.postCategoriesMap.map((c, i) => c ? this.board.postCategories[i]: null), null);
+    post.memberCategories = _.without(this.postForm.value.memberCategoriesMap.map((c, i) => c ? this.board.department.memberCategories[i]: null), null);
     const applyProperty = 'apply' + _.capitalize(this.postForm.value.applyType);
     post[applyProperty] = this.postForm.value[applyProperty];
 
     const errorHandler = (error: Response) => {
       if (error.status === 422) {
-        if(error.json().exceptionCode === 'MISSING_RELATION_DESCRIPTION') {
+        if (error.json().exceptionCode === 'MISSING_RELATION_DESCRIPTION') {
           this.postForm.get('existingRelationSpecify').setErrors({missingRelationDescription: true});
         }
       }
