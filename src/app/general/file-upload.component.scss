@@ -4,12 +4,12 @@
   margin-top: 4px;
   &.logo {
     border: 3px dashed $inactiveGrey;
-    width: 206px;
-    height: 206px;
-    .logo-flex {
-      border: none;
-      background: transparent;
-    }
+    width: 180px;
+    height: 180px;
+    float: right;
+    display: block;
+    text-align: center;
+    margin-top: 25px;
   }
   &.background {
     border: 1px dashed $inactiveGrey;

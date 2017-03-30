@@ -1,49 +1,57 @@
-<h1>Create a new Board</h1>
-
 <form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
-  <!--<div *ngIf="!newDepartment">-->
-    <!--<md-select formControlName="selectedDepartment" placeholder="Department" name="department"-->
-               <!--(change)="departmentSelected()" class="full-width">-->
-      <!--<md-option *ngFor="let department of departments" [value]="department">-->
+<md-card>
+    <md-card-header>
+      <md-card-title>
+        <h1>Create a new Board</h1>
+      </md-card-title>
+    </md-card-header>
+    <md-card-content>
+        <!--<div *ngIf="!newDepartment">-->
+        <!--<md-select formControlName="selectedDepartment" placeholder="Department" name="department"-->
+        <!--(change)="departmentSelected()" class="full-width">-->
+        <!--<md-option *ngFor="let department of departments" [value]="department">-->
         <!--{{department.name}}-->
-      <!--</md-option>-->
-    <!--</md-select>-->
-    <!--<control-messages [control]="boardForm.controls.selectedDepartment"></control-messages>-->
-  <!--</div>-->
+        <!--</md-option>-->
+        <!--</md-select>-->
+        <!--<control-messages [control]="boardForm.controls.selectedDepartment"></control-messages>-->
+        <!--</div>-->
+        <div class="grid grid--half-gutters" *ngIf="newDepartment" formGroupName="department">
+          <div class="grid__item small--one-whole medium-up--one-half">
+            <md-input-container class="md-block">
+              <input mdInput formControlName="name" placeholder="Department Name" required>
+            </md-input-container>
+            <control-messages [control]="boardForm.get('department').get('name')"></control-messages>
+          </div>
+          <div class="grid__item small--one-whole medium-up--one-half">
+            <file-upload formControlName="documentLogo" class="logo-uploader" type="logo"></file-upload>
+          </div>
+        </div>
 
-  <div *ngIf="newDepartment" formGroupName="department">
-    <md-input-container class="md-block">
-      <input mdInput formControlName="name" placeholder="Department Name" required>
-    </md-input-container>
-    <control-messages [control]="boardForm.get('department').get('name')"></control-messages>
+        <md-input-container class="md-block">
+          <input mdInput formControlName="name" placeholder="Board Name" required>
+        </md-input-container>
+        <control-messages [control]="boardForm.controls.name"></control-messages>
 
-    <!--<button md-button (click)="cancelNewDepartment()">Cancel</button>-->
-    <file-upload formControlName="documentLogo" type="logo"></file-upload>
-  </div>
+        <md-input-container class="md-block">
+          <textarea mdInput formControlName="purpose" placeholder="Board Purpose" required></textarea>
+        </md-input-container>
+        <control-messages [control]="boardForm.controls.purpose"></control-messages>
 
-  <md-input-container class="md-block">
-    <input mdInput formControlName="name" placeholder="Board Name" required>
-  </md-input-container>
-  <control-messages [control]="boardForm.controls.name"></control-messages>
+        <div *ngIf="newDepartment !== null">
+          <board-aliases formGroupName="handles" [disableDepartment]="!newDepartment"></board-aliases>
+        </div>
 
-  <md-input-container class="md-block">
-    <textarea mdInput formControlName="purpose" placeholder="Board Purpose" required></textarea>
-  </md-input-container>
-  <control-messages [control]="boardForm.controls.purpose"></control-messages>
+        <div formGroupName="settings">
+          <rl-tag-input formControlName="postCategories" placeholder="Add Post category"></rl-tag-input>
+        </div>
 
-  <div *ngIf="newDepartment !== null">
-    <board-aliases formGroupName="handles" [disableDepartment]="!newDepartment"></board-aliases>
-  </div>
+        <div *ngIf="newDepartment" formGroupName="department">
+          <rl-tag-input formControlName="memberCategories" placeholder="Add Member category"></rl-tag-input>
+        </div>
 
-  <div formGroupName="settings">
-    <rl-tag-input formControlName="postCategories" placeholder="Add Post category"></rl-tag-input>
-  </div>
-
-  <div *ngIf="newDepartment" formGroupName="department">
-    <rl-tag-input formControlName="memberCategories" placeholder="Add Member category"></rl-tag-input>
-  </div>
-
-  <div layout="column" layout-align="space-between stretch">
-    <button md-raised-button type="submit">Submit</button>
-  </div>
+    </md-card-content>
+      <md-card-actions>
+        <button md-raised-button color="primary" type="submit">Submit</button>
+      </md-card-actions>
+</md-card>
 </form>

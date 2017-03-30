@@ -13,10 +13,10 @@
       </div>
       <nav class="grid__item two-thirds text-right">
         <div *ngIf="(user$ | async) === false">
-          <button md-button (click)="showLogin()">Log in</button>
+          <button md-button (click)="showLogin()" md-raised-button color="warn">Log in</button>
         </div>
         <div *ngIf="user$ | async">
-          <button md-button (click)="logout()">Log out</button>
+          <button md-button (click)="logout()" md-raised-button color="warn">Log out</button>
         </div>
       </nav>
     </div>
