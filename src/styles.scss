@@ -16,6 +16,17 @@ $board-app-theme: mat-light-theme($board-app-primary, $board-app-accent, $board-
 body {
   font-family:$font-family;
   margin: 0;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+app-root {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+ng-component {
+  flex-grow: 1;
 }
 h1, h2, h3, h4, h5, h6 {
   color: $uclred;
@@ -26,11 +37,20 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
 }
 a {
+  color: $fontColor1;
+  text-decoration: none;
   -webkit-transition: all 200ms;
   -moz-transition: all 200ms;
   -o-transition: all 200ms;
   transition: all 200ms;
   cursor: pointer;
+  &:hover,
+  &:focus {
+    opacity: $opacity-link-hover;
+  }
+  &.classic-link {
+    text-decoration: underline;
+  }
   &:hover {
     text-decoration: none;
   }
@@ -60,14 +80,13 @@ button {
   }
 }
 .prism-icon {
-  height: 40px;
+  height: 36px;
   width: auto;
   display: block;
   img {
     height: 100%;
   }
 }
-
 .prism-logo {
   width: auto;
   height: 36px;
@@ -91,12 +110,30 @@ button {
     padding-right: $gutter-site-mobile;
   }
 }
+.section {
+  padding-top: $section-spacing-small;
+  padding-bottom: $section-spacing-small;
 
+  @include media-query($medium-up) {
+    padding-top: $section-spacing;
+    padding-bottom: $section-spacing;
+  }
+}
 .main-content {
   display: block;
   padding-top: $section-spacing-small;
 
   @include media-query($medium-up) {
     padding-top: $section-spacing;
+  }
+}
+.list--inline {
+  padding: 0;
+  margin: 0;
+  li {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+    margin-right:10px;
   }
 }

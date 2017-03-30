@@ -1,0 +1,17 @@
+@import '../../assets/variables';
+footer {
+  background: $uclfooter;
+  padding: 10px 0;
+  a {
+    color: white;
+  }
+  .prism-icon {
+    display: inline-block;
+    float: left;
+  }
+  nav {
+    float: right;
+    margin-left: 25px;
+    margin-top:5px;
+  }
+}

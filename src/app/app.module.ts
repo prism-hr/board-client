@@ -11,6 +11,7 @@ import {RouterModule} from '@angular/router';
 import {MaterialModule} from '@angular/material';
 import {stormpathConfig} from './stormpath.config';
 import {HeaderComponent} from './header/header.component';
+import {FooterComponent} from './footer/footer.component';
 import {AuthedComponent} from './authentication/authed.component';
 import {AuthGuard} from './authentication/auth-guard.service';
 import {MotivationCheckDialog} from './header/motivation-check.dialog';
@@ -48,6 +49,7 @@ import {PlacesModule} from './general/places/places.module';
     AppComponent,
     ControlMessagesComponent,
     HeaderComponent,
+    FooterComponent,
     MotivationCheckDialog,
     AuthenticationDialog,
     NotFoundComponent,

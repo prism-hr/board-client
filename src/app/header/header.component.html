@@ -1,24 +1,24 @@
-<nav class="main-nav">
+<header class="main-nav">
   <div class="page-width" >
     <div class="grid ">
       <div class="grid__item one-third">
         <div class="logo-holder">
           <a class="prism-logo" fxHide.xs routerLink="/">
-            <img src="assets/prism-white.png">
+            <img src="assets/prism.svg">
           </a>
           <a class="prism-icon" fxHide.gt-xs routerLink="/">
-            <img src="assets/prism-logo.png">
+            <img src="assets/prism-logo.svg">
           </a>
         </div>
       </div>
-      <div class="grid__item two-thirds text-right">
+      <nav class="grid__item two-thirds text-right">
         <div *ngIf="(user$ | async) === false">
           <button md-button (click)="showLogin()">Log in</button>
         </div>
         <div *ngIf="user$ | async">
           <button md-button (click)="logout()">Log out</button>
         </div>
-      </div>
+      </nav>
     </div>
   </div>
-</nav>
+</header>
