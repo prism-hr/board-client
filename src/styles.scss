@@ -69,17 +69,27 @@ button {
 }
 
 .prism-logo {
-  width: 130px;
-  height: 33px;
+  width: auto;
+  height: 36px;
   display: block;
+  padding: 4px 0;
   img {
-    width: 100%;
+    height: 100%;
   }
 }
 .page-width {
   @include clearfix();
   max-width: $width-site;
   margin: 0 auto;
+}
+.page-width {
+  padding-left: $gutter-site;
+  padding-right: $gutter-site;
+
+  @include media-query($small) {
+    padding-left: $gutter-site-mobile;
+    padding-right: $gutter-site-mobile;
+  }
 }
 
 .main-content {
