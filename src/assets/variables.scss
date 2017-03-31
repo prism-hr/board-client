@@ -151,3 +151,29 @@ $mat-prism-red: (
     A700: white,
   )
 );
+/*================ VARIABLES ================*/
+/*============================================================================
+  Grid Breakpoints and Class Names
+    - Do not change the variable names
+==============================================================================*/
+$grid-medium: 750px;
+$grid-large: 990px;
+$grid-widescreen: 1400px;
+$grid-gutter: 30px;
+$grid-gutter-mobile: 22px;
+
+$small: 'small';
+$medium: 'medium';
+$medium-down: 'medium-down';
+$medium-up: 'medium-up';
+$large: 'large';
+$large-down: 'large-down';
+$large-up: 'large-up';
+$widescreen: 'widescreen';
+
+/*================ Sizing Variables ================*/
+$width-site: 1200px;
+$gutter-site: 40px;
+$gutter-site-mobile: 20px;
+$section-spacing: 35px;
+$section-spacing-small: 25px;

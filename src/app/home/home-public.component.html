@@ -6,20 +6,27 @@
       </md-card-title>
     </md-card-header>
     <md-card-content>
-
-      <md-input-container class="md-block">
-        <input mdInput formControlName="departmentName" placeholder="Department Name" required>
-      </md-input-container>
-      <control-messages [control]="boardForm.controls.departmentName"></control-messages>
-
-      <md-input-container class="md-block">
-        <input mdInput formControlName="name" placeholder="Board Name" required>
-      </md-input-container>
-      <control-messages [control]="boardForm.controls.name"></control-messages>
-
+      <div class="grid">
+        <div class="grid__item small--one-whole medium-up--one-half">
+          <md-input-container class="md-block">
+            <input mdInput formControlName="departmentName" placeholder="Department Name" required>
+          </md-input-container>
+          <control-messages [control]="boardForm.controls.departmentName"></control-messages>
+        </div>
+        <div class="grid__item small--one-whole medium-up--one-half">
+          <md-input-container class="md-block">
+            <input mdInput formControlName="name" placeholder="Board Name" required>
+          </md-input-container>
+          <control-messages [control]="boardForm.controls.name"></control-messages>
+        </div>
+      </div>
     </md-card-content>
     <md-card-actions>
-      <button md-raised-button color="primary" type="submit" [disabled]="boardForm.invalid">Submit</button>
+      <div class="grid grid--half-gutters">
+        <div class="grid__item one-whole">
+          <button md-raised-button color="warn" type="submit" [disabled]="boardForm.invalid">Submit</button>
+        </div>
+      </div>
     </md-card-actions>
   </md-card>
 </form>

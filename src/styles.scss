@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,900');
 @import 'assets/variables';
-@import 'assets/grid';
+
+
 @import '~@angular/material/core/theming/all-theme';
 @include mat-core();
 $board-app-primary: mat-palette($mat-prism-blue);
@@ -12,6 +13,11 @@ $board-app-theme: mat-light-theme($board-app-primary, $board-app-accent, $board-
 @include angular-material-theme($board-app-theme);
 
 @import '~simple-line-icons/css/simple-line-icons.css';
+
+$mat-body-font-size-base: rem(1.6);
+
+@import 'assets/grid';
+@import 'assets/cards';
 
 body {
   font-family:$font-family;
@@ -25,7 +31,7 @@ app-root {
   min-height: 100vh;
   flex-direction: column;
 }
-ng-component {
+.flex-grow {
   flex-grow: 1;
 }
 h1, h2, h3, h4, h5, h6 {
@@ -100,6 +106,7 @@ button {
   @include clearfix();
   max-width: $width-site;
   margin: 0 auto;
+  width: 100%;
 }
 .page-width {
   padding-left: $gutter-site;
@@ -119,6 +126,7 @@ button {
     padding-bottom: $section-spacing;
   }
 }
+
 .main-content {
   display: block;
   padding-top: $section-spacing-small;
@@ -137,31 +145,8 @@ button {
     margin-right:10px;
   }
 }
-.mat-input-container{
-  width: 100%;
-}
 control-messages {
   color: $error;
-  font-size:12px;
-}
-// Card styling
-
-md-card.mat-card>:first-child {
-  margin-top: -24px;
-}
-md-card {
-  .mat-card-header {
-    margin: -24px -24px 0 -24px ;
-    background: $fadeGrey;
-    height: auto;
-  }
-  .mat-card-header-text {
-    height: auto;
-    padding: 15px 0;
-    margin: 0 22px;
-    md-card-title {
-      margin-bottom:0;
-    }
-  }
+  font-size:13px;
 }
 

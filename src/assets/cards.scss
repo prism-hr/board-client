@@ -1,0 +1,55 @@
+@import 'variables';
+
+// Card styling
+.mat-input-container{
+  width: 100%;
+}
+md-card.mat-card>:first-child {
+  margin-top: -24px;
+}
+.mat-card-content {
+  padding-top: $section-spacing-small;
+  padding-bottom: $section-spacing-small / 2;
+  @include media-query($medium-up) {
+    padding-top: $section-spacing;
+    padding-right: $gutter-site-mobile / 2;
+  }
+}md-card.mat-card {
+  .mat-input-placeholder, .mat-input-placeholder-wrapper {
+    padding-top:0.6em;
+  }
+  .mat-card-header {
+    margin: -24px -24px 0 -24px ;
+    background: $fadeGrey;
+    height: auto;
+  }
+  .mat-card-header-text {
+    height: auto;
+    padding: 15px 0;
+    margin: 0 22px;
+    md-card-title {
+      margin-bottom:0;
+    }
+  }
+  >.mat-card-actions {
+    background: $greyBackground;
+    text-align: right;
+    margin: 0 -24px -24px -24px ;
+    padding: 12px 22px;
+    &:last-child {
+      margin-bottom:-24px;
+      padding-bottom:12px;
+    }
+  }
+  .mat-input-element {
+    font-size:$mat-body-font-size-base;
+    padding: 6px 0;
+  }
+  .mat-input-placeholder  {
+    height: 50px;
+    font-size: 130%;
+  }
+  .mat-input-placeholder-wrapper {
+    height: 50px;
+  }
+}
