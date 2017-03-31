@@ -1,7 +1,7 @@
 <section class="section">
   <div class="page-width">
     <div class="info-badge">You're seconds away from creating your first board!</div>
-    <board-new *ngIf="!user"></board-new>
+    <home-public *ngIf="!user"></home-public>
     <div *ngIf="user">
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5%">
         <div>

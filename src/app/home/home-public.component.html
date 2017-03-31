@@ -1,56 +1,25 @@
-<div class="splash-container">
-  <h1 class="strap-line">
-    THE MARKETPLACE FOR <br/><b>STUDENT</b> AND <b>GRADUATE</b> CAREERS
-  </h1>
-  <div class="splash-box-container">
-    <md-grid-list cols="3">
-      <md-grid-tile class="box-item student">
-        <div class="box-content">
-          <div class="box-icon">
-              <span class="custom-icon student">
-                <student-logo></student-logo>
-              </span>
-          </div>
-          <h2>STUDENTS & GRADUATES</h2>
-          <div class="md-button-group">
-            <button md-raised-button routerLink="/">
-              <i class="icon-user"></i> Join
-            </button>
-          </div>
-        </div>
-      </md-grid-tile>
-      <md-grid-tile class="box-item university">
-        <div class="box-arrow left"></div>
-        <div class="box-content">
-          <div class="box-icon">
-              <span class="custom-icon university">
-                <uni-logo></uni-logo>
-              </span>
-          </div>
-          <h2>UNIVERSITIES & COLLEGES</h2>
-          <div class="md-button-group">
-            <button md-raised-button routerLink="/newBoard">
-              <i class="icon-user"></i> Join
-            </button>
-          </div>
-        </div>
-        <div class="box-arrow right"></div>
-      </md-grid-tile>
-      <md-grid-tile class="box-item employer">
-        <div class="box-content">
-          <div class="box-icon">
-              <span class="custom-icon employer">
-                <employer-logo></employer-logo>
-              </span>
-          </div>
-          <h2>EMPLOYERS & RECRUITERS</h2>
-          <div class="md-button-group">
-            <button md-raised-button routerLink="/">
-              <i class="icon-plus"></i> Advertise
-            </button>
-          </div>
-        </div>
-      </md-grid-tile>
-    </md-grid-list>
-  </div>
-</div>
+<form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
+  <md-card>
+    <md-card-header>
+      <md-card-title>
+        <h1>Create a new Board</h1>
+      </md-card-title>
+    </md-card-header>
+    <md-card-content>
+
+      <md-input-container class="md-block">
+        <input mdInput formControlName="departmentName" placeholder="Department Name" required>
+      </md-input-container>
+      <control-messages [control]="boardForm.controls.departmentName"></control-messages>
+
+      <md-input-container class="md-block">
+        <input mdInput formControlName="name" placeholder="Board Name" required>
+      </md-input-container>
+      <control-messages [control]="boardForm.controls.name"></control-messages>
+
+    </md-card-content>
+    <md-card-actions>
+      <button md-raised-button color="primary" type="submit" [disabled]="boardForm.invalid">Submit</button>
+    </md-card-actions>
+  </md-card>
+</form>

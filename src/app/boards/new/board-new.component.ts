@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Http, Response} from '@angular/http';
 import {DefinitionsService} from '../../services/definitions.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
@@ -23,7 +23,7 @@ export class BoardNewComponent implements OnInit {
   boardForm: FormGroup;
   applicationUrl: string;
 
-  constructor(private router: Router, private http: Http, private fb: FormBuilder,
+  constructor(private router: Router, private route: ActivatedRoute, private http: Http, private fb: FormBuilder,
               private definitionsService: DefinitionsService, private authGuard: AuthGuard) {
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
@@ -32,7 +32,7 @@ export class BoardNewComponent implements OnInit {
         postCategories: [[]],
       }),
       department: this.fb.group({
-        name: ['', [Validators.minLength(3), Validators.required, Validators.maxLength(255)]],
+        name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
         memberCategories: [[]],
         documentLogo: []
       }),
@@ -46,6 +46,18 @@ export class BoardNewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.queryParams
+      .subscribe(params => {
+        if (params['prepopulate']) {
+          const prepopulateDetails = JSON.parse(localStorage.getItem("newBoardPrepopulate"));
+          if (prepopulateDetails) {
+            this.boardForm.patchValue({
+              name: prepopulateDetails.name,
+              department: {name: prepopulateDetails.departmentName}
+            })
+          }
+        }
+      });
     // this.departments = this.route.snapshot.data['departments'];
     // this.departments.push({name: "Create a new department"});
     this.applicationUrl = this.definitionsService.getDefinitions().applicationUrl;
