@@ -1,8 +1,8 @@
-<div ngClass="{'error-enter' : error}">
+<div ngClass="{'error-enter' : error}" class="authenticate">
   <md-progress-bar class="md-warn" *ngIf="loading" mode="indeterminate"></md-progress-bar>
-  <h3 class="center">
+  <h2 class="center">
     Authenticate
-  </h3>
+  </h2>
   <div *ngIf="error" role="alert">
     <div>
       <div class="info-badge red">
@@ -11,8 +11,8 @@
     </div>
   </div>
 
-  <div *ngIf="view === 'LOGIN'">
-    <div class="flex-container full-width social-login" fxLayoutAlign="space-around">
+  <div *ngIf="view === 'LOGIN'" class="login-container">
+    <div class="social-login" fxLayout="row" fxLayoutAlign="space-between center">
       <button md-raised-button class="linkedin" fxFlex="44%">
         <i class="icon-social-linkedin"></i> linkedin
       </button>
@@ -20,70 +20,89 @@
         <i class="icon-social-facebook"></i> facebook
       </button>
     </div>
-    <div class="divider-or"><span>OR</span></div>
-
-    <form #form="ngForm" (ngSubmit)="login(form.value)" autocomplete="off">
-      <md-input-container class="full-width">
-        <input mdInput placeholder="Email" name="login" [(ngModel)]="loginFormModel.login" required type="email">
-      </md-input-container>
-      <md-input-container class="full-width">
-        <input mdInput placeholder="Password" name="password" [(ngModel)]="loginFormModel.password" required
-               type="password">
-      </md-input-container>
-      <button md-raised-button type="submit" color="warn" class="full-width">Submit</button>
-      <div>
-        <button md-button color="warn" (click)="setView('FORGOT')">Forgot password?</button>
-        <button md-button color="warn" (click)="setView('REGISTER')">Register</button>
+    <div class="grid">
+      <div class="grid__item one-whole">
+        <div class="divider-or"><span>OR</span></div>
       </div>
-    </form>
+      <div class="grid__item one-whole">
+        <form #form="ngForm" (ngSubmit)="login(form.value)" autocomplete="off">
+          <md-input-container>
+            <input mdInput placeholder="Email" name="login" [(ngModel)]="loginFormModel.login" required type="email">
+          </md-input-container>
+          <md-input-container>
+            <input mdInput placeholder="Password" name="password" [(ngModel)]="loginFormModel.password" required
+                   type="password">
+          </md-input-container>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <button md-raised-button type="submit" color="warn" class="full-width">Submit</button>
+            <div>
+              <button md-button color="warn" (click)="setView('FORGOT')">Forgot password?</button>
+              <button md-button color="warn" (click)="setView('REGISTER')">Register</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 
-  <div *ngIf="view === 'REGISTER'">
-    <md-grid-list class="social-login" rowHeight="70px" cols="2">
-      <md-grid-tile>
-        <button md-raised-button class="linkedin">
-          <i class="icon-social-linkedin"></i> linkedin
-        </button>
-      </md-grid-tile>
-      <md-grid-tile>
-        <button md-raised-button class="facebook">
-          <i class="icon-social-facebook"></i> facebook
-        </button>
-      </md-grid-tile>
-    </md-grid-list>
-    <div class="divider-or"><span>OR</span></div>
-    <form #form="ngForm" (ngSubmit)="register(form.value)" autocomplete="off">
-      <div class="index-padding">
-        <md-input-container class="full-width">
-          <input mdInput placeholder="Email" name="email" [(ngModel)]="registrationFormModel.email" required
-                 type="email">
-        </md-input-container>
-        <md-input-container class="full-width">
-          <input mdInput placeholder="First Name" name="givenName" [(ngModel)]="registrationFormModel.givenName"
-                 required>
-        </md-input-container>
-        <md-input-container class="full-width">
-          <input mdInput placeholder="Last Name" name="surname" [(ngModel)]="registrationFormModel.surname" required>
-        </md-input-container>
-        <md-input-container class="full-width">
-          <input mdInput placeholder="Password" name="password" [(ngModel)]="registrationFormModel.password" required
-                 type="password">
-        </md-input-container>
+  <div *ngIf="view === 'REGISTER'" class="register-container">
+    <div class="social-login" fxLayout="row" fxLayoutAlign="space-between center">
+      <button md-raised-button class="linkedin" fxFlex="44%">
+        <i class="icon-social-linkedin"></i> linkedin
+      </button>
+      <button md-raised-button class="facebook" fxFlex="44%">
+        <i class="icon-social-facebook"></i> facebook
+      </button>
+    </div>
+    <div class="grid">
+      <div class="grid__item one-whole">
+        <div class="divider-or"><span>OR</span></div>
       </div>
-      <div class="info-box" layout-padding>
-        <div class="info-badge blue" layout="row" layout-aling="start center">
-          <i class="icon-exclamation"></i>
-          <span>By registering, you agree to NoticeBoard's User Agreement, Privacy Policy, and Cookie Policy.</span>
-        </div>
+      <div class="grid__item one-whole">
+        <form #form="ngForm" (ngSubmit)="register(form.value)" autocomplete="off">
+          <div class="grid">
+            <div class="grid__item small--one-whole medium-up--one-half">
+              <md-input-container>
+                <input mdInput placeholder="First Name" name="givenName" [(ngModel)]="registrationFormModel.givenName"
+                       required>
+              </md-input-container>
+            </div>
+            <div class="grid__item small--one-whole medium-up--one-half">
+              <md-input-container>
+                <input mdInput placeholder="Last Name" name="surname" [(ngModel)]="registrationFormModel.surname" required>
+              </md-input-container>
+            </div>
+            <div class="grid__item one-whole">
+              <md-input-container>
+                <input mdInput placeholder="Email" name="email" [(ngModel)]="registrationFormModel.email" required
+                       type="email">
+              </md-input-container>
+            </div>
+            <div class="grid__item one-whole">
+              <md-input-container>
+                <input mdInput placeholder="Password" name="password" [(ngModel)]="registrationFormModel.password" required
+                       type="password">
+              </md-input-container>
+            </div>
+          </div>
+          <div class="info-box" layout-padding>
+            <div class="info-badge blue" layout="row" layout-aling="start center">
+              <i class="icon-exclamation"></i>
+              <span>By registering, you agree to NoticeBoard's User Agreement, Privacy Policy, and Cookie Policy.</span>
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <button md-raised-button color="warn" type="submit">Submit</button>
+            <div>
+              <button md-button color="warn" (click)="setView('LOGIN')">Already Registered?</button>
+            </div>
+          </div>
+        </form>
       </div>
-      <button md-raised-button color="warn" class="full-width" type="submit">Submit</button>
-      <div>
-        <button md-button color="warn" (click)="setView('LOGIN')">Already Registered?</button>
-      </div>
-    </form>
+    </div>
   </div>
 
-  <div *ngIf="view === 'FORGOT'">
+  <div *ngIf="view === 'FORGOT'" class="forgot-container">
     <form *ngIf="!forgottenSent" #form="ngForm" (ngSubmit)="sendForgotten(form.value)" autocomplete="off">
       <div class="index-padding">
         <md-input-container>
@@ -91,12 +110,17 @@
                  type="email">
         </md-input-container>
       </div>
-      <button md-raised-button type="submit" color="warn" class="full-width">Reset Password</button>
-      <button md-button color="warn" (click)="setView('LOGIN')">Back</button>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button md-raised-button type="submit" color="warn" class="full-width">Reset Password</button>
+        <button md-button color="warn" (click)="setView('LOGIN')">Back</button>
+      </div>
     </form>
-    <div *ngIf="forgottenSent">
-      We have sent a password reset link to the email address of the account that you specified.
-      Please check your email for this message, then click on the link.
+    <div *ngIf="forgottenSent" class="info-box">
+      <div class="info-badge blue">
+        <i class="icon-exclamation"></i>
+        <span>We have sent a password reset link to the email address of the account that you specified.
+        Please check your email for this message, then click on the link.</span>
+      </div>
     </div>
   </div>
 

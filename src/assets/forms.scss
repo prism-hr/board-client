@@ -1,0 +1,16 @@
+@import 'variables';
+
+form {
+  .mat-input-element {
+    font-size:$mat-body-font-size-base;
+    padding: 6px 0;
+  }
+  .mat-input-placeholder  {
+    height: 50px;
+    font-size: 130%;
+  }
+  .mat-input-placeholder-wrapper {
+    height: 50px;
+  }
+}
+
