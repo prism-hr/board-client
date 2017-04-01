@@ -103,6 +103,9 @@ button {
     height: 100%;
   }
 }
+.top-nav {
+  margin-left:25px;
+}
 .page-width {
   @include clearfix();
   max-width: $width-site;
