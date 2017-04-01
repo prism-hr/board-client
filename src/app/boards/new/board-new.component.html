@@ -41,12 +41,12 @@
           <board-aliases formGroupName="handles" [disableDepartment]="!newDepartment"></board-aliases>
         </div>
 
-        <p>Add some categories to describe the topics of posts to your board, audience members will be able to filter on these categories.</p>
+        <p>Define some categories to describe the topics that will be covered by your board. Members will be able to use these categories for filtering.</p>
         <div formGroupName="settings">
           <rl-tag-input formControlName="postCategories" placeholder="Add Post category"></rl-tag-input>
         </div>
 
-        <p>Describe your department members using categories.</p>
+        <p>Define some categories to describe the groups of members in your department. Contributors will be able to use these categories for targeting.</p>
         <div *ngIf="newDepartment" formGroupName="department">
           <rl-tag-input formControlName="memberCategories" placeholder="Add Member category"></rl-tag-input>
         </div>
