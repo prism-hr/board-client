@@ -1,5 +1,5 @@
 <section class="section">
-    <h2 class="title">You're seconds away from creating your first board!</h2>
+    <h2 class="title"  *ngIf="!user">You're seconds away from creating your first board!</h2>
   <home-public *ngIf="!user"></home-public>
   <div *ngIf="user">
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5%">

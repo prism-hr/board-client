@@ -5,6 +5,16 @@
   h2 {
     margin-bottom:15px;
   }
+  .linkedin, .facebook {
+    font-size:16px;
+    text-transform: uppercase;
+    i {
+      font-size: 20px;
+      margin-right: 8px;
+      margin-top: -6px;
+      display: inline-block;
+    }
+  }
 }
 .error-enter {
   animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;

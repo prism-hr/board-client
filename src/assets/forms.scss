@@ -12,5 +12,28 @@ form {
   .mat-input-placeholder-wrapper {
     height: 50px;
   }
+  p.info {
+    color: $uclhue3;
+    font-size:94%;
+  }
 }
 
+.url-builder {
+  .grid__item {
+    position: relative;
+  }
+  .separator-right {
+    position: absolute;
+    right: -19px;
+    color: grey;
+    top: 21px;
+    font-size: 18px;
+  }
+  .separator-left {
+    position: absolute;
+    left: 10px;
+    color: grey;
+    top: 21px;
+    font-size: 18px;
+  }
+}
