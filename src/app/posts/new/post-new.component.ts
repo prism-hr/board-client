@@ -31,9 +31,9 @@ export class PostNewComponent implements OnInit {
     this.route.data.subscribe(data => {
       if (data['board']) {
         this.board = data['board'];
-      } else if (data['post']) {
+      }
+      if (data['post']) {
         this.post = data['post'];
-        this.board = this.post.board;
       }
 
       const existingPostCategories = this.post ? this.post.postCategories : [];
@@ -88,8 +88,8 @@ export class PostNewComponent implements OnInit {
 
   submit() {
     const post: PostDTO = _.pick(this.postForm.value, ['name', 'description', 'organizationName', 'location', 'existingRelation']);
-    post.postCategories = _.without(this.postForm.value.postCategoriesMap.map((c, i) => c ? this.board.postCategories[i]: null), null);
-    post.memberCategories = _.without(this.postForm.value.memberCategoriesMap.map((c, i) => c ? this.board.department.memberCategories[i]: null), null);
+    post.postCategories = _.without(this.postForm.value.postCategoriesMap.map((c, i) => c ? this.board.postCategories[i] : null), null);
+    post.memberCategories = _.without(this.postForm.value.memberCategoriesMap.map((c, i) => c ? this.board.department.memberCategories[i] : null), null);
     const applyProperty = 'apply' + _.capitalize(this.postForm.value.applyType);
     post[applyProperty] = this.postForm.value[applyProperty];
 

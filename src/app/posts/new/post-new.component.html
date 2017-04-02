@@ -1,6 +1,8 @@
 <h1 *ngIf="!post">Create a new post</h1>
 <h1 *ngIf="post">Edit Post</h1>
 
+<a routerLink="../">Back</a>
+
 <form [formGroup]="postForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
 
   <md-input-container class="md-block">

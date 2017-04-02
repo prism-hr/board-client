@@ -15,7 +15,7 @@ export class BoardManageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.data.subscribe(data => {
+    this.route.parent.data.subscribe(data => {
       this.board = data['board'];
       this.navigationUrl = '/' + this.board.department.handle + '/' + this.board.handle;
     });

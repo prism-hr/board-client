@@ -73,55 +73,57 @@ import {PlacesModule} from './general/places/places.module';
     RouterModule.forRoot([
       {path: '', component: HomeComponent},
       {
-        path: '', component: AuthedComponent, canActivate: [AuthGuard], children: [
-        {
-          path: 'newBoard',
-          component: BoardNewComponent
-        },
-        {
-          path: 'newPost',
-          component: PostNewComponent,
-          resolve: {
-            board: BoardResolver
-          }
-        },
-        {
-          path: ':departmentHandle',
-          children: [
-            {
-              path: '',
-              component: DepartmentViewComponent,
-              resolve: {
-                department: DepartmentResolver
-              }
-            },
-            {
-              path: ':boardHandle',
-              component: BoardManageComponent,
-              resolve: {
-                board: BoardResolver
-              },
-              children: [
-                {
-                  path: '',
-                  component: BoardViewComponent
-                },
-                {
-                  path: 'settings',
-                  component: BoardSettingsComponent
-                },
-                {
-                  path: ':postId',
-                  component: PostNewComponent,
-                  resolve: {
-                    post: PostResolver
-                  },
-                }
-              ]
+        path: 'newBoard',
+        component: BoardNewComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: ':departmentHandle',
+        children: [
+          {
+            path: '',
+            component: DepartmentViewComponent,
+            resolve: {
+              department: DepartmentResolver
             }
-          ]
-        }
-      ]
+          },
+          {
+            path: ':boardHandle',
+            resolve: {
+              board: BoardResolver
+            },
+            children: [
+              {
+                path: '',
+                component: BoardManageComponent,
+                children: [
+                  {
+                    path: '',
+                    component: BoardViewComponent
+                  },
+                  {
+                    path: 'settings',
+                    component: BoardSettingsComponent,
+                    canActivate: [AuthGuard]
+                  }
+                ]
+              },
+              {
+                path: 'newPost',
+                component: PostNewComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: ':postId',
+                component: PostNewComponent,
+                resolve: {
+                  post: PostResolver
+                },
+                canActivate: [AuthGuard]
+              }
+            ]
+          }
+        ]
       },
       {path: '**', component: NotFoundComponent}
     ]),

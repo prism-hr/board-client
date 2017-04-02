@@ -40,11 +40,6 @@ export class LocationAutocompleteComponent implements ControlValueAccessor, OnIn
   }
 
   ngOnInit() {
-    this.googlePlacesProvider.getPlacesServices()
-      .subscribe(s => {
-        console.log(s);
-      });
-
     this.filteredLocations = this.modelChanges$
       .debounceTime(300)
       .map(user => user && typeof user === 'object' ? user.name : user)
@@ -54,7 +49,6 @@ export class LocationAutocompleteComponent implements ControlValueAccessor, OnIn
         }
         return this.googlePlacesProvider.getPlacesServices()
           .switchMap(services => {
-            console.log(input);
             const autocompleteService: google.maps.places.AutocompleteService = services[0];
             const subject = new Subject<AutocompletePrediction[]>();
             autocompleteService.getPlacePredictions({input, types: ['(cities)']}, places => {
