@@ -4,6 +4,12 @@
       "PUBLIC": "Public",
       "PRIVATE": "Private",
       "PART_PRIVATE": "Part-private"
+    },
+    "relationWithDepartment": {
+      "FRIENDS" : "Friends",
+      "FAMILY" : "Family",
+      "AFFAIR" : "Affair",
+      "COINCIDENCE" : "Coincidence"
     }
   }
 }

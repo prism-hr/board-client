@@ -21,7 +21,7 @@
   <div formArrayName="postCategoriesMap">
     <label *ngFor="let category of board.postCategories; let i = index">
       <input type="checkbox"
-            formControlName="{{i}}"/>
+             formControlName="{{i}}"/>
       {{category}}
     </label>
   </div>
@@ -38,20 +38,13 @@
     <control-messages [control]="postForm.controls.location"></control-messages>
   </div>
 
-  <div *ngIf="showExistingRelationSpecify">
-    Do you have an existing relationship with our department?
-    <md-radio-group formControlName="existingRelationSpecify">
-      <md-radio-button [value]="false">No</md-radio-button>
-      <md-radio-button [value]="true">Yes</md-radio-button>
-    </md-radio-group>
-    <control-messages [control]="postForm.controls.existingRelationSpecify"></control-messages>
-  </div>
-
-  <div *ngIf="postForm.value.existingRelationSpecify">
-    <md-input-container class="md-block">
-      <textarea mdInput formControlName="existingRelation" placeholder="Briefly summarise your relationship"
-                required></textarea>
-    </md-input-container>
+  <div *ngIf="showExistingRelation">
+    What is your relationship with our department?
+    <md-select formControlName="existingRelation" placeholder="Relation with department">
+      <md-option *ngFor="let relation of definitions.relationWithDepartment" [value]="relation">
+        {{'definitions.relationWithDepartment.' + relation | translate}}
+      </md-option>
+    </md-select>
     <control-messages [control]="postForm.controls.existingRelation"></control-messages>
   </div>
 

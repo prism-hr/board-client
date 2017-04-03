@@ -13,8 +13,8 @@ import BoardSettingsDTO = b.BoardSettingsDTO;
   styleUrls: ['board-settings.component.scss']
 })
 export class BoardSettingsComponent implements OnInit {
+  definitions: { [key: string]: any };
   board: BoardRepresentation;
-  definitions: any;
   settingsForm: FormGroup;
 
   constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder, private snackBar: MdSnackBar,

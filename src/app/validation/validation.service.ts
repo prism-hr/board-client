@@ -11,8 +11,7 @@ export class ValidationService {
       maxlength: `Maximum length ${validatorValue.requiredLength}`,
       duplicateHandle: `The alias is already taken.`,
       duplicateDepartment: `Another department with this name already exists.`,
-      duplicateBoard: `Another board with this name already exists.`,
-      missingRelationDescription: 'You need to specify the kind of relation you have with the the department'
+      duplicateBoard: `Another board with this name already exists.`
     };
 
     return config[validatorName];
