@@ -43,6 +43,7 @@ import {PostViewComponent} from './posts/view/post-view.component';
 import {PostResolver} from './posts/post-resolver.service';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {PlacesModule} from './general/places/places.module';
+import {AccountComponent} from './account/account.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import {PlacesModule} from './general/places/places.module';
     ControlMessagesComponent,
     HeaderComponent,
     FooterComponent,
+    AccountComponent,
     MotivationCheckDialog,
     AuthenticationDialog,
     NotFoundComponent,
@@ -75,6 +77,11 @@ import {PlacesModule} from './general/places/places.module';
       {
         path: 'newBoard',
         component: BoardNewComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'account',
+        component: AccountComponent,
         canActivate: [AuthGuard]
       },
       {

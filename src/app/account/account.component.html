@@ -1,0 +1,19 @@
+<h1>Account</h1>
+
+<form [formGroup]="accountForm" (ngSubmit)="submit()" autocomplete="off">
+
+  <md-input-container class="md-block">
+    <input mdInput formControlName="givenName" placeholder="First Name" required>
+  </md-input-container>
+  <control-messages [control]="accountForm.controls.givenName"></control-messages>
+
+  <md-input-container class="md-block">
+    <input mdInput formControlName="surname" placeholder="Last Name" required>
+  </md-input-container>
+  <control-messages [control]="accountForm.controls.surname"></control-messages>
+
+  <div layout="column" layout-align="space-between stretch">
+    <button md-raised-button type="submit">Submit</button>
+  </div>
+
+</form>

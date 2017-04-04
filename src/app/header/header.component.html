@@ -1,7 +1,7 @@
 <header class="main-nav">
-  <div class="page-width" >
+  <div class="page-width">
     <div class="grid ">
-      <div class="grid__item one-third" fxLayout="row" fxLayoutAlign=" center" >
+      <div class="grid__item one-third" fxLayout="row" fxLayoutAlign=" center">
         <div class="logo-holder">
           <a class="prism-logo" fxHide.xs routerLink="/">
             <img src="assets/prism.svg">
@@ -10,7 +10,10 @@
             <img src="assets/prism-logo.svg">
           </a>
         </div>
-        <div *ngIf="user$ | async" class="top-nav">  <a md-button routerLink="/" >Boards</a> </div>
+        <div *ngIf="user$ | async" class="top-nav">
+          <a md-button routerLink="/">Boards</a>
+          <a md-button routerLink="/account">{{(user$ | async).fullName}}</a>
+        </div>
       </div>
       <nav class="grid__item two-thirds text-right">
         <div *ngIf="(user$ | async) === false">
