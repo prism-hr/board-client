@@ -21,7 +21,7 @@ export class BoardViewComponent implements OnInit {
               private snackBar: MdSnackBar) {
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-      purpose: ['', [Validators.required, Validators.maxLength(2000)]],
+      purpose: ['', [Validators.required]],
     });
   }
 
@@ -37,7 +37,7 @@ export class BoardViewComponent implements OnInit {
   }
 
   submit() {
-    this.http.put('/api/boards/' + this.board.id, this.boardForm.value)
+    this.http.patch('/api/boards/' + this.board.id, this.boardForm.value)
       .subscribe(() => {
         this.snackBar.open("Board Saved!");
       }, (error: Response) => {

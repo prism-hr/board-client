@@ -1,4 +1,4 @@
-<nav *ngIf="canManage" md-tab-nav-bar>
+<nav md-tab-nav-bar>
   <a md-tab-link
      routerLink="{{navigationUrl}}"
      routerLinkActive #view="routerLinkActive"
@@ -7,11 +7,11 @@
     View
   </a>
   <a md-tab-link
-     routerLink="{{navigationUrl}}/settings"
+     routerLink="{{navigationUrl}}/users"
      routerLinkActive #settings="routerLinkActive"
      [routerLinkActiveOptions]="{exact: true}"
      [active]="settings.isActive">
-    Settings
+    Users
   </a>
 </nav>
 

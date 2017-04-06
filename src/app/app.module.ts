@@ -29,7 +29,7 @@ import {BoardResolver} from './boards/manage/board-resolver.service';
 import {BoardViewComponent} from './boards/manage/view/board-view.component';
 import {BoardSettingsComponent} from './boards/manage/settings/board-settings.component';
 import {DepartmentResolver} from './departments/department-resolver.service';
-import {DepartmentViewComponent} from './departments/department-view.component';
+import {DepartmentViewComponent} from './departments/view/department-view.component';
 import {BoardNewComponent} from './boards/new/board-new.component';
 import {RlTagInputModule} from 'angular2-tag-input/dist';
 import {HomePublicComponent} from './home/home-public.component';
@@ -44,6 +44,8 @@ import {PostResolver} from './posts/post-resolver.service';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {PlacesModule} from './general/places/places.module';
 import {AccountComponent} from './account/account.component';
+import {DepartmentUsersComponent} from './departments/users/department-users.component';
+import {DepartmentManageComponent} from './departments/department-manage.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,9 @@ import {AccountComponent} from './account/account.component';
     BoardManageComponent,
     BoardViewComponent,
     BoardSettingsComponent,
+    DepartmentManageComponent,
     DepartmentViewComponent,
+    DepartmentUsersComponent,
     PostNewComponent,
     PostViewComponent
   ],
@@ -89,10 +93,21 @@ import {AccountComponent} from './account/account.component';
         children: [
           {
             path: '',
-            component: DepartmentViewComponent,
+            component: DepartmentManageComponent,
             resolve: {
               department: DepartmentResolver
-            }
+            },
+            children: [
+              {
+                path: '',
+                component: DepartmentViewComponent
+              },
+              {
+                path: 'users',
+                component: DepartmentUsersComponent,
+                canActivate: [AuthGuard]
+              }
+            ]
           },
           {
             path: ':boardHandle',

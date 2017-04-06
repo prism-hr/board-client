@@ -9,7 +9,8 @@ import BoardRepresentation = b.BoardRepresentation;
 })
 export class BoardManageComponent implements OnInit {
   private board: BoardRepresentation;
-  private navigationUrl: string
+  private navigationUrl: string;
+  private canManage: boolean;
 
   constructor(private route: ActivatedRoute) {
   }
@@ -18,6 +19,7 @@ export class BoardManageComponent implements OnInit {
     this.route.parent.data.subscribe(data => {
       this.board = data['board'];
       this.navigationUrl = '/' + this.board.department.handle + '/' + this.board.handle;
+      this.canManage = (this.board.actions as any as string[]).includes('EDIT');
     });
   }
 
