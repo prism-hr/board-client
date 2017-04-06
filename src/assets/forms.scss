@@ -16,6 +16,7 @@ form {
     color: $uclhue3;
     font-size:94%;
   }
+
 }
 
 .url-builder {
@@ -35,5 +36,9 @@ form {
     color: grey;
     top: 21px;
     font-size: 18px;
+  }
+  .mat-input-element:disabled {
+    color: $refereesColor;
+    cursor: not-allowed;
   }
 }

@@ -1,19 +1,34 @@
-<h1>Account</h1>
-
-<form [formGroup]="accountForm" (ngSubmit)="submit()" autocomplete="off">
-
-  <md-input-container class="md-block">
-    <input mdInput formControlName="givenName" placeholder="First Name" required>
-  </md-input-container>
-  <control-messages [control]="accountForm.controls.givenName"></control-messages>
-
-  <md-input-container class="md-block">
-    <input mdInput formControlName="surname" placeholder="Last Name" required>
-  </md-input-container>
-  <control-messages [control]="accountForm.controls.surname"></control-messages>
-
-  <div layout="column" layout-align="space-between stretch">
-    <button md-raised-button type="submit">Submit</button>
-  </div>
-
-</form>
+<div class="section">
+  <form [formGroup]="accountForm" (ngSubmit)="submit()" autocomplete="off">
+    <div class="grid">
+      <div class="grid__item small--one-whole medium-up--three-eighths medium-up--push-two-sixths">
+        <md-card>
+          <md-card-header>
+            <md-card-title>
+              <h1>Account</h1>
+            </md-card-title>
+          </md-card-header>
+          <md-card-content>
+            <div class="grid">
+              <div class="grid__item small--one-whole medium-up--one-half">
+                <md-input-container class="md-block">
+                  <input mdInput formControlName="givenName" placeholder="First Name" required>
+                </md-input-container>
+                <control-messages [control]="accountForm.controls.givenName"></control-messages>
+              </div>
+              <div class="grid__item small--one-whole medium-up--one-half">
+                <md-input-container class="md-block">
+                  <input mdInput formControlName="surname" placeholder="Last Name" required>
+                </md-input-container>
+                <control-messages [control]="accountForm.controls.surname"></control-messages>
+              </div>
+            </div>
+          </md-card-content>
+          <md-card-actions>
+            <button md-raised-button type="submit">Submit</button>
+          </md-card-actions>
+        </md-card>
+      </div>
+    </div>
+  </form>
+</div>
