@@ -40,20 +40,25 @@
             </div>
           </div>
           <div class="grid__item small--one-whole medium-up--one-third" formGroupName="department">
-            <file-upload formControlName="documentLogo" class="logo-uploader" type="logo" ></file-upload>
+            <file-upload formControlName="documentLogo" class="logo-uploader" type="logo"></file-upload>
           </div>
         </div>
         <div *ngIf="newDepartment !== null">
           <board-aliases formGroupName="handles" [disableDepartment]="!newDepartment"></board-aliases>
         </div>
-        <div formGroupName="settings">
-          <rl-tag-input formControlName="postCategories" placeholder="Add Post category"></rl-tag-input>
-        </div>
-        <p class="info"><i class="icon-info"></i> Define some categories to describe the topics that will be covered by your board. Members will be able to use these categories for filtering.</p>
+
+        <rl-tag-input formControlName="postCategories" placeholder="Add Post category"></rl-tag-input>
+
+        <p class="info">
+          <i class="icon-info"></i> Define some categories to describe the topics that will be covered by
+          your board. Members will be able to use these categories for filtering.
+        </p>
+
         <div *ngIf="newDepartment" formGroupName="department">
           <rl-tag-input formControlName="memberCategories" placeholder="Add Member category"></rl-tag-input>
         </div>
-        <p class="info"><i class="icon-info"></i> Define some categories to describe the groups of members in your department. Contributors will be able to use these categories for targeting.</p>
+        <p class="info"><i class="icon-info"></i> Define some categories to describe the groups of members in your
+          department. Contributors will be able to use these categories for targeting.</p>
       </md-card-content>
       <md-card-actions>
         <button md-raised-button color="primary" type="submit" [disabled]="boardForm.invalid">Submit</button>
