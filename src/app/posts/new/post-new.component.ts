@@ -12,7 +12,6 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
 import BoardRepresentation = b.BoardRepresentation;
 import PostDTO = b.PostDTO;
 import PostRepresentation = b.PostRepresentation;
-import Role = b.Role;
 
 @Component({
   templateUrl: 'post-new.component.html',
@@ -62,8 +61,8 @@ export class PostNewComponent implements OnInit {
         this.postForm.patchValue(formValue);
       }
 
-      if (_.intersection(this.board.roles as any as string[], ['ADMINISTRATOR', 'CONTRIBUTOR']).length === 0) {
-        // user has no department rights, has to specify relation type
+      if (_.intersection(this.board.actions as any as string[], ['EXTEND']).length === 0) {
+        // user has no permission to create trusted post, has to specify relation type
         this.showExistingRelation = true;
       }
     });
@@ -87,7 +86,7 @@ export class PostNewComponent implements OnInit {
     post[applyProperty] = this.postForm.value[applyProperty];
 
     if (this.post) {
-      this.http.put('/api/posts/' + this.post.id, post)
+      this.http.patch('/api/posts/' + this.post.id, post)
         .subscribe(() => {
           this.snackBar.open("Board Saved!");
         });

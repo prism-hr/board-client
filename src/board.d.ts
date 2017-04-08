@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.17.284 on 2017-04-06 13:37:21.
+// Generated using typescript-generator version 1.17.284 on 2017-04-07 13:31:21.
 
 declare namespace b {
 
@@ -7,19 +7,25 @@ declare namespace b {
     nextState?: State;
   }
 
-  interface BoardDTO extends ResourceDTO<BoardDTO> {
+  interface BoardDTO {
+    name?: string;
     purpose?: string;
+    handle?: string;
+    postCategories?: string[];
     department?: DepartmentDTO;
-    settings?: BoardSettingsDTO;
   }
 
-  interface BoardSettingsDTO {
+  interface BoardPatchDTO {
+    name?: string;
+    purpose?: string;
     handle?: string;
     postCategories?: string[];
     defaultPostVisibility?: PostVisibility;
   }
 
-  interface DepartmentDTO extends ResourceDTO<DepartmentDTO> {
+  interface DepartmentDTO {
+    id?: number;
+    name?: string;
     documentLogo?: DocumentDTO;
     handle?: string;
     memberCategories?: string[];
@@ -39,11 +45,13 @@ declare namespace b {
     longitude?: number;
   }
 
-  interface PostDTO extends ResourceDTO<PostDTO> {
+  interface PostDTO {
+    name?: string;
     description?: string;
     organizationName?: string;
     location?: LocationDTO;
     existingRelation?: RelationWithDepartment;
+    existingRelationExplanation?: string;
     postCategories?: string[];
     memberCategories?: string[];
     applyWebsite?: string;
@@ -51,20 +59,15 @@ declare namespace b {
     applyEmail?: string;
   }
 
-  interface ResourceDTO<R> {
+  interface ResourceFilterDTO {
+    scope?: Scope;
     id?: number;
-    name?: string;
+    handle?: string;
+    parentId?: number;
+    orderStatement?: string;
   }
 
-  interface AbstractResourceRepresentation {
-    id?: number;
-    name?: string;
-    state?: State;
-    roles?: Role[];
-    actions?: Action[];
-  }
-
-  interface BoardRepresentation extends AbstractResourceRepresentation {
+  interface BoardRepresentation extends ResourceRepresentation {
     purpose?: string;
     handle?: string;
     department?: DepartmentRepresentation;
@@ -72,7 +75,7 @@ declare namespace b {
     defaultPostVisibility?: PostVisibility;
   }
 
-  interface DepartmentRepresentation extends AbstractResourceRepresentation {
+  interface DepartmentRepresentation extends ResourceRepresentation {
     documentLogo?: DocumentRepresentation;
     handle?: string;
     boards?: BoardRepresentation[];
@@ -93,11 +96,12 @@ declare namespace b {
     longitude?: number;
   }
 
-  interface PostRepresentation extends AbstractResourceRepresentation {
+  interface PostRepresentation extends ResourceRepresentation {
     description?: string;
     organizationName?: string;
     location?: LocationRepresentation;
     existingRelation?: RelationWithDepartment;
+    existingRelationExplanation?: string;
     postCategories?: string[];
     memberCategories?: string[];
     applyWebsite?: string;
@@ -106,10 +110,17 @@ declare namespace b {
     board?: BoardRepresentation;
   }
 
+  interface ResourceRepresentation {
+    id?: number;
+    name?: string;
+    state?: State;
+    actions?: Action[];
+  }
+
   const enum Action {
     VIEW,
     EDIT,
-    POST_TO,
+    EXTEND,
     ACCEPT,
     SUSPEND,
     CORRECT,
@@ -140,10 +151,10 @@ declare namespace b {
     COINCIDENCE,
   }
 
-  const enum Role {
-    ADMINISTRATOR,
-    CONTRIBUTOR,
-    PUBLIC,
+  const enum Scope {
+    DEPARTMENT,
+    BOARD,
+    POST,
   }
 
 }

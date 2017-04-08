@@ -28,9 +28,7 @@ export class BoardNewComponent implements OnInit {
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
       purpose: ['', [Validators.required, Validators.maxLength(2000)]],
-      settings: this.fb.group({
-        postCategories: [[]],
-      }),
+      postCategories: [[]],
       department: this.fb.group({
         name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
         memberCategories: [[]],
@@ -70,10 +68,10 @@ export class BoardNewComponent implements OnInit {
   }
 
   submit() {
-    let board: BoardDTO = _.pick(this.boardForm.value, ['name', 'purpose', 'settings', 'department']);
+    let board: BoardDTO = _.pick(this.boardForm.value, ['name', 'purpose', 'postCategories', 'department']);
     board = Object.assign({}, board);
+    board.handle = this.boardForm.value.handles.boardHandle;
     board.department.handle = this.boardForm.value.handles.departmentHandle;
-    board.settings.handle = this.boardForm.value.handles.boardHandle;
     this.authGuard.ensureAuthenticated(true) // open dialog if not authenticated
       .subscribe(authenticated => {
         if (!authenticated) {

@@ -6,7 +6,7 @@ import {MdSnackBar} from '@angular/material';
 import {DefinitionsService} from '../../../services/definitions.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import BoardRepresentation = b.BoardRepresentation;
-import BoardSettingsDTO = b.BoardSettingsDTO;
+import BoardPatchDTO = b.BoardPatchDTO;
 
 @Component({
   templateUrl: 'board-settings.component.html',
@@ -40,9 +40,9 @@ export class BoardSettingsComponent implements OnInit {
   }
 
   submit() {
-    const settings: BoardSettingsDTO = _.pick(this.settingsForm.value, ['postCategories', 'defaultPostVisibility']);
-    settings.handle = this.settingsForm.value.handles.boardHandle;
-    this.http.put('/api/boards/' + this.board.id + '/settings', settings)
+    const board: BoardPatchDTO = _.pick(this.settingsForm.value, ['postCategories', 'defaultPostVisibility']);
+    board.handle = this.settingsForm.value.handles.boardHandle;
+    this.http.patch('/api/boards/' + this.board.id, board)
       .subscribe(() => {
         this.snackBar.open('Board Saved!');
       }, (error: Response | any) => {

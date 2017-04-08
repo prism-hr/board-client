@@ -21,7 +21,7 @@ export class BoardViewComponent implements OnInit {
               private snackBar: MdSnackBar) {
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-      purpose: ['', [Validators.required]],
+      purpose: ['', [Validators.required, Validators.maxLength(2000)]],
     });
   }
 

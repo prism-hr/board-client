@@ -38,8 +38,7 @@ export class DepartmentViewComponent implements OnInit {
   submit() {
     const department: DepartmentDTO = _.pick(this.departmentForm.value, ['name', 'memberCategories', 'documentLogo']);
     department.handle = this.departmentForm.value.handles.departmentHandle;
-    Object.assign(this.department, department);
-    this.http.put('/api/departments/' + this.department.id, this.department)
+    this.http.patch('/api/departments/' + this.department.id, department)
       .subscribe(() => {
         this.snackBar.open("Department Saved!");
       }, (error: Response) => {
