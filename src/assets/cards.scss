@@ -4,6 +4,7 @@
 .mat-input-container{
   width: 100%;
 }
+
 md-card.mat-card>:first-child {
   margin-top: -24px;
 }
@@ -14,7 +15,8 @@ md-card.mat-card>:first-child {
     padding-top: $section-spacing;
     padding-right: $gutter-site-mobile / 2;
   }
-}md-card.mat-card {
+}
+md-card.mat-card {
   .mat-input-placeholder, .mat-input-placeholder-wrapper {
     padding-top:0.6em;
   }
@@ -35,7 +37,7 @@ md-card.mat-card>:first-child {
     background: $greyBackground;
     text-align: right;
     margin: 0 -24px -24px -24px ;
-    padding: 12px 22px;
+    padding: 12px 15px;
     &:last-child {
       margin-bottom:-24px;
       padding-bottom:12px;
@@ -51,5 +53,14 @@ md-card.mat-card>:first-child {
   }
   .mat-input-placeholder-wrapper {
     height: 50px;
+  }
+  .mat-card-subtitle {
+    margin-bottom:0;
+  }
+  .mat-card-header .mat-card-subtitle:not(:first-child), .mat-card>.mat-card-xl-image:first-child {
+    margin-top:0;
+  }
+  .mat-card-avatar {
+    margin-right: 15px;
   }
 }

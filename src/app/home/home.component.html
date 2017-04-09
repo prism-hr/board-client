@@ -2,6 +2,39 @@
     <h2 class="title"  *ngIf="!user">You're seconds away from creating your first board!</h2>
   <home-public *ngIf="!user"></home-public>
   <div *ngIf="user">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <h1>Departments</h1>
+      <button md-raised-button routerLink="/newBoard" class="add-board" color="primary"><md-icon>add</md-icon> New Board</button>
+    </div>
+    <div class="department-content">
+      <div class="section-header" fxLayout="row" fxLayoutAlign="start center"><h2>Chemical</h2> <button md-mini-fab class="xs-mini"><md-icon>edit</md-icon></button></div>
+      <div class="grid">
+        <div class="grid__item small--one-whole medium-up--one-third">
+          <md-card>
+            <md-card-header  fxLayout="row" fxLayoutAlign="space-between center">
+                <md-card-avatar class="logo-holder-small default-logo"></md-card-avatar>
+                <md-card-title><h3>Students</h3></md-card-title>
+                <md-card-subtitle>Chemical</md-card-subtitle>
+            </md-card-header>
+            <md-card-content>
+
+            </md-card-content>
+            <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+              <button md-raised-button color="primary"><md-icon class="icon-eye"></md-icon> View</button>
+              <button md-mini-fab><md-icon class="icon-settings"></md-icon></button>
+
+            </md-card-actions>
+          </md-card>
+        </div>
+        <div class="grid__item small--one-whole medium-up--one-third">
+
+        </div>
+        <div class="grid__item small--one-whole medium-up--one-third">
+
+        </div>
+      </div>
+    </div>
+
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5%">
       <div>
         Departments:
@@ -20,8 +53,6 @@
         </ul>
       </div>
     </div>
-    <button md-mini-fab routerLink="/newBoard" class="add-board">
-      <md-icon>add</md-icon>
-    </button>
+
   </div>
 </section>

@@ -4,3 +4,17 @@
   margin-bottom:$section-spacing;
   text-align: center;
 }
+.department-content {
+  margin-bottom:$section-spacing / 2;
+  margin-top:$section-spacing / 2;
+  h2 {
+    margin-bottom:$section-spacing / 2;
+  }
+}
+.default-logo {
+  background: url("/assets/prism-logo.svg") $uclblue2 no-repeat center center;
+  background-size: 50%;
+}
+.logo-holder-small {
+  border-radius: 5px;
+}

@@ -1,24 +1,36 @@
 @import 'variables';
 
 form {
+  .mat-input-wrapper {
+    margin-top:1.2em;
+  }
   .mat-input-element {
     font-size:$mat-body-font-size-base;
-    padding: 6px 0;
+    padding: 8px 0;
   }
   .mat-input-placeholder  {
-    height: 50px;
+    height: 52px;
     font-size: 130%;
   }
   .mat-input-placeholder-wrapper {
-    height: 50px;
+    height: 52px;
   }
   p.info {
     color: $uclhue3;
     font-size:94%;
   }
-
 }
-
+.mat-mini-fab.xs-mini {
+  width: 25px;
+  height: 25px;
+  line-height:25px;
+  margin-top: -13px;
+  margin-left: 15px;
+  .material-icons {
+    margin-top:-7px;
+    font-size:16px;
+  }
+}
 .url-builder {
   .grid__item {
     position: relative;
