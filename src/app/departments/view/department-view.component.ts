@@ -4,14 +4,15 @@ import {Http, Response} from '@angular/http';
 import {MdSnackBar} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as _ from 'lodash';
-import DepartmentDTO = b.DepartmentDTO;
+import DepartmentPatchDTO = b.DepartmentPatchDTO;
+import DepartmentRepresentation = b.DepartmentRepresentation;
 
 @Component({
   templateUrl: 'department-view.component.html',
   styleUrls: ['department-view.component.scss']
 })
 export class DepartmentViewComponent implements OnInit {
-  department: DepartmentDTO;
+  department: DepartmentRepresentation;
   departmentForm: FormGroup;
 
 
@@ -37,7 +38,7 @@ export class DepartmentViewComponent implements OnInit {
   }
 
   submit() {
-    const department: DepartmentDTO = _.pick(this.departmentForm.value, ['name', 'memberCategories', 'documentLogo']);
+    const department: DepartmentPatchDTO = _.pick(this.departmentForm.value, ['name', 'memberCategories', 'documentLogo']);
     department.handle = this.departmentForm.value.handles.departmentHandle;
     this.http.patch('/api/departments/' + this.department.id, department)
       .subscribe(() => {

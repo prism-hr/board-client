@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.17.284 on 2017-04-07 13:31:21.
+// Generated using typescript-generator version 1.17.284 on 2017-04-11 14:06:59.
 
 declare namespace b {
 
@@ -10,7 +10,6 @@ declare namespace b {
   interface BoardDTO {
     name?: string;
     purpose?: string;
-    handle?: string;
     postCategories?: string[];
     department?: DepartmentDTO;
   }
@@ -25,6 +24,12 @@ declare namespace b {
 
   interface DepartmentDTO {
     id?: number;
+    name?: string;
+    documentLogo?: DocumentDTO;
+    memberCategories?: string[];
+  }
+
+  interface DepartmentPatchDTO {
     name?: string;
     documentLogo?: DocumentDTO;
     handle?: string;
@@ -52,6 +57,18 @@ declare namespace b {
     location?: LocationDTO;
     existingRelation?: RelationWithDepartment;
     existingRelationExplanation?: string;
+    postCategories?: string[];
+    memberCategories?: string[];
+    applyWebsite?: string;
+    applyDocument?: DocumentDTO;
+    applyEmail?: string;
+  }
+
+  interface PostPatchDTO {
+    name?: string;
+    description?: string;
+    organizationName?: string;
+    location?: LocationDTO;
     postCategories?: string[];
     memberCategories?: string[];
     applyWebsite?: string;
@@ -114,7 +131,16 @@ declare namespace b {
     id?: number;
     name?: string;
     state?: State;
-    actions?: Action[];
+    actions?: ResourceAction[];
+  }
+
+  interface ResourceAction extends Comparable<ResourceAction> {
+    action?: Action;
+    scope?: Scope;
+    state?: State;
+  }
+
+  interface Comparable<T> {
   }
 
   const enum Action {
@@ -131,8 +157,10 @@ declare namespace b {
 
   const enum State {
     DRAFT,
+    PENDING,
     SUSPENDED,
     ACCEPTED,
+    EXPIRED,
     REJECTED,
     WITHDRAWN,
     PREVIOUS,

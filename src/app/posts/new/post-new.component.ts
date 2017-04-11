@@ -68,10 +68,11 @@ export class PostNewComponent implements OnInit {
         this.postForm.patchValue(formValue);
       }
 
-      // if (_.intersection(this.board.actions as any as string[], ['EXTEND']).length === 0) {
-      // user has no permission to create trusted post, has to specify relation type
-      this.showExistingRelation = true;
-      // }
+      const extendAction = this.board.actions.find(a => (a.action as any as string) === 'EXTEND' && (a.scope as any as string) === 'POST');
+      if ((extendAction.state as any as string) === 'DRAFT') {
+        // user has no permission to create trusted post, has to specify relation type
+        this.showExistingRelation = true;
+      }
     });
 
     this.postForm.get('applyType').valueChanges
