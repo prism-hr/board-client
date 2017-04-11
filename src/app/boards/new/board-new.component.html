@@ -1,68 +1,54 @@
 <div class="section">
   <form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
-    <md-card>
-      <md-card-header>
-        <md-card-title>
-          <h1>Create a new Board</h1>
-        </md-card-title>
-      </md-card-header>
-      <md-card-content>
-        <!--<div *ngIf="!newDepartment">-->
-        <!--<md-select formControlName="selectedDepartment" placeholder="Department" name="department"-->
-        <!--(change)="departmentSelected()" class="full-width">-->
-        <!--<md-option *ngFor="let department of departments" [value]="department">-->
-        <!--{{department.name}}-->
-        <!--</md-option>-->
-        <!--</md-select>-->
-        <!--<control-messages [control]="boardForm.controls.selectedDepartment"></control-messages>-->
-        <!--</div>-->
-        <div class="grid" *ngIf="newDepartment">
-          <div class="grid__item small--one-whole medium-up--two-thirds">
-            <div class="grid">
-              <div class="grid__item one-whole">
-                <md-input-container class="md-block" formGroupName="department">
-                  <input mdInput formControlName="name" placeholder="Department Name" required>
-                </md-input-container>
-                <control-messages [control]="boardForm.get('department').get('name')"></control-messages>
-              </div>
-              <div class="grid__item one-whole">
-                <md-input-container class="md-block">
-                  <input mdInput formControlName="name" placeholder="Board Name" required>
-                </md-input-container>
-                <control-messages [control]="boardForm.controls.name"></control-messages>
-              </div>
-              <div class="grid__item one-whole">
-                <md-input-container class="md-block">
-                  <textarea mdInput formControlName="purpose" placeholder="Board Purpose" required></textarea>
-                </md-input-container>
-                <control-messages [control]="boardForm.controls.purpose"></control-messages>
-              </div>
+    <p-panel header="Create a new Board">
+
+      <div class="grid" *ngIf="newDepartment">
+        <div class="grid__item small--one-whole medium-up--two-thirds">
+          <div class="grid">
+            <div class="grid__item one-whole">
+              <label>Department Name</label>
+              <input pInputText formControlName="name" required>
+              <control-messages [control]="boardForm.get('department').get('name')"></control-messages>
+            </div>
+            <div class="grid__item one-whole">
+              <label>Board Name</label>
+              <input pInputText formControlName="name" required>
+              <control-messages [control]="boardForm.controls.name"></control-messages>
+            </div>
+            <div class="grid__item one-whole">
+              <label>Board Purpose</label>
+              <textarea pInputTextarea formControlName="purpose" required></textarea>
+              <control-messages [control]="boardForm.controls.purpose"></control-messages>
             </div>
           </div>
-          <div class="grid__item small--one-whole medium-up--one-third" formGroupName="department">
-            <file-upload formControlName="documentLogo" class="logo-uploader" type="logo"></file-upload>
-          </div>
         </div>
-        <div *ngIf="newDepartment !== null">
-          <board-aliases formGroupName="handles" [disableDepartment]="!newDepartment"></board-aliases>
+        <div class="grid__item small--one-whole medium-up--one-third" formGroupName="department">
+          <file-upload formControlName="documentLogo" class="logo-uploader" type="logo"></file-upload>
         </div>
+      </div>
+      <div *ngIf="newDepartment !== null">
+        <board-aliases formGroupName="handles" [disableDepartment]="!newDepartment"></board-aliases>
+      </div>
 
-        <rl-tag-input formControlName="postCategories" placeholder="Add Post category"></rl-tag-input>
+      <div>
+        <label>Post categories</label>
+        <p-chips formControlName="postCategories"></p-chips>
+      </div>
 
-        <p class="info">
-          <i class="icon-info"></i> Define some categories to describe the topics that will be covered by
-          your board. Members will be able to use these categories for filtering.
-        </p>
+      <p-messages
+        [value]="[{severity:'info', detail:'Define some categories to describe the topics that will be covered by your board. Members will be able to use these categories for filtering.'}]"
+        [closable]="false"></p-messages>
 
-        <div *ngIf="newDepartment" formGroupName="department">
-          <rl-tag-input formControlName="memberCategories" placeholder="Add Member category"></rl-tag-input>
-        </div>
-        <p class="info"><i class="icon-info"></i> Define some categories to describe the groups of members in your
-          department. Contributors will be able to use these categories for targeting.</p>
-      </md-card-content>
-      <md-card-actions>
-        <button md-raised-button color="primary" type="submit" [disabled]="boardForm.invalid">Submit</button>
-      </md-card-actions>
-    </md-card>
+      <div *ngIf="newDepartment" formGroupName="department">
+        <label>Member categories</label>
+        <p-chips formControlName="memberCategories"></p-chips>
+      </div>
+
+      <p-messages
+        [value]="[{severity:'info', detail:'Define some categories to describe the groups of members in your department. Contributors will be able to use these categories for targeting.'}]"
+        [closable]="false"></p-messages>
+
+      <button pButton class="ui-button-warning" type="submit" [disabled]="boardForm.invalid" label="Submit"></button>
+    </p-panel>
   </form>
 </div>

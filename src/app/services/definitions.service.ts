@@ -6,7 +6,7 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
 @Injectable()
 export class DefinitionsService {
 
-  private definitions: any;
+  private definitions: { [key: string]: any };
 
   constructor(private http: Http) {
   }

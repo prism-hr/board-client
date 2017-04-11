@@ -4,7 +4,6 @@ import {ViewContainerRef, Component, OnInit} from '@angular/core';
 import {Stormpath, Account} from 'angular-stormpath';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
-import {MotivationCheckDialog} from './motivation-check.dialog';
 
 @Component({
   selector: 'header-component',
@@ -36,16 +35,6 @@ export class HeaderComponent implements OnInit {
         }
       });
     });
-  }
-
-  showMotivationCheck() {
-    let dialogRef: MdDialogRef<MotivationCheckDialog>;
-    let config = new MdDialogConfig();
-    config.viewContainerRef = this.viewContainerRef;
-    config.width = '400px';
-
-    dialogRef = this.dialog.open(MotivationCheckDialog, config);
-    return dialogRef.afterClosed();
   }
 
   logout() {

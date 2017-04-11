@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {MenuItem} from 'primeng/primeng';
 import BoardDTO = b.BoardDTO;
 import BoardRepresentation = b.BoardRepresentation;
 
@@ -9,8 +10,8 @@ import BoardRepresentation = b.BoardRepresentation;
 })
 export class BoardManageComponent implements OnInit {
   private board: BoardRepresentation;
-  private navigationUrl: string;
   private canManage: boolean;
+  private items: MenuItem[];
 
   constructor(private route: ActivatedRoute) {
   }
@@ -18,8 +19,11 @@ export class BoardManageComponent implements OnInit {
   ngOnInit() {
     this.route.parent.data.subscribe(data => {
       this.board = data['board'];
-      this.navigationUrl = '/' + this.board.department.handle + '/' + this.board.handle;
       this.canManage = (this.board.actions as any as string[]).includes('EDIT');
+      this.items = [{label: 'View', routerLink: [this.board.department.handle, this.board.handle]}, {
+        label: 'Settings',
+        routerLink: [this.board.department.handle, this.board.handle, 'settings']
+      }];
     });
   }
 

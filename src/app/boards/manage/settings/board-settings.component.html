@@ -1,16 +1,18 @@
 <h1>Settings</h1>
 
 <form [formGroup]="settingsForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
-  <rl-tag-input formControlName="postCategories" placeholder="Add Post category"></rl-tag-input>
+  <div>
+    <label>Post categories</label>
+    <p-chips formControlName="postCategories"></p-chips>
+  </div>
 
   Default post visibility:
-  <md-radio-group formControlName="defaultPostVisibility">
-    <md-radio-button *ngFor="let postVisibility of definitions.postVisibility" [value]="postVisibility">
-      {{'definitions.postVisibility.' + postVisibility | translate}}
-    </md-radio-button>
-  </md-radio-group>
+  <p-radioButton *ngFor="let postVisibility of definitions.postVisibility"
+                 [value]="postVisibility" name="defaultPostVisibility"
+                 formControlName="defaultPostVisibility" [label]="'definitions.postVisibility.' + postVisibility | translate">
+  </p-radioButton>
 
   <board-aliases formGroupName="handles"></board-aliases>
 
-  <button md-raised-button type="submit">Submit</button>
+  <button pButton type="submit" class="ui-button-warning" label="Submit"></button>
 </form>

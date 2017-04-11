@@ -20,7 +20,7 @@ export class AuthenticationDialog implements OnInit {
   private user$: Observable<Account | boolean>;
   private loading: boolean;
   private view: AuthenticationView;
-  private forgottenSent: boolean;
+  private forgottenSent: any;
 
   constructor(private dialogRef: MdDialogRef<AuthenticationDialog>, private stormpath: Stormpath) {
     this.loginFormModel = <any>{};

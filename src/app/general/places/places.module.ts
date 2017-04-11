@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {LocationAutocompleteComponent} from './places-autocomplete.component';
 import {FormsModule} from '@angular/forms';
-import {MaterialModule} from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {GooglePlacesProvider} from './places-google-provider.service';
+import {AutoCompleteModule} from 'primeng/primeng';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,7 @@ import {GooglePlacesProvider} from './places-google-provider.service';
   imports: [
     FormsModule,
     CommonModule,
-    MaterialModule
+    AutoCompleteModule
   ],
   providers: [
     GooglePlacesProvider

@@ -2,32 +2,19 @@
   <form [formGroup]="accountForm" (ngSubmit)="submit()" autocomplete="off">
     <div class="grid">
       <div class="grid__item small--one-whole medium-up--three-eighths medium-up--push-two-sixths">
-        <md-card>
-          <md-card-header>
-            <md-card-title>
-              <h1>Account</h1>
-            </md-card-title>
-          </md-card-header>
-          <md-card-content>
-            <div class="grid">
-              <div class="grid__item small--one-whole medium-up--one-half">
-                <md-input-container class="md-block">
-                  <input mdInput formControlName="givenName" placeholder="First Name" required>
-                </md-input-container>
-                <control-messages [control]="accountForm.controls.givenName"></control-messages>
-              </div>
-              <div class="grid__item small--one-whole medium-up--one-half">
-                <md-input-container class="md-block">
-                  <input mdInput formControlName="surname" placeholder="Last Name" required>
-                </md-input-container>
-                <control-messages [control]="accountForm.controls.surname"></control-messages>
-              </div>
+        <p-panel header="Account">
+          <div class="grid">
+            <div class="grid__item small--one-whole medium-up--one-half">
+              <input pInputText formControlName="givenName" placeholder="First Name" required>
+              <control-messages [control]="accountForm.controls.givenName"></control-messages>
             </div>
-          </md-card-content>
-          <md-card-actions>
-            <button md-raised-button type="submit">Submit</button>
-          </md-card-actions>
-        </md-card>
+            <div class="grid__item small--one-whole medium-up--one-half">
+              <input pInputText formControlName="surname" placeholder="Last Name" required>
+              <control-messages [control]="accountForm.controls.surname"></control-messages>
+            </div>
+          </div>
+          <button pButton class="ui-button-warning" type="submit" label="Submit"></button>
+        </p-panel>
       </div>
     </div>
   </form>

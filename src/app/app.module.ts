@@ -8,13 +8,12 @@ import {AuthenticationDialog} from './authentication/authentication.dialog';
 import {HomeComponent} from './home/home.component';
 import {NotFoundComponent} from './not-found.component';
 import {RouterModule} from '@angular/router';
-import {MaterialModule} from '@angular/material';
+import {MaterialModule, MdDialogModule, MdSnackBarModule} from '@angular/material';
 import {stormpathConfig} from './stormpath.config';
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
 import {AuthedComponent} from './authentication/authed.component';
 import {AuthGuard} from './authentication/auth-guard.service';
-import {MotivationCheckDialog} from './header/motivation-check.dialog';
 import {FileUploadComponent} from './general/file-upload.component';
 import {ResourceService} from './services/resource.service';
 import {BoardManageComponent} from './boards/manage/board-manage.component';
@@ -46,6 +45,11 @@ import {PlacesModule} from './general/places/places.module';
 import {AccountComponent} from './account/account.component';
 import {DepartmentUsersComponent} from './departments/users/department-users.component';
 import {DepartmentManageComponent} from './departments/department-manage.component';
+import {
+  AutoCompleteModule,
+  ButtonModule, CheckboxModule, ChipsModule, DropdownModule, InputTextModule, MessagesModule, PanelModule,
+  RadioButtonModule, TabMenuModule
+} from 'primeng/primeng';
 
 @NgModule({
   declarations: [
@@ -54,7 +58,6 @@ import {DepartmentManageComponent} from './departments/department-manage.compone
     HeaderComponent,
     FooterComponent,
     AccountComponent,
-    MotivationCheckDialog,
     AuthenticationDialog,
     NotFoundComponent,
     HomeComponent,
@@ -149,7 +152,19 @@ import {DepartmentManageComponent} from './departments/department-manage.compone
       },
       {path: '**', component: NotFoundComponent}
     ]),
-    MaterialModule,
+    // PrimeNG modules
+    InputTextModule,
+    ButtonModule,
+    MessagesModule,
+    PanelModule,
+    ChipsModule,
+    RadioButtonModule,
+    TabMenuModule,
+    CheckboxModule,
+    DropdownModule,
+    // Material modules
+    MdDialogModule,
+    MdSnackBarModule,
     FlexLayoutModule,
     BrowserModule,
     FormsModule,
@@ -185,7 +200,7 @@ import {DepartmentManageComponent} from './departments/department-manage.compone
       multi: true
     }, AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver
   ],
-  entryComponents: [AuthenticationDialog, MotivationCheckDialog],
+  entryComponents: [AuthenticationDialog],
   bootstrap: [AppComponent]
 })
 export class AppModule {

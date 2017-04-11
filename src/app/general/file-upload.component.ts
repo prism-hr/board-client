@@ -37,7 +37,7 @@ export class FileUploadComponent implements ControlValueAccessor {
   }
 
   ngOnInit(): void {
-      this.uploader.onBeforeUploadItem = fileItem => {
+    this.uploader.onBeforeUploadItem = fileItem => {
       fileItem.withCredentials = false;
       this.progressPercentage = 0;
       return {fileItem};

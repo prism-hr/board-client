@@ -3,21 +3,17 @@
   <h2 class="center">
     Authenticate
   </h2>
-  <div *ngIf="error" role="alert">
-    <div>
-      <div class="info-badge red">
-        <i class="icon-info"></i> {{error}}
-      </div>
-    </div>
+  <div *ngIf="error">
+    <p-messages [value]="[{severity:'error', detail:error}]"></p-messages>
   </div>
 
   <div *ngIf="view === 'LOGIN'" class="login-container">
     <div class="social-login" fxLayout="row" fxLayoutAlign="space-between center">
-      <button md-raised-button class="linkedin" fxFlex="44%">
-        <i class="icon-social-linkedin"></i> linkedin
+      <button pButton class="linkedin" fxFlex="44%" label="linkedin">
+        <i class="icon-social-linkedin"></i>
       </button>
-      <button md-raised-button class="facebook" fxFlex="44%">
-        <i class="icon-social-facebook"></i> facebook
+      <button pButton class="facebook" fxFlex="44%" label="facebook">
+        <i class="icon-social-facebook"></i>
       </button>
     </div>
     <div class="grid">
@@ -26,18 +22,16 @@
       </div>
       <div class="grid__item one-whole">
         <form #form="ngForm" (ngSubmit)="login(form.value)" autocomplete="off">
-          <md-input-container>
-            <input mdInput placeholder="Email" name="login" [(ngModel)]="loginFormModel.login" required type="email">
-          </md-input-container>
-          <md-input-container>
-            <input mdInput placeholder="Password" name="password" [(ngModel)]="loginFormModel.password" required
-                   type="password">
-          </md-input-container>
+          <input pInputText placeholder="Email" name="login" [(ngModel)]="loginFormModel.login" required type="email">
+          <input pInputText placeholder="Password" name="password" [(ngModel)]="loginFormModel.password" required
+                 type="password">
           <div fxLayout="row" fxLayoutAlign="space-between center">
-            <button md-raised-button type="submit" color="warn" class="full-width">Submit</button>
+            <button pButton type="submit" class="ui-button-warning full-width" label="Submit"></button>
             <div>
-              <button md-button color="warn" (click)="setView('FORGOT')">Forgot password?</button>
-              <button md-button color="warn" (click)="setView('REGISTER')">Register</button>
+              <button pButton type="button" class="ui-button-secondary" label="Forgot password?"
+                      (click)="setView('FORGOT')"></button>
+              <button pButton type="button" class="ui-button-secondary" label="Register"
+                      (click)="setView('REGISTER')"></button>
             </div>
           </div>
         </form>
@@ -47,11 +41,11 @@
 
   <div *ngIf="view === 'REGISTER'" class="register-container">
     <div class="social-login" fxLayout="row" fxLayoutAlign="space-between center">
-      <button md-raised-button class="linkedin" fxFlex="44%">
-        <i class="icon-social-linkedin"></i> linkedin
+      <button pButton class="linkedin" fxFlex="44%" label="linkedin">
+        <i class="icon-social-linkedin"></i>
       </button>
-      <button md-raised-button class="facebook" fxFlex="44%">
-        <i class="icon-social-facebook"></i> facebook
+      <button pButton class="facebook" fxFlex="44%" label="facebook">
+        <i class="icon-social-facebook"></i>
       </button>
     </div>
     <div class="grid">
@@ -62,39 +56,31 @@
         <form #form="ngForm" (ngSubmit)="register(form.value)" autocomplete="off">
           <div class="grid">
             <div class="grid__item small--one-whole medium-up--one-half">
-              <md-input-container>
-                <input mdInput placeholder="First Name" name="givenName" [(ngModel)]="registrationFormModel.givenName"
-                       required>
-              </md-input-container>
+              <input pInputText placeholder="First Name" name="givenName" [(ngModel)]="registrationFormModel.givenName"
+                     required>
             </div>
-            <div class="grid__item small--one-whole medium-up--one-half">
-              <md-input-container>
-                <input mdInput placeholder="Last Name" name="surname" [(ngModel)]="registrationFormModel.surname" required>
-              </md-input-container>
+            <div class="grid__itpem small--one-whole medium-up--one-half">
+              <input pInputText laceholder="Last Name" name="surname" [(ngModel)]="registrationFormModel.surname"
+                     required>
             </div>
             <div class="grid__item one-whole">
-              <md-input-container>
-                <input mdInput placeholder="Email" name="email" [(ngModel)]="registrationFormModel.email" required
-                       type="email">
-              </md-input-container>
+              <input pInputText placeholder="Email" name="email" [(ngModel)]="registrationFormModel.email" required
+                     type="email">
             </div>
             <div class="grid__item one-whole">
-              <md-input-container>
-                <input mdInput placeholder="Password" name="password" [(ngModel)]="registrationFormModel.password" required
-                       type="password">
-              </md-input-container>
+              <input pInputText placeholder="Password" name="password" [(ngModel)]="registrationFormModel.password"
+                     required
+                     type="password">
             </div>
           </div>
-          <div class="info-box" layout-padding>
-            <div class="info-badge blue" layout="row" layout-aling="start center">
-              <i class="icon-exclamation"></i>
-              <span>By registering, you agree to NoticeBoard's User Agreement, Privacy Policy, and Cookie Policy.</span>
-            </div>
-          </div>
+          <p-messages
+            [value]="[{severity:'info', summary:'Email sent', detail:'By registering, you agree to NoticeBoard\'s User Agreement, Privacy Policy, and Cookie Policy.'}]"
+            [closable]="false"></p-messages>
           <div fxLayout="row" fxLayoutAlign="space-between center">
-            <button md-raised-button color="warn" type="submit">Submit</button>
+            <button pButton class="ui-button-warning" type="submit" label="Submit"></button>
             <div>
-              <button md-button color="warn" (click)="setView('LOGIN')">Already Registered?</button>
+              <button pButton class="ui-button-secondary" label="Already Registered?"
+                      (click)="setView('LOGIN')"></button>
             </div>
           </div>
         </form>
@@ -105,22 +91,19 @@
   <div *ngIf="view === 'FORGOT'" class="forgot-container">
     <form *ngIf="!forgottenSent" #form="ngForm" (ngSubmit)="sendForgotten(form.value)" autocomplete="off">
       <div class="index-padding">
-        <md-input-container>
-          <input mdInput placeholder="Email" name="email" [(ngModel)]="forgotPasswordFormModel.email" required
-                 type="email">
-        </md-input-container>
+        <input pInputText placeholder="Email" name="email" [(ngModel)]="forgotPasswordFormModel.email" required
+               type="email">
       </div>
       <div fxLayout="row" fxLayoutAlign="space-between center">
-        <button md-raised-button type="submit" color="warn" class="full-width">Reset Password</button>
-        <button md-button color="warn" (click)="setView('LOGIN')">Back</button>
+        <button pButton type="submit" class="ui-button-warning" class="full-width" label="Reset Password"></button>
+        <button pButton class="ui-button-secondary" label="Back"
+                (click)="setView('LOGIN')"></button>
       </div>
     </form>
-    <div *ngIf="forgottenSent" class="info-box">
-      <div class="info-badge blue">
-        <i class="icon-exclamation"></i>
-        <span>We have sent a password reset link to the email address of the account that you specified.
-        Please check your email for this message, then click on the link.</span>
-      </div>
+    <div *ngIf="forgottenSent">
+      <p-messages
+        [value]="[{severity:'info', summary:'Email sent', detail:'We have sent a password reset link to the email address of the account that you specified. Please check your email for this message, then click on the link.'}]"
+        [closable]="false"></p-messages>
     </div>
   </div>
 

@@ -5,17 +5,19 @@
     Department: <a routerLink="/{{board.department.handle}}">{{board.department.name}}</a>
   </p>
 
-  <md-input-container class="md-block">
-    <input mdInput formControlName="name" placeholder="Board Name" required>
-  </md-input-container>
-  <control-messages [control]="boardForm.controls.name"></control-messages>
+  <div>
+    <label>Board Name</label>
+    <input pInputText formControlName="name" required>
+    <control-messages [control]="boardForm.controls.name"></control-messages>
+  </div>
 
-  <md-input-container class="md-block">
-    <textarea mdInput formControlName="purpose" placeholder="Board Purpose" required></textarea>
-  </md-input-container>
-  <control-messages [control]="boardForm.controls.purpose"></control-messages>
+  <div>
+    <label>Board Purpose</label>
+    <textarea pInputTextarea formControlName="purpose" required></textarea>
+    <control-messages [control]="boardForm.controls.purpose"></control-messages>
+  </div>
 
-  <button md-raised-button type="submit">Submit</button>
+  <button pButton type="submit" label="Submit" class="ui-button-warning"></button>
 </form>
 
 <ul>

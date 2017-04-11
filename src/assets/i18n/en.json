@@ -6,10 +6,22 @@
       "PART_PRIVATE": "Part-private"
     },
     "relationWithDepartment": {
-      "FRIENDS" : "Friends",
-      "FAMILY" : "Family",
-      "AFFAIR" : "Affair",
-      "COINCIDENCE" : "Coincidence"
+      "FRIENDS": {
+        "name": "Friends",
+        "explanationPrompt": "What kind of friends?"
+      },
+      "FAMILY": {
+        "name": "Family",
+        "explanationPrompt": "What kind of family?"
+      },
+      "AFFAIR": {
+        "name": "Affair",
+        "explanationPrompt": "What kind of affair?"
+      },
+      "COINCIDENCE": {
+        "name": "Concidence",
+        "explanationPrompt": "What kind of coincidence?"
+      }
     }
   }
 }

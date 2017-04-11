@@ -8,15 +8,11 @@
     <md-card-content>
       <div class="grid">
         <div class="grid__item small--one-whole medium-up--one-half">
-          <md-input-container class="md-block">
-            <input mdInput formControlName="departmentName" placeholder="Department Name" required>
-          </md-input-container>
+          <input pInputText formControlName="departmentName" placeholder="Department Name" required>
           <control-messages [control]="boardForm.controls.departmentName"></control-messages>
         </div>
         <div class="grid__item small--one-whole medium-up--one-half">
-          <md-input-container class="md-block">
-            <input mdInput formControlName="name" placeholder="Board Name" required>
-          </md-input-container>
+          <input pInputText formControlName="name" placeholder="Board Name" required>
           <control-messages [control]="boardForm.controls.name"></control-messages>
         </div>
       </div>
@@ -24,7 +20,8 @@
     <md-card-actions>
       <div class="grid grid--half-gutters">
         <div class="grid__item one-whole">
-          <button md-raised-button color="warn" type="submit" [disabled]="boardForm.invalid">Submit</button>
+          <button pButton class="ui-button-warning" type="submit" [disabled]="boardForm.invalid"
+                  label="Submit"></button>
         </div>
       </div>
     </md-card-actions>

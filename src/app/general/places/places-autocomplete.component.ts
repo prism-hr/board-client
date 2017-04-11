@@ -1,6 +1,6 @@
 import {Component, forwardRef, NgZone, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {Observable, Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import {GooglePlacesProvider} from './places-google-provider.service';
 import * as _ from 'lodash';
 import LocationDTO = b.LocationDTO;
@@ -9,16 +9,9 @@ import AutocompletePrediction = google.maps.places.AutocompletePrediction;
 @Component({
   selector: 'places-autocomplete',
   template: `
-    <md-input-container>
-      <input type="text" mdInput [(ngModel)]="model" (ngModelChange)="modelChanged($event)" [mdAutocomplete]="auto"
-             (blur)="onTouch($event)" placeholder="e.g. London">
-    </md-input-container>
-
-    <md-autocomplete #auto="mdAutocomplete" [displayWith]="displayFn">
-      <md-option *ngFor="let option of filteredLocations | async" [value]="option">
-        {{option.description}}
-      </md-option>
-    </md-autocomplete>
+    <p-autoComplete [(ngModel)]="model" (completeMethod)="search($event)"
+                    (onBlur)="onTouch($event)" placeholder="e.g. London"
+                    [suggestions]="results" field="name" (onSelect)="locationSelected()"></p-autoComplete>
   `,
   providers: [
     {
@@ -32,17 +25,16 @@ export class LocationAutocompleteComponent implements ControlValueAccessor, OnIn
 
   onChange: any;
   onTouch: any;
-  filteredLocations: Observable<LocationDTO[]>;
+  results: LocationDTO[];
   model: LocationDTO | AutocompletePrediction | string;
-  modelChanges$: Subject<LocationDTO | string> = new Subject();
+  search$: Subject<string> = new Subject();
 
   constructor(private googlePlacesProvider: GooglePlacesProvider, private zone: NgZone) {
   }
 
   ngOnInit() {
-    this.filteredLocations = this.modelChanges$
+    this.search$
       .debounceTime(300)
-      .map(user => user && typeof user === 'object' ? user.name : user)
       .switchMap((input: string) => {
         if (!input || input.trim() === '') {
           return [];
@@ -59,15 +51,20 @@ export class LocationAutocompleteComponent implements ControlValueAccessor, OnIn
             });
             return subject.asObservable();
           });
+      })
+      .subscribe((results: any[]) => {
+        results.forEach(r => {
+          r.name = r.description
+        });
+        this.results = results;
       });
   }
 
-  modelChanged(val) {
-    this.modelChanges$.next(val);
-    if (typeof this.model !== 'object') {
-      this.onChange(null);
-      return;
-    }
+  search(event) {
+    this.search$.next(event.query);
+  }
+
+  locationSelected() {
     this.googlePlacesProvider.getPlacesServices()
       .subscribe(services => {
         const placesService: google.maps.places.PlacesService = services[1];

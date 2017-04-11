@@ -1,12 +1,16 @@
 <h1>Department</h1>
 
 <form [formGroup]="departmentForm" (ngSubmit)="submit()" autocomplete="off">
-  <md-input-container class="md-block">
-    <input mdInput formControlName="name" placeholder="Department Name" required>
-  </md-input-container>
-  <control-messages [control]="departmentForm.controls.name"></control-messages>
+  <div>
+    <label>Department Name</label>
+    <input pInputText formControlName="name" required>
+    <control-messages [control]="departmentForm.controls.name"></control-messages>
+  </div>
 
-  <rl-tag-input formControlName="memberCategories" placeholder="Add Member category"></rl-tag-input>
+  <div>
+    <label>Member categories</label>
+    <p-chips formControlName="memberCategories"></p-chips>
+  </div>
 
   <board-aliases formGroupName="handles" [hideBoard]="true"></board-aliases>
 

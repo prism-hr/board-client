@@ -6,6 +6,8 @@ import {ValidationService} from '../../validation/validation.service';
 import * as _ from 'lodash';
 import {MdSnackBar} from '@angular/material';
 import {DefinitionsService} from '../../services/definitions.service';
+import {SelectItem} from 'primeng/primeng';
+import {TranslateService} from '@ngx-translate/core';
 import DepartmentDTO = b.DepartmentDTO;
 import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
@@ -18,15 +20,22 @@ import PostRepresentation = b.PostRepresentation;
   styleUrls: ['post-new.component.scss']
 })
 export class PostNewComponent implements OnInit {
-  definitions: { [key: string]: any };
   board: BoardRepresentation;
   post: PostRepresentation;
   postForm: FormGroup;
+  relations: SelectItem[];
   showExistingRelation: boolean;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: Http, private fb: FormBuilder,
-              private snackBar: MdSnackBar, private definitionsService: DefinitionsService) {
-    this.definitions = definitionsService.getDefinitions();
+              private snackBar: MdSnackBar, private translationService: TranslateService,
+              private definitionsService: DefinitionsService) {
+    const definitions = definitionsService.getDefinitions();
+    translationService.get('definitions.relationWithDepartment')
+      .subscribe(relationTranslations => {
+        this.relations = (definitions['relationWithDepartment'] as string[]).map(relation => {
+          return {label: relationTranslations[relation].name, value: relation};
+        })
+      });
   }
 
   ngOnInit() {
@@ -38,17 +47,15 @@ export class PostNewComponent implements OnInit {
         this.post = data['post'];
       }
 
-      const existingPostCategories = this.post ? this.post.postCategories : [];
-      const existingMemberCategories = this.post ? this.post.memberCategories : [];
-
       this.postForm = this.fb.group({
         name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
         description: ['', [Validators.required, Validators.maxLength(2000)]],
         organizationName: ['', [Validators.required, Validators.maxLength(255)]],
         location: [null, Validators.required],
         existingRelation: [],
-        postCategoriesMap: this.fb.array(this.board.postCategories.map(c => this.fb.control(existingPostCategories.includes(c)))),
-        memberCategoriesMap: this.fb.array(this.board.department.memberCategories.map(c => this.fb.control(existingMemberCategories.includes(c)))),
+        existingRelationExplanation: [],
+        postCategories: [],
+        memberCategories: [],
         applyType: [null, Validators.required],
         applyWebsite: [null, Validators.maxLength(255)],
         applyDocument: [],
@@ -61,10 +68,10 @@ export class PostNewComponent implements OnInit {
         this.postForm.patchValue(formValue);
       }
 
-      if (_.intersection(this.board.actions as any as string[], ['EXTEND']).length === 0) {
-        // user has no permission to create trusted post, has to specify relation type
-        this.showExistingRelation = true;
-      }
+      // if (_.intersection(this.board.actions as any as string[], ['EXTEND']).length === 0) {
+      // user has no permission to create trusted post, has to specify relation type
+      this.showExistingRelation = true;
+      // }
     });
 
     this.postForm.get('applyType').valueChanges
@@ -78,12 +85,12 @@ export class PostNewComponent implements OnInit {
       });
   }
 
-  submit() {
-    const post: PostDTO = _.pick(this.postForm.value, ['name', 'description', 'organizationName', 'location', 'existingRelation']);
-    post.postCategories = _.without(this.postForm.value.postCategoriesMap.map((c, i) => c ? this.board.postCategories[i] : null), null);
-    post.memberCategories = _.without(this.postForm.value.memberCategoriesMap.map((c, i) => c ? this.board.department.memberCategories[i] : null), null);
-    const applyProperty = 'apply' + _.capitalize(this.postForm.value.applyType);
-    post[applyProperty] = this.postForm.value[applyProperty];
+  submit(event: Event) {
+    event.preventDefault();
+    const post: PostDTO = _.pick(this.postForm.value, ['name', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories', 'memberCategories']);
+    post.applyWebsite = this.postForm.value.applyType === 'website' ? this.postForm.value.applyWebsite : null;
+    post.applyDocument = this.postForm.value.applyType === 'document' ? this.postForm.value.applyDocument : null;
+    post.applyEmail = this.postForm.value.applyType === 'email' ? this.postForm.value.applyEmail : null;
 
     if (this.post) {
       this.http.patch('/api/posts/' + this.post.id, post)

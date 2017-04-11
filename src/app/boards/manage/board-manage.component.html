@@ -1,18 +1,3 @@
-<nav *ngIf="canManage" md-tab-nav-bar>
-  <a md-tab-link
-     routerLink="{{navigationUrl}}"
-     routerLinkActive #view="routerLinkActive"
-     [routerLinkActiveOptions]="{exact: true}"
-     [active]="view.isActive">
-    View
-  </a>
-  <a md-tab-link
-     routerLink="{{navigationUrl}}/settings"
-     routerLinkActive #settings="routerLinkActive"
-     [routerLinkActiveOptions]="{exact: true}"
-     [active]="settings.isActive">
-    Settings
-  </a>
-</nav>
+<p-tabMenu [model]="items"></p-tabMenu>
 
 <router-outlet></router-outlet>
