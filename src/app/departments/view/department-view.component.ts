@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Http, Response} from '@angular/http';
 import {MdSnackBar} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -15,7 +15,8 @@ export class DepartmentViewComponent implements OnInit {
   departmentForm: FormGroup;
 
 
-  constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder, private snackBar: MdSnackBar) {
+  constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder, private router: Router,
+              private snackBar: MdSnackBar) {
     this.departmentForm = this.fb.group({
       name: ['', [Validators.minLength(3), Validators.required, Validators.maxLength(255)]],
       memberCategories: [],
@@ -40,7 +41,10 @@ export class DepartmentViewComponent implements OnInit {
     department.handle = this.departmentForm.value.handles.departmentHandle;
     this.http.patch('/api/departments/' + this.department.id, department)
       .subscribe(() => {
-        this.snackBar.open("Department Saved!");
+        this.router.navigate([department.handle])
+          .then(() => {
+            this.snackBar.open('Department Saved!');
+          });
       }, (error: Response) => {
         if (error.status === 422) {
           if (error.json().exceptionCode === 'DUPLICATE_DEPARTMENT') {

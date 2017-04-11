@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Http, Response} from '@angular/http';
 import * as _ from 'lodash';
 import {MdSnackBar} from '@angular/material';
@@ -17,8 +17,8 @@ export class BoardSettingsComponent implements OnInit {
   board: BoardRepresentation;
   settingsForm: FormGroup;
 
-  constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder, private snackBar: MdSnackBar,
-              private definitionsService: DefinitionsService) {
+  constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder, private router: Router,
+              private snackBar: MdSnackBar,              private definitionsService: DefinitionsService) {
     this.definitions = definitionsService.getDefinitions();
     this.settingsForm = this.fb.group({
       postCategories: [[]],
@@ -44,7 +44,10 @@ export class BoardSettingsComponent implements OnInit {
     board.handle = this.settingsForm.value.handles.boardHandle;
     this.http.patch('/api/boards/' + this.board.id, board)
       .subscribe(() => {
-        this.snackBar.open('Board Saved!');
+        this.router.navigate([this.board.department.handle, board.handle, 'settings'])
+          .then(() => {
+            this.snackBar.open('Board Saved!');
+          });
       }, (error: Response | any) => {
         if (error.status === 422) {
           if (error.json().exceptionCode === 'DUPLICATE_BOARD_HANDLE') {
