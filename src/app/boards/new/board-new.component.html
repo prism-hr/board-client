@@ -12,7 +12,7 @@
         <div class="grid">
           <div class="grid__item small--one-whole medium-up--two-thirds">
             <div class="grid">
-              <div class="grid__item one-whole">
+              <div class="grid__item one-whole" formGroupName="department">
                 <label>Department Name</label>
                 <input pInputText formControlName="name" required>
                 <control-messages [control]="boardForm.get('department').get('name')"></control-messages>
