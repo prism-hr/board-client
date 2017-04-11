@@ -21,7 +21,7 @@ export class DepartmentViewComponent implements OnInit {
       memberCategories: [],
       documentLogo: [],
       handles: this.fb.group({
-        departmentHandle: ['', [Validators.required, Validators.maxLength(15)]]
+        departmentHandle: ['', [Validators.required, Validators.maxLength(25)]]
       })
     });
   }

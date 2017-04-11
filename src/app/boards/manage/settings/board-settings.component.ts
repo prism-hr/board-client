@@ -25,7 +25,7 @@ export class BoardSettingsComponent implements OnInit {
       defaultPostVisibility: [null, Validators.required],
       handles: this.fb.group({
         departmentHandle: [{value: '', disabled: true}, [Validators.required, Validators.maxLength(15)]],
-        boardHandle: ['', [Validators.required, Validators.maxLength(15)]]
+        boardHandle: ['', [Validators.required, Validators.maxLength(25)]]
       })
     });
   }

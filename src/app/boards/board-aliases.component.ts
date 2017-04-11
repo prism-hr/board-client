@@ -35,7 +35,7 @@ export class BoardAliasesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.applicationUrl = this.definitionsService.getDefinitions().applicationUrl;
+    this.applicationUrl = this.definitionsService.getDefinitions()['applicationUrl'];
   }
 
 

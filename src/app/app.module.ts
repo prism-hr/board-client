@@ -8,7 +8,7 @@ import {AuthenticationDialog} from './authentication/authentication.dialog';
 import {HomeComponent} from './home/home.component';
 import {NotFoundComponent} from './not-found.component';
 import {RouterModule} from '@angular/router';
-import {MaterialModule, MdDialogModule, MdSnackBarModule} from '@angular/material';
+import {MaterialModule, MdCard, MdCardModule, MdDialogModule, MdSnackBarModule} from '@angular/material';
 import {stormpathConfig} from './stormpath.config';
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
@@ -156,7 +156,6 @@ import {
     InputTextModule,
     ButtonModule,
     MessagesModule,
-    PanelModule,
     ChipsModule,
     RadioButtonModule,
     TabMenuModule,
@@ -165,6 +164,7 @@ import {
     // Material modules
     MdDialogModule,
     MdSnackBarModule,
+    MdCardModule,
     FlexLayoutModule,
     BrowserModule,
     FormsModule,

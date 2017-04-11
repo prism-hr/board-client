@@ -1,54 +1,61 @@
 <div class="section">
   <form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
-    <p-panel header="Create a new Board">
 
-      <div class="grid" *ngIf="newDepartment">
-        <div class="grid__item small--one-whole medium-up--two-thirds">
-          <div class="grid">
-            <div class="grid__item one-whole">
-              <label>Department Name</label>
-              <input pInputText formControlName="name" required>
-              <control-messages [control]="boardForm.get('department').get('name')"></control-messages>
-            </div>
-            <div class="grid__item one-whole">
-              <label>Board Name</label>
-              <input pInputText formControlName="name" required>
-              <control-messages [control]="boardForm.controls.name"></control-messages>
-            </div>
-            <div class="grid__item one-whole">
-              <label>Board Purpose</label>
-              <textarea pInputTextarea formControlName="purpose" required></textarea>
-              <control-messages [control]="boardForm.controls.purpose"></control-messages>
+    <md-card>
+      <md-card-header>
+        <md-card-title>
+          <h1>Create a new Board</h1>
+        </md-card-title>
+      </md-card-header>
+      <md-card-content>
+
+        <div class="grid">
+          <div class="grid__item small--one-whole medium-up--two-thirds">
+            <div class="grid">
+              <div class="grid__item one-whole">
+                <label>Department Name</label>
+                <input pInputText formControlName="name" required>
+                <control-messages [control]="boardForm.get('department').get('name')"></control-messages>
+              </div>
+              <div class="grid__item one-whole">
+                <label>Board Name</label>
+                <input pInputText formControlName="name" required>
+                <control-messages [control]="boardForm.controls.name"></control-messages>
+              </div>
+              <div class="grid__item one-whole">
+                <label>Board Purpose</label>
+                <textarea pInputTextarea formControlName="purpose" required></textarea>
+                <control-messages [control]="boardForm.controls.purpose"></control-messages>
+              </div>
             </div>
           </div>
+          <div class="grid__item small--one-whole medium-up--one-third" formGroupName="department">
+            <file-upload formControlName="documentLogo" class="logo-uploader" type="logo"></file-upload>
+          </div>
         </div>
-        <div class="grid__item small--one-whole medium-up--one-third" formGroupName="department">
-          <file-upload formControlName="documentLogo" class="logo-uploader" type="logo"></file-upload>
+
+        <div>
+          <label>Post categories</label>
+          <p-chips formControlName="postCategories"></p-chips>
         </div>
-      </div>
-      <div *ngIf="newDepartment !== null">
-        <board-aliases formGroupName="handles" [disableDepartment]="!newDepartment"></board-aliases>
-      </div>
 
-      <div>
-        <label>Post categories</label>
-        <p-chips formControlName="postCategories"></p-chips>
-      </div>
+        <p-messages
+          [value]="[{severity:'info', detail:'Define some categories to describe the topics that will be covered by your board. Members will be able to use these categories for filtering.'}]"
+          [closable]="false"></p-messages>
 
-      <p-messages
-        [value]="[{severity:'info', detail:'Define some categories to describe the topics that will be covered by your board. Members will be able to use these categories for filtering.'}]"
-        [closable]="false"></p-messages>
+        <div formGroupName="department">
+          <label>Member categories</label>
+          <p-chips formControlName="memberCategories"></p-chips>
+        </div>
 
-      <div *ngIf="newDepartment" formGroupName="department">
-        <label>Member categories</label>
-        <p-chips formControlName="memberCategories"></p-chips>
-      </div>
+        <p-messages
+          [value]="[{severity:'info', detail:'Define some categories to describe the groups of members in your department. Contributors will be able to use these categories for targeting.'}]"
+          [closable]="false"></p-messages>
 
-      <p-messages
-        [value]="[{severity:'info', detail:'Define some categories to describe the groups of members in your department. Contributors will be able to use these categories for targeting.'}]"
-        [closable]="false"></p-messages>
-
-      <button pButton class="ui-button-warning" type="submit" [disabled]="boardForm.invalid" label="Submit"></button>
-    </p-panel>
+      </md-card-content>
+      <md-card-actions>
+        <button pButton class="ui-button-warning" type="submit" [disabled]="boardForm.invalid" label="Submit"></button>
+      </md-card-actions>
+    </md-card>
   </form>
 </div>

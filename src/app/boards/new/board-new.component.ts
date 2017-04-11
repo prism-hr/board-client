@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Http, Response} from '@angular/http';
 import {DefinitionsService} from '../../services/definitions.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import {AuthGuard} from '../../authentication/auth-guard.service';
 import DepartmentDTO = b.DepartmentDTO;
@@ -16,10 +16,7 @@ import BoardRepresentation = b.BoardRepresentation;
   styleUrls: ['board-new.component.scss']
 })
 export class BoardNewComponent implements OnInit {
-  departments: DepartmentDTO[];
-  selectedDepartment: DepartmentDTO;
   board: BoardDTO;
-  newDepartment: Boolean;
   boardForm: FormGroup;
   applicationUrl: string;
 
@@ -33,14 +30,8 @@ export class BoardNewComponent implements OnInit {
         name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
         memberCategories: [[]],
         documentLogo: []
-      }),
-      // selectedDepartment: ['', Validators.required],
-      handles: this.fb.group({
-        departmentHandle: ['', [Validators.required, Validators.maxLength(15)]],
-        boardHandle: ['', [Validators.required, Validators.maxLength(15)]]
       })
     });
-    this.newDepartment = true; // department select turned off
   }
 
   ngOnInit() {
@@ -56,22 +47,11 @@ export class BoardNewComponent implements OnInit {
           }
         }
       });
-    // this.departments = this.route.snapshot.data['departments'];
-    // this.departments.push({name: "Create a new department"});
-    this.applicationUrl = this.definitionsService.getDefinitions().applicationUrl;
-  }
-
-  cancelNewDepartment() {
-    this.newDepartment = null;
-    this.boardForm.patchValue({selectedDepartment: null, department: {name: ''}});
-    this.boardForm.reset();
+    this.applicationUrl = this.definitionsService.getDefinitions()['applicationUrl'];
   }
 
   submit() {
     let board: BoardDTO = _.pick(this.boardForm.value, ['name', 'purpose', 'postCategories', 'department']);
-    board = Object.assign({}, board);
-    board.handle = this.boardForm.value.handles.boardHandle;
-    board.department.handle = this.boardForm.value.handles.departmentHandle;
     this.authGuard.ensureAuthenticated(true) // open dialog if not authenticated
       .subscribe(authenticated => {
         if (!authenticated) {
@@ -93,17 +73,4 @@ export class BoardNewComponent implements OnInit {
       });
   }
 
-  departmentSelected() {
-    const selected: DepartmentRepresentation = this.boardForm.value.selectedDepartment;
-    const departmentHandle: FormControl = this.boardForm.controls['handles']['controls'].departmentHandle;
-    if (selected.id) {
-      this.boardForm.patchValue({department: selected, handles: {departmentHandle: selected.handle}});
-      departmentHandle.disable();
-      this.newDepartment = false;
-    } else {
-      this.newDepartment = true;
-      this.boardForm.patchValue({department: {name: ''}, handles: {departmentHandle: ''}});
-      departmentHandle.enable();
-    }
-  }
 }
