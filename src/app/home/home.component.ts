@@ -1,6 +1,5 @@
 ///<reference path="../../board.d.ts"/>
-import {Component, OnInit} from '@angular/core';
-import {Http} from '@angular/http';
+import {Component} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Account, Stormpath} from 'angular-stormpath';
 import {ResourceService} from '../services/resource.service';
@@ -14,7 +13,6 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
 export class HomeComponent {
 
   private user: Account | boolean;
-  private boards: BoardRepresentation[];
   private departments: DepartmentRepresentation[];
 
   constructor(private resourceService: ResourceService, private stormpath: Stormpath) {
@@ -23,14 +21,16 @@ export class HomeComponent {
   ngOnInit(): void {
     this.stormpath.user$.subscribe(user => {
       this.user = user;
-      this.boards = null;
       this.departments = null;
-      if(user) {
-        this.resourceService.getBoards().subscribe(boards => {
-          this.boards = boards;
-        });
-        this.resourceService.getDepartments().subscribe(departments => {
-          this.departments = departments;
+      if (user) {
+        Observable.forkJoin([this.resourceService.getBoards(), this.resourceService.getDepartments()]).subscribe(results => {
+          const boards: BoardRepresentation[] = results[0];
+          this.departments = results[1];
+          boards.forEach(b => {
+            const department = this.departments.find(d => b.department.id === d.id);
+            department.boards = department.boards || [];
+            department.boards.push(b);
+          })
         });
       }
     });
