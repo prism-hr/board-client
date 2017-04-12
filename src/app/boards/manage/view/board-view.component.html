@@ -1,5 +1,3 @@
-<h1>Edit Board</h1>
-
 <form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
   <p>
     Department: <a routerLink="/{{board.department.handle}}">{{board.department.name}}</a>
@@ -20,11 +18,41 @@
   <button pButton type="submit" label="Submit" class="ui-button-warning"></button>
 </form>
 
-<ul>
-  <li *ngFor="let post of posts">
-    <a [routerLink]="post.id">{{post.name}}</a>
-  </li>
-  <li>
-    <a [routerLink]="['newPost']">Add new post</a>
-  </li>
-</ul>
+<div>
+  <a pButton routerLink="newPost" class="ui-button-primary" icon="fa-plus" label="New Post"></a>
+</div>
+
+<div *ngFor="let post of posts" class="grid__item small--one-whole medium-up--one-third">
+  <md-card>
+    <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
+      <md-card-avatar class="logo-holder-small default-logo"></md-card-avatar>
+      <md-card-title>
+        <h3>
+          <a [routerLink]="post.id">{{post.name}}</a>
+        </h3>
+      </md-card-title>
+    </md-card-header>
+    <md-card-content>
+      {{post.description}}
+    </md-card-content>
+    <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+      <span *ngIf="post.actionView === 'REVISE'">
+        <button pButton class="ui-button-success" label="Accept" (click)="executePostAction(post, 'ACCEPT')"></button>
+        <button pButton class="ui-button-danger" label="Reject" (click)="executePostAction(post, 'REJECT')"></button>
+        <a pButton [routerLink]="post.id" label="Revise"></a>
+      </span>
+      <span *ngIf="post.actionView === 'CORRECT'">
+        <a pButton [routerLink]="post.id" label="Correct"></a>
+      </span>
+      <span *ngIf="post.actionView === 'EDIT'">
+        <a pButton [routerLink]="post.id" label="Edit"></a>
+      </span>
+      <span *ngIf="post.actionView === 'VIEW'">
+        <a pButton [routerLink]="post.id" label="View"></a>
+      </span>
+    </md-card-actions>
+  </md-card>
+
+</div>
+
+

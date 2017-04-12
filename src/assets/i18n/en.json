@@ -22,6 +22,12 @@
         "name": "Concidence",
         "explanationPrompt": "What kind of coincidence?"
       }
+    },
+    "action": {
+      "ACCEPT": "Accept",
+      "SUSPEND": "Suspend",
+      "CORRECT": "Correct",
+      "REJECT": "Reject"
     }
   }
 }

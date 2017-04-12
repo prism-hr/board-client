@@ -1,9 +1,17 @@
 <h1 *ngIf="!post">Create a new post</h1>
 <h1 *ngIf="post">Edit Post</h1>
 
-<a routerLink="../">Back</a>
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <a routerLink="../">Back</a>
+  <span>
+    <button *ngIf="availableActions.indexOf('ACCEPT') > -1" pButton label="Accept"
+            (click)="executeAction('ACCEPT')"></button>
+    <button *ngIf="availableActions.indexOf('SUSPEND') > -1" pButton label="Suspend"
+            (click)="executeAction('SUSPEND')"></button>
+  </span>
+</div>
 
-<form [formGroup]="postForm" (ngSubmit)="submit($event)" autocomplete="off" novalidate>
+<form [formGroup]="postForm" novalidate>
 
   <div>
     <label>Title of your post</label>
@@ -37,15 +45,18 @@
   </div>
 
   <div *ngIf="showExistingRelation">
-    <label>What is your relationship with our department?</label>
-    <p-dropdown [options]="relations" formControlName="existingRelation"></p-dropdown>
-    <control-messages [control]="postForm.controls.existingRelation"></control-messages>
-  </div>
+    <div>
+      <label>What is your relationship with our department?</label>
+      <p-dropdown [options]="relations" formControlName="existingRelation" placeholder="Select relationship..."></p-dropdown>
+      <control-messages [control]="postForm.controls.existingRelation"></control-messages>
+    </div>
 
-  <div *ngIf="postForm.value.existingRelation">
-    <label>{{'definitions.relationWithDepartment.' + postForm.value.existingRelation + ".explanationPrompt" | translate}}</label>
-    <textarea pInputTextarea formControlName="existingRelationExplanation" required></textarea>
-    <control-messages [control]="postForm.controls.existingRelationExplanation"></control-messages>
+    <div *ngIf="postForm.value.existingRelation">
+      <label>{{'definitions.relationWithDepartment.' + postForm.value.existingRelation + ".explanationPrompt" |
+        translate}}</label>
+      <textarea pInputTextarea formControlName="existingRelationExplanation" required></textarea>
+      <control-messages [control]="postForm.controls.existingRelationExplanation"></control-messages>
+    </div>
   </div>
 
   <p>Who do you want to share your post with?</p>
@@ -84,7 +95,24 @@
     <control-messages [control]="postForm.controls.applyEmail"></control-messages>
   </div>
 
-  <div layout="column" layout-align="space-between stretch">
-    <button pButton type="submit" [disabled]="postForm.invalid" label="Submit"></button>
+  <div *ngIf="actionView === 'REVISE'" layout="column" layout-align="space-between stretch">
+    <button pButton [disabled]="postForm.invalid" label="Accept"
+            (click)="executeAction('ACCEPT', true)"></button>
+    <button pButton class="ui-button-warning" [disabled]="postForm.invalid" label="Request Correction"
+            (click)="executeAction('SUSPEND', true)"></button>
+    <button pButton class="ui-button-danger" label="Reject" (click)="executeAction('REJECT')"></button>
   </div>
+
+  <div *ngIf="actionView === 'CORRECT'" layout="column" layout-align="space-between stretch">
+    <button pButton [disabled]="postForm.invalid" label="Correct" (click)="executeAction('CORRECT', true)"></button>
+  </div>
+
+  <div *ngIf="actionView === 'EDIT'" layout="column" layout-align="space-between stretch">
+    <button pButton [disabled]="postForm.invalid" label="Save" (click)="save()"></button>
+  </div>
+
+  <div *ngIf="actionView === 'CREATE'" layout="column" layout-align="space-between stretch">
+    <button pButton [disabled]="postForm.invalid" label="Submit" (click)="create()"></button>
+  </div>
+
 </form>

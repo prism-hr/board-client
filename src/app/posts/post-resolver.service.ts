@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Http} from '@angular/http';
 import DepartmentDTO = b.DepartmentDTO;
 import PostRepresentation = b.PostRepresentation;

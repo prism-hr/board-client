@@ -8,7 +8,7 @@ import {AuthenticationDialog} from './authentication/authentication.dialog';
 import {HomeComponent} from './home/home.component';
 import {NotFoundComponent} from './not-found.component';
 import {RouterModule} from '@angular/router';
-import {MaterialModule, MdCard, MdCardModule, MdDialogModule, MdSnackBarModule} from '@angular/material';
+import {MdCardModule, MdDialogModule, MdSnackBarModule} from '@angular/material';
 import {stormpathConfig} from './stormpath.config';
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
@@ -46,10 +46,17 @@ import {AccountComponent} from './account/account.component';
 import {DepartmentUsersComponent} from './departments/users/department-users.component';
 import {DepartmentManageComponent} from './departments/department-manage.component';
 import {
-  AutoCompleteModule,
-  ButtonModule, CheckboxModule, ChipsModule, DropdownModule, InputTextModule, MessagesModule, PanelModule,
-  RadioButtonModule, TabMenuModule
+  ButtonModule,
+  CheckboxModule,
+  ChipsModule,
+  DropdownModule,
+  InputTextModule,
+  MessagesModule,
+  RadioButtonModule,
+  SelectButtonModule,
+  TabMenuModule
 } from 'primeng/primeng';
+import {PostService} from './posts/post.service';
 
 @NgModule({
   declarations: [
@@ -198,7 +205,7 @@ import {
       useFactory: DefinitionsLoader,
       deps: [DefinitionsService],
       multi: true
-    }, AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver
+    }, AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService
   ],
   entryComponents: [AuthenticationDialog],
   bootstrap: [AppComponent]

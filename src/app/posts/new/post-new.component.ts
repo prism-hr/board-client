@@ -8,12 +8,14 @@ import {MdSnackBar} from '@angular/material';
 import {DefinitionsService} from '../../services/definitions.service';
 import {SelectItem} from 'primeng/primeng';
 import {TranslateService} from '@ngx-translate/core';
+import {PostService} from '../post.service';
 import DepartmentDTO = b.DepartmentDTO;
 import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import BoardRepresentation = b.BoardRepresentation;
 import PostDTO = b.PostDTO;
 import PostRepresentation = b.PostRepresentation;
+import Action = b.Action;
 
 @Component({
   templateUrl: 'post-new.component.html',
@@ -25,16 +27,18 @@ export class PostNewComponent implements OnInit {
   postForm: FormGroup;
   relations: SelectItem[];
   showExistingRelation: boolean;
+  actionView: string;
+  availableActions: Action[];
 
   constructor(private route: ActivatedRoute, private router: Router, private http: Http, private fb: FormBuilder,
               private snackBar: MdSnackBar, private translationService: TranslateService,
-              private definitionsService: DefinitionsService) {
+              private definitionsService: DefinitionsService, private postService: PostService) {
     const definitions = definitionsService.getDefinitions();
     translationService.get('definitions.relationWithDepartment')
       .subscribe(relationTranslations => {
         this.relations = (definitions['relationWithDepartment'] as string[]).map(relation => {
           return {label: relationTranslations[relation].name, value: relation};
-        })
+        });
       });
   }
 
@@ -54,8 +58,8 @@ export class PostNewComponent implements OnInit {
         location: [null, Validators.required],
         existingRelation: [],
         existingRelationExplanation: [],
-        postCategories: [],
-        memberCategories: [],
+        postCategories: [[]],
+        memberCategories: [[]],
         applyType: [null, Validators.required],
         applyWebsite: [null, Validators.maxLength(255)],
         applyDocument: [],
@@ -64,12 +68,13 @@ export class PostNewComponent implements OnInit {
 
       if (this.post) {
         const formValue: any = Object.assign({}, this.post);
-        formValue.applyType = formValue.applyWebsite ? 'website' : (formValue.applyDocument ? 'document' : (formValue.applyEmail ? 'email' : null));
+        formValue.applyType = formValue.applyWebsite ? 'website' :
+          (formValue.applyDocument ? 'document' : (formValue.applyEmail ? 'email' : null));
         this.postForm.patchValue(formValue);
       }
 
       const extendAction = this.board.actions.find(a => (a.action as any as string) === 'EXTEND' && (a.scope as any as string) === 'POST');
-      if ((extendAction.state as any as string) === 'DRAFT') {
+      if (!this.post && (extendAction.state as any as string) === 'DRAFT') {
         // user has no permission to create trusted post, has to specify relation type
         this.showExistingRelation = true;
       }
@@ -84,26 +89,43 @@ export class PostNewComponent implements OnInit {
         this.postForm.get('applyDocument').updateValueAndValidity();
         this.postForm.get('applyEmail').updateValueAndValidity();
       });
+
+    this.actionView = this.post ? this.postService.getActionView(this.post) : 'CREATE';
+    this.availableActions = this.post ? this.post.actions.map(a => a.action) : [];
   }
 
-  submit(event: Event) {
-    event.preventDefault();
-    const post: PostDTO = _.pick(this.postForm.value, ['name', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories', 'memberCategories']);
+  save() {
+    const post = this.generatePostRequestBody();
+    this.http.patch('/api/posts/' + this.post.id, post)
+      .subscribe(() => {
+        this.snackBar.open('Board Saved!');
+      });
+  }
+
+  create() {
+    const post = this.generatePostRequestBody();
+    this.http.post('/api/boards/' + this.board.id + '/posts', post)
+      .subscribe(() => {
+        this.router.navigate([this.board.department.handle, this.board.handle]);
+      });
+  }
+
+  executeAction(action: string, sendForm?: boolean) {
+    this.http.post('/api/posts/' + this.post.id + '/' + action.toLowerCase(), sendForm ? this.generatePostRequestBody() : {})
+      .subscribe(() => {
+        this.router.navigate([this.board.department.handle, this.board.handle])
+          .then(() => {
+            this.snackBar.open('You action has been made.');
+          });
+      });
+  }
+
+  private generatePostRequestBody() {
+    const post: PostDTO = _.pick(this.postForm.value,
+      ['name', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories', 'memberCategories']);
     post.applyWebsite = this.postForm.value.applyType === 'website' ? this.postForm.value.applyWebsite : null;
     post.applyDocument = this.postForm.value.applyType === 'document' ? this.postForm.value.applyDocument : null;
     post.applyEmail = this.postForm.value.applyType === 'email' ? this.postForm.value.applyEmail : null;
-
-    if (this.post) {
-      this.http.patch('/api/posts/' + this.post.id, post)
-        .subscribe(() => {
-          this.snackBar.open("Board Saved!");
-        });
-    } else {
-      this.http.post('/api/boards/' + this.board.id + '/posts', post)
-        .subscribe(() => {
-          this.router.navigate([this.board.department.handle, this.board.handle]);
-        });
-    }
+    return post;
   }
-
 }
