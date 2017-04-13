@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Http, URLSearchParams} from '@angular/http';
 import DepartmentRepresentation = b.DepartmentRepresentation;
 
@@ -17,7 +17,7 @@ export class DepartmentResolver implements Resolve<DepartmentRepresentation> {
     }
     const departmentHandle = route.parent.params['departmentHandle'];
     const params = new URLSearchParams();
-    params.set("handle", departmentHandle);
+    params.set('handle', departmentHandle);
     return this.http.get('/api/departments', {search: params}).map(res => res.json());
   }
 

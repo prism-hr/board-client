@@ -19,7 +19,7 @@ export class AccountComponent implements OnInit {
   ngOnInit(): void {
     this.stormpath.user$
       .subscribe((user: Account) => {
-        if(user) {
+        if (user) {
           this.accountForm.reset(user);
         }
       });

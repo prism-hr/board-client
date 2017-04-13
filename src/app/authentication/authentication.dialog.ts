@@ -1,9 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {
-  Stormpath, Account, LoginFormModel, StormpathErrorResponse, RegistrationFormModel,
-  ForgotPasswordFormModel
+  Account,
+  ForgotPasswordFormModel,
+  LoginFormModel,
+  RegistrationFormModel,
+  Stormpath,
+  StormpathErrorResponse
 } from 'angular-stormpath';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {MdDialogRef} from '@angular/material';
 
 @Component({
@@ -13,14 +17,14 @@ import {MdDialogRef} from '@angular/material';
 })
 export class AuthenticationDialog implements OnInit {
 
-  private loginFormModel: LoginFormModel;
-  private registrationFormModel: RegistrationFormModel;
-  private forgotPasswordFormModel: ForgotPasswordFormModel;
-  private error: string;
-  private user$: Observable<Account | boolean>;
-  private loading: boolean;
-  private view: AuthenticationView;
-  private forgottenSent: any;
+  loginFormModel: LoginFormModel;
+  registrationFormModel: RegistrationFormModel;
+  forgotPasswordFormModel: ForgotPasswordFormModel;
+  error: string;
+  user$: Observable<Account | boolean>;
+  loading: boolean;
+  view: AuthenticationView;
+  forgottenSent: any;
 
   constructor(private dialogRef: MdDialogRef<AuthenticationDialog>, private stormpath: Stormpath) {
     this.loginFormModel = <any>{};

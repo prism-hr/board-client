@@ -29,7 +29,7 @@ describe('AuthenticationDialog', () => {
 
   beforeEach(() => {
     dialog = TestBed.get(MdDialog);
-    let dialogRef = dialog.open(AuthenticationDialog);
+    const dialogRef = dialog.open(AuthenticationDialog);
     component = dialogRef.componentInstance;
   });
 

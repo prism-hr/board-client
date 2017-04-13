@@ -10,8 +10,8 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
   styleUrls: ['department-manage.component.scss']
 })
 export class DepartmentManageComponent implements OnInit {
-  private department: DepartmentRepresentation;
-  private items: MenuItem[];
+  department: DepartmentRepresentation;
+  items: MenuItem[];
 
   constructor(private route: ActivatedRoute) {
   }

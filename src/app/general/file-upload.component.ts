@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input} from '@angular/core';
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {Cloudinary} from '@cloudinary/angular';
 import {FileItem, FileUploader, ParsedResponseHeaders} from 'ng2-file-upload';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
@@ -17,9 +17,9 @@ import DocumentDTO = b.DocumentDTO;
     }
   ]
 })
-export class FileUploadComponent implements ControlValueAccessor {
+export class FileUploadComponent implements ControlValueAccessor, OnInit {
 
-  @Input("type")
+  @Input('type')
   type: string;
 
   uploader: FileUploader;

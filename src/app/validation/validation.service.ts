@@ -3,7 +3,7 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
 
 export class ValidationService {
   static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
-    let config = {
+    const config = {
       required: 'This field is required',
       email: 'Invalid email address',
       password: 'Invalid password. Password must be at least 6 characters long and contain a number.',

@@ -9,9 +9,9 @@ import BoardRepresentation = b.BoardRepresentation;
   styleUrls: ['board-manage.component.scss']
 })
 export class BoardManageComponent implements OnInit {
-  private board: BoardRepresentation;
-  private canManage: boolean;
-  private items: MenuItem[];
+  board: BoardRepresentation;
+  canManage: boolean;
+  items: MenuItem[];
 
   constructor(private route: ActivatedRoute) {
   }

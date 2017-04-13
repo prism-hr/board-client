@@ -38,12 +38,12 @@ export class BoardNewComponent implements OnInit {
     this.route.queryParams
       .subscribe(params => {
         if (params['prepopulate']) {
-          const prepopulateDetails = JSON.parse(localStorage.getItem("newBoardPrepopulate"));
+          const prepopulateDetails = JSON.parse(localStorage.getItem('newBoardPrepopulate'));
           if (prepopulateDetails) {
             this.boardForm.patchValue({
               name: prepopulateDetails.name,
               department: {name: prepopulateDetails.departmentName}
-            })
+            });
           }
         }
       });
@@ -51,7 +51,7 @@ export class BoardNewComponent implements OnInit {
   }
 
   submit() {
-    let board: BoardDTO = _.pick(this.boardForm.value, ['name', 'purpose', 'postCategories', 'department']);
+    const board: BoardDTO = _.pick(this.boardForm.value, ['name', 'purpose', 'postCategories', 'department']);
     this.authGuard.ensureAuthenticated(true) // open dialog if not authenticated
       .subscribe(authenticated => {
         if (!authenticated) {

@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {CanActivate} from '@angular/router';
 import {AuthenticationDialog} from './authentication.dialog';
-import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
+import {MdDialog, MdDialogConfig} from '@angular/material';
 import {Stormpath} from 'angular-stormpath';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

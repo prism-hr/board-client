@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Resolve, ActivatedRouteSnapshot} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Http, URLSearchParams} from '@angular/http';
 import DepartmentDTO = b.DepartmentDTO;
 import BoardDTO = b.BoardDTO;
@@ -19,7 +19,7 @@ export class BoardResolver implements Resolve<BoardDTO> {
     const departmentHandle = route.parent.params['departmentHandle'];
     const boardHandle = route.params['boardHandle'];
     const params = new URLSearchParams();
-    params.set("handle", departmentHandle + '/' + boardHandle);
+    params.set('handle', departmentHandle + '/' + boardHandle);
     return this.http.get('/api/boards', {search: params}).map(res => res.json());
   }
 

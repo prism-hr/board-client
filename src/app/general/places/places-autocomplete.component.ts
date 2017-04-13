@@ -1,6 +1,6 @@
 import {Component, forwardRef, NgZone, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {Subject} from 'rxjs';
+import {Subject} from 'rxjs/Subject';
 import {GooglePlacesProvider} from './places-google-provider.service';
 import * as _ from 'lodash';
 import LocationDTO = b.LocationDTO;
@@ -54,7 +54,7 @@ export class LocationAutocompleteComponent implements ControlValueAccessor, OnIn
       })
       .subscribe((results: any[]) => {
         results.forEach(r => {
-          r.name = r.description
+          r.name = r.description;
         });
         this.results = results;
       });
@@ -84,10 +84,6 @@ export class LocationAutocompleteComponent implements ControlValueAccessor, OnIn
 
   registerOnTouched(fn: any): void {
     this.onTouch = fn;
-  }
-
-  displayFn(location: any): string {
-    return location ? (location.description || location.name) : '';
   }
 
   placeResultToLocation(placeDetails: google.maps.places.PlaceResult): LocationDTO {

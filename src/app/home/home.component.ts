@@ -1,6 +1,5 @@
-///<reference path="../../board.d.ts"/>
-import {Component} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
 import {Account, Stormpath} from 'angular-stormpath';
 import {ResourceService} from '../services/resource.service';
 import BoardRepresentation = b.BoardRepresentation;
@@ -10,10 +9,10 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
 
-  private user: Account | boolean;
-  private departments: DepartmentRepresentation[];
+  user: Account | boolean;
+  departments: DepartmentRepresentation[];
 
   constructor(private resourceService: ResourceService, private stormpath: Stormpath) {
   }

@@ -2,7 +2,7 @@ import {MdDialog, MdDialogRef, MdDialogConfig} from '@angular/material';
 import {AuthenticationDialog} from '../authentication/authentication.dialog';
 import {ViewContainerRef, Component, OnInit} from '@angular/core';
 import {Stormpath, Account} from 'angular-stormpath';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
 
 @Component({
@@ -12,7 +12,7 @@ import {Router} from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  private user$: Observable<Account | boolean>;
+  user$: Observable<Account | boolean>;
 
   constructor(private dialog: MdDialog, private viewContainerRef: ViewContainerRef, private router: Router, private stormpath: Stormpath) {
   }
@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
 
   showLogin() {
     let dialogRef: MdDialogRef<AuthenticationDialog>;
-    let config = new MdDialogConfig();
+    const config = new MdDialogConfig();
     config.data = {showRegister: false};
     config.viewContainerRef = this.viewContainerRef;
 
