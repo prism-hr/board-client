@@ -3,11 +3,12 @@ import {Observable} from 'rxjs/Observable';
 import {Http} from '@angular/http';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
+import DepartmentPatchDTO = b.DepartmentPatchDTO;
 
 @Injectable()
 export class ResourceService {
 
-  constructor(private http: Http) {
+  constructor(protected http: Http) {
   }
 
   getBoards(): Observable<BoardRepresentation[]> {
@@ -16,6 +17,10 @@ export class ResourceService {
 
   getDepartments(): Observable<DepartmentRepresentation[]> {
     return this.http.get('/api/departments').map(res => res.json());
+  }
+
+  patchDepartment(id: number, department: DepartmentPatchDTO): Observable<DepartmentRepresentation> {
+    return this.http.patch('/api/departments/' + id, department).map(res => res.json());
   }
 
 }

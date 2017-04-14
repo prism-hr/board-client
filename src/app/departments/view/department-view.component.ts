@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Http, Response} from '@angular/http';
+import {Response} from '@angular/http';
 import {MdSnackBar} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as _ from 'lodash';
+import {ResourceService} from '../../services/resource.service';
 import DepartmentPatchDTO = b.DepartmentPatchDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 
@@ -16,8 +17,8 @@ export class DepartmentViewComponent implements OnInit {
   departmentForm: FormGroup;
 
 
-  constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder, private router: Router,
-              private snackBar: MdSnackBar) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router,
+              private snackBar: MdSnackBar, private resourceService: ResourceService) {
     this.departmentForm = this.fb.group({
       name: ['', [Validators.minLength(3), Validators.required, Validators.maxLength(255)]],
       memberCategories: [],
@@ -40,7 +41,7 @@ export class DepartmentViewComponent implements OnInit {
   submit() {
     const department: DepartmentPatchDTO = _.pick(this.departmentForm.value, ['name', 'memberCategories', 'documentLogo']);
     department.handle = this.departmentForm.value.handles.departmentHandle;
-    this.http.patch('/api/departments/' + this.department.id, department)
+    this.resourceService.patchDepartment(this.department.id, department)
       .subscribe(() => {
         this.router.navigate([department.handle])
           .then(() => {

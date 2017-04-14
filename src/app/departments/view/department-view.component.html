@@ -1,6 +1,6 @@
 <h1>Department</h1>
 
-<form [formGroup]="departmentForm" (ngSubmit)="submit()" autocomplete="off">
+<form [formGroup]="departmentForm">
   <div>
     <label>Department Name</label>
     <input pInputText formControlName="name" required>
@@ -17,6 +17,6 @@
   <file-upload formControlName="documentLogo" type="logo"></file-upload>
 
   <div layout="column" layout-align="space-between stretch">
-    <button pButton type="submit" class="ui-button-warning" label="Submit"></button>
+    <button pButton (click)="submit()" id="sub" class="ui-button-warning" label="Submit"></button>
   </div>
 </form>
