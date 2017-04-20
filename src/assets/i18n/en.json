@@ -5,22 +5,30 @@
       "PRIVATE": "Private",
       "PART_PRIVATE": "Part-private"
     },
-    "relationWithDepartment": {
-      "FRIENDS": {
-        "name": "Friends",
-        "explanationPrompt": "What kind of friends?"
+    "existingRelation": {
+      "STAFF": {
+        "name": "Staff member",
+        "explanationPrompt": "When did you start?"
       },
-      "FAMILY": {
-        "name": "Family",
-        "explanationPrompt": "What kind of family?"
+      "STUDENT": {
+        "name": "Student",
+        "explanationPrompt": "When did you start?"
       },
-      "AFFAIR": {
-        "name": "Affair",
-        "explanationPrompt": "What kind of affair?"
+      "PREVIOUS_STAFF": {
+        "name": "Previously staff member",
+        "explanationPrompt": "When did you start?"
       },
-      "COINCIDENCE": {
-        "name": "Coincidence",
-        "explanationPrompt": "What kind of coincidence?"
+      "PREVIOUS_STUDENT": {
+        "name": "Previously student",
+        "explanationPrompt": "When did you start?"
+      },
+      "COLLABORATOR": {
+        "name": "Collaborator",
+        "explanationPrompt": "What kind of Collaborator?"
+      },
+      "OTHER": {
+        "name": "Other",
+        "explanationPrompt": "Please explain"
       }
     },
     "action": {

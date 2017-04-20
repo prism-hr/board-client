@@ -34,9 +34,9 @@ export class PostNewComponent implements OnInit {
               private snackBar: MdSnackBar, private translationService: TranslateService,
               private definitionsService: DefinitionsService, private postService: PostService) {
     const definitions = definitionsService.getDefinitions();
-    translationService.get('definitions.relationWithDepartment')
+    translationService.get('definitions.existingRelation')
       .subscribe(relationTranslations => {
-        this.relations = (definitions['relationWithDepartment'] as string[]).map(relation => {
+        this.relations = (definitions['existingRelation'] as string[]).map(relation => {
           return {label: relationTranslations[relation].name, value: relation};
         });
       });

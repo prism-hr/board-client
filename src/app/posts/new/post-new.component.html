@@ -54,7 +54,7 @@
 
     <div *ngIf="postForm.value.existingRelation">
       <label>
-        {{'definitions.relationWithDepartment.' + postForm.value.existingRelation + ".explanationPrompt" |
+        {{'definitions.existingRelation.' + postForm.value.existingRelation + ".explanationPrompt" |
         translate}}
       </label>
       <textarea pInputTextarea formControlName="existingRelationExplanation" required></textarea>
