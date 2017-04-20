@@ -1,6 +1,15 @@
 @import 'variables';
 
 form {
+  .ui-inputtext {
+    padding: 0.6em;
+    width: 100%;
+  }
+  .ui-message {
+    margin: 4px 0 0 0;
+    padding: 0.4em;
+  }
+
   .mat-input-wrapper {
     margin-top:1.2em;
   }

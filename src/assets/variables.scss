@@ -177,3 +177,61 @@ $gutter-site: 40px;
 $gutter-site-mobile: 20px;
 $section-spacing: 35px;
 $section-spacing-small: 25px;
+
+
+// prime theme
+
+$fontFamily: 'Lato';
+$fontSize: 1.1em;
+$borderRadius: 2px;
+$disabledOpacity: 0.35;
+
+//Header
+$headerBorderWidth: 1px;
+$headerBorderColor: #e78f08;
+$headerBgColor: #f6a828;
+$headerTextColor: #ffffff;
+$headerFontWeight: bold;
+$headerIconTextColor: #ffffff;
+
+//Content
+$contentBorderWidth: 1px;
+$contentBorderColor: #dddddd;
+$contentBgColor: #eeeeee;
+$contentTextColor: #333333;
+
+//Default State
+$stateDefaultBorderWidth: 1px;
+$stateDefaultBorderColor: #cccccc;
+$stateDefaultBgColor: #f6f6f6;
+$stateDefaultTextColor: #1c94c4;
+
+//Active State
+$stateActiveBorderColor: $uclblue;
+$stateActiveBgColor: #ffffff;
+$stateActiveTextColor: #eb8f00;
+
+//Highlight State
+$stateHighlightBorderColor: $uclhue3;
+$stateHighlightBgColor: $uclhue3;
+$stateHighlightTextColor: #363636;
+
+//Focus State
+$stateFocusBorderColor: $uclblue;
+$stateFocusBgColor: $uclblue;
+$stateFocusTextColor: #c77405;
+
+//Error State
+$stateErrorBorderColor: $error;
+$stateErrorBgColor: $uclred;
+$stateErrorTextColor: #ffffff;
+
+//Hover State
+$stateHoverBorderColor: $uclblue;
+$stateHoverBgColor: $uclblue2;
+$stateHoverTextColor: white;
+
+//Forms
+$inputBgColor: #ffffff;
+$inputTextColor: #333333;
+$invalidInputBorderColor: $error;

@@ -435,8 +435,9 @@ $grid-breakpoints: (
 .grid {
   @include clearfix();
   list-style: none;
+  margin: 0;
   padding: 0;
-  margin: 0 0 0 -$grid-gutter;
+  margin-left: -$grid-gutter;
 
   @include media-query($small) {
     margin-left: -$grid-gutter-mobile;
@@ -456,6 +457,7 @@ $grid-breakpoints: (
     position: relative;
   }
 }
+
 
 /*============================================================================
   Reversed grids allow you to structure your source in the opposite
