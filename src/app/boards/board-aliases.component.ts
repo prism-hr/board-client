@@ -27,7 +27,6 @@ import {FormGroupName, NG_VALUE_ACCESSOR} from '@angular/forms';
   ]
 })
 export class BoardAliasesComponent implements OnInit {
-  @Input() disableDepartment: boolean;
   @Input() hideBoard: boolean;
   applicationUrl: string;
 

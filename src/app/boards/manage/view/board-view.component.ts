@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Http, Response} from '@angular/http';
 import {MdSnackBar} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import {PostService} from '../../../posts/post.service';
+import {ResourceService} from '../../../services/resource.service';
 import BoardRepresentation = b.BoardRepresentation;
 import BoardDTO = b.BoardDTO;
 import PostRepresentation = b.PostRepresentation;
@@ -17,9 +18,11 @@ export class BoardViewComponent implements OnInit {
   board: BoardRepresentation;
   posts: PostRepresentation[];
   boardForm: FormGroup;
+  nameEditing: boolean;
+  boardName: string;
 
-  constructor(private route: ActivatedRoute, private http: Http, private router: Router, private fb: FormBuilder,
-              private snackBar: MdSnackBar, private postService: PostService) {
+  constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder,
+              private snackBar: MdSnackBar, private resourceService: ResourceService, private postService: PostService) {
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
       purpose: ['', [Validators.required, Validators.maxLength(2000)]],
@@ -40,10 +43,20 @@ export class BoardViewComponent implements OnInit {
       });
   }
 
-  submit() {
-    this.http.patch('/api/boards/' + this.board.id, this.boardForm.value)
-      .subscribe(() => {
-        this.snackBar.open('Board Saved!');
+  openNameEdit() {
+    this.nameEditing = true;
+    this.boardName = this.board.name;
+  }
+
+  cancelNameEdit() {
+    this.nameEditing = false;
+  }
+
+  acceptNameEdit() {
+    this.resourceService.patchBoard(this.board.id, {name: this.boardName})
+      .subscribe(board => {
+        this.board.name = board.name;
+        this.nameEditing = false;
       }, (error: Response) => {
         if (error.status === 422) {
           if (error.json().exceptionCode === 'DUPLICATE_BOARD') {

@@ -47,13 +47,16 @@
   <div *ngIf="showExistingRelation">
     <div>
       <label>What is your relationship with our department?</label>
-      <p-dropdown [options]="relations" formControlName="existingRelation" placeholder="Select relationship..."></p-dropdown>
+      <p-dropdown [options]="relations" formControlName="existingRelation"
+                  placeholder="Select relationship..."></p-dropdown>
       <control-messages [control]="postForm.controls.existingRelation"></control-messages>
     </div>
 
     <div *ngIf="postForm.value.existingRelation">
-      <label>{{'definitions.relationWithDepartment.' + postForm.value.existingRelation + ".explanationPrompt" |
-        translate}}</label>
+      <label>
+        {{'definitions.relationWithDepartment.' + postForm.value.existingRelation + ".explanationPrompt" |
+        translate}}
+      </label>
       <textarea pInputTextarea formControlName="existingRelationExplanation" required></textarea>
       <control-messages [control]="postForm.controls.existingRelationExplanation"></control-messages>
     </div>

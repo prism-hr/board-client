@@ -57,6 +57,7 @@ import {
   TabMenuModule
 } from 'primeng/primeng';
 import {PostService} from './posts/post.service';
+import {XeditableInputComponent} from './xeditable/xeditable-input.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import {PostService} from './posts/post.service';
     EmployerLogoComponent,
     StudentLogoComponent,
     FileUploadComponent,
+    XeditableInputComponent,
     AuthedComponent,
     BoardAliasesComponent,
     BoardNewComponent,

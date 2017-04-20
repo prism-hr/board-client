@@ -4,6 +4,7 @@ import {Http} from '@angular/http';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import DepartmentPatchDTO = b.DepartmentPatchDTO;
+import BoardPatchDTO = b.BoardPatchDTO;
 
 @Injectable()
 export class ResourceService {
@@ -17,6 +18,10 @@ export class ResourceService {
 
   getDepartments(): Observable<DepartmentRepresentation[]> {
     return this.http.get('/api/departments').map(res => res.json());
+  }
+
+  patchBoard(id: number, board: BoardPatchDTO): Observable<BoardRepresentation> {
+    return this.http.patch('/api/boards/' + id, board).map(res => res.json());
   }
 
   patchDepartment(id: number, department: DepartmentPatchDTO): Observable<DepartmentRepresentation> {

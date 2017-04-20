@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.17.284 on 2017-04-11 14:06:59.
+// Generated using typescript-generator version 1.23.311 on 2017-04-19 15:51:41.
 
 declare namespace b {
 
@@ -129,6 +129,7 @@ declare namespace b {
 
   interface ResourceRepresentation {
     id?: number;
+    scope?: Scope;
     name?: string;
     state?: State;
     actions?: ResourceAction[];

@@ -19,7 +19,7 @@ export class BoardManageComponent implements OnInit {
   ngOnInit() {
     this.route.parent.data.subscribe(data => {
       this.board = data['board'];
-      this.canManage = (this.board.actions as any as string[]).includes('EDIT');
+      this.canManage = !!this.board.actions.find(a => a.action as any === 'EDIT');
       this.items = [{label: 'View', routerLink: [this.board.department.handle, this.board.handle]}, {
         label: 'Settings',
         routerLink: [this.board.department.handle, this.board.handle, 'settings']
