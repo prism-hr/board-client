@@ -14,11 +14,13 @@
             <p-chips formControlName="memberCategories"></p-chips>
           </div>
           <div class="grid__item one-whole input-holder">
+            <label>Board URL</label>
             <board-aliases formGroupName="handles" [hideBoard]="true"></board-aliases>
           </div>
         </div>
       </div>
       <div class="grid__item small--one-whole medium-up--one-third">
+
         <b-file-upload formControlName="documentLogo" type="logo"></b-file-upload>
       </div>
     </div>

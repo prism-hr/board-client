@@ -30,6 +30,7 @@ $simple-line-icon-prefix: "icon-" !default;
   &user-following,
   &user-unfollow,
   &login,
+  &circle,
   &logout,
   &emotsmile,
   &phone,
@@ -351,7 +352,7 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e07b";
 }
 
-.#{$simple-line-icon-prefix}check:before {
+.#{$simple-line-icon-prefix}check:before, .#{$simple-line-icon-prefix}circle:before {
   content: "\e080";
 }
 

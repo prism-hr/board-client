@@ -1290,6 +1290,7 @@ button.ui-button::-moz-focus-inner {
     display: block;
     box-sizing: border-box;
     margin: 0;
+
   }
 }
 
@@ -3223,7 +3224,6 @@ button.ui-button::-moz-focus-inner {
   vertical-align: middle;
   margin-right: .25em;
 }
-
 .ui-radiobutton-box {
   width: 1.125em;
   height: 1.125em;
@@ -3232,11 +3232,33 @@ button.ui-button::-moz-focus-inner {
   -webkit-border-radius: 100%;
   border-radius: 100%;
   text-align: center;
+  border:1px solid $activeGrey;
+  &.ui-state-active {
+    border-color: transparent;
+    .ui-radiobutton-icon {
+      color: $uclblue;
+    }
+  }
+}
+
+
+.ui-radiobutton-inline {
+  clear: both;
+  display: block;
+  padding: 0.30em 0;
+  label {
+    margin-bottom:0;
+  }
+  .ui-radiobutton-label{
+    margin-right:15px;
+  }
 }
 
 .ui-radiobutton-icon {
   display: block;
-  font-size: .6em;
+  font-size: 1.16em;
+  margin-left: -1px;
+  margin-top: 0px;
   line-height: inherit;
 }
 
@@ -3433,7 +3455,7 @@ button.ui-button::-moz-focus-inner {
     border:none;
     a {
       float: left;
-      padding: 0.5em 1.4em;
+      padding: 0.5em 1.6em;
       text-decoration: none;
     }
   }
@@ -4005,7 +4027,11 @@ $invalidInputBorderColor: $error;
     content: $icon;
   }
 }
-
+p-radiobutton:hover {
+  .ui-radiobutton-box {
+    @include hover-element();
+  }
+}
 .ui-widget {
   font-family: $fontFamily;
   font-size: $fontSize;
