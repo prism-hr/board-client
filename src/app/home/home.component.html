@@ -9,7 +9,7 @@
     <div *ngFor="let department of departments" class="department-content">
       <div class="section-header" fxLayout="row" fxLayoutAlign="start center">
         <h2>{{department.name}}</h2>
-        <button pButton routerLink="/{{department.handle}}" class="ui-button-success" icon="fa-edit" label="Edit"></button>
+        <button pButton routerLink="/{{department.handle}}" class="ui-button-success" icon="fa-pencil" label="Edit"></button>
       </div>
       <div class="grid">
         <div *ngFor="let board of department.boards" class="grid__item small--one-whole medium-up--one-third">
@@ -26,7 +26,7 @@
             </md-card-content>
             <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
               <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}" class="ui-button-success" icon="fa-eye" label="View"></button>
-              <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}/settings" class="ui-button-success" icon="fa-gear"></button>
+              <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}/settings" class="ui-button-success" icon="fa-settings"></button>
 
             </md-card-actions>
           </md-card>

@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,900');
 @import 'assets/variables';
 
-@import '~simple-line-icons/css/simple-line-icons.css';
-@import '~font-awesome/css/font-awesome.css';
+$simple-line-font-path: "~simple-line-icons/fonts/";
+$simple-line-font-family: "simple-line-icons";
+$simple-line-icon-prefix: "fa-";
+
+@import 'assets/simple-line-replacement';
 @import 'assets/primeng';
 
 @import '~@angular/material/core/theming/all-theme';
