@@ -4,7 +4,11 @@
 .mat-input-container{
   width: 100%;
 }
-
+md-card {
+  .ui-tabmenu {
+    margin: 0px -24px 0px -24px ;
+  }
+}
 md-card.mat-card>:first-child {
   margin-top: -24px;
 }
@@ -29,7 +33,7 @@ md-card.mat-card {
       margin-bottom:0;
     }
   }
-  >.mat-card-actions {
+  .mat-card-actions {
     background: $greyBackground;
     text-align: right;
     margin: 0 -24px -24px -24px ;

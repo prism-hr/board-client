@@ -50,7 +50,7 @@
   left: 0;
   position: absolute;
   opacity: 0;
-  filter: Alpha(Opacity = 0);
+  filter: Alpha(Opacity=0);
 }
 
 .ui-state-disabled {
@@ -393,7 +393,11 @@
   text-align: center;
   zoom: 1;
   overflow: visible;
+  border: 1px solid transparent;
   /* the overflow property removes extra width in IE */
+  &.ui-button-small {
+    font-size: 12px;
+  }
 }
 
 .ui-button-icon-only {
@@ -405,6 +409,12 @@
 .ui-button .ui-button-text {
   display: block;
   line-height: normal;
+  color: white;
+}
+.ui-button:focus, .ui-button:enabled:hover {
+  color: $fadeGrey;
+  background: none;
+  border-color: transparent;
 }
 
 .ui-button-text-only .ui-button-text {
@@ -436,7 +446,7 @@
   top: 50%;
   left: 50%;
   margin-top: -.5em;
-  margin-left: -.6em;
+  margin-left: -.55em;
 }
 
 .ui-button-icon-left {
@@ -582,6 +592,7 @@ button.ui-button::-moz-focus-inner {
     }
   }
 }
+
 .ui-calendar {
   position: relative;
   display: inline-block;
@@ -784,11 +795,11 @@ button.ui-button::-moz-focus-inner {
     div a {
       display: block;
       opacity: 0.7;
-      filter: Alpha(Opacity = 70);
+      filter: Alpha(Opacity=70);
       &:hover {
         display: block;
         opacity: 1;
-        filter: Alpha(Opacity = 100);
+        filter: Alpha(Opacity=100);
       }
     }
   }
@@ -909,7 +920,8 @@ button.ui-button::-moz-focus-inner {
   margin-right: .125em;
   border: 0 none;
   font-size: 1em;
-
+  background: $tips;
+  color: white;
   .ui-chips-token-label {
     display: block;
     margin-right: 1.4em;
@@ -1285,7 +1297,8 @@ button.ui-button::-moz-focus-inner {
   position: relative;
 }
 
-.ui-datatable-scrollable-view {}
+.ui-datatable-scrollable-view {
+}
 
 .ui-datatable-frozen-view .ui-datatable-scrollable-body {
   overflow: hidden;
@@ -2112,7 +2125,7 @@ button.ui-button::-moz-focus-inner {
   position: relative;
   margin: 0 0 10px 0;
   opacity: 0.95;
-  filter: alpha(opacity = 95);
+  filter: alpha(opacity=95);
 }
 
 .ui-growl-item {
@@ -2614,7 +2627,7 @@ button.ui-button::-moz-focus-inner {
     outline: none;
     text-decoration: none;
     font-weight: normal;
-    border: 1px solid  transparent;
+    border: 1px solid transparent;
     line-height: 1em;
     cursor: pointer;
     position: relative;
@@ -2647,7 +2660,7 @@ button.ui-button::-moz-focus-inner {
 .ui-messages {
   border: 1px solid;
   margin: .5em 0;
-  padding:.5em;
+  padding: .5em;
   display: none;
   position: relative;
 }
@@ -3406,20 +3419,21 @@ button.ui-button::-moz-focus-inner {
 
 .ui-tabmenu .ui-tabmenu-nav {
   margin: 0;
-  padding: .25em .5em 0 .25em;
+  padding: 0 .5em 0 0;
   .ui-tabmenuitem {
     list-style: none;
     float: left;
     position: relative;
-    margin: 0 .2em 1px 0;
+    margin: 0;
     padding: 0;
     white-space: nowrap;
     display: block;
-    border-bottom: 0;
-    top: 1px;
+    top: 0px;
+    font-size:16px;
+    border:none;
     a {
       float: left;
-      padding: 0.5em 1em;
+      padding: 0.5em 1.4em;
       text-decoration: none;
     }
   }
@@ -3432,6 +3446,9 @@ button.ui-button::-moz-focus-inner {
     }
     &.ui-state-disabled a {
       cursor: default;
+    }
+    &.ui-state-active {
+      font-weight:bold;
     }
   }
 }
@@ -3905,6 +3922,7 @@ button.ui-button::-moz-focus-inner {
     }
   }
 }
+
 // prime theme
 
 $fontFamily: 'Lato';
@@ -3914,27 +3932,27 @@ $disabledOpacity: 0.35;
 
 //Header
 $headerBorderWidth: 1px;
-$headerBorderColor: #e78f08;
-$headerBgColor: #f6a828;
+$headerBorderColor: transparent;
+$headerBgColor: transparent;
 $headerTextColor: #ffffff;
 $headerFontWeight: bold;
 $headerIconTextColor: #ffffff;
 
 //Content
 $contentBorderWidth: 1px;
-$contentBorderColor: #dddddd;
-$contentBgColor: #eeeeee;
+$contentBorderColor: transparent;
+$contentBgColor: $panel-grey;
 $contentTextColor: #333333;
 
 //Default State
 $stateDefaultBorderWidth: 1px;
-$stateDefaultBorderColor: #cccccc;
-$stateDefaultBgColor: white;
+$stateDefaultBorderColor: transparent;
+$stateDefaultBgColor: $panel-grey;
 $stateDefaultTextColor: $uclred;
 
 //Active State
-$stateActiveBorderColor: inherit;
-$stateActiveBgColor: $fadeGrey;
+$stateActiveBorderColor: $fadeGrey;
+$stateActiveBgColor: white;
 $stateActiveTextColor: $uclred;
 
 //Highlight State
@@ -3961,7 +3979,6 @@ $stateHoverTextColor: $uclred;
 $inputBgColor: #ffffff;
 $inputTextColor: #333333;
 $invalidInputBorderColor: $error;
-
 
 @mixin hover-element() {
   border-color: $stateHoverBorderColor;
@@ -3990,11 +4007,11 @@ $invalidInputBorderColor: $error;
 }
 
 .ui-widget {
-  font-family:  $fontFamily;
+  font-family: $fontFamily;
   font-size: $fontSize;
 
   input, select, textarea, button {
-    font-family:  $fontFamily;
+    font-family: $fontFamily;
     font-size: $fontSize;
   }
 
@@ -4017,8 +4034,6 @@ $invalidInputBorderColor: $error;
   border: $headerBorderWidth solid $headerBorderColor;
   background: $headerBgColor;
   color: $headerTextColor;
-  font-weight: $headerFontWeight;
-
   a {
     color: $headerTextColor;
   }
@@ -4027,23 +4042,21 @@ $invalidInputBorderColor: $error;
 .ui-widget-overlay {
   background: #666666;
   opacity: .50;
-  filter:Alpha(Opacity=50);
+  filter: Alpha(Opacity=50);
 }
 
 .ui-widget-header .ui-state-default,
-.ui-widget-content .ui-state-default,
-.ui-state-default {
+.ui-widget-content .ui-state-default {
   border: $stateDefaultBorderWidth solid $stateDefaultBorderColor;
   background: $stateDefaultBgColor;
   color: $stateDefaultTextColor;
   a {
-    color: $stateDefaultTextColor ;
+    color: $stateDefaultTextColor;
   }
 }
 
 .ui-widget-header .ui-state-active,
-.ui-widget-content .ui-state-active,
-.ui-state-active {
+.ui-widget-content .ui-state-active {
   border-color: $stateActiveBorderColor;
   background: $stateActiveBgColor;
   color: $stateActiveTextColor;
@@ -4054,8 +4067,7 @@ $invalidInputBorderColor: $error;
 }
 
 .ui-widget-header .ui-state-highlight,
-.ui-widget-content .ui-state-highlight,
-.ui-state-highlight  {
+.ui-widget-content .ui-state-highlight {
   border-color: $stateHighlightBorderColor;
   background: $stateHighlightBgColor;
   color: $stateHighlightTextColor;
@@ -4092,7 +4104,7 @@ $invalidInputBorderColor: $error;
 .ui-state-disabled,
 .ui-widget:disabled {
   opacity: $disabledOpacity;
-  filter: Alpha(Opacity= $disabledOpacity * 100);
+  filter: Alpha(Opacity=$disabledOpacity * 100);
   background-image: none;
   cursor: default !important;
 
@@ -4105,6 +4117,7 @@ $invalidInputBorderColor: $error;
 .ui-inputtext {
   background: $inputBgColor;
   color: $inputTextColor;
+  border: 1px solid $inactiveGrey;
 }
 
 .ui-inputtext:enabled:hover {
@@ -4142,18 +4155,6 @@ $invalidInputBorderColor: $error;
       border-color: $stateFocusBorderColor;
     }
   }
-}
-
-.ui-button:focus,
-.ui-button:enabled:hover {
-  outline: 0 none;
-  @include hover-element();
-}
-
-.ui-button:enabled:active {
-  border-color: $stateActiveBorderColor;
-  background: $stateActiveBgColor;
-  color: $stateActiveTextColor;
 }
 
 .ui-chkbox-box:not(.ui-state-disabled):not(.ui-state-active):hover {
@@ -4374,7 +4375,12 @@ $invalidInputBorderColor: $error;
     li:not(.ui-state-active):hover {
       @include hover-element();
     }
+    &.ui-corner-all {
+      border-radius: 0;
+    }
+    border: none !important;
   }
+  border: none !important;
 }
 
 .ui-steps {
@@ -4475,12 +4481,68 @@ p-togglebutton.ng-dirty.ng-invalid .ui-button {
 }
 
 /* Cornering */
-.ui-corner-tl { -moz-border-radius-topleft: $borderRadius; -webkit-border-top-left-radius: $borderRadius; border-top-left-radius: $borderRadius; }
-.ui-corner-tr { -moz-border-radius-topright: $borderRadius; -webkit-border-top-right-radius: $borderRadius; border-top-right-radius: $borderRadius; }
-.ui-corner-bl { -moz-border-radius-bottomleft: $borderRadius; -webkit-border-bottom-left-radius: $borderRadius; border-bottom-left-radius: $borderRadius; }
-.ui-corner-br { -moz-border-radius-bottomright: $borderRadius; -webkit-border-bottom-right-radius: $borderRadius; border-bottom-right-radius: $borderRadius; }
-.ui-corner-top { -moz-border-radius-topleft: $borderRadius; -webkit-border-top-left-radius: $borderRadius; border-top-left-radius: $borderRadius; -moz-border-radius-topright: $borderRadius; -webkit-border-top-right-radius: $borderRadius; border-top-right-radius: $borderRadius; }
-.ui-corner-bottom { -moz-border-radius-bottomleft: $borderRadius; -webkit-border-bottom-left-radius: $borderRadius; border-bottom-left-radius: $borderRadius; -moz-border-radius-bottomright: $borderRadius; -webkit-border-bottom-right-radius: $borderRadius; border-bottom-right-radius: $borderRadius; }
-.ui-corner-right {  -moz-border-radius-topright: $borderRadius; -webkit-border-top-right-radius: $borderRadius; border-top-right-radius: $borderRadius; -moz-border-radius-bottomright: $borderRadius; -webkit-border-bottom-right-radius: $borderRadius; border-bottom-right-radius: $borderRadius; }
-.ui-corner-left { -moz-border-radius-topleft: $borderRadius; -webkit-border-top-left-radius: $borderRadius; border-top-left-radius: $borderRadius; -moz-border-radius-bottomleft: $borderRadius; -webkit-border-bottom-left-radius: $borderRadius; border-bottom-left-radius: $borderRadius; }
-.ui-corner-all { -moz-border-radius: $borderRadius; -webkit-border-radius: $borderRadius; border-radius: $borderRadius; }
+.ui-corner-tl {
+  -moz-border-radius-topleft: $borderRadius;
+  -webkit-border-top-left-radius: $borderRadius;
+  border-top-left-radius: $borderRadius;
+}
+
+.ui-corner-tr {
+  -moz-border-radius-topright: $borderRadius;
+  -webkit-border-top-right-radius: $borderRadius;
+  border-top-right-radius: $borderRadius;
+}
+
+.ui-corner-bl {
+  -moz-border-radius-bottomleft: $borderRadius;
+  -webkit-border-bottom-left-radius: $borderRadius;
+  border-bottom-left-radius: $borderRadius;
+}
+
+.ui-corner-br {
+  -moz-border-radius-bottomright: $borderRadius;
+  -webkit-border-bottom-right-radius: $borderRadius;
+  border-bottom-right-radius: $borderRadius;
+}
+
+.ui-corner-top {
+  -moz-border-radius-topleft: $borderRadius;
+  -webkit-border-top-left-radius: $borderRadius;
+  border-top-left-radius: $borderRadius;
+  -moz-border-radius-topright: $borderRadius;
+  -webkit-border-top-right-radius: $borderRadius;
+  border-top-right-radius: $borderRadius;
+}
+
+.ui-corner-bottom {
+  -moz-border-radius-bottomleft: $borderRadius;
+  -webkit-border-bottom-left-radius: $borderRadius;
+  border-bottom-left-radius: $borderRadius;
+  -moz-border-radius-bottomright: $borderRadius;
+  -webkit-border-bottom-right-radius: $borderRadius;
+  border-bottom-right-radius: $borderRadius;
+}
+
+.ui-corner-right {
+  -moz-border-radius-topright: $borderRadius;
+  -webkit-border-top-right-radius: $borderRadius;
+  border-top-right-radius: $borderRadius;
+  -moz-border-radius-bottomright: $borderRadius;
+  -webkit-border-bottom-right-radius: $borderRadius;
+  border-bottom-right-radius: $borderRadius;
+}
+
+.ui-corner-left {
+  -moz-border-radius-topleft: $borderRadius;
+  -webkit-border-top-left-radius: $borderRadius;
+  border-top-left-radius: $borderRadius;
+  -moz-border-radius-bottomleft: $borderRadius;
+  -webkit-border-bottom-left-radius: $borderRadius;
+  border-bottom-left-radius: $borderRadius;
+}
+
+.ui-corner-all {
+  -moz-border-radius: $borderRadius;
+  -webkit-border-radius: $borderRadius;
+  border-radius: $borderRadius;
+}

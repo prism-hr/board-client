@@ -1,22 +1,33 @@
-<h1>Department</h1>
-
 <form [formGroup]="departmentForm">
-  <div>
-    <label>Department Name</label>
-    <input pInputText formControlName="name" required>
-    <control-messages [control]="departmentForm.controls.name"></control-messages>
-  </div>
+  <md-card-content>
+    <div class="grid">
+      <div class="grid__item small--one-whole medium-up--two-thirds">
+        <div class="grid">
+          <div class="grid__item one-whole input-holder">
+            <label>Department Name</label>
+            <input pInputText formControlName="name" required>
+            <control-messages [control]="departmentForm.controls.name"></control-messages>
 
-  <div>
-    <label>Member categories</label>
-    <p-chips formControlName="memberCategories"></p-chips>
-  </div>
-
-  <board-aliases formGroupName="handles" [hideBoard]="true"></board-aliases>
-
-  <b-file-upload formControlName="documentLogo" type="logo"></b-file-upload>
-
-  <div layout="column" layout-align="space-between stretch">
-    <button pButton (click)="submit()" id="sub" class="ui-button-warning" label="Submit"></button>
-  </div>
+          </div>
+          <div class="grid__item one-whole input-holder">
+            <label>Member categories</label>
+            <p-chips formControlName="memberCategories"></p-chips>
+          </div>
+          <div class="grid__item one-whole input-holder">
+            <board-aliases formGroupName="handles" [hideBoard]="true"></board-aliases>
+          </div>
+        </div>
+      </div>
+      <div class="grid__item small--one-whole medium-up--one-third">
+        <b-file-upload formControlName="documentLogo" type="logo"></b-file-upload>
+      </div>
+    </div>
+  </md-card-content>
+  <md-card-actions>
+    <div class="grid grid--half-gutters">
+      <div class="grid__item one-whole">
+        <button pButton (click)="submit()" id="sub" class="ui-button-warning" label="Submit"></button>
+      </div>
+    </div>
+  </md-card-actions>
 </form>

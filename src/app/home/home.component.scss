@@ -9,6 +9,16 @@
   margin-top:$section-spacing / 2;
   h2 {
     margin-bottom:$section-spacing / 2;
+    span {
+      display: inline-block;
+      float: left;
+    }
+    button {
+      display: inline-block;
+      float: left;
+      margin-top:4px;
+      margin-left:10px;
+    }
   }
 }
 .default-logo {
