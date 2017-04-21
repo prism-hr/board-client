@@ -17,7 +17,7 @@
       </div>
       <nav class="grid__item one-third text-right">
         <div *ngIf="(user$ | async) === false">
-          <button pButton (click)="showLogin()" class="ui-button-primary" label="Log in"></button>
+          <button pButton (click)="showLogin()" label="Log in"></button>
         </div>
         <div *ngIf="user$ | async">
           <button pButton (click)="logout()" class="ui-button-warning" label="Log out"></button>

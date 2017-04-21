@@ -9,37 +9,15 @@ form {
     margin: 4px 0 0 0;
     padding: 0.4em;
   }
-
-  .mat-input-wrapper {
-    margin-top:1.2em;
-  }
-  .mat-input-element {
-    font-size:$mat-body-font-size-base;
-    padding: 8px 0;
-  }
-  .mat-input-placeholder  {
-    height: 52px;
-    font-size: 130%;
-  }
-  .mat-input-placeholder-wrapper {
-    height: 52px;
-  }
   p.info {
     color: $uclhue3;
     font-size:94%;
   }
-}
-.mat-mini-fab.xs-mini {
-  width: 25px;
-  height: 25px;
-  line-height:25px;
-  margin-top: -13px;
-  margin-left: 15px;
-  .material-icons {
-    margin-top:-7px;
-    font-size:16px;
+  .ui-messages-error {
+    background-color: $error ;
   }
 }
+
 .url-builder {
   .grid__item {
     position: relative;
@@ -58,8 +36,17 @@ form {
     top: 21px;
     font-size: 18px;
   }
-  .mat-input-element:disabled {
-    color: $refereesColor;
-    cursor: not-allowed;
+}
+.ui-button {
+  .ui-button-warning {
+    .ui-state-default {
+
+    }
   }
 }
+button.ui-button-text-only {
+  .ui-button-text {
+    padding: 0.30em 1em;
+  }
+}
+

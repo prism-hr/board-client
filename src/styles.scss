@@ -6,6 +6,16 @@
 @import '~primeng/resources/themes/_theme';
 @import '~font-awesome/css/font-awesome.css';
 
+@import '~@angular/material/core/theming/all-theme';
+@include mat-core();
+$board-app-primary: mat-palette($mat-prism-blue);
+$board-app-accent:  mat-palette($mat-prism-green, 500, 100, 400);
+
+$board-app-warn:    mat-palette($mat-prism-red);
+
+$board-app-theme: mat-light-theme($board-app-primary, $board-app-accent, $board-app-warn);
+@include angular-material-theme($board-app-theme);
+
 $mat-body-font-size-base: rem(1.6);
 
 @import 'assets/grid';
