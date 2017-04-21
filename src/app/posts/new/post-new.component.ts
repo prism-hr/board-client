@@ -63,13 +63,19 @@ export class PostNewComponent implements OnInit {
         applyType: [null, Validators.required],
         applyWebsite: [null, Validators.maxLength(255)],
         applyDocument: [],
-        applyEmail: [null, Validators.maxLength(254)]
+        applyEmail: [null, Validators.maxLength(254)],
+        showLiveTimestamp: [],
+        liveTimestamp: [],
+        showDeadTimestamp: [],
+        deadTimestamp: []
       });
 
       if (this.post) {
         const formValue: any = Object.assign({}, this.post);
         formValue.applyType = formValue.applyWebsite ? 'website' :
           (formValue.applyDocument ? 'document' : (formValue.applyEmail ? 'email' : null));
+        formValue.showLiveTimestamp = !!formValue.liveTimestamp;
+        formValue.showDeadTimestamp = !!formValue.deadTimestamp;
         this.postForm.patchValue(formValue);
       }
 
@@ -78,6 +84,14 @@ export class PostNewComponent implements OnInit {
         // user has no permission to create trusted post, has to specify relation type
         this.showExistingRelation = true;
       }
+
+      this.postForm.get('showLiveTimestamp').valueChanges.forEach((show: boolean) => {
+        this.postForm.get('liveTimestamp').setValidators(show && [Validators.required]);
+      });
+
+      this.postForm.get('showDeadTimestamp').valueChanges.forEach((show: boolean) => {
+        this.postForm.get('deadTimestamp').setValidators(show && [Validators.required]);
+      });
     });
 
     this.postForm.get('applyType').valueChanges
@@ -122,7 +136,7 @@ export class PostNewComponent implements OnInit {
 
   private generatePostRequestBody() {
     const post: PostDTO = _.pick(this.postForm.value,
-      ['name', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories', 'memberCategories']);
+      ['name', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories', 'memberCategories', 'liveTimestamp']);
     post.applyWebsite = this.postForm.value.applyType === 'website' ? this.postForm.value.applyWebsite : null;
     post.applyDocument = this.postForm.value.applyType === 'document' ? this.postForm.value.applyDocument : null;
     post.applyEmail = this.postForm.value.applyType === 'email' ? this.postForm.value.applyEmail : null;

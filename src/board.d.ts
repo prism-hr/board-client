@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-04-19 15:51:41.
+// Generated using typescript-generator version 1.23.311 on 2017-04-20 18:23:24.
 
 declare namespace b {
 
@@ -14,7 +14,7 @@ declare namespace b {
     department?: DepartmentDTO;
   }
 
-  interface BoardPatchDTO {
+  interface BoardPatchDTO extends ResourcePatchDTO {
     name?: string;
     purpose?: string;
     handle?: string;
@@ -29,7 +29,7 @@ declare namespace b {
     memberCategories?: string[];
   }
 
-  interface DepartmentPatchDTO {
+  interface DepartmentPatchDTO extends ResourcePatchDTO {
     name?: string;
     documentLogo?: DocumentDTO;
     handle?: string;
@@ -55,16 +55,18 @@ declare namespace b {
     description?: string;
     organizationName?: string;
     location?: LocationDTO;
-    existingRelation?: RelationWithDepartment;
-    existingRelationExplanation?: string;
+    existingRelation?: ExistingRelation;
+    existingRelationExplanation?: { [index: string]: any };
     postCategories?: string[];
     memberCategories?: string[];
     applyWebsite?: string;
     applyDocument?: DocumentDTO;
     applyEmail?: string;
+    liveTimestamp?: LocalDateTime;
+    deadTimestamp?: LocalDateTime;
   }
 
-  interface PostPatchDTO {
+  interface PostPatchDTO extends ResourcePatchDTO {
     name?: string;
     description?: string;
     organizationName?: string;
@@ -74,6 +76,8 @@ declare namespace b {
     applyWebsite?: string;
     applyDocument?: DocumentDTO;
     applyEmail?: string;
+    liveTimestamp?: LocalDateTime;
+    deadTimestamp?: LocalDateTime;
   }
 
   interface ResourceFilterDTO {
@@ -82,6 +86,16 @@ declare namespace b {
     handle?: string;
     parentId?: number;
     orderStatement?: string;
+  }
+
+  interface ResourcePatchDTO {
+    comment?: string;
+  }
+
+  interface ActionRepresentation extends Comparable<ActionRepresentation> {
+    action?: Action;
+    scope?: Scope;
+    state?: State;
   }
 
   interface BoardRepresentation extends ResourceRepresentation {
@@ -117,14 +131,23 @@ declare namespace b {
     description?: string;
     organizationName?: string;
     location?: LocationRepresentation;
-    existingRelation?: RelationWithDepartment;
-    existingRelationExplanation?: string;
+    existingRelation?: ExistingRelation;
+    existingRelationExplanation?: { [index: string]: any };
     postCategories?: string[];
     memberCategories?: string[];
     applyWebsite?: string;
     applyDocument?: DocumentRepresentation;
     applyEmail?: string;
     board?: BoardRepresentation;
+    liveTimestamp?: LocalDateTime;
+    deadTimestamp?: LocalDateTime;
+  }
+
+  interface ResourceOperationRepresentation {
+    action?: Action;
+    user?: UserRepresentation;
+    changeList?: { [index: string]: any };
+    comment?: string;
   }
 
   interface ResourceRepresentation {
@@ -132,16 +155,77 @@ declare namespace b {
     scope?: Scope;
     name?: string;
     state?: State;
-    actions?: ResourceAction[];
+    actions?: ActionRepresentation[];
   }
 
-  interface ResourceAction extends Comparable<ResourceAction> {
-    action?: Action;
-    scope?: Scope;
-    state?: State;
+  interface UserRepresentation {
+    id?: number;
+    givenName?: string;
+    surname?: string;
+    email?: string;
+  }
+
+  interface LocalDateTime extends Temporal, TemporalAdjuster, ChronoLocalDateTime<LocalDate>, Serializable {
+    dayOfMonth?: number;
+    dayOfWeek?: DayOfWeek;
+    dayOfYear?: number;
+    month?: Month;
+    monthValue?: number;
+    year?: number;
+    hour?: number;
+    minute?: number;
+    second?: number;
+    nano?: number;
+  }
+
+  interface Chronology extends Comparable<Chronology> {
+    id?: string;
+    calendarType?: string;
+  }
+
+  interface Temporal extends TemporalAccessor {
+  }
+
+  interface TemporalAdjuster {
+  }
+
+  interface Serializable {
   }
 
   interface Comparable<T> {
+  }
+
+  interface TemporalAccessor {
+  }
+
+  interface ChronoLocalDateTime<D> extends Temporal, TemporalAdjuster, Comparable<ChronoLocalDateTime<any>> {
+    chronology?: Chronology;
+  }
+
+  interface LocalDate extends Temporal, TemporalAdjuster, ChronoLocalDate, Serializable {
+    year?: number;
+    month?: Month;
+    dayOfMonth?: number;
+    dayOfWeek?: DayOfWeek;
+    dayOfYear?: number;
+    monthValue?: number;
+    chronology?: IsoChronology;
+  }
+
+  interface Era extends TemporalAccessor, TemporalAdjuster {
+    value?: number;
+  }
+
+  interface IsoChronology extends AbstractChronology, Serializable {
+  }
+
+  interface ChronoLocalDate extends Temporal, TemporalAdjuster, Comparable<ChronoLocalDate> {
+    era?: Era;
+    leapYear?: boolean;
+    chronology?: Chronology;
+  }
+
+  interface AbstractChronology extends Chronology {
   }
 
   const enum Action {
@@ -152,6 +236,8 @@ declare namespace b {
     SUSPEND,
     CORRECT,
     REJECT,
+    PUBLISH,
+    RETIRE,
     RESTORE,
     WITHDRAW,
   }
@@ -173,17 +259,44 @@ declare namespace b {
     PART_PRIVATE,
   }
 
-  const enum RelationWithDepartment {
-    FRIENDS,
-    FAMILY,
-    AFFAIR,
-    COINCIDENCE,
+  const enum ExistingRelation {
+    STAFF,
+    STUDENT,
+    PREVIOUS_STAFF,
+    PREVIOUS_STUDENT,
+    COLLABORATOR,
+    OTHER,
   }
 
   const enum Scope {
     DEPARTMENT,
     BOARD,
     POST,
+  }
+
+  const enum DayOfWeek {
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY,
+    SUNDAY,
+  }
+
+  const enum Month {
+    JANUARY,
+    FEBRUARY,
+    MARCH,
+    APRIL,
+    MAY,
+    JUNE,
+    JULY,
+    AUGUST,
+    SEPTEMBER,
+    OCTOBER,
+    NOVEMBER,
+    DECEMBER,
   }
 
 }

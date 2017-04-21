@@ -88,7 +88,7 @@
   </div>
 
   <div *ngIf="postForm.value.applyType === 'document'">
-    <file-upload formControlName="applyDocument" type="document"></file-upload>
+    <b-file-upload formControlName="applyDocument" type="document"></b-file-upload>
     <control-messages [control]="postForm.controls.applyDocument"></control-messages>
   </div>
 
@@ -96,6 +96,34 @@
     <label>Email address</label>
     <input pInputText type="email" formControlName="applyEmail" placeholder="e.g. apply@example.com" required>
     <control-messages [control]="postForm.controls.applyEmail"></control-messages>
+  </div>
+
+  <div>
+    <p-checkbox formControlName="showLiveTimestamp" binary="true" label="Specify opening date"></p-checkbox>
+  </div>
+
+  <div *ngIf="postForm.value.showLiveTimestamp">
+    <label>Opening Date</label>
+    <b-datetime formControlName="liveTimestamp" name="liveTimestamp"></b-datetime>
+    <control-messages [control]="postForm.controls.liveTimestamp" dataType="string"></control-messages>
+
+    <p-messages
+      [value]="[{severity:'info', detail:'By specifying this field you can control when the post will be opened. Otherwise it will happen straight away.'}]"
+      [closable]="false"></p-messages>
+  </div>
+
+  <div>
+    <p-checkbox formControlName="showDeadTimestamp" binary="true" label="Specify closing date"></p-checkbox>
+  </div>
+
+  <div *ngIf="postForm.value.showDeadTimestamp">
+    <label>Closing Date</label>
+    <b-datetime formControlName="deadTimestamp" name="deadTimestamp"></b-datetime>
+    <control-messages [control]="postForm.controls.deadTimestamp" dataType="string"></control-messages>
+
+    <p-messages
+      [value]="[{severity:'info', detail:'By specifying this field you can control when the post will be closed. Otherwise it will happen a month after opening.'}]"
+      [closable]="false"></p-messages>
   </div>
 
   <div *ngIf="actionView === 'REVISE'" layout="column" layout-align="space-between stretch">

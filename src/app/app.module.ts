@@ -47,17 +47,18 @@ import {DepartmentUsersComponent} from './departments/users/department-users.com
 import {DepartmentManageComponent} from './departments/department-manage.component';
 import {
   ButtonModule,
+  CalendarModule,
   CheckboxModule,
   ChipsModule,
   DropdownModule,
   InputTextModule,
   MessagesModule,
   RadioButtonModule,
-  SelectButtonModule,
   TabMenuModule
 } from 'primeng/primeng';
 import {PostService} from './posts/post.service';
-import {XeditableInputComponent} from './xeditable/xeditable-input.component';
+import {XeditableInputComponent} from './controls/xeditable-input.component';
+import {DateTimeComponent} from './controls/datetime.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import {XeditableInputComponent} from './xeditable/xeditable-input.component';
     EmployerLogoComponent,
     StudentLogoComponent,
     FileUploadComponent,
+    DateTimeComponent,
     XeditableInputComponent,
     AuthedComponent,
     BoardAliasesComponent,
@@ -170,6 +172,7 @@ import {XeditableInputComponent} from './xeditable/xeditable-input.component';
     TabMenuModule,
     CheckboxModule,
     DropdownModule,
+    CalendarModule,
     // Material modules
     MdDialogModule,
     MdSnackBarModule,

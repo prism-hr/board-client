@@ -6,7 +6,7 @@ import {environment} from '../../environments/environment';
 import DocumentDTO = b.DocumentDTO;
 
 @Component({
-  selector: 'file-upload',
+  selector: 'b-file-upload',
   templateUrl: './file-upload.component.html',
   styleUrls: ['file-upload.component.scss'],
   providers: [
