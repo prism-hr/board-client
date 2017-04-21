@@ -1,20 +1,30 @@
-<h1>Settings</h1>
-
 <form [formGroup]="settingsForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
-  <div>
-    <label>Post categories</label>
-    <p-chips formControlName="postCategories"></p-chips>
-  </div>
-
-  <label>Default post visibility:</label>
-  <div class="ui-radiobutton-inline">
-    <p-radioButton *ngFor="let postVisibility of definitions.postVisibility"
-                   [value]="postVisibility" name="defaultPostVisibility"
-                   formControlName="defaultPostVisibility" [label]="'definitions.postVisibility.' + postVisibility | translate">
-    </p-radioButton>
-  </div>
-
-  <board-aliases formGroupName="handles"></board-aliases>
-
-  <button pButton type="submit" class="ui-button-warning" label="Submit"></button>
+  <md-card-content>
+    <div class="grid">
+      <div class="grid__item one-whole input-holder">
+        <label>Post categories</label>
+        <p-chips formControlName="postCategories"></p-chips>
+      </div>
+      <div class="grid__item one-whole input-holder">
+        <label>Default post visibility:</label>
+        <div class="ui-radiobutton-inline">
+          <p-radioButton *ngFor="let postVisibility of definitions.postVisibility"
+                         [value]="postVisibility" name="defaultPostVisibility"
+                         formControlName="defaultPostVisibility" [label]="'definitions.postVisibility.' + postVisibility | translate">
+          </p-radioButton>
+        </div>
+      </div>
+      <div class="grid__item one-whole input-holder">
+        <label>Board URL</label>
+        <board-aliases formGroupName="handles"></board-aliases>
+      </div>
+    </div>
+  </md-card-content>
+  <md-card-actions>
+    <div class="grid grid--half-gutters">
+      <div class="grid__item one-whole">
+        <button pButton type="submit" class="ui-button-success" label="Submit"></button>
+      </div>
+    </div>
+  </md-card-actions>
 </form>

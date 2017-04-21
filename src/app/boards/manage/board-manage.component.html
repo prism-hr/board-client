@@ -1,3 +1,11 @@
-<p-tabMenu *ngIf="canManage" [model]="items"></p-tabMenu>
-
-<router-outlet></router-outlet>
+<section class="section">
+  <md-card>
+    <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
+      <md-card-title>
+        <h1>{{board.name}}</h1>
+      </md-card-title>
+    </md-card-header>
+    <p-tabMenu *ngIf="canManage" [model]="items"></p-tabMenu>
+    <router-outlet></router-outlet>
+  </md-card>
+</section>
