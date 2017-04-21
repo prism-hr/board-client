@@ -11,8 +11,8 @@
           </a>
         </div>
         <div *ngIf="user$ | async" class="top-nav">
-          <a pButton class="ui-button-success" routerLink="/" label="Boards"></a>
-          <a pButton class="ui-button-success" routerLink="/account" [label]="(user$ | async).fullName"></a>
+          <a pButton class="ui-button-text" routerLink="/" label="Boards"></a>
+          <a pButton class="ui-button-text" routerLink="/account" [label]="(user$ | async).fullName"></a>
         </div>
       </div>
       <nav class="grid__item one-third text-right">

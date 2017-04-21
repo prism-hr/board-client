@@ -22,17 +22,21 @@
       </div>
       <div class="grid__item one-whole">
         <form #form="ngForm" (ngSubmit)="login(form.value)" autocomplete="off">
-          <input pInputText placeholder="Email" name="login" [(ngModel)]="loginFormModel.login" required type="email">
-          <input pInputText placeholder="Password" name="password" [(ngModel)]="loginFormModel.password" required
-                 type="password">
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <button pButton type="submit" class="ui-button-warning full-width" label="Submit"></button>
+          <div class="input-holder">
+            <input pInputText placeholder="Email" name="login" [(ngModel)]="loginFormModel.login" required type="email">
+          </div>
+          <div class="input-holder">
+            <input pInputText placeholder="Password" name="password" [(ngModel)]="loginFormModel.password" required
+                   type="password">
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">
             <div>
               <button pButton type="button" class="ui-button-secondary" label="Forgot password?"
                       (click)="setView('FORGOT')"></button>
               <button pButton type="button" class="ui-button-secondary" label="Register"
                       (click)="setView('REGISTER')"></button>
             </div>
+            <button pButton type="submit" class="ui-button-success" label="Submit"></button>
           </div>
         </form>
       </div>
@@ -55,19 +59,19 @@
       <div class="grid__item one-whole">
         <form #form="ngForm" (ngSubmit)="register(form.value)" autocomplete="off">
           <div class="grid">
-            <div class="grid__item small--one-whole medium-up--one-half">
+            <div class="grid__item small--one-whole medium-up--one-half input-holder">
               <input pInputText placeholder="First Name" name="givenName" [(ngModel)]="registrationFormModel.givenName"
                      required>
             </div>
-            <div class="grid__itpem small--one-whole medium-up--one-half">
+            <div class="grid__item small--one-whole medium-up--one-half input-holder">
               <input pInputText laceholder="Last Name" name="surname" [(ngModel)]="registrationFormModel.surname"
                      required>
             </div>
-            <div class="grid__item one-whole">
+            <div class="grid__item one-whole input-holder">
               <input pInputText placeholder="Email" name="email" [(ngModel)]="registrationFormModel.email" required
                      type="email">
             </div>
-            <div class="grid__item one-whole">
+            <div class="grid__item one-whole input-holder">
               <input pInputText placeholder="Password" name="password" [(ngModel)]="registrationFormModel.password"
                      required
                      type="password">
@@ -76,12 +80,12 @@
           <p-messages
             [value]="[{severity:'info', summary:'Email sent', detail:'By registering, you agree to NoticeBoard\'s User Agreement, Privacy Policy, and Cookie Policy.'}]"
             [closable]="false"></p-messages>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <button pButton class="ui-button-warning" type="submit" label="Submit"></button>
+          <div fxLayout="row" fxLayoutAlign="space-between center"  class="actions-holder">
             <div>
               <button pButton class="ui-button-secondary" label="Already Registered?"
                       (click)="setView('LOGIN')"></button>
             </div>
+            <button pButton class="ui-button-success" type="submit" label="Submit"></button>
           </div>
         </form>
       </div>
@@ -90,14 +94,14 @@
 
   <div *ngIf="view === 'FORGOT'" class="forgot-container">
     <form *ngIf="!forgottenSent" #form="ngForm" (ngSubmit)="sendForgotten(form.value)" autocomplete="off">
-      <div class="index-padding">
+      <div class="index-padding input-holder">
         <input pInputText placeholder="Email" name="email" [(ngModel)]="forgotPasswordFormModel.email" required
                type="email">
       </div>
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <button pButton type="submit" class="ui-button-warning full-width" label="Reset Password"></button>
+      <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">
         <button pButton class="ui-button-secondary" label="Back"
                 (click)="setView('LOGIN')"></button>
+        <button pButton type="submit" class="ui-button-warning full-width" label="Reset Password"></button>
       </div>
     </form>
     <div *ngIf="forgottenSent">

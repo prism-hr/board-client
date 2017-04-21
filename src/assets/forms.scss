@@ -16,6 +16,17 @@ form {
   .ui-messages-error {
     background-color: $error ;
   }
+  .input-holder {
+    margin-bottom: 6px;
+  }
+  .actions-holder {
+    margin-top:15px;
+  }
+  label {
+    font-size:110%;
+    margin-bottom:4px;
+    display: inline-block;
+  }
 }
 
 .url-builder {
@@ -37,10 +48,14 @@ form {
     font-size: 18px;
   }
 }
-.ui-button {
-  .ui-button-warning {
-    .ui-state-default {
-
+button.ui-button {
+  .ui-button-text {
+    display: inline-block;
+  }
+  &.ui-button-warning {
+    &.ui-state-default {
+      background-color: $uclred;
+      border-color: $uclred;
     }
   }
 }
@@ -49,4 +64,6 @@ button.ui-button-text-only {
     padding: 0.30em 1em;
   }
 }
-
+button.ui-state-default {
+  border-color: transparent;
+}

@@ -4,7 +4,7 @@
   <div *ngIf="user">
     <div fxLayout="row" fxLayoutAlign="space-between center">
       <h1>Departments</h1>
-      <button pButton routerLink="/newBoard" class="ui-button-primary" icon="fa-plus" label="New Board"></button>
+      <button pButton routerLink="/newBoard" class="ui-button-success" icon="fa-plus" label="New Board"></button>
     </div>
     <div *ngFor="let department of departments" class="department-content">
       <div class="section-header" fxLayout="row" fxLayoutAlign="start center">

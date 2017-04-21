@@ -5,8 +5,8 @@
   margin-top: 4px;
   &.logo {
     border: 3px dashed $inactiveGrey;
-    width: 180px;
-    height: 180px;
+    width: 206px;
+    height: 131px;
     float: right;
     @include media-query($small) {
       float: none;
@@ -30,7 +30,6 @@
 }
 
 .logo-flex {
-  border: 1px solid #ececec;
   background: #ffffff;
   display: flex;
   border-radius: 1px;
