@@ -1,8 +1,11 @@
 <section class="section">
   <md-card>
-    <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
+    <md-card-header class="header-full">
       <md-card-title>
-        <h1>{{board.name}}</h1>
+        <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
+          <h1><a routerLink="/{{board.department.handle}}">{{board.department.name}}</a> -  <b-xeditable-input [resource]="board" propertyName="name"></b-xeditable-input></h1>
+          <button pButton routerLink="newPost" class="ui-button-success" icon="fa-plus" label="New Post"></button>
+        </div>
       </md-card-title>
     </md-card-header>
     <p-tabMenu *ngIf="canManage" [model]="items"></p-tabMenu>

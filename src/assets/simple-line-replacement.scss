@@ -4,7 +4,7 @@ $simple-line-font-family: "simple-line-icons" !default;
 $simple-line-icon-prefix: "icon-" !default;
 
 .#{$simple-line-icon-prefix}2x {
-  font-size: 2em;
+  font-size: 1.5em;
 }
 
 // Fonts
@@ -20,6 +20,22 @@ $simple-line-icon-prefix: "icon-" !default;
     font-weight: normal;
     font-style: normal;
   }
+}
+@font-face {
+  font-family: 'icomoon';
+  src:  url('/assets/icons/icomoon.eot');
+  src:  url('/assets/icons/icomoon.eot#iefix') format('embedded-opentype'),
+  url('/assets/icons/icomoon.ttf') format('truetype'),
+  url('/assets/icons/icomoon.woff') format('woff'),
+  url('/assets/icons/icomoon.svg?#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="fa-"], [class*=" fa-"] {
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .#{$simple-line-icon-prefix} {
@@ -982,4 +998,8 @@ $simple-line-icon-prefix: "icon-" !default;
 
 .#{$simple-line-icon-prefix}social-steam:before {
   content: "\e620";
+}
+.ui-chkbox-icon.fa-check:before {
+  font-family: 'icomoon';
+  content: "\e900";
 }

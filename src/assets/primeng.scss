@@ -889,6 +889,13 @@ button.ui-button::-moz-focus-inner {
     -webkit-border-radius: 2px;
     border-radius: 2px;
     text-align: center;
+    border:1px solid $activeGrey;
+    &.ui-state-active {
+      border-color: $uclblue;
+      .ui-chkbox-icon {
+        color: $uclblue;
+      }
+    }
   }
   .ui-chkbox-icon {
     line-height: inherit;
@@ -917,7 +924,7 @@ button.ui-button::-moz-focus-inner {
   padding: .3em .5em;
   white-space: nowrap;
   position: relative;
-  margin-right: .125em;
+  margin-right: .5em;
   border: 0 none;
   font-size: 1em;
   background: $tips;
@@ -3222,7 +3229,7 @@ button.ui-button::-moz-focus-inner {
   display: inline-block;
   cursor: pointer;
   vertical-align: middle;
-  margin-right: .25em;
+  margin-right: 0;
 }
 .ui-radiobutton-box {
   width: 1.125em;
@@ -3240,7 +3247,18 @@ button.ui-button::-moz-focus-inner {
     }
   }
 }
-
+.ui-checkbox-inline {
+  clear: both;
+  display: block;
+  padding: 0.30em 0;
+  label {
+    margin-bottom:0;
+  }
+  .ui-chkbox-label{
+    margin-right:15px;
+    padding-left:4px;
+  }
+}
 
 .ui-radiobutton-inline {
   clear: both;
@@ -3251,6 +3269,7 @@ button.ui-button::-moz-focus-inner {
   }
   .ui-radiobutton-label{
     margin-right:15px;
+    padding-left:4px;
   }
 }
 
@@ -4029,6 +4048,14 @@ $invalidInputBorderColor: $error;
 }
 p-radiobutton:hover {
   .ui-radiobutton-box {
+    @include hover-element();
+    &.ui-state-active {
+      border-color: transparent;
+    }
+  }
+}
+p-checkbox:hover {
+  .ui-chkbox {
     @include hover-element();
     &.ui-state-active {
       border-color: transparent;

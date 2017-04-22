@@ -1,149 +1,157 @@
-<h1 *ngIf="!post">Create a new post</h1>
-<h1 *ngIf="post">Edit Post</h1>
+<section class="section">
+  <md-card>
+    <md-card-header class="header-full">
+      <md-card-title>
+        <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
+          <h1 *ngIf="!post">Create a new post</h1>
+          <h1 *ngIf="post">Edit Post</h1>
+          <div>
+            <a routerLink="../">Back</a>
+            <span>
+              <button *ngIf="availableActions.indexOf('ACCEPT') > -1" pButton label="Accept"
+                      (click)="executeAction('ACCEPT')"></button>
+              <button *ngIf="availableActions.indexOf('SUSPEND') > -1" pButton label="Suspend"
+                      (click)="executeAction('SUSPEND')"></button>
+            </span>
+          </div>
+        </div>
 
-<div fxLayout="row" fxLayoutAlign="space-between center">
-  <a routerLink="../">Back</a>
-  <span>
-    <button *ngIf="availableActions.indexOf('ACCEPT') > -1" pButton label="Accept"
-            (click)="executeAction('ACCEPT')"></button>
-    <button *ngIf="availableActions.indexOf('SUSPEND') > -1" pButton label="Suspend"
-            (click)="executeAction('SUSPEND')"></button>
-  </span>
-</div>
+      </md-card-title>
+    </md-card-header>
+    <form [formGroup]="postForm" novalidate>
+      <md-card-content>
+        <div class="grid">
+          <div class="grid__item one-whole input-holder">
+            <label>Title of your post</label>
+            <input pInputText formControlName="name" required>
+            <control-messages [control]="postForm.controls.name"></control-messages>
+          </div>
+          <div class="grid__item one-whole input-holder">
+            <label>Content of your post</label>
+            <textarea pInputTextarea formControlName="description" required
+                      class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
+            <control-messages [control]="postForm.controls.description"></control-messages>
+          </div>
+          <div class="grid__item one-whole input-holder">
+            <label>What is your post about?</label>
+            <div class="ui-checkbox-inline">
+              <span *ngFor="let category of board.postCategories">
+                <p-checkbox name="postCategoriesMap" [value]="category" [label]="category"
+                            formControlName="postCategories"></p-checkbox>
+              </span>
+            </div>
+          </div>
+          <div class="grid__item one-whole input-holder">
+            <label>Your organization</label>
+            <input pInputText formControlName="organizationName" required>
+            <control-messages [control]="postForm.controls.organizationName"></control-messages>
+          </div>
+          <div class="grid__item one-whole input-holder">
+            <label>Location</label>
+            <places-autocomplete formControlName="location"></places-autocomplete>
+            <control-messages [control]="postForm.controls.location"></control-messages>
+          </div>
+          <div *ngIf="showExistingRelation">
+            <div class="grid__item one-whole input-holder">
+              <label>What is your relationship with our department?</label>
+              <p-dropdown [options]="relations" formControlName="existingRelation"
+                          placeholder="Select relationship..."></p-dropdown>
+              <control-messages [control]="postForm.controls.existingRelation"></control-messages>
+            </div>
 
-<form [formGroup]="postForm" novalidate>
+            <div *ngIf="postForm.value.existingRelation" class="grid__item one-whole input-holder">
+              <label>
+                {{'definitions.existingRelation.' + postForm.value.existingRelation + ".explanationPrompt" |
+                translate}}
+              </label>
+              <textarea pInputTextarea formControlName="existingRelationExplanation" required></textarea>
+              <control-messages [control]="postForm.controls.existingRelationExplanation"></control-messages>
+            </div>
+          </div>
+          <div class="grid__item one-whole input-holder">
+            <label>Who do you want to share your post with?</label>
+            <div class="ui-checkbox-inline">
+               <span *ngFor="let category of board.department.memberCategories">
+                  <p-checkbox name="memberCategoriesMap" [value]="category" [label]="category"
+                              formControlName="memberCategories"></p-checkbox>
+                </span>
+            </div>
+          </div>
+          <div class="grid__item one-whole input-holder">
+            <label>How will people respond?</label>
+            <div class="ui-radiobutton-inline">
+              <p-radioButton value="website" name="applyType" formControlName="applyType"
+                             label="By visiting a web page"></p-radioButton>
+              <p-radioButton value="document" name="applyType" formControlName="applyType"
+                             label="By following instructions in a document"></p-radioButton>
+              <p-radioButton value="email" name="applyType" formControlName="applyType"
+                             label="By sending an email"></p-radioButton>
+            </div>
+            <control-messages [control]="postForm.controls.applyType"></control-messages>
+          </div>
+          <div *ngIf="postForm.value.applyType === 'website'" class="grid__item one-whole input-holder">
+            <label>Your website address</label>
+            <input pInputText type="url" formControlName="applyWebsite" required>
+            <control-messages [control]="postForm.controls.applyWebsite"></control-messages>
+          </div>
 
-  <div>
-    <label>Title of your post</label>
-    <input pInputText formControlName="name" required>
-    <control-messages [control]="postForm.controls.name"></control-messages>
-  </div>
+          <div *ngIf="postForm.value.applyType === 'document'" class="grid__item one-whole input-holder">
+            <b-file-upload formControlName="applyDocument" type="document"></b-file-upload>
+            <control-messages [control]="postForm.controls.applyDocument"></control-messages>
+          </div>
+          <div *ngIf="postForm.value.applyType === 'email'" class="grid__item one-whole input-holder">
+            <label>Email address</label>
+            <input pInputText type="email" formControlName="applyEmail" placeholder="e.g. apply@example.com" required>
+            <control-messages [control]="postForm.controls.applyEmail"></control-messages>
+          </div>
+          <div class="grid__item one-whole input-holder">
+            <p-checkbox formControlName="showLiveTimestamp" binary="true" label="Specify opening date"></p-checkbox>
+          </div>
+          <div *ngIf="postForm.value.showLiveTimestamp" class="grid__item one-whole input-holder">
+            <label>Opening Date</label>
+            <b-datetime formControlName="liveTimestamp" name="liveTimestamp"></b-datetime>
+            <control-messages [control]="postForm.controls.liveTimestamp" dataType="string"></control-messages>
 
-  <div>
-    <label>Content of your post</label>
-    <textarea pInputTextarea formControlName="description" required></textarea>
-    <control-messages [control]="postForm.controls.description"></control-messages>
-  </div>
+            <p-messages
+              [value]="[{severity:'info', detail:'By specifying this field you can control when the post will be opened. Otherwise it will happen straight away.'}]"
+              [closable]="false"></p-messages>
+          </div>
+          <div class="grid__item one-whole input-holder">
+            <p-checkbox formControlName="showDeadTimestamp" binary="true" label="Specify closing date"></p-checkbox>
+          </div>
+          <div *ngIf="postForm.value.showDeadTimestamp" class="grid__item one-whole input-holder">
+            <label>Closing Date</label>
+            <b-datetime formControlName="deadTimestamp" name="deadTimestamp"></b-datetime>
+            <control-messages [control]="postForm.controls.deadTimestamp" dataType="string"></control-messages>
 
-  <p>What is your post about?</p>
-  <div>
-    <span *ngFor="let category of board.postCategories">
-      <p-checkbox name="postCategoriesMap" [value]="category" [label]="category"
-                  formControlName="postCategories"></p-checkbox>
-    </span>
-  </div>
+            <p-messages
+              [value]="[{severity:'info', detail:'By specifying this field you can control when the post will be closed. Otherwise it will happen a month after opening.'}]"
+              [closable]="false"></p-messages>
+          </div>
+        </div>
+      </md-card-content>
+      <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+        <div *ngIf="actionView === 'REVISE'" layout="column" layout-align="space-between stretch">
+          <button pButton [disabled]="postForm.invalid" label="Accept"
+                  (click)="executeAction('ACCEPT', true)"></button>
+          <button pButton class="ui-button-warning" [disabled]="postForm.invalid" label="Request Correction"
+                  (click)="executeAction('SUSPEND', true)"></button>
+          <button pButton class="ui-button-danger" label="Reject" (click)="executeAction('REJECT')"></button>
+        </div>
 
-  <div>
-    <label>Your organization</label>
-    <input pInputText formControlName="organizationName" required>
-    <control-messages [control]="postForm.controls.organizationName"></control-messages>
-  </div>
+        <div *ngIf="actionView === 'CORRECT'" layout="column" layout-align="space-between stretch">
+          <button pButton [disabled]="postForm.invalid" label="Correct"
+                  (click)="executeAction('CORRECT', true)"></button>
+        </div>
 
-  <div>
-    <places-autocomplete formControlName="location"></places-autocomplete>
-    <control-messages [control]="postForm.controls.location"></control-messages>
-  </div>
+        <div *ngIf="actionView === 'EDIT'" layout="column" layout-align="space-between stretch">
+          <button pButton [disabled]="postForm.invalid" label="Save" (click)="save()"></button>
+        </div>
 
-  <div *ngIf="showExistingRelation">
-    <div>
-      <label>What is your relationship with our department?</label>
-      <p-dropdown [options]="relations" formControlName="existingRelation"
-                  placeholder="Select relationship..."></p-dropdown>
-      <control-messages [control]="postForm.controls.existingRelation"></control-messages>
-    </div>
-
-    <div *ngIf="postForm.value.existingRelation">
-      <label>
-        {{'definitions.existingRelation.' + postForm.value.existingRelation + ".explanationPrompt" |
-        translate}}
-      </label>
-      <textarea pInputTextarea formControlName="existingRelationExplanation" required></textarea>
-      <control-messages [control]="postForm.controls.existingRelationExplanation"></control-messages>
-    </div>
-  </div>
-
-  <p>Who do you want to share your post with?</p>
-  <div>
-    <span *ngFor="let category of board.department.memberCategories">
-      <p-checkbox name="memberCategoriesMap" [value]="category" [label]="category"
-                  formControlName="memberCategories"></p-checkbox>
-    </span>
-  </div>
-
-  <div>
-    How will people respond?
-    <p-radioButton value="website" name="applyType" formControlName="applyType"
-                   label="By visiting a web page"></p-radioButton>
-    <p-radioButton value="document" name="applyType" formControlName="applyType"
-                   label="By following instructions in a document"></p-radioButton>
-    <p-radioButton value="email" name="applyType" formControlName="applyType"
-                   label="By sending an email"></p-radioButton>
-    <control-messages [control]="postForm.controls.applyType"></control-messages>
-  </div>
-
-  <div *ngIf="postForm.value.applyType === 'website'">
-    <label>Your website address</label>
-    <input pInputText type="url" formControlName="applyWebsite" required>
-    <control-messages [control]="postForm.controls.applyWebsite"></control-messages>
-  </div>
-
-  <div *ngIf="postForm.value.applyType === 'document'">
-    <b-file-upload formControlName="applyDocument" type="document"></b-file-upload>
-    <control-messages [control]="postForm.controls.applyDocument"></control-messages>
-  </div>
-
-  <div *ngIf="postForm.value.applyType === 'email'">
-    <label>Email address</label>
-    <input pInputText type="email" formControlName="applyEmail" placeholder="e.g. apply@example.com" required>
-    <control-messages [control]="postForm.controls.applyEmail"></control-messages>
-  </div>
-
-  <div>
-    <p-checkbox formControlName="showLiveTimestamp" binary="true" label="Specify opening date"></p-checkbox>
-  </div>
-
-  <div *ngIf="postForm.value.showLiveTimestamp">
-    <label>Opening Date</label>
-    <b-datetime formControlName="liveTimestamp" name="liveTimestamp"></b-datetime>
-    <control-messages [control]="postForm.controls.liveTimestamp" dataType="string"></control-messages>
-
-    <p-messages
-      [value]="[{severity:'info', detail:'By specifying this field you can control when the post will be opened. Otherwise it will happen straight away.'}]"
-      [closable]="false"></p-messages>
-  </div>
-
-  <div>
-    <p-checkbox formControlName="showDeadTimestamp" binary="true" label="Specify closing date"></p-checkbox>
-  </div>
-
-  <div *ngIf="postForm.value.showDeadTimestamp">
-    <label>Closing Date</label>
-    <b-datetime formControlName="deadTimestamp" name="deadTimestamp"></b-datetime>
-    <control-messages [control]="postForm.controls.deadTimestamp" dataType="string"></control-messages>
-
-    <p-messages
-      [value]="[{severity:'info', detail:'By specifying this field you can control when the post will be closed. Otherwise it will happen a month after opening.'}]"
-      [closable]="false"></p-messages>
-  </div>
-
-  <div *ngIf="actionView === 'REVISE'" layout="column" layout-align="space-between stretch">
-    <button pButton [disabled]="postForm.invalid" label="Accept"
-            (click)="executeAction('ACCEPT', true)"></button>
-    <button pButton class="ui-button-warning" [disabled]="postForm.invalid" label="Request Correction"
-            (click)="executeAction('SUSPEND', true)"></button>
-    <button pButton class="ui-button-danger" label="Reject" (click)="executeAction('REJECT')"></button>
-  </div>
-
-  <div *ngIf="actionView === 'CORRECT'" layout="column" layout-align="space-between stretch">
-    <button pButton [disabled]="postForm.invalid" label="Correct" (click)="executeAction('CORRECT', true)"></button>
-  </div>
-
-  <div *ngIf="actionView === 'EDIT'" layout="column" layout-align="space-between stretch">
-    <button pButton [disabled]="postForm.invalid" label="Save" (click)="save()"></button>
-  </div>
-
-  <div *ngIf="actionView === 'CREATE'" layout="column" layout-align="space-between stretch">
-    <button pButton [disabled]="postForm.invalid" label="Submit" (click)="create()"></button>
-  </div>
-
-</form>
+        <div *ngIf="actionView === 'CREATE'" layout="column" layout-align="space-between stretch">
+          <button pButton [disabled]="postForm.invalid" label="Submit" (click)="create()"></button>
+        </div>
+      </md-card-actions>
+    </form>
+  </md-card>
+</section>

@@ -17,7 +17,7 @@ form {
     background-color: $error ;
   }
   .input-holder {
-    margin-bottom: 6px;
+    margin-bottom: 10px;
   }
   .actions-holder {
     margin-top:15px;
@@ -42,10 +42,10 @@ form {
   }
   .separator-left {
     position: absolute;
-    left: 10px;
+    left: 11px;
     color: grey;
-    top: 21px;
-    font-size: 18px;
+    top: 4px;
+    font-size: 22px;
   }
 }
 button.ui-button {

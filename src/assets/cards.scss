@@ -33,6 +33,11 @@ md-card.mat-card {
       margin-bottom:0;
     }
   }
+  .header-full {
+    .mat-card-header-text {
+      width: 100%;
+    }
+  }
   .mat-card-actions {
     background: $greyBackground;
     text-align: right;
