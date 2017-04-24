@@ -409,7 +409,11 @@
 .ui-button .ui-button-text {
   display: block;
   line-height: normal;
-  color: white;
+}
+header {
+  .ui-button .ui-button-text {
+    color: white;
+  }
 }
 .ui-button:focus, .ui-button:enabled:hover {
   color: $fadeGrey;
@@ -526,6 +530,7 @@ button.ui-button::-moz-focus-inner {
     }
     &:enabled:hover, &:focus {
       background-color: #f2f2f2;
+      color: $fontColor3;
     }
     &:enabled:active {
       background-color: #e6e6e6;
@@ -622,7 +627,7 @@ button.ui-button::-moz-focus-inner {
 /* Datepicker */
 
 .ui-datepicker {
-  width: 17em;
+  width: 12em;
   padding: .2em;
   display: none;
   &.ui-widget-content {
