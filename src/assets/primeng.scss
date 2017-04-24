@@ -231,7 +231,7 @@
   -webkit-box-shadow: none;
   box-shadow: none;
   position: relative;
-  display: inline-block;
+  display: block;
   .ui-autocomplete-dropdown {
     height: 100%;
     width: 2em;
@@ -625,6 +625,11 @@ button.ui-button::-moz-focus-inner {
   width: 17em;
   padding: .2em;
   display: none;
+  &.ui-widget-content {
+    background: white;
+    border-color: $activeGrey;
+  }
+
   position: absolute;
   &.ui-datepicker-inline {
     display: block;
@@ -651,13 +656,13 @@ button.ui-button::-moz-focus-inner {
     position: absolute;
     left: 50%;
     top: 50%;
-    margin-top: -.5em;
+    margin-top: -.45em;
   }
   .ui-datepicker-prev span {
-    margin-left: -.25em;
+    margin-left: -.5em;
   }
   .ui-datepicker-next span {
-    margin-left: -.125em;
+    margin-left: -.5em;
   }
   .ui-datepicker-title {
     margin: 0 2.3em;
@@ -724,7 +729,17 @@ button.ui-button::-moz-focus-inner {
     width: auto;
   }
 }
-
+.ui-datepicker-today {
+  .ui-state-default.ui-state-highlight {
+    border-color: #f4b09b;
+  }
+}
+.ui-datepicker-current-day {
+  .ui-state-default.ui-state-active {
+    color: $uclblue;
+    border-color: $uclblue;
+  }
+}
 /* with multiple calendars */
 
 .ui-datepicker-multi .ui-datepicker-group {
@@ -776,6 +791,9 @@ button.ui-button::-moz-focus-inner {
 .ui-timepicker {
   text-align: center;
   padding: .5em 0;
+  &.ui-widget-header {
+    background: $uclblue;
+  }
   > {
     div {
       display: inline-block;
@@ -4025,7 +4043,7 @@ $invalidInputBorderColor: $error;
   border-color: $stateHoverBorderColor;
   background: $stateHoverBgColor;
   color: $stateHoverTextColor;
-
+  cursor: pointer;
   a {
     color: $stateHoverTextColor;
   }
@@ -4047,6 +4065,10 @@ $invalidInputBorderColor: $error;
   }
 }
 p-radiobutton:hover {
+  cursor: pointer;
+  label {
+    cursor: pointer;
+  }
   .ui-radiobutton-box {
     @include hover-element();
     &.ui-state-active {
@@ -4055,6 +4077,10 @@ p-radiobutton:hover {
   }
 }
 p-checkbox:hover {
+  cursor: pointer;
+  label {
+    cursor: pointer;
+  }
   .ui-chkbox {
     @include hover-element();
     &.ui-state-active {
@@ -4476,6 +4502,7 @@ p-checkbox:hover {
 
 .ui-datepicker {
   .ui-datepicker-header {
+    background: $uclblue;
     a {
       color: $headerTextColor;
 
@@ -4535,7 +4562,9 @@ p-selectbutton.ng-dirty.ng-invalid .ui-button,
 p-togglebutton.ng-dirty.ng-invalid .ui-button {
   border-bottom-color: $invalidInputBorderColor;
 }
-
+p-autocomplete {
+  display: block;
+}
 /* Cornering */
 .ui-corner-tl {
   -moz-border-radius-topleft: $borderRadius;

@@ -17,7 +17,13 @@ form {
     background-color: $error ;
   }
   .input-holder {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    > label {
+      font-weight:bold;
+    }
+  }
+  .date-holder {
+    margin-top:10px;
   }
   .actions-holder {
     margin-top:15px;

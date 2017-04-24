@@ -10,12 +10,12 @@ import 'moment-timezone';
                 dataType="string" (onBlur)="touched()"></p-calendar>
     <p-calendar [(ngModel)]="time" (ngModelChange)="dateTimeChanged($event)" [timeOnly]="true"
                 dataType="string" [stepMinute]="5" (onBlur)="touched()"></p-calendar>
-    <span *ngIf="currentTz !== mainTz">
+    <div *ngIf="currentTz !== mainTz" class="ui-radiobutton-inline">
       <p-radioButton [name]="timezoneRadioGroupName" [value]="mainTz" [label]="mainTz" [(ngModel)]="selectedTz"
                      (ngModelChange)="dateTimeChanged($event)"></p-radioButton>
       <p-radioButton [name]="timezoneRadioGroupName" [value]="currentTz" [label]="currentTz" [(ngModel)]="selectedTz"
                      (ngModelChange)="dateTimeChanged($event)"></p-radioButton>
-    </span>
+    </div>
   `,
   styles: [''],
   providers: [

@@ -39,6 +39,10 @@ $simple-line-icon-prefix: "icon-" !default;
 }
 
 .#{$simple-line-icon-prefix} {
+  &angle-right,
+  &angle-left,
+  &angle-down,
+  &angle-up,
   &user,
   &people,
   &user-female,
@@ -336,19 +340,19 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e603";
 }
 
-.#{$simple-line-icon-prefix}arrow-down:before {
+.#{$simple-line-icon-prefix}arrow-down:before, .#{$simple-line-icon-prefix}angle-down:before {
   content: "\e604";
 }
 
-.#{$simple-line-icon-prefix}arrow-left:before {
+.#{$simple-line-icon-prefix}arrow-left:before, .#{$simple-line-icon-prefix}angle-left:before {
   content: "\e605";
 }
 
-.#{$simple-line-icon-prefix}arrow-right:before {
+.#{$simple-line-icon-prefix}arrow-right:before, .#{$simple-line-icon-prefix}angle-right:before {
   content: "\e606";
 }
 
-.#{$simple-line-icon-prefix}arrow-up:before {
+.#{$simple-line-icon-prefix}arrow-up:before, .#{$simple-line-icon-prefix}angle-up:before {
   content: "\e607";
 }
 
@@ -1002,4 +1006,5 @@ $simple-line-icon-prefix: "icon-" !default;
 .ui-chkbox-icon.fa-check:before {
   font-family: 'icomoon';
   content: "\e900";
+  font-size:1.1em;
 }

@@ -6,11 +6,11 @@
           <h1 *ngIf="!post">Create a new post</h1>
           <h1 *ngIf="post">Edit Post</h1>
           <div>
-            <a routerLink="../">Back</a>
+            <button routerLink="../" pButton label="Back"></button>
             <span>
-              <button *ngIf="availableActions.indexOf('ACCEPT') > -1" pButton label="Accept"
+              <button *ngIf="availableActions.indexOf('ACCEPT') > -1" class="ui-button-success" pButton label="Accept"
                       (click)="executeAction('ACCEPT')"></button>
-              <button *ngIf="availableActions.indexOf('SUSPEND') > -1" pButton label="Suspend"
+              <button *ngIf="availableActions.indexOf('SUSPEND') > -1" class="ui-button-danger" pButton label="Suspend"
                       (click)="executeAction('SUSPEND')"></button>
             </span>
           </div>
@@ -41,12 +41,12 @@
               </span>
             </div>
           </div>
-          <div class="grid__item one-whole input-holder">
+          <div class="grid__item small--one-whole medium-up--one-half input-holder">
             <label>Your organization</label>
             <input pInputText formControlName="organizationName" required>
             <control-messages [control]="postForm.controls.organizationName"></control-messages>
           </div>
-          <div class="grid__item one-whole input-holder">
+          <div class="grid__item small--one-whole medium-up--one-half input-holder">
             <label>Location</label>
             <places-autocomplete formControlName="location"></places-autocomplete>
             <control-messages [control]="postForm.controls.location"></control-messages>
@@ -96,7 +96,7 @@
           </div>
 
           <div *ngIf="postForm.value.applyType === 'document'" class="grid__item one-whole input-holder">
-            <b-file-upload formControlName="applyDocument" type="document"></b-file-upload>
+            <b-file-upload formControlName="applyDocument" type="document" class="uploader"></b-file-upload>
             <control-messages [control]="postForm.controls.applyDocument"></control-messages>
           </div>
           <div *ngIf="postForm.value.applyType === 'email'" class="grid__item one-whole input-holder">
@@ -104,56 +104,61 @@
             <input pInputText type="email" formControlName="applyEmail" placeholder="e.g. apply@example.com" required>
             <control-messages [control]="postForm.controls.applyEmail"></control-messages>
           </div>
-
           <div class="grid__item one-whole input-holder">
-            <p-checkbox formControlName="showLiveTimestamp" binary="true" label="Specify opening date"></p-checkbox>
-          </div>
+            <label>Post Availability</label>
+            <div class="grid">
+              <div class="grid__item small--one-whole medium-up--one-half">
+                <p-checkbox formControlName="showLiveTimestamp" binary="true" label="Specify opening date"></p-checkbox>
+                <div *ngIf="postForm.value.showLiveTimestamp" class="date-holder">
 
-          <div *ngIf="postForm.value.showLiveTimestamp" class="grid__item one-whole input-holder">
-            <label>Opening Date</label>
-            <b-datetime formControlName="liveTimestamp" name="liveTimestamp"></b-datetime>
-            <control-messages [control]="postForm.controls.liveTimestamp" dataType="string"></control-messages>
+                  <div class="input-holder">
+                    <b-datetime formControlName="liveTimestamp" name="liveTimestamp"></b-datetime>
+                    <control-messages [control]="postForm.controls.liveTimestamp" dataType="string"></control-messages>
+                  </div>
+                  <p-messages
+                    [value]="[{severity:'info', detail:'By specifying this field you can control when the post will be opened. Otherwise it will happen straight away.'}]"
+                    [closable]="false"></p-messages>
+                </div>
+              </div>
 
-            <p-messages
-              [value]="[{severity:'info', detail:'By specifying this field you can control when the post will be opened. Otherwise it will happen straight away.'}]"
-              [closable]="false"></p-messages>
-          </div>
+              <div class="grid__item small--one-whole medium-up--one-half">
+                <p-checkbox formControlName="showDeadTimestamp" binary="true" label="Specify closing date"></p-checkbox>
+                <div *ngIf="postForm.value.showDeadTimestamp" class="date-holder">
 
-          <div class="grid__item one-whole input-holder">
-            <p-checkbox formControlName="showDeadTimestamp" binary="true" label="Specify closing date"></p-checkbox>
-          </div>
-          <div *ngIf="postForm.value.showDeadTimestamp" class="grid__item one-whole input-holder">
-            <label>Closing Date</label>
-            <b-datetime formControlName="deadTimestamp" name="deadTimestamp"></b-datetime>
-            <control-messages [control]="postForm.controls.deadTimestamp" dataType="string"></control-messages>
-
-            <p-messages
-              [value]="[{severity:'info', detail:'By specifying this field you can control when the post will be closed. Otherwise it will happen a month after opening.'}]"
-              [closable]="false"></p-messages>
+                  <div class="input-holder">
+                    <b-datetime formControlName="deadTimestamp" name="deadTimestamp"></b-datetime>
+                    <control-messages [control]="postForm.controls.deadTimestamp" dataType="string"></control-messages>
+                  </div>
+                  <p-messages
+                    [value]="[{severity:'info', detail:'By specifying this field you can control when the post will be closed. Otherwise it will happen a month after opening.'}]"
+                    [closable]="false"></p-messages>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </md-card-content>
-      <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
-        <div *ngIf="actionView === 'REVISE'" layout="column" layout-align="space-between stretch">
+      <md-card-actions fxLayout="row" fxLayoutAlign="end center">
+        <span *ngIf="actionView === 'REVISE'" >
           <button pButton [disabled]="postForm.invalid" label="Accept"
                   (click)="executeAction('ACCEPT', true)"></button>
           <button pButton class="ui-button-warning" [disabled]="postForm.invalid" label="Request Correction"
                   (click)="executeAction('SUSPEND', true)"></button>
           <button pButton class="ui-button-danger" label="Reject" (click)="executeAction('REJECT')"></button>
-        </div>
+        </span>
 
-        <div *ngIf="actionView === 'CORRECT'" layout="column" layout-align="space-between stretch">
-          <button pButton [disabled]="postForm.invalid" label="Correct"
+        <span *ngIf="actionView === 'CORRECT'">
+          <button pButton [disabled]="postForm.invalid" label="Correct"  class="ui-button-warning"
                   (click)="executeAction('CORRECT', true)"></button>
-        </div>
+        </span>
 
-        <div *ngIf="actionView === 'EDIT'" layout="column" layout-align="space-between stretch">
-          <button pButton [disabled]="postForm.invalid" label="Save" (click)="save()"></button>
-        </div>
+        <span *ngIf="actionView === 'EDIT'">
+          <button pButton class="ui-button-success" [disabled]="postForm.invalid" label="Save" (click)="save()"></button>
+        </span>
 
-        <div *ngIf="actionView === 'CREATE'" layout="column" layout-align="space-between stretch">
-          <button pButton [disabled]="postForm.invalid" label="Submit" (click)="create()"></button>
-        </div>
+        <span *ngIf="actionView === 'CREATE'">
+          <button pButton class="ui-button-success" [disabled]="postForm.invalid" label="Submit" (click)="create()"></button>
+        </span>
       </md-card-actions>
     </form>
   </md-card>

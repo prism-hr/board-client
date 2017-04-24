@@ -1,41 +1,43 @@
 <md-card-content>
+  <div class="grid grid--half-gutters">
+    <div *ngFor="let post of posts" class="grid__item small--one-whole medium-up--one-third">
+      <md-card>
+        <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
+          <md-card-avatar class="logo-holder-small default-logo"></md-card-avatar>
+          <md-card-title>
+            <h3>
+              <a [routerLink]="post.id">{{post.name}}</a>
+            </h3>
+          </md-card-title>
+        </md-card-header>
+        <md-card-content>
+          {{post.description}}
+        </md-card-content>
+        <md-card-actions fxLayout="row" fxLayoutAlign="end center">
+      <span *ngIf="post.actionView === 'REVISE'">
+        <button pButton class="ui-button-success" label="Accept" (click)="executePostAction(post, 'ACCEPT')"></button>
+        <button pButton class="ui-button-danger" label="Reject" (click)="executePostAction(post, 'REJECT')"></button>
+        <a pButton [routerLink]="post.id" label="Revise" class="ui-button-warning"></a>
+      </span>
+          <span *ngIf="post.actionView === 'CORRECT'">
+        <a pButton [routerLink]="post.id" class="ui-button-warning" label="Correct"></a>
+      </span>
+          <span *ngIf="post.actionView === 'EDIT'">
+        <a pButton [routerLink]="post.id" class="ui-button-success" label="Edit"></a>
+      </span>
+          <span *ngIf="post.actionView === 'VIEW'">
+        <a pButton [routerLink]="post.id" class="ui-button-info" label="View"></a>
+      </span>
+        </md-card-actions>
+      </md-card>
 
+    </div>
+  </div>
 </md-card-content>
 <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
   <button pButton routerLink="newPost" class="ui-button-success" icon="fa-plus" label="New Post"></button>
 </md-card-actions>
 
-<div *ngFor="let post of posts" class="grid__item small--one-whole medium-up--one-third">
-  <md-card>
-    <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
-      <md-card-avatar class="logo-holder-small default-logo"></md-card-avatar>
-      <md-card-title>
-        <h3>
-          <a [routerLink]="post.id">{{post.name}}</a>
-        </h3>
-      </md-card-title>
-    </md-card-header>
-    <md-card-content>
-      {{post.description}}
-    </md-card-content>
-    <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
-      <span *ngIf="post.actionView === 'REVISE'">
-        <button pButton class="ui-button-success" label="Accept" (click)="executePostAction(post, 'ACCEPT')"></button>
-        <button pButton class="ui-button-danger" label="Reject" (click)="executePostAction(post, 'REJECT')"></button>
-        <a pButton [routerLink]="post.id" label="Revise"></a>
-      </span>
-      <span *ngIf="post.actionView === 'CORRECT'">
-        <a pButton [routerLink]="post.id" label="Correct"></a>
-      </span>
-      <span *ngIf="post.actionView === 'EDIT'">
-        <a pButton [routerLink]="post.id" label="Edit"></a>
-      </span>
-      <span *ngIf="post.actionView === 'VIEW'">
-        <a pButton [routerLink]="post.id" label="View"></a>
-      </span>
-    </md-card-actions>
-  </md-card>
 
-</div>
 
 
