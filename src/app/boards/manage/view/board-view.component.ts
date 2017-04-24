@@ -25,14 +25,14 @@ export class BoardViewComponent implements OnInit {
               private snackBar: MdSnackBar, private resourceService: ResourceService, private postService: PostService) {
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-      purpose: ['', [Validators.required, Validators.maxLength(2000)]],
+      description: ['', [Validators.required, Validators.maxLength(2000)]],
     });
   }
 
   ngOnInit() {
     this.route.parent.data.subscribe(data => {
       this.board = data['board'];
-      this.boardForm.setValue(_.pick(this.board, ['name', 'purpose']));
+      this.boardForm.setValue(_.pick(this.board, ['name', 'description']));
     });
     this.http.get('/api/boards/' + this.board.id + '/posts')
       .subscribe((posts: Response) => {

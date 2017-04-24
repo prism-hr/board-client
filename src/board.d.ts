@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-04-20 18:23:24.
+// Generated using typescript-generator version 1.23.311 on 2017-04-24 11:22:16.
 
 declare namespace b {
 
@@ -9,14 +9,14 @@ declare namespace b {
 
   interface BoardDTO {
     name?: string;
-    purpose?: string;
+    description?: string;
     postCategories?: string[];
     department?: DepartmentDTO;
   }
 
   interface BoardPatchDTO extends ResourcePatchDTO {
     name?: string;
-    purpose?: string;
+    description?: string;
     handle?: string;
     postCategories?: string[];
     defaultPostVisibility?: PostVisibility;
@@ -99,7 +99,7 @@ declare namespace b {
   }
 
   interface BoardRepresentation extends ResourceRepresentation {
-    purpose?: string;
+    description?: string;
     handle?: string;
     department?: DepartmentRepresentation;
     postCategories?: string[];

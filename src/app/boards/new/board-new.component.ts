@@ -24,7 +24,7 @@ export class BoardNewComponent implements OnInit {
               private definitionsService: DefinitionsService, private authGuard: AuthGuard) {
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-      purpose: ['', [Validators.required, Validators.maxLength(2000)]],
+      description: ['', [Validators.required, Validators.maxLength(2000)]],
       postCategories: [[]],
       department: this.fb.group({
         name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
@@ -51,7 +51,7 @@ export class BoardNewComponent implements OnInit {
   }
 
   submit() {
-    const board: BoardDTO = _.pick(this.boardForm.value, ['name', 'purpose', 'postCategories', 'department']);
+    const board: BoardDTO = _.pick(this.boardForm.value, ['name', 'description', 'postCategories', 'department']);
     this.authGuard.ensureAuthenticated(true) // open dialog if not authenticated
       .subscribe(authenticated => {
         if (!authenticated) {

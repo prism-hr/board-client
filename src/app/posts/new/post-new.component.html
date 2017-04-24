@@ -104,9 +104,11 @@
             <input pInputText type="email" formControlName="applyEmail" placeholder="e.g. apply@example.com" required>
             <control-messages [control]="postForm.controls.applyEmail"></control-messages>
           </div>
+
           <div class="grid__item one-whole input-holder">
             <p-checkbox formControlName="showLiveTimestamp" binary="true" label="Specify opening date"></p-checkbox>
           </div>
+
           <div *ngIf="postForm.value.showLiveTimestamp" class="grid__item one-whole input-holder">
             <label>Opening Date</label>
             <b-datetime formControlName="liveTimestamp" name="liveTimestamp"></b-datetime>
@@ -116,6 +118,7 @@
               [value]="[{severity:'info', detail:'By specifying this field you can control when the post will be opened. Otherwise it will happen straight away.'}]"
               [closable]="false"></p-messages>
           </div>
+
           <div class="grid__item one-whole input-holder">
             <p-checkbox formControlName="showDeadTimestamp" binary="true" label="Specify closing date"></p-checkbox>
           </div>
