@@ -18,10 +18,10 @@ import PostRepresentation = b.PostRepresentation;
 import Action = b.Action;
 
 @Component({
-  templateUrl: 'post-new.component.html',
-  styleUrls: ['post-new.component.scss']
+  templateUrl: 'post-edit.component.html',
+  styleUrls: ['post-edit.component.scss']
 })
-export class PostNewComponent implements OnInit {
+export class PostEditComponent implements OnInit {
   board: BoardRepresentation;
   post: PostRepresentation;
   postForm: FormGroup;
@@ -64,18 +64,17 @@ export class PostNewComponent implements OnInit {
         applyWebsite: [null, Validators.maxLength(255)],
         applyDocument: [],
         applyEmail: [null, Validators.maxLength(254)],
-        showLiveTimestamp: [],
+        hideTimestamps: [],
         liveTimestamp: [],
-        showDeadTimestamp: [],
         deadTimestamp: []
       });
+
+      this.postForm.patchValue({hideTimestamps: !this.post});
 
       if (this.post) {
         const formValue: any = Object.assign({}, this.post);
         formValue.applyType = formValue.applyWebsite ? 'website' :
           (formValue.applyDocument ? 'document' : (formValue.applyEmail ? 'email' : null));
-        formValue.showLiveTimestamp = !!formValue.liveTimestamp;
-        formValue.showDeadTimestamp = !!formValue.deadTimestamp;
         this.postForm.patchValue(formValue);
       }
 
@@ -85,12 +84,9 @@ export class PostNewComponent implements OnInit {
         this.showExistingRelation = true;
       }
 
-      this.postForm.get('showLiveTimestamp').valueChanges.forEach((show: boolean) => {
-        this.postForm.get('liveTimestamp').setValidators(show && [Validators.required]);
-      });
-
-      this.postForm.get('showDeadTimestamp').valueChanges.forEach((show: boolean) => {
-        this.postForm.get('deadTimestamp').setValidators(show && [Validators.required]);
+      this.postForm.get('hideTimestamps').valueChanges.forEach((hide: boolean) => {
+        this.postForm.get('liveTimestamp').setValidators(!hide && [Validators.required]);
+        this.postForm.get('deadTimestamp').setValidators(!hide && [Validators.required]);
       });
     });
 

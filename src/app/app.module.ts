@@ -37,7 +37,7 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {createTranslateLoader} from './services/translate.service';
 import {BoardAliasesComponent} from './boards/board-aliases.component';
 import {ControlMessagesComponent} from './validation/control-messages.component';
-import {PostNewComponent} from './posts/new/post-new.component';
+import {PostEditComponent} from './posts/edit/post-edit.component';
 import {PostViewComponent} from './posts/view/post-view.component';
 import {PostResolver} from './posts/post-resolver.service';
 import {AgmCoreModule} from 'angular2-google-maps/core';
@@ -86,7 +86,7 @@ import {DateTimeComponent} from './controls/datetime.component';
     DepartmentManageComponent,
     DepartmentViewComponent,
     DepartmentUsersComponent,
-    PostNewComponent,
+    PostEditComponent,
     PostViewComponent
   ],
   imports: [
@@ -146,16 +146,25 @@ import {DateTimeComponent} from './controls/datetime.component';
               },
               {
                 path: 'newPost',
-                component: PostNewComponent,
+                component: PostEditComponent,
                 canActivate: [AuthGuard]
               },
               {
                 path: ':postId',
-                component: PostNewComponent,
                 resolve: {
                   post: PostResolver
                 },
-                canActivate: [AuthGuard]
+                children: [
+                  {
+                    path: '',
+                    component: PostViewComponent,
+                  },
+                  {
+                    path: 'settings',
+                    component: PostEditComponent,
+                    canActivate: [AuthGuard]
+                  }
+                ]
               }
             ]
           }

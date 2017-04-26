@@ -1,3 +1,49 @@
-<h1>Post</h1>
-
-{{post.name}}
+<section class="section">
+  <md-card>
+    <md-card-header class="header-full">
+      <md-card-title>
+        <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
+          <h1>{{post.name}}</h1>
+          <div>
+            <button routerLink="../" pButton label="Back" class="ui-button-secondary"></button>
+            <span>
+              <button *ngIf="availableActions.indexOf('ACCEPT') > -1" class="ui-button-success" pButton label="Accept"
+                      (click)="executeAction('ACCEPT')"></button>
+              <button *ngIf="availableActions.indexOf('SUSPEND') > -1" class="ui-button-danger" pButton label="Suspend"
+                      (click)="executeAction('SUSPEND')"></button>
+              <button *ngIf="availableActions.indexOf('EDIT') > -1" class="ui-button-success" pButton label="Settings"
+                      routerLink="./settings"></button>
+            </span>
+          </div>
+        </div>
+      </md-card-title>
+    </md-card-header>
+    <md-card-content>
+      <div>
+        {{post.description}}
+      </div>
+      <div>
+        Categories: <span *ngFor="let category of post.postCategories">{{category}}</span>
+      </div>
+      <div>
+        Organization: {{post.organizationName}}
+      </div>
+      <div>
+        Location: {{post.location.name}}
+      </div>
+      <div *ngIf="post.applyWebsite">
+        <a href="{{post.applyWebsite}}">Apply</a>
+      </div>
+      <div *ngIf="post.applyDocument">
+        <a target="_blank" href="{{post.applyDocument.cloudinaryUrl}}">
+          {{post.applyDocument.fileName}}
+        </a>
+      </div>
+      <div *ngIf="post.applyEmail">
+        <a href="mailto:{{post.applyEmail}}">
+          {{post.applyEmail}}
+        </a>
+      </div>
+    </md-card-content>
+  </md-card>
+</section>
