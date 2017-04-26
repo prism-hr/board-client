@@ -53,7 +53,7 @@ import {
   DropdownModule,
   InputTextModule,
   MessagesModule,
-  RadioButtonModule,
+  RadioButtonModule, SplitButtonModule,
   TabMenuModule
 } from 'primeng/primeng';
 import {PostService} from './posts/post.service';
@@ -182,6 +182,7 @@ import {DateTimeComponent} from './controls/datetime.component';
     CheckboxModule,
     DropdownModule,
     CalendarModule,
+    SplitButtonModule,
     // Material modules
     MdDialogModule,
     MdSnackBarModule,

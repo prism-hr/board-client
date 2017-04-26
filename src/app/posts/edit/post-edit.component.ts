@@ -104,30 +104,16 @@ export class PostEditComponent implements OnInit {
     this.availableActions = this.post ? this.post.actions.map(a => a.action) : [];
   }
 
-  save() {
-    const post = this.generatePostRequestBody();
-    this.http.patch('/api/posts/' + this.post.id, post)
-      .subscribe(() => {
-        this.snackBar.open('Board Saved!');
-      });
+  update() {
+    this.postService.update(this.post, this.generatePostRequestBody())
   }
 
   create() {
-    const post = this.generatePostRequestBody();
-    this.http.post('/api/boards/' + this.board.id + '/posts', post)
-      .subscribe(() => {
-        this.router.navigate([this.board.department.handle, this.board.handle]);
-      });
+    this.postService.create(this.board, this.generatePostRequestBody());
   }
 
   executeAction(action: string, sendForm?: boolean) {
-    this.http.post('/api/posts/' + this.post.id + '/' + action.toLowerCase(), sendForm ? this.generatePostRequestBody() : {})
-      .subscribe(() => {
-        this.router.navigate([this.board.department.handle, this.board.handle])
-          .then(() => {
-            this.snackBar.open('You action has been made.');
-          });
-      });
+    this.postService.executeAction(this.post, action, sendForm ? this.generatePostRequestBody() : {}, this.board);
   }
 
   private generatePostRequestBody() {

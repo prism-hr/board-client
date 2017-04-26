@@ -146,7 +146,7 @@
 
         <span *ngIf="actionView === 'EDIT'">
           <button pButton class="ui-button-success" [disabled]="postForm.invalid" label="Save"
-                  (click)="save()"></button>
+                  (click)="update()"></button>
         </span>
 
         <span *ngIf="actionView === 'CREATE'">

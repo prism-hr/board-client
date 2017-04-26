@@ -5,15 +5,8 @@
         <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
           <h2>{{post.name}}</h2>
           <div>
-            <button routerLink="../" pButton label="Back" class="ui-button-secondary"></button>
-            <span>
-              <button *ngIf="availableActions.indexOf('ACCEPT') > -1" class="ui-button-success" pButton label="Accept"
-                      (click)="executeAction('ACCEPT')"></button>
-              <button *ngIf="availableActions.indexOf('SUSPEND') > -1" class="ui-button-danger" pButton label="Suspend"
-                      (click)="executeAction('SUSPEND')"></button>
-              <button *ngIf="availableActions.indexOf('EDIT') > -1" class="ui-button-success" pButton label="Settings"
-                      routerLink="./settings"></button>
-            </span>
+            <button [routerLink]="['/' + board.department.handle, board.handle]" pButton label="Back" class="ui-button-secondary"></button>
+            <p-splitButton label="Settings" icon="fa-gear" (onClick)="gotoSettings()" [model]="actions"></p-splitButton>
           </div>
         </div>
       </md-card-title>

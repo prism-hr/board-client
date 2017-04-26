@@ -35,7 +35,9 @@
       "ACCEPT": "Accept",
       "SUSPEND": "Suspend",
       "CORRECT": "Correct",
-      "REJECT": "Reject"
+      "REJECT": "Reject",
+      "WITHDRAW": "Withdraw",
+      "RESTORE": "Restore"
     }
   }
 }
