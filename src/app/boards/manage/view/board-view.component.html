@@ -15,20 +15,22 @@
           {{post.description}}
         </md-card-content>
         <md-card-actions fxLayout="row" fxLayoutAlign="end center">
-      <span *ngIf="post.actionView === 'REVISE'">
-        <button pButton class="ui-button-success" label="Accept" (click)="executePostAction(post, 'ACCEPT')"></button>
-        <button pButton class="ui-button-danger" label="Reject" (click)="executePostAction(post, 'REJECT')"></button>
-        <a pButton [routerLink]="post.id" label="Revise" class="ui-button-warning"></a>
-      </span>
+          <span *ngIf="post.actionView === 'REVISE'">
+            <button pButton class="ui-button-success" label="Accept"
+                    (click)="executePostAction(post, 'ACCEPT')"></button>
+            <button pButton class="ui-button-danger" label="Reject"
+                    (click)="executePostAction(post, 'REJECT')"></button>
+            <a pButton [routerLink]="post.id" label="Revise" class="ui-button-warning"></a>
+          </span>
           <span *ngIf="post.actionView === 'CORRECT'">
-        <a pButton [routerLink]="post.id" class="ui-button-warning" label="Correct"></a>
-      </span>
+            <p-splitButton label="Correct" icon="fa-gear" (onClick)="gotoView()" [model]="post.actions"></p-splitButton>
+          </span>
           <span *ngIf="post.actionView === 'EDIT'">
-        <a pButton [routerLink]="post.id" class="ui-button-success" label="Edit"></a>
-      </span>
+            <p-splitButton label="Edit" icon="fa-gear" (onClick)="gotoView()" [model]="post.actions"></p-splitButton>
+          </span>
           <span *ngIf="post.actionView === 'VIEW'">
-        <a pButton [routerLink]="post.id" class="ui-button-info" label="View"></a>
-      </span>
+            <p-splitButton label="View" icon="fa-gear" (onClick)="gotoView()" [model]="post.actions"></p-splitButton>
+          </span>
         </md-card-actions>
       </md-card>
 

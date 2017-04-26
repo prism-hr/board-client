@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import {Http} from '@angular/http';
 import {Router} from '@angular/router';
 import {MdSnackBar} from '@angular/material';
+import {TranslateService} from '@ngx-translate/core';
 import PostRepresentation = b.PostRepresentation;
 import PostPatchDTO = b.PostPatchDTO;
 import BoardRepresentation = b.BoardRepresentation;
@@ -11,7 +12,7 @@ import PostDTO = b.PostDTO;
 @Injectable()
 export class PostService {
 
-  constructor(private http: Http, private router: Router, private snackBar: MdSnackBar) {
+  constructor(private http: Http, private router: Router, private translate: TranslateService, private snackBar: MdSnackBar) {
   }
 
   getActionView(post: PostRepresentation): string {
@@ -52,6 +53,21 @@ export class PostService {
           .then(() => {
             this.snackBar.open('Your action was executed successfully.');
           });
+      });
+  }
+
+  getActionItems(post: PostRepresentation, board: BoardRepresentation) {
+    const availableActions = ['SUSPEND', 'REJECT', 'WITHDRAW', 'RESTORE']
+      .filter(a => post.actions.find(actionDef => actionDef.action as any === a));
+    return this.translate.get('definitions.action')
+      .map(actionTranslations => {
+        return availableActions.map(a => {
+          return {
+            label: actionTranslations[a], command: () => {
+              this.executeAction(post, a, {}, board);
+            }
+          };
+        });
       });
   }
 

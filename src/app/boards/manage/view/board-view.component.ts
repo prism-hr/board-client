@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Http, Response} from '@angular/http';
-import {MdSnackBar} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import {PostService} from '../../../posts/post.service';
@@ -22,7 +21,7 @@ export class BoardViewComponent implements OnInit {
   boardName: string;
 
   constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder,
-              private snackBar: MdSnackBar, private resourceService: ResourceService, private postService: PostService) {
+              private resourceService: ResourceService, private postService: PostService) {
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
       description: ['', [Validators.required, Validators.maxLength(2000)]],
@@ -76,6 +75,8 @@ export class BoardViewComponent implements OnInit {
 
   private preprocessPost(p: PostRepresentation): PostRepresentation {
     (p as any).actionView = this.postService.getActionView(p);
+    this.postService.getActionItems(p, this.board)
+      .subscribe(actions => (p as any).actions = actions);
     return p;
   }
 }

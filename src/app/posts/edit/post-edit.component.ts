@@ -82,6 +82,7 @@ export class PostEditComponent implements OnInit {
       if (!this.post && (extendAction.state as any as string) === 'DRAFT') {
         // user has no permission to create trusted post, has to specify relation type
         this.showExistingRelation = true;
+        this.postForm.get('existingRelation').setValidators([Validators.required]);
       }
 
       this.postForm.get('hideTimestamps').valueChanges.forEach((hide: boolean) => {
