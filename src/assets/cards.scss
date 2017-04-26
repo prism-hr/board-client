@@ -66,6 +66,22 @@ md-card.mat-card {
     margin-top:0;
   }
   .mat-card-avatar {
+    height: 45px;
+    width: 45px;
+    overflow: hidden;
     margin-right: 15px;
+    &.no-background {
+      width: auto;
+      max-height: 45px;
+      img {
+        max-height: 100%;
+      }
+    }
   }
+}
+.section-header {
+  background: $greyBackground;
+  padding:10px;
+  margin-bottom:15px;
+  border-bottom:1px solid $fadeGrey;
 }

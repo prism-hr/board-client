@@ -5,26 +5,19 @@
   text-align: center;
 }
 .department-content {
-  margin-bottom:$section-spacing / 2;
+  margin-bottom:$section-spacing ;
   margin-top:$section-spacing / 2;
-  h2 {
-    margin-bottom:$section-spacing / 2;
-    span {
-      display: inline-block;
-      float: left;
-    }
-    button {
-      display: inline-block;
-      float: left;
-      margin-top:4px;
-      margin-left:10px;
-    }
-  }
 }
 .default-logo {
   background: url("/assets/prism-logo.svg") $uclblue2 no-repeat center center;
   background-size: 50%;
+  img {
+    max-height: 100%;
+  }
+  &.no-background {
+    background: white;
+  }
 }
 .logo-holder-small {
-  border-radius: 5px;
+  border-radius: 3px;
 }

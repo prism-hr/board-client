@@ -5,12 +5,12 @@ import {Response} from '@angular/http';
 @Component({
   selector: 'b-xeditable-input',
   template: `
-    <span *ngIf="!editing" (click)="edit()">{{resource[propertyName]}}
+    <span *ngIf="!editing" (click)="edit()"><span>{{resource[propertyName]}}</span>
     </span>
     <span *ngIf="editing">
       <input pInputText [(ngModel)]="editedName" required>
-      <button pButton type="button" (click)="ok()" icon="fa-check"></button>
-      <button pButton type="button" (click)="cancel()" icon="fa-close"></button>
+      <button pButton type="button" class="ui-button-success ui-button-small" (click)="ok()" icon="fa-check"></button>
+      <button pButton type="button" class="ui-button-warning ui-button-small" (click)="cancel()" icon="fa-close"></button>
     </span>
   `,
   styles: ['']
