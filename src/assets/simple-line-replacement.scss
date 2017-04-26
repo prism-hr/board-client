@@ -40,6 +40,7 @@ $simple-line-icon-prefix: "icon-" !default;
 
 .#{$simple-line-icon-prefix} {
   &angle-right,
+  &caret-down,
   &angle-left,
   &angle-down,
   &angle-up,
@@ -208,6 +209,7 @@ $simple-line-icon-prefix: "icon-" !default;
   &refresh,
   &reload,
   &settings,
+  &gear,
   &star,
   &symbol-female,
   &symbol-male,
@@ -340,7 +342,7 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e603";
 }
 
-.#{$simple-line-icon-prefix}arrow-down:before, .#{$simple-line-icon-prefix}angle-down:before {
+.#{$simple-line-icon-prefix}arrow-down:before, .#{$simple-line-icon-prefix}angle-down:before, .#{$simple-line-icon-prefix}caret-down:before {
   content: "\e604";
 }
 
@@ -896,7 +898,7 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e099";
 }
 
-.#{$simple-line-icon-prefix}settings:before {
+.#{$simple-line-icon-prefix}settings:before, .#{$simple-line-icon-prefix}gear:before {
   content: "\e09a";
 }
 

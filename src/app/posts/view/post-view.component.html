@@ -1,42 +1,38 @@
 <section class="section">
-  <md-card>
-    <md-card-header class="header-full">
-      <md-card-title>
-        <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
-          <h2>{{post.name}}</h2>
-          <div>
-            <button [routerLink]="['/' + board.department.handle, board.handle]" pButton label="Back" class="ui-button-secondary"></button>
-            <p-splitButton label="Settings" icon="fa-gear" (onClick)="gotoSettings()" [model]="actions"></p-splitButton>
-          </div>
-        </div>
-      </md-card-title>
-    </md-card-header>
-    <md-card-content>
+  <div class="section-header">
+    <div fxFill fxLayout="row" fxLayoutAlign="space-between center" >
+      <h2>{{post.name}}</h2>
       <div>
-        {{post.description}}
+        <button [routerLink]="['/' + board.department.handle, board.handle]" pButton label="Back" class="ui-button-secondary"></button>
+        <p-splitButton label="Settings" icon="fa-gear" (onClick)="gotoSettings()" [model]="actions" class="ui-button-info"></p-splitButton>
       </div>
-      <div>
-        Categories: <span *ngFor="let category of post.postCategories">{{category}}</span>
-      </div>
-      <div>
-        Organization: {{post.organizationName}}
-      </div>
-      <div>
-        Location: {{post.location.name}}
-      </div>
-      <div *ngIf="post.applyWebsite">
-        <a href="{{post.applyWebsite}}">Apply</a>
-      </div>
-      <div *ngIf="post.applyDocument">
-        <a target="_blank" href="{{post.applyDocument.cloudinaryUrl}}">
-          {{post.applyDocument.fileName}}
-        </a>
-      </div>
-      <div *ngIf="post.applyEmail">
-        <a href="mailto:{{post.applyEmail}}">
-          {{post.applyEmail}}
-        </a>
-      </div>
-    </md-card-content>
-  </md-card>
+    </div>
+  </div>
+  <div class="post-content">
+    <div>
+      {{post.description}}
+    </div>
+    <div>
+      Categories: <span *ngFor="let category of post.postCategories">{{category}}</span>
+    </div>
+    <div>
+      Organization: {{post.organizationName}}
+    </div>
+    <div>
+      Location: {{post.location.name}}
+    </div>
+    <div *ngIf="post.applyWebsite">
+      <a href="{{post.applyWebsite}}">Apply</a>
+    </div>
+    <div *ngIf="post.applyDocument">
+      <a target="_blank" href="{{post.applyDocument.cloudinaryUrl}}">
+        {{post.applyDocument.fileName}}
+      </a>
+    </div>
+    <div *ngIf="post.applyEmail">
+      <a href="mailto:{{post.applyEmail}}">
+        {{post.applyEmail}}
+      </a>
+    </div>
+  </div>
 </section>
