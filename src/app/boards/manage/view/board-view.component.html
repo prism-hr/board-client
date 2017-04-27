@@ -12,24 +12,18 @@
           </md-card-title>
         </md-card-header>
         <md-card-content>
-          {{post.description}}
+          <div>{{post.description}}</div>
+          <div>State: {{'definitions.state.' + post.state | translate}}</div>
         </md-card-content>
         <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
           <span *ngIf="post.actionView === 'REVISE'">
-            <button pButton class="ui-button-success" label="Accept"
-                    (click)="executePostAction(post, 'ACCEPT')"></button>
-            <button pButton class="ui-button-danger" label="Reject"
-                    (click)="executePostAction(post, 'REJECT')"></button>
-            <a pButton [routerLink]="post.id" label="Revise" class="ui-button-warning"></a>
+            <p-splitButton label="Revise" icon="fa-gear" (onClick)="gotoSettings(post)" [model]="post.actions" class="ui-button-info"></p-splitButton>
           </span>
           <span *ngIf="post.actionView === 'CORRECT'">
-            <p-splitButton label="Correct" icon="fa-gear" (onClick)="gotoView()" [model]="post.actions" class="ui-button-info"></p-splitButton>
+            <p-splitButton label="Correct" icon="fa-gear" (onClick)="gotoSettings(post)" [model]="post.actions" class="ui-button-info"></p-splitButton>
           </span>
           <span *ngIf="post.actionView === 'EDIT'">
-            <p-splitButton icon="fa-gear" (onClick)="gotoView()" [model]="post.actions" class="ui-button-info"></p-splitButton>
-          </span>
-          <span *ngIf="post.actionView === 'VIEW'">
-            <p-splitButton label="View" icon="fa-eye" (onClick)="gotoView()" [model]="post.actions" class="ui-button-info"></p-splitButton>
+            <p-splitButton label="Edit" icon="fa-gear" (onClick)="gotoSettings(post)" [model]="post.actions" class="ui-button-info"></p-splitButton>
           </span>
           <button pButton [routerLink]="post.id" class="ui-button-secondary " icon="fa-eye" label="View"></button>
         </md-card-actions>

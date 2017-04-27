@@ -6,7 +6,7 @@
           <h2 *ngIf="!post">Create a new post</h2>
           <h2 *ngIf="post">Edit Post</h2>
           <div>
-            <button routerLink="../" pButton label="Back" class="ui-button-secondary"></button>
+            <button [routerLink]="['/' + board.department.handle, board.handle]" pButton label="Back" class="ui-button-secondary"></button>
           </div>
         </div>
 

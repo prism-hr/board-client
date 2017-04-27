@@ -38,6 +38,16 @@
       "REJECT": "Reject",
       "WITHDRAW": "Withdraw",
       "RESTORE": "Restore"
+    },
+    "state": {
+      "DRAFT": "Draft",
+      "PENDING": "Pending",
+      "SUSPENDED": "Suspended",
+      "ACCEPTED": "Accepted",
+      "EXPIRED": "Expired",
+      "REJECTED": "Rejected",
+      "WITHDRAWN": "Withdraw",
+      "PREVIOUS": "Previous"
     }
   }
 }

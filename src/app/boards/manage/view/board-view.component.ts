@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Http, Response} from '@angular/http';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as _ from 'lodash';
@@ -20,7 +20,7 @@ export class BoardViewComponent implements OnInit {
   nameEditing: boolean;
   boardName: string;
 
-  constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder,
+  constructor(private route: ActivatedRoute, private router: Router, private http: Http, private fb: FormBuilder,
               private resourceService: ResourceService, private postService: PostService) {
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
@@ -71,6 +71,10 @@ export class BoardViewComponent implements OnInit {
         const idx = this.posts.indexOf(post);
         this.posts.splice(idx, 1, this.preprocessPost(returnedPost.json()));
       });
+  }
+
+  gotoSettings(post: PostRepresentation) {
+    this.router.navigate([post.id, 'settings'], {relativeTo: this.route});
   }
 
   private preprocessPost(p: PostRepresentation): PostRepresentation {
