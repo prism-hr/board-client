@@ -5,9 +5,6 @@
         <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
           <h2 *ngIf="!post">Create a new post</h2>
           <h2 *ngIf="post">Edit Post</h2>
-          <div>
-            <button [routerLink]="['/' + board.department.handle, board.handle]" pButton label="Back" class="ui-button-secondary"></button>
-          </div>
         </div>
 
       </md-card-title>
@@ -22,7 +19,7 @@
           </div>
           <div class="grid__item one-whole input-holder">
             <label>Content of your post</label>
-            <textarea pInputTextarea formControlName="description" required
+            <textarea pInputTextarea formControlName="description" required rows="5"
                       class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
             <control-messages [control]="postForm.controls.description"></control-messages>
           </div>

@@ -3,7 +3,7 @@
     <div fxFill fxLayout="row" fxLayoutAlign="space-between center" >
       <h2>{{post.name}}</h2>
       <div>
-        <button [routerLink]="['/' + board.department.handle, board.handle]" pButton label="Back" class="ui-button-secondary"></button>
+
         <p-splitButton label="Settings" icon="fa-gear" (onClick)="gotoSettings()" [model]="actions" class="ui-button-info"></p-splitButton>
       </div>
     </div>

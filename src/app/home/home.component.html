@@ -19,9 +19,15 @@
         <div *ngFor="let post of board.posts" class="grid__item small--one-whole medium-up--one-half">
           <md-card>
             <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
+              <md-card-avatar class="logo-holder-small default-logo" [ngClass]="{'no-background': board.department.documentLogo}">
+                <cl-image *ngIf="board.department.documentLogo" public-id="{{board.department.documentLogo.cloudinaryId}}" class="img">
+                  <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
+                </cl-image>
+              </md-card-avatar>
               <md-card-title>
                 <h3><a [routerLink]="[board.department.handle, board.handle, post.id]">{{post.name}}</a></h3>
               </md-card-title>
+              <md-card-subtitle><h6>{{board.department.name}} > {{board.name}}</h6></md-card-subtitle>
             </md-card-header>
             <md-card-content>
               {{post.description}}
