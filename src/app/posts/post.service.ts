@@ -42,7 +42,7 @@ export class PostService {
   update(post: PostRepresentation, postPatch: PostPatchDTO) {
     this.http.patch('/api/posts/' + post.id, postPatch)
       .subscribe(() => {
-        this.snackBar.open('Board Saved!');
+        this.snackBar.open('Board Saved!', null, {duration: 500});
       });
   }
 
@@ -51,7 +51,7 @@ export class PostService {
       .subscribe(() => {
         this.router.navigate([board.department.handle, board.handle])
           .then(() => {
-            this.snackBar.open('Your action was executed successfully.');
+            this.snackBar.open('Your action was executed successfully.', null, {duration: 500});
           });
       });
   }

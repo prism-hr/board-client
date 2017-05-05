@@ -43,7 +43,7 @@ export class BoardSettingsComponent implements OnInit {
       .subscribe(() => {
         this.router.navigate([this.board.department.handle, board.handle, 'settings'])
           .then(() => {
-            this.snackBar.open('Board Saved!');
+            this.snackBar.open('Board Saved!', null, {duration: 500});
           });
       }, (error: Response | any) => {
         if (error.status === 422) {
