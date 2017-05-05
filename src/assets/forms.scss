@@ -34,16 +34,7 @@ form {
     display: inline-block;
   }
 }
-b-xeditable-input {
-  > span {
-    .ui-widget {
-      font-size:80%;
-    }
-    > span {
-      border-bottom:1px dashed $uclred;
-    }
-  }
-}
+
 .url-builder {
   .grid__item {
     position: relative;

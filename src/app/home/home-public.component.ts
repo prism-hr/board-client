@@ -14,8 +14,8 @@ export class HomePublicComponent {
 
   constructor(private router: Router, private fb: FormBuilder, private authGuard: AuthGuard) {
     this.boardForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-      departmentName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]]
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      departmentName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]]
     });
   }
 

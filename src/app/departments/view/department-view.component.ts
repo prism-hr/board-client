@@ -20,7 +20,7 @@ export class DepartmentViewComponent implements OnInit {
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router,
               private snackBar: MdSnackBar, private resourceService: ResourceService) {
     this.departmentForm = this.fb.group({
-      name: ['', [Validators.minLength(3), Validators.required, Validators.maxLength(255)]],
+      name: ['', [Validators.minLength(3), Validators.required, Validators.maxLength(100)]],
       memberCategories: [],
       documentLogo: [],
       handles: this.fb.group({

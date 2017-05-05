@@ -21,11 +21,11 @@ export class BoardNewComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private http: Http, private fb: FormBuilder,
               private definitionsService: DefinitionsService) {
     this.boardForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       description: ['', [Validators.required, Validators.maxLength(2000)]],
       postCategories: [[]],
       department: this.fb.group({
-        name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+        name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
         memberCategories: [[]],
         documentLogo: []
       })

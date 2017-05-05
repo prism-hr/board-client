@@ -17,13 +17,11 @@ export class BoardViewComponent implements OnInit {
   board: BoardRepresentation;
   posts: PostRepresentation[];
   boardForm: FormGroup;
-  nameEditing: boolean;
-  boardName: string;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: Http, private fb: FormBuilder,
-              private resourceService: ResourceService, private postService: PostService) {
+              private postService: PostService) {
     this.boardForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       description: ['', [Validators.required, Validators.maxLength(2000)]],
     });
   }
@@ -39,37 +37,6 @@ export class BoardViewComponent implements OnInit {
         this.posts.forEach(p => {
           this.preprocessPost(p);
         });
-      });
-  }
-
-  openNameEdit() {
-    this.nameEditing = true;
-    this.boardName = this.board.name;
-  }
-
-  cancelNameEdit() {
-    this.nameEditing = false;
-  }
-
-  acceptNameEdit() {
-    this.resourceService.patchBoard(this.board.id, {name: this.boardName})
-      .subscribe(board => {
-        this.board.name = board.name;
-        this.nameEditing = false;
-      }, (error: Response) => {
-        if (error.status === 422) {
-          if (error.json().exceptionCode === 'DUPLICATE_BOARD') {
-            this.boardForm.controls['name'].setErrors({duplicateBoard: true});
-          }
-        }
-      });
-  }
-
-  executePostAction(post: PostRepresentation, action: string) {
-    this.http.post('/api/posts/' + post.id + '/' + action.toLowerCase(), {})
-      .subscribe(returnedPost => {
-        const idx = this.posts.indexOf(post);
-        this.posts.splice(idx, 1, this.preprocessPost(returnedPost.json()));
       });
   }
 

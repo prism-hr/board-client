@@ -5,7 +5,7 @@ import {Response} from '@angular/http';
 @Component({
   selector: 'b-xeditable-input',
   template: `
-    <span *ngIf="!editing" (click)="edit()"><span>{{resource[propertyName]}}</span>
+    <span *ngIf="!editing" [ngClass]="{editable: canEdit}" (click)="edit()"><span>{{resource[propertyName]}}</span>
     </span>
     <span *ngIf="editing">
       <input pInputText [(ngModel)]="editedName" required>
@@ -13,10 +13,11 @@ import {Response} from '@angular/http';
       <button pButton type="button" class="ui-button-warning ui-button-small" (click)="cancel()" icon="fa-close"></button>
     </span>
   `,
-  styles: ['']
+  styleUrls: ['xeditable.scss']
 })
 export class XeditableInputComponent implements OnInit {
 
+  @Input() canEdit: boolean;
   @Input() resource: any;
   @Input() propertyName: string;
 
@@ -30,6 +31,9 @@ export class XeditableInputComponent implements OnInit {
   }
 
   edit() {
+    if(!this.canEdit) {
+      return;
+    }
     this.editing = true;
     this.editedName = this.resource[this.propertyName];
   }

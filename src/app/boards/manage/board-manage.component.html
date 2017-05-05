@@ -2,7 +2,7 @@
   <div class="section-header">
     <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
       <h2><a routerLink="/{{board.department.handle}}">{{board.department.name}}</a> -
-        <b-xeditable-input [resource]="board" propertyName="name"></b-xeditable-input>
+        <b-xeditable-input [resource]="board" propertyName="name" [canEdit]="canManage"></b-xeditable-input>
       </h2>
       <div>
         <button pButton routerLink="/" class="ui-button-secondary " label="Back"></button>

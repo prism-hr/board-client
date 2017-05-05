@@ -1,0 +1,10 @@
+@import '../../assets/variables';
+
+span {
+  .ui-widget {
+    font-size:80%;
+  }
+  .editable {
+    border-bottom:1px dashed $uclred;
+  }
+}
