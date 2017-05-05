@@ -4,9 +4,13 @@
 .mat-input-container{
   width: 100%;
 }
+
 md-card {
   .ui-tabmenu {
     margin: 0px -24px 0px -24px ;
+  }
+  &.mat-card {
+    font-family:'lato';
   }
 }
 md-card.mat-card>:first-child {
@@ -70,6 +74,7 @@ md-card.mat-card {
     width: 45px;
     overflow: hidden;
     margin-right: 15px;
+    border-radius: 3px;
     &.no-background {
       width: auto;
       max-height: 45px;

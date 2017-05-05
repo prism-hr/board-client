@@ -11,8 +11,8 @@
           </a>
         </div>
         <div *ngIf="user$ | async" class="top-nav">
-          <a pButton class="ui-button" routerLink="/" label="Boards"></a>
-          <a pButton class="ui-button" routerLink="/account" [label]="(user$ | async).fullName"></a>
+          <a pButton class="ui-button" routerLink="/" label="Posts"></a>
+          <a pButton class="ui-button" routerLink="/boards" label="Boards"></a>
         </div>
       </div>
       <nav class="grid__item one-third text-right">
@@ -20,6 +20,7 @@
           <button pButton (click)="showLogin()" class="ui-button-warning" label="Log in"></button>
         </div>
         <div *ngIf="user$ | async">
+          <button *ngIf="user$ | async" pButton class="ui-button ui-button-icon-only ui-button-text" icon="fa-user" routerLink="/account" [label]="(user$ | async).fullName"></button>
           <button pButton (click)="logout()" class="ui-button-warning" label="Log out"></button>
         </div>
       </nav>

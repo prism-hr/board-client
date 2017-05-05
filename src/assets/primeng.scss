@@ -402,6 +402,10 @@
 
 .ui-button-icon-only {
   width: 2em;
+  &.ui-button-text {
+    color: white;
+    background: transparent;
+  }
 }
 
 /*button text element */
@@ -2434,6 +2438,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 .ui-menu-list {
+  text-align: left;
   position: static;
 }
 
@@ -4659,4 +4664,10 @@ p-autocomplete {
   -moz-border-radius: $borderRadius;
   -webkit-border-radius: $borderRadius;
   border-radius: $borderRadius;
+}
+cl-image > img {
+  max-height: 100%;
+}
+.hidden {
+  display: none;
 }

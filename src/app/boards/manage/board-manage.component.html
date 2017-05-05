@@ -1,11 +1,20 @@
 <section class="section">
-  <div class="section-header">
-    <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
-      <h2><a routerLink="/{{board.department.handle}}">{{board.department.name}}</a> -
-        <b-xeditable-input [resource]="board" propertyName="name" [canEdit]="canManage"></b-xeditable-input>
-      </h2>
+  <div class="board-header">
+    <div fxFill fxLayout="row" class="board-header-content" fxLayoutAlign="space-between center">
       <div>
-        <button pButton routerLink="/" class="ui-button-secondary " label="Back"></button>
+        <h2><a routerLink="/{{board.department.handle}}">{{board.department.name}}</a> -   <b-xeditable-input [resource]="board" propertyName="name" [canEdit]="canManage"></b-xeditable-input></h2>
+        <div class="description-holder">
+          <div class="description-text">{{board.description}}</div>
+        </div>
+      </div>
+      <div class="logo-holder default-logo" [ngClass]="{'no-background': board.department.documentLogo}">
+        <cl-image *ngIf="board.department.documentLogo" public-id="{{board.department.documentLogo.cloudinaryId}}" class="img">
+          <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
+        </cl-image>
+      </div>
+    </div>
+    <div class="board-header-footer" fxLayoutAlign="end center">
+      <div>
         <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}" routerLinkActive="hidden"
                 class="ui-button-secondary" icon="fa-eye" label="View"></button>
         <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}/settings" routerLinkActive="hidden"
@@ -14,5 +23,6 @@
       </div>
     </div>
   </div>
+
   <router-outlet></router-outlet>
 </section>

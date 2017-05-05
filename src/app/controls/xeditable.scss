@@ -4,7 +4,10 @@ span {
   .ui-widget {
     font-size:80%;
   }
-  .editable {
+  button.ui-widget {
+    font-size:70%;
+  }
+  &.editable {
     border-bottom:1px dashed $uclred;
   }
 }
