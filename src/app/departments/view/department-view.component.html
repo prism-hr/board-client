@@ -7,20 +7,21 @@
             <label>Department Name</label>
             <input pInputText formControlName="name" required>
             <control-messages [control]="departmentForm.controls.name"></control-messages>
-
           </div>
+
           <div class="grid__item one-whole input-holder">
             <label>Member categories</label>
             <p-chips formControlName="memberCategories"></p-chips>
           </div>
+          
           <div class="grid__item one-whole input-holder">
             <label>Board URL</label>
-            <board-aliases formGroupName="handles" [hideBoard]="true"></board-aliases>
+            <b-board-aliases formGroupName="handles" [hideBoard]="true"></b-board-aliases>
           </div>
         </div>
       </div>
-      <div class="grid__item small--one-whole medium-up--one-third">
 
+      <div class="grid__item small--one-whole medium-up--one-third">
         <b-file-upload formControlName="documentLogo" type="logo"></b-file-upload>
       </div>
     </div>

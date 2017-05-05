@@ -4,14 +4,13 @@
   <div *ngIf="user">
     <div fxLayout="row" fxLayoutAlign="space-between center">
       <h1>Posts</h1>
-      <button pButton routerLink="/newBoard" class="ui-button-success" icon="fa-plus" label="New Board"></button>
     </div>
     <div *ngFor="let board of boards" class="board-content">
       <div class="section-header">
         <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
           <h2>{{board.name}}</h2>
           <div>
-            <button pButton [routerLink]="[board.department.handle, board.handle]"
+            <button pButton [routerLink]="[board.department.handle, board.handle, 'settings']"
                     class="ui-button-info ui-button-icon-only" icon="fa-settings"></button>
           </div>
         </div>

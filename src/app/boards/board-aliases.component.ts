@@ -3,7 +3,7 @@ import {DefinitionsService} from '../services/definitions.service';
 import {FormGroupName, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
-  selector: 'board-aliases',
+  selector: 'b-board-aliases',
   template: `
     <div [formGroup]="formGroupName.control" class="grid url-builder">
       <div class="grid__item one-third">
