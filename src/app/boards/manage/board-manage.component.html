@@ -2,22 +2,27 @@
   <div class="board-header">
     <div fxFill fxLayout="row" class="board-header-content" fxLayoutAlign="space-between center">
       <div>
-        <h2><a routerLink="/{{board.department.handle}}">{{board.department.name}}</a> -   <b-xeditable-input [resource]="board" propertyName="name" [canEdit]="canManage"></b-xeditable-input></h2>
+        <h2><a routerLink="/{{board.department.handle}}">{{board.department.name}}</a> -
+          <b-xeditable-input [resource]="board" propertyName="name" [canEdit]="canManage"></b-xeditable-input>
+        </h2>
         <div class="description-holder">
           <div class="description-text">{{board.description}}</div>
         </div>
       </div>
       <div class="logo-holder default-logo" [ngClass]="{'no-background': board.department.documentLogo}">
-        <cl-image *ngIf="board.department.documentLogo" public-id="{{board.department.documentLogo.cloudinaryId}}" class="img">
+        <cl-image *ngIf="board.department.documentLogo" public-id="{{board.department.documentLogo.cloudinaryId}}"
+                  class="img">
           <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
         </cl-image>
       </div>
     </div>
     <div class="board-header-footer" fxLayoutAlign="end center">
       <div>
-        <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}" routerLinkActive="hidden"
+        <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}"
+                routerLinkActive="hidden" [routerLinkActiveOptions]="{exact: true}"
                 class="ui-button-secondary" icon="fa-eye" label="View"></button>
-        <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}/settings" routerLinkActive="hidden"
+        <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}/settings"
+                routerLinkActive="hidden" [routerLinkActiveOptions]="{exact: true}"
                 class="ui-button-info ui-button-icon-only" icon="fa-settings" *ngIf="canManage"></button>
         <button pButton routerLink="newPost" class="ui-button-success" icon="fa-plus" label="New Post"></button>
       </div>
