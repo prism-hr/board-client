@@ -3,7 +3,7 @@ import {DepartmentViewComponent} from './department-view.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ControlMessagesComponent} from '../../validation/control-messages.component';
 import {ButtonModule, ChipsModule} from 'primeng/primeng';
-import {BoardAliasesComponent} from '../../boards/board-aliases.component';
+import {BoardAliasesComponent} from '../../controls/board-aliases.component';
 import {FileUploadComponent} from '../../general/file-upload.component';
 import {CloudinaryModule} from '@cloudinary/angular';
 import {FileUploadModule} from 'ng2-file-upload';

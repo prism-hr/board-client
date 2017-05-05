@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import {ResourceService} from '../../services/resource.service';
 import DepartmentPatchDTO = b.DepartmentPatchDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
+import {DefinitionsService} from '../../services/definitions.service';
 
 @Component({
   templateUrl: 'department-view.component.html',
@@ -15,32 +16,28 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
 export class DepartmentViewComponent implements OnInit {
   department: DepartmentRepresentation;
   departmentForm: FormGroup;
-
+  urlPrefix: string;
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router,
-              private snackBar: MdSnackBar, private resourceService: ResourceService) {
+              private snackBar: MdSnackBar, private resourceService: ResourceService, private definitionsService: DefinitionsService) {
     this.departmentForm = this.fb.group({
       name: ['', [Validators.minLength(3), Validators.required, Validators.maxLength(100)]],
       memberCategories: [],
       documentLogo: [],
-      handles: this.fb.group({
-        departmentHandle: ['', [Validators.required, Validators.maxLength(25)]]
-      })
+      handle: ['', [Validators.required, Validators.maxLength(25)]]
     });
   }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.department = data['department'];
-      const value: any = Object.assign({}, this.department);
-      value.handles = {departmentHandle: this.department.handle};
-      this.departmentForm.reset(value);
+      this.departmentForm.reset(this.department);
+      this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/';
     });
   }
 
   submit() {
-    const department: DepartmentPatchDTO = _.pick(this.departmentForm.value, ['name', 'memberCategories', 'documentLogo']);
-    department.handle = this.departmentForm.value.handles.departmentHandle;
+    const department: DepartmentPatchDTO = _.pick(this.departmentForm.value, ['name', 'memberCategories', 'documentLogo', 'handle']);
     this.resourceService.patchDepartment(this.department.id, department)
       .subscribe(() => {
         this.router.navigate([department.handle])

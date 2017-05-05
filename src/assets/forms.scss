@@ -35,25 +35,6 @@ form {
   }
 }
 
-.url-builder {
-  .grid__item {
-    position: relative;
-  }
-  .separator-right {
-    position: absolute;
-    right: -19px;
-    color: grey;
-    top: 4px;
-    font-size: 22px;
-  }
-  .separator-left {
-    position: absolute;
-    left: 11px;
-    color: grey;
-    top: 4px;
-    font-size: 22px;
-  }
-}
 button.ui-button {
   .ui-button-text {
     display: inline-block;

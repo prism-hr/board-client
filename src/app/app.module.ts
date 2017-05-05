@@ -35,7 +35,7 @@ import {HomePublicComponent} from './home/home-public.component';
 import {DefinitionsLoader, DefinitionsService} from './services/definitions.service';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {createTranslateLoader} from './services/translate.service';
-import {BoardAliasesComponent} from './boards/board-aliases.component';
+import {ResourceHandleComponent} from './controls/resource-handle.component';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {PostEditComponent} from './posts/edit/post-edit.component';
 import {PostViewComponent} from './posts/view/post-view.component';
@@ -80,7 +80,7 @@ import {BoardsListComponent} from './boards/list/boards-list.component';
     XeditableInputComponent,
     AuthedComponent,
     BoardsListComponent,
-    BoardAliasesComponent,
+    ResourceHandleComponent,
     BoardNewComponent,
     BoardManageComponent,
     BoardViewComponent,

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ResourceService} from '../services/resource.service';
 import {Response} from '@angular/http';
 
@@ -31,7 +31,7 @@ export class XeditableInputComponent implements OnInit {
   }
 
   edit() {
-    if(!this.canEdit) {
+    if (!this.canEdit) {
       return;
     }
     this.editing = true;

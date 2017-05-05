@@ -22,7 +22,7 @@
         </div>
         <div class="grid__item one-whole input-holder">
           <label>Board URL</label>
-          <b-board-aliases formGroupName="handles"></b-board-aliases>
+          <b-resource-handle formControlName="handle" [urlPrefix]="urlPrefix"></b-resource-handle>
         </div>
       </div>
     </md-card-content>

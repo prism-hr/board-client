@@ -13,10 +13,10 @@
             <label>Member categories</label>
             <p-chips formControlName="memberCategories"></p-chips>
           </div>
-          
+
           <div class="grid__item one-whole input-holder">
-            <label>Board URL</label>
-            <b-board-aliases formGroupName="handles" [hideBoard]="true"></b-board-aliases>
+            <label>Department URL</label>
+            <b-resource-handle formControlName="handle" [urlPrefix]="urlPrefix"></b-resource-handle>
           </div>
         </div>
       </div>
