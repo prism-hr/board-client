@@ -5,11 +5,16 @@ import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import DepartmentPatchDTO = b.DepartmentPatchDTO;
 import BoardPatchDTO = b.BoardPatchDTO;
+import PostRepresentation = b.PostRepresentation;
 
 @Injectable()
 export class ResourceService {
 
   constructor(protected http: Http) {
+  }
+
+  getPosts(): Observable<PostRepresentation[]> {
+    return this.http.get('/api/posts').map(res => res.json());
   }
 
   getBoards(): Observable<BoardRepresentation[]> {

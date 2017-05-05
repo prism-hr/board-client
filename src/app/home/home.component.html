@@ -3,38 +3,35 @@
   <b-home-public *ngIf="!user"></b-home-public>
   <div *ngIf="user">
     <div fxLayout="row" fxLayoutAlign="space-between center">
-      <h1>Boards</h1>
+      <h1>Posts</h1>
       <button pButton routerLink="/newBoard" class="ui-button-success" icon="fa-plus" label="New Board"></button>
     </div>
-    <div *ngFor="let department of departments" class="department-content">
+    <div *ngFor="let board of boards" class="board-content">
       <div class="section-header">
-        <div fxFill fxLayout="row" fxLayoutAlign="space-between center" >
-          <h2>{{department.name}}</h2>
+        <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
+          <h2>{{board.name}}</h2>
           <div>
-            <button pButton routerLink="/{{department.handle}}" class="ui-button-info ui-button-icon-only" icon="fa-settings"></button>
+            <button pButton [routerLink]="[board.department.handle, board.handle]"
+                    class="ui-button-info ui-button-icon-only" icon="fa-settings"></button>
           </div>
         </div>
       </div>
       <div class="grid">
-        <div *ngFor="let board of department.boards" class="grid__item small--one-whole medium-up--one-half">
+        <div *ngFor="let post of board.posts" class="grid__item small--one-whole medium-up--one-half">
           <md-card>
             <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
-              <md-card-avatar class="logo-holder-small default-logo" [ngClass]="{'no-background': board.department.documentLogo}">
-                <cl-image *ngIf="board.department.documentLogo" public-id="{{board.department.documentLogo.cloudinaryId}}" class="img">
-                  <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
-                </cl-image>
-              </md-card-avatar>
               <md-card-title>
-                <h3><a routerLink="/{{board.department.handle}}/{{board.handle}}">{{board.name}}</a></h3>
+                <h3><a [routerLink]="[board.department.handle, board.handle, post.id]">{{post.name}}</a></h3>
               </md-card-title>
-              <md-card-subtitle><h6>{{department.name}}</h6></md-card-subtitle>
             </md-card-header>
             <md-card-content>
-              {{board.description}}
+              {{post.description}}
             </md-card-content>
             <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
-              <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}/settings" class="ui-button-info ui-button-icon-only" icon="fa-settings" label="Settings"></button>
-              <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}" class="ui-button-secondary " icon="fa-eye" label="View"></button>
+              <button pButton [routerLink]="[board.department.handle, board.handle, post.id, 'settings']"
+                      class="ui-button-info ui-button-icon-only" icon="fa-settings" label="Settings"></button>
+              <button pButton [routerLink]="[board.department.handle, board.handle, post.id]"
+                      class="ui-button-secondary " icon="fa-eye" label="View"></button>
             </md-card-actions>
           </md-card>
         </div>

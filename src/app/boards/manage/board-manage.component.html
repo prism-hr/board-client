@@ -1,11 +1,15 @@
 <section class="section">
   <div class="section-header">
-    <div fxFill fxLayout="row" fxLayoutAlign="space-between center" >
-      <h2><a routerLink="/{{board.department.handle}}">{{board.department.name}}</a> -  <b-xeditable-input [resource]="board" propertyName="name"></b-xeditable-input></h2>
+    <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
+      <h2><a routerLink="/{{board.department.handle}}">{{board.department.name}}</a> -
+        <b-xeditable-input [resource]="board" propertyName="name"></b-xeditable-input>
+      </h2>
       <div>
         <button pButton routerLink="/" class="ui-button-secondary " label="Back"></button>
-        <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}" class="ui-button-secondary" icon="fa-eye" label="View"></button>
-        <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}/settings" class="ui-button-info ui-button-icon-only" icon="fa-settings" *ngIf="canManage" ></button>
+        <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}" routerLinkActive="hidden"
+                class="ui-button-secondary" icon="fa-eye" label="View"></button>
+        <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}/settings" routerLinkActive="hidden"
+                class="ui-button-info ui-button-icon-only" icon="fa-settings" *ngIf="canManage"></button>
         <button pButton routerLink="newPost" class="ui-button-success" icon="fa-plus" label="New Post"></button>
       </div>
     </div>

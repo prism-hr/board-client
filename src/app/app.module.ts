@@ -59,6 +59,7 @@ import {
 import {PostService} from './posts/post.service';
 import {XeditableInputComponent} from './controls/xeditable-input.component';
 import {DateTimeComponent} from './controls/datetime.component';
+import {BoardsListComponent} from './boards/list/boards-list.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import {DateTimeComponent} from './controls/datetime.component';
     DateTimeComponent,
     XeditableInputComponent,
     AuthedComponent,
+    BoardsListComponent,
     BoardAliasesComponent,
     BoardNewComponent,
     BoardManageComponent,
@@ -92,6 +94,7 @@ import {DateTimeComponent} from './controls/datetime.component';
   imports: [
     RouterModule.forRoot([
       {path: '', component: HomeComponent},
+      {path: 'boards', component: BoardsListComponent},
       {
         path: 'newBoard',
         component: BoardNewComponent,
