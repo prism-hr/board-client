@@ -15,13 +15,15 @@ import BoardPatchDTO = b.BoardPatchDTO;
 export class BoardSettingsComponent implements OnInit {
   definitions: { [key: string]: any };
   board: BoardRepresentation;
-  settingsForm: FormGroup;
+  boardForm: FormGroup;
   urlPrefix: string;
 
   constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder, private router: Router,
               private snackBar: MdSnackBar, private definitionsService: DefinitionsService) {
     this.definitions = definitionsService.getDefinitions();
-    this.settingsForm = this.fb.group({
+    this.boardForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      description: ['', [Validators.required, Validators.maxLength(2000)]],
       postCategories: [[]],
       defaultPostVisibility: [null, Validators.required],
       handle: ['', [Validators.required, Validators.maxLength(25)]]
@@ -31,14 +33,15 @@ export class BoardSettingsComponent implements OnInit {
   ngOnInit() {
     this.route.parent.data.subscribe(data => {
       this.board = data['board'];
-      const value: any = _.pick(this.board, ['postCategories', 'defaultPostVisibility', 'handle']);
-      this.settingsForm.setValue(value);
+      const value: any = _.pick(this.board, ['name', 'description', 'postCategories', 'defaultPostVisibility', 'handle']);
+      this.boardForm.setValue(value);
       this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/' + this.board.department.handle + '/';
     });
   }
 
   submit() {
-    const board: BoardPatchDTO = _.pick(this.settingsForm.value, ['postCategories', 'defaultPostVisibility', 'handle']);
+    const board: BoardPatchDTO = _.pick(this.boardForm.value,
+      ['name', 'description', 'postCategories', 'defaultPostVisibility', 'handle']);
     this.http.patch('/api/boards/' + this.board.id, board)
       .subscribe(() => {
         this.router.navigate([this.board.department.handle, board.handle, 'settings'])
@@ -48,7 +51,7 @@ export class BoardSettingsComponent implements OnInit {
       }, (error: Response | any) => {
         if (error.status === 422) {
           if (error.json().exceptionCode === 'DUPLICATE_BOARD_HANDLE') {
-            (this.settingsForm.controls['handles'] as FormGroup).controls['boardHandle'].setErrors({duplicateHandle: true});
+            (this.boardForm.controls['handles'] as FormGroup).controls['boardHandle'].setErrors({duplicateHandle: true});
           }
         }
       });

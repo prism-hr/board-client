@@ -1,12 +1,28 @@
 <md-card>
   <md-card-header class="header-full">
     <md-card-title>
-      <h2>Edit</h2>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <h2>Edit</h2>
+        <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}"
+                class="ui-button-secondary" icon="fa-eye" label="Back"></button>
+      </div>
     </md-card-title>
   </md-card-header>
-  <form [formGroup]="settingsForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
+  <form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
     <md-card-content>
       <div class="grid">
+        <div class="grid__item one-whole input-holder">
+          <label>Board Name</label>
+          <input pInputText formControlName="name" required>
+          <control-messages [control]="boardForm.controls.name"></control-messages>
+        </div>
+
+        <div class="grid__item one-whole input-holder">
+          <label>Board Purpose</label>
+          <textarea pInputTextarea formControlName="description" required class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
+          <control-messages [control]="boardForm.controls.description"></control-messages>
+        </div>
+
         <div class="grid__item one-whole input-holder">
           <label>Post categories</label>
           <p-chips formControlName="postCategories"></p-chips>
@@ -16,7 +32,8 @@
           <div class="ui-radiobutton-inline">
             <p-radioButton *ngFor="let postVisibility of definitions.postVisibility"
                            [value]="postVisibility" name="defaultPostVisibility"
-                           formControlName="defaultPostVisibility" [label]="'definitions.postVisibility.' + postVisibility | translate">
+                           formControlName="defaultPostVisibility"
+                           [label]="'definitions.postVisibility.' + postVisibility | translate">
             </p-radioButton>
           </div>
         </div>

@@ -106,7 +106,7 @@ export class PostEditComponent implements OnInit {
   }
 
   update() {
-    this.postService.update(this.post, this.generatePostRequestBody())
+    this.postService.update(this.post, this.generatePostRequestBody());
   }
 
   create() {

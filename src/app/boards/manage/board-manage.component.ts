@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {MenuItem} from 'primeng/primeng';
 import BoardDTO = b.BoardDTO;
 import BoardRepresentation = b.BoardRepresentation;
+import {ResourceService} from '../../services/resource.service';
 
 @Component({
   templateUrl: 'board-manage.component.html',
@@ -10,20 +10,15 @@ import BoardRepresentation = b.BoardRepresentation;
 })
 export class BoardManageComponent implements OnInit {
   board: BoardRepresentation;
-  canManage: boolean;
-  items: MenuItem[];
+  canEdit: boolean;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private resourceService: ResourceService) {
   }
 
   ngOnInit() {
     this.route.parent.data.subscribe(data => {
       this.board = data['board'];
-      this.canManage = !!this.board.actions.find(a => a.action as any === 'EDIT');
-      this.items = [{label: 'View', routerLink: [this.board.department.handle, this.board.handle]}, {
-        label: 'Settings',
-        routerLink: [this.board.department.handle, this.board.handle, 'settings']
-      }];
+        this.canEdit = this.resourceService.canEdit(this.board);
     });
   }
 

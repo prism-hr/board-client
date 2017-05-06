@@ -1,3 +1,11 @@
+<b-board-header [board]="board" [canEdit]="canEdit"></b-board-header>
+
+<div class="resource-controls" fxLayoutAlign="end center">
+  <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}/settings"
+          class="ui-button-info ui-button-icon-only" icon="fa-settings" *ngIf="canEdit"></button>
+  <button pButton routerLink="newPost" class="ui-button-success" icon="fa-plus" label="New Post"></button>
+</div>
+
 <md-card-content>
   <div class="grid grid--half-gutters">
     <div *ngFor="let post of posts" class="grid__item small--one-whole medium-up--one-half">
@@ -17,13 +25,16 @@
         </md-card-content>
         <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
           <span *ngIf="post.actionView === 'REVISE'">
-            <p-splitButton label="Revise" icon="fa-gear" (onClick)="gotoSettings(post)" [model]="post.actions" class="ui-button-info"></p-splitButton>
+            <p-splitButton label="Revise" icon="fa-gear" (onClick)="gotoSettings(post)" [model]="post.actions"
+                           class="ui-button-info"></p-splitButton>
           </span>
           <span *ngIf="post.actionView === 'CORRECT'">
-            <p-splitButton label="Correct" icon="fa-gear" (onClick)="gotoSettings(post)" [model]="post.actions" class="ui-button-info"></p-splitButton>
+            <p-splitButton label="Correct" icon="fa-gear" (onClick)="gotoSettings(post)" [model]="post.actions"
+                           class="ui-button-info"></p-splitButton>
           </span>
           <span *ngIf="post.actionView === 'EDIT'">
-            <p-splitButton label="Edit" icon="fa-gear" (onClick)="gotoSettings(post)" [model]="post.actions" class="ui-button-info"></p-splitButton>
+            <p-splitButton label="Edit" icon="fa-gear" (onClick)="gotoSettings(post)" [model]="post.actions"
+                           class="ui-button-info"></p-splitButton>
           </span>
           <button pButton [routerLink]="post.id" class="ui-button-secondary " icon="fa-eye" label="View"></button>
         </md-card-actions>

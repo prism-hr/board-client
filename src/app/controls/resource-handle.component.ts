@@ -5,8 +5,8 @@ import {ControlValueAccessor, FormGroupName, NG_VALUE_ACCESSOR} from '@angular/f
 @Component({
   selector: 'b-resource-handle',
   template: `
-    <span *ngIf="!editing">{{urlPrefix}}</span>
-    <span (click)="edit()"><span>{{handle}}</span>
+    <span>{{urlPrefix}}</span>
+    <span *ngIf="!editing" (click)="edit()"><span>{{handle}}</span>
     </span>
     <span *ngIf="editing">
       <input pInputText [(ngModel)]="editedHandle" required>

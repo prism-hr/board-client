@@ -6,6 +6,7 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
 import DepartmentPatchDTO = b.DepartmentPatchDTO;
 import BoardPatchDTO = b.BoardPatchDTO;
 import PostRepresentation = b.PostRepresentation;
+import ResourceRepresentation = b.ResourceRepresentation;
 
 @Injectable()
 export class ResourceService {
@@ -31,6 +32,10 @@ export class ResourceService {
 
   patchDepartment(id: number, department: DepartmentPatchDTO): Observable<DepartmentRepresentation> {
     return this.http.patch('/api/departments/' + id, department).map(res => res.json());
+  }
+
+  canEdit(resource: ResourceRepresentation) {
+    return !!resource.actions.find(a => a.action as any === 'EDIT');
   }
 
 }

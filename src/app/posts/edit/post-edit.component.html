@@ -5,8 +5,9 @@
         <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
           <h2 *ngIf="!post">Create a new post</h2>
           <h2 *ngIf="post">Edit Post</h2>
+          <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}"
+                  class="ui-button-secondary" icon="fa-eye" label="Back"></button>
         </div>
-
       </md-card-title>
     </md-card-header>
     <form [formGroup]="postForm" novalidate>

@@ -108,6 +108,7 @@ button {
     font-weight: 900 !important;
   }
 }
+
 .prism-icon {
   height: 36px;
   width: auto;
@@ -116,6 +117,7 @@ button {
     height: 100%;
   }
 }
+
 .prism-logo {
   width: auto;
   height: 36px;
@@ -125,19 +127,23 @@ button {
     height: 100%;
   }
 }
+
 .top-nav {
   margin-left:25px;
 }
+
 .page-width {
   @include clearfix();
   max-width: $width-site;
   margin: 0 auto;
   width: 100%;
 }
+
 .page-width {
   padding-left: 15px;
   padding-right: 15px;
 }
+
 .section {
   padding-top: $section-spacing-small;
   padding-bottom: $section-spacing-small;
@@ -156,6 +162,7 @@ button {
     padding-top: $section-spacing;
   }
 }
+
 .list--inline {
   padding: 0;
   margin: 0;
@@ -166,8 +173,15 @@ button {
     margin-right:10px;
   }
 }
+
 control-messages {
   color: $error;
   font-size:13px;
 }
 
+.resource-controls {
+  background: $greyBackground;
+  padding:10px;
+  border-bottom:1px solid $fadeGrey;
+  margin-bottom:15px;
+}
