@@ -21,7 +21,7 @@ export class BoardSettingsComponent implements OnInit {
   boardProperties = ['name', 'description', 'postCategories', 'defaultPostVisibility', 'handle'];
 
   constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder, private router: Router,
-              private snackBar: MdSnackBar, private definitionsService: DefinitionsService) {
+              private definitionsService: DefinitionsService) {
     this.definitions = definitionsService.getDefinitions();
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
