@@ -18,6 +18,8 @@ export class BoardSettingsComponent implements OnInit {
   boardForm: FormGroup;
   urlPrefix: string;
 
+  boardProperties = ['name', 'description', 'postCategories', 'defaultPostVisibility', 'handle'];
+
   constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder, private router: Router,
               private snackBar: MdSnackBar, private definitionsService: DefinitionsService) {
     this.definitions = definitionsService.getDefinitions();
@@ -33,21 +35,18 @@ export class BoardSettingsComponent implements OnInit {
   ngOnInit() {
     this.route.parent.data.subscribe(data => {
       this.board = data['board'];
-      const value: any = _.pick(this.board, ['name', 'description', 'postCategories', 'defaultPostVisibility', 'handle']);
+      const value: any = _.pick(this.board, this.boardProperties);
       this.boardForm.setValue(value);
       this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/' + this.board.department.handle + '/';
     });
   }
 
   submit() {
-    const board: BoardPatchDTO = _.pick(this.boardForm.value,
-      ['name', 'description', 'postCategories', 'defaultPostVisibility', 'handle']);
+    const board: BoardPatchDTO = _.pick(this.boardForm.value, this.boardProperties);
     this.http.patch('/api/boards/' + this.board.id, board)
       .subscribe(() => {
-        this.router.navigate([this.board.department.handle, board.handle, 'settings'])
-          .then(() => {
-            this.snackBar.open('Board Saved!', null, {duration: 500});
-          });
+        Object.assign(this.board, board);
+        this.router.navigate([this.board.department.handle, board.handle]);
       }, (error: Response | any) => {
         if (error.status === 422) {
           if (error.json().exceptionCode === 'DUPLICATE_BOARD_HANDLE') {

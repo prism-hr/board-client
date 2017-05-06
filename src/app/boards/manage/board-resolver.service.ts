@@ -12,10 +12,6 @@ export class BoardResolver implements Resolve<BoardDTO> {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<BoardDTO> {
-    const id = route.params['boardId'];
-    if (id) {
-      return this.http.get('/api/boards/' + id).map(res => res.json());
-    }
     const departmentHandle = route.parent.params['departmentHandle'];
     const boardHandle = route.params['boardHandle'];
     const params = new URLSearchParams();
