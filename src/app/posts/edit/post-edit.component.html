@@ -5,8 +5,8 @@
         <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
           <h2 *ngIf="!post">Create a new post</h2>
           <h2 *ngIf="post">Edit Post</h2>
-          <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}"
-                  class="ui-button-secondary" icon="fa-eye" label="Back"></button>
+          <a pButton routerLink="/{{board.department.handle}}/{{board.handle}}"
+                  class="ui-button-secondary" icon="fa-eye" label="Cancel"></a>
         </div>
       </md-card-title>
     </md-card-header>
@@ -14,7 +14,7 @@
       <md-card-content>
         <div class="grid">
           <div class="grid__item one-whole input-holder">
-            <label>Title of your post</label>
+            <label>Title of y#our post</label>
             <input pInputText formControlName="name" required>
             <control-messages [control]="postForm.controls.name"></control-messages>
           </div>

@@ -59,8 +59,9 @@ import {
 import {PostService} from './posts/post.service';
 import {XeditableInputComponent} from './controls/xeditable-input.component';
 import {DateTimeComponent} from './controls/datetime.component';
-import {BoardsListComponent} from './boards/list/boards-list.component';
+import {BoardListComponent} from './boards/list/board-list.component';
 import {BoardHeaderComponent} from './boards/header/board-header.component';
+import {DepartmentListComponent} from './departments/list/department-list.component';
 
 @NgModule({
   declarations: [
@@ -80,13 +81,14 @@ import {BoardHeaderComponent} from './boards/header/board-header.component';
     DateTimeComponent,
     XeditableInputComponent,
     AuthedComponent,
-    BoardsListComponent,
+    BoardListComponent,
     ResourceHandleComponent,
     BoardHeaderComponent,
     BoardNewComponent,
     BoardManageComponent,
     BoardViewComponent,
     BoardSettingsComponent,
+    DepartmentListComponent,
     DepartmentManageComponent,
     DepartmentViewComponent,
     DepartmentUsersComponent,
@@ -96,7 +98,8 @@ import {BoardHeaderComponent} from './boards/header/board-header.component';
   imports: [
     RouterModule.forRoot([
       {path: '', component: HomeComponent},
-      {path: 'boards', component: BoardsListComponent},
+      {path: 'boards', component: BoardListComponent},
+      {path: 'departments', component: DepartmentListComponent},
       {
         path: 'newBoard',
         component: BoardNewComponent,

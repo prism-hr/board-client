@@ -1,0 +1,38 @@
+<section class="section">
+  <div *ngIf="!user">
+    <h1 class="title">You're seconds away from creating your first board!</h1>
+    <b-home-public></b-home-public>
+  </div>
+  <div *ngIf="user">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <h1>Departments</h1>
+      <button pButton routerLink="/newBoard" class="ui-button-success" icon="fa-plus" label="New Board"></button>
+    </div>
+    <div class="grid">
+      <div *ngFor="let department of departments" class="grid__item small--one-whole medium-up--one-half">
+        <md-card>
+          <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
+            <md-card-avatar class="logo-holder-small default-logo"
+                            [ngClass]="{'no-background': department.documentLogo}">
+              <cl-image *ngIf="department.documentLogo" public-id="{{department.documentLogo.cloudinaryId}}"
+                        class="img">
+                <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
+              </cl-image>
+            </md-card-avatar>
+            <md-card-title>
+              <h3><a [routerLink]="['/', department.handle]">{{department.name}}</a></h3>
+            </md-card-title>
+          </md-card-header>
+          <md-card-content>
+            {{department.description}}
+          </md-card-content>
+          <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+            <a pButton [routerLink]="['/', department.handle]" class="ui-button-secondary "
+                    icon="fa-eye" label="View"></a>
+          </md-card-actions>
+        </md-card>
+      </div>
+    </div>
+
+  </div>
+</section>
