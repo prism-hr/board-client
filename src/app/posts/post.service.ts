@@ -8,6 +8,8 @@ import PostRepresentation = b.PostRepresentation;
 import PostPatchDTO = b.PostPatchDTO;
 import BoardRepresentation = b.BoardRepresentation;
 import PostDTO = b.PostDTO;
+import {Observable} from 'rxjs/Observable';
+import {MenuItem} from 'primeng/primeng';
 
 @Injectable()
 export class PostService {
@@ -56,7 +58,7 @@ export class PostService {
       });
   }
 
-  getActionItems(post: PostRepresentation, board: BoardRepresentation) {
+  getActionItems(post: PostRepresentation): Observable<MenuItem[]> {
     const availableActions = ['SUSPEND', 'REJECT', 'WITHDRAW', 'RESTORE']
       .filter(a => post.actions.find(actionDef => actionDef.action as any === a));
     return this.translate.get('definitions.action')
@@ -64,7 +66,7 @@ export class PostService {
         return availableActions.map(a => {
           return {
             label: actionTranslations[a], command: () => {
-              this.executeAction(post, a, {}, board);
+              this.executeAction(post, a, {}, post.board);
             }
           };
         });

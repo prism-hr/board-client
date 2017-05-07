@@ -62,6 +62,7 @@ import {DateTimeComponent} from './controls/datetime.component';
 import {BoardListComponent} from './boards/list/board-list.component';
 import {BoardHeaderComponent} from './boards/header/board-header.component';
 import {DepartmentListComponent} from './departments/list/department-list.component';
+import {PostItemComponent} from './posts/item/post-item.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import {DepartmentListComponent} from './departments/list/department-list.compon
     DepartmentViewComponent,
     DepartmentUsersComponent,
     PostEditComponent,
-    PostViewComponent
+    PostViewComponent,
+    PostItemComponent
   ],
   imports: [
     RouterModule.forRoot([

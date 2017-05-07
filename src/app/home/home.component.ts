@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
           const boardsIndex: { [index: number]: BoardRepresentation } = {};
           posts.forEach(p => {
             const board = p.board;
-            p.board = null;
             if (!boardsIndex[board.id]) {
               (board as any).posts = [];
               boardsIndex[board.id] = board;
