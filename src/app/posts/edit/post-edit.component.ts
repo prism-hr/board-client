@@ -79,27 +79,35 @@ export class PostEditComponent implements OnInit {
       }
 
       const extendAction = this.board.actions.find(a => (a.action as any as string) === 'EXTEND' && (a.scope as any as string) === 'POST');
-      if (!this.post && (extendAction.state as any as string) === 'DRAFT') {
-        // user has no permission to create trusted post, has to specify relation type
+      const creatingNewPostAsUntrustedPerson = !this.post && (extendAction.state as any as string) === 'DRAFT';
+      if (creatingNewPostAsUntrustedPerson || _.get(this.post, 'existingRelation')) {
         this.showExistingRelation = true;
+        if (this.post.existingRelationExplanation) {
+          this.postForm.patchValue({existingRelationExplanation: this.post.existingRelationExplanation['text']});
+        }
         this.postForm.get('existingRelation').setValidators([Validators.required]);
       }
-
-      this.postForm.get('hideTimestamps').valueChanges.forEach((hide: boolean) => {
-        this.postForm.get('liveTimestamp').setValidators(!hide && [Validators.required]);
-        this.postForm.get('deadTimestamp').setValidators(!hide && [Validators.required]);
-      });
     });
 
-    this.postForm.get('applyType').valueChanges
-      .subscribe((applyType: string) => {
-        this.postForm.get('applyWebsite').setValidators(applyType === 'website' && [Validators.required, Validators.maxLength(255)]);
-        this.postForm.get('applyDocument').setValidators(applyType === 'document' && Validators.required);
-        this.postForm.get('applyEmail').setValidators(applyType === 'email' && [Validators.required, ValidationService.emailValidator]);
-        this.postForm.get('applyWebsite').updateValueAndValidity();
-        this.postForm.get('applyDocument').updateValueAndValidity();
-        this.postForm.get('applyEmail').updateValueAndValidity();
-      });
+    this.postForm.get('existingRelation').valueChanges.subscribe((existingRelation: string) => {
+      this.postForm.patchValue({existingRelationExplanation: null});
+      this.postForm.get('existingRelationExplanation')
+        .setValidators(existingRelation === 'OTHER' && [Validators.required, Validators.maxLength(1000)]);
+    });
+
+    this.postForm.get('applyType').valueChanges.subscribe((applyType: string) => {
+      this.postForm.get('applyWebsite').setValidators(applyType === 'website' && [Validators.required, Validators.maxLength(255)]);
+      this.postForm.get('applyDocument').setValidators(applyType === 'document' && Validators.required);
+      this.postForm.get('applyEmail').setValidators(applyType === 'email' && [Validators.required, ValidationService.emailValidator]);
+      this.postForm.get('applyWebsite').updateValueAndValidity();
+      this.postForm.get('applyDocument').updateValueAndValidity();
+      this.postForm.get('applyEmail').updateValueAndValidity();
+    });
+
+    this.postForm.get('hideTimestamps').valueChanges.subscribe((hide: boolean) => {
+      this.postForm.get('liveTimestamp').setValidators(!hide && [Validators.required]);
+      this.postForm.get('deadTimestamp').setValidators(!hide && [Validators.required]);
+    });
 
     this.actionView = this.post ? this.postService.getActionView(this.post) : 'CREATE';
     this.availableActions = this.post ? this.post.actions.map(a => a.action) : [];
@@ -123,6 +131,9 @@ export class PostEditComponent implements OnInit {
     post.applyWebsite = this.postForm.value.applyType === 'website' ? this.postForm.value.applyWebsite : null;
     post.applyDocument = this.postForm.value.applyType === 'document' ? this.postForm.value.applyDocument : null;
     post.applyEmail = this.postForm.value.applyType === 'email' ? this.postForm.value.applyEmail : null;
+    if (this.postForm.value.existingRelationExplanation) {
+      post.existingRelationExplanation = {text: this.postForm.value.existingRelationExplanation};
+    }
     return post;
   }
 }

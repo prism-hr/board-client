@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {MenuItem} from 'primeng/primeng';
 import {PostService} from '../post.service';
 import PostRepresentation = b.PostRepresentation;
@@ -16,7 +16,7 @@ export class PostItemComponent implements OnChanges {
   actionView: string;
   actions: MenuItem[];
 
-  constructor(private route: ActivatedRoute, private router: Router, private postService: PostService) {
+  constructor(private router: Router, private postService: PostService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {

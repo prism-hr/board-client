@@ -14,7 +14,7 @@
       <md-card-content>
         <div class="grid">
           <div class="grid__item one-whole input-holder">
-            <label>Title of y#our post</label>
+            <label>Title of your post</label>
             <input pInputText formControlName="name" required>
             <control-messages [control]="postForm.controls.name"></control-messages>
           </div>
@@ -51,7 +51,7 @@
               <control-messages [control]="postForm.controls.existingRelation"></control-messages>
             </div>
 
-            <div *ngIf="postForm.value.existingRelation" class="grid__item one-whole input-holder">
+            <div *ngIf="postForm.value.existingRelation === 'OTHER'" class="grid__item one-whole input-holder">
               <label>
                 {{'definitions.existingRelation.' + postForm.value.existingRelation + ".explanationPrompt" |
                 translate}}
