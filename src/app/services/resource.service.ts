@@ -38,4 +38,8 @@ export class ResourceService {
     return !!resource.actions.find(a => a.action as any === 'EDIT');
   }
 
+  canAudit(resource: ResourceRepresentation) {
+    return !!resource.actions.find(a => a.action as any === 'AUDIT');
+  }
+
 }

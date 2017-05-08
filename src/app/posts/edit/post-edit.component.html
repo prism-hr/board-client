@@ -5,7 +5,7 @@
         <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
           <h2 *ngIf="!post">Create a new post</h2>
           <h2 *ngIf="post">Edit Post</h2>
-          <a pButton [routerLink]="['/', board.department.handle, board.handle, post.id]"
+          <a pButton [routerLink]="['/', board.department.handle, board.handle, post ? post.id : '']"
                   class="ui-button-secondary" icon="fa-eye" label="Cancel"></a>
         </div>
       </md-card-title>

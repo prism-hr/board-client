@@ -37,7 +37,9 @@
       "CORRECT": "Correct",
       "REJECT": "Reject",
       "WITHDRAW": "Withdraw",
-      "RESTORE": "Restore"
+      "RESTORE": "Restore",
+      "EDIT": "Edit",
+      "EXTEND": "Create"
     },
     "state": {
       "DRAFT": "Draft",

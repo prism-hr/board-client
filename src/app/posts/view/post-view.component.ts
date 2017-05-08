@@ -2,7 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PostService} from '../post.service';
 import {MenuItem} from 'primeng/primeng';
+import {ResourceService} from '../../services/resource.service';
 import PostRepresentation = b.PostRepresentation;
+import ResourceOperationRepresentation = b.ResourceOperationRepresentation;
 
 @Component({
   templateUrl: 'post-view.component.html',
@@ -11,8 +13,11 @@ import PostRepresentation = b.PostRepresentation;
 export class PostViewComponent implements OnInit {
   post: PostRepresentation;
   actions: MenuItem[];
+  operations: ResourceOperationRepresentation[];
+  operationsLoading: boolean;
 
-  constructor(private route: ActivatedRoute, private router: Router, private postService: PostService) {
+  constructor(private route: ActivatedRoute, private router: Router, private postService: PostService,
+              private resourceService: ResourceService) {
   }
 
   ngOnInit() {
@@ -20,6 +25,15 @@ export class PostViewComponent implements OnInit {
       this.post = data['post'];
       this.postService.getActionItems(this.post)
         .subscribe(actions => this.actions = actions);
+      const canAudit = this.resourceService.canAudit(this.post);
+      if (canAudit) {
+        this.operationsLoading = true;
+        this.postService.loadOperations(this.post)
+          .subscribe(operations => {
+            this.operations = operations;
+            this.operationsLoading = false;
+          });
+      }
     });
   }
 

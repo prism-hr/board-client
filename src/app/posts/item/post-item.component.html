@@ -29,6 +29,6 @@
       <p-splitButton label="Edit" icon="fa-gear" (onClick)="gotoSettings(post)" [model]="actions"
                      class="ui-button-info"></p-splitButton>
     </span>
-    <a pButton [routerLink]="[post.board.department.handle, post.board.handle, post.id]" class="ui-button-secondary " icon="fa-eye" label="View"></a>
+    <a pButton [routerLink]="['/', post.board.department.handle, post.board.handle, post.id]" class="ui-button-secondary " icon="fa-eye" label="View"></a>
   </md-card-actions>
 </md-card>

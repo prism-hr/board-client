@@ -4,12 +4,13 @@ import {Http} from '@angular/http';
 import {Router} from '@angular/router';
 import {MdSnackBar} from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
+import {Observable} from 'rxjs/Observable';
+import {MenuItem} from 'primeng/primeng';
 import PostRepresentation = b.PostRepresentation;
 import PostPatchDTO = b.PostPatchDTO;
 import BoardRepresentation = b.BoardRepresentation;
 import PostDTO = b.PostDTO;
-import {Observable} from 'rxjs/Observable';
-import {MenuItem} from 'primeng/primeng';
+import ResourceOperationRepresentation = b.ResourceOperationRepresentation;
 
 @Injectable()
 export class PostService {
@@ -56,6 +57,10 @@ export class PostService {
             this.snackBar.open('Your action was executed successfully.', null, {duration: 500});
           });
       });
+  }
+
+  loadOperations(post: PostRepresentation): Observable<ResourceOperationRepresentation[]> {
+    return this.http.get('/api/posts/' + post.id + '/operations').map(res => res.json());
   }
 
   getActionItems(post: PostRepresentation): Observable<MenuItem[]> {

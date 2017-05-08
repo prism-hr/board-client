@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-04-24 11:22:16.
+// Generated using typescript-generator version 1.23.311 on 2017-05-08 13:55:08.
 
 declare namespace b {
 
@@ -14,7 +14,7 @@ declare namespace b {
     department?: DepartmentDTO;
   }
 
-  interface BoardPatchDTO extends ResourcePatchDTO {
+  interface BoardPatchDTO {
     name?: string;
     description?: string;
     handle?: string;
@@ -29,25 +29,17 @@ declare namespace b {
     memberCategories?: string[];
   }
 
-  interface DepartmentPatchDTO extends ResourcePatchDTO {
+  interface DepartmentPatchDTO {
     name?: string;
     documentLogo?: DocumentDTO;
     handle?: string;
     memberCategories?: string[];
   }
 
-  interface DocumentDTO {
-    cloudinaryId?: string;
-    cloudinaryUrl?: string;
-    fileName?: string;
+  interface DocumentDTO extends DocumentDefinition {
   }
 
-  interface LocationDTO {
-    name?: string;
-    domicile?: string;
-    googleId?: string;
-    latitude?: number;
-    longitude?: number;
+  interface LocationDTO extends LocationDefinition {
   }
 
   interface PostDTO {
@@ -66,18 +58,21 @@ declare namespace b {
     deadTimestamp?: LocalDateTime;
   }
 
-  interface PostPatchDTO extends ResourcePatchDTO {
+  interface PostPatchDTO {
     name?: string;
     description?: string;
     organizationName?: string;
     location?: LocationDTO;
-    postCategories?: string[];
-    memberCategories?: string[];
     applyWebsite?: string;
     applyDocument?: DocumentDTO;
     applyEmail?: string;
+    postCategories?: string[];
+    memberCategories?: string[];
+    existingRelation?: ExistingRelation;
+    existingRelationExplanation?: { [index: string]: any };
     liveTimestamp?: LocalDateTime;
     deadTimestamp?: LocalDateTime;
+    comment?: string;
   }
 
   interface ResourceFilterDTO {
@@ -85,11 +80,8 @@ declare namespace b {
     id?: number;
     handle?: string;
     parentId?: number;
+    includePublicResources?: boolean;
     orderStatement?: string;
-  }
-
-  interface ResourcePatchDTO {
-    comment?: string;
   }
 
   interface ActionRepresentation extends Comparable<ActionRepresentation> {
@@ -109,22 +101,13 @@ declare namespace b {
   interface DepartmentRepresentation extends ResourceRepresentation {
     documentLogo?: DocumentRepresentation;
     handle?: string;
-    boards?: BoardRepresentation[];
     memberCategories?: string[];
   }
 
-  interface DocumentRepresentation {
-    cloudinaryId?: string;
-    cloudinaryUrl?: string;
-    fileName?: string;
+  interface DocumentRepresentation extends DocumentDefinition {
   }
 
-  interface LocationRepresentation {
-    name?: string;
-    domicile?: string;
-    googleId?: string;
-    latitude?: number;
-    longitude?: number;
+  interface LocationRepresentation extends LocationDefinition {
   }
 
   interface PostRepresentation extends ResourceRepresentation {
@@ -148,6 +131,7 @@ declare namespace b {
     user?: UserRepresentation;
     changeList?: { [index: string]: any };
     comment?: string;
+    createdTimestamp?: LocalDateTime;
   }
 
   interface ResourceRepresentation {
@@ -155,6 +139,8 @@ declare namespace b {
     scope?: Scope;
     name?: string;
     state?: State;
+    createdTimestamp?: LocalDateTime;
+    updatedTimestamp?: LocalDateTime;
     actions?: ActionRepresentation[];
   }
 
@@ -163,6 +149,20 @@ declare namespace b {
     givenName?: string;
     surname?: string;
     email?: string;
+  }
+
+  interface DocumentDefinition {
+    fileName?: string;
+    cloudinaryId?: string;
+    cloudinaryUrl?: string;
+  }
+
+  interface LocationDefinition {
+    name?: string;
+    domicile?: string;
+    googleId?: string;
+    latitude?: number;
+    longitude?: number;
   }
 
   interface LocalDateTime extends Temporal, TemporalAdjuster, ChronoLocalDateTime<LocalDate>, Serializable {
@@ -230,6 +230,7 @@ declare namespace b {
 
   const enum Action {
     VIEW,
+    AUDIT,
     EDIT,
     EXTEND,
     ACCEPT,
