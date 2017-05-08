@@ -11,7 +11,7 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
 export class HomeComponent implements OnInit {
 
   user: Account | boolean;
-  boards: BoardRepresentation[];
+  posts: BoardRepresentation[];
 
   constructor(private resourceService: ResourceService, private stormpath: Stormpath) {
   }
@@ -19,20 +19,10 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.stormpath.user$.subscribe(user => {
       this.user = user;
-      this.boards = null;
+      this.posts = null;
       if (user) {
         this.resourceService.getPosts().subscribe(posts => {
-          const boardsIndex: { [index: number]: BoardRepresentation } = {};
-          posts.forEach(p => {
-            const board = p.board;
-            if (!boardsIndex[board.id]) {
-              (board as any).posts = [];
-              boardsIndex[board.id] = board;
-            }
-            (boardsIndex[board.id] as any).posts.push(p);
-          });
-          const boardIds = Object.keys(boardsIndex);
-          this.boards = boardIds.map(id => boardsIndex[id]);
+          this.posts = posts;
         });
       }
     });

@@ -4,10 +4,7 @@
   margin-bottom:$section-spacing;
   text-align: center;
 }
-.board-content {
-  margin-bottom:$section-spacing ;
-  margin-top:$section-spacing / 2;
-}
+
 .default-logo {
   background: url("/assets/prism-logo.svg") $uclblue2 no-repeat center center;
   background-size: 50%;
@@ -18,6 +15,7 @@
     background: white;
   }
 }
+
 .logo-holder-small {
   border-radius: 3px;
 }

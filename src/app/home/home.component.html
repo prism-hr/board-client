@@ -5,20 +5,10 @@
     <div fxLayout="row" fxLayoutAlign="space-between center">
       <h1>Posts</h1>
     </div>
-    <div *ngFor="let board of boards" class="board-content">
-      <div class="section-header">
-        <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
-          <h2>{{board.name}}</h2>
-          <div>
-            <button pButton [routerLink]="[board.department.handle, board.handle, 'settings']"
-                    class="ui-button-info ui-button-icon-only" icon="fa-settings"></button>
-          </div>
-        </div>
-      </div>
-      <div class="grid">
-        <div *ngFor="let post of board.posts" class="grid__item small--one-whole medium-up--one-half">
-          <b-post-item [post]="post"></b-post-item>
-        </div>
+
+    <div class="grid">
+      <div *ngFor="let post of posts" class="grid__item small--one-whole medium-up--one-half">
+        <b-post-item [post]="post"></b-post-item>
       </div>
     </div>
 
