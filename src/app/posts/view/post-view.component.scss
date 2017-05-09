@@ -1,0 +1,146 @@
+@import '../../../assets/variables';
+
+.post {
+  .post-content {
+    padding: 25px 10px 45px;
+    .rte {
+      line-height: 1.5rem;
+    }
+  }
+  .post-actions, .post-title {
+    background: $greyBackground;
+    border-top: 1px solid $fadeGrey;
+    border-bottom: 1px solid $fadeGrey;
+    padding: 10px;
+  }
+  .post-title {
+    p-splitbutton {
+      font-size:0.8rem;
+    }
+    .date {
+      font-size:0.9em;
+    }
+    h1 {
+      font-size:1.5em;
+      font-weight:bold;
+      color: $uclred;
+      padding: 7px 0;
+    }
+    h2 {
+      font-size:1.2em;
+      font-weight:bold;
+      padding: 0 0 5px;
+      em {
+        font-weight:400;
+        color: $activeGrey;
+      }
+    }
+    .location {
+      padding-left:15px;
+      font-weight:400;
+      font-size: 0.9em;
+      padding-top: 5px;
+      i {
+        color: $goldColor;
+      }
+    }
+  }
+  .post-actions {
+    h4 {
+      font-size:1.1em;
+      font-weight:900;
+      padding: 5px 0;
+    }
+    .post-action-content {
+      color: $fontColor1;
+      padding: 5px 0;
+      font-weight:600;
+      .ui-button-text-only .ui-button-text {
+        padding: 0.1em 1em 0.22em;
+        font-weight:400;
+      }
+    }
+  }
+}
+.post-timeline {
+  ul {
+    padding: 0;
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      background: $fadeGrey;
+      width: 5px;
+      margin-left: -6px;
+      left: 15%;
+    }
+    li {
+      list-style: none;
+      padding: 0;
+      position: relative;
+    }
+  }
+  time {
+    display: block;
+    width: 18%;
+    padding-right: 100px;
+    position: absolute;
+    top: 15px;
+    .post-timeline--time {
+      color: #575858;
+      font-size: 15px;
+      font-weight:600;
+      display: block;
+      text-align: right;
+    }
+    .post-timeline--day {
+      display: block;
+      text-align: right;
+      font-size:12px;
+    }
+  }
+  .post-timeline--icon {
+    width: 40px;
+    height: 40px;
+    speak: none;
+    font-size: 1.2em;
+    line-height: 37px;
+    -webkit-font-smoothing: antialiased;
+    position: absolute;
+    background-color: white;
+    color: $uclblue;
+    border-radius: 50%;
+    border: 3px solid $fadeGrey;
+    text-align: center;
+    left: 15%;
+    top: 10px;
+    margin: 0 0 0 -24px;
+  }
+  .post-timeline--label {
+    margin-left:20%;
+    background: $fadeGrey;
+    margin-bottom: 30px;
+    padding: 20px;
+    -webkit-border-radius: 0px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 0px;
+    -moz-background-clip: padding;
+    border-radius: 0px;
+    background-clip: padding-box;
+    position: relative;
+    &:after {
+      right: 100%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-right-color: $fadeGrey;
+      border-width: 10px;
+      top: 20px;
+    }
+  }
+}

@@ -21,6 +21,7 @@ md-card.mat-card>:first-child {
   padding-bottom: $section-spacing-small / 2;
 }
 md-card.mat-card {
+  margin-bottom:15px;
   .mat-input-placeholder, .mat-input-placeholder-wrapper {
     padding-top:0.6em;
   }

@@ -1,55 +1,97 @@
 <section class="section">
-  <div class="section-header">
-    <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
-      <h2>{{post.name}}</h2>
-      <b-post-actions-box [post]="post"></b-post-actions-box>
-    </div>
-  </div>
-  <div class="post-content">
-    <div>
-      Board: <a [routerLink]="['/', post.board.department.handle, post.board.handle]">{{post.board.name}}</a>
-    </div>
-    <div>
-      {{post.description}}
-    </div>
-    <div>
-      Categories: <span *ngFor="let category of post.postCategories">{{category}}</span>
-    </div>
-    <div>
-      Organization: {{post.organizationName}}
-    </div>
-    <div>
-      Location: {{post.location.name}}
-    </div>
-    <div *ngIf="post.applyWebsite">
-      <a href="{{post.applyWebsite}}">Apply</a>
-    </div>
-    <div *ngIf="post.applyDocument">
-      <a target="_blank" href="{{post.applyDocument.cloudinaryUrl}}">
-        {{post.applyDocument.fileName}}
-      </a>
-    </div>
-    <div *ngIf="post.applyEmail">
-      <a href="mailto:{{post.applyEmail}}">
-        {{post.applyEmail}}
-      </a>
-    </div>
-    <div>
-      <span *ngIf="post.liveTimestamp">Live date: {{post.liveTimestamp | date:'short'}}</span>
-      <span *ngIf="post.deadTimestamp">Closing date: {{post.deadTimestamp | date:'short'}}</span>
-    </div>
-  </div>
-
-  <div>
-    <h2>Operations</h2>
-    <ul>
-      <li *ngFor="let operation of operations">
-        {{'definitions.action.' + operation.action | translate}}
-        <div *ngIf="operation.user">
-          ({{operation.user.givenName}} {{operation.user.surname}} - {{operation.user.email}})
+  <div class="grid">
+    <div class="grid__item medium-up--three-quarters small-one-whole post">
+      <div class="post-title" fxLayout="row" fxLayoutAlign="space-between top">
+        <div>
+          <div class="date">Ofert publish 2 days ago</div>
+          <h1>{{post.name}}</h1>
+          <h2><em>at</em> {{post.organizationName}} <span class="location"><i class="fa fa-location-pin"></i> {{post.location.name}}</span></h2>
         </div>
         <div>
-          {{operation.createdTimestamp | date:'short'}}
+          <p-splitButton icon="fa-gear" (onClick)="gotoSettings()" [model]="actions"
+                         class="ui-button-info"></p-splitButton>
+        </div>
+      </div>
+      <div class="post-content">
+        <div class="rte">
+          {{post.description}}
+        </div>
+      </div>
+      <div class="post-actions">
+        <div class="post-actions-how-to">
+          <h4>How to Apply?</h4>
+          <div class="post-action-content">
+            <a (click)="showLogin()">Login</a> to check this job offer contact details.
+          </div>
+          <div  *ngIf="true" class="post-action-content">
+            <div *ngIf="post.applyWebsite">
+              Apply on this website <a href="{{post.applyWebsite}}" class="ui-button-success small ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" target="_blank"><span class="ui-button-text ui-c">Apply</span></a>
+            </div>
+            <div *ngIf="post.applyDocument">
+              Download and follow the instructions on the following document:
+              <a target="_blank" href="{{post.applyDocument.cloudinaryUrl}}">
+                {{post.applyDocument.fileName}}
+              </a>
+            </div>
+            <div *ngIf="post.applyEmail">
+              Send an email to
+              <a href="mailto:{{post.applyEmail}}">
+                {{post.applyEmail}}
+              </a>
+            </div>
+          </div>
+
+          <div class="post-actions-date">
+            <span *ngIf="post.liveTimestamp">Live date: {{post.liveTimestamp | date:'short'}}</span>
+            <span *ngIf="post.deadTimestamp">Closing date: {{post.deadTimestamp | date:'short'}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid__item medium-up--one-quarter small-one-whole">
+      <md-card>
+        <md-card-header class="header-full">
+          <md-card-title>
+            <h3>Publish by</h3>
+          </md-card-title>
+        </md-card-header>
+        <md-card-content>
+          <div class="grid">
+            <div class="grid__item one-whole">
+              <md-card-avatar class="logo-holder-small default-logo"
+                              [ngClass]="{'no-background': post.board.department.documentLogo}">
+                <cl-image *ngIf="post.board.department.documentLogo" public-id="{{post.board.department.documentLogo.cloudinaryId}}"
+                          class="img">
+                  <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
+                </cl-image>
+              </md-card-avatar>
+              <h4><a [routerLink]="['/', post.board.department.handle]">{{post.board.department.name}}</a></h4>
+              <a [routerLink]="['/', post.board.department.handle, post.board.handle]">{{post.board.name}}</a>
+            </div>
+          </div>
+        </md-card-content>
+      </md-card>
+      <div class="category-list">
+        <span class="ui-chips-token  ui-corner-all" *ngFor="let category of post.postCategories">{{category}}</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section post-timeline">
+  <h2>Post Timeline</h2>
+  <ul>
+    <li *ngFor="let operation of operations">
+      <time>
+        <span class="post-timeline--time">{{operation.createdTimestamp | date:'hh:mm'}}</span>
+        <span class="post-timeline--day">{{operation.createdTimestamp | date:'d/mm/yy'}}</span>
+      </time>
+      <div class="post-timeline--icon">
+        <i class="fa fa-{{ operation.action | lowercase }}"></i>
+      </div>
+      <div class="post-timeline--label">
+        <div *ngIf="operation.user" class="post-timeline--user">
+          <h5>{{operation.user.givenName}} {{operation.user.surname}} <small>{{operation.user.email}}</small></h5>
+          <span>{{'definitions.action.' + operation.action | translate}}</span>
         </div>
         <div *ngIf="operation.comment">
           Comment: {{operation.comment}}
@@ -60,7 +102,9 @@
             {{change.property}} changed from {{change.oldValue}} to {{change.newValue}}
           </div>
         </div>
-      </li>
-    </ul>
-  </div>
+      </div>
+
+
+    </li>
+  </ul>
 </section>

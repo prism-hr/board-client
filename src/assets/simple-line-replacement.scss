@@ -159,6 +159,7 @@ $simple-line-icon-prefix: "icon-" !default;
   &question,
   &pie-chart,
   &pencil,
+  &edit,
   &note,
   &loop,
   &home,
@@ -702,7 +703,7 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e05e";
 }
 
-.#{$simple-line-icon-prefix}pencil:before {
+.#{$simple-line-icon-prefix}pencil:before, .#{$simple-line-icon-prefix}edit:before {
   content: "\e05f";
 }
 
