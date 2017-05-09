@@ -11,11 +11,10 @@ import {Observable} from 'rxjs/Observable';
 import {MdDialogRef} from '@angular/material';
 
 @Component({
-  selector: 'app-authentication',
   templateUrl: './authentication.dialog.html',
   styleUrls: ['./authentication.dialog.scss']
 })
-export class AuthenticationDialog implements OnInit {
+export class AuthenticationDialogComponent implements OnInit {
 
   loginFormModel: LoginFormModel;
   registrationFormModel: RegistrationFormModel;
@@ -26,7 +25,7 @@ export class AuthenticationDialog implements OnInit {
   view: AuthenticationView;
   forgottenSent: any;
 
-  constructor(private dialogRef: MdDialogRef<AuthenticationDialog>, private stormpath: Stormpath) {
+  constructor(private dialogRef: MdDialogRef<AuthenticationDialogComponent>, private stormpath: Stormpath) {
     this.loginFormModel = <any>{};
     this.registrationFormModel = <any>{};
     this.forgotPasswordFormModel = <any>{};

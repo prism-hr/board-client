@@ -4,7 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Http, HttpModule} from '@angular/http';
 import {StormpathConfiguration, StormpathModule} from 'angular-stormpath';
 import {AppComponent} from './app.component';
-import {AuthenticationDialog} from './authentication/authentication.dialog';
+import {AuthenticationDialogComponent} from './authentication/authentication.dialog';
 import {HomeComponent} from './home/home.component';
 import {NotFoundComponent} from './not-found.component';
 import {RouterModule} from '@angular/router';
@@ -64,6 +64,8 @@ import {BoardHeaderComponent} from './boards/header/board-header.component';
 import {DepartmentListComponent} from './departments/list/department-list.component';
 import {PostItemComponent} from './posts/item/post-item.component';
 import {XeditableLogoComponent} from './controls/xeditable-logo.component';
+import {PostActionsBoxComponent} from './posts/actions-box/post-actions-box.component';
+import {PostCommentDialogComponent} from './posts/post-comment.dialog';
 
 @NgModule({
   declarations: [
@@ -72,7 +74,7 @@ import {XeditableLogoComponent} from './controls/xeditable-logo.component';
     HeaderComponent,
     FooterComponent,
     AccountComponent,
-    AuthenticationDialog,
+    AuthenticationDialogComponent,
     NotFoundComponent,
     HomeComponent,
     HomePublicComponent,
@@ -97,7 +99,9 @@ import {XeditableLogoComponent} from './controls/xeditable-logo.component';
     DepartmentUsersComponent,
     PostEditComponent,
     PostViewComponent,
-    PostItemComponent
+    PostItemComponent,
+    PostActionsBoxComponent,
+    PostCommentDialogComponent
   ],
   imports: [
     RouterModule.forRoot([
@@ -234,7 +238,7 @@ import {XeditableLogoComponent} from './controls/xeditable-logo.component';
       multi: true
     }, AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService
   ],
-  entryComponents: [AuthenticationDialog],
+  entryComponents: [AuthenticationDialogComponent, PostCommentDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

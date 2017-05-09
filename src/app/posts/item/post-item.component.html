@@ -17,18 +17,8 @@
     <div>State: {{'definitions.state.' + post.state | translate}}</div>
   </md-card-content>
   <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
-    <span *ngIf="actionView === 'REVISE'">
-      <p-splitButton label="Revise" icon="fa-gear" (onClick)="gotoSettings(post)" [model]="actions"
-                     class="ui-button-info"></p-splitButton>
-    </span>
-    <span *ngIf="actionView === 'CORRECT'">
-      <p-splitButton label="Correct" icon="fa-gear" (onClick)="gotoSettings(post)" [model]="actions"
-                     class="ui-button-info"></p-splitButton>
-    </span>
-    <span *ngIf="actionView === 'EDIT'">
-      <p-splitButton label="Edit" icon="fa-gear" (onClick)="gotoSettings(post)" [model]="actions"
-                     class="ui-button-info"></p-splitButton>
-    </span>
-    <a pButton [routerLink]="['/', post.board.department.handle, post.board.handle, post.id]" class="ui-button-secondary " icon="fa-eye" label="View"></a>
+    <b-post-actions-box [post]="post"></b-post-actions-box>
+    <a pButton [routerLink]="['/', post.board.department.handle, post.board.handle, post.id]" class="ui-button-secondary "
+       icon="fa-eye" label="View"></a>
   </md-card-actions>
 </md-card>

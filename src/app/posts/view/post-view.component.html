@@ -2,11 +2,7 @@
   <div class="section-header">
     <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
       <h2>{{post.name}}</h2>
-      <div>
-
-        <p-splitButton label="Settings" icon="fa-gear" (onClick)="gotoSettings()" [model]="actions"
-                       class="ui-button-info"></p-splitButton>
-      </div>
+      <b-post-actions-box [post]="post"></b-post-actions-box>
     </div>
   </div>
   <div class="post-content">
@@ -49,10 +45,15 @@
     <ul>
       <li *ngFor="let operation of operations">
         {{'definitions.action.' + operation.action | translate}}
-        <span *ngIf="operation.user">
+        <div *ngIf="operation.user">
           ({{operation.user.givenName}} {{operation.user.surname}} - {{operation.user.email}})
-        </span>
-        {{operation.createdTimestamp | date:'short'}}
+        </div>
+        <div>
+          {{operation.createdTimestamp | date:'short'}}
+        </div>
+        <div *ngIf="operation.comment">
+          Comment: {{operation.comment}}
+        </div>
         <div *ngIf="operation.changeList">
           <div>Changes:</div>
           <div *ngFor="let change of operation.changeList">

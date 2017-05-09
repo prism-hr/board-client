@@ -1,4 +1,4 @@
-import {AuthenticationDialog} from './authentication.dialog';
+import {AuthenticationDialogComponent} from './authentication.dialog';
 import {StormpathModule} from 'angular-stormpath';
 import {MaterialModule, MdDialog} from '@angular/material';
 import {FormsModule} from '@angular/forms';
@@ -9,15 +9,15 @@ import {MessagesModule} from 'primeng/primeng';
 
 @NgModule({
   imports: [StormpathModule, MaterialModule, FormsModule, CommonModule, MessagesModule],
-  exports: [AuthenticationDialog],
-  declarations: [AuthenticationDialog],
-  entryComponents: [AuthenticationDialog]
+  exports: [AuthenticationDialogComponent],
+  declarations: [AuthenticationDialogComponent],
+  entryComponents: [AuthenticationDialogComponent]
 })
 class TestModule {
 }
 
-describe('AuthenticationDialog', () => {
-  let component: AuthenticationDialog;
+describe('AuthenticationDialogComponent', () => {
+  let component: AuthenticationDialogComponent;
   let dialog: MdDialog;
 
   beforeEach(async(() => {
@@ -29,7 +29,7 @@ describe('AuthenticationDialog', () => {
 
   beforeEach(() => {
     dialog = TestBed.get(MdDialog);
-    const dialogRef = dialog.open(AuthenticationDialog);
+    const dialogRef = dialog.open(AuthenticationDialogComponent);
     component = dialogRef.componentInstance;
   });
 

@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Http} from '@angular/http';
+import {ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ValidationService} from '../../validation/validation.service';
 import * as _ from 'lodash';
-import {MdSnackBar} from '@angular/material';
+import {MdDialog} from '@angular/material';
 import {DefinitionsService} from '../../services/definitions.service';
 import {SelectItem} from 'primeng/primeng';
 import {TranslateService} from '@ngx-translate/core';
 import {PostService} from '../post.service';
+import {PostCommentDialogComponent} from '../post-comment.dialog';
 import DepartmentDTO = b.DepartmentDTO;
 import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
@@ -16,6 +16,7 @@ import BoardRepresentation = b.BoardRepresentation;
 import PostDTO = b.PostDTO;
 import PostRepresentation = b.PostRepresentation;
 import Action = b.Action;
+import PostPatchDTO = b.PostPatchDTO;
 
 @Component({
   templateUrl: 'post-edit.component.html',
@@ -30,9 +31,9 @@ export class PostEditComponent implements OnInit {
   actionView: string;
   availableActions: Action[];
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: Http, private fb: FormBuilder,
-              private snackBar: MdSnackBar, private translationService: TranslateService,
-              private definitionsService: DefinitionsService, private postService: PostService) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private dialog: MdDialog,
+              private translationService: TranslateService, private definitionsService: DefinitionsService,
+              private postService: PostService) {
     const definitions = definitionsService.getDefinitions();
     translationService.get('definitions.existingRelation')
       .subscribe(relationTranslations => {
@@ -146,11 +147,18 @@ export class PostEditComponent implements OnInit {
   }
 
   executeAction(action: string, sendForm?: boolean) {
-    this.postService.executeAction(this.post, action, sendForm ? this.generatePostRequestBody() : {}, this.board);
+    const dialogRef = this.dialog.open(PostCommentDialogComponent);
+    dialogRef.afterClosed().subscribe(comment => {
+      if (comment) {
+        const requestBody = sendForm ? this.generatePostRequestBody() : {};
+        requestBody.comment = comment;
+        this.postService.executeAction(this.post, action, requestBody, this.board);
+      }
+    });
   }
 
   private generatePostRequestBody() {
-    const post: PostDTO = _.pick(this.postForm.value,
+    const post: PostPatchDTO = _.pick(this.postForm.value,
       ['name', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories', 'memberCategories',
         'liveTimestamp', 'deadTimestamp']);
     post.applyWebsite = this.postForm.value.applyType === 'website' ? this.postForm.value.applyWebsite : null;

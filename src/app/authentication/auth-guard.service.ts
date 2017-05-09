@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {CanActivate} from '@angular/router';
-import {AuthenticationDialog} from './authentication.dialog';
+import {AuthenticationDialogComponent} from './authentication.dialog';
 import {MdDialog, MdDialogConfig} from '@angular/material';
 import {Stormpath} from 'angular-stormpath';
 import {Observable} from 'rxjs/Observable';
@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
       if (!user) {
         const config = new MdDialogConfig();
         config.data = {showRegister};
-        const dialogRef = this.dialog.open(AuthenticationDialog, config);
+        const dialogRef = this.dialog.open(AuthenticationDialogComponent, config);
         return dialogRef.afterClosed();
       }
       return Observable.of(true);
