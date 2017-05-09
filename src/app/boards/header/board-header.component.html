@@ -1,10 +1,12 @@
 <div fxLayout="row" class="board-header" fxLayoutAlign="space-between center">
   <div>
     <h2><a routerLink="/{{board.department.handle}}">{{board.department.name}}</a> -
-      <b-xeditable-input [resource]="board" propertyName="name" [canEdit]="canEdit"></b-xeditable-input>
+      <b-xeditable-input [resource]="board" propertyName="name" [canEdit]="canEdit"
+                         fieldType="input"></b-xeditable-input>
     </h2>
     <div class="description-holder">
-      <div class="description-text">{{board.description}}</div>
+      <b-xeditable-input [resource]="board" propertyName="description" [canEdit]="canEdit"
+                         fieldType="textarea"></b-xeditable-input>
     </div>
   </div>
   <div class="logo-holder default-logo" [ngClass]="{'no-background': board.department.documentLogo}">
