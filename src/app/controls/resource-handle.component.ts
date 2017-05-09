@@ -4,9 +4,17 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 @Component({
   selector: 'b-resource-handle',
   template: `
-    <span>{{urlPrefix}}</span>
-    <input pInputText [(ngModel)]="handle" (change)="handleChanged($event)" required>
-    <button pButton type="button" (click)="copyToClipboard()" icon="fa-docs"></button>
+    <div class="grid">
+      <div class="grid__item one-third">
+        {{urlPrefix}}
+      </div>
+      <div class="grid__item one-third">
+        <input pInputText [(ngModel)]="handle" (change)="handleChanged($event)" required>
+      </div>
+      <div class="grid__item one-third">
+        <button pButton type="button" (click)="copyToClipboard()" icon="fa-docs"></button>
+      </div>
+    </div>
   `,
   styleUrls: ['xeditable.scss'],
   providers: [

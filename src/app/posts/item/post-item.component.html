@@ -7,7 +7,7 @@
     </md-card-avatar>
     <md-card-title>
       <h3>
-        <a [routerLink]="post.id">{{post.name}}</a>
+        <a [routerLink]="['/', post.board.department.handle, post.board.handle, post.id]">{{post.name}}</a>
       </h3>
     </md-card-title>
     <md-card-subtitle><h6>{{post.board.department.name}} > {{post.board.name}}</h6></md-card-subtitle>
