@@ -63,6 +63,7 @@ import {BoardListComponent} from './boards/list/board-list.component';
 import {BoardHeaderComponent} from './boards/header/board-header.component';
 import {DepartmentListComponent} from './departments/list/department-list.component';
 import {PostItemComponent} from './posts/item/post-item.component';
+import {XeditableLogoComponent} from './controls/xeditable-logo.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import {PostItemComponent} from './posts/item/post-item.component';
     FileUploadComponent,
     DateTimeComponent,
     XeditableInputComponent,
+    XeditableLogoComponent,
     AuthedComponent,
     BoardListComponent,
     ResourceHandleComponent,
