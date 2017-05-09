@@ -56,6 +56,7 @@ $simple-line-icon-prefix: "icon-" !default;
   &circle,
   &correct,
   &logout,
+  &withdraw,
   &emotsmile,
   &phone,
   &call-end,
@@ -135,6 +136,7 @@ $simple-line-icon-prefix: "icon-" !default;
   &drop,
   &drawer,
   &docs,
+  &reject,
   &doc,
   &diamond,
   &cup,
@@ -156,6 +158,7 @@ $simple-line-icon-prefix: "icon-" !default;
   &size-fullscreen,
   &size-actual,
   &shuffle,
+  &restore,
   &share-alt,
   &share,
   &rocket,
@@ -395,7 +398,7 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e615";
 }
 
-.#{$simple-line-icon-prefix}close:before {
+.#{$simple-line-icon-prefix}close:before, .#{$simple-line-icon-prefix}withdraw:before {
   content: "\e082";
 }
 
@@ -479,7 +482,7 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e00f";
 }
 
-.#{$simple-line-icon-prefix}magic-wand:before, .#{$simple-line-icon-prefix}extend:before  {
+.#{$simple-line-icon-prefix}magic-wand:before, .#{$simple-line-icon-prefix}restore:before  {
   content: "\e017";
 }
 
@@ -499,7 +502,7 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e01b";
 }
 
-.#{$simple-line-icon-prefix}fire:before {
+.#{$simple-line-icon-prefix}fire:before, .#{$simple-line-icon-prefix}reject:before {
   content: "\e01c";
 }
 
@@ -519,7 +522,7 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e027";
 }
 
-.#{$simple-line-icon-prefix}badge:before {
+.#{$simple-line-icon-prefix}badge:before, .#{$simple-line-icon-prefix}extend:before {
   content: "\e028";
 }
 

@@ -161,10 +161,29 @@
       border-color: $qualificationsColor;
     }
   }
-  .action-suspend {
+  .action-reject {
     .post-timeline--icon {
       color: $error;
       border-color: $error;
     }
   }
+  .action-suspend {
+    .post-timeline--icon {
+      color: $programColor;
+      border-color: $programColor;
+    }
+  }
+  .action-restore {
+    .post-timeline--icon {
+      color: $fundingColor;
+      border-color: $fundingColor;
+    }
+  }
+  .action-withdraw {
+    .post-timeline--icon {
+      color: $uclred;
+      border-color: $uclred;
+    }
+  }
+
 }
