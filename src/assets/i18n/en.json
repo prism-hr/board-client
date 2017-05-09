@@ -39,7 +39,8 @@
       "WITHDRAW": "Withdraw",
       "RESTORE": "Restore",
       "EDIT": "Edit",
-      "EXTEND": "Create"
+      "EXTEND": "Create",
+      "PUBLISH": "Publish"
     },
     "state": {
       "DRAFT": "Draft",

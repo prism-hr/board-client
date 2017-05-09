@@ -11,6 +11,9 @@
   </div>
   <div class="post-content">
     <div>
+      Board: <a [routerLink]="['/', post.board.department.handle, post.board.handle]">{{post.board.name}}</a>
+    </div>
+    <div>
       {{post.description}}
     </div>
     <div>
@@ -36,8 +39,8 @@
       </a>
     </div>
     <div>
-      Live date: {{post.liveTimestamp | date:'short'}}
-      Closing date: {{post.deadTimestamp | date:'short'}}
+      <span *ngIf="post.liveTimestamp">Live date: {{post.liveTimestamp | date:'short'}}</span>
+      <span *ngIf="post.deadTimestamp">Closing date: {{post.deadTimestamp | date:'short'}}</span>
     </div>
   </div>
 
@@ -46,7 +49,9 @@
     <ul>
       <li *ngFor="let operation of operations">
         {{'definitions.action.' + operation.action | translate}}
-        ({{operation.user.givenName}} {{operation.user.surname}} - {{operation.user.email}})
+        <span *ngIf="operation.user">
+          ({{operation.user.givenName}} {{operation.user.surname}} - {{operation.user.email}})
+        </span>
         {{operation.createdTimestamp | date:'short'}}
         <div *ngIf="operation.changeList">
           <div>Changes:</div>

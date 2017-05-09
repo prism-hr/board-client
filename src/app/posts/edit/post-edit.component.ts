@@ -53,7 +53,7 @@ export class PostEditComponent implements OnInit {
 
       this.postForm = this.fb.group({
         name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-        description: ['', [Validators.required, Validators.maxLength(2000)]],
+        description: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(2000)]],
         organizationName: ['', [Validators.required, Validators.maxLength(255)]],
         location: [null, Validators.required],
         existingRelation: [],
@@ -64,8 +64,9 @@ export class PostEditComponent implements OnInit {
         applyWebsite: [null, Validators.maxLength(255)],
         applyDocument: [],
         applyEmail: [null, Validators.maxLength(254)],
-        hideTimestamps: [],
+        hideLiveTimestamp: [],
         liveTimestamp: [],
+        hideDeadTimestamp: [],
         deadTimestamp: []
       });
 
@@ -75,9 +76,15 @@ export class PostEditComponent implements OnInit {
         const formValue: any = Object.assign({}, this.post);
         formValue.applyType = formValue.applyWebsite ? 'website' :
           (formValue.applyDocument ? 'document' : (formValue.applyEmail ? 'email' : null));
+        formValue.hideLiveTimestamp = !formValue.liveTimestamp;
+        formValue.hideDeadTimestamp = !formValue.deadTimestamp;
         this.postForm.patchValue(formValue);
+      } else {
+        this.postForm.patchValue({hideLiveTimestamp: true});
+        this.postForm.get('liveTimestamp').disable();
       }
 
+      // initialize existing relation
       const extendAction = this.board.actions.find(a => (a.action as any as string) === 'EXTEND' && (a.scope as any as string) === 'POST');
       const creatingNewPostAsUntrustedPerson = !this.post && (extendAction.state as any as string) === 'DRAFT';
       if (creatingNewPostAsUntrustedPerson || _.get(this.post, 'existingRelation')) {
@@ -104,9 +111,26 @@ export class PostEditComponent implements OnInit {
       this.postForm.get('applyEmail').updateValueAndValidity();
     });
 
-    this.postForm.get('hideTimestamps').valueChanges.subscribe((hide: boolean) => {
-      this.postForm.get('liveTimestamp').setValidators(!hide && [Validators.required]);
-      this.postForm.get('deadTimestamp').setValidators(!hide && [Validators.required]);
+    this.postForm.get('hideLiveTimestamp').valueChanges.subscribe((hide: boolean) => {
+      this.postForm.patchValue({liveTimestamp: null});
+      const control = this.postForm.get('liveTimestamp');
+      control.setValidators(!hide && [Validators.required]);
+      if (hide) {
+        control.disable();
+      } else {
+        control.enable();
+      }
+    });
+
+    this.postForm.get('hideDeadTimestamp').valueChanges.subscribe((hide: boolean) => {
+      this.postForm.patchValue({deadTimestamp: null});
+      const control = this.postForm.get('deadTimestamp');
+      control.setValidators(!hide && [Validators.required]);
+      if (hide) {
+        control.disable();
+      } else {
+        control.enable();
+      }
     });
 
     this.actionView = this.post ? this.postService.getActionView(this.post) : 'CREATE';
@@ -127,13 +151,16 @@ export class PostEditComponent implements OnInit {
 
   private generatePostRequestBody() {
     const post: PostDTO = _.pick(this.postForm.value,
-      ['name', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories', 'memberCategories', 'liveTimestamp']);
+      ['name', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories', 'memberCategories',
+        'liveTimestamp', 'deadTimestamp']);
     post.applyWebsite = this.postForm.value.applyType === 'website' ? this.postForm.value.applyWebsite : null;
     post.applyDocument = this.postForm.value.applyType === 'document' ? this.postForm.value.applyDocument : null;
     post.applyEmail = this.postForm.value.applyType === 'email' ? this.postForm.value.applyEmail : null;
     if (this.postForm.value.existingRelationExplanation) {
       post.existingRelationExplanation = {text: this.postForm.value.existingRelationExplanation};
     }
+    post.liveTimestamp = post.liveTimestamp || null;
+    post.deadTimestamp = post.deadTimestamp || null;
     return post;
   }
 }

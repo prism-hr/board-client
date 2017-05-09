@@ -6,7 +6,7 @@
           <h2 *ngIf="!post">Create a new post</h2>
           <h2 *ngIf="post">Edit Post</h2>
           <a pButton [routerLink]="['/', board.department.handle, board.handle, post ? post.id : '']"
-                  class="ui-button-secondary" icon="fa-eye" label="Cancel"></a>
+             class="ui-button-secondary" icon="fa-eye" label="Cancel"></a>
         </div>
       </md-card-title>
     </md-card-header>
@@ -97,12 +97,7 @@
             <control-messages [control]="postForm.controls.applyEmail"></control-messages>
           </div>
 
-          <div *ngIf="!post" class="grid__item one-whole input-holder">
-            <p-checkbox formControlName="hideTimestamps" binary="true"
-                        label="Keep default opening and closing dates (post opens now and close in one month)"></p-checkbox>
-          </div>
-
-          <div *ngIf="!postForm.value.hideTimestamps" class="grid__item one-whole input-holder">
+          <div class="grid__item one-whole input-holder">
             <label>Post Availability</label>
             <div class="grid">
               <div class="grid__item small--one-whole medium-up--one-half">
@@ -110,19 +105,31 @@
                   <b-datetime formControlName="liveTimestamp" name="liveTimestamp"></b-datetime>
                   <control-messages [control]="postForm.controls.liveTimestamp" dataType="string"></control-messages>
                 </div>
-                <p-messages
+                <p-messages *ngIf="!postForm.value.hideLiveTimestamp"
                   [value]="[{severity:'info', detail:'By specifying this field you can control when the post will be opened. Otherwise it will happen straight away.'}]"
                   [closable]="false"></p-messages>
               </div>
 
               <div class="grid__item small--one-whole medium-up--one-half">
+                <p-checkbox formControlName="hideLiveTimestamp" binary="true"
+                            label="Immediately"></p-checkbox>
+              </div>
+            </div>
+
+            <div class="grid">
+              <div class="grid__item small--one-whole medium-up--one-half">
                 <div class="input-holder">
                   <b-datetime formControlName="deadTimestamp" name="deadTimestamp"></b-datetime>
                   <control-messages [control]="postForm.controls.deadTimestamp" dataType="string"></control-messages>
                 </div>
-                <p-messages
+                <p-messages *ngIf="!postForm.value.hideDeadTimestamp"
                   [value]="[{severity:'info', detail:'By specifying this field you can control when the post will be closed. Otherwise it will happen a month after opening.'}]"
                   [closable]="false"></p-messages>
+              </div>
+
+              <div class="grid__item small--one-whole medium-up--one-half">
+                <p-checkbox formControlName="hideDeadTimestamp" binary="true"
+                            label="No Closing Date"></p-checkbox>
               </div>
             </div>
           </div>

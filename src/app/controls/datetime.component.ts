@@ -7,14 +7,14 @@ import 'moment-timezone';
   selector: 'b-datetime',
   template: `
     <p-calendar [(ngModel)]="date" (ngModelChange)="dateTimeChanged($event)" dateFormat="yy-mm-dd"
-                dataType="string" (onBlur)="touched()"></p-calendar>
+                dataType="string" (onBlur)="touched()" [disabled]="isDisabled"></p-calendar>
     <p-calendar [(ngModel)]="time" (ngModelChange)="dateTimeChanged($event)" [timeOnly]="true"
-                dataType="string" [stepMinute]="5" (onBlur)="touched()"></p-calendar>
+                dataType="string" [stepMinute]="5" (onBlur)="touched()" [disabled]="isDisabled"></p-calendar>
     <div *ngIf="currentTz !== mainTz" class="ui-radiobutton-inline">
       <p-radioButton [name]="timezoneRadioGroupName" [value]="mainTz" [label]="mainTz" [(ngModel)]="selectedTz"
-                     (ngModelChange)="dateTimeChanged($event)"></p-radioButton>
+                     (ngModelChange)="dateTimeChanged($event)" [disabled]="isDisabled"></p-radioButton>
       <p-radioButton [name]="timezoneRadioGroupName" [value]="currentTz" [label]="currentTz" [(ngModel)]="selectedTz"
-                     (ngModelChange)="dateTimeChanged($event)"></p-radioButton>
+                     (ngModelChange)="dateTimeChanged($event)" [disabled]="isDisabled"></p-radioButton>
     </div>
   `,
   styles: [''],
@@ -36,6 +36,7 @@ export class DateTimeComponent implements ControlValueAccessor, OnInit {
   currentTz: string;
   selectedTz: string;
   mainTz = 'Europe/London';
+  isDisabled: boolean;
 
   constructor(public elementRef: ElementRef) {
     const nameAttr = elementRef.nativeElement.getAttribute('name');
@@ -76,6 +77,10 @@ export class DateTimeComponent implements ControlValueAccessor, OnInit {
 
   registerOnTouched(fn: any): void {
     this.propagateTouch = fn;
+  }
+
+  setDisabledState(isDisabled: boolean) {
+    this.isDisabled = isDisabled;
   }
 
 }

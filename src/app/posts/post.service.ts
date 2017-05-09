@@ -45,7 +45,7 @@ export class PostService {
   update(post: PostRepresentation, postPatch: PostPatchDTO) {
     this.http.patch('/api/posts/' + post.id, postPatch)
       .subscribe(() => {
-        this.snackBar.open('Board Saved!', null, {duration: 3000});
+        this.router.navigate([post.board.department.handle, post.board.handle, post.id]);
       });
   }
 
