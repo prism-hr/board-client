@@ -65,8 +65,8 @@
                   <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
                 </cl-image>
               </md-card-avatar>
-              <h4><a [routerLink]="['/', post.board.department.handle]">{{post.board.department.name}}</a></h4>
-              <a [routerLink]="['/', post.board.department.handle, post.board.handle]">{{post.board.name}}</a>
+              <h3><a [routerLink]="['/', post.board.department.handle]">{{post.board.department.name}}</a></h3>
+              <h4><a [routerLink]="['/', post.board.department.handle, post.board.handle]">{{post.board.name}}</a></h4>
             </div>
           </div>
         </md-card-content>
@@ -80,7 +80,7 @@
 <section class="section post-timeline">
   <h2>Post Timeline</h2>
   <ul>
-    <li *ngFor="let operation of operations">
+    <li *ngFor="let operation of operations" class="action-{{ operation.action | lowercase }}">
       <time>
         <span class="post-timeline--time">{{operation.createdTimestamp | date:'hh:mm'}}</span>
         <span class="post-timeline--day">{{operation.createdTimestamp | date:'d/mm/yy'}}</span>

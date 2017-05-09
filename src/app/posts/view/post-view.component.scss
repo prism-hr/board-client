@@ -84,10 +84,10 @@
   }
   time {
     display: block;
-    width: 18%;
+    width: 20%;
     padding-right: 100px;
     position: absolute;
-    top: 15px;
+    top: 12px;
     .post-timeline--time {
       color: #575858;
       font-size: 15px;
@@ -112,7 +112,7 @@
     background-color: white;
     color: $uclblue;
     border-radius: 50%;
-    border: 3px solid $fadeGrey;
+    border: 3px solid $uclblue;
     text-align: center;
     left: 15%;
     top: 10px;
@@ -141,6 +141,30 @@
       border-right-color: $fadeGrey;
       border-width: 10px;
       top: 20px;
+    }
+  }
+  .action-extend {
+    .post-timeline--icon {
+      color: $goldColor;
+      border-color: $goldColor;
+    }
+  }
+  .action-accept {
+    .post-timeline--icon {
+      color: $uclgreen;
+      border-color: $uclgreen;
+    }
+  }
+  .action-correct {
+    .post-timeline--icon {
+      color: $qualificationsColor;
+      border-color: $qualificationsColor;
+    }
+  }
+  .action-suspend {
+    .post-timeline--icon {
+      color: $error;
+      border-color: $error;
     }
   }
 }

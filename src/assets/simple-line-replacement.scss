@@ -43,6 +43,8 @@ $simple-line-icon-prefix: "icon-" !default;
   &caret-down,
   &angle-left,
   &angle-down,
+  &extend,
+  &accept,
   &angle-up,
   &user,
   &people,
@@ -52,6 +54,7 @@ $simple-line-icon-prefix: "icon-" !default;
   &user-unfollow,
   &login,
   &circle,
+  &correct,
   &logout,
   &emotsmile,
   &phone,
@@ -164,6 +167,7 @@ $simple-line-icon-prefix: "icon-" !default;
   &loop,
   &home,
   &grid,
+  &suspend,
   &graph,
   &microphone,
   &music-tone-alt,
@@ -439,7 +443,7 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e016";
 }
 
-.#{$simple-line-icon-prefix}energy:before {
+.#{$simple-line-icon-prefix}energy:before, .#{$simple-line-icon-prefix}correct:before  {
   content: "\e020";
 }
 
@@ -475,7 +479,7 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e00f";
 }
 
-.#{$simple-line-icon-prefix}magic-wand:before {
+.#{$simple-line-icon-prefix}magic-wand:before, .#{$simple-line-icon-prefix}extend:before  {
   content: "\e017";
 }
 
@@ -751,11 +755,11 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e06c";
 }
 
-.#{$simple-line-icon-prefix}like:before {
+.#{$simple-line-icon-prefix}like:before, .#{$simple-line-icon-prefix}accept:before {
   content: "\e068";
 }
 
-.#{$simple-line-icon-prefix}dislike:before {
+.#{$simple-line-icon-prefix}dislike:before, .#{$simple-line-icon-prefix}suspend:before  {
   content: "\e06d";
 }
 
