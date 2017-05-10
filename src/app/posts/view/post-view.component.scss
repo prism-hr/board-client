@@ -14,7 +14,7 @@
     padding: 10px;
   }
   .post-title {
-    p-splitbutton {
+    .post-admin-actions {
       font-size:0.8rem;
     }
     .date {
@@ -185,5 +185,18 @@
       border-color: $uclred;
     }
   }
-
+}
+.publisher {
+  md-card-title h3{
+    font-weight:600;
+    font-size:1.2em;
+    color: $fontColor1;
+  }
+  md-card-content {
+    padding-bottom:0;
+    h3 {
+      margin-top:10px;
+      padding-bottom:5px;
+    }
+  }
 }
