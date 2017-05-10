@@ -50,10 +50,12 @@ import {
   CalendarModule,
   CheckboxModule,
   ChipsModule,
-  DropdownModule, EditorModule,
+  DropdownModule,
+  EditorModule,
   InputTextModule,
   MessagesModule,
-  RadioButtonModule, SplitButtonModule,
+  RadioButtonModule,
+  SplitButtonModule,
   TabMenuModule
 } from 'primeng/primeng';
 import {PostService} from './posts/post.service';
@@ -63,7 +65,6 @@ import {BoardListComponent} from './boards/list/board-list.component';
 import {BoardHeaderComponent} from './boards/header/board-header.component';
 import {DepartmentListComponent} from './departments/list/department-list.component';
 import {PostItemComponent} from './posts/item/post-item.component';
-import {XeditableLogoComponent} from './controls/xeditable-logo.component';
 import {PostActionsBoxComponent} from './posts/actions-box/post-actions-box.component';
 import {PostCommentDialogComponent} from './posts/post-comment.dialog';
 import {MomentModule} from 'angular2-moment';
@@ -85,7 +86,6 @@ import {MomentModule} from 'angular2-moment';
     FileUploadComponent,
     DateTimeComponent,
     XeditableInputComponent,
-    XeditableLogoComponent,
     AuthedComponent,
     BoardListComponent,
     ResourceHandleComponent,

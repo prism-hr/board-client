@@ -19,8 +19,7 @@ import DocumentDTO = b.DocumentDTO;
 })
 export class FileUploadComponent implements ControlValueAccessor, OnInit {
 
-  @Input('type')
-  type: string;
+  @Input() type: string;
 
   uploader: FileUploader;
   propagateChange: any;
