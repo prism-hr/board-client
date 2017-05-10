@@ -101,35 +101,29 @@
             <label>Post Availability</label>
             <div class="grid">
               <div class="grid__item small--one-whole medium-up--one-half">
+                <p-checkbox formControlName="hideLiveTimestamp" binary="true"
+                            label="Immediately"></p-checkbox>
+              </div>
+
+              <div *ngIf="!postForm.value.hideLiveTimestamp" class="grid__item small--one-whole medium-up--one-half">
                 <div class="input-holder">
                   <b-datetime formControlName="liveTimestamp" name="liveTimestamp"></b-datetime>
                   <control-messages [control]="postForm.controls.liveTimestamp" dataType="string"></control-messages>
                 </div>
-                <p-messages *ngIf="!postForm.value.hideLiveTimestamp"
-                  [value]="[{severity:'info', detail:'By specifying this field you can control when the post will be opened. Otherwise it will happen straight away.'}]"
-                  [closable]="false"></p-messages>
-              </div>
-
-              <div class="grid__item small--one-whole medium-up--one-half">
-                <p-checkbox formControlName="hideLiveTimestamp" binary="true"
-                            label="Immediately"></p-checkbox>
               </div>
             </div>
 
             <div class="grid">
               <div class="grid__item small--one-whole medium-up--one-half">
+                <p-checkbox formControlName="hideDeadTimestamp" binary="true"
+                            label="No Closing Date"></p-checkbox>
+              </div>
+
+              <div *ngIf="!postForm.value.hideDeadTimestamp" class="grid__item small--one-whole medium-up--one-half">
                 <div class="input-holder">
                   <b-datetime formControlName="deadTimestamp" name="deadTimestamp"></b-datetime>
                   <control-messages [control]="postForm.controls.deadTimestamp" dataType="string"></control-messages>
                 </div>
-                <p-messages *ngIf="!postForm.value.hideDeadTimestamp"
-                  [value]="[{severity:'info', detail:'By specifying this field you can control when the post will be closed. Otherwise it will happen a month after opening.'}]"
-                  [closable]="false"></p-messages>
-              </div>
-
-              <div class="grid__item small--one-whole medium-up--one-half">
-                <p-checkbox formControlName="hideDeadTimestamp" binary="true"
-                            label="No Closing Date"></p-checkbox>
               </div>
             </div>
           </div>

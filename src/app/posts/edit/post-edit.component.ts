@@ -82,8 +82,9 @@ export class PostEditComponent implements OnInit {
         this.postForm.patchValue(formValue);
       } else {
         this.postForm.patchValue({hideLiveTimestamp: true});
-        this.postForm.get('liveTimestamp').disable();
       }
+      this.configureTimestampControl('liveTimestamp');
+      this.configureTimestampControl('deadTimestamp');
 
       // initialize existing relation
       const extendAction = this.board.actions.find(a => (a.action as any as string) === 'EXTEND' && (a.scope as any as string) === 'POST');
@@ -114,24 +115,12 @@ export class PostEditComponent implements OnInit {
 
     this.postForm.get('hideLiveTimestamp').valueChanges.subscribe((hide: boolean) => {
       this.postForm.patchValue({liveTimestamp: null});
-      const control = this.postForm.get('liveTimestamp');
-      control.setValidators(!hide && [Validators.required]);
-      if (hide) {
-        control.disable();
-      } else {
-        control.enable();
-      }
+      this.configureTimestampControl('liveTimestamp');
     });
 
     this.postForm.get('hideDeadTimestamp').valueChanges.subscribe((hide: boolean) => {
       this.postForm.patchValue({deadTimestamp: null});
-      const control = this.postForm.get('deadTimestamp');
-      control.setValidators(!hide && [Validators.required]);
-      if (hide) {
-        control.disable();
-      } else {
-        control.enable();
-      }
+      this.configureTimestampControl('deadTimestamp');
     });
 
     this.actionView = this.post ? this.postService.getActionView(this.post) : 'CREATE';
@@ -170,5 +159,16 @@ export class PostEditComponent implements OnInit {
     post.liveTimestamp = post.liveTimestamp || null;
     post.deadTimestamp = post.deadTimestamp || null;
     return post;
+  }
+
+  private configureTimestampControl(controlName: string) {
+    const control = this.postForm.get(controlName);
+    const hide = this.postForm.value['hide' + _.capitalize(controlName)];
+    control.setValidators(!hide && [Validators.required]);
+    if (hide) {
+      control.disable();
+    } else {
+      control.enable();
+    }
   }
 }
