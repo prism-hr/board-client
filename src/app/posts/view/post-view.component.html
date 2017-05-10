@@ -17,8 +17,7 @@
         <b-post-actions-box [post]="post"></b-post-actions-box>
       </div>
       <div class="post-content">
-        <div class="post-content--excerpt">
-          Responsible for devising, writing and running testing software in C/C++ to characterise the performance and functionality of next-gen storage system hardware. An experi
+        <div *ngIf="post.description" class="post-content--excerpt" [innerHtml]="post.description">
         </div>
         <div class="post-content--summary">
           {{post.summary}}
