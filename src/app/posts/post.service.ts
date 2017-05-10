@@ -35,23 +35,23 @@ export class PostService {
     return 'VIEW';
   }
 
-  create(board: BoardRepresentation, post: PostDTO) {
-    return this.http.post('/api/boards/' + board.id + '/posts', post);
+  create(board: BoardRepresentation, post: PostDTO): Observable<PostRepresentation> {
+    return this.http.post('/api/boards/' + board.id + '/posts', post).map(res => res.json());
   }
 
-  update(post: PostRepresentation, postPatch: PostPatchDTO) {
-    return this.http.patch('/api/posts/' + post.id, postPatch);
+  update(post: PostRepresentation, postPatch: PostPatchDTO): Observable<PostRepresentation> {
+    return this.http.patch('/api/posts/' + post.id, postPatch).map(res => res.json());
   }
 
-  executeAction(post: PostRepresentation, action: string, postPatch: PostPatchDTO) {
-    return this.http.post('/api/posts/' + post.id + '/' + action.toLowerCase(), postPatch);
+  executeAction(post: PostRepresentation, action: string, postPatch: PostPatchDTO): Observable<PostRepresentation> {
+    return this.http.post('/api/posts/' + post.id + '/' + action.toLowerCase(), postPatch).map(res => res.json());
   }
 
   loadOperations(post: PostRepresentation): Observable<ResourceOperationRepresentation[]> {
     return this.http.get('/api/posts/' + post.id + '/operations').map(res => res.json());
   }
 
-  getActionItems(post: PostRepresentation): Observable<MenuItem[]> {
+  getActionItems(post: PostRepresentation, actionCallback: (post: PostRepresentation) => void): Observable<MenuItem[]> {
     const availableActions = ['SUSPEND', 'REJECT', 'WITHDRAW', 'RESTORE']
       .filter(a => post.actions.find(actionDef => actionDef.action as any === a));
     return this.translate.get('definitions.action')
@@ -60,11 +60,8 @@ export class PostService {
           return {
             label: actionTranslations[a], command: () => {
               this.executeAction(post, a, {})
-                .subscribe(() => {
-                  this.router.navigate([post.board.department.handle, post.board.handle])
-                    .then(() => {
-                      this.snackBar.open('Your action was executed successfully.', null, {duration: 500});
-                    });
+                .subscribe(newPost => {
+                  actionCallback(newPost);
                 });
             }
           };

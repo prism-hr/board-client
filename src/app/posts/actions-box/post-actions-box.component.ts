@@ -5,6 +5,7 @@ import {PostService} from '../post.service';
 import PostRepresentation = b.PostRepresentation;
 import Action = b.Action;
 import BoardRepresentation = b.BoardRepresentation;
+import {MdSnackBar} from '@angular/material';
 
 @Component({
   selector: 'b-post-actions-box',
@@ -16,18 +17,26 @@ export class PostActionsBoxComponent implements OnChanges {
   actionView: string;
   actions: MenuItem[];
 
-  constructor(private router: Router, private postService: PostService) {
+  constructor(private router: Router, private snackBar: MdSnackBar, private postService: PostService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.actionView = this.postService.getActionView(this.post);
-    this.postService.getActionItems(this.post)
-      .subscribe(actions => {
-        this.actions = actions;
-      });
+    this.generateActionItems();
   }
 
   gotoSettings() {
     this.router.navigate([this.post.board.department.handle, this.post.board.handle, this.post.id, 'settings']);
+  }
+
+  private generateActionItems() {
+    this.actionView = this.postService.getActionView(this.post);
+    this.postService.getActionItems(this.post, post => {
+      Object.assign(this.post, post);
+      this.generateActionItems();
+      this.snackBar.open('Your action was executed successfully.', null, {duration: 1500});
+    })
+      .subscribe(actions => {
+        this.actions = actions;
+      });
   }
 }

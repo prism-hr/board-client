@@ -42,7 +42,7 @@ export class DepartmentViewComponent implements OnInit {
       .subscribe(() => {
         this.router.navigate([department.handle])
           .then(() => {
-            this.snackBar.open('Department Saved!', null, {duration: 500});
+            this.snackBar.open('Department Saved!', null, {duration: 1500});
           });
       }, (error: Response) => {
         if (error.status === 422) {
