@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-05-08 13:55:08.
+// Generated using typescript-generator version 1.23.311 on 2017-05-10 11:35:37.
 
 declare namespace b {
 
@@ -9,14 +9,14 @@ declare namespace b {
 
   interface BoardDTO {
     name?: string;
-    description?: string;
+    summary?: string;
     postCategories?: string[];
     department?: DepartmentDTO;
   }
 
   interface BoardPatchDTO {
     name?: string;
-    description?: string;
+    summary?: string;
     handle?: string;
     postCategories?: string[];
     defaultPostVisibility?: PostVisibility;
@@ -44,7 +44,7 @@ declare namespace b {
 
   interface PostDTO {
     name?: string;
-    description?: string;
+    summary?: string;
     organizationName?: string;
     location?: LocationDTO;
     existingRelation?: ExistingRelation;
@@ -60,7 +60,7 @@ declare namespace b {
 
   interface PostPatchDTO {
     name?: string;
-    description?: string;
+    summary?: string;
     organizationName?: string;
     location?: LocationDTO;
     applyWebsite?: string;
@@ -91,7 +91,7 @@ declare namespace b {
   }
 
   interface BoardRepresentation extends ResourceRepresentation {
-    description?: string;
+    summary?: string;
     handle?: string;
     department?: DepartmentRepresentation;
     postCategories?: string[];
@@ -111,7 +111,7 @@ declare namespace b {
   }
 
   interface PostRepresentation extends ResourceRepresentation {
-    description?: string;
+    summary?: string;
     organizationName?: string;
     location?: LocationRepresentation;
     existingRelation?: ExistingRelation;
@@ -129,7 +129,7 @@ declare namespace b {
   interface ResourceOperationRepresentation {
     action?: Action;
     user?: UserRepresentation;
-    changeList?: { [index: string]: any };
+    changeList?: any[];
     comment?: string;
     createdTimestamp?: LocalDateTime;
   }
@@ -153,16 +153,16 @@ declare namespace b {
 
   interface DocumentDefinition {
     fileName?: string;
-    cloudinaryId?: string;
     cloudinaryUrl?: string;
+    cloudinaryId?: string;
   }
 
   interface LocationDefinition {
     name?: string;
     domicile?: string;
+    longitude?: number;
     googleId?: string;
     latitude?: number;
-    longitude?: number;
   }
 
   interface LocalDateTime extends Temporal, TemporalAdjuster, ChronoLocalDateTime<LocalDate>, Serializable {
@@ -174,8 +174,8 @@ declare namespace b {
     year?: number;
     hour?: number;
     minute?: number;
-    second?: number;
     nano?: number;
+    second?: number;
   }
 
   interface Chronology extends Comparable<Chronology> {

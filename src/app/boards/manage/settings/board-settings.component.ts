@@ -18,14 +18,14 @@ export class BoardSettingsComponent implements OnInit {
   boardForm: FormGroup;
   urlPrefix: string;
 
-  boardProperties = ['name', 'description', 'postCategories', 'defaultPostVisibility', 'handle'];
+  boardProperties = ['name', 'summary', 'postCategories', 'defaultPostVisibility', 'handle'];
 
   constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder, private router: Router,
               private definitionsService: DefinitionsService) {
     this.definitions = definitionsService.getDefinitions();
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      description: ['', [Validators.required, Validators.maxLength(2000)]],
+      summary: ['', [Validators.required, Validators.maxLength(1000)]],
       postCategories: [[]],
       defaultPostVisibility: [null, Validators.required],
       handle: ['', [Validators.required, Validators.maxLength(25)]]

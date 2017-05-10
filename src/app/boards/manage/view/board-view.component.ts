@@ -21,7 +21,7 @@ export class BoardViewComponent implements OnInit {
   constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder, private resourceService: ResourceService) {
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      description: ['', [Validators.required, Validators.maxLength(2000)]],
+      summary: ['', [Validators.required, Validators.maxLength(1000)]],
     });
   }
 
@@ -29,7 +29,7 @@ export class BoardViewComponent implements OnInit {
     this.route.parent.data.subscribe(data => {
       this.board = data['board'];
       this.canEdit = this.resourceService.canEdit(this.board);
-      this.boardForm.setValue(_.pick(this.board, ['name', 'description']));
+      this.boardForm.setValue(_.pick(this.board, ['name', 'summary']));
     });
     this.http.get('/api/boards/' + this.board.id + '/posts')
       .subscribe((posts: Response) => {

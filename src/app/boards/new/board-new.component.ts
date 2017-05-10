@@ -22,7 +22,7 @@ export class BoardNewComponent implements OnInit {
               private definitionsService: DefinitionsService) {
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      description: ['', [Validators.required, Validators.maxLength(2000)]],
+      summary: ['', [Validators.required, Validators.maxLength(1000)]],
       postCategories: [[]],
       department: this.fb.group({
         name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
@@ -49,7 +49,7 @@ export class BoardNewComponent implements OnInit {
   }
 
   submit() {
-    const board: BoardDTO = _.pick(this.boardForm.value, ['name', 'description', 'postCategories', 'department']);
+    const board: BoardDTO = _.pick(this.boardForm.value, ['name', 'summary', 'postCategories', 'department']);
 
     this.http.post('/api/boards', board)
       .subscribe(res => {
