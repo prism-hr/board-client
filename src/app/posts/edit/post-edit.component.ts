@@ -55,6 +55,7 @@ export class PostEditComponent implements OnInit {
       this.postForm = this.fb.group({
         name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
         summary: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
+        description: [],
         organizationName: ['', [Validators.required, Validators.maxLength(255)]],
         location: [null, Validators.required],
         existingRelation: [],
@@ -148,7 +149,7 @@ export class PostEditComponent implements OnInit {
 
   private generatePostRequestBody() {
     const post: PostPatchDTO = _.pick(this.postForm.value,
-      ['name', 'summary', 'organizationName', 'location', 'existingRelation', 'postCategories', 'memberCategories',
+      ['name', 'summary', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories', 'memberCategories',
         'liveTimestamp', 'deadTimestamp']);
     post.applyWebsite = this.postForm.value.applyType === 'website' ? this.postForm.value.applyWebsite : null;
     post.applyDocument = this.postForm.value.applyType === 'document' ? this.postForm.value.applyDocument : null;
