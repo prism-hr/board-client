@@ -3,14 +3,11 @@
     <div class="grid__item medium-up--three-quarters small-one-whole post">
       <div class="post-title" fxLayout="row" fxLayoutAlign="space-between top">
         <div>
-          <div class="date">Ofert publish 2 days ago</div>
+          <div class="date">Published {{post.liveTimestamp | amCalendar}}</div>
           <h1>{{post.name}}</h1>
           <h2><em>at</em> {{post.organizationName}} <span class="location"><i class="fa fa-location-pin"></i> {{post.location.name}}</span></h2>
         </div>
-        <div>
-          <p-splitButton icon="fa-gear" (onClick)="gotoSettings()" [model]="actions"
-                         class="ui-button-info"></p-splitButton>
-        </div>
+        <b-post-actions-box [post]="post"></b-post-actions-box>
       </div>
       <div class="post-content">
         <div class="rte">
@@ -52,7 +49,7 @@
       <md-card>
         <md-card-header class="header-full">
           <md-card-title>
-            <h3>Publish by</h3>
+            <h3>Published by</h3>
           </md-card-title>
         </md-card-header>
         <md-card-content>

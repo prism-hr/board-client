@@ -66,6 +66,7 @@ import {PostItemComponent} from './posts/item/post-item.component';
 import {XeditableLogoComponent} from './controls/xeditable-logo.component';
 import {PostActionsBoxComponent} from './posts/actions-box/post-actions-box.component';
 import {PostCommentDialogComponent} from './posts/post-comment.dialog';
+import {MomentModule} from 'angular2-moment';
 
 @NgModule({
   declarations: [
@@ -223,7 +224,8 @@ import {PostCommentDialogComponent} from './posts/post-comment.dialog';
       apiKey: 'AIzaSyDmaVzQjUgftYVHNfTfoSszjaUe8hie8e8',
       libraries: ['places']
     }),
-    PlacesModule
+    PlacesModule,
+    MomentModule
   ],
   providers: [
     {
