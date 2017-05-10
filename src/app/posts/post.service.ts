@@ -36,27 +36,15 @@ export class PostService {
   }
 
   create(board: BoardRepresentation, post: PostDTO) {
-    this.http.post('/api/boards/' + board.id + '/posts', post)
-      .subscribe(() => {
-        this.router.navigate([board.department.handle, board.handle]);
-      });
+    return this.http.post('/api/boards/' + board.id + '/posts', post);
   }
 
   update(post: PostRepresentation, postPatch: PostPatchDTO) {
-    this.http.patch('/api/posts/' + post.id, postPatch)
-      .subscribe(() => {
-        this.router.navigate([post.board.department.handle, post.board.handle, post.id]);
-      });
+    return this.http.patch('/api/posts/' + post.id, postPatch);
   }
 
-  executeAction(post: PostRepresentation, action: string, postPatch: PostPatchDTO, board: BoardRepresentation) {
-    this.http.post('/api/posts/' + post.id + '/' + action.toLowerCase(), postPatch)
-      .subscribe(() => {
-        this.router.navigate([board.department.handle, board.handle])
-          .then(() => {
-            this.snackBar.open('Your action was executed successfully.', null, {duration: 500});
-          });
-      });
+  executeAction(post: PostRepresentation, action: string, postPatch: PostPatchDTO) {
+    return this.http.post('/api/posts/' + post.id + '/' + action.toLowerCase(), postPatch);
   }
 
   loadOperations(post: PostRepresentation): Observable<ResourceOperationRepresentation[]> {
@@ -71,7 +59,13 @@ export class PostService {
         return availableActions.map(a => {
           return {
             label: actionTranslations[a], command: () => {
-              this.executeAction(post, a, {}, post.board);
+              this.executeAction(post, a, {})
+                .subscribe(() => {
+                  this.router.navigate([post.board.department.handle, post.board.handle])
+                    .then(() => {
+                      this.snackBar.open('Your action was executed successfully.', null, {duration: 500});
+                    });
+                });
             }
           };
         });

@@ -24,7 +24,6 @@ export class BoardHeaderComponent implements OnChanges {
 
   logoChanged() {
     this.resourceService.patchDepartment(this.board.department.id, {documentLogo: this.board.department.documentLogo})
-      .subscribe(() => {
-      });
+      .subscribe();
   }
 }

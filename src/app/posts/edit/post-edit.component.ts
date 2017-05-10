@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ValidationService} from '../../validation/validation.service';
 import * as _ from 'lodash';
@@ -30,8 +30,10 @@ export class PostEditComponent implements OnInit {
   showExistingRelation: boolean;
   actionView: string;
   availableActions: Action[];
+  formProperties = ['name', 'summary', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories', 'memberCategories',
+    'liveTimestamp', 'deadTimestamp'];
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private dialog: MdDialog,
+  constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private dialog: MdDialog,
               private translationService: TranslateService, private definitionsService: DefinitionsService,
               private postService: PostService) {
     const definitions = definitionsService.getDefinitions();
@@ -129,11 +131,18 @@ export class PostEditComponent implements OnInit {
   }
 
   update() {
-    this.postService.update(this.post, this.generatePostRequestBody());
+    this.postService.update(this.post, this.generatePostRequestBody())
+      .subscribe(() => {
+        Object.assign(this.post, _.pick(this.postForm.value, this.formProperties));
+        this.router.navigate([this.board.department.handle, this.board.handle, this.post.id]);
+      });
   }
 
   create() {
-    this.postService.create(this.board, this.generatePostRequestBody());
+    this.postService.create(this.board, this.generatePostRequestBody())
+      .subscribe(() => {
+        this.router.navigate([this.board.department.handle, this.board.handle]);
+      });
   }
 
   executeAction(action: string, sendForm?: boolean) {
@@ -142,15 +151,16 @@ export class PostEditComponent implements OnInit {
       if (comment) {
         const requestBody = sendForm ? this.generatePostRequestBody() : {};
         requestBody.comment = comment;
-        this.postService.executeAction(this.post, action, requestBody, this.board);
+        this.postService.executeAction(this.post, action, requestBody)
+          .subscribe(() => {
+            this.router.navigate([this.board.department.handle, this.board.handle]);
+          });
       }
     });
   }
 
   private generatePostRequestBody() {
-    const post: PostPatchDTO = _.pick(this.postForm.value,
-      ['name', 'summary', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories', 'memberCategories',
-        'liveTimestamp', 'deadTimestamp']);
+    const post: PostPatchDTO = _.pick(this.postForm.value, this.formProperties);
     post.applyWebsite = this.postForm.value.applyType === 'website' ? this.postForm.value.applyWebsite : null;
     post.applyDocument = this.postForm.value.applyType === 'document' ? this.postForm.value.applyDocument : null;
     post.applyEmail = this.postForm.value.applyType === 'email' ? this.postForm.value.applyEmail : null;
