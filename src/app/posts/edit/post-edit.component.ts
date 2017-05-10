@@ -163,7 +163,7 @@ export class PostEditComponent implements OnInit {
 
   private configureTimestampControl(controlName: string) {
     const control = this.postForm.get(controlName);
-    const hide = this.postForm.value['hide' + _.capitalize(controlName)];
+    const hide = this.postForm.value['hide' + _.upperFirst(controlName)];
     control.setValidators(!hide && [Validators.required]);
     if (hide) {
       control.disable();

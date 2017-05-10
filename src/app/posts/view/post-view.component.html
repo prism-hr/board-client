@@ -3,12 +3,12 @@
     <div class="grid__item medium-up--three-quarters small-one-whole post">
       <div class="post-title" fxLayout="row" fxLayoutAlign="space-between top">
         <div>
-          <div *ngIf="post.liveTimestamp" class="date">
-            <div *ngIf="(post.liveTimestamp | amDifference: today) >= 0">
-              Going live: {{post.liveTimestamp | amCalendar}}
+          <div *ngIf="publishedTimestamp" class="date">
+            <div *ngIf="(publishedTimestamp | amDifference: today) >= 0">
+              Going live: {{publishedTimestamp | amCalendar}}
             </div>
-            <div *ngIf="(post.liveTimestamp | amDifference: today) < 0">
-              Published: {{post.liveTimestamp | amCalendar}}
+            <div *ngIf="(publishedTimestamp | amDifference: today) < 0">
+              Published: {{publishedTimestamp | amCalendar}}
             </div>
           </div>
           <h1>{{post.name}}</h1>
