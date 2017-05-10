@@ -19,13 +19,16 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.scss"
+        "styles.scss",
+        "../node_modules/quill/dist/quill.core.css",
+        "../node_modules/quill/dist/quill.snow.css"
       ],
       "scripts": [
         "../node_modules/lodash/lodash.js",
         "../node_modules/moment/moment.js",
         "../node_modules/moment-timezone/moment-timezone.js",
-        "../node_modules/cloudinary-core/cloudinary-core-shrinkwrap.js"
+        "../node_modules/cloudinary-core/cloudinary-core-shrinkwrap.js",
+        "../node_modules/quill/dist/quill.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

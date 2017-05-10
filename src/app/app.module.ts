@@ -50,7 +50,7 @@ import {
   CalendarModule,
   CheckboxModule,
   ChipsModule,
-  DropdownModule,
+  DropdownModule, EditorModule,
   InputTextModule,
   MessagesModule,
   RadioButtonModule, SplitButtonModule,
@@ -200,6 +200,7 @@ import {MomentModule} from 'angular2-moment';
     DropdownModule,
     CalendarModule,
     SplitButtonModule,
+    EditorModule,
     // Material modules
     MdDialogModule,
     MdSnackBarModule,

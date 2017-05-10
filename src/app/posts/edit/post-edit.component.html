@@ -18,12 +18,32 @@
             <input pInputText formControlName="name" required>
             <control-messages [control]="postForm.controls.name"></control-messages>
           </div>
+
           <div class="grid__item one-whole input-holder">
-            <label>Content of your post</label>
-            <textarea pInputTextarea formControlName="summary" required rows="5"
+            <label>Summary of your post</label>
+            <textarea pInputTextarea formControlName="summary" required rows="4"
                       class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
             <control-messages [control]="postForm.controls.summary"></control-messages>
           </div>
+
+          <div *ngIf="post" class="grid__item one-whole input-holder">
+            <label>Description of your post</label>
+            <p-editor formControlName="description" [style]="{'height':'150px'}">
+              <p-header>
+                <span class="ql-formats">
+                  <button class="ql-bold"></button>
+                  <button class="ql-italic"></button>
+                  <button class="ql-underline"></button>
+                </span>
+                <span class="ql-formats">
+                  <button class="ql-list" value="ordered" aria-label="Ordered List"></button>
+                  <button class="ql-list" value="bullet" aria-label="Unordered List"></button>
+                </span>
+              </p-header>
+            </p-editor>
+            <control-messages [control]="postForm.controls.description"></control-messages>
+          </div>
+
           <div class="grid__item one-whole input-holder">
             <label>What is your post about?</label>
             <div class="ui-checkbox-inline">
