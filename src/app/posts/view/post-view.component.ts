@@ -12,19 +12,18 @@ import ResourceOperationRepresentation = b.ResourceOperationRepresentation;
 })
 export class PostViewComponent implements OnInit {
   post: PostRepresentation;
-  actions: MenuItem[];
   operations: ResourceOperationRepresentation[];
   operationsLoading: boolean;
+  today: Date;
 
   constructor(private route: ActivatedRoute, private router: Router, private postService: PostService,
               private resourceService: ResourceService) {
   }
 
   ngOnInit() {
+    this.today = new Date();
     this.route.data.subscribe(data => {
       this.post = data['post'];
-      this.postService.getActionItems(this.post)
-        .subscribe(actions => this.actions = actions);
       const canAudit = this.resourceService.canAudit(this.post);
       if (canAudit) {
         this.operationsLoading = true;
