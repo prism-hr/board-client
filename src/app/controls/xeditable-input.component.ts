@@ -33,7 +33,7 @@ export class XeditableInputComponent {
   documentClick(event) {
     if (!this.eRef.nativeElement.contains(event.target)) { // clicked outside
       if (this.editing) {
-        this.cancel();
+        this.ok();
       }
     }
   }

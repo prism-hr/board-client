@@ -9,10 +9,10 @@
                          fieldType="textarea"></b-xeditable-input>
     </div>
   </div>
-  <div class="logo-holder default-logo" [ngClass]="{'no-background': board.department.documentLogo}">
-    <b-file-upload *ngIf="canEditDepartment" [(ngModel)]="board.department.documentLogo" (ngModelChange)="logoChanged()" type="logo"></b-file-upload>
+  <div class="logo-holder default-logo" [ngClass]="{'no-background': board.documentLogo}">
+    <b-file-upload *ngIf="canEdit" [(ngModel)]="board.documentLogo" (ngModelChange)="logoChanged()" type="logo"></b-file-upload>
 
-    <cl-image *ngIf="!canEditDepartment && board.department.documentLogo" public-id="{{board.department.documentLogo.cloudinaryId}}"
+    <cl-image *ngIf="!canEdit && board.documentLogo" public-id="{{board.documentLogo.cloudinaryId}}"
               class="img">
       <cl-transformation height="150" width="200" crop="mfit"></cl-transformation>
     </cl-image>

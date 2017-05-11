@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-05-10 11:35:37.
+// Generated using typescript-generator version 1.23.311 on 2017-05-10 21:39:05.
 
 declare namespace b {
 
@@ -9,6 +9,7 @@ declare namespace b {
 
   interface BoardDTO {
     name?: string;
+    documentLogo?: DocumentDTO;
     summary?: string;
     postCategories?: string[];
     department?: DepartmentDTO;
@@ -17,6 +18,7 @@ declare namespace b {
   interface BoardPatchDTO {
     name?: string;
     summary?: string;
+    documentLogo?: DocumentDTO;
     handle?: string;
     postCategories?: string[];
     defaultPostVisibility?: PostVisibility;
@@ -61,6 +63,7 @@ declare namespace b {
   interface PostPatchDTO {
     name?: string;
     summary?: string;
+    description?: string;
     organizationName?: string;
     location?: LocationDTO;
     applyWebsite?: string;
@@ -91,6 +94,7 @@ declare namespace b {
   }
 
   interface BoardRepresentation extends ResourceRepresentation {
+    documentLogo?: DocumentRepresentation;
     summary?: string;
     handle?: string;
     department?: DepartmentRepresentation;
@@ -112,6 +116,7 @@ declare namespace b {
 
   interface PostRepresentation extends ResourceRepresentation {
     summary?: string;
+    description?: string;
     organizationName?: string;
     location?: LocationRepresentation;
     existingRelation?: ExistingRelation;
@@ -153,16 +158,16 @@ declare namespace b {
 
   interface DocumentDefinition {
     fileName?: string;
-    cloudinaryUrl?: string;
     cloudinaryId?: string;
+    cloudinaryUrl?: string;
   }
 
   interface LocationDefinition {
     name?: string;
     domicile?: string;
-    longitude?: number;
     googleId?: string;
     latitude?: number;
+    longitude?: number;
   }
 
   interface LocalDateTime extends Temporal, TemporalAdjuster, ChronoLocalDateTime<LocalDate>, Serializable {

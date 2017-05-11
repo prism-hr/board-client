@@ -4,6 +4,8 @@ import {Http, Response} from '@angular/http';
 import {DefinitionsService} from '../../services/definitions.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as _ from 'lodash';
+import {FileUploadService} from '../../services/file-upload.service';
+import {FileItem, FileUploader, ParsedResponseHeaders} from 'ng2-file-upload';
 import DepartmentDTO = b.DepartmentDTO;
 import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
@@ -24,10 +26,10 @@ export class BoardNewComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       summary: ['', [Validators.required, Validators.maxLength(1000)]],
       postCategories: [[]],
+      documentLogo: [],
       department: this.fb.group({
         name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-        memberCategories: [[]],
-        documentLogo: []
+        memberCategories: [[]]
       })
     });
   }
@@ -49,7 +51,8 @@ export class BoardNewComponent implements OnInit {
   }
 
   submit() {
-    const board: BoardDTO = _.pick(this.boardForm.value, ['name', 'summary', 'postCategories', 'department']);
+    const board: BoardDTO = _.pick(this.boardForm.value, ['name', 'summary', 'postCategories', 'documentLogo', 'department']);
+    board.department.documentLogo = board.documentLogo;
 
     this.http.post('/api/boards', board)
       .subscribe(res => {

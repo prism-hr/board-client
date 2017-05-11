@@ -52,5 +52,12 @@
       "WITHDRAWN": "Withdraw",
       "PREVIOUS": "Previous"
     }
+  },
+  "authenticate": {
+    "title": {
+      "LOGIN": "Login",
+      "REGISTER": "Register",
+      "FORGOT": "Forgot Password?"
+    }
   }
 }

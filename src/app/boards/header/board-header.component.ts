@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ResourceService} from '../../services/resource.service';
 
 @Component({
@@ -6,24 +6,16 @@ import {ResourceService} from '../../services/resource.service';
   templateUrl: 'board-header.component.html',
   styleUrls: ['board-header.component.scss']
 })
-export class BoardHeaderComponent implements OnChanges {
+export class BoardHeaderComponent {
 
   @Input() board: any;
-  canEdit: boolean;
-  canEditDepartment: boolean;
+  @Input() canEdit: boolean;
 
   constructor(private resourceService: ResourceService) {
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['board']) {
-      this.canEdit = this.resourceService.canEdit(this.board);
-      this.canEditDepartment = this.resourceService.canEdit(this.board.department);
-    }
-  }
-
   logoChanged() {
-    this.resourceService.patchDepartment(this.board.department.id, {documentLogo: this.board.department.documentLogo})
+    this.resourceService.patchBoard(this.board.id, {documentLogo: this.board.documentLogo})
       .subscribe();
   }
 }
