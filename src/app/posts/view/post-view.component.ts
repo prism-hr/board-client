@@ -4,10 +4,11 @@ import {PostService} from '../post.service';
 import {ResourceService} from '../../services/resource.service';
 import * as _ from 'lodash';
 import {Observable} from 'rxjs/Observable';
-import {Account, Stormpath} from 'angular-stormpath';
 import {AuthGuard} from '../../authentication/auth-guard.service';
+import {UserService} from '../../services/user.service';
 import PostRepresentation = b.PostRepresentation;
 import ResourceOperationRepresentation = b.ResourceOperationRepresentation;
+import UserRepresentation = b.UserRepresentation;
 
 @Component({
   templateUrl: 'post-view.component.html',
@@ -19,14 +20,14 @@ export class PostViewComponent implements OnInit {
   operationsLoading: boolean;
   publishedTimestamp: string;
   today: Date;
-  user$: Observable<Account | boolean>;
+  user$: Observable<UserRepresentation | boolean>;
 
-  constructor(private route: ActivatedRoute, private stormpath: Stormpath, private postService: PostService,
+  constructor(private route: ActivatedRoute, private userService: UserService, private postService: PostService,
               private resourceService: ResourceService, private authGuard: AuthGuard) {
   }
 
   ngOnInit() {
-    this.user$ = this.stormpath.user$;
+    this.user$ = this.userService.user$;
     this.today = new Date();
     this.route.data.subscribe(data => {
       this.post = data['post'];

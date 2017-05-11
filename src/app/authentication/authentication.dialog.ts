@@ -8,7 +8,8 @@ import {
   StormpathErrorResponse
 } from 'angular-stormpath';
 import {Observable} from 'rxjs/Observable';
-import {MdDialogRef} from '@angular/material';
+import {MdDialog, MdDialogRef} from '@angular/material';
+import {UserImageDialogComponent} from './user-image.dialog';
 
 @Component({
   templateUrl: './authentication.dialog.html',
@@ -20,12 +21,11 @@ export class AuthenticationDialogComponent implements OnInit {
   registrationFormModel: RegistrationFormModel;
   forgotPasswordFormModel: ForgotPasswordFormModel;
   error: string;
-  user$: Observable<Account | boolean>;
   loading: boolean;
   view: AuthenticationView;
   forgottenSent: any;
 
-  constructor(private dialogRef: MdDialogRef<AuthenticationDialogComponent>, private stormpath: Stormpath) {
+  constructor(private dialogRef: MdDialogRef<AuthenticationDialogComponent>, private dialog: MdDialog, private stormpath: Stormpath) {
     this.loginFormModel = <any>{};
     this.registrationFormModel = <any>{};
     this.forgotPasswordFormModel = <any>{};
@@ -33,7 +33,6 @@ export class AuthenticationDialogComponent implements OnInit {
 
   ngOnInit() {
     this.setView(this.dialogRef.config.data.showRegister ? 'REGISTER' : 'LOGIN');
-    this.user$ = this.stormpath.user$;
   }
 
   setView(view: AuthenticationView): void {
@@ -46,6 +45,7 @@ export class AuthenticationDialogComponent implements OnInit {
     this.stormpath.login(this.loginFormModel)
       .subscribe(() => {
         this.dialogRef.close(true);
+        this.dialog.open(UserImageDialogComponent);
       }, (error: StormpathErrorResponse) => {
         this.loading = false;
         this.error = error.message;
@@ -66,6 +66,7 @@ export class AuthenticationDialogComponent implements OnInit {
           this.stormpath.login(loginAttempt)
             .subscribe(() => {
               this.dialogRef.close(true);
+              this.dialog.open(UserImageDialogComponent);
             });
         }
       }, error => this.error = error.message);

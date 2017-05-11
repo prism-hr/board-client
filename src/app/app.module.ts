@@ -68,6 +68,8 @@ import {PostItemComponent} from './posts/item/post-item.component';
 import {PostActionsBoxComponent} from './posts/actions-box/post-actions-box.component';
 import {PostCommentDialogComponent} from './posts/post-comment.dialog';
 import {MomentModule} from 'angular2-moment';
+import {UserService} from './services/user.service';
+import {UserImageDialogComponent} from './authentication/user-image.dialog';
 
 @NgModule({
   declarations: [
@@ -102,7 +104,8 @@ import {MomentModule} from 'angular2-moment';
     PostViewComponent,
     PostItemComponent,
     PostActionsBoxComponent,
-    PostCommentDialogComponent
+    PostCommentDialogComponent,
+    UserImageDialogComponent
   ],
   imports: [
     RouterModule.forRoot([
@@ -239,9 +242,9 @@ import {MomentModule} from 'angular2-moment';
       useFactory: DefinitionsLoader,
       deps: [DefinitionsService],
       multi: true
-    }, AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService
+    }, AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService, UserService
   ],
-  entryComponents: [AuthenticationDialogComponent, PostCommentDialogComponent],
+  entryComponents: [AuthenticationDialogComponent, PostCommentDialogComponent, UserImageDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

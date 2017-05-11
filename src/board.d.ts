@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-05-10 21:39:05.
+// Generated using typescript-generator version 1.23.311 on 2017-05-11 13:23:47.
 
 declare namespace b {
 
@@ -39,6 +39,7 @@ declare namespace b {
   }
 
   interface DocumentDTO extends DocumentDefinition {
+    id?: number;
   }
 
   interface LocationDTO extends LocationDefinition {
@@ -87,6 +88,12 @@ declare namespace b {
     orderStatement?: string;
   }
 
+  interface UserPatchDTO {
+    givenName?: string;
+    surname?: string;
+    documentImage?: DocumentDTO;
+  }
+
   interface ActionRepresentation extends Comparable<ActionRepresentation> {
     action?: Action;
     scope?: Scope;
@@ -109,6 +116,7 @@ declare namespace b {
   }
 
   interface DocumentRepresentation extends DocumentDefinition {
+    id?: number;
   }
 
   interface LocationRepresentation extends LocationDefinition {
@@ -154,6 +162,7 @@ declare namespace b {
     givenName?: string;
     surname?: string;
     email?: string;
+    documentImage?: DocumentRepresentation;
   }
 
   interface DocumentDefinition {
@@ -179,8 +188,8 @@ declare namespace b {
     year?: number;
     hour?: number;
     minute?: number;
-    nano?: number;
     second?: number;
+    nano?: number;
   }
 
   interface Chronology extends Comparable<Chronology> {

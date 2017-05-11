@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ResourceService} from '../../services/resource.service';
 import {Account, Stormpath} from 'angular-stormpath';
 import DepartmentRepresentation = b.DepartmentRepresentation;
+import {UserService} from '../../services/user.service';
+import UserRepresentation = b.UserRepresentation;
 
 @Component({
   templateUrl: 'department-list.component.html',
@@ -9,14 +11,14 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
 })
 export class DepartmentListComponent implements OnInit {
 
-  user: Account | boolean;
+  user: UserRepresentation | boolean;
   departments: DepartmentRepresentation[];
 
-  constructor(private resourceService: ResourceService, private stormpath: Stormpath) {
+  constructor(private resourceService: ResourceService, private userService: UserService) {
   }
 
   ngOnInit(): void {
-    this.stormpath.user$.subscribe(user => {
+    this.userService.user$.subscribe(user => {
       this.user = user;
       this.departments = null;
       if (user) {

@@ -11,7 +11,7 @@ import ResourceRepresentation = b.ResourceRepresentation;
 @Injectable()
 export class ResourceService {
 
-  constructor(protected http: Http) {
+  constructor(private http: Http) {
   }
 
   getPosts(): Observable<PostRepresentation[]> {

@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Account, Stormpath} from 'angular-stormpath';
+import {Stormpath} from 'angular-stormpath';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
 import {AuthGuard} from '../authentication/auth-guard.service';
+import {UserService} from '../services/user.service';
+import UserRepresentation = b.UserRepresentation;
 
 @Component({
   selector: 'b-header-component',
@@ -11,13 +13,13 @@ import {AuthGuard} from '../authentication/auth-guard.service';
 })
 export class HeaderComponent implements OnInit {
 
-  user$: Observable<Account | boolean>;
+  user$: Observable<UserRepresentation | boolean>;
 
-  constructor(private router: Router, private stormpath: Stormpath, private authGuard: AuthGuard) {
+  constructor(private router: Router, private stormpath: Stormpath, private userService: UserService, private authGuard: AuthGuard) {
   }
 
   ngOnInit(): void {
-    this.user$ = this.stormpath.user$;
+    this.user$ = this.userService.user$;
   }
 
   showLogin() {

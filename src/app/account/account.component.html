@@ -19,6 +19,10 @@
                 <control-messages [control]="accountForm.controls.surname"></control-messages>
               </div>
             </div>
+
+            <div>
+              <b-file-upload formControlName="documentImage" type="logo"></b-file-upload>
+            </div>
           </md-card-content>
           <md-card-actions>
             <button pButton class="ui-button-warning" type="submit" label="Submit"></button>
