@@ -5,6 +5,8 @@ import {Router} from '@angular/router';
 import {AuthGuard} from '../authentication/auth-guard.service';
 import {UserService} from '../services/user.service';
 import UserRepresentation = b.UserRepresentation;
+import {MdDialog} from '@angular/material';
+import {UserImageDialogComponent} from '../authentication/user-image.dialog';
 
 @Component({
   selector: 'b-header-component',
@@ -15,7 +17,8 @@ export class HeaderComponent implements OnInit {
 
   user$: Observable<UserRepresentation | boolean>;
 
-  constructor(private router: Router, private stormpath: Stormpath, private userService: UserService, private authGuard: AuthGuard) {
+  constructor(private router: Router, private stormpath: Stormpath, private userService: UserService, private authGuard: AuthGuard,
+              private dialog: MdDialog) {
   }
 
   ngOnInit(): void {
@@ -36,4 +39,7 @@ export class HeaderComponent implements OnInit {
     return this.router.navigate(['']);
   }
 
+  openImageDialog() {
+    this.dialog.open(UserImageDialogComponent);
+  }
 }
