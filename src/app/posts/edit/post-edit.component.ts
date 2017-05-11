@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ValidationService} from '../../validation/validation.service';
 import * as _ from 'lodash';
 import {MdDialog} from '@angular/material';
@@ -57,7 +57,6 @@ export class PostEditComponent implements OnInit {
       this.postForm = this.fb.group({
         name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
         summary: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
-        description: [],
         organizationName: ['', [Validators.required, Validators.maxLength(255)]],
         location: [null, Validators.required],
         existingRelation: [],
@@ -73,6 +72,9 @@ export class PostEditComponent implements OnInit {
         hideDeadTimestamp: [],
         deadTimestamp: []
       });
+      if (this.post) {
+        this.postForm.addControl('description', new FormControl());
+      }
 
       this.postForm.patchValue({hideTimestamps: !this.post});
 
