@@ -1,8 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {PostService} from '../post.service';
 import {ResourceService} from '../../services/resource.service';
 import * as _ from 'lodash';
+import {Observable} from 'rxjs/Observable';
+import {Account, Stormpath} from 'angular-stormpath';
+import {AuthGuard} from '../../authentication/auth-guard.service';
 import PostRepresentation = b.PostRepresentation;
 import ResourceOperationRepresentation = b.ResourceOperationRepresentation;
 
@@ -16,12 +19,14 @@ export class PostViewComponent implements OnInit {
   operationsLoading: boolean;
   publishedTimestamp: string;
   today: Date;
+  user$: Observable<Account | boolean>;
 
-  constructor(private route: ActivatedRoute, private router: Router, private postService: PostService,
-              private resourceService: ResourceService) {
+  constructor(private route: ActivatedRoute, private stormpath: Stormpath, private postService: PostService,
+              private resourceService: ResourceService, private authGuard: AuthGuard) {
   }
 
   ngOnInit() {
+    this.user$ = this.stormpath.user$;
     this.today = new Date();
     this.route.data.subscribe(data => {
       this.post = data['post'];
@@ -34,7 +39,7 @@ export class PostViewComponent implements OnInit {
             this.operations = operations;
             this.operationsLoading = false;
 
-            this.publishedTimestamp = this.post.liveTimestamp as any;
+            this.publishedTimestamp = <any>this.post.liveTimestamp;
             if (!this.publishedTimestamp) {
               const publishOperation = this.operations.reverse().find(o => o.action as any === 'PUBLISH');
               this.publishedTimestamp = _.get(publishOperation, 'createdTimestamp') as any;
@@ -44,12 +49,20 @@ export class PostViewComponent implements OnInit {
     });
   }
 
-  gotoSettings() {
-    this.router.navigate([this.post.board.department.handle, this.post.board.handle, this.post.id, 'settings']);
-  }
-
   showLogin() {
-
+    this.authGuard.ensureAuthenticated(false) // open dialog if not authenticated
+      .subscribe(authenticated => {
+        if (!authenticated) {
+          return;
+        }
+        this.resourceService.getPost(this.post.id)
+          .subscribe(post => {
+            this.route.data.subscribe(data => {
+              data['post'] = post;
+              (<any>this.route.data).next(data);
+            });
+          });
+      });
   }
 
 }

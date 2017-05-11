@@ -12,7 +12,8 @@
             </div>
           </div>
           <h1>{{post.name}}</h1>
-          <h2><em>at</em> {{post.organizationName}} <span class="location"><i class="fa fa-location-pin"></i> {{post.location.name}}</span></h2>
+          <h2><em>at</em> {{post.organizationName}} <span class="location"><i class="fa fa-location-pin"></i> {{post.location.name}}</span>
+          </h2>
         </div>
         <b-post-actions-box [post]="post"></b-post-actions-box>
       </div>
@@ -26,12 +27,14 @@
       <div class="post-actions">
         <div class="post-actions-how-to">
           <h4>How to Apply?</h4>
-          <div class="post-action-content">
+          <div *ngIf="(user$ | async) === false" class="post-action-content">
             <a (click)="showLogin()">Login</a> to check this job offer contact details.
           </div>
-          <div  *ngIf="true" class="post-action-content">
+          <div *ngIf="user$ | async" class="post-action-content">
             <div *ngIf="post.applyWebsite">
-              Apply on this website <a href="{{post.applyWebsite}}" class="ui-button-success small ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" target="_blank"><span class="ui-button-text ui-c">Apply</span></a>
+              Apply on this website <a href="{{post.applyWebsite}}"
+                                       class="ui-button-success small ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+                                       target="_blank"><span class="ui-button-text ui-c">Apply</span></a>
             </div>
             <div *ngIf="post.applyDocument">
               Download and follow the instructions on the following document:
@@ -66,7 +69,8 @@
             <div class="grid__item one-whole">
               <md-card-avatar class="logo-holder-small default-logo"
                               [ngClass]="{'no-background': post.board.department.documentLogo}">
-                <cl-image *ngIf="post.board.department.documentLogo" public-id="{{post.board.department.documentLogo.cloudinaryId}}"
+                <cl-image *ngIf="post.board.department.documentLogo"
+                          public-id="{{post.board.department.documentLogo.cloudinaryId}}"
                           class="img">
                   <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
                 </cl-image>
@@ -88,17 +92,19 @@
   <ul>
     <li *ngFor="let operation of operations" class="action-{{ operation.action | lowercase }}">
       <time>
-        <span class="post-timeline--time">{{operation.createdTimestamp | date:'hh:mm'}}</span>
-        <span class="post-timeline--day">{{operation.createdTimestamp | date:'d/mm/yy'}}</span>
+        <span class="post-timeline--time">{{operation.createdTimestamp | date:'shortTime'}}</span>
+        <span class="post-timeline--day">{{operation.createdTimestamp | date:'shortDate'}}</span>
       </time>
       <div class="post-timeline--icon">
         <i class="fa fa-{{ operation.action | lowercase }}"></i>
       </div>
       <div class="post-timeline--label">
         <div *ngIf="operation.user" class="post-timeline--user">
-          <h5>{{operation.user.givenName}} {{operation.user.surname}} <small>{{operation.user.email}}</small></h5>
-          <span>{{'definitions.action.' + operation.action | translate}}</span>
+          <h5>{{operation.user.givenName}} {{operation.user.surname}}
+            <small>{{operation.user.email}}</small>
+          </h5>
         </div>
+        <div>{{'definitions.action.' + operation.action | translate}}</div>
         <div *ngIf="operation.comment">
           Comment: {{operation.comment}}
         </div>

@@ -4,16 +4,17 @@ import {Observable} from 'rxjs/Observable';
 import {Http} from '@angular/http';
 import DepartmentDTO = b.DepartmentDTO;
 import PostRepresentation = b.PostRepresentation;
+import {ResourceService} from '../services/resource.service';
 
 @Injectable()
 export class PostResolver implements Resolve<PostRepresentation> {
 
-  constructor(private http: Http) {
+  constructor(private resourceService: ResourceService) {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<PostRepresentation> {
-    const id = route.params['postId'];
-    return this.http.get('/api/posts/' + id).map(res => res.json());
+    const id = +route.params['postId'];
+    return this.resourceService.getPost(id);
   }
 
 }

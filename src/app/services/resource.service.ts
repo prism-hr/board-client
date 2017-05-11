@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {Http} from '@angular/http';
+import {Http, URLSearchParams} from '@angular/http';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import DepartmentPatchDTO = b.DepartmentPatchDTO;
@@ -24,6 +24,22 @@ export class ResourceService {
 
   getDepartments(): Observable<DepartmentRepresentation[]> {
     return this.http.get('/api/departments').map(res => res.json());
+  }
+
+  getPost(id: number): Observable<PostRepresentation[]> {
+    return this.http.get('/api/posts/' + id).map(res => res.json());
+  }
+
+  getBoard(departmentHandle: string, boardHandle: string): Observable<BoardRepresentation[]> {
+    const params = new URLSearchParams();
+    params.set('handle', departmentHandle + '/' + boardHandle);
+    return this.http.get('/api/boards', {search: params}).map(res => res.json());
+  }
+
+  getDepartment(handle: string): Observable<DepartmentRepresentation[]> {
+    const params = new URLSearchParams();
+    params.set('handle', handle);
+    return this.http.get('/api/departments', {search: params}).map(res => res.json());
   }
 
   patchBoard(id: number, board: BoardPatchDTO): Observable<BoardRepresentation> {

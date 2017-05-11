@@ -1,12 +1,11 @@
-import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
-import {AuthenticationDialogComponent} from '../authentication/authentication.dialog';
-import {Component, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Account, Stormpath} from 'angular-stormpath';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
+import {AuthGuard} from '../authentication/auth-guard.service';
 
 @Component({
-  selector: 'header-component',
+  selector: 'b-header-component',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
@@ -14,7 +13,7 @@ export class HeaderComponent implements OnInit {
 
   user$: Observable<Account | boolean>;
 
-  constructor(private dialog: MdDialog, private viewContainerRef: ViewContainerRef, private router: Router, private stormpath: Stormpath) {
+  constructor(private router: Router, private stormpath: Stormpath, private authGuard: AuthGuard) {
   }
 
   ngOnInit(): void {
@@ -22,19 +21,12 @@ export class HeaderComponent implements OnInit {
   }
 
   showLogin() {
-    let dialogRef: MdDialogRef<AuthenticationDialogComponent>;
-    const config = new MdDialogConfig();
-    config.data = {showRegister: false};
-    config.viewContainerRef = this.viewContainerRef;
-
-    dialogRef = this.dialog.open(AuthenticationDialogComponent, config);
-    dialogRef.afterClosed().subscribe(() => {
-      this.user$.subscribe(user => {
-        if (user) {
+    this.authGuard.ensureAuthenticated(false) // open dialog if not authenticated
+      .subscribe(authenticated => {
+        if (authenticated) {
           return this.router.navigate(['/']);
         }
       });
-    });
   }
 
   logout() {
