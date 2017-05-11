@@ -16,9 +16,41 @@
 }
 
 .board-header {
-  padding-bottom:15px;
+  background: $greyBackground;
+  border-top: 1px solid $fadeGrey;
+  border-bottom: 1px solid $fadeGrey;
+  padding: 10px;
+  .post-admin-actions {
+    font-size: 0.8rem;
+  }
+  .board-visibility {
+    font-size: 0.9em;
+    font-weight:600;
+  }
+  h1 {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: $uclred;
+    padding: 7px 0;
+  }
 }
-
+.board-logo-holder {
+  md-card-title h3{
+    font-weight:600;
+    font-size:1.2em;
+    color: $fontColor1;
+  }
+  .mat-card-content {
+    display: flex;
+    justify-content:center;
+    padding-bottom:0;
+    padding-top: 15px;
+  }
+}
 .summary-holder {
-  margin-top:15px;
+  margin-top: 15px;
+  margin-bottom: 25px;
+  font-size: 110%;
+  font-weight: 500;
+  line-height: 1.6rem;
 }

@@ -1,19 +1,19 @@
 @import '../../assets/variables';
 @import '../../assets/grid';
 
+b-file-upload {
+  > div {
+    display: flex;
+  }
+}
 .drop-area {
   margin-top: 4px;
   &.logo {
     border: 3px dashed $inactiveGrey;
     width: 206px;
     height: 131px;
-    float: right;
-    @include media-query($small) {
-      float: none;
-    }
     display: block;
     text-align: center;
-    margin-top: 25px;
   }
   &.background {
     border: 1px dashed $inactiveGrey;

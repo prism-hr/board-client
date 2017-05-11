@@ -9,9 +9,11 @@ import {Response} from '@angular/http';
     </span>
     <span *ngIf="editing">
       <input *ngIf="fieldType === 'input'" pInputText [(ngModel)]="editedName" required>
-      <textarea *ngIf="fieldType === 'textarea'" pInputTextarea [(ngModel)]="editedName" required></textarea>
-      <button pButton type="button" class="ui-button-success ui-button-small" (click)="ok()" icon="fa-check"></button>
+      <textarea class="ui-inputtext" *ngIf="fieldType === 'textarea'" pInputTextarea [(ngModel)]="editedName" required></textarea>
+      <div [ngClass]="{'textarea-container':fieldType === 'textarea', 'input-container':fieldType === 'input' }">
+        <button pButton type="button" class="ui-button-success ui-button-small" (click)="ok()" icon="fa-check"></button>
       <button pButton type="button" class="ui-button-warning ui-button-small" (click)="cancel()" icon="fa-close"></button>
+      </div>
     </span>
   `,
   styleUrls: ['xeditable.scss']

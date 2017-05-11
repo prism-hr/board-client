@@ -6,8 +6,8 @@ import DocumentRepresentation = b.DocumentRepresentation;
 
 @Component({
   template: `
-    <div>
-      <span>Would you like to specify your avatar?</span>
+    <div class="avatar-box">
+      <h2>Would you like to specify your avatar?</h2>
       <b-file-upload [(ngModel)]="image" type="logo"></b-file-upload>
       <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">
         <button pButton class="ui-button-secondary" label="Ok" (click)="ok()" [disabled]="!image"></button>

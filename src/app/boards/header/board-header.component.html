@@ -1,20 +1,41 @@
-<div fxLayout="row" class="board-header" fxLayoutAlign="space-between center">
-  <div>
-    <h2><a routerLink="/{{board.department.handle}}">{{board.department.name}}</a> -
-      <b-xeditable-input [resource]="board" propertyName="name" [canEdit]="canEdit"
-                         fieldType="input"></b-xeditable-input>
-    </h2>
+<div class="grid">
+  <div class="grid__item medium-up--three-quarters small-one-whole board">
+    <div class="board-header" fxLayout="row" fxLayoutAlign="space-between top">
+      <div>
+        <div class="board-visibility">
+          {{'definitions.postVisibility.' + board.defaultPostVisibility | translate}}
+        </div>
+        <h1><a routerLink="/{{board.department.handle}}">{{board.department.name}}</a> -
+          <b-xeditable-input [resource]="board" propertyName="name" [canEdit]="canEdit"
+                             fieldType="input"></b-xeditable-input>
+        </h1>
+      </div>
+      <div class="post-admin-actions">
+        <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}/settings"
+                class="ui-button-info ui-button-icon-only" icon="fa-settings" *ngIf="canEdit"></button>
+      </div>
+    </div>
     <div class="summary-holder">
       <b-xeditable-input [resource]="board" propertyName="summary" [canEdit]="canEdit"
                          fieldType="textarea"></b-xeditable-input>
     </div>
   </div>
-  <div class="logo-holder default-logo" [ngClass]="{'no-background': board.documentLogo}">
-    <b-file-upload *ngIf="canEdit" [(ngModel)]="board.documentLogo" (ngModelChange)="logoChanged()" type="logo"></b-file-upload>
-
-    <cl-image *ngIf="!canEdit && board.documentLogo" public-id="{{board.documentLogo.cloudinaryId}}"
-              class="img">
-      <cl-transformation height="150" width="200" crop="mfit"></cl-transformation>
-    </cl-image>
+  <div class="grid__item medium-up--one-quarter small-one-whole board-logo-holder">
+    <md-card>
+      <md-card-header class="header-full">
+        <md-card-title>
+          <h3>Board Logo</h3>
+        </md-card-title>
+      </md-card-header>
+      <md-card-content>
+        <b-file-upload *ngIf="canEdit" [(ngModel)]="board.documentLogo" (ngModelChange)="logoChanged()" type="logo"></b-file-upload>
+        <cl-image *ngIf="!canEdit && board.documentLogo" public-id="{{board.documentLogo.cloudinaryId}}" class="img">
+          <cl-transformation height="150" width="200" crop="mfit"></cl-transformation>
+        </cl-image>
+      </md-card-content>
+    </md-card>
+    <div class="category-list">
+      <span class="ui-chips-token  ui-corner-all" *ngFor="let category of board.postCategories">{{category}}</span>
+    </div>
   </div>
 </div>

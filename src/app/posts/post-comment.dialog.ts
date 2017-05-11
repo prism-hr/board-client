@@ -15,7 +15,7 @@ import {MdDialogRef} from '@angular/material';
     <div>
       <span>Your comments:</span>
       <textarea [(ngModel)]="comment"></textarea>
-      <button pButton class="ui-button-success" [disabled]="!comment" label="Submit"              (click)="submit()"></button>
+      <button pButton class="ui-button-success" [disabled]="!comment" label="Submit" (click)="submit()"></button>
     </div>
   `,
   styleUrls: []

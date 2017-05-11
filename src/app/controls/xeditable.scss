@@ -10,4 +10,7 @@ span {
   &.editable {
     border-bottom:1px dashed $uclred;
   }
+  .input-container {
+    display: inline-block;
+  }
 }

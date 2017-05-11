@@ -15,7 +15,7 @@
           <h2><em>at</em> {{post.organizationName}} <span class="location"><i class="fa fa-location-pin"></i> {{post.location.name}}</span>
           </h2>
         </div>
-        <b-post-actions-box [post]="post"></b-post-actions-box>
+        <b-post-actions-box [post]="post" class="post-admin-actions"></b-post-actions-box>
       </div>
       <div class="post-content">
         <div *ngIf="post.description" class="post-content--excerpt" [innerHtml]="post.description">
@@ -49,15 +49,10 @@
               </a>
             </div>
           </div>
-
-          <div class="post-actions-date">
-            <span *ngIf="post.liveTimestamp">Live date: {{post.liveTimestamp | date:'short'}}</span>
-            <span *ngIf="post.deadTimestamp">Closing date: {{post.deadTimestamp | date:'short'}}</span>
-          </div>
         </div>
       </div>
     </div>
-    <div class="grid__item medium-up--one-quarter small-one-whole">
+    <div class="grid__item medium-up--one-quarter small-one-whole publisher">
       <md-card>
         <md-card-header class="header-full">
           <md-card-title>
