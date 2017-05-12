@@ -15,18 +15,18 @@
           <div class="grid__item small--one-whole medium-up--two-thirds">
             <div class="grid">
               <div class="grid__item one-whole input-holder" formGroupName="department">
-                <label>Department Name</label>
-                <input pInputText formControlName="name" required >
+                <label for="departmentName">Department Name</label>
+                <input id="departmentName" pInputText formControlName="name" required >
                 <control-messages [control]="boardForm.get('department').get('name')"></control-messages>
               </div>
               <div class="grid__item one-whole input-holder">
-                <label>Board Name</label>
-                <input pInputText formControlName="name" required>
+                <label for="boardName">Board Name</label>
+                <input id="boardName" pInputText formControlName="name" required>
                 <control-messages [control]="boardForm.controls.name"></control-messages>
               </div>
               <div class="grid__item one-whole input-holder">
-                <label>Board Purpose</label>
-                <textarea pInputTextarea formControlName="summary" required class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
+                <label for="summary">Board Purpose</label>
+                <textarea id="summary" pInputTextarea formControlName="summary" required class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
                 <control-messages [control]="boardForm.controls.summary"></control-messages>
               </div>
             </div>

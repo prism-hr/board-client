@@ -7,7 +7,7 @@ import LocationDTO = b.LocationDTO;
 import AutocompletePrediction = google.maps.places.AutocompletePrediction;
 
 @Component({
-  selector: 'places-autocomplete',
+  selector: 'b-places-autocomplete',
   template: `
     <p-autoComplete [(ngModel)]="model" (completeMethod)="search($event)"
                     (onBlur)="onTouch($event)" placeholder="e.g. London"
