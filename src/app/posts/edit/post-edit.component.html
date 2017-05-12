@@ -2,11 +2,9 @@
   <md-card>
     <md-card-header class="header-full">
       <md-card-title>
-        <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
+        <div>
           <h2 *ngIf="!post">Create a new post</h2>
           <h2 *ngIf="post">Edit Post</h2>
-          <a pButton [routerLink]="['/', board.department.handle, board.handle, post ? post.id : '']"
-             class="ui-button-secondary" icon="fa-eye" label="Cancel"></a>
         </div>
       </md-card-title>
     </md-card-header>
@@ -152,6 +150,8 @@
         </div>
       </md-card-content>
       <md-card-actions fxLayout="row" fxLayoutAlign="end center">
+        <a pButton [routerLink]="['/', board.department.handle, board.handle, post ? post.id : '']"
+           class="ui-button-secondary" label="Cancel"></a>
         <span *ngIf="actionView === 'REVISE'">
           <button pButton [disabled]="postForm.invalid" label="Accept"
                   (click)="executeAction('ACCEPT', true)"></button>

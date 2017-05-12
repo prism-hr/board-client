@@ -3,10 +3,8 @@
 
     <md-card>
       <md-card-header class="header-full">
-        <md-card-title fxLayout="row" fxLayoutAlign="space-between center">
+        <md-card-title>
           <h2>Create a new Board</h2>
-          <a pButton routerLink="/boards"
-                  class="ui-button-secondary" icon="fa-eye" label="Cancel"></a>
         </md-card-title>
       </md-card-header>
       <md-card-content>
@@ -56,6 +54,8 @@
 
       </md-card-content>
       <md-card-actions>
+        <a pButton routerLink="/boards"
+           class="ui-button-secondary" label="Cancel"></a>
         <button pButton class="ui-button-success" type="submit" [disabled]="boardForm.invalid" label="Submit"></button>
       </md-card-actions>
     </md-card>

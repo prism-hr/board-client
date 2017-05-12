@@ -226,12 +226,16 @@ $simple-line-icon-prefix: "icon-" !default;
   &paypal,
   &social-tumblr,
   &social-twitter,
+  &twitter,
   &social-facebook,
+  &facebook,
   &social-instagram,
   &social-linkedin,
+  &linkedin,
   &social-pinterest,
   &social-github,
   &social-google,
+  &google-plus,
   &social-reddit,
   &social-skype,
   &social-dribbble,
@@ -938,11 +942,11 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e00a";
 }
 
-.#{$simple-line-icon-prefix}social-twitter:before {
+.#{$simple-line-icon-prefix}social-twitter:before, .#{$simple-line-icon-prefix}twitter:before {
   content: "\e009";
 }
 
-.#{$simple-line-icon-prefix}social-facebook:before {
+.#{$simple-line-icon-prefix}social-facebook:before, .#{$simple-line-icon-prefix}facebook:before {
   content: "\e00b";
 }
 
@@ -950,7 +954,7 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e609";
 }
 
-.#{$simple-line-icon-prefix}social-linkedin:before {
+.#{$simple-line-icon-prefix}social-linkedin:before, .#{$simple-line-icon-prefix}linkedin:before {
   content: "\e60a";
 }
 
@@ -962,7 +966,7 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e60c";
 }
 
-.#{$simple-line-icon-prefix}social-google:before {
+.#{$simple-line-icon-prefix}social-google:before, .#{$simple-line-icon-prefix}google-plus:before {
   content: "\e60d";
 }
 

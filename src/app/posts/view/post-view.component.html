@@ -18,10 +18,10 @@
         <b-post-actions-box [post]="post" class="post-admin-actions"></b-post-actions-box>
       </div>
       <div class="post-content">
-        <div *ngIf="post.description" class="post-content--excerpt" [innerHtml]="post.description">
-        </div>
-        <div class="post-content--summary">
+        <div class=" post-content--excerpt">
           {{post.summary}}
+        </div>
+        <div *ngIf="post.description" class="post-content--description" [innerHtml]="post.description">
         </div>
       </div>
       <div class="post-actions">
@@ -52,7 +52,7 @@
         </div>
       </div>
 
-      <share-buttons [title]="post.name" [description]="post.summary"
+      <share-buttons [title]="post.name" [description]="post.summary" [pinterest]="false" [stumbleUpOn]="false" [reddit]="false" [reddit]="false" [whatsapp]="false" [tumblr]="false"
                      [image]="post.board.documentLogo?.cloudinaryUrl"></share-buttons>
 
     </div>
@@ -86,7 +86,7 @@
     </div>
   </div>
 </section>
-<section class="section post-timeline">
+<section class="section post-timeline" *ngIf="operations">
   <h2>Post Timeline</h2>
   <ul>
     <li *ngFor="let operation of operations" class="action-{{ operation.action | lowercase }}">

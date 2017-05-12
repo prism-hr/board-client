@@ -7,6 +7,17 @@
       line-height: 1.5rem;
     }
   }
+  .post-content--excerpt {
+    font-size: 110%;
+    font-weight: 600;
+    line-height: 1.6rem;
+    margin-bottom:15px;
+  }
+  .post-content--description {
+    font-size: 95%;
+    font-weight: 400;
+    line-height: 1rem;
+  }
   .post-actions, .post-title {
     background: $greyBackground;
     border-top: 1px solid $fadeGrey;
