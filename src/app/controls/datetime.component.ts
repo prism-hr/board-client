@@ -52,8 +52,8 @@ export class DateTimeComponent implements ControlValueAccessor, OnInit {
   }
 
   dateTimeChanged() {
-    const iso = (moment as any).tz(this.date + ' ' + this.time, this.selectedTz);
-    this.propagateChange(iso.tz('UTC'));
+    const iso = (moment as any).tz(this.date + ' ' + this.time, this.selectedTz).tz(this.currentTz);
+    this.propagateChange(iso.format().slice(0, -6));
   }
 
   touched() {
@@ -62,8 +62,8 @@ export class DateTimeComponent implements ControlValueAccessor, OnInit {
 
   writeValue(dateTime: string): void {
     if (dateTime) {
-      const utcDatetime = (moment as any).tz(dateTime, 'UTC');
-      const selectedDateTime = (utcDatetime as any).tz(this.selectedTz).format();
+      const localDatetime = moment(dateTime);
+      const selectedDateTime = (localDatetime as any).tz(this.selectedTz).format();
       [this.date, this.time] = selectedDateTime.split('T');
       this.time = this.time.substr(0, 5);
     } else {
