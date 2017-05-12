@@ -70,6 +70,7 @@ import {PostCommentDialogComponent} from './posts/post-comment.dialog';
 import {MomentModule} from 'angular2-moment';
 import {UserService} from './services/user.service';
 import {UserImageDialogComponent} from './authentication/user-image.dialog';
+import {ShareButtonsModule} from 'ngx-sharebuttons';
 
 @NgModule({
   declarations: [
@@ -229,7 +230,8 @@ import {UserImageDialogComponent} from './authentication/user-image.dialog';
       libraries: ['places']
     }),
     PlacesModule,
-    MomentModule
+    MomentModule,
+    ShareButtonsModule.forRoot()
   ],
   providers: [
     {
