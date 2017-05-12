@@ -42,7 +42,7 @@
             <control-messages [control]="postForm.controls.description"></control-messages>
           </div>
 
-          <div class="grid__item one-whole input-holder">
+          <div *ngIf="hasAvailablePostCategories" class="grid__item one-whole input-holder">
             <label>What is your post about?</label>
             <div class="ui-checkbox-inline">
               <span *ngFor="let category of board.postCategories">
@@ -52,6 +52,8 @@
               <control-messages [control]="postForm.controls.postCategories"></control-messages>
             </div>
           </div>
+
+          Post: {{postForm.value.postCategories}}
           <div class="grid__item small--one-whole medium-up--one-half input-holder">
             <label for="organizationName">Your organization</label>
             <input id="organizationName" pInputText formControlName="organizationName" required>
@@ -79,7 +81,8 @@
               <control-messages [control]="postForm.controls.existingRelationExplanation"></control-messages>
             </div>
           </div>
-          <div class="grid__item one-whole input-holder">
+
+          <div *ngIf="hasAvailableMemberCategories" class="grid__item one-whole input-holder">
             <label>Who do you want to share your post with?</label>
             <div class="ui-checkbox-inline">
                <span *ngFor="let category of board.department.memberCategories">
@@ -89,6 +92,8 @@
               <control-messages [control]="postForm.controls.memberCategories"></control-messages>
             </div>
           </div>
+
+          Member: {{postForm.value.memberCategories}}
           <div class="grid__item one-whole input-holder">
             <label>How will people respond?</label>
             <div class="ui-radiobutton-inline">

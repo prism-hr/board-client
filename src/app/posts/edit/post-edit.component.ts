@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ValidationService} from '../../validation/validation.service';
 import * as _ from 'lodash';
 import {MdDialog} from '@angular/material';
@@ -30,6 +30,8 @@ export class PostEditComponent implements OnInit {
   showExistingRelation: boolean;
   actionView: string;
   availableActions: Action[];
+  hasAvailablePostCategories: boolean;
+  hasAvailableMemberCategories: boolean;
   formProperties = ['name', 'summary', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories',
     'memberCategories', 'liveTimestamp', 'deadTimestamp'];
 
@@ -62,8 +64,8 @@ export class PostEditComponent implements OnInit {
         location: [null, Validators.required],
         existingRelation: [],
         existingRelationExplanation: [],
-        postCategories: [[], Validators.required],
-        memberCategories: [[], Validators.required],
+        postCategories: [[]],
+        memberCategories: [[]],
         applyType: [null, Validators.required],
         applyWebsite: [null, Validators.maxLength(255)],
         applyDocument: [],
@@ -73,7 +75,16 @@ export class PostEditComponent implements OnInit {
         hideDeadTimestamp: [],
         deadTimestamp: []
       });
-      this.postForm.patchValue({hideTimestamps: !this.post});
+
+      this.hasAvailablePostCategories = this.board.postCategories && this.board.postCategories.length > 0;
+      if (this.hasAvailablePostCategories) {
+        this.postForm.get('postCategories').setValidators(Validators.required);
+      }
+
+      this.hasAvailableMemberCategories = this.board.department.memberCategories && this.board.department.memberCategories.length > 0;
+      if (this.hasAvailableMemberCategories) {
+        this.postForm.get('memberCategories').setValidators(Validators.required);
+      }
 
       if (this.post) {
         const formValue: any = Object.assign({}, this.post);
