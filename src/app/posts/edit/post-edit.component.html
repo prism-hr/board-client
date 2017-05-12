@@ -26,7 +26,7 @@
             <control-messages [control]="postForm.controls.summary"></control-messages>
           </div>
 
-          <div *ngIf="post" class="grid__item one-whole input-holder">
+          <div class="grid__item one-whole input-holder">
             <label>Description of your post</label>
             <p-editor formControlName="description" [style]="{'height':'150px'}">
               <p-header>
@@ -51,6 +51,7 @@
                 <p-checkbox name="postCategoriesMap" [value]="category" [label]="category"
                             formControlName="postCategories"></p-checkbox>
               </span>
+              <control-messages [control]="postForm.controls.postCategories"></control-messages>
             </div>
           </div>
           <div class="grid__item small--one-whole medium-up--one-half input-holder">
@@ -87,6 +88,7 @@
                   <p-checkbox name="memberCategoriesMap" [value]="category" [label]="category"
                               formControlName="memberCategories"></p-checkbox>
                 </span>
+              <control-messages [control]="postForm.controls.memberCategories"></control-messages>
             </div>
           </div>
           <div class="grid__item one-whole input-holder">

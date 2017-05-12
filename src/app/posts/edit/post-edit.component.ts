@@ -30,8 +30,8 @@ export class PostEditComponent implements OnInit {
   showExistingRelation: boolean;
   actionView: string;
   availableActions: Action[];
-  formProperties = ['name', 'summary', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories', 'memberCategories',
-    'liveTimestamp', 'deadTimestamp'];
+  formProperties = ['name', 'summary', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories',
+    'memberCategories', 'liveTimestamp', 'deadTimestamp'];
 
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private dialog: MdDialog,
               private translationService: TranslateService, private definitionsService: DefinitionsService,
@@ -57,12 +57,13 @@ export class PostEditComponent implements OnInit {
       this.postForm = this.fb.group({
         name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
         summary: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
+        description: [''],
         organizationName: ['', [Validators.required, Validators.maxLength(255)]],
         location: [null, Validators.required],
         existingRelation: [],
         existingRelationExplanation: [],
-        postCategories: [[]],
-        memberCategories: [[]],
+        postCategories: [[], Validators.required],
+        memberCategories: [[], Validators.required],
         applyType: [null, Validators.required],
         applyWebsite: [null, Validators.maxLength(255)],
         applyDocument: [],
@@ -72,10 +73,6 @@ export class PostEditComponent implements OnInit {
         hideDeadTimestamp: [],
         deadTimestamp: []
       });
-      if (this.post) {
-        this.postForm.addControl('description', new FormControl());
-      }
-
       this.postForm.patchValue({hideTimestamps: !this.post});
 
       if (this.post) {
