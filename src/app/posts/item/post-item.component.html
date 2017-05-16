@@ -1,24 +1,24 @@
-<md-card>
-  <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
-    <md-card-avatar class="logo-holder-small default-logo" [ngClass]="{'no-background': post.board.department.documentLogo}">
-      <cl-image *ngIf="post.board.department.documentLogo" public-id="{{post.board.department.documentLogo.cloudinaryId}}" class="img">
-        <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
-      </cl-image>
-    </md-card-avatar>
-    <md-card-title>
-      <h3>
-        <a [routerLink]="['/', post.board.department.handle, post.board.handle, post.id]">{{post.name}}</a>
-      </h3>
-    </md-card-title>
-    <md-card-subtitle><h6>{{post.board.department.name}} > {{post.board.name}}</h6></md-card-subtitle>
-  </md-card-header>
-  <md-card-content>
-    <div>{{post.summary}}</div>
-    <div>State: {{'definitions.state.' + post.state | translate}}</div>
-  </md-card-content>
-  <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
-    <b-post-actions-box [post]="post"></b-post-actions-box>
-    <a pButton [routerLink]="['/', post.board.department.handle, post.board.handle, post.id]" class="ui-button-secondary "
-       icon="fa-eye" label="View"></a>
-  </md-card-actions>
-</md-card>
+  <md-card>
+    <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
+      <md-card-avatar class="logo-holder-small default-logo" [ngClass]="{'no-background': post.board.department.documentLogo}">
+        <cl-image *ngIf="post.board.department.documentLogo" public-id="{{post.board.department.documentLogo.cloudinaryId}}" class="img">
+          <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
+        </cl-image>
+      </md-card-avatar>
+      <md-card-title>
+        <h3>
+          <a [routerLink]="['/', post.board.department.handle, post.board.handle, post.id]">{{post.name}}</a>
+        </h3>
+      </md-card-title>
+      <md-card-subtitle><h6>{{post.board.department.name}} > {{post.board.name}}</h6></md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <div>{{post.summary}}</div>
+      <div>State: {{'definitions.state.' + post.state | translate}}</div>
+    </md-card-content>
+    <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+      <b-post-actions-box [post]="post"></b-post-actions-box>
+      <a pButton [routerLink]="['/', post.board.department.handle, post.board.handle, post.id]" class="ui-button-secondary "
+         icon="fa-eye" label="View"></a>
+    </md-card-actions>
+  </md-card>

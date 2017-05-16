@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-05-11 13:23:47.
+// Generated using typescript-generator version 1.23.311 on 2017-05-16 18:55:34.
 
 declare namespace b {
 
@@ -48,6 +48,7 @@ declare namespace b {
   interface PostDTO {
     name?: string;
     summary?: string;
+    description?: string;
     organizationName?: string;
     location?: LocationDTO;
     existingRelation?: ExistingRelation;
@@ -86,6 +87,17 @@ declare namespace b {
     parentId?: number;
     includePublicResources?: boolean;
     orderStatement?: string;
+  }
+
+  interface ResourceUserDTO {
+    user?: UserDTO;
+    roles?: Role[];
+  }
+
+  interface UserDTO {
+    givenName?: string;
+    surname?: string;
+    email?: string;
   }
 
   interface UserPatchDTO {
@@ -155,6 +167,11 @@ declare namespace b {
     createdTimestamp?: LocalDateTime;
     updatedTimestamp?: LocalDateTime;
     actions?: ActionRepresentation[];
+  }
+
+  interface ResourceUserRepresentation {
+    user?: UserRepresentation;
+    roles?: Role[];
   }
 
   interface UserRepresentation {
@@ -259,8 +276,8 @@ declare namespace b {
 
   const enum State {
     DRAFT,
-    PENDING,
     SUSPENDED,
+    PENDING,
     ACCEPTED,
     EXPIRED,
     REJECTED,
@@ -287,6 +304,13 @@ declare namespace b {
     DEPARTMENT,
     BOARD,
     POST,
+  }
+
+  const enum Role {
+    ADMINISTRATOR,
+    AUTHOR,
+    MEMBER,
+    PUBLIC,
   }
 
   const enum DayOfWeek {

@@ -51,6 +51,12 @@
       "REJECTED": "Rejected",
       "WITHDRAWN": "Withdraw",
       "PREVIOUS": "Previous"
+    },
+    "role": {
+      "ADMINISTRATOR": "Administrator",
+      "AUTHOR": "Author",
+      "MEMBER": "Member",
+      "PUBLIC": "Public"
     }
   },
   "authenticate": {

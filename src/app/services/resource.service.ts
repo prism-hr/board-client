@@ -7,6 +7,10 @@ import DepartmentPatchDTO = b.DepartmentPatchDTO;
 import BoardPatchDTO = b.BoardPatchDTO;
 import PostRepresentation = b.PostRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
+import Scope = b.Scope;
+import UserRepresentation = b.UserRepresentation;
+import ResourceUserDTO = b.ResourceUserDTO;
+import ResourceUserRepresentation = b.ResourceUserRepresentation;
 
 @Injectable()
 export class ResourceService {
@@ -42,12 +46,36 @@ export class ResourceService {
     return this.http.get('/api/departments', {search: params}).map(res => res.json());
   }
 
+  getResourceUsers(scope: string, id: number) {
+    return this.http.get('/api/' + scope + 's' + '/' + id + '/users').map(res => res.json());
+  }
+
   patchBoard(id: number, board: BoardPatchDTO): Observable<BoardRepresentation> {
     return this.http.patch('/api/boards/' + id, board).map(res => res.json());
   }
 
   patchDepartment(id: number, department: DepartmentPatchDTO): Observable<DepartmentRepresentation> {
     return this.http.patch('/api/departments/' + id, department).map(res => res.json());
+  }
+
+  addUserRole(resource: ResourceRepresentation, user: UserRepresentation, role: string) {
+    const resourceCol = (<any>resource.scope).toLowerCase() + 's';
+    return this.http.put('/api/' + resourceCol + '/' + resource.id + '/users/' + user.id + '/roles/' + role, {});
+  }
+
+  removeUserRole(resource: ResourceRepresentation, user: UserRepresentation, role: string) {
+    const resourceCol = (<any>resource.scope).toLowerCase() + 's';
+    return this.http.delete('/api/' + resourceCol + '/' + resource.id + '/users/' + user.id + '/roles/' + role, {});
+  }
+
+  createUser(resource: ResourceRepresentation, user: ResourceUserDTO) {
+    const resourceCol = (<any>resource.scope).toLowerCase() + 's';
+    return this.http.post('/api/' + resourceCol + '/' + resource.id + '/users', user).map(res => res.json());
+  }
+
+  removeUser(resource: ResourceRepresentation, user: UserRepresentation) {
+    const resourceCol = (<any>resource.scope).toLowerCase() + 's';
+    return this.http.delete('/api/' + resourceCol + '/' + resource.id + '/users/' + user.id);
   }
 
   canEdit(resource: ResourceRepresentation) {

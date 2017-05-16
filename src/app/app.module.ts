@@ -43,7 +43,7 @@ import {PostResolver} from './posts/post-resolver.service';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {PlacesModule} from './general/places/places.module';
 import {AccountComponent} from './account/account.component';
-import {DepartmentUsersComponent} from './departments/users/department-users.component';
+import {ResourceUsersComponent} from './resource/users/resource-users.component';
 import {DepartmentManageComponent} from './departments/department-manage.component';
 import {
   ButtonModule,
@@ -71,6 +71,7 @@ import {MomentModule} from 'angular2-moment';
 import {UserService} from './services/user.service';
 import {UserImageDialogComponent} from './authentication/user-image.dialog';
 import {ShareButtonsModule} from 'ngx-sharebuttons';
+import {ResourceUsersResolver} from './resource/resource-users-resolver.service';
 
 @NgModule({
   declarations: [
@@ -100,7 +101,7 @@ import {ShareButtonsModule} from 'ngx-sharebuttons';
     DepartmentListComponent,
     DepartmentManageComponent,
     DepartmentViewComponent,
-    DepartmentUsersComponent,
+    ResourceUsersComponent,
     PostEditComponent,
     PostViewComponent,
     PostItemComponent,
@@ -129,8 +130,11 @@ import {ShareButtonsModule} from 'ngx-sharebuttons';
           {
             path: '',
             component: DepartmentManageComponent,
+            data: {
+              resourceScope: 'department'
+            },
             resolve: {
-              department: DepartmentResolver
+              department: DepartmentResolver,
             },
             children: [
               {
@@ -139,8 +143,11 @@ import {ShareButtonsModule} from 'ngx-sharebuttons';
               },
               {
                 path: 'users',
-                component: DepartmentUsersComponent,
-                canActivate: [AuthGuard]
+                component: ResourceUsersComponent,
+                canActivate: [AuthGuard],
+                resolve: {
+                  users: ResourceUsersResolver
+                }
               }
             ]
           },
@@ -244,7 +251,7 @@ import {ShareButtonsModule} from 'ngx-sharebuttons';
       useFactory: DefinitionsLoader,
       deps: [DefinitionsService],
       multi: true
-    }, AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService, UserService
+    }, AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, ResourceUsersResolver, PostService, UserService
   ],
   entryComponents: [AuthenticationDialogComponent, PostCommentDialogComponent, UserImageDialogComponent],
   bootstrap: [AppComponent]

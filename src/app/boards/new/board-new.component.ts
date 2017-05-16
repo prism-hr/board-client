@@ -4,8 +4,6 @@ import {Http, Response} from '@angular/http';
 import {DefinitionsService} from '../../services/definitions.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as _ from 'lodash';
-import {FileUploadService} from '../../services/file-upload.service';
-import {FileItem, FileUploader, ParsedResponseHeaders} from 'ng2-file-upload';
 import DepartmentDTO = b.DepartmentDTO;
 import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
