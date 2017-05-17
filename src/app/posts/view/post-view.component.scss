@@ -1,5 +1,4 @@
 @import '../../../assets/variables';
-
 .post {
   .post-content {
     padding: 25px 10px 45px;
@@ -210,4 +209,8 @@
       padding-bottom:5px;
     }
   }
+}
+share-buttons .sb-style button {
+  padding: 0.2em .4em !important;
+  font-size: 1.3em !important;
 }

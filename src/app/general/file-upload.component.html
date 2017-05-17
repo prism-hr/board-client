@@ -4,7 +4,7 @@
          (fileOver)="fileOver($event)"
          [ngClass]="{'dragover': isDragOver}"
          class="drop-area logo">
-    <span *ngIf="!model">Drop your Logo here</span>
+    <span *ngIf="!model">Drop your image here</span>
     <div *ngIf="model" class="logo-flex">
       <div class="logo">
         <cl-image public-id="{{model.cloudinaryId}}" class="img">

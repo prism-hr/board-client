@@ -1,4 +1,4 @@
-<div class="section">
+<section>
   <form [formGroup]="accountForm" (ngSubmit)="submit()" autocomplete="off">
     <div class="grid">
       <div class="grid__item small--one-whole medium-up--three-eighths medium-up--push-two-sixths">
@@ -9,6 +9,11 @@
             </md-card-title>
           </md-card-header>
           <md-card-content>
+            <div class="block-avatar">
+              <div>
+                <b-file-upload formControlName="documentImage" type="logo" class="avatar"></b-file-upload>
+              </div>
+            </div>
             <div class="grid">
               <div class="grid__item small--one-whole medium-up--one-half">
                 <input pInputText formControlName="givenName" placeholder="First Name" required>
@@ -19,10 +24,6 @@
                 <control-messages [control]="accountForm.controls.surname"></control-messages>
               </div>
             </div>
-
-            <div>
-              <b-file-upload formControlName="documentImage" type="logo"></b-file-upload>
-            </div>
           </md-card-content>
           <md-card-actions>
             <button pButton class="ui-button-warning" type="submit" label="Submit"></button>
@@ -31,4 +32,4 @@
       </div>
     </div>
   </form>
-</div>
+</section>

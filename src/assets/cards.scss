@@ -91,3 +91,27 @@ md-card.mat-card {
   margin-bottom:15px;
   border-bottom:1px solid $fadeGrey;
 }
+b-file-upload {
+  margin: auto;
+  display: block;
+  width: 206px;
+  > div {
+    display: flex;
+  }
+}
+.avatar {
+  width: 131px;
+  label.drop-area.logo {
+    border-radius: 50% ;
+    width: 131px ;
+    background: white;
+    overflow: hidden;
+    span {
+      display: block;
+      padding-top: 47px;
+    }
+    .logo-flex {
+     width: 125px;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+@import '../../assets/variables';
+
+.mat-card-content .block-avatar {
+ margin: -24px -24px 0 -24px;
+ background: $greyBackground;
+  > div {
+    padding: 24px;
+    margin-bottom: 24px;
+    .avatar {
+
+    }
+  }
+}
