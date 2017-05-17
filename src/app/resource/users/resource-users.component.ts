@@ -3,6 +3,8 @@ import {ActivatedRoute} from '@angular/router';
 import {ResourceService} from '../../services/resource.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ValidationService} from '../../validation/validation.service';
+import {Observable} from 'rxjs/Observable';
+import {Response} from '@angular/http';
 import UserRepresentation = b.UserRepresentation;
 import ResourceUserRepresentation = b.ResourceUserRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
@@ -19,6 +21,7 @@ export class ResourceUsersComponent implements OnInit {
   availableRoles: Role[];
   loading: boolean;
   userForm: FormGroup;
+  adminsCount: number;
 
   constructor(private route: ActivatedRoute, private cdRef: ChangeDetectorRef, private fb: FormBuilder,
               private resourceService: ResourceService) {
@@ -44,23 +47,23 @@ export class ResourceUsersComponent implements OnInit {
     });
     this.route.data.subscribe(data => {
       this.users = data['users'];
+      this.calculateAdminsCount();
     });
   }
 
   userRoleChanged(user, role, checked) {
     this.loading = true;
     this.cdRef.detectChanges();
+    let observable: Observable<Response>;
     if (checked) {
-      this.resourceService.addUserRole(this.resource, user.user, role)
-        .subscribe(() => {
-          this.loading = false;
-        });
+      observable = this.resourceService.addUserRole(this.resource, user.user, role);
     } else {
-      this.resourceService.removeUserRole(this.resource, user.user, role)
-        .subscribe(() => {
-          this.loading = false;
-        });
+      observable = this.resourceService.removeUserRole(this.resource, user.user, role)
     }
+    observable.subscribe(() => {
+      this.loading = false;
+      this.calculateAdminsCount();
+    });
   }
 
   createNewUser() {
@@ -68,8 +71,9 @@ export class ResourceUsersComponent implements OnInit {
     this.resourceService.createUser(this.resource, this.userForm.value)
       .subscribe(user => {
         this.loading = false;
-        this.userForm.reset();
+        this.userForm.reset({roles: []});
         this.users.push(user);
+        this.calculateAdminsCount();
       });
   }
 
@@ -79,7 +83,29 @@ export class ResourceUsersComponent implements OnInit {
         this.loading = false;
         const idx = this.users.indexOf(user);
         this.users.splice(idx, 1);
+        this.calculateAdminsCount();
       });
+  }
+
+  canSwitchRole(user, role) {
+    if (user.roles.indexOf(role) === -1) {
+      return true; // roles not checked, can check at any time
+    }
+    if (user.roles.length === 1) {
+      return false; // cannot remove last role
+    }
+    if (this.lastAdministratorRole() && role === 'ADMINISTRATOR') {
+      return false; // cannot remove last administrator role for department
+    }
+    return true;
+  }
+
+  lastAdministratorRole() {
+    return (<any>this.resource.scope) === 'DEPARTMENT' && this.adminsCount === 1;
+  }
+
+  private calculateAdminsCount() {
+    this.adminsCount = this.users.filter(u => (<any>u.roles).indexOf('ADMINISTRATOR') > -1).length;
   }
 
 }

@@ -51,12 +51,13 @@
             <span *ngFor="let role of availableRoles">
               <p-checkbox [value]="role" [label]="'definitions.role.' + role | translate"
                           [ngModel]="user.roles" (onChange)="userRoleChanged(user, role, checked)"
-                          [disabled]="loading"></p-checkbox>
+                          [disabled]="loading || !canSwitchRole(user, role)">
+              </p-checkbox>
             </span>
           </md-card-content>
           <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
             <button pButton (click)="removeUser(user)" class="ui-button-secondary" label="Remove"
-                    [disabled]="loading"></button>
+                    [disabled]="loading || (lastAdministratorRole() && user.roles.indexOf('ADMINISTRATOR') > -1)"></button>
           </md-card-actions>
         </md-card>
 
