@@ -49,7 +49,7 @@ import {
   ButtonModule,
   CalendarModule,
   CheckboxModule,
-  ChipsModule,
+  ChipsModule, DataTableModule,
   DropdownModule,
   EditorModule,
   InputTextModule,
@@ -215,6 +215,7 @@ import {FileUploadService} from './services/file-upload.service';
     CalendarModule,
     SplitButtonModule,
     EditorModule,
+    DataTableModule,
     // Material modules
     MdDialogModule,
     MdSnackBarModule,

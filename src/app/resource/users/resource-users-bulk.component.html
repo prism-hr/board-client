@@ -19,6 +19,13 @@
     </label>
     <input type="file" ng2FileSelect [uploader]="uploader" id="csv-uploader-input" style="display:none"/>
   </div>
+
+  <p-dataTable [value]="users">
+    <p-column field="givenName" header="First name"></p-column>
+    <p-column field="surname" header="Last name"></p-column>
+    <p-column field="email" header="Email"></p-column>
+  </p-dataTable>
+
 </div>
 
 <button pButton class="ui-button-success" type="submit" label="Submit"></button>

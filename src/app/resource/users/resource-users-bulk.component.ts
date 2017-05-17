@@ -1,10 +1,10 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ResourceService} from '../../services/resource.service';
+import {FileItem, FileUploader} from 'ng2-file-upload';
 import UserRepresentation = b.UserRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
 import Role = b.Role;
-import {FileItem, FileUploader} from 'ng2-file-upload';
-import {environment} from '../../../environments/environment';
+import UserDTO = b.UserDTO;
 
 @Component({
   selector: 'b-resource-users-bulk',
@@ -17,6 +17,7 @@ export class ResourceUsersBulkComponent implements OnInit {
   firstLineHeader: boolean;
   uploader: FileUploader;
   isDragOver: boolean;
+  users: UserDTO[];
   @Output() close: EventEmitter<any> = new EventEmitter();
 
   constructor(private resourceService: ResourceService) {
@@ -31,6 +32,8 @@ export class ResourceUsersBulkComponent implements OnInit {
       };
       reader.readAsText(item._file);
     };
+    this.users = [{givenName: 'Jerzy', surname: 'Urban', email: 'jerzy@urban.pl'},
+      {givenName: 'Jozef', surname: 'Oleksy', email: 'jozef@oleksy.pl'}];
   }
 
   fileOver(event: any) {
