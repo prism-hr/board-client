@@ -91,7 +91,7 @@ md-card.mat-card {
   margin-bottom:15px;
   border-bottom:1px solid $fadeGrey;
 }
-b-file-upload {
+b-file-upload[type=logo] {
   margin: auto;
   display: block;
   width: 206px;
@@ -99,7 +99,7 @@ b-file-upload {
     display: flex;
   }
 }
-.avatar {
+b-file-upload[type=logo].avatar {
   width: 131px;
   label.drop-area.logo {
     border-radius: 50% ;
