@@ -4,6 +4,7 @@ import {FileItem, FileUploader, ParsedResponseHeaders} from 'ng2-file-upload';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {environment} from '../../environments/environment';
 import DocumentDTO = b.DocumentDTO;
+import {FileUploadService} from '../services/file-upload.service';
 
 @Component({
   selector: 'b-file-upload',
@@ -27,12 +28,8 @@ export class FileUploadComponent implements ControlValueAccessor, OnInit {
   isDragOver: boolean;
   model: DocumentDTO;
 
-  constructor(private cloudinary: Cloudinary) {
-    this.uploader = new FileUploader({
-      url: 'https://api.cloudinary.com/v1_1/' + environment.cloudinaryCloudName + '/upload',
-      autoUpload: true,
-      additionalParameter: {upload_preset: 'unsigned', folder: environment.cloudinaryFolder}
-    });
+  constructor(private fileUploadService: FileUploadService) {
+    this.uploader = fileUploadService.createUploader();
   }
 
   ngOnInit(): void {

@@ -10,14 +10,14 @@
   </div>
 
   <div>
-    <label ng2FileDrop
+    <label for="csv-uploader-input" ng2FileDrop
            [uploader]="uploader"
            (fileOver)="fileOver($event)"
            [ngClass]="{'dragover': isDragOver}"
            class="drop-area logo">
       <span>Drop your Logo here</span>
     </label>
-    <input type="file" ng2FileSelect [uploader]="uploader" id="uploader-input" style="display:none"/>
+    <input type="file" ng2FileSelect [uploader]="uploader" id="csv-uploader-input" style="display:none"/>
   </div>
 </div>
 

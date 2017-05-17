@@ -3,7 +3,7 @@ import {ResourceService} from '../../services/resource.service';
 import UserRepresentation = b.UserRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
 import Role = b.Role;
-import {FileUploader} from 'ng2-file-upload';
+import {FileItem, FileUploader} from 'ng2-file-upload';
 import {environment} from '../../../environments/environment';
 
 @Component({
@@ -20,14 +20,17 @@ export class ResourceUsersBulkComponent implements OnInit {
   @Output() close: EventEmitter<any> = new EventEmitter();
 
   constructor(private resourceService: ResourceService) {
-    this.uploader = new FileUploader({
-      url: 'https://api.cloudinary.com/v1_1/' + environment.cloudinaryCloudName + '/upload',
-      autoUpload: true,
-      additionalParameter: {upload_preset: 'unsigned', folder: environment.cloudinaryFolder}
-    });
+    this.uploader = new FileUploader({});
   }
 
   ngOnInit() {
+    this.uploader.onAfterAddingFile = (item: FileItem) => {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const data = (<any>e.target).result;
+      };
+      reader.readAsText(item._file);
+    };
   }
 
   fileOver(event: any) {

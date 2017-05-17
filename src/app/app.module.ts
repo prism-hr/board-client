@@ -73,6 +73,7 @@ import {UserImageDialogComponent} from './authentication/user-image.dialog';
 import {ShareButtonsModule} from 'ngx-sharebuttons';
 import {ResourceUsersResolver} from './resource/resource-users-resolver.service';
 import {ResourceUsersBulkComponent} from './resource/users/resource-users-bulk.component';
+import {FileUploadService} from './services/file-upload.service';
 
 @NgModule({
   declarations: [
@@ -253,7 +254,9 @@ import {ResourceUsersBulkComponent} from './resource/users/resource-users-bulk.c
       useFactory: DefinitionsLoader,
       deps: [DefinitionsService],
       multi: true
-    }, AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, ResourceUsersResolver, PostService, UserService
+    },
+    AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, ResourceUsersResolver, PostService, UserService,
+    FileUploadService
   ],
   entryComponents: [AuthenticationDialogComponent, PostCommentDialogComponent, UserImageDialogComponent],
   bootstrap: [AppComponent]
