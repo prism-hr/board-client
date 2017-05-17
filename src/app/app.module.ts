@@ -72,6 +72,7 @@ import {UserService} from './services/user.service';
 import {UserImageDialogComponent} from './authentication/user-image.dialog';
 import {ShareButtonsModule} from 'ngx-sharebuttons';
 import {ResourceUsersResolver} from './resource/resource-users-resolver.service';
+import {ResourceUsersBulkComponent} from './resource/users/resource-users-bulk.component';
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import {ResourceUsersResolver} from './resource/resource-users-resolver.service'
     DepartmentManageComponent,
     DepartmentViewComponent,
     ResourceUsersComponent,
+    ResourceUsersBulkComponent,
     PostEditComponent,
     PostViewComponent,
     PostItemComponent,

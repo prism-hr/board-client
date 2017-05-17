@@ -22,6 +22,7 @@ export class ResourceUsersComponent implements OnInit {
   loading: boolean;
   userForm: FormGroup;
   adminsCount: number;
+  bulkMode: boolean;
 
   constructor(private route: ActivatedRoute, private cdRef: ChangeDetectorRef, private fb: FormBuilder,
               private resourceService: ResourceService) {
@@ -94,13 +95,10 @@ export class ResourceUsersComponent implements OnInit {
     if (user.roles.length === 1) {
       return false; // cannot remove last role
     }
-    if (this.lastAdministratorRole() && role === 'ADMINISTRATOR') {
-      return false; // cannot remove last administrator role for department
-    }
-    return true;
+    return !(this.lastAdministratorRole() && role === 'ADMINISTRATOR'); // cannot remove last administrator role for department
   }
 
-  lastAdministratorRole() {
+  private lastAdministratorRole() {
     return (<any>this.resource.scope) === 'DEPARTMENT' && this.adminsCount === 1;
   }
 

@@ -1,0 +1,25 @@
+<div class="grid">
+  <div class="grid__item one-whole input-holder">
+    <label for="csvTextarea">Users CSV</label>
+    <textarea id="csvTextarea" pInputTextarea [(ngModel)]="csvText"></textarea>
+  </div>
+
+  <div class="grid__item one-whole">
+    <label>First line contains header</label>
+    <p-checkbox [(ngModel)]="firstLineHeader" [binary]="true"></p-checkbox>
+  </div>
+
+  <div>
+    <label ng2FileDrop
+           [uploader]="uploader"
+           (fileOver)="fileOver($event)"
+           [ngClass]="{'dragover': isDragOver}"
+           class="drop-area logo">
+      <span>Drop your Logo here</span>
+    </label>
+    <input type="file" ng2FileSelect [uploader]="uploader" id="uploader-input" style="display:none"/>
+  </div>
+</div>
+
+<button pButton class="ui-button-success" type="submit" label="Submit"></button>
+<button pButton class="ui-button-secondary" (click)="closeBulkMode()" label="Add users individually"></button>

@@ -1,10 +1,6 @@
 <section>
-
-  <div>
-    <h2>Users</h2>
-  </div>
   <md-card-content>
-    <div>
+    <div *ngIf="!bulkMode">
       <h3>New User</h3>
       <form [formGroup]="userForm" (ngSubmit)="createNewUser()" autocomplete="off" novalidate>
         <div formGroupName="user" class="grid">
@@ -26,9 +22,16 @@
                       formControlName="roles"></p-checkbox>
         </span>
 
-        <button pButton class="ui-button-success" type="submit" [disabled]="userForm.invalid" label="Submit"></button>
+        <div>
+          <button pButton class="ui-button-success" type="submit" [disabled]="userForm.invalid"
+                  label="Add user"></button>
+          <button pButton class="ui-button-secondary" (click)="bulkMode = true" label="Add users in bulk"></button>
+        </div>
       </form>
     </div>
+
+    <b-resource-users-bulk *ngIf="bulkMode" (close)="bulkMode = false">
+    </b-resource-users-bulk>
 
     <div class="grid grid--half-gutters">
       <div *ngFor="let user of users" class="grid__item small--one-whole medium-up--one-half">
