@@ -3,12 +3,13 @@
   <div class="grid">
     <div class="grid__item one-whole input-holder">
       <label for="csvTextarea">Users CSV</label>
-      <textarea id="csvTextarea" pInputTextarea [(ngModel)]="csvText" class="ui-inputtext"></textarea>
+      <textarea id="csvTextarea" pInputTextarea [(ngModel)]="csvText" class="ui-inputtext"
+                (ngModelChange)="computeUsers()"></textarea>
     </div>
 
     <div class="grid__item one-whole">
       <label>First line contains header</label>
-      <p-checkbox [(ngModel)]="firstLineHeader" [binary]="true"></p-checkbox>
+      <p-checkbox [(ngModel)]="firstLineHeader" [binary]="true" (onChange)="computeUsers()"></p-checkbox>
     </div>
 
     <div>
@@ -19,17 +20,26 @@
              class="drop-area logo">
         <span>Drop your Logo here</span>
       </label>
-      <input type="file" ng2FileSelect [uploader]="uploader" id="csv-uploader-input" style="display:none"/>
+      <input #csvUploaderInput type="file" ng2FileSelect [uploader]="uploader"
+             id="csv-uploader-input" style="display:none"/>
     </div>
 
+    <div *ngIf="userErrors?.length > 0">
+      <div *ngFor="let error of userErrors">
+        Line {{error.line}}: {{error.message}}
+      </div>
+    </div>
+
+    <div *ngIf="users?.length > 0">
     <p-dataTable [value]="users">
       <p-column field="givenName" header="First name"></p-column>
       <p-column field="surname" header="Last name"></p-column>
       <p-column field="email" header="Email"></p-column>
     </p-dataTable>
+    </div>
 
   </div>
-  <div  class="action-holder" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="action-holder" fxLayout="row" fxLayoutAlign="space-between center">
     <button pButton class="ui-button-success" type="submit" label="Submit"></button>
     <button pButton class="ui-button-secondary" (click)="closeBulkMode()" label="Add users individually"></button>
   </div>

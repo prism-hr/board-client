@@ -32,6 +32,7 @@
     "angular2-tag-input": "^1.2.3",
     "cloudinary-core": "^2.1.9",
     "core-js": "^2.4.1",
+    "csv-js": "^1.0.0",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.4",
     "moment-timezone": "^0.5.13",

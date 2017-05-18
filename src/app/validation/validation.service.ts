@@ -2,6 +2,9 @@ import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 
 export class ValidationService {
+
+  static EMAIL_REGEX = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+
   static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
     const config = {
       required: 'This field is required',
@@ -19,7 +22,8 @@ export class ValidationService {
 
   static emailValidator(control) {
     // RFC 2822 compliant regex
-    if (control.value && control.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
+
+    if (control.value && control.value.match(ValidationService.EMAIL_REGEX)) {
       return null;
     } else {
       return {'email': true};
