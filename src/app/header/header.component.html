@@ -10,18 +10,19 @@
             <img src="assets/prism-logo.svg">
           </a>
         </div>
-        <div *ngIf="user$ | async" class="top-nav">
+        <div *ngIf="user" class="top-nav">
           <a pButton class="ui-button" routerLink="/" label="Posts"></a>
           <a pButton class="ui-button" routerLink="/boards" label="Boards"></a>
           <a pButton class="ui-button" routerLink="/departments" label="Departments"></a>
         </div>
       </div>
       <nav class="grid__item one-third text-right">
-        <div *ngIf="(user$ | async) === false">
+        <div *ngIf="user === false">
           <button pButton (click)="showLogin()" class="ui-button-warning" label="Log in"></button>
         </div>
-        <div *ngIf="user$ | async">
-          <button *ngIf="user$ | async" pButton class="ui-button ui-button-icon-only ui-button-text" icon="fa-user" routerLink="/account" [label]="(user$ | async).fullName"></button>
+        <div *ngIf="user">
+          <button *ngIf="user" pButton class="ui-button ui-button-icon-only ui-button-text" icon="fa-user"
+                  routerLink="/account" [label]="user.fullName"></button>
           <button pButton (click)="logout()" class="ui-button-warning" label="Log out"></button>
         </div>
       </nav>

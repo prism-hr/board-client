@@ -20,7 +20,7 @@ export class HomePublicComponent {
   }
 
   submit() {
-    this.authGuard.ensureAuthenticated(true) // open dialog if not authenticated
+    this.authGuard.ensureAuthenticated(true).first() // open dialog if not authenticated
       .subscribe(authenticated => {
         if (!authenticated) {
           return;
