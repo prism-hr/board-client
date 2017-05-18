@@ -8,7 +8,7 @@ $simple-line-icon-prefix: "fa-";
 @import 'assets/simple-line-replacement';
 @import 'assets/primeng';
 
-@import '~@angular/material/core/theming/all-theme';
+@import '~@angular/material/theming';
 @include mat-core();
 $board-app-primary: mat-palette($mat-prism-blue);
 $board-app-accent:  mat-palette($mat-prism-green, 500, 100, 400);

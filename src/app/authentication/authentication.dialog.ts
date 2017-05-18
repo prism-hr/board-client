@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {
   Account,
   ForgotPasswordFormModel,
@@ -7,8 +7,7 @@ import {
   Stormpath,
   StormpathErrorResponse
 } from 'angular-stormpath';
-import {Observable} from 'rxjs/Observable';
-import {MdDialog, MdDialogRef} from '@angular/material';
+import {MD_DIALOG_DATA, MdDialog, MdDialogRef} from '@angular/material';
 import {UserImageDialogComponent} from './user-image.dialog';
 
 @Component({
@@ -24,15 +23,18 @@ export class AuthenticationDialogComponent implements OnInit {
   loading: boolean;
   view: AuthenticationView;
   forgottenSent: any;
+  dialogData: any
 
-  constructor(private dialogRef: MdDialogRef<AuthenticationDialogComponent>, private dialog: MdDialog, private stormpath: Stormpath) {
+  constructor(private dialogRef: MdDialogRef<AuthenticationDialogComponent>, @Inject(MD_DIALOG_DATA) data: any,
+              private dialog: MdDialog, private stormpath: Stormpath) {
     this.loginFormModel = <any>{};
     this.registrationFormModel = <any>{};
     this.forgotPasswordFormModel = <any>{};
+    this.dialogData = data;
   }
 
   ngOnInit() {
-    this.setView(this.dialogRef.config.data.showRegister ? 'REGISTER' : 'LOGIN');
+    this.setView(this.dialogData.showRegister ? 'REGISTER' : 'LOGIN');
   }
 
   setView(view: AuthenticationView): void {

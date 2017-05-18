@@ -1,10 +1,10 @@
   <md-card>
     <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
-      <md-card-avatar class="logo-holder-small default-logo" [ngClass]="{'no-background': post.board.department.documentLogo}">
+      <div md-card-avatar class="logo-holder-small default-logo" [ngClass]="{'no-background': post.board.department.documentLogo}">
         <cl-image *ngIf="post.board.department.documentLogo" public-id="{{post.board.department.documentLogo.cloudinaryId}}" class="img">
           <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
         </cl-image>
-      </md-card-avatar>
+      </div>
       <md-card-title>
         <h3>
           <a [routerLink]="['/', post.board.department.handle, post.board.handle, post.id]">{{post.name}}</a>

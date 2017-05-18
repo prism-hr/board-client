@@ -44,13 +44,13 @@
       <div *ngFor="let user of users" class="grid__item small--one-whole medium-up--one-half">
         <md-card>
           <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
-            <md-card-avatar class="logo-holder-small default-logo"
+            <div md-card-avatar class="logo-holder-small default-logo"
                             [ngClass]="{'no-background': user.user.documentImage}">
               <cl-image *ngIf="user.user.documentImage" public-id="{{user.user.documentImage.cloudinaryId}}"
                         class="img">
                 <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
               </cl-image>
-            </md-card-avatar>
+            </div>
             <md-card-title>
               <h3>
                 {{user.user.givenName}} {{user.user.surname}}
