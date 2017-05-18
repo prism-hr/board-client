@@ -19,7 +19,8 @@ export class DepartmentManageComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.department = data['department'];
-      this.items = [{label: 'View', routerLink: [this.department.handle]}, {label: 'Users', routerLink: [this.department.handle, 'users']}];
+      this.items = [{label: 'View', routerLink: ['/', this.department.handle]},
+        {label: 'Users', routerLink: ['/', this.department.handle, 'users']}];
     });
   }
 

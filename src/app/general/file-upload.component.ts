@@ -1,10 +1,8 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {Cloudinary} from '@cloudinary/angular';
 import {FileItem, FileUploader, ParsedResponseHeaders} from 'ng2-file-upload';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {environment} from '../../environments/environment';
-import DocumentDTO = b.DocumentDTO;
 import {FileUploadService} from '../services/file-upload.service';
+import DocumentDTO = b.DocumentDTO;
 
 @Component({
   selector: 'b-file-upload',

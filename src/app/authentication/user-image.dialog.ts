@@ -14,8 +14,7 @@ import DocumentRepresentation = b.DocumentRepresentation;
         <button pButton class="ui-button-warning full-width" label="Skip" (click)="skip()"></button>
       </div>
     </div>
-  `,
-  styles: ['']
+  `
 })
 export class UserImageDialogComponent implements OnInit {
 

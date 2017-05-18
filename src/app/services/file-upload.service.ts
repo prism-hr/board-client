@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {FileUploader} from 'ng2-file-upload';
-import {Cloudinary} from '@cloudinary/angular';
+import {Cloudinary} from '@cloudinary/angular-4.x';
 import {environment} from '../../environments/environment';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;

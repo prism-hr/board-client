@@ -1,13 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {
-  Account,
-  ForgotPasswordFormModel,
-  LoginFormModel,
-  RegistrationFormModel,
-  Stormpath,
-  StormpathErrorResponse
-} from 'angular-stormpath';
-import {Observable} from 'rxjs/Observable';
+import {Component} from '@angular/core';
 import {MdDialogRef} from '@angular/material';
 
 @Component({
@@ -17,8 +8,7 @@ import {MdDialogRef} from '@angular/material';
       <textarea [(ngModel)]="comment"></textarea>
       <button pButton class="ui-button-success" [disabled]="!comment" label="Submit" (click)="submit()"></button>
     </div>
-  `,
-  styleUrls: []
+  `
 })
 export class PostCommentDialogComponent {
 

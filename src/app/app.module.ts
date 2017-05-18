@@ -21,7 +21,7 @@ import {UniLogoComponent} from './home/uni-logo.component';
 import {EmployerLogoComponent} from './home/employer-logo.component';
 import {StudentLogoComponent} from './home/student-logo.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {CloudinaryModule} from '@cloudinary/angular';
+import {CloudinaryModule} from '@cloudinary/angular-4.x';
 import * as Cloudinary from 'cloudinary-core';
 import {FileUploadModule} from 'ng2-file-upload';
 import {BoardResolver} from './boards/manage/board-resolver.service';
@@ -74,6 +74,7 @@ import {ShareButtonsModule} from 'ngx-sharebuttons';
 import {ResourceUsersResolver} from './resource/resource-users-resolver.service';
 import {ResourceUsersBulkComponent} from './resource/users/resource-users-bulk.component';
 import {FileUploadService} from './services/file-upload.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -222,6 +223,7 @@ import {FileUploadService} from './services/file-upload.service';
     MdCardModule,
     FlexLayoutModule,
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
