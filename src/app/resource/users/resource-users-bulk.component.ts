@@ -11,7 +11,7 @@ import UserDTO = b.UserDTO;
 @Component({
   selector: 'b-resource-users-bulk',
   templateUrl: 'resource-users-bulk.component.html',
-  styles: ['']
+  styleUrls: ['resource-users-bulk.component.scss']
 })
 export class ResourceUsersBulkComponent implements OnInit {
 

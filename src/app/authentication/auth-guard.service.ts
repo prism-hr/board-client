@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CanActivate} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {AuthenticationDialogComponent} from './authentication.dialog';
 import {MdDialog, MdDialogConfig} from '@angular/material';
 import {Stormpath} from 'angular-stormpath';
@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
   constructor(private dialog: MdDialog, private stormpath: Stormpath) {
   }
 
-  canActivate(): Observable<boolean> {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.ensureAuthenticated(false);
   }
 

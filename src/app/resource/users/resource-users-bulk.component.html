@@ -12,16 +12,20 @@
       <p-checkbox [(ngModel)]="firstLineHeader" [binary]="true" (onChange)="computeUsers()"></p-checkbox>
     </div>
 
-    <div>
+    <div class="grid__item one-whole">
       <label for="csv-uploader-input" ng2FileDrop
              [uploader]="uploader"
              (fileOver)="fileOver($event)"
              [ngClass]="{'dragover': isDragOver}"
-             class="drop-area logo">
-        <span>Drop your Logo here</span>
+             class="drop-area">
+        <span>Click to upload or Drag and Drop CSV file</span>
       </label>
       <input #csvUploaderInput type="file" ng2FileSelect [uploader]="uploader"
              id="csv-uploader-input" style="display:none"/>
+
+      <a pButton class="ui-button-secondary" href="assets/user-list.csv">
+        Download CSV template
+      </a>
     </div>
 
     <div *ngIf="userErrors?.length > 0">
