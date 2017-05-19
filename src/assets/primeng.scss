@@ -422,7 +422,7 @@ header {
 .ui-button:focus, .ui-button:enabled:hover {
   color: $fadeGrey;
   background: none;
-  border-color: transparent;
+  border:1px solid transparent;
 }
 
 .ui-button-text-only .ui-button-text {

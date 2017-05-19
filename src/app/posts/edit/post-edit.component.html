@@ -92,7 +92,7 @@
             </div>
           </div>
 
-          Member: {{postForm.value.memberCategories}}
+          <!--Member: {{postForm.value.memberCategories}}-->
           <div class="grid__item one-whole input-holder">
             <label>How will people respond?</label>
             <div class="ui-radiobutton-inline">
@@ -153,7 +153,7 @@
           </div>
         </div>
       </md-card-content>
-      <md-card-actions fxLayout="row" fxLayoutAlign="end center">
+      <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
         <a pButton [routerLink]="['/', board.department.handle, board.handle, post ? post.id : '']"
            class="ui-button-secondary" label="Cancel"></a>
         <span *ngIf="actionView === 'REVISE'">

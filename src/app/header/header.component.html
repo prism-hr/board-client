@@ -20,10 +20,16 @@
         <div *ngIf="!user">
           <button pButton (click)="showLogin()" class="ui-button-warning" label="Log in"></button>
         </div>
-        <div *ngIf="user">
-          Welcome, {{user.givenName}}
-          <button *ngIf="user" pButton class="ui-button ui-button-icon-only ui-button-text" icon="fa-user"
-                  routerLink="/account"></button>
+        <div *ngIf="user" class="user-header-profile">
+          <a routerLink="/account" pButton class="ui-button" label=" Welcome, {{user.givenName}}">
+            <div *ngIf="user.documentImage">
+              <cl-image public-id="{{user.documentImage.cloudinaryId}}"
+                        class="img">
+                <cl-transformation gravity="north_west" height="40" width="40" crop="mfit"></cl-transformation>
+              </cl-image>
+            </div>
+            <i *ngIf="!user.documentImage" class="fa-user"></i>
+          </a>
           <button pButton (click)="logout()" class="ui-button-warning" label="Log out"></button>
         </div>
       </nav>

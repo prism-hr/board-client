@@ -73,7 +73,7 @@ a {
   -moz-transition: all 200ms;
   -o-transition: all 200ms;
   transition: all 200ms;
-  cursor: pointer;
+  cursor: pointer !important;
   &:hover,
   &:focus {
     opacity: $opacity-link-hover;
@@ -185,4 +185,20 @@ control-messages {
   padding:10px;
   border-bottom:1px solid $fadeGrey;
   margin-bottom:15px;
+}
+.user-header-profile {
+  a > div {
+    display: inline-block;
+    float: right;
+    margin: 1px 10px -1px -6px;
+  }
+  span.ui-button-text.ui-c {
+   display: inline-block;
+  }
+  img {
+    display: inline-block;
+    max-height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
 }

@@ -1,29 +1,31 @@
-<form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
-  <md-card>
-    <md-card-header>
-      <md-card-title>
-        <h2>Create a new Board</h2>
-      </md-card-title>
-    </md-card-header>
-    <md-card-content>
-      <div class="grid">
-        <div class="grid__item small--one-whole medium-up--one-half">
-          <input pInputText formControlName="departmentName" placeholder="Department Name" required>
-          <control-messages [control]="boardForm.controls.departmentName"></control-messages>
+<section>
+  <form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
+    <md-card>
+      <md-card-header>
+        <md-card-title>
+          <h2>Create a new Board</h2>
+        </md-card-title>
+      </md-card-header>
+      <md-card-content>
+        <div class="grid">
+          <div class="grid__item small--one-whole medium-up--one-half">
+            <input pInputText formControlName="departmentName" placeholder="Department Name" required>
+            <control-messages [control]="boardForm.controls.departmentName"></control-messages>
+          </div>
+          <div class="grid__item small--one-whole medium-up--one-half">
+            <input pInputText formControlName="name" placeholder="Board Name" required>
+            <control-messages [control]="boardForm.controls.name"></control-messages>
+          </div>
         </div>
-        <div class="grid__item small--one-whole medium-up--one-half">
-          <input pInputText formControlName="name" placeholder="Board Name" required>
-          <control-messages [control]="boardForm.controls.name"></control-messages>
+      </md-card-content>
+      <md-card-actions>
+        <div class="grid grid--half-gutters">
+          <div class="grid__item one-whole">
+            <button pButton class="ui-button-warning" type="submit" [disabled]="boardForm.invalid"
+                    label="Submit"></button>
+          </div>
         </div>
-      </div>
-    </md-card-content>
-    <md-card-actions>
-      <div class="grid grid--half-gutters">
-        <div class="grid__item one-whole">
-          <button pButton class="ui-button-warning" type="submit" [disabled]="boardForm.invalid"
-                  label="Submit"></button>
-        </div>
-      </div>
-    </md-card-actions>
-  </md-card>
-</form>
+      </md-card-actions>
+    </md-card>
+  </form>
+</section>

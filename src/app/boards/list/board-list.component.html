@@ -6,8 +6,8 @@
       <h1>Boards</h1>
       <a pButton routerLink="/newBoard" class="ui-button-success" icon="fa-plus" label="New Board"></a>
     </div>
-    <div class="grid">
-      <div *ngFor="let board of boards" class="grid__item small--one-whole medium-up--one-half">
+    <div class="grid list-container">
+      <div *ngFor="let board of boards" class="list-container__item">
         <md-card>
           <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
             <div md-card-avatar class="logo-holder-small default-logo"
