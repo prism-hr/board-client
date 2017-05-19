@@ -17,12 +17,13 @@
         </div>
       </div>
       <nav class="grid__item one-third text-right">
-        <div *ngIf="user === false">
+        <div *ngIf="!user">
           <button pButton (click)="showLogin()" class="ui-button-warning" label="Log in"></button>
         </div>
         <div *ngIf="user">
+          Welcome, {{user.givenName}}
           <button *ngIf="user" pButton class="ui-button ui-button-icon-only ui-button-text" icon="fa-user"
-                  routerLink="/account" [label]="user.fullName"></button>
+                  routerLink="/account"></button>
           <button pButton (click)="logout()" class="ui-button-warning" label="Log out"></button>
         </div>
       </nav>

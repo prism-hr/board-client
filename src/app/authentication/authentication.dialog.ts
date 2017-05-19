@@ -1,14 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {
-  Account,
-  ForgotPasswordFormModel,
-  LoginFormModel,
-  RegistrationFormModel,
-  Stormpath,
-  StormpathErrorResponse
-} from 'angular-stormpath';
 import {MD_DIALOG_DATA, MdDialog, MdDialogRef} from '@angular/material';
 import {UserImageDialogComponent} from './user-image.dialog';
+import {UserService} from '../services/user.service';
 
 @Component({
   templateUrl: './authentication.dialog.html',
@@ -16,17 +9,17 @@ import {UserImageDialogComponent} from './user-image.dialog';
 })
 export class AuthenticationDialogComponent implements OnInit {
 
-  loginFormModel: LoginFormModel;
-  registrationFormModel: RegistrationFormModel;
-  forgotPasswordFormModel: ForgotPasswordFormModel;
+  loginFormModel: any;
+  registrationFormModel: any;
+  forgotPasswordFormModel: any;
   error: string;
   loading: boolean;
   view: AuthenticationView;
   forgottenSent: any;
-  dialogData: any
+  dialogData: any;
 
   constructor(private dialogRef: MdDialogRef<AuthenticationDialogComponent>, @Inject(MD_DIALOG_DATA) data: any,
-              private dialog: MdDialog, private stormpath: Stormpath) {
+              private dialog: MdDialog, private userService: UserService) {
     this.loginFormModel = <any>{};
     this.registrationFormModel = <any>{};
     this.forgotPasswordFormModel = <any>{};
@@ -44,41 +37,64 @@ export class AuthenticationDialogComponent implements OnInit {
   login(): void {
     this.error = null;
     this.loading = true;
-    this.stormpath.login(this.loginFormModel)
-      .subscribe(() => {
-        this.dialogRef.close(true);
-        this.dialog.open(UserImageDialogComponent);
-      }, (error: StormpathErrorResponse) => {
-        this.loading = false;
-        this.error = error.message;
+    this.userService.login(this.loginFormModel)
+      .subscribe({
+        error: (err: any) => {
+          this.loading = false;
+          this.error = err;
+        },
+        complete: () => {
+          this.dialogRef.close(true);
+          this.dialog.open(UserImageDialogComponent);
+        }
       });
   }
 
   register(): void {
-    this.stormpath.register(this.registrationFormModel)
-      .subscribe((account: Account) => {
-        const canLogin = account.status === 'ENABLED';
-
-        if (canLogin) {
-          const loginAttempt: LoginFormModel = {
-            login: this.registrationFormModel.email,
-            password: this.registrationFormModel.password
-          };
-
-          this.stormpath.login(loginAttempt)
-            .subscribe(() => {
-              this.dialogRef.close(true);
-              this.dialog.open(UserImageDialogComponent);
-            });
+    this.error = null;
+    this.loading = true;
+    this.userService.signup(this.registrationFormModel)
+      .subscribe({
+        error: (err: any) => {
+          this.loading = false;
+          this.error = err;
+        },
+        complete: () => {
+          this.dialogRef.close(true);
+          this.dialog.open(UserImageDialogComponent);
         }
-      }, error => this.error = error.message);
+      });
+  }
+
+  authenticate(name: string) {
+    this.error = null;
+    this.loading = true;
+    this.userService.authenticate(name)
+      .subscribe({
+        error: (err: any) => {
+          this.loading = false;
+          this.error = err;
+        },
+        complete: () => {
+          this.dialogRef.close(true);
+          this.dialog.open(UserImageDialogComponent);
+        }
+      });
   }
 
   sendForgotten(): void {
     this.error = null;
-    this.stormpath.sendPasswordResetEmail(this.forgotPasswordFormModel)
-      .subscribe(() => this.forgottenSent = true,
-        (error: StormpathErrorResponse) => this.error = error.message);
+    this.loading = true;
+    this.userService.resetPassword(this.forgotPasswordFormModel.email)
+      .subscribe({
+        error: (err: any) => {
+          this.loading = false;
+          this.error = err;
+        },
+        complete: () => {
+          this.forgottenSent = true
+        }
+      });
   }
 
 }

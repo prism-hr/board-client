@@ -9,10 +9,10 @@
 
   <div *ngIf="view === 'LOGIN'" class="login-container">
     <div class="social-login" fxLayout="row" fxLayoutAlign="space-between center">
-      <button pButton class="linkedin" fxFlex="44%" label="linkedin">
+      <button pButton (click)="authenticate('linkedin')" class="linkedin" fxFlex="44%" label="linkedin">
         <i class="fa-social-linkedin"></i>
       </button>
-      <button pButton class="facebook" fxFlex="44%" label="facebook">
+      <button pButton (click)="authenticate('facebook')" class="facebook" fxFlex="44%" label="facebook">
         <i class="fa-social-facebook"></i>
       </button>
     </div>
@@ -23,7 +23,7 @@
       <div class="grid__item one-whole">
         <form #form="ngForm" (ngSubmit)="login(form.value)" autocomplete="off">
           <div class="input-holder">
-            <input pInputText placeholder="Email" name="login" [(ngModel)]="loginFormModel.login" required type="email">
+            <input pInputText placeholder="Email" name="email" [(ngModel)]="loginFormModel.email" required type="email">
           </div>
           <div class="input-holder">
             <input pInputText placeholder="Password" name="password" [(ngModel)]="loginFormModel.password" required
@@ -45,11 +45,11 @@
 
   <div *ngIf="view === 'REGISTER'" class="register-container">
     <div class="social-login" fxLayout="row" fxLayoutAlign="space-between center">
-      <button pButton class="linkedin" fxFlex="44%" label="linkedin">
+      <button pButton (click)="authenticate('linkedin')" class="linkedin" fxFlex="44%" label="linkedin">
         <i class="fa-social-linkedin"></i>
       </button>
 
-      <button pButton class="facebook" fxFlex="44%" label="facebook">
+      <button pButton (click)="authenticate('facebook')" class="facebook" fxFlex="44%" label="facebook">
         <i class="fa-social-facebook"></i>
       </button>
     </div>

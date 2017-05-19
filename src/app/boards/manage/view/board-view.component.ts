@@ -18,7 +18,7 @@ export class BoardViewComponent implements OnInit {
   posts: PostRepresentation[];
   boardForm: FormGroup;
 
-  constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder, private resourceService: ResourceService) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private resourceService: ResourceService) {
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       summary: ['', [Validators.required, Validators.maxLength(1000)]],
@@ -31,10 +31,8 @@ export class BoardViewComponent implements OnInit {
       this.canEdit = this.resourceService.canEdit(this.board);
       this.boardForm.setValue(_.pick(this.board, ['name', 'summary']));
     });
-    this.http.get('/api/boards/' + this.board.id + '/posts')
-      .subscribe((posts: Response) => {
-        this.posts = posts.json();
-      });
+    this.resourceService.getBoardPosts(this.board.id)
+      .subscribe(posts => this.posts = posts);
   }
 
 }

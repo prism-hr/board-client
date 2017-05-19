@@ -11,6 +11,7 @@ import Scope = b.Scope;
 import UserRepresentation = b.UserRepresentation;
 import ResourceUserDTO = b.ResourceUserDTO;
 import ResourceUserRepresentation = b.ResourceUserRepresentation;
+import BoardDTO = b.BoardDTO;
 
 @Injectable()
 export class ResourceService {
@@ -48,6 +49,14 @@ export class ResourceService {
 
   getResourceUsers(scope: string, id: number) {
     return this.http.get('/api/' + scope + 's' + '/' + id + '/users').map(res => res.json());
+  }
+
+  getBoardPosts(boardId: number): Observable<PostRepresentation[]> {
+    return this.http.get('/api/boards/' + boardId + '/posts').map(res => res.json());
+  }
+
+  postBoard(board: BoardDTO) {
+    return this.http.post('/api/boards', board).map(res => res.json());
   }
 
   patchBoard(id: number, board: BoardPatchDTO): Observable<BoardRepresentation> {

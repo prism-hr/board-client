@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Stormpath} from 'angular-stormpath';
 import {Router} from '@angular/router';
 import {AuthGuard} from '../authentication/auth-guard.service';
 import {UserService} from '../services/user.service';
@@ -14,7 +13,7 @@ export class HeaderComponent implements OnInit {
 
   user: UserRepresentation;
 
-  constructor(private router: Router, private stormpath: Stormpath, private userService: UserService, private authGuard: AuthGuard) {
+  constructor(private router: Router, private userService: UserService, private authGuard: AuthGuard) {
   }
 
   ngOnInit(): void {
@@ -32,7 +31,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.stormpath.logout();
+    this.userService.logout().subscribe();
     return this.router.navigate(['']);
   }
 }

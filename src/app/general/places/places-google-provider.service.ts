@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {MapsAPILoader} from 'angular2-google-maps/core';
+import 'rxjs/add/observable/fromPromise';
 
 @Injectable()
 export class GooglePlacesProvider {

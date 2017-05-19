@@ -7,6 +7,7 @@ import {DefinitionsService} from '../../../services/definitions.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import BoardRepresentation = b.BoardRepresentation;
 import BoardPatchDTO = b.BoardPatchDTO;
+import {ResourceService} from '../../../services/resource.service';
 
 @Component({
   templateUrl: 'board-settings.component.html',
@@ -20,7 +21,7 @@ export class BoardSettingsComponent implements OnInit {
 
   boardProperties = ['name', 'summary', 'postCategories', 'defaultPostVisibility', 'handle'];
 
-  constructor(private route: ActivatedRoute, private http: Http, private fb: FormBuilder, private router: Router,
+  constructor(private route: ActivatedRoute, private resourceService: ResourceService, private fb: FormBuilder, private router: Router,
               private definitionsService: DefinitionsService) {
     this.definitions = definitionsService.getDefinitions();
     this.boardForm = this.fb.group({
@@ -43,7 +44,7 @@ export class BoardSettingsComponent implements OnInit {
 
   submit() {
     const board: BoardPatchDTO = _.pick(this.boardForm.value, this.boardProperties);
-    this.http.patch('/api/boards/' + this.board.id, board)
+    this.resourceService.patchBoard(this.board.id, board)
       .subscribe(() => {
         Object.assign(this.board, board);
         this.router.navigate([this.board.department.handle, board.handle]);

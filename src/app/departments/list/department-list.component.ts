@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ResourceService} from '../../services/resource.service';
-import {Account, Stormpath} from 'angular-stormpath';
-import DepartmentRepresentation = b.DepartmentRepresentation;
 import {UserService} from '../../services/user.service';
+import DepartmentRepresentation = b.DepartmentRepresentation;
 import UserRepresentation = b.UserRepresentation;
 
 @Component({

@@ -8,6 +8,7 @@ import DepartmentDTO = b.DepartmentDTO;
 import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import BoardRepresentation = b.BoardRepresentation;
+import {ResourceService} from '../../services/resource.service';
 
 @Component({
   templateUrl: 'board-new.component.html',
@@ -18,7 +19,7 @@ export class BoardNewComponent implements OnInit {
   boardForm: FormGroup;
   applicationUrl: string;
 
-  constructor(private router: Router, private route: ActivatedRoute, private http: Http, private fb: FormBuilder,
+  constructor(private router: Router, private route: ActivatedRoute, private resourceService: ResourceService, private fb: FormBuilder,
               private definitionsService: DefinitionsService) {
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
@@ -52,9 +53,8 @@ export class BoardNewComponent implements OnInit {
     const board: BoardDTO = _.pick(this.boardForm.value, ['name', 'summary', 'postCategories', 'documentLogo', 'department']);
     board.department.documentLogo = board.documentLogo;
 
-    this.http.post('/api/boards', board)
-      .subscribe(res => {
-        const saved: BoardRepresentation = res.json();
+    this.resourceService.postBoard(board)
+      .subscribe(saved => {
         this.router.navigate([saved.department.handle, saved.handle]);
       }, (error: Response) => {
         if (error.status === 422) {

@@ -1,6 +1,5 @@
-import {TestBed, async} from '@angular/core/testing';
+import {async, TestBed} from '@angular/core/testing';
 import {AppComponent} from './app.component';
-import {StormpathModule} from 'angular-stormpath';
 import {HeaderComponent} from './header/header.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MaterialModule} from '@angular/material';
@@ -12,7 +11,7 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AppComponent, HeaderComponent, FooterComponent],
-      imports: [RouterTestingModule, StormpathModule, MaterialModule, ButtonModule, TranslateModule.forRoot()]
+      imports: [RouterTestingModule, MaterialModule, ButtonModule, TranslateModule.forRoot()]
     });
     TestBed.compileComponents();
   }));

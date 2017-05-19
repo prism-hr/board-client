@@ -2,14 +2,12 @@ import {BrowserModule} from '@angular/platform-browser';
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Http, HttpModule} from '@angular/http';
-import {StormpathConfiguration, StormpathModule} from 'angular-stormpath';
 import {AppComponent} from './app.component';
 import {AuthenticationDialogComponent} from './authentication/authentication.dialog';
 import {HomeComponent} from './home/home.component';
 import {NotFoundComponent} from './not-found.component';
 import {RouterModule} from '@angular/router';
 import {MdCardModule, MdDialogModule, MdSnackBarModule} from '@angular/material';
-import {stormpathConfig} from './stormpath.config';
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
 import {AuthedComponent} from './authentication/authed.component';
@@ -49,7 +47,8 @@ import {
   ButtonModule,
   CalendarModule,
   CheckboxModule,
-  ChipsModule, DataTableModule,
+  ChipsModule,
+  DataTableModule,
   DropdownModule,
   EditorModule,
   InputTextModule,
@@ -75,6 +74,8 @@ import {ResourceUsersResolver} from './resource/resource-users-resolver.service'
 import {ResourceUsersBulkComponent} from './resource/users/resource-users-bulk.component';
 import {FileUploadService} from './services/file-upload.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {Ng2UiAuthModule} from 'ng2-ui-auth';
+import {MyAuthConfig} from './auth.config';
 
 @NgModule({
   declarations: [
@@ -227,7 +228,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    StormpathModule,
     CloudinaryModule.forRoot(Cloudinary, {cloud_name: 'bitfoot'}),
     FileUploadModule,
     RlTagInputModule,
@@ -242,15 +242,12 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
       apiKey: 'AIzaSyDmaVzQjUgftYVHNfTfoSszjaUe8hie8e8',
       libraries: ['places']
     }),
+    Ng2UiAuthModule.forRoot(MyAuthConfig),
     PlacesModule,
     MomentModule,
     ShareButtonsModule.forRoot()
   ],
   providers: [
-    {
-      provide: StormpathConfiguration,
-      useFactory: stormpathConfig
-    },
     DefinitionsService,
     {
       provide: APP_INITIALIZER,

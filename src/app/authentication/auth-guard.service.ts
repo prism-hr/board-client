@@ -1,30 +1,29 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
+import {CanActivate} from '@angular/router';
 import {AuthenticationDialogComponent} from './authentication.dialog';
 import {MdDialog, MdDialogConfig} from '@angular/material';
-import {Stormpath} from 'angular-stormpath';
 import {Observable} from 'rxjs/Observable';
+import {AuthService} from 'ng2-ui-auth';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
 
-  constructor(private dialog: MdDialog, private stormpath: Stormpath) {
+  constructor(private dialog: MdDialog, private authService: AuthService) {
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+  canActivate(): Observable<boolean> {
     return this.ensureAuthenticated(false).first();
   }
 
   ensureAuthenticated(showRegister: boolean): Observable<boolean> {
-    return this.stormpath.user$.flatMap(user => {
-      if (!user) {
-        const config = new MdDialogConfig();
-        config.data = {showRegister};
-        const dialogRef = this.dialog.open(AuthenticationDialogComponent, config);
-        return dialogRef.afterClosed();
-      }
+    if (this.authService.getToken()) {
       return Observable.of(true);
-    });
+    } else {
+      const config = new MdDialogConfig();
+      config.data = {showRegister};
+      const dialogRef = this.dialog.open(AuthenticationDialogComponent, config);
+      return dialogRef.afterClosed();
+    }
   }
 }
