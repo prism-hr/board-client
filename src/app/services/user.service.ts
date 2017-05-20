@@ -50,7 +50,8 @@ export class UserService {
   authenticate(name: string, userData?: any): Observable<Response> {
     return this.auth.authenticate(name, userData)
       .do((response: Response) => {
-        console.log('res');
+        this.auth.setToken(response.json().token);
+        this.loadUser();
       });
   }
 
