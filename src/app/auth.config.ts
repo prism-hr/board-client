@@ -6,6 +6,6 @@ export class MyAuthConfig extends CustomConfig {
   signupUrl = '/api/auth/register';
   providers = {
     linkedin: {url: '/api/auth/linkedin', clientId: '772yxzl30r2opy', requiredUrlParams: ['state', 'scope']},
-    facebook: {url: '/api/auth/facebook', clientId: '354986761351368'}
+    facebook: {url: '/api/auth/facebook', clientId: '238053150013119'}
   };
 }
