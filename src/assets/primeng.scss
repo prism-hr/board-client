@@ -987,7 +987,7 @@ button.ui-button::-moz-focus-inner {
   list-style-type: none;
   margin: 0 0 0 .125em;
   padding: .25em .25em .25em 0;
-  .ui-inputtext {
+  .ui-inputtext, input {
     border: 0 none;
     width: 10em;
     outline: medium none;

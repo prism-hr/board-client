@@ -14,12 +14,20 @@ span {
     display: inline-block;
   }
 }
-.host-url span {
-  font-size: 1.3em;
-  padding: 8px 0;
-  display: block;
-  color: grey;
+.host-url {
+  span {
+    display: inline-block;
+    button.ui-widget {
+      font-size:90%;
+    }
+  }
+  > span {
+    font-size: 1.3em;
+    padding: 8px 0;
+    color: grey;
+  }
+
 }
 .ui-button-success {
-  margin-top:4px;
+    margin-top:4px;
 }

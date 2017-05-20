@@ -5,14 +5,14 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
   selector: 'b-resource-handle',
   template: `
     <div class="grid">
-      <div class="grid__item one-third host-url">
+      <div class="grid__item one-whole host-url">
         <span>{{urlPrefix}}</span>
-      </div>
-      <div class="grid__item one-third">
-        <input pInputText [(ngModel)]="handle" (change)="handleChanged($event)" required>
-      </div>
-      <div class="grid__item one-third">
-        <button pButton type="button" (click)="copyToClipboard()" class="ui-button-success" icon="fa-docs"></button>
+        <span class="host-url__input">
+          <input pInputText [(ngModel)]="handle" (change)="handleChanged($event)" required>
+        </span>
+        <span class="host-url__button">
+          <button pButton type="button" (click)="copyToClipboard()" class="ui-button-success" icon="fa-docs"></button>
+        </span>
       </div>
     </div>
   `,
