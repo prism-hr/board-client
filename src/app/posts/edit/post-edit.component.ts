@@ -156,11 +156,11 @@ export class PostEditComponent implements OnInit {
   }
 
   executeAction(action: string, sendForm?: boolean) {
-    const dialogRef = this.dialog.open(PostCommentDialogComponent);
-    dialogRef.afterClosed().subscribe(comment => {
-      if (comment) {
+    const dialogRef = this.dialog.open(PostCommentDialogComponent, {data: {action, post: this.post}});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
         const requestBody = sendForm ? this.generatePostRequestBody() : {};
-        requestBody.comment = comment;
+        requestBody.comment = result.comment;
         this.postService.executeAction(this.post, action, requestBody)
           .subscribe(() => {
             this.router.navigate([this.board.department.handle, this.board.handle]);

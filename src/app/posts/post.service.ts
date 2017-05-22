@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import * as _ from 'lodash';
-import {Http} from '@angular/http';
 import {Router} from '@angular/router';
-import {MdSnackBar} from '@angular/material';
+import {MdDialog} from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
 import {Observable} from 'rxjs/Observable';
 import {MenuItem} from 'primeng/primeng';
+import {JwtHttp} from 'ng2-ui-auth';
+import {PostCommentDialogComponent} from './post-comment.dialog';
 import PostRepresentation = b.PostRepresentation;
 import PostPatchDTO = b.PostPatchDTO;
 import BoardRepresentation = b.BoardRepresentation;
@@ -15,7 +16,7 @@ import ResourceOperationRepresentation = b.ResourceOperationRepresentation;
 @Injectable()
 export class PostService {
 
-  constructor(private http: Http, private router: Router, private translate: TranslateService, private snackBar: MdSnackBar) {
+  constructor(private http: JwtHttp, private router: Router, private translate: TranslateService, private dialog: MdDialog) {
   }
 
   getActionView(post: PostRepresentation): string {
@@ -52,17 +53,24 @@ export class PostService {
   }
 
   getActionItems(post: PostRepresentation, actionCallback: (post: PostRepresentation) => void): Observable<MenuItem[]> {
-    const availableActions = ['SUSPEND', 'REJECT', 'WITHDRAW', 'RESTORE']
+    const availableActions = ['SUSPEND', 'REJECT', 'WITHDRAW', 'RESTORE', 'ACCEPT']
       .filter(a => post.actions.find(actionDef => actionDef.action as any === a));
     return this.translate.get('definitions.action')
       .map(actionTranslations => {
-        return availableActions.map(a => {
+        return availableActions.map(action => {
           return {
-            label: actionTranslations[a], command: () => {
-              this.executeAction(post, a, {})
-                .subscribe(newPost => {
-                  actionCallback(newPost);
-                });
+            label: actionTranslations[action], command: () => {
+              const dialogRef = this.dialog.open(PostCommentDialogComponent, {data: {action, post}});
+              dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                  const requestBody: any = {};
+                  requestBody.comment = result.comment;
+                  this.executeAction(post, action, requestBody)
+                    .subscribe(newPost => {
+                      actionCallback(newPost);
+                    });
+                }
+              });
             }
           };
         });
