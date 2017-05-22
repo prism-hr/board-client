@@ -12,11 +12,12 @@ import UserRepresentation = b.UserRepresentation;
 import ResourceUserDTO = b.ResourceUserDTO;
 import ResourceUserRepresentation = b.ResourceUserRepresentation;
 import BoardDTO = b.BoardDTO;
+import {JwtHttp} from 'ng2-ui-auth';
 
 @Injectable()
 export class ResourceService {
 
-  constructor(private http: Http) {
+  constructor(private http: JwtHttp) {
   }
 
   getPosts(): Observable<PostRepresentation[]> {
