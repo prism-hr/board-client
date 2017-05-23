@@ -104,7 +104,7 @@ export class PostEditComponent implements OnInit {
       const creatingNewPostAsUntrustedPerson = !this.post && (extendAction.state as any as string) === 'DRAFT';
       if (creatingNewPostAsUntrustedPerson || _.get(this.post, 'existingRelation')) {
         this.showExistingRelation = true;
-        if (this.post.existingRelationExplanation) {
+        if (_.get(this.post, 'existingRelationExplanation')) {
           this.postForm.patchValue({existingRelationExplanation: this.post.existingRelationExplanation['text']});
         }
         this.postForm.get('existingRelation').setValidators([Validators.required]);

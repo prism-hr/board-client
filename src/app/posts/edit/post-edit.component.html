@@ -58,11 +58,13 @@
             <input id="organizationName" pInputText formControlName="organizationName" required>
             <control-messages [control]="postForm.controls.organizationName"></control-messages>
           </div>
+
           <div class="grid__item small--one-whole medium-up--one-half input-holder">
             <label>Location</label>
             <b-places-autocomplete formControlName="location"></b-places-autocomplete>
             <control-messages [control]="postForm.controls.location"></control-messages>
           </div>
+
           <div *ngIf="showExistingRelation">
             <div class="grid__item one-whole input-holder">
               <label>What is your relationship with our department?</label>
@@ -71,12 +73,15 @@
               <control-messages [control]="postForm.controls.existingRelation"></control-messages>
             </div>
 
-            <div *ngIf="postForm.value.existingRelation === 'OTHER'" class="grid__item one-whole input-holder">
+            <div
+              *ngIf="postForm.value.existingRelation === 'OTHER' || postForm.value.existingRelation === 'COLLABORATOR'"
+              class="grid__item one-whole input-holder">
               <label>
                 {{'definitions.existingRelation.' + postForm.value.existingRelation + ".explanationPrompt" |
                 translate}}
               </label>
-              <textarea pInputTextarea formControlName="existingRelationExplanation" required></textarea>
+              <textarea pInputTextarea formControlName="existingRelationExplanation" required
+                        class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
               <control-messages [control]="postForm.controls.existingRelationExplanation"></control-messages>
             </div>
           </div>

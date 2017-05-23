@@ -7,28 +7,24 @@
     },
     "existingRelation": {
       "STAFF": {
-        "name": "Staff member",
-        "explanationPrompt": "When did you start?"
+        "name": "Staff member"
       },
       "STUDENT": {
-        "name": "Student",
-        "explanationPrompt": "When did you start?"
+        "name": "Student"
       },
       "PREVIOUS_STAFF": {
-        "name": "Previously staff member",
-        "explanationPrompt": "When did you start?"
+        "name": "Previously staff member"
       },
       "PREVIOUS_STUDENT": {
-        "name": "Previously student",
-        "explanationPrompt": "When did you start?"
+        "name": "Previously student"
       },
       "COLLABORATOR": {
         "name": "Collaborator",
-        "explanationPrompt": "What kind of Collaborator?"
+        "explanationPrompt": "Please tell us who you work with"
       },
       "OTHER": {
         "name": "Other",
-        "explanationPrompt": "Please explain"
+        "explanationPrompt": "Please explain your interest in us"
       }
     },
     "action": {
