@@ -53,6 +53,10 @@
       "AUTHOR": "Author",
       "MEMBER": "Member",
       "PUBLIC": "Public"
+    },
+    "exceptionCode": {
+      "UNREGISTERED_USER": "The user is not registered.",
+      "DUPLICATE_USER": "This email is already taken."
     }
   },
   "authenticate": {

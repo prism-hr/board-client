@@ -3,6 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {RequestOptionsArgs, Response} from '@angular/http';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {AuthService, JwtHttp} from 'ng2-ui-auth';
+import 'rxjs/add/operator/toPromise';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import DepartmentPatchDTO = b.DepartmentPatchDTO;
@@ -24,19 +25,21 @@ export class UserService {
     this.loadUser();
   }
 
-  login(user: any, opts?: RequestOptionsArgs): Observable<Response> {
+  login(user: any, opts?: RequestOptionsArgs): Promise<UserRepresentation> {
     return this.auth.login(user, opts)
-      .do((response: Response) => {
-        this.loadUser();
-        console.log('login');
+      .toPromise()
+      .then((response: Response) => {
+        this.auth.setToken(response.json().token);
+        return this.loadUser();
       });
   }
 
-  signup(user: any, opts?: RequestOptionsArgs): Observable<Response> {
+  signup(user: any, opts?: RequestOptionsArgs): Promise<UserRepresentation> {
     return this.auth.signup(user, opts)
-      .do((response: Response) => {
+      .toPromise()
+      .then((response: Response) => {
         this.auth.setToken(response.json().token);
-        this.loadUser();
+        return this.loadUser();
       });
   }
 
@@ -47,29 +50,35 @@ export class UserService {
       });
   }
 
-  authenticate(name: string, userData?: any): Observable<Response> {
+  authenticate(name: string, userData?: any): Promise<UserRepresentation> {
     return this.auth.authenticate(name, userData)
-      .do((response: Response) => {
+      .toPromise()
+      .then((response: Response) => {
         this.auth.setToken(response.json().token);
-        this.loadUser();
+        return this.loadUser();
       });
   }
 
   resetPassword(email: string): Observable<Response> {
-    return this.http.post('/api/auth/resetPassword', {email})
-      .do((response: Response) => {
-        console.log('password reset');
-      });
+    return this.http.post('/api/auth/resetPassword', {email});
   }
 
   loadUser() {
-    const token = this.auth.getToken();
-    if (token) {
-      return this.http.get('/api/user')
-        .map(user => user.json())
-        .subscribe(user => this.userSource.next(user));
-    }
-    this.userSource.next(null);
+    return new Promise((resolve) => {
+      const token = this.auth.getToken();
+      if (token) {
+        this.http.get('/api/user')
+          .map(user => user.json())
+          .subscribe(user => {
+            this.userSource.next(user);
+            resolve(user);
+          });
+      } else {
+        this.userSource.next(null);
+        resolve(null);
+      }
+    });
+
   }
 
   update(userPatch: UserPatchDTO): Observable<UserRepresentation> {

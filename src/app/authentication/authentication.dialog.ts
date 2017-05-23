@@ -2,6 +2,8 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MD_DIALOG_DATA, MdDialog, MdDialogRef} from '@angular/material';
 import {UserImageDialogComponent} from './user-image.dialog';
 import {UserService} from '../services/user.service';
+import {TranslateService} from '@ngx-translate/core';
+import UserRepresentation = b.UserRepresentation;
 
 @Component({
   templateUrl: './authentication.dialog.html',
@@ -19,7 +21,7 @@ export class AuthenticationDialogComponent implements OnInit {
   dialogData: any;
 
   constructor(private dialogRef: MdDialogRef<AuthenticationDialogComponent>, @Inject(MD_DIALOG_DATA) data: any,
-              private dialog: MdDialog, private userService: UserService) {
+              private translate: TranslateService, private dialog: MdDialog, private userService: UserService) {
     this.loginFormModel = <any>{};
     this.registrationFormModel = <any>{};
     this.forgotPasswordFormModel = <any>{};
@@ -39,48 +41,37 @@ export class AuthenticationDialogComponent implements OnInit {
     this.error = null;
     this.loading = true;
     this.userService.login(this.loginFormModel)
-      .subscribe({
-        error: (err: any) => {
-          this.loading = false;
-          this.error = err;
+      .then((user: UserRepresentation) => {
+          this.afterAuthenticated(user);
         },
-        complete: () => {
-          this.dialogRef.close(true);
-          this.dialog.open(UserImageDialogComponent);
-        }
-      });
+        (response: any) => {
+          this.afterError(response);
+        });
   }
 
   register(): void {
     this.error = null;
     this.loading = true;
     this.userService.signup(this.registrationFormModel)
-      .subscribe({
-        error: (err: any) => {
-          this.loading = false;
-          this.error = err;
+      .then((user: UserRepresentation) => {
+          this.afterAuthenticated(user);
         },
-        complete: () => {
-          this.dialogRef.close(true);
-          this.dialog.open(UserImageDialogComponent);
-        }
-      });
+        (response: any) => {
+          this.afterError(response);
+        });
   }
 
   authenticate(name: string) {
     this.error = null;
     this.loading = true;
     this.userService.authenticate(name)
-      .subscribe({
-        error: (err: any) => {
-          this.loading = false;
-          this.error = err;
+      .then((user: UserRepresentation) => {
+          this.afterAuthenticated(user);
         },
-        complete: () => {
-          this.dialogRef.close(true);
-          this.dialog.open(UserImageDialogComponent);
+        (response: any) => {
+          this.afterError(response);
         }
-      });
+      );
   }
 
   sendForgotten(): void {
@@ -88,12 +79,29 @@ export class AuthenticationDialogComponent implements OnInit {
     this.loading = true;
     this.userService.resetPassword(this.forgotPasswordFormModel.email)
       .subscribe({
-        error: (err: any) => {
+        error: (response: any) => {
           this.loading = false;
-          this.error = err;
+          this.afterError(response);
         },
         complete: () => {
-          this.forgottenSent = true
+          this.forgottenSent = true;
+        }
+      });
+  }
+
+  private afterAuthenticated(user: UserRepresentation) {
+    this.dialogRef.close(true);
+    if (!user.documentImage) {
+      this.dialog.open(UserImageDialogComponent);
+    }
+  }
+
+  private afterError(response) {
+    this.translate.get('definitions.exceptionCode')
+      .subscribe(codeTranslations => {
+        const code = response.json && response.json().exceptionCode;
+        if (code) {
+          this.error = codeTranslations[code] || code;
         }
       });
   }
