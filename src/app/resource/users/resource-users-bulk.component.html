@@ -2,9 +2,12 @@
   <h4>Bulk Users</h4>
   <div class="grid">
     <div class="grid__item one-whole input-holder">
-      <label for="csvTextarea">Users CSV</label>
-      <textarea id="csvTextarea" pInputTextarea [(ngModel)]="csvText" class="ui-inputtext"
-                (ngModelChange)="computeUsers()"></textarea>
+      <div class="ui-checkbox-inline">
+             <span *ngFor="let role of availableRoles">
+            <p-checkbox [value]="role" [label]="'definitions.role.' + role | translate"
+                        [(ngModel)]="roles"></p-checkbox>
+          </span>
+      </div>
     </div>
 
     <div class="grid__item one-whole">
@@ -44,7 +47,7 @@
 
   </div>
   <div class="action-holder" fxLayout="row" fxLayoutAlign="space-between center">
-    <button pButton class="ui-button-success" type="submit" label="Submit"></button>
+    <button pButton class="ui-button-success" (click)="submit()" label="Submit"></button>
     <button pButton class="ui-button-secondary" (click)="closeBulkMode()" label="Add users individually"></button>
   </div>
 </div>

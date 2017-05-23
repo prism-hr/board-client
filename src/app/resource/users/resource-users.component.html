@@ -37,7 +37,7 @@
       </form>
     </div>
 
-    <b-resource-users-bulk *ngIf="bulkMode" (close)="bulkMode = false">
+    <b-resource-users-bulk *ngIf="bulkMode" [resource]="resource" [availableRoles]="availableRoles" (close)="closeBulkMode($event)">
     </b-resource-users-bulk>
 
     <div class="grid grid--half-gutters">

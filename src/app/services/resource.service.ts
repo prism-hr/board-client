@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {Http, URLSearchParams} from '@angular/http';
+import {URLSearchParams} from '@angular/http';
+import {JwtHttp} from 'ng2-ui-auth';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import DepartmentPatchDTO = b.DepartmentPatchDTO;
@@ -12,7 +13,7 @@ import UserRepresentation = b.UserRepresentation;
 import ResourceUserDTO = b.ResourceUserDTO;
 import ResourceUserRepresentation = b.ResourceUserRepresentation;
 import BoardDTO = b.BoardDTO;
-import {JwtHttp} from 'ng2-ui-auth';
+import ResourceUserBulkDTO = b.ResourceUserBulkDTO;
 
 @Injectable()
 export class ResourceService {
@@ -48,7 +49,7 @@ export class ResourceService {
     return this.http.get('/api/departments', {search: params}).map(res => res.json());
   }
 
-  getResourceUsers(scope: string, id: number) {
+  getResourceUsers(scope: string, id: number): Observable<ResourceUserRepresentation[]> {
     return this.http.get('/api/' + scope + 's' + '/' + id + '/users').map(res => res.json());
   }
 
@@ -78,9 +79,14 @@ export class ResourceService {
     return this.http.delete('/api/' + resourceCol + '/' + resource.id + '/users/' + user.id + '/roles/' + role, {});
   }
 
-  createUser(resource: ResourceRepresentation, user: ResourceUserDTO) {
+  addUser(resource: ResourceRepresentation, user: ResourceUserDTO) {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
     return this.http.post('/api/' + resourceCol + '/' + resource.id + '/users', user).map(res => res.json());
+  }
+
+  addUsersInBulk(resource: ResourceRepresentation, usersBulk: ResourceUserBulkDTO) {
+    const resourceCol = (<any>resource.scope).toLowerCase() + 's';
+    return this.http.post('/api/' + resourceCol + '/' + resource.id + '/users/bulk', usersBulk);
   }
 
   removeUser(resource: ResourceRepresentation, user: UserRepresentation) {

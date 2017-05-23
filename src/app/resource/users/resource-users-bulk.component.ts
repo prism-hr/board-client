@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {ResourceService} from '../../services/resource.service';
 import {FileItem, FileUploader} from 'ng2-file-upload';
 import * as csv from 'csv-js';
@@ -19,8 +19,11 @@ export class ResourceUsersBulkComponent implements OnInit {
   firstLineHeader = true;
   uploader: FileUploader;
   isDragOver: boolean;
+  roles: Role[] = [];
   users: UserDTO[];
   userErrors: any[];
+  @Input() resource: any;
+  @Input() availableRoles: Role[];
   @Output() close: EventEmitter<any> = new EventEmitter();
   @ViewChild('csvUploaderInput') uploadElRef: ElementRef;
 
@@ -72,6 +75,13 @@ export class ResourceUsersBulkComponent implements OnInit {
       }
       this.users.push(user);
     });
+  }
+
+  submit() {
+    this.resourceService.addUsersInBulk(this.resource, {users: this.users, roles: this.roles})
+      .subscribe(() => {
+        this.close.emit('refresh');
+      });
   }
 
   fileOver(event: any) {

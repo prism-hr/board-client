@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-05-16 18:55:34.
+// Generated using typescript-generator version 1.23.311 on 2017-05-23 21:10:51.
 
 declare namespace b {
 
@@ -45,6 +45,17 @@ declare namespace b {
   interface LocationDTO extends LocationDefinition {
   }
 
+  interface LoginDTO {
+    email?: string;
+    password?: string;
+  }
+
+  interface OauthDTO {
+    clientId?: string;
+    code?: string;
+    redirectUri?: string;
+  }
+
   interface PostDTO {
     name?: string;
     summary?: string;
@@ -80,6 +91,17 @@ declare namespace b {
     comment?: string;
   }
 
+  interface RegisterDTO {
+    givenName?: string;
+    surname?: string;
+    email?: string;
+    password?: string;
+  }
+
+  interface ResetPasswordDTO {
+    email?: string;
+  }
+
   interface ResourceFilterDTO {
     scope?: Scope;
     id?: number;
@@ -87,6 +109,11 @@ declare namespace b {
     parentId?: number;
     includePublicResources?: boolean;
     orderStatement?: string;
+  }
+
+  interface ResourceUserBulkDTO {
+    users?: UserDTO[];
+    roles?: Role[];
   }
 
   interface ResourceUserDTO {
@@ -104,6 +131,7 @@ declare namespace b {
     givenName?: string;
     surname?: string;
     documentImage?: DocumentDTO;
+    documentImageRequestState?: DocumentRequestState;
   }
 
   interface ActionRepresentation extends Comparable<ActionRepresentation> {
@@ -294,9 +322,8 @@ declare namespace b {
   const enum ExistingRelation {
     STAFF,
     STUDENT,
-    PREVIOUS_STAFF,
-    PREVIOUS_STUDENT,
     COLLABORATOR,
+    EMPLOYER,
     OTHER,
   }
 
@@ -311,6 +338,12 @@ declare namespace b {
     AUTHOR,
     MEMBER,
     PUBLIC,
+  }
+
+  const enum DocumentRequestState {
+    DISPLAY_FIRST,
+    DISPLAY_AGAIN,
+    DISPLAY_NEVER,
   }
 
   const enum DayOfWeek {

@@ -69,7 +69,7 @@ export class ResourceUsersComponent implements OnInit {
 
   createNewUser() {
     this.loading = true;
-    this.resourceService.createUser(this.resource, this.userForm.value)
+    this.resourceService.addUser(this.resource, this.userForm.value)
       .subscribe(user => {
         this.loading = false;
         this.userForm.reset({roles: []});
@@ -96,6 +96,18 @@ export class ResourceUsersComponent implements OnInit {
       return false; // cannot remove last role
     }
     return !(this.lastAdministratorRole() && role === 'ADMINISTRATOR'); // cannot remove last administrator role for department
+  }
+
+  closeBulkMode($event) {
+    if ($event === 'refresh') {
+      this.resourceService.getResourceUsers((<any>this.resource.scope).toLowerCase(), this.resource.id)
+        .subscribe(users => {
+          this.users = users;
+          this.bulkMode = false;
+        });
+    } else {
+      this.bulkMode = false;
+    }
   }
 
   private lastAdministratorRole() {

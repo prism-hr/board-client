@@ -12,15 +12,12 @@
       "STUDENT": {
         "name": "Student"
       },
-      "PREVIOUS_STAFF": {
-        "name": "Previously staff member"
-      },
-      "PREVIOUS_STUDENT": {
-        "name": "Previously student"
-      },
       "COLLABORATOR": {
         "name": "Collaborator",
         "explanationPrompt": "Please tell us who you work with"
+      },
+      "EMPLOYER": {
+        "name": "Employer"
       },
       "OTHER": {
         "name": "Other",
