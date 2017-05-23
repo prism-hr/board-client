@@ -11,8 +11,8 @@
         <md-card>
           <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
             <div md-card-avatar class="logo-holder-small default-logo"
-                            [ngClass]="{'no-background': board.department.documentLogo}">
-              <cl-image *ngIf="board.department.documentLogo" public-id="{{board.department.documentLogo.cloudinaryId}}"
+                            [ngClass]="{'no-background': board.documentLogo}">
+              <cl-image *ngIf="board.documentLogo" public-id="{{board.documentLogo.cloudinaryId}}"
                         class="img">
                 <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
               </cl-image>

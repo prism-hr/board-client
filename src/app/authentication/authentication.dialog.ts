@@ -32,6 +32,7 @@ export class AuthenticationDialogComponent implements OnInit {
 
   setView(view: AuthenticationView): void {
     this.view = view;
+    this.error = null;
   }
 
   login(): void {

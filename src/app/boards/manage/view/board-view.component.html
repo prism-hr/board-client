@@ -3,7 +3,7 @@
 
   <div fxLayout="row" fxLayoutAlign="space-between top" class="section-header">
     <h2>Posts</h2>
-    <button pButton routerLink="newPost" class="ui-button-success" icon="fa-plus" label="New Post"></button>
+    <button pButton (click)="newPost()" class="ui-button-success" icon="fa-plus" label="New Post"></button>
   </div>
   <md-card-content>
     <div class="grid grid--half-gutters">
