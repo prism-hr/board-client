@@ -76,6 +76,7 @@ import {FileUploadService} from './services/file-upload.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Ng2UiAuthModule} from 'ng2-ui-auth';
 import {MyAuthConfig} from './auth.config';
+import {ClipboardModule} from 'ngx-clipboard/dist';
 
 @NgModule({
   declarations: [
@@ -245,7 +246,8 @@ import {MyAuthConfig} from './auth.config';
     Ng2UiAuthModule.forRoot(MyAuthConfig),
     PlacesModule,
     MomentModule,
-    ShareButtonsModule.forRoot()
+    ShareButtonsModule.forRoot(),
+    ClipboardModule
   ],
   providers: [
     DefinitionsService,
