@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-05-23 21:10:51.
+// Generated using typescript-generator version 1.23.311 on 2017-05-24 11:42:08.
 
 declare namespace b {
 
@@ -111,13 +111,13 @@ declare namespace b {
     orderStatement?: string;
   }
 
-  interface ResourceUserBulkDTO {
-    users?: UserDTO[];
+  interface ResourceUserDTO {
+    user?: UserDTO;
     roles?: Role[];
   }
 
-  interface ResourceUserDTO {
-    user?: UserDTO;
+  interface ResourceUsersDTO {
+    users?: UserDTO[];
     roles?: Role[];
   }
 
@@ -208,6 +208,7 @@ declare namespace b {
     surname?: string;
     email?: string;
     documentImage?: DocumentRepresentation;
+    documentImageRequestState?: DocumentRequestState;
   }
 
   interface DocumentDefinition {
@@ -233,8 +234,8 @@ declare namespace b {
     year?: number;
     hour?: number;
     minute?: number;
-    second?: number;
     nano?: number;
+    second?: number;
   }
 
   interface Chronology extends Comparable<Chronology> {
@@ -287,88 +288,22 @@ declare namespace b {
   interface AbstractChronology extends Chronology {
   }
 
-  const enum Action {
-    VIEW,
-    AUDIT,
-    EDIT,
-    EXTEND,
-    ACCEPT,
-    SUSPEND,
-    CORRECT,
-    REJECT,
-    PUBLISH,
-    RETIRE,
-    RESTORE,
-    WITHDRAW,
-  }
+  type Action = 'VIEW' | 'AUDIT' | 'EDIT' | 'EXTEND' | 'ACCEPT' | 'SUSPEND' | 'CORRECT' | 'REJECT' | 'PUBLISH' | 'RETIRE' | 'RESTORE' | 'WITHDRAW';
 
-  const enum State {
-    DRAFT,
-    SUSPENDED,
-    PENDING,
-    ACCEPTED,
-    EXPIRED,
-    REJECTED,
-    WITHDRAWN,
-    PREVIOUS,
-  }
+  type State = 'DRAFT' | 'SUSPENDED' | 'PENDING' | 'ACCEPTED' | 'EXPIRED' | 'REJECTED' | 'WITHDRAWN' | 'PREVIOUS';
 
-  const enum PostVisibility {
-    PUBLIC,
-    PRIVATE,
-    PART_PRIVATE,
-  }
+  type PostVisibility = 'PUBLIC' | 'PRIVATE' | 'PART_PRIVATE';
 
-  const enum ExistingRelation {
-    STAFF,
-    STUDENT,
-    COLLABORATOR,
-    EMPLOYER,
-    OTHER,
-  }
+  type ExistingRelation = 'STAFF' | 'STUDENT' | 'COLLABORATOR' | 'EMPLOYER' | 'OTHER';
 
-  const enum Scope {
-    DEPARTMENT,
-    BOARD,
-    POST,
-  }
+  type Scope = 'DEPARTMENT' | 'BOARD' | 'POST';
 
-  const enum Role {
-    ADMINISTRATOR,
-    AUTHOR,
-    MEMBER,
-    PUBLIC,
-  }
+  type Role = 'ADMINISTRATOR' | 'AUTHOR' | 'MEMBER' | 'PUBLIC';
 
-  const enum DocumentRequestState {
-    DISPLAY_FIRST,
-    DISPLAY_AGAIN,
-    DISPLAY_NEVER,
-  }
+  type DocumentRequestState = 'DISPLAY_FIRST' | 'DISPLAY_AGAIN' | 'DISPLAY_NEVER';
 
-  const enum DayOfWeek {
-    MONDAY,
-    TUESDAY,
-    WEDNESDAY,
-    THURSDAY,
-    FRIDAY,
-    SATURDAY,
-    SUNDAY,
-  }
+  type DayOfWeek = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
 
-  const enum Month {
-    JANUARY,
-    FEBRUARY,
-    MARCH,
-    APRIL,
-    MAY,
-    JUNE,
-    JULY,
-    AUGUST,
-    SEPTEMBER,
-    OCTOBER,
-    NOVEMBER,
-    DECEMBER,
-  }
+  type Month = 'JANUARY' | 'FEBRUARY' | 'MARCH' | 'APRIL' | 'MAY' | 'JUNE' | 'JULY' | 'AUGUST' | 'SEPTEMBER' | 'OCTOBER' | 'NOVEMBER' | 'DECEMBER';
 
 }

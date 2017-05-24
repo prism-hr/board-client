@@ -81,7 +81,7 @@ export class UserService {
 
   }
 
-  update(userPatch: UserPatchDTO): Observable<UserRepresentation> {
+  patchUser(userPatch: UserPatchDTO): Observable<UserRepresentation> {
     return this.http.patch('/api/user', userPatch)
       .map(res => res.json())
       .map(user => {

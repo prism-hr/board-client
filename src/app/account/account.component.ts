@@ -31,7 +31,7 @@ export class AccountComponent implements OnInit {
 
   submit(): void {
     const user: UserPatchDTO = this.accountForm.value;
-    this.userService.update(user)
+    this.userService.patchUser(user)
       .subscribe(() => {
         this.snackBar.open('Your account was successfully.', null, {duration: 1500});
       });

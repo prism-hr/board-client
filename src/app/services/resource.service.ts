@@ -13,7 +13,7 @@ import UserRepresentation = b.UserRepresentation;
 import ResourceUserDTO = b.ResourceUserDTO;
 import ResourceUserRepresentation = b.ResourceUserRepresentation;
 import BoardDTO = b.BoardDTO;
-import ResourceUserBulkDTO = b.ResourceUserBulkDTO;
+import ResourceUsersDTO = b.ResourceUsersDTO;
 
 @Injectable()
 export class ResourceService {
@@ -84,7 +84,7 @@ export class ResourceService {
     return this.http.post('/api/' + resourceCol + '/' + resource.id + '/users', user).map(res => res.json());
   }
 
-  addUsersInBulk(resource: ResourceRepresentation, usersBulk: ResourceUserBulkDTO) {
+  addUsersInBulk(resource: ResourceRepresentation, usersBulk: ResourceUsersDTO) {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
     return this.http.post('/api/' + resourceCol + '/' + resource.id + '/users/bulk', usersBulk);
   }

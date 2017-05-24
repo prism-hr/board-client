@@ -91,8 +91,8 @@ export class AuthenticationDialogComponent implements OnInit {
 
   private afterAuthenticated(user: UserRepresentation) {
     this.dialogRef.close(true);
-    if (!user.documentImage) {
-      this.dialog.open(UserImageDialogComponent);
+    if (!user.documentImage && user.documentImageRequestState !== 'DISPLAY_NEVER') {
+      this.dialog.open(UserImageDialogComponent, {disableClose: true});
     }
   }
 

@@ -9,6 +9,12 @@ import DocumentRepresentation = b.DocumentRepresentation;
     <div class="avatar-box">
       <h2>Would you like to specify your avatar?</h2>
       <b-file-upload [(ngModel)]="image" type="logo" class="avatar"></b-file-upload>
+
+      <div *ngIf="showRequestStateBox">
+        <label>Don't show it again</label>
+        <p-checkbox [(ngModel)]="dontShowAgain" [binary]="true"></p-checkbox>
+      </div>
+
       <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">
         <button pButton class="ui-button-secondary" label="Ok" (click)="ok()" [disabled]="!image"></button>
         <button pButton class="ui-button-warning full-width" label="Skip" (click)="skip()"></button>
@@ -18,8 +24,10 @@ import DocumentRepresentation = b.DocumentRepresentation;
 })
 export class UserImageDialogComponent implements OnInit {
 
-  user: UserRepresentation | boolean;
+  user: UserRepresentation;
   image: DocumentRepresentation;
+  showRequestStateBox: boolean;
+  dontShowAgain: boolean;
 
   constructor(private dialogRef: MdDialogRef<UserImageDialogComponent>, private userService: UserService) {
   }
@@ -28,18 +36,26 @@ export class UserImageDialogComponent implements OnInit {
     this.userService.user$.subscribe((user: UserRepresentation) => {
       this.user = user;
       this.image = user.documentImage;
-    });
+      if (user.documentImageRequestState === 'DISPLAY_AGAIN') {
+        this.showRequestStateBox = true;
+      }
+    }).unsubscribe();
   }
 
   ok() {
-    this.userService.update({documentImage: this.image})
+    this.userService.patchUser({documentImage: this.image})
       .subscribe(() => {
         this.dialogRef.close();
       });
   }
 
   skip() {
-    this.dialogRef.close();
+    if (this.user.documentImageRequestState !== 'DISPLAY_NEVER') {
+      this.userService.patchUser({documentImageRequestState: this.dontShowAgain ? 'DISPLAY_NEVER' : 'DISPLAY_AGAIN'})
+        .subscribe(() => {
+          this.dialogRef.close();
+        });
+    }
   }
 
 }
