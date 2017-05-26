@@ -119,3 +119,103 @@ b-file-upload[type=logo].avatar {
   padding: 0.2em .4em !important;
   font-size: 1.3em !important;
 }
+.general-card-summary {
+  border-bottom: 1px solid $fadeGrey;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  font-size: 1.1em;
+}
+.boxes-list {
+  .boxes-list__item {
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    text-align: center;
+    border-radius: 2px;
+    overflow: hidden;
+    .number {
+      display: inline-block;
+      line-height: 1.9em;
+      font-size: 17px;
+      font-weight: bold;
+      padding: 0 10px 0 9px;
+    }
+    .title {
+      display: inline-block;
+      font-size: 17px;
+      line-height: 1.9em;
+      padding: 0 10px 0 9px;
+      font-weight: 500;
+      background: $fadeGrey;
+      color: white;
+    }
+    &.boards {
+      .title {
+        background: $uclred;
+      }
+    }
+    &.posts {
+      .title {
+        background: $uclblue;
+      }
+    }
+    &.members {
+      .title {
+        background: $uclblue2;
+      }
+    }
+    &.connections {
+      .title {
+        background: $uclgreen;
+      }
+    }
+    &.reports {
+      .title {
+        background: $programColor;
+      }
+    }
+    &.views {
+      .title {
+        background: $goldColor;
+      }
+    }
+    &.responses {
+      .title {
+        background: $fundingColor;
+      }
+    }
+    &.extend {
+      .title {
+        background: $goldColor;
+      }
+    }
+    &.accepted {
+      .title {
+        background: $uclgreen;
+      }
+    }
+    &.correct {
+      .title {
+        background: $qualificationsColor;
+      }
+    }
+    &.rejected, &.expired {
+      .title {
+        background: $error;
+      }
+    }
+    &.suspended {
+      .title {
+        background: $programColor;
+      }
+    }
+    &.restored {
+      .title {
+        background: $fundingColor;
+      }
+    }
+    &.withdrawn {
+      .title {
+        background: $uclred;
+      }
+    }
+  }
+}

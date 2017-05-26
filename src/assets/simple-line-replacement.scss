@@ -45,6 +45,7 @@ $simple-line-icon-prefix: "icon-" !default;
   &angle-down,
   &extend,
   &accept,
+  &accepted,
   &angle-up,
   &user,
   &people,
@@ -57,6 +58,7 @@ $simple-line-icon-prefix: "icon-" !default;
   &correct,
   &logout,
   &withdraw,
+  &withdrawn,
   &emotsmile,
   &phone,
   &call-end,
@@ -137,6 +139,7 @@ $simple-line-icon-prefix: "icon-" !default;
   &drawer,
   &docs,
   &reject,
+  &rejected,
   &doc,
   &diamond,
   &cup,
@@ -154,6 +157,7 @@ $simple-line-icon-prefix: "icon-" !default;
   &trash,
   &tag,
   &support,
+  &expired,
   &frame,
   &size-fullscreen,
   &size-actual,
@@ -171,6 +175,7 @@ $simple-line-icon-prefix: "icon-" !default;
   &home,
   &grid,
   &suspend,
+  &suspended,
   &graph,
   &microphone,
   &music-tone-alt,
@@ -390,7 +395,7 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e080";
 }
 
-.#{$simple-line-icon-prefix}clock:before {
+.#{$simple-line-icon-prefix}clock:before, .#{$simple-line-icon-prefix}expired:before{
   content: "\e081";
 }
 
@@ -402,7 +407,7 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e615";
 }
 
-.#{$simple-line-icon-prefix}close:before, .#{$simple-line-icon-prefix}withdraw:before {
+.#{$simple-line-icon-prefix}close:before, .#{$simple-line-icon-prefix}withdraw:before, .#{$simple-line-icon-prefix}withdrawn:before {
   content: "\e082";
 }
 
@@ -506,7 +511,7 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e01b";
 }
 
-.#{$simple-line-icon-prefix}fire:before, .#{$simple-line-icon-prefix}reject:before {
+.#{$simple-line-icon-prefix}fire:before, .#{$simple-line-icon-prefix}reject:before, .#{$simple-line-icon-prefix}rejected:before {
   content: "\e01c";
 }
 
@@ -762,11 +767,11 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e06c";
 }
 
-.#{$simple-line-icon-prefix}like:before, .#{$simple-line-icon-prefix}accept:before {
+.#{$simple-line-icon-prefix}like:before, .#{$simple-line-icon-prefix}accept:before, .#{$simple-line-icon-prefix}accepted:before {
   content: "\e068";
 }
 
-.#{$simple-line-icon-prefix}dislike:before, .#{$simple-line-icon-prefix}suspend:before  {
+.#{$simple-line-icon-prefix}dislike:before, .#{$simple-line-icon-prefix}suspend:before, .#{$simple-line-icon-prefix}suspended:before  {
   content: "\e06d";
 }
 

@@ -27,7 +27,23 @@
             </md-card-subtitle>
           </md-card-header>
           <md-card-content>
-            {{board.summary}}
+            <div class="general-card-summary">
+              {{board.summary}}
+            </div>
+            <div class="boxes-list" fxLayout="row" fxLayoutAlign="space-between center">
+              <div class="boxes-list__item posts">
+                <div class="title"><i class="fa-book-open"></i> Post</div>
+                <span class="number">30</span>
+              </div>
+              <div class="boxes-list__item connections">
+                <div class="title"><i class="fa-share"></i> Connections</div>
+                <span class="number">30</span>
+              </div>
+              <div class="boxes-list__item reports">
+                <div class="title"><i class="fa-pie-chart"></i> Reports</div>
+                <span class="number">30</span>
+              </div>
+            </div>
           </md-card-content>
           <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
             <a pButton routerLink="/{{board.department.handle}}/{{board.handle}}/settings"

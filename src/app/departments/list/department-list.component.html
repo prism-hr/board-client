@@ -24,7 +24,24 @@
             </div>
           </md-card-header>
           <md-card-content>
-            {{department.summary}}
+            <div class="general-card-summary">
+              {{department.summary}}
+              We need to introduce the summary here too
+            </div>
+            <div class="boxes-list" fxLayout="row" fxLayoutAlign="space-between center">
+              <div class="boxes-list__item boards">
+                <div class="title"><i class="fa-notebook"></i> Boards</div>
+                <div class="number">30</div>
+              </div>
+              <div class="boxes-list__item posts">
+                <div class="title"><i class="fa-book-open"></i> Posts</div>
+                <span class="number">30</span>
+              </div>
+              <div class="boxes-list__item members">
+                <div class="title"><i class="fa-people"></i> Members</div>
+                <span class="number">30</span>
+              </div>
+            </div>
           </md-card-content>
           <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
             <a pButton [routerLink]="['/', department.handle]" class="ui-button-secondary "
