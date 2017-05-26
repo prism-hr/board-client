@@ -4671,3 +4671,15 @@ cl-image > img {
 .hidden {
   display: none;
 }
+.ui-button.ui-button-info.ui-state-default {
+  &:not(.ui-state-active) {
+    background: white;
+    .ui-button-text {
+      color: black;
+    }
+  }
+  &:hover {
+    border-color: $uclred;
+  }
+
+}

@@ -55,7 +55,7 @@ import {
   MessagesModule,
   RadioButtonModule,
   SplitButtonModule,
-  TabMenuModule
+  TabMenuModule, ToggleButtonModule
 } from 'primeng/primeng';
 import {PostService} from './posts/post.service';
 import {XeditableInputComponent} from './controls/xeditable-input.component';
@@ -220,6 +220,7 @@ import {ClipboardModule} from 'ngx-clipboard/dist';
     EditorModule,
     DataTableModule,
     // Material modules
+    ToggleButtonModule,
     MdDialogModule,
     MdSnackBarModule,
     MdCardModule,
