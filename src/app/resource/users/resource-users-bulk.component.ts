@@ -3,10 +3,13 @@ import {ResourceService} from '../../services/resource.service';
 import {FileItem, FileUploader} from 'ng2-file-upload';
 import * as csv from 'csv-js';
 import {ValidationService} from '../../validation/validation.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import UserRepresentation = b.UserRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
-import Role = b.Role;
 import UserDTO = b.UserDTO;
+import UserRoleDTO = b.UserRoleDTO;
+import Role = b.Role;
+import * as _ from 'lodash';
 
 @Component({
   selector: 'b-resource-users-bulk',
@@ -16,22 +19,33 @@ import UserDTO = b.UserDTO;
 export class ResourceUsersBulkComponent implements OnInit {
 
   csvText: string;
-  firstLineHeader = true;
+  usersForm: FormGroup;
   uploader: FileUploader;
   isDragOver: boolean;
-  roles: Role[] = [];
   users: UserDTO[];
   userErrors: any[];
   @Input() resource: any;
   @Input() availableRoles: Role[];
+  @Input() availableMemberCategories: string[];
   @Output() close: EventEmitter<any> = new EventEmitter();
   @ViewChild('csvUploaderInput') uploadElRef: ElementRef;
 
-  constructor(private resourceService: ResourceService) {
+  constructor(private fb: FormBuilder, private resourceService: ResourceService) {
+    this.usersForm = this.fb.group({
+      role: [null, Validators.required],
+      categories: [[]],
+      expiryDate: [null, Validators.required],
+      firstLineHeader: [true]
+    });
     this.uploader = new FileUploader({});
   }
 
   ngOnInit() {
+    this.usersForm.get('role').valueChanges.subscribe((role: Role) => {
+      this.usersForm.patchValue({categories: []});
+      this.usersForm.get('categories').setValidators(role === 'MEMBER' && Validators.required);
+    });
+
     this.uploader.onAfterAddingFile = (item: FileItem) => {
       const reader = new FileReader();
       reader.onload = e => {
@@ -47,11 +61,11 @@ export class ResourceUsersBulkComponent implements OnInit {
   computeUsers() {
     csv.IGNORE_RECORD_LENGTH = true;
     let rows = csv.parse(this.csvText || '');
-    rows = rows.slice(this.firstLineHeader ? 1 : 0);
+    rows = rows.slice(this.usersForm.value.firstLineHeader ? 1 : 0);
     this.userErrors = [];
     this.users = [];
     rows.forEach((row, idx) => {
-      const line = idx + 1 + (this.firstLineHeader ? 1 : 0);
+      const line = idx + 1 + (this.usersForm.value.firstLineHeader ? 1 : 0);
       if (row.length === 0) {
         return; // empty line, skip
       }
@@ -78,7 +92,8 @@ export class ResourceUsersBulkComponent implements OnInit {
   }
 
   submit() {
-    this.resourceService.addUsersInBulk(this.resource, {users: this.users, roles: this.roles})
+    const roles: UserRoleDTO[] = [_.pick(this.usersForm.value, ['role', 'categories', 'expiryDate'])];
+    this.resourceService.addUsersInBulk(this.resource, {users: this.users, roles})
       .subscribe(() => {
         this.close.emit('refresh');
       });

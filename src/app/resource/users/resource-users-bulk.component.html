@@ -1,18 +1,32 @@
-<div class="form">
+<form class="form" [formGroup]="usersForm">
   <h4>Bulk Users</h4>
   <div class="grid">
     <div class="grid__item one-whole input-holder">
       <div class="ui-checkbox-inline">
-             <span *ngFor="let role of availableRoles">
-            <p-checkbox [value]="role" [label]="'definitions.role.' + role | translate"
-                        [(ngModel)]="roles"></p-checkbox>
-          </span>
+        <span *ngFor="let role of availableRoles">
+          <p-radioButton name="role" [value]="role" [label]="'definitions.role.' + role | translate"
+                         formControlName="role"></p-radioButton>
+        </span>
       </div>
+    </div>
+
+    <div *ngIf="usersForm.value.role === 'MEMBER'" class="grid__item one-whole input-holder">
+      <label>Specify member categories</label>
+      <div class="ui-checkbox-inline">
+        <span *ngFor="let category of availableMemberCategories">
+          <p-checkbox formControlName="categories" [value]="category" [label]="category"></p-checkbox>
+        </span>
+      </div>
+    </div>
+
+    <div *ngIf="usersForm.value.role" class="grid__item one-whole input-holder">
+      <label>Specify expiry date for "{{'definitions.role.' + usersForm.value.role | translate}}" role:</label>
+      <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string"></p-calendar>
     </div>
 
     <div class="grid__item one-whole">
       <label>First line contains header</label>
-      <p-checkbox [(ngModel)]="firstLineHeader" [binary]="true" (onChange)="computeUsers()"></p-checkbox>
+      <p-checkbox formControlName="firstLineHeader" [binary]="true" (onChange)="computeUsers()"></p-checkbox>
     </div>
 
     <div class="grid__item one-whole">
@@ -38,11 +52,11 @@
     </div>
 
     <div *ngIf="users?.length > 0">
-    <p-dataTable [value]="users">
-      <p-column field="givenName" header="First name"></p-column>
-      <p-column field="surname" header="Last name"></p-column>
-      <p-column field="email" header="Email"></p-column>
-    </p-dataTable>
+      <p-dataTable [value]="users">
+        <p-column field="givenName" header="First name"></p-column>
+        <p-column field="surname" header="Last name"></p-column>
+        <p-column field="email" header="Email"></p-column>
+      </p-dataTable>
     </div>
 
   </div>
@@ -50,7 +64,7 @@
     <button pButton class="ui-button-success" (click)="submit()" label="Submit"></button>
     <button pButton class="ui-button-secondary" (click)="closeBulkMode()" label="Add users individually"></button>
   </div>
-</div>
+</form>
 
 
 

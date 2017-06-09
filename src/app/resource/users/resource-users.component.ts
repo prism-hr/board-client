@@ -9,6 +9,10 @@ import UserRepresentation = b.UserRepresentation;
 import ResourceUserRepresentation = b.ResourceUserRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
 import Role = b.Role;
+import DepartmentRepresentation = b.DepartmentRepresentation;
+import BoardDTO = b.BoardDTO;
+import BoardRepresentation = b.BoardRepresentation;
+import ResourceUserDTO = b.ResourceUserDTO;
 
 @Component({
   templateUrl: 'resource-users.component.html',
@@ -16,13 +20,14 @@ import Role = b.Role;
 })
 export class ResourceUsersComponent implements OnInit {
 
-  users: ResourceUserRepresentation[];
+  users: ResourceUserExtendedRepresentation[];
   resource: ResourceRepresentation;
   availableRoles: Role[];
   loading: boolean;
   userForm: FormGroup;
   adminsCount: number;
   bulkMode: boolean;
+  availableMemberCategories: string[];
 
   constructor(private route: ActivatedRoute, private cdRef: ChangeDetectorRef, private fb: FormBuilder,
               private resourceService: ResourceService) {
@@ -32,7 +37,7 @@ export class ResourceUsersComponent implements OnInit {
         surname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],
         email: ['', [Validators.required, ValidationService.emailValidator]],
       }),
-      roles: [[], Validators.required],
+      roles: [[], Validators.required]
     });
   }
 
@@ -40,14 +45,22 @@ export class ResourceUsersComponent implements OnInit {
     this.route.parent.data.subscribe(data => {
       const resourceScope = data['resourceScope'];
       this.resource = data[resourceScope];
-      if ((<any>this.resource.scope) === 'BOARD') {
-        this.availableRoles = <any>['ADMINISTRATOR', 'AUTHOR'];
+      if (this.resource.scope === 'BOARD') {
+        this.availableRoles = ['ADMINISTRATOR', 'AUTHOR'];
       } else {
-        this.availableRoles = <any>['ADMINISTRATOR', 'AUTHOR', 'MEMBER'];
+        this.availableRoles = ['ADMINISTRATOR', 'AUTHOR', 'MEMBER'];
       }
+      this.availableMemberCategories = this.resource.scope === 'DEPARTMENT'
+        ? (this.resource as DepartmentRepresentation).memberCategories
+        : (this.resource as BoardRepresentation).department.memberCategories;
+
+      const roleDefinitions = {};
+      this.availableRoles.forEach(role => roleDefinitions[role] = this.fb.group({expiryDate: [], categories: []}));
+      this.userForm.setControl('roleDefinitions', this.fb.group(roleDefinitions));
     });
     this.route.data.subscribe(data => {
       this.users = data['users'];
+      this.users.forEach(user => this.preprocessUser(user));
       this.calculateAdminsCount();
     });
   }
@@ -59,7 +72,7 @@ export class ResourceUsersComponent implements OnInit {
     if (checked) {
       observable = this.resourceService.addUserRole(this.resource, user.user, role);
     } else {
-      observable = this.resourceService.removeUserRole(this.resource, user.user, role)
+      observable = this.resourceService.removeUserRole(this.resource, user.user, role);
     }
     observable.subscribe(() => {
       this.loading = false;
@@ -69,10 +82,18 @@ export class ResourceUsersComponent implements OnInit {
 
   createNewUser() {
     this.loading = true;
-    this.resourceService.addUser(this.resource, this.userForm.value)
+    const formValue = this.userForm.value;
+    const userDTO: ResourceUserDTO = {user: formValue.user};
+    userDTO.roles = formValue.roles.map(r => ({
+      role: r,
+      expiryDate: formValue.roleDefinitions[r].expiryDate,
+      categories: formValue.roleDefinitions[r].categories
+    }));
+    this.resourceService.addUser(this.resource, userDTO)
       .subscribe(user => {
         this.loading = false;
         this.userForm.reset({roles: []});
+        this.preprocessUser(user);
         this.users.push(user);
         this.calculateAdminsCount();
       });
@@ -88,8 +109,8 @@ export class ResourceUsersComponent implements OnInit {
       });
   }
 
-  canSwitchRole(user, role) {
-    if (user.roles.indexOf(role) === -1) {
+  canSwitchRole(user: ResourceUserExtendedRepresentation, role: Role) {
+    if (!user.roles.find(r => r.role === role)) {
       return true; // roles not checked, can check at any time
     }
     if (user.roles.length === 1) {
@@ -100,7 +121,7 @@ export class ResourceUsersComponent implements OnInit {
 
   closeBulkMode($event) {
     if ($event === 'refresh') {
-      this.resourceService.getResourceUsers((<any>this.resource.scope).toLowerCase(), this.resource.id)
+      this.resourceService.getResourceUsers(this.resource.scope.toLowerCase(), this.resource.id)
         .subscribe(users => {
           this.users = users;
           this.bulkMode = false;
@@ -110,12 +131,21 @@ export class ResourceUsersComponent implements OnInit {
     }
   }
 
+  private preprocessUser(user: ResourceUserExtendedRepresentation) {
+    user.roles = user.roles.sort((a, b) => this.availableRoles.indexOf(a.role) - this.availableRoles.indexOf(b.role));
+    user.rolesFlat = user.roles.map(r => r.role);
+  }
+
   private lastAdministratorRole() {
-    return (<any>this.resource.scope) === 'DEPARTMENT' && this.adminsCount === 1;
+    return this.resource.scope === 'DEPARTMENT' && this.adminsCount === 1;
   }
 
   private calculateAdminsCount() {
-    this.adminsCount = this.users.filter(u => (<any>u.roles).indexOf('ADMINISTRATOR') > -1).length;
+    this.adminsCount = this.users.filter(u => u.roles.indexOf('ADMINISTRATOR') > -1).length;
   }
 
+}
+
+interface ResourceUserExtendedRepresentation extends ResourceUserRepresentation {
+  rolesFlat?: Role[];
 }

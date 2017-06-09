@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-05-24 11:42:08.
+// Generated using typescript-generator version 1.23.311 on 2017-05-29 09:18:11.
 
 declare namespace b {
 
@@ -113,12 +113,12 @@ declare namespace b {
 
   interface ResourceUserDTO {
     user?: UserDTO;
-    roles?: Role[];
+    roles?: UserRoleDTO[];
   }
 
   interface ResourceUsersDTO {
     users?: UserDTO[];
-    roles?: Role[];
+    roles?: UserRoleDTO[];
   }
 
   interface UserDTO {
@@ -132,6 +132,12 @@ declare namespace b {
     surname?: string;
     documentImage?: DocumentDTO;
     documentImageRequestState?: DocumentRequestState;
+  }
+
+  interface UserRoleDTO {
+    role?: Role;
+    expiryDate?: LocalDate;
+    categories?: string[];
   }
 
   interface ActionRepresentation extends Comparable<ActionRepresentation> {
@@ -199,7 +205,7 @@ declare namespace b {
 
   interface ResourceUserRepresentation {
     user?: UserRepresentation;
-    roles?: Role[];
+    roles?: UserRoleRepresentation[];
   }
 
   interface UserRepresentation {
@@ -209,6 +215,12 @@ declare namespace b {
     email?: string;
     documentImage?: DocumentRepresentation;
     documentImageRequestState?: DocumentRequestState;
+  }
+
+  interface UserRoleRepresentation {
+    role?: Role;
+    expiryDate?: LocalDate;
+    categories?: string[];
   }
 
   interface DocumentDefinition {
@@ -238,6 +250,16 @@ declare namespace b {
     second?: number;
   }
 
+  interface LocalDate extends Temporal, TemporalAdjuster, ChronoLocalDate, Serializable {
+    year?: number;
+    month?: Month;
+    dayOfMonth?: number;
+    dayOfWeek?: DayOfWeek;
+    dayOfYear?: number;
+    monthValue?: number;
+    chronology?: IsoChronology;
+  }
+
   interface Chronology extends Comparable<Chronology> {
     id?: string;
     calendarType?: string;
@@ -252,26 +274,6 @@ declare namespace b {
   interface Serializable {
   }
 
-  interface Comparable<T> {
-  }
-
-  interface TemporalAccessor {
-  }
-
-  interface ChronoLocalDateTime<D> extends Temporal, TemporalAdjuster, Comparable<ChronoLocalDateTime<any>> {
-    chronology?: Chronology;
-  }
-
-  interface LocalDate extends Temporal, TemporalAdjuster, ChronoLocalDate, Serializable {
-    year?: number;
-    month?: Month;
-    dayOfMonth?: number;
-    dayOfWeek?: DayOfWeek;
-    dayOfYear?: number;
-    monthValue?: number;
-    chronology?: IsoChronology;
-  }
-
   interface Era extends TemporalAccessor, TemporalAdjuster {
     value?: number;
   }
@@ -282,6 +284,16 @@ declare namespace b {
   interface ChronoLocalDate extends Temporal, TemporalAdjuster, Comparable<ChronoLocalDate> {
     era?: Era;
     leapYear?: boolean;
+    chronology?: Chronology;
+  }
+
+  interface Comparable<T> {
+  }
+
+  interface TemporalAccessor {
+  }
+
+  interface ChronoLocalDateTime<D> extends Temporal, TemporalAdjuster, Comparable<ChronoLocalDateTime<any>> {
     chronology?: Chronology;
   }
 
@@ -298,9 +310,9 @@ declare namespace b {
 
   type Scope = 'DEPARTMENT' | 'BOARD' | 'POST';
 
-  type Role = 'ADMINISTRATOR' | 'AUTHOR' | 'MEMBER' | 'PUBLIC';
-
   type DocumentRequestState = 'DISPLAY_FIRST' | 'DISPLAY_AGAIN' | 'DISPLAY_NEVER';
+
+  type Role = 'ADMINISTRATOR' | 'AUTHOR' | 'MEMBER' | 'PUBLIC';
 
   type DayOfWeek = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
 

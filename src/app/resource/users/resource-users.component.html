@@ -1,76 +1,100 @@
-  <md-card-content>
-    <div *ngIf="!bulkMode">
-      <h4>New User</h4>
-      <form [formGroup]="userForm" (ngSubmit)="createNewUser()" autocomplete="off" novalidate>
-        <div formGroupName="user" class="grid">
-          <div class="grid__item small--one-whole medium-up--one-third input-holder">
-            <input pInputText formControlName="givenName" placeholder="First Name" required>
-            <control-messages [control]="userForm.get('user').get('givenName')"></control-messages>
-          </div>
-          <div class="grid__item small--one-whole medium-up--one-third input-holder">
-            <input pInputText formControlName="surname" placeholder="Last Name" required>
-            <control-messages [control]="userForm.get('user').get('surname')"></control-messages>
-          </div>
-          <div class="grid__item small--one-whole medium-up--one-third input-holder">
-            <input pInputText formControlName="email" placeholder="Email" required>
-            <control-messages [control]="userForm.get('user').get('email')"></control-messages>
-          </div>
+<md-card-content>
+  <div *ngIf="!bulkMode">
+    <h4>New User</h4>
 
+    <form [formGroup]="userForm" (ngSubmit)="createNewUser()" autocomplete="off" novalidate>
+      <div formGroupName="user" class="grid">
+        <div class="grid__item small--one-whole medium-up--one-third input-holder">
+          <input pInputText formControlName="givenName" placeholder="First Name" required>
+          <control-messages [control]="userForm.get('user').get('givenName')"></control-messages>
         </div>
-       <div class="grid">
-         <div class="grid__item one-whole input-holder">
-           <div class="ui-checkbox-inline">
-             <span *ngFor="let role of availableRoles">
-            <p-checkbox [value]="role" [label]="'definitions.role.' + role | translate"
-                        formControlName="roles"></p-checkbox>
-          </span>
-           </div>
-         </div>
-       </div>
-
-
-        <div class="action-holder" fxLayout="row" fxLayoutAlign="space-between center">
-          <button pButton class="ui-button-success" type="submit" [disabled]="userForm.invalid"
-                  label="Add user"></button>
-          <button pButton class="ui-button-secondary" (click)="bulkMode = true" label="Add users in bulk"></button>
+        <div class="grid__item small--one-whole medium-up--one-third input-holder">
+          <input pInputText formControlName="surname" placeholder="Last Name" required>
+          <control-messages [control]="userForm.get('user').get('surname')"></control-messages>
         </div>
-      </form>
-    </div>
+        <div class="grid__item small--one-whole medium-up--one-third input-holder">
+          <input pInputText formControlName="email" placeholder="Email" required>
+          <control-messages [control]="userForm.get('user').get('email')"></control-messages>
+        </div>
+      </div>
 
-    <b-resource-users-bulk *ngIf="bulkMode" [resource]="resource" [availableRoles]="availableRoles" (close)="closeBulkMode($event)">
-    </b-resource-users-bulk>
-
-    <div class="grid grid--half-gutters">
-      <div *ngFor="let user of users" class="grid__item small--one-whole medium-up--one-half">
-        <md-card>
-          <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
-            <div md-card-avatar class="logo-holder-small default-logo"
-                            [ngClass]="{'no-background': user.user.documentImage}">
-              <cl-image *ngIf="user.user.documentImage" public-id="{{user.user.documentImage.cloudinaryId}}"
-                        class="img">
-                <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
-              </cl-image>
-            </div>
-            <md-card-title>
-              <h3>
-                {{user.user.givenName}} {{user.user.surname}}
-              </h3>
-            </md-card-title>
-          </md-card-header>
-          <md-card-content>
+      <div *ngIf="availableRoles" class="grid">
+        <div class="grid__item one-whole input-holder">
+          <div class="ui-checkbox-inline">
             <span *ngFor="let role of availableRoles">
               <p-checkbox [value]="role" [label]="'definitions.role.' + role | translate"
-                          [ngModel]="user.roles" (onChange)="userRoleChanged(user, role, checked)"
-                          [disabled]="loading || !canSwitchRole(user, role)">
-              </p-checkbox>
+                          formControlName="roles"></p-checkbox>
             </span>
-          </md-card-content>
-          <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
-            <button pButton (click)="removeUser(user)" class="ui-button-secondary" label="Remove"
-                    [disabled]="loading || (lastAdministratorRole() && user.roles.indexOf('ADMINISTRATOR') > -1)"></button>
-          </md-card-actions>
-        </md-card>
+          </div>
+        </div>
 
+        <div formGroupName="roleDefinitions">
+          <div *ngIf="userForm.value.roles.indexOf('MEMBER') > -1" formGroupName="MEMBER">
+            <label>Specify member categories</label>
+            <div class="ui-checkbox-inline">
+              <span *ngFor="let category of availableMemberCategories">
+                <p-checkbox formControlName="categories" [value]="category" [label]="category"></p-checkbox>
+              </span>
+            </div>
+          </div>
+
+          <div *ngFor="let role of userForm.value.roles" [formGroupName]="role"
+               class="grid__item one-whole input-holder">
+            <label>Specify expiry date for "{{'definitions.role.' + role | translate}}" role:</label>
+            <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string"></p-calendar>
+          </div>
+        </div>
       </div>
+
+      <div class="action-holder" fxLayout="row" fxLayoutAlign="space-between center">
+        <button pButton class="ui-button-success" type="submit" [disabled]="userForm.invalid"
+                label="Add user"></button>
+        <button pButton class="ui-button-secondary" (click)="bulkMode = true" label="Add users in bulk"></button>
+      </div>
+    </form>
+  </div>
+
+  <b-resource-users-bulk *ngIf="bulkMode" [resource]="resource" [availableRoles]="availableRoles"
+                         [availableMemberCategories]="availableMemberCategories" (close)="closeBulkMode($event)">
+  </b-resource-users-bulk>
+
+  <div class="grid grid--half-gutters">
+    <div *ngFor="let user of users" class="grid__item small--one-whole medium-up--one-half">
+      <md-card>
+        <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
+          <div md-card-avatar class="logo-holder-small default-logo"
+               [ngClass]="{'no-background': user.user.documentImage}">
+            <cl-image *ngIf="user.user.documentImage" public-id="{{user.user.documentImage.cloudinaryId}}"
+                      class="img">
+              <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
+            </cl-image>
+          </div>
+          <md-card-title>
+            <h3>
+              {{user.user.givenName}} {{user.user.surname}}
+            </h3>
+          </md-card-title>
+        </md-card-header>
+        <md-card-content>
+          <span *ngFor="let role of availableRoles">
+            <p-checkbox [value]="role" [label]="'definitions.role.' + role | translate"
+                        [ngModel]="user.rolesFlat" (onChange)="userRoleChanged(user, role, checked)"
+                        [disabled]="loading || !canSwitchRole(user, role)">
+            </p-checkbox>
+          </span>
+          <div *ngFor="let role of user.roles">
+            {{'definitions.role.' + role.role | translate}} expiry date: {{role.expiryDate | date : 'shortDate'}}
+            <div *ngIf="role.categories">Categories:
+              <span *ngFor="let category of role.categories">{{category}}</span>
+            </div>
+          </div>
+        </md-card-content>
+        <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+          <button pButton (click)="removeUser(user)" class="ui-button-secondary" label="Remove"
+                  [disabled]="loading || (lastAdministratorRole() && user.roles.indexOf('ADMINISTRATOR') > -1)"></button>
+        </md-card-actions>
+      </md-card>
+
     </div>
-  </md-card-content>
+  </div>
+</md-card-content>
