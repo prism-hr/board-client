@@ -22,12 +22,10 @@ export class ResourceUsersComponent implements OnInit {
 
   users: ResourceUserExtendedRepresentation[];
   resource: ResourceRepresentation;
-  availableRoles: Role[];
   loading: boolean;
   userForm: FormGroup;
   adminsCount: number;
   bulkMode: boolean;
-  availableMemberCategories: string[];
 
   constructor(private route: ActivatedRoute, private cdRef: ChangeDetectorRef, private fb: FormBuilder,
               private resourceService: ResourceService) {
@@ -36,8 +34,7 @@ export class ResourceUsersComponent implements OnInit {
         givenName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
         surname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],
         email: ['', [Validators.required, ValidationService.emailValidator]],
-      }),
-      roles: [[], Validators.required]
+      })
     });
   }
 
@@ -45,18 +42,6 @@ export class ResourceUsersComponent implements OnInit {
     this.route.parent.data.subscribe(data => {
       const resourceScope = data['resourceScope'];
       this.resource = data[resourceScope];
-      if (this.resource.scope === 'BOARD') {
-        this.availableRoles = ['ADMINISTRATOR', 'AUTHOR'];
-      } else {
-        this.availableRoles = ['ADMINISTRATOR', 'AUTHOR', 'MEMBER'];
-      }
-      this.availableMemberCategories = this.resource.scope === 'DEPARTMENT'
-        ? (this.resource as DepartmentRepresentation).memberCategories
-        : (this.resource as BoardRepresentation).department.memberCategories;
-
-      const roleDefinitions = {};
-      this.availableRoles.forEach(role => roleDefinitions[role] = this.fb.group({expiryDate: [], categories: []}));
-      this.userForm.setControl('roleDefinitions', this.fb.group(roleDefinitions));
     });
     this.route.data.subscribe(data => {
       this.users = data['users'];
@@ -65,15 +50,11 @@ export class ResourceUsersComponent implements OnInit {
     });
   }
 
-  userRoleChanged(user, role, checked) {
+  userRoleChanged(user: ResourceUserRepresentation) {
     this.loading = true;
     this.cdRef.detectChanges();
     let observable: Observable<Response>;
-    if (checked) {
-      observable = this.resourceService.addUserRole(this.resource, user.user, role);
-    } else {
-      observable = this.resourceService.removeUserRole(this.resource, user.user, role);
-    }
+    observable = this.resourceService.updateResourceUser(this.resource, user.user, {user: user.user, roles: user.roles});
     observable.subscribe(() => {
       this.loading = false;
       this.calculateAdminsCount();
@@ -132,7 +113,8 @@ export class ResourceUsersComponent implements OnInit {
   }
 
   private preprocessUser(user: ResourceUserExtendedRepresentation) {
-    user.roles = user.roles.sort((a, b) => this.availableRoles.indexOf(a.role) - this.availableRoles.indexOf(b.role));
+    const rolesOrder = ['ADMINISTRATOR', 'AUTHOR', 'MEMBER'];
+    user.roles = user.roles.sort((a, b) => rolesOrder.indexOf(a.role) - rolesOrder.indexOf(b.role));
     user.rolesFlat = user.roles.map(r => r.role);
   }
 

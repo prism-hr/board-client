@@ -69,14 +69,9 @@ export class ResourceService {
     return this.http.patch('/api/departments/' + id, department).map(res => res.json());
   }
 
-  addUserRole(resource: ResourceRepresentation, user: UserRepresentation, role: string) {
+  updateResourceUser(resource: ResourceRepresentation, user: UserRepresentation, resourceUserDTO: ResourceUserDTO) {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
-    return this.http.put('/api/' + resourceCol + '/' + resource.id + '/users/' + user.id + '/roles/' + role, {});
-  }
-
-  removeUserRole(resource: ResourceRepresentation, user: UserRepresentation, role: string) {
-    const resourceCol = (<any>resource.scope).toLowerCase() + 's';
-    return this.http.delete('/api/' + resourceCol + '/' + resource.id + '/users/' + user.id + '/roles/' + role, {});
+    return this.http.put('/api/' + resourceCol + '/' + resource.id + '/users/' + user.id, resourceUserDTO).map(res => res.json());
   }
 
   addUser(resource: ResourceRepresentation, user: ResourceUserDTO) {

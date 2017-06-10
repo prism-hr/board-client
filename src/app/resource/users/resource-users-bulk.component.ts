@@ -9,7 +9,6 @@ import ResourceRepresentation = b.ResourceRepresentation;
 import UserDTO = b.UserDTO;
 import UserRoleDTO = b.UserRoleDTO;
 import Role = b.Role;
-import * as _ from 'lodash';
 
 @Component({
   selector: 'b-resource-users-bulk',
@@ -25,27 +24,17 @@ export class ResourceUsersBulkComponent implements OnInit {
   users: UserDTO[];
   userErrors: any[];
   @Input() resource: any;
-  @Input() availableRoles: Role[];
-  @Input() availableMemberCategories: string[];
   @Output() close: EventEmitter<any> = new EventEmitter();
   @ViewChild('csvUploaderInput') uploadElRef: ElementRef;
 
   constructor(private fb: FormBuilder, private resourceService: ResourceService) {
     this.usersForm = this.fb.group({
-      role: [null, Validators.required],
-      categories: [[]],
-      expiryDate: [null, Validators.required],
       firstLineHeader: [true]
     });
     this.uploader = new FileUploader({});
   }
 
   ngOnInit() {
-    this.usersForm.get('role').valueChanges.subscribe((role: Role) => {
-      this.usersForm.patchValue({categories: []});
-      this.usersForm.get('categories').setValidators(role === 'MEMBER' && Validators.required);
-    });
-
     this.uploader.onAfterAddingFile = (item: FileItem) => {
       const reader = new FileReader();
       reader.onload = e => {
@@ -92,7 +81,12 @@ export class ResourceUsersBulkComponent implements OnInit {
   }
 
   submit() {
-    const roles: UserRoleDTO[] = [_.pick(this.usersForm.value, ['role', 'categories', 'expiryDate'])];
+    const formValue = this.usersForm.value;
+    const roles: UserRoleDTO[] = formValue.roles.map(r => ({
+      role: r,
+      expiryDate: formValue.roleDefinitions[r].expiryDate,
+      categories: formValue.roleDefinitions[r].categories
+    }));
     this.resourceService.addUsersInBulk(this.resource, {users: this.users, roles})
       .subscribe(() => {
         this.close.emit('refresh');

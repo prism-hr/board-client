@@ -17,33 +17,8 @@
           <control-messages [control]="userForm.get('user').get('email')"></control-messages>
         </div>
       </div>
-
-      <div *ngIf="availableRoles" class="grid">
-        <div class="grid__item one-whole input-holder">
-          <div class="ui-checkbox-inline">
-            <span *ngFor="let role of availableRoles">
-              <p-checkbox [value]="role" [label]="'definitions.role.' + role | translate"
-                          formControlName="roles"></p-checkbox>
-            </span>
-          </div>
-        </div>
-
-        <div formGroupName="roleDefinitions">
-          <div *ngIf="userForm.value.roles.indexOf('MEMBER') > -1" formGroupName="MEMBER">
-            <label>Specify member categories</label>
-            <div class="ui-checkbox-inline">
-              <span *ngFor="let category of availableMemberCategories">
-                <p-checkbox formControlName="categories" [value]="category" [label]="category"></p-checkbox>
-              </span>
-            </div>
-          </div>
-
-          <div *ngFor="let role of userForm.value.roles" [formGroupName]="role"
-               class="grid__item one-whole input-holder">
-            <label>Specify expiry date for "{{'definitions.role.' + role | translate}}" role:</label>
-            <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string"></p-calendar>
-          </div>
-        </div>
+      <div *ngIf="resource" class="grid">
+        <b-resource-user-role-form-part [resource]="resource" [parentForm]="userForm"></b-resource-user-role-form-part>
       </div>
 
       <div class="action-holder" fxLayout="row" fxLayoutAlign="space-between center">
@@ -54,8 +29,7 @@
     </form>
   </div>
 
-  <b-resource-users-bulk *ngIf="bulkMode" [resource]="resource" [availableRoles]="availableRoles"
-                         [availableMemberCategories]="availableMemberCategories" (close)="closeBulkMode($event)">
+  <b-resource-users-bulk *ngIf="bulkMode" [resource]="resource" (close)="closeBulkMode($event)">
   </b-resource-users-bulk>
 
   <div class="grid grid--half-gutters">
@@ -82,10 +56,16 @@
                         [disabled]="loading || !canSwitchRole(user, role)">
             </p-checkbox>
           </span>
-          <div *ngFor="let role of user.roles">
-            {{'definitions.role.' + role.role | translate}} expiry date: {{role.expiryDate | date : 'shortDate'}}
-            <div *ngIf="role.categories">Categories:
-              <span *ngFor="let category of role.categories">{{category}}</span>
+          <div>
+            Roles:
+            <div *ngFor="let role of user.roles">
+              * {{'definitions.role.' + role.role | translate}}
+              <span *ngIf="role.expiryDate">
+                [Expiry date: {{role.expiryDate | date : 'shortDate'}}]
+              </span>
+              <span *ngIf="role.categories.length > 0">
+                [Member categories: <span *ngFor="let category of role.categories">{{category}}</span>]
+              </span>
             </div>
           </div>
         </md-card-content>

@@ -77,6 +77,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Ng2UiAuthModule} from 'ng2-ui-auth';
 import {MyAuthConfig} from './auth.config';
 import {ClipboardModule} from 'ngx-clipboard/dist';
+import {ResourceUserEditDialogComponent} from './resource/users/resource-user-edit-dialog.component';
+import {ResourceUserRoleFormPartComponent} from './resource/users/resource-user-role-form-part.component';
 
 @NgModule({
   declarations: [
@@ -107,6 +109,8 @@ import {ClipboardModule} from 'ngx-clipboard/dist';
     DepartmentManageComponent,
     DepartmentViewComponent,
     ResourceUsersComponent,
+    ResourceUserRoleFormPartComponent,
+    ResourceUserEditDialogComponent,
     ResourceUsersBulkComponent,
     PostEditComponent,
     PostViewComponent,
@@ -261,7 +265,7 @@ import {ClipboardModule} from 'ngx-clipboard/dist';
     AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, ResourceUsersResolver, PostService, UserService,
     FileUploadService
   ],
-  entryComponents: [AuthenticationDialogComponent, PostCommentDialogComponent, UserImageDialogComponent],
+  entryComponents: [AuthenticationDialogComponent, PostCommentDialogComponent, UserImageDialogComponent, ResourceUserEditDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {
