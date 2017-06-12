@@ -1,10 +1,10 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ResourceService} from '../../services/resource.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ValidationService} from '../../validation/validation.service';
-import {Observable} from 'rxjs/Observable';
-import {Response} from '@angular/http';
+import {ResourceUserEditDialogComponent} from './resource-user-edit-dialog.component';
+import {MdDialog} from '@angular/material';
 import UserRepresentation = b.UserRepresentation;
 import ResourceUserRepresentation = b.ResourceUserRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
@@ -20,14 +20,14 @@ import ResourceUserDTO = b.ResourceUserDTO;
 })
 export class ResourceUsersComponent implements OnInit {
 
-  users: ResourceUserExtendedRepresentation[];
+  users: ResourceUserRepresentation[];
   resource: ResourceRepresentation;
   loading: boolean;
   userForm: FormGroup;
-  adminsCount: number;
+  lastAdminRole: boolean;
   bulkMode: boolean;
 
-  constructor(private route: ActivatedRoute, private cdRef: ChangeDetectorRef, private fb: FormBuilder,
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private dialog: MdDialog,
               private resourceService: ResourceService) {
     this.userForm = this.fb.group({
       user: this.fb.group({
@@ -46,17 +46,6 @@ export class ResourceUsersComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.users = data['users'];
       this.users.forEach(user => this.preprocessUser(user));
-      this.calculateAdminsCount();
-    });
-  }
-
-  userRoleChanged(user: ResourceUserRepresentation) {
-    this.loading = true;
-    this.cdRef.detectChanges();
-    let observable: Observable<Response>;
-    observable = this.resourceService.updateResourceUser(this.resource, user.user, {user: user.user, roles: user.roles});
-    observable.subscribe(() => {
-      this.loading = false;
       this.calculateAdminsCount();
     });
   }
@@ -80,24 +69,27 @@ export class ResourceUsersComponent implements OnInit {
       });
   }
 
-  removeUser(user) {
-    this.resourceService.removeUser(this.resource, user.user)
+  removeUser(resourceUser) {
+    this.resourceService.removeUser(this.resource, resourceUser.user)
       .subscribe(() => {
         this.loading = false;
-        const idx = this.users.indexOf(user);
+        const idx = this.users.indexOf(resourceUser);
         this.users.splice(idx, 1);
         this.calculateAdminsCount();
       });
   }
 
-  canSwitchRole(user: ResourceUserExtendedRepresentation, role: Role) {
-    if (!user.roles.find(r => r.role === role)) {
-      return true; // roles not checked, can check at any time
-    }
-    if (user.roles.length === 1) {
-      return false; // cannot remove last role
-    }
-    return !(this.lastAdministratorRole() && role === 'ADMINISTRATOR'); // cannot remove last administrator role for department
+  openUserSettings(resourceUser) {
+    const dialogRef = this.dialog.open(ResourceUserEditDialogComponent,
+      {data: {resource: this.resource, lastAdminRole: this.lastAdminRole && this.isAdmin(resourceUser), resourceUser}});
+    dialogRef.afterClosed().subscribe((savedResourceUser: ResourceUserRepresentation) => {
+      if (savedResourceUser) {
+        this.preprocessUser(savedResourceUser);
+        const idx = this.users.findIndex(ru => ru.user.id === savedResourceUser.user.id);
+        this.users.splice(idx, 1, savedResourceUser);
+        this.calculateAdminsCount();
+      }
+    });
   }
 
   closeBulkMode($event) {
@@ -112,22 +104,18 @@ export class ResourceUsersComponent implements OnInit {
     }
   }
 
-  private preprocessUser(user: ResourceUserExtendedRepresentation) {
-    const rolesOrder = ['ADMINISTRATOR', 'AUTHOR', 'MEMBER'];
-    user.roles = user.roles.sort((a, b) => rolesOrder.indexOf(a.role) - rolesOrder.indexOf(b.role));
-    user.rolesFlat = user.roles.map(r => r.role);
+  isAdmin(user: ResourceUserRepresentation) {
+    return user.roles.findIndex(r => r.role === 'ADMINISTRATOR') > -1;
   }
 
-  private lastAdministratorRole() {
-    return this.resource.scope === 'DEPARTMENT' && this.adminsCount === 1;
+  private preprocessUser(user: ResourceUserRepresentation) {
+    const rolesOrder = ['ADMINISTRATOR', 'AUTHOR', 'MEMBER'];
+    user.roles = user.roles.sort((a, b) => rolesOrder.indexOf(a.role) - rolesOrder.indexOf(b.role));
   }
 
   private calculateAdminsCount() {
-    this.adminsCount = this.users.filter(u => u.roles.indexOf('ADMINISTRATOR') > -1).length;
+    const adminsCount = this.users.filter(u => u.roles.map(ur => ur.role).indexOf('ADMINISTRATOR') > -1).length;
+    this.lastAdminRole = this.resource.scope === 'DEPARTMENT' && adminsCount === 1;
   }
 
-}
-
-interface ResourceUserExtendedRepresentation extends ResourceUserRepresentation {
-  rolesFlat?: Role[];
 }

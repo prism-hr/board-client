@@ -33,45 +33,40 @@
   </b-resource-users-bulk>
 
   <div class="grid grid--half-gutters">
-    <div *ngFor="let user of users" class="grid__item small--one-whole medium-up--one-half">
+    <div *ngFor="let resourceUser of users" class="grid__item small--one-whole medium-up--one-half">
       <md-card>
         <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
           <div md-card-avatar class="logo-holder-small default-logo"
-               [ngClass]="{'no-background': user.user.documentImage}">
-            <cl-image *ngIf="user.user.documentImage" public-id="{{user.user.documentImage.cloudinaryId}}"
+               [ngClass]="{'no-background': resourceUser.user.documentImage}">
+            <cl-image *ngIf="resourceUser.user.documentImage" public-id="{{resourceUser.user.documentImage.cloudinaryId}}"
                       class="img">
               <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
             </cl-image>
           </div>
           <md-card-title>
             <h3>
-              {{user.user.givenName}} {{user.user.surname}}
+              {{resourceUser.user.givenName}} {{resourceUser.user.surname}}
             </h3>
           </md-card-title>
         </md-card-header>
         <md-card-content>
-          <span *ngFor="let role of availableRoles">
-            <p-checkbox [value]="role" [label]="'definitions.role.' + role | translate"
-                        [ngModel]="user.rolesFlat" (onChange)="userRoleChanged(user, role, checked)"
-                        [disabled]="loading || !canSwitchRole(user, role)">
-            </p-checkbox>
-          </span>
           <div>
             Roles:
-            <div *ngFor="let role of user.roles">
-              * {{'definitions.role.' + role.role | translate}}
-              <span *ngIf="role.expiryDate">
-                [Expiry date: {{role.expiryDate | date : 'shortDate'}}]
+            <div *ngFor="let userRole of resourceUser.roles">
+              * {{'definitions.role.' + userRole.role | translate}}
+              <span *ngIf="userRole.expiryDate">
+                [Expiry date: {{userRole.expiryDate | date : 'shortDate'}}]
               </span>
-              <span *ngIf="role.categories.length > 0">
-                [Member categories: <span *ngFor="let category of role.categories">{{category}}</span>]
+              <span *ngIf="userRole.categories.length > 0">
+                [Member categories: <span *ngFor="let category of userRole.categories">{{category}}</span>]
               </span>
             </div>
           </div>
         </md-card-content>
         <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
-          <button pButton (click)="removeUser(user)" class="ui-button-secondary" label="Remove"
-                  [disabled]="loading || (lastAdministratorRole() && user.roles.indexOf('ADMINISTRATOR') > -1)"></button>
+          <button pButton (click)="removeUser(resourceUser)" class="ui-button-secondary" label="Remove"
+                  [disabled]="loading || (lastAdminRole && isAdmin(resourceUser))"></button>
+          <a pButton (click)="openUserSettings(resourceUser)" class="ui-button-info ui-button-icon-only" icon="fa-settings"></a>
         </md-card-actions>
       </md-card>
 
