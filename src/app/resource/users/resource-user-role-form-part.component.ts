@@ -17,9 +17,9 @@ import ResourceUserDTO = b.ResourceUserDTO;
         <div class="ui-checkbox-inline">
             <span *ngFor="let role of availableRoles">
               <p-checkbox [value]="role" [label]="'definitions.role.' + role | translate"
-                          formControlName="roles"></p-checkbox>
+                          formControlName="roles" (onChange)="roleChanged(role)"></p-checkbox>
             </span>
-            <control-messages [control]="parentForm.get('roles')"></control-messages>
+          <control-messages [control]="parentForm.get('roles')"></control-messages>
         </div>
       </div>
 
@@ -30,15 +30,21 @@ import ResourceUserDTO = b.ResourceUserDTO;
               <span *ngFor="let category of availableMemberCategories">
                 <p-checkbox formControlName="categories" [value]="category" [label]="category"></p-checkbox>
               </span>
-              <control-messages [control]="parentForm.get('roleDefinitions').get('MEMBER').get('categories')"></control-messages>
+            <control-messages [control]="parentForm.get('roleDefinitions').get('MEMBER').get('categories')"></control-messages>
           </div>
         </div>
 
-        <div *ngFor="let role of parentForm.value.roles" [formGroupName]="role"
-             class="grid__item one-whole input-holder">
-          <label>Specify expiry date for "{{'definitions.role.' + role | translate}}" role:</label>
-          <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string"></p-calendar>
-          <control-messages [control]="parentForm.get('roleDefinitions').get(role).get('expiryDate')"></control-messages>
+        <div *ngFor="let role of parentForm.value.roles" [formGroupName]="role">
+          <div class="grid__item one-whole input-holder">
+            <p-checkbox label="No expiry date" formControlName="noExpiryDate" binary="true"
+                        (onChange)="noExpiryDateChanged(role)"></p-checkbox>
+          </div>
+
+          <div *ngIf="!parentForm.get('roleDefinitions').get(role).get('noExpiryDate').value" class="grid__item one-whole input-holder">
+            <label>Specify expiry date for "{{'definitions.role.' + role | translate}}" role:</label>
+            <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string"></p-calendar>
+            <control-messages [control]="parentForm.get('roleDefinitions').get(role).get('expiryDate')"></control-messages>
+          </div>
         </div>
       </div>
     </div>
@@ -68,15 +74,28 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
 
     this.parentForm.setControl('roles', this.fb.control([], Validators.required));
     const roleDefinitions = {};
-    this.availableRoles.forEach(role => roleDefinitions[role] = this.fb.group({expiryDate: [], categories: []}));
+    this.availableRoles.forEach(role => roleDefinitions[role] = this.fb.group({noExpiryDate: [true], expiryDate: [], categories: []}));
     this.parentForm.setControl('roleDefinitions', this.fb.group(roleDefinitions));
+  }
 
-    this.parentForm.get('roles').valueChanges.subscribe((roles: Role[]) => {
-      const memberSelected = roles.indexOf('MEMBER') > -1;
-      if (memberSelected) {
-        this.parentForm.patchValue({roleDefinitions: {MEMBER: {categories: []}}});
-      }
-      this.parentForm.get('roleDefinitions').get('MEMBER').get('categories').setValidators(memberSelected && Validators.required);
-    });
+  roleChanged(role: Role) {
+    if (role === 'MEMBER') {
+      this.parentForm.patchValue({roleDefinitions: {MEMBER: {categories: []}}});
+      const checked = this.parentForm.get('roles').value.indexOf(role) > -1;
+      this.parentForm.get('roleDefinitions').get(role).get('categories').setValidators(checked && Validators.required);
+    }
+    this.refreshValidators(role);
+  }
+
+  noExpiryDateChanged(role: Role) {
+    this.parentForm.get('roleDefinitions').get(role).get('expiryDate').setValue(null);
+    this.refreshValidators(role);
+  }
+
+  private refreshValidators(role: Role) {
+    const noExpiryDate = this.parentForm.get('roleDefinitions').get(role).get('noExpiryDate').value;
+    const expiryDateControl = this.parentForm.get('roleDefinitions').get(role).get('expiryDate');
+    expiryDateControl.setValidators(!noExpiryDate && Validators.required);
+    expiryDateControl.updateValueAndValidity();
   }
 }
