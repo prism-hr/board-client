@@ -5,8 +5,6 @@ import {ValidationService} from '../../validation/validation.service';
 import * as _ from 'lodash';
 import {MdDialog} from '@angular/material';
 import {DefinitionsService} from '../../services/definitions.service';
-import {SelectItem} from 'primeng/primeng';
-import {TranslateService} from '@ngx-translate/core';
 import {PostService} from '../post.service';
 import {PostCommentDialogComponent} from '../post-comment.dialog';
 import DepartmentDTO = b.DepartmentDTO;
@@ -26,7 +24,7 @@ export class PostEditComponent implements OnInit {
   board: BoardRepresentation;
   post: PostRepresentation;
   postForm: FormGroup;
-  relations: SelectItem[];
+  definitions: { [key: string]: any };
   showExistingRelation: boolean;
   actionView: string;
   availableActions: Action[];
@@ -36,15 +34,8 @@ export class PostEditComponent implements OnInit {
     'memberCategories', 'liveTimestamp', 'deadTimestamp'];
 
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private dialog: MdDialog,
-              private translationService: TranslateService, private definitionsService: DefinitionsService,
-              private postService: PostService) {
-    const definitions = definitionsService.getDefinitions();
-    translationService.get('definitions.existingRelation')
-      .subscribe(relationTranslations => {
-        this.relations = (definitions['existingRelation'] as string[]).map(relation => {
-          return {label: relationTranslations[relation].name, value: relation};
-        });
-      });
+              private definitionsService: DefinitionsService, private postService: PostService) {
+    this.definitions = definitionsService.getDefinitions();
   }
 
   ngOnInit() {

@@ -27,7 +27,7 @@
         <div class="grid__item one-whole input-holder">
           <label>Default post visibility:</label>
           <div class="ui-radiobutton-inline">
-            <p-radioButton *ngFor="let postVisibility of definitions.postVisibility"
+            <p-radioButton *ngFor="let postVisibility of definitions['postVisibility']"
                            [value]="postVisibility" name="defaultPostVisibility"
                            formControlName="defaultPostVisibility"
                            [label]="'definitions.postVisibility.' + postVisibility | translate">

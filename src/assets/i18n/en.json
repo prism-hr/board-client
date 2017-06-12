@@ -17,7 +17,8 @@
         "explanationPrompt": "Please tell us who you work with"
       },
       "EMPLOYER": {
-        "name": "Employer"
+        "name": "Employer",
+        "explanationPrompt": "Please explain your interest in us"
       },
       "OTHER": {
         "name": "Other",

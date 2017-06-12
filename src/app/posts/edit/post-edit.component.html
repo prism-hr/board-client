@@ -68,14 +68,16 @@
           <div *ngIf="showExistingRelation">
             <div class="grid__item one-whole input-holder">
               <label>What is your relationship with our department?</label>
-              <p-dropdown [options]="relations" formControlName="existingRelation"
-                          placeholder="Select relationship..."></p-dropdown>
+              <p-radioButton *ngFor="let relation of definitions['existingRelation']"
+                             [value]="relation" name="existingRelation"
+                             formControlName="existingRelation"
+                             [label]="'definitions.existingRelation.' + relation + '.name'| translate">
+              </p-radioButton>
               <control-messages [control]="postForm.controls.existingRelation"></control-messages>
             </div>
 
-            <div
-              *ngIf="postForm.value.existingRelation === 'OTHER' || postForm.value.existingRelation === 'COLLABORATOR'"
-              class="grid__item one-whole input-holder">
+            <div *ngIf="['COLLABORATOR', 'EMPLOYER', 'OTHER'].indexOf(postForm.value.existingRelation) > -1"
+                 class="grid__item one-whole input-holder">
               <label>
                 {{'definitions.existingRelation.' + postForm.value.existingRelation + ".explanationPrompt" |
                 translate}}
