@@ -11,9 +11,10 @@
           </a>
         </div>
         <div *ngIf="user" class="top-nav">
-          <a pButton class="ui-button" routerLink="/" label="Posts"></a>
-          <a pButton class="ui-button" routerLink="/boards" label="Boards"></a>
-          <a pButton class="ui-button" routerLink="/departments" label="Departments"></a>
+          <a pButton class="ui-button" routerLink="/" routerLinkActive="active"
+             [routerLinkActiveOptions]="{exact:true}" label="Posts"></a>
+          <a pButton class="ui-button" routerLink="/boards" routerLinkActive="active" label="Boards"></a>
+          <a pButton class="ui-button" routerLink="/departments" routerLinkActive="active" label="Departments"></a>
         </div>
       </div>
       <nav class="grid__item one-third text-right">
