@@ -55,7 +55,8 @@ import {
   MessagesModule,
   RadioButtonModule,
   SplitButtonModule,
-  TabMenuModule, ToggleButtonModule
+  TabMenuModule,
+  ToggleButtonModule
 } from 'primeng/primeng';
 import {PostService} from './posts/post.service';
 import {XeditableInputComponent} from './controls/xeditable-input.component';
@@ -185,7 +186,8 @@ import {ResourceUserRoleFormPartComponent} from './resource/users/resource-user-
               {
                 path: 'newPost',
                 component: PostEditComponent,
-                canActivate: [AuthGuard]
+                canActivate: [AuthGuard],
+                data: {showRegister: true}
               },
               {
                 path: ':postId',

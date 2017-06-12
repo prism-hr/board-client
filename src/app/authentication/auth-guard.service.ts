@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CanActivate} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate} from '@angular/router';
 import {AuthenticationDialogComponent} from './authentication.dialog';
 import {MdDialog, MdDialogConfig} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
@@ -12,8 +12,8 @@ export class AuthGuard implements CanActivate {
   constructor(private dialog: MdDialog, private authService: AuthService) {
   }
 
-  canActivate(): Observable<boolean> {
-    return this.ensureAuthenticated(false).first();
+  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
+    return this.ensureAuthenticated(route.data.showRegister).first();
   }
 
   ensureAuthenticated(showRegister: boolean): Observable<boolean> {
