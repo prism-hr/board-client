@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AuthGuard} from '../authentication/auth-guard.service';
 
 @Component({
@@ -8,15 +8,22 @@ import {AuthGuard} from '../authentication/auth-guard.service';
   templateUrl: './home-public.component.html',
   styleUrls: ['./home-public.component.scss']
 })
-export class HomePublicComponent {
+export class HomePublicComponent implements OnInit {
 
   boardForm: FormGroup;
 
-  constructor(private router: Router, private fb: FormBuilder, private authGuard: AuthGuard) {
+  constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private authGuard: AuthGuard) {
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       departmentName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]]
     });
+  }
+
+  ngOnInit() {
+    const showLogin = this.route.snapshot.queryParams.showLogin;
+    if (showLogin) {
+      this.authGuard.ensureAuthenticated(false).subscribe();
+    }
   }
 
   submit() {
