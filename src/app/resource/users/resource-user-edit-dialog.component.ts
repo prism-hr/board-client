@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
 import {ResourceService} from '../../services/resource.service';
 import PostRepresentation = b.PostRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
@@ -24,7 +24,7 @@ import ResourceUserRepresentation = b.ResourceUserRepresentation;
       <div>
         <button pButton class="ui-button-success" [disabled]="userForm.invalid"
                 label="Save" type="submit" (click)="save()"></button>
-        <button pButton class="ui-button-text" label="Cancel" (click)="cancel()"></button>
+        <button pButton class="ui-button-text" label="Cancel" md-dialog-close></button>
       </div>
     </md-dialog-actions>
   `
@@ -48,10 +48,6 @@ export class ResourceUserEditDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
-
-  cancel() {
-    this.dialogRef.close(null);
   }
 
   save(): void {
