@@ -4,16 +4,22 @@ import PostRepresentation = b.PostRepresentation;
 
 @Component({
   template: `
-    <form>
-      <h1>{{'definitions.action.' + action | translate}}</h1>
-      <div *ngIf="this.commentType !== 'no'">
-        <span>Your comments <span *ngIf="commentType === 'optional'">(optional)</span>:</span>
-        <textarea name="comment" [(ngModel)]="comment"></textarea>
-      </div>
+    <h2 md-dialog-title>{{'definitions.action.' + action | translate}}</h2>
+
+    <md-dialog-content>
+      <form>
+        <div *ngIf="this.commentType !== 'no'">
+          <span>Your comments <span *ngIf="commentType === 'optional'">(optional)</span>:</span>
+          <textarea name="comment" [(ngModel)]="comment"></textarea>
+        </div>
+      </form>
+    </md-dialog-content>
+
+    <md-dialog-actions>
       <button pButton class="ui-button-success" [disabled]="commentType === 'required' && !comment"
               label="Submit" type="submit" (click)="submit()"></button>
-      <button pButton class="ui-button-text" label="Cancel" (click)="cancel()"></button>
-    </form>
+      <button pButton class="ui-button-text" label="Cancel" md-dialog-close></button>
+    </md-dialog-actions>
   `
 })
 export class PostCommentDialogComponent {
@@ -37,10 +43,6 @@ export class PostCommentDialogComponent {
         this.commentType = 'no';
       }
     }
-  }
-
-  cancel() {
-    this.dialogRef.close(null);
   }
 
   submit(): void {

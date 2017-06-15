@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ValidationService} from '../../validation/validation.service';
-import * as _ from 'lodash';
 import {MdDialog} from '@angular/material';
+import {ActivatedRoute, Router} from '@angular/router';
+import * as _ from 'lodash';
 import {DefinitionsService} from '../../services/definitions.service';
-import {PostService} from '../post.service';
+import {ValidationService} from '../../validation/validation.service';
 import {PostCommentDialogComponent} from '../post-comment.dialog';
+import {PostService} from '../post.service';
 import DepartmentDTO = b.DepartmentDTO;
 import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
@@ -33,7 +33,8 @@ export class PostEditComponent implements OnInit {
   formProperties = ['name', 'summary', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories',
     'memberCategories', 'liveTimestamp', 'deadTimestamp'];
 
-  constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private dialog: MdDialog,
+  constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private cdf: ChangeDetectorRef,
+              private dialog: MdDialog,
               private definitionsService: DefinitionsService, private postService: PostService) {
     this.definitions = definitionsService.getDefinitions();
   }
@@ -100,6 +101,7 @@ export class PostEditComponent implements OnInit {
         }
         this.postForm.get('existingRelation').setValidators([Validators.required]);
       }
+      this.cdf.detectChanges();
     });
 
     this.postForm.get('existingRelation').valueChanges.subscribe((existingRelation: string) => {

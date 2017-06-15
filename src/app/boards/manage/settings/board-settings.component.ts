@@ -1,13 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Http, Response} from '@angular/http';
-import * as _ from 'lodash';
-import {MdSnackBar} from '@angular/material';
-import {DefinitionsService} from '../../../services/definitions.service';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Response} from '@angular/http';
+import {ActivatedRoute, Router} from '@angular/router';
+import * as _ from 'lodash';
+import {DefinitionsService} from '../../../services/definitions.service';
+import {ResourceService} from '../../../services/resource.service';
 import BoardRepresentation = b.BoardRepresentation;
 import BoardPatchDTO = b.BoardPatchDTO;
-import {ResourceService} from '../../../services/resource.service';
 
 @Component({
   templateUrl: 'board-settings.component.html',
@@ -21,8 +20,8 @@ export class BoardSettingsComponent implements OnInit {
 
   boardProperties = ['name', 'summary', 'postCategories', 'defaultPostVisibility', 'handle'];
 
-  constructor(private route: ActivatedRoute, private resourceService: ResourceService, private fb: FormBuilder, private router: Router,
-              private definitionsService: DefinitionsService) {
+  constructor(private route: ActivatedRoute, private cdf: ChangeDetectorRef, private fb: FormBuilder, private router: Router,
+              private resourceService: ResourceService, private definitionsService: DefinitionsService) {
     this.definitions = definitionsService.getDefinitions();
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
@@ -39,6 +38,7 @@ export class BoardSettingsComponent implements OnInit {
       const value: any = _.pick(this.board, this.boardProperties);
       this.boardForm.setValue(value);
       this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/' + this.board.department.handle + '/';
+      this.cdf.detectChanges();
     });
   }
 

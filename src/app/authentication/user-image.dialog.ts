@@ -6,16 +6,17 @@ import DocumentRepresentation = b.DocumentRepresentation;
 
 @Component({
   template: `
-    <div class="avatar-box">
-      <h2>Would you like to specify your avatar?</h2>
-      <b-file-upload [(ngModel)]="image" type="logo" class="avatar"></b-file-upload>
+    <h2 md-dialog-title>Would you like to specify your avatar?</h2>
 
-      <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">
-        <button pButton class="ui-button-secondary" label="Ok" (click)="ok()" [disabled]="!image"></button>
-        <button pButton class="ui-button-warning full-width" label="Do not show it again" (click)="skip('DISPLAY_NEVER')"></button>
-        <button pButton class="ui-button-warning full-width" label="I'll do it later" (click)="skip('DISPLAY_AGAIN')"></button>
-      </div>
-    </div>
+    <md-dialog-content>
+      <b-file-upload [(ngModel)]="image" type="logo" class="avatar"></b-file-upload>
+    </md-dialog-content>
+
+    <md-dialog-actions>
+      <button pButton class="ui-button-secondary" label="Ok" (click)="ok()" [disabled]="!image"></button>
+      <button pButton class="ui-button-warning full-width" label="Do not show it again" (click)="skip('DISPLAY_NEVER')"></button>
+      <button pButton class="ui-button-warning full-width" label="I'll do it later" (click)="skip('DISPLAY_AGAIN')"></button>
+    </md-dialog-actions>
   `
 })
 export class UserImageDialogComponent implements OnInit {
