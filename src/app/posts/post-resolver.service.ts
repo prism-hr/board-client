@@ -1,20 +1,20 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
+import {ActivatedRouteSnapshot, Resolve, Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import {Http} from '@angular/http';
+import {ResourceService} from '../services/resource.service';
+import {AuthGuard} from '../authentication/auth-guard.service';
 import DepartmentDTO = b.DepartmentDTO;
 import PostRepresentation = b.PostRepresentation;
-import {ResourceService} from '../services/resource.service';
 
 @Injectable()
 export class PostResolver implements Resolve<PostRepresentation> {
 
-  constructor(private resourceService: ResourceService) {
+  constructor(private authGuard: AuthGuard, private resourceService: ResourceService) {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<PostRepresentation> {
     const id = +route.params['postId'];
-    return this.resourceService.getPost(id);
+    return this.authGuard.requestSecuredEndpoint(() => this.resourceService.getPost(id));
   }
 
 }

@@ -22,7 +22,7 @@ export class HomePublicComponent implements OnInit {
   ngOnInit() {
     const showLogin = this.route.snapshot.queryParams.showLogin;
     if (showLogin) {
-      this.authGuard.ensureAuthenticated(false).subscribe();
+      this.authGuard.ensureAuthenticated().subscribe();
     }
   }
 

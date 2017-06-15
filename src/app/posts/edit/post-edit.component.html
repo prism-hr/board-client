@@ -166,7 +166,7 @@
         <span *ngIf="actionView === 'REVISE'">
           <button pButton [disabled]="postForm.invalid" label="Accept"
                   (click)="executeAction('ACCEPT', true)"></button>
-          <button pButton class="ui-button-warning" [disabled]="postForm.invalid" label="Request Correction"
+          <button pButton class="ui-button-warning" [disabled]="postForm.invalid" label="Suggest Change"
                   (click)="executeAction('SUSPEND', true)"></button>
           <button pButton class="ui-button-danger" label="Reject" (click)="executeAction('REJECT')"></button>
         </span>

@@ -80,6 +80,7 @@ import {MyAuthConfig} from './auth.config';
 import {ClipboardModule} from 'ngx-clipboard/dist';
 import {ResourceUserEditDialogComponent} from './resource/users/resource-user-edit-dialog.component';
 import {ResourceUserRoleFormPartComponent} from './resource/users/resource-user-role-form-part.component';
+import './rxjs-extensions';
 
 @NgModule({
   declarations: [

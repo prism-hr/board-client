@@ -3,7 +3,6 @@ import {Observable} from 'rxjs/Observable';
 import {RequestOptionsArgs, Response} from '@angular/http';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {AuthService, JwtHttp} from 'ng2-ui-auth';
-import 'rxjs/add/operator/toPromise';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import DepartmentPatchDTO = b.DepartmentPatchDTO;

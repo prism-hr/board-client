@@ -51,7 +51,7 @@ export class PostViewComponent implements OnInit {
   }
 
   showLogin() {
-    this.authGuard.ensureAuthenticated(false).first() // open dialog if not authenticated
+    this.authGuard.ensureAuthenticated().first() // open dialog if not authenticated
       .subscribe(authenticated => {
         if (!authenticated) {
           return;
