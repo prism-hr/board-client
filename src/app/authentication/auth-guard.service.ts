@@ -4,14 +4,12 @@ import {AuthenticationDialogComponent} from './authentication.dialog';
 import {MdDialog, MdDialogConfig} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import {AuthService} from 'ng2-ui-auth';
-import {ResourceService} from '../services/resource.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
 
-  constructor(private router: Router, private dialog: MdDialog, private authService: AuthService,
-              private resourceService: ResourceService) {
+  constructor(private router: Router, private dialog: MdDialog, private authService: AuthService) {
   }
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {

@@ -13,7 +13,6 @@
       <md-card-subtitle><h6>{{post.board.department.name}} > {{post.board.name}}</h6></md-card-subtitle>
     </md-card-header>
     <md-card-content>
-
       <div class="general-card-summary">
         {{post.summary}}
       </div>
@@ -31,8 +30,7 @@
         </div>
       </div>
     </md-card-content>
-    <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
-      <b-post-actions-box [post]="post"></b-post-actions-box>
+    <md-card-actions>
       <a pButton [routerLink]="['/', post.board.department.handle, post.board.handle, post.id]" class="ui-button-secondary "
          icon="fa-eye" label="View"></a>
     </md-card-actions>

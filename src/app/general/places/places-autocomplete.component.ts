@@ -24,7 +24,7 @@ import AutocompletePrediction = google.maps.places.AutocompletePrediction;
 export class LocationAutocompleteComponent implements ControlValueAccessor, OnInit {
 
   onChange: any;
-  onTouch: any;
+  onTouch: () => any;
   results: LocationDTO[];
   model: LocationDTO | AutocompletePrediction | string;
   search$: Subject<string> = new Subject();
@@ -45,7 +45,7 @@ export class LocationAutocompleteComponent implements ControlValueAccessor, OnIn
             const subject = new Subject<AutocompletePrediction[]>();
             autocompleteService.getPlacePredictions({input, types: ['(cities)']}, places => {
               this.zone.run(() => {
-                subject.next(places);
+                subject.next(places || []);
                 subject.complete();
               });
             });
@@ -82,13 +82,13 @@ export class LocationAutocompleteComponent implements ControlValueAccessor, OnIn
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => any): void {
     this.onTouch = fn;
   }
 
   placeResultToLocation(placeDetails: google.maps.places.PlaceResult): LocationDTO {
     function getAddressPart(componentType: any, type: string) {
-      const component: any = _.find(placeDetails.address_components, component => _.includes(component.types, componentType));
+      const component: any = _.find(placeDetails.address_components, comp => _.includes(comp.types, componentType));
       if (type === 'long') {
         return component ? component.long_name : undefined;
       }

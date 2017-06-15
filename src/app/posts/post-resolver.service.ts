@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, Router} from '@angular/router';
+import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {ResourceService} from '../services/resource.service';
 import {AuthGuard} from '../authentication/auth-guard.service';
