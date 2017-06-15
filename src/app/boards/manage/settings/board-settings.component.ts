@@ -13,7 +13,7 @@ import BoardPatchDTO = b.BoardPatchDTO;
   styleUrls: ['board-settings.component.scss']
 })
 export class BoardSettingsComponent implements OnInit {
-  definitions: { [key: string]: any };
+  availablePostVisibilities: string[];
   board: BoardRepresentation;
   boardForm: FormGroup;
   urlPrefix: string;
@@ -22,10 +22,10 @@ export class BoardSettingsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private cdf: ChangeDetectorRef, private fb: FormBuilder, private router: Router,
               private resourceService: ResourceService, private definitionsService: DefinitionsService) {
-    this.definitions = definitionsService.getDefinitions();
+    this.availablePostVisibilities = definitionsService.getDefinitions()['postVisibility'];
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      summary: ['', [Validators.required, Validators.maxLength(1000)]],
+      summary: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
       postCategories: [[]],
       defaultPostVisibility: [null, Validators.required],
       handle: ['', [Validators.required, Validators.maxLength(25)]]

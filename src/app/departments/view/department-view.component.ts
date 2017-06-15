@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Response} from '@angular/http';
 import {MdSnackBar} from '@angular/material';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
+import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
 import DepartmentPatchDTO = b.DepartmentPatchDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
-import {DefinitionsService} from '../../services/definitions.service';
 
 @Component({
   templateUrl: 'department-view.component.html',
@@ -21,7 +21,8 @@ export class DepartmentViewComponent implements OnInit {
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router,
               private snackBar: MdSnackBar, private resourceService: ResourceService, private definitionsService: DefinitionsService) {
     this.departmentForm = this.fb.group({
-      name: ['', [Validators.minLength(3), Validators.required, Validators.maxLength(100)]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      summary: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
       memberCategories: [],
       documentLogo: [],
       handle: ['', [Validators.required, Validators.maxLength(25)]]
@@ -37,7 +38,8 @@ export class DepartmentViewComponent implements OnInit {
   }
 
   submit() {
-    const department: DepartmentPatchDTO = _.pick(this.departmentForm.value, ['name', 'memberCategories', 'documentLogo', 'handle']);
+    const department: DepartmentPatchDTO = _.pick(this.departmentForm.value,
+      ['name', 'summary', 'memberCategories', 'documentLogo', 'handle']);
     this.resourceService.patchDepartment(this.department.id, department)
       .subscribe(() => {
         this.router.navigate([department.handle])

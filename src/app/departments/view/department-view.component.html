@@ -6,7 +6,14 @@
           <div class="grid__item one-whole input-holder">
             <label for="name">Department Name</label>
             <input id="name" pInputText formControlName="name" required>
-            <control-messages [control]="departmentForm.controls.name"></control-messages>
+            <control-messages [control]="departmentForm.get('name')"></control-messages>
+          </div>
+
+          <div class="grid__item one-whole input-holder">
+            <label for="summary">Department Summary</label>
+            <textarea id="summary" pInputTextarea formControlName="summary" required
+                      class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
+            <control-messages [control]="departmentForm.get('summary')"></control-messages>
           </div>
 
           <div class="grid__item one-whole input-holder">
@@ -29,7 +36,8 @@
   <md-card-actions>
     <div class="grid grid--half-gutters">
       <div class="grid__item one-whole">
-        <button pButton (click)="submit()" id="sub" class="ui-button-warning" label="Submit"></button>
+        <button pButton [disabled]="departmentForm.invalid" (click)="submit()"
+                class="ui-button-warning" label="Submit"></button>
       </div>
     </div>
   </md-card-actions>

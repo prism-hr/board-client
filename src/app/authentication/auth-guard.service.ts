@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
-import {AuthenticationDialogComponent} from './authentication.dialog';
 import {MdDialog, MdDialogConfig} from '@angular/material';
-import {Observable} from 'rxjs/Observable';
+import {ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
 import {AuthService} from 'ng2-ui-auth';
+import {Observable} from 'rxjs/Observable';
+import {AuthenticationDialogComponent} from './authentication.dialog';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -29,7 +29,7 @@ export class AuthGuard implements CanActivate {
 
   requestSecuredEndpoint<T>(endpointCall: () => Observable<T>): Observable<T> {
     return endpointCall()
-      .catch(error => {
+      .catch((error: Response) => {
         if (error.status === 401) {
           return this.ensureAuthenticated()
             .mergeMap(loggedIn => {

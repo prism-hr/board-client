@@ -10,14 +10,14 @@
         <div class="grid__item one-whole input-holder">
           <label for="name">Board Name</label>
           <input id="name" pInputText formControlName="name" required>
-          <control-messages [control]="boardForm.controls.name"></control-messages>
+          <control-messages [control]="boardForm.get('name')"></control-messages>
         </div>
 
         <div class="grid__item one-whole input-holder">
           <label for="summary">Board Purpose</label>
           <textarea id="summary" pInputTextarea formControlName="summary" required
                     class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
-          <control-messages [control]="boardForm.controls.summary"></control-messages>
+          <control-messages [control]="boardForm.get('summary')"></control-messages>
         </div>
 
         <div class="grid__item one-whole input-holder">
@@ -27,7 +27,7 @@
         <div class="grid__item one-whole input-holder">
           <label>Default post visibility:</label>
           <div class="ui-radiobutton-inline">
-            <p-radioButton *ngFor="let postVisibility of definitions['postVisibility']"
+            <p-radioButton *ngFor="let postVisibility of availablePostVisibilities"
                            [value]="postVisibility" name="defaultPostVisibility"
                            formControlName="defaultPostVisibility"
                            [label]="'definitions.postVisibility.' + postVisibility | translate">
