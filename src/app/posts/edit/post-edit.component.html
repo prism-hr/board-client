@@ -92,10 +92,11 @@
             <label>Who do you want to share your post with?</label>
             <div class="ui-checkbox-inline">
                <span *ngFor="let category of board.department.memberCategories">
-                  <p-checkbox name="memberCategoriesMap" [value]="category" [label]="category"
+                  <p-checkbox name="memberCategoriesMap" [value]="category"
+                              [label]="'definitions.memberCategory.' + category | translate"
                               formControlName="memberCategories"></p-checkbox>
                 </span>
-              <control-messages [control]="postForm.controls.memberCategories"></control-messages>
+              <control-messages [control]="postForm.get('memberCategories')"></control-messages>
             </div>
           </div>
 

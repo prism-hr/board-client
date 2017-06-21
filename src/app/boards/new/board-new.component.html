@@ -43,9 +43,16 @@
           [value]="[{severity:'info', detail:'Define some categories to describe the topics that will be covered by your board. Members will be able to use these categories for filtering.'}]"
           [closable]="false"></p-messages>
 
-        <div formGroupName="department">
-          <label>Member categories</label>
-          <p-chips formControlName="memberCategories"></p-chips>
+        <div class="grid__item one-whole input-holder" formGroupName="department">
+          <label>Member Categories</label>
+          <div class="ui-checkbox-inline">
+               <span *ngFor="let category of availableMemberCategories">
+                  <p-checkbox name="memberCategoriesMap" [value]="category"
+                              [label]="'definitions.memberCategory.' + category | translate"
+                              formControlName="memberCategories"></p-checkbox>
+                </span>
+            <control-messages [control]="boardForm.get('department').get('memberCategories')"></control-messages>
+          </div>
         </div>
 
         <p-messages

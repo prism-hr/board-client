@@ -25,6 +25,11 @@
         "explanationPrompt": "Please explain your interest in us"
       }
     },
+    "memberCategory": {
+      "UNDERGRADUATE": "Undergraduate",
+      "MASTER": "Master",
+      "RESEARCH": "Research"
+    },
     "action": {
       "ACCEPT": "Accept",
       "SUSPEND": "Suspend",

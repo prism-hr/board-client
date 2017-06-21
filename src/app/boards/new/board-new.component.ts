@@ -1,26 +1,29 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Http, Response} from '@angular/http';
-import {DefinitionsService} from '../../services/definitions.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Response} from '@angular/http';
+import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
+import {DefinitionsService} from '../../services/definitions.service';
+import {ResourceService} from '../../services/resource.service';
 import DepartmentDTO = b.DepartmentDTO;
 import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import BoardRepresentation = b.BoardRepresentation;
-import {ResourceService} from '../../services/resource.service';
 
 @Component({
   templateUrl: 'board-new.component.html',
   styleUrls: ['board-new.component.scss']
 })
 export class BoardNewComponent implements OnInit {
+  applicationUrl: string;
+  availableMemberCategories: string[];
   board: BoardDTO;
   boardForm: FormGroup;
-  applicationUrl: string;
 
   constructor(private router: Router, private route: ActivatedRoute, private resourceService: ResourceService, private fb: FormBuilder,
               private definitionsService: DefinitionsService) {
+    this.applicationUrl = this.definitionsService.getDefinitions()['applicationUrl'];
+    this.availableMemberCategories = definitionsService.getDefinitions()['memberCategory'];
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       summary: ['', [Validators.required, Validators.maxLength(1000)]],
@@ -46,7 +49,6 @@ export class BoardNewComponent implements OnInit {
           }
         }
       });
-    this.applicationUrl = this.definitionsService.getDefinitions()['applicationUrl'];
   }
 
   submit() {

@@ -14,12 +14,14 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
   styleUrls: ['department-view.component.scss']
 })
 export class DepartmentViewComponent implements OnInit {
+  availableMemberCategories: string[];
   department: DepartmentRepresentation;
   departmentForm: FormGroup;
   urlPrefix: string;
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router,
               private snackBar: MdSnackBar, private resourceService: ResourceService, private definitionsService: DefinitionsService) {
+    this.availableMemberCategories = definitionsService.getDefinitions()['memberCategory'];
     this.departmentForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       summary: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],

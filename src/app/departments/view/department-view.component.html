@@ -17,8 +17,15 @@
           </div>
 
           <div class="grid__item one-whole input-holder">
-            <label>Member categories</label>
-            <p-chips formControlName="memberCategories"></p-chips>
+            <label>Member Categories</label>
+            <div class="ui-checkbox-inline">
+               <span *ngFor="let category of availableMemberCategories">
+                  <p-checkbox name="memberCategoriesMap" [value]="category"
+                              [label]="'definitions.memberCategory.' + category | translate"
+                              formControlName="memberCategories"></p-checkbox>
+                </span>
+              <control-messages [control]="departmentForm.get('memberCategories')"></control-messages>
+            </div>
           </div>
 
           <div class="grid__item one-whole input-holder">
