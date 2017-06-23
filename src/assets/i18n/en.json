@@ -26,9 +26,12 @@
       }
     },
     "memberCategory": {
-      "UNDERGRADUATE": "Undergraduate",
-      "MASTER": "Master",
-      "RESEARCH": "Research"
+      "UNDERGRADUATE_STUDENT": "Undergraduate Student",
+      "MASTER_STUDENT": "Master Student",
+      "RESEARCH_STUDENT": "Research Student",
+      "RESEARCH_STAFF": "Research Staff",
+      "ACADEMIC_STAFF": "Academic Staff",
+      "PROFESSIONAL_STAFF": "Professional Staff"
     },
     "action": {
       "ACCEPT": "Accept",

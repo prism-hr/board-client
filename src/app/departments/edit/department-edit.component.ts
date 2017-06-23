@@ -10,14 +10,15 @@ import DepartmentPatchDTO = b.DepartmentPatchDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 
 @Component({
-  templateUrl: 'department-view.component.html',
-  styleUrls: ['department-view.component.scss']
+  templateUrl: 'department-edit.component.html',
+  styleUrls: ['department-edit.component.scss']
 })
-export class DepartmentViewComponent implements OnInit {
+export class DepartmentEditComponent implements OnInit {
   availableMemberCategories: string[];
   department: DepartmentRepresentation;
   departmentForm: FormGroup;
   urlPrefix: string;
+  actionView: string;
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router,
               private snackBar: MdSnackBar, private resourceService: ResourceService, private definitionsService: DefinitionsService) {
@@ -27,7 +28,7 @@ export class DepartmentViewComponent implements OnInit {
       summary: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
       memberCategories: [],
       documentLogo: [],
-      handle: ['', [Validators.required, Validators.maxLength(25)]]
+      handle: []
     });
   }
 
@@ -35,25 +36,48 @@ export class DepartmentViewComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.department = data['department'];
       this.departmentForm.reset(this.department);
+      this.departmentForm.get('handle').setValidators(this.department && [Validators.required, Validators.maxLength(25)]);
       this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/';
+      this.actionView = this.department ? 'EDIT' : 'CREATE';
     });
   }
 
-  submit() {
-    const department: DepartmentPatchDTO = _.pick(this.departmentForm.value,
-      ['name', 'summary', 'memberCategories', 'documentLogo', 'handle']);
-    this.resourceService.patchDepartment(this.department.id, department)
-      .subscribe(() => {
+  update() {
+    this.resourceService.patchDepartment(this.department.id, this.generateDepartmentRequestBody())
+      .subscribe(department => {
         this.router.navigate([department.handle])
           .then(() => {
             this.snackBar.open('Department Saved!', null, {duration: 1500});
           });
-      }, (error: Response) => {
-        if (error.status === 422) {
-          if (error.json().exceptionCode === 'DUPLICATE_DEPARTMENT') {
-            this.departmentForm.controls['name'].setErrors({duplicateDepartment: true});
-          }
-        }
-      });
+      }, this.handleErrors);
+  }
+
+  create() {
+    this.resourceService.postDepartment(this.generateDepartmentRequestBody())
+      .subscribe(department => {
+        this.router.navigate([department.handle])
+          .then(() => {
+            this.snackBar.open('Department Created!', null, {duration: 1500});
+          });
+      }, this.handleErrors);
+  }
+
+  private generateDepartmentRequestBody(): DepartmentPatchDTO {
+    const departmentDTO: DepartmentPatchDTO = _.pick(this.departmentForm.value,
+      ['name', 'summary', 'memberCategories', 'documentLogo']);
+    if (this.departmentForm.get('handle').value) {
+      departmentDTO.handle = this.departmentForm.get('handle').value;
+    }
+    return departmentDTO;
+  }
+
+
+  private handleErrors(error: Response) {
+    if (error.status === 422) {
+      if (error.json().exceptionCode === 'DUPLICATE_DEPARTMENT') {
+        this.departmentForm.controls['name'].setErrors({duplicateDepartment: true});
+      }
+    }
+
   }
 }

@@ -28,7 +28,7 @@
             </div>
           </div>
 
-          <div class="grid__item one-whole input-holder">
+          <div *ngIf="department" class="grid__item one-whole input-holder">
             <label>Department URL</label>
             <b-resource-handle formControlName="handle" [urlPrefix]="urlPrefix"></b-resource-handle>
           </div>
@@ -43,7 +43,9 @@
   <md-card-actions>
     <div class="grid grid--half-gutters">
       <div class="grid__item one-whole">
-        <button pButton [disabled]="departmentForm.invalid" (click)="submit()"
+        <button *ngIf="actionView === 'EDIT'" pButton [disabled]="departmentForm.invalid" (click)="update()"
+                class="ui-button-warning" label="Save"></button>
+        <button *ngIf="actionView === 'CREATE'" pButton [disabled]="departmentForm.invalid" (click)="create()"
                 class="ui-button-warning" label="Submit"></button>
       </div>
     </div>

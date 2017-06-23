@@ -14,7 +14,8 @@ import DocumentRepresentation = b.DocumentRepresentation;
 
     <md-dialog-actions>
       <button pButton class="ui-button-secondary" label="Ok" (click)="ok()" [disabled]="!image"></button>
-      <button pButton class="ui-button-warning full-width" label="Do not show it again" (click)="skip('DISPLAY_NEVER')"></button>
+      <button *ngIf="user.documentImageRequestState !== 'DISPLAY_FIRST'" pButton class="ui-button-warning full-width"
+              label="Do not show it again" (click)="skip('DISPLAY_NEVER')"></button>
       <button pButton class="ui-button-warning full-width" label="I'll do it later" (click)="skip('DISPLAY_AGAIN')"></button>
     </md-dialog-actions>
   `

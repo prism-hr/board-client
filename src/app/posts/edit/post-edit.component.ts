@@ -101,6 +101,10 @@ export class PostEditComponent implements OnInit {
         }
         this.postForm.get('existingRelation').setValidators([Validators.required]);
       }
+
+      this.actionView = this.post ? this.postService.getActionView(this.post) : 'CREATE';
+      this.availableActions = this.post ? this.post.actions.map(a => a.action) : [];
+
       this.cdf.detectChanges();
     });
 
@@ -119,18 +123,15 @@ export class PostEditComponent implements OnInit {
       this.postForm.get('applyEmail').updateValueAndValidity();
     });
 
-    this.postForm.get('hideLiveTimestamp').valueChanges.subscribe((hide: boolean) => {
+    this.postForm.get('hideLiveTimestamp').valueChanges.subscribe(() => {
       this.postForm.patchValue({liveTimestamp: null});
       this.configureTimestampControl('liveTimestamp');
     });
 
-    this.postForm.get('hideDeadTimestamp').valueChanges.subscribe((hide: boolean) => {
+    this.postForm.get('hideDeadTimestamp').valueChanges.subscribe(() => {
       this.postForm.patchValue({deadTimestamp: null});
       this.configureTimestampControl('deadTimestamp');
     });
-
-    this.actionView = this.post ? this.postService.getActionView(this.post) : 'CREATE';
-    this.availableActions = this.post ? this.post.actions.map(a => a.action) : [];
   }
 
   update() {
@@ -162,7 +163,7 @@ export class PostEditComponent implements OnInit {
     });
   }
 
-  private generatePostRequestBody() {
+  private generatePostRequestBody(): PostPatchDTO {
     const post: PostPatchDTO = _.pick(this.postForm.value, this.formProperties);
     post.applyWebsite = this.postForm.value.applyType === 'website' ? this.postForm.value.applyWebsite : null;
     post.applyDocument = this.postForm.value.applyType === 'document' ? this.postForm.value.applyDocument : null;

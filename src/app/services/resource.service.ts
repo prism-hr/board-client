@@ -14,6 +14,7 @@ import ResourceUserDTO = b.ResourceUserDTO;
 import ResourceUserRepresentation = b.ResourceUserRepresentation;
 import BoardDTO = b.BoardDTO;
 import ResourceUsersDTO = b.ResourceUsersDTO;
+import DepartmentDTO = b.DepartmentDTO;
 
 @Injectable()
 export class ResourceService {
@@ -63,6 +64,10 @@ export class ResourceService {
 
   patchBoard(id: number, board: BoardPatchDTO): Observable<BoardRepresentation> {
     return this.http.patch('/api/boards/' + id, board).map(res => res.json());
+  }
+
+  postDepartment(department: DepartmentDTO) {
+    return this.http.post('/api/departments', department).map(res => res.json());
   }
 
   patchDepartment(id: number, department: DepartmentPatchDTO): Observable<DepartmentRepresentation> {

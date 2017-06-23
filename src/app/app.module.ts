@@ -51,7 +51,7 @@ import {XeditableInputComponent} from './controls/xeditable-input.component';
 import {DepartmentManageComponent} from './departments/department-manage.component';
 import {DepartmentResolver} from './departments/department-resolver.service';
 import {DepartmentListComponent} from './departments/list/department-list.component';
-import {DepartmentViewComponent} from './departments/view/department-view.component';
+import {DepartmentEditComponent} from './departments/edit/department-edit.component';
 import {FooterComponent} from './footer/footer.component';
 import {FileUploadComponent} from './general/file-upload.component';
 import {PlacesModule} from './general/places/places.module';
@@ -109,7 +109,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
     BoardSettingsComponent,
     DepartmentListComponent,
     DepartmentManageComponent,
-    DepartmentViewComponent,
+    DepartmentEditComponent,
     ResourceUsersComponent,
     ResourceUserRoleFormPartComponent,
     ResourceUserEditDialogComponent,
@@ -132,6 +132,11 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
         canActivate: [AuthGuard]
       },
       {
+        path: 'newDepartment',
+        component: DepartmentEditComponent,
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'account',
         component: AccountComponent,
         canActivate: [AuthGuard]
@@ -151,7 +156,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
             children: [
               {
                 path: '',
-                component: DepartmentViewComponent
+                component: DepartmentEditComponent
               },
               {
                 path: 'users',
