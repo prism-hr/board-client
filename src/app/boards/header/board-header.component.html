@@ -1,6 +1,6 @@
 <div class="grid">
   <div class="grid__item medium-up--three-quarters small-one-whole board">
-    <div class="board-header" fxLayout="row" fxLayoutAlign="space-between top">
+    <div class="resource-header" fxLayout="row" fxLayoutAlign="space-between top">
       <div>
         <div class="board-visibility">
           {{'definitions.postVisibility.' + board.defaultPostVisibility | translate}}
@@ -10,7 +10,7 @@
                              fieldType="input"></b-xeditable-input>
         </h1>
       </div>
-      <div class="post-admin-actions">
+      <div class="admin-actions">
         <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}/settings"
                 class="ui-button-info ui-button-icon-only" icon="fa-settings" *ngIf="canEdit"></button>
       </div>
@@ -20,7 +20,7 @@
                          fieldType="textarea"></b-xeditable-input>
     </div>
   </div>
-  <div class="grid__item medium-up--one-quarter small-one-whole board-logo-holder">
+  <div class="grid__item medium-up--one-quarter small-one-whole resource-logo-holder">
     <md-card>
       <md-card-header class="header-full">
         <md-card-title>
@@ -35,7 +35,7 @@
       </md-card-content>
     </md-card>
     <div class="category-list">
-      <span class="ui-chips-token  ui-corner-all" *ngFor="let category of board.postCategories">{{category}}</span>
+      <span class="ui-chips-token ui-corner-all" *ngFor="let category of board.postCategories">{{category}}</span>
     </div>
   </div>
 </div>

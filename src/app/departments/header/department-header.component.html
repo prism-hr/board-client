@@ -1,0 +1,40 @@
+<div class="grid">
+  <div class="grid__item medium-up--three-quarters small-one-whole board">
+    <div class="resource-header" fxLayout="row" fxLayoutAlign="space-between top">
+      <h1>
+        <b-xeditable-input [resource]="department" propertyName="name" [canEdit]="canEdit"
+                           fieldType="input"></b-xeditable-input>
+      </h1>
+      <div class="admin-actions">
+        <button pButton routerLink="/{{department.handle}}/edit"
+                class="ui-button-info ui-button-icon-only" icon="fa-settings" *ngIf="canEdit"></button>
+      </div>
+    </div>
+    <div class="summary-holder">
+      <b-xeditable-input [resource]="department" propertyName="summary" [canEdit]="canEdit"
+                         fieldType="textarea"></b-xeditable-input>
+    </div>
+  </div>
+  <div class="grid__item medium-up--one-quarter small-one-whole resource-logo-holder">
+    <md-card>
+      <md-card-header class="header-full">
+        <md-card-title>
+          <h3>Department Logo</h3>
+        </md-card-title>
+      </md-card-header>
+      <md-card-content>
+        <b-file-upload *ngIf="canEdit" [(ngModel)]="department.documentLogo" (ngModelChange)="logoChanged()"
+                       type="logo"></b-file-upload>
+        <cl-image *ngIf="!canEdit && department.documentLogo" public-id="{{department.documentLogo.cloudinaryId}}"
+                  class="img">
+          <cl-transformation height="150" width="200" crop="mfit"></cl-transformation>
+        </cl-image>
+      </md-card-content>
+    </md-card>
+    <div class="category-list">
+      <span class="ui-chips-token ui-corner-all" *ngFor="let category of department.memberCategories">
+        {{'definitions.memberCategory.' + category | translate}}
+      </span>
+    </div>
+  </div>
+</div>

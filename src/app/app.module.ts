@@ -28,7 +28,6 @@ import {
   MessagesModule,
   RadioButtonModule,
   SplitButtonModule,
-  TabMenuModule,
   ToggleButtonModule
 } from 'primeng/primeng';
 import {AccountComponent} from './account/account.component';
@@ -50,8 +49,9 @@ import {ResourceHandleComponent} from './controls/resource-handle.component';
 import {XeditableInputComponent} from './controls/xeditable-input.component';
 import {DepartmentManageComponent} from './departments/department-manage.component';
 import {DepartmentResolver} from './departments/department-resolver.service';
-import {DepartmentListComponent} from './departments/list/department-list.component';
 import {DepartmentEditComponent} from './departments/edit/department-edit.component';
+import {DepartmentListComponent} from './departments/list/department-list.component';
+import {DepartmentViewComponent} from './departments/view/department-view.component';
 import {FooterComponent} from './footer/footer.component';
 import {FileUploadComponent} from './general/file-upload.component';
 import {PlacesModule} from './general/places/places.module';
@@ -81,6 +81,7 @@ import {ResourceService} from './services/resource.service';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
+import {DepartmentHeaderComponent} from './departments/header/department-header.component';
 
 @NgModule({
   declarations: [
@@ -109,7 +110,9 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
     BoardSettingsComponent,
     DepartmentListComponent,
     DepartmentManageComponent,
+    DepartmentViewComponent,
     DepartmentEditComponent,
+    DepartmentHeaderComponent,
     ResourceUsersComponent,
     ResourceUserRoleFormPartComponent,
     ResourceUserEditDialogComponent,
@@ -156,6 +159,10 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
             children: [
               {
                 path: '',
+                component: DepartmentViewComponent
+              },
+              {
+                path: 'edit',
                 component: DepartmentEditComponent
               },
               {
@@ -224,7 +231,6 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
     MessagesModule,
     ChipsModule,
     RadioButtonModule,
-    TabMenuModule,
     CheckboxModule,
     DropdownModule,
     CalendarModule,

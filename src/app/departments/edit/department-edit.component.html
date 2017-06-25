@@ -43,6 +43,8 @@
   <md-card-actions>
     <div class="grid grid--half-gutters">
       <div class="grid__item one-whole">
+        <button pButton [routerLink]="['/', department ? department.handle : 'departments']"
+                class="ui-button-secondary" label="Cancel"></button>
         <button *ngIf="actionView === 'EDIT'" pButton [disabled]="departmentForm.invalid" (click)="update()"
                 class="ui-button-warning" label="Save"></button>
         <button *ngIf="actionView === 'CREATE'" pButton [disabled]="departmentForm.invalid" (click)="create()"

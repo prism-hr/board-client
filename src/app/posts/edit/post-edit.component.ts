@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdDialog} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ValidationService} from '../../validation/validation.service';
 import {PostCommentDialogComponent} from '../post-comment.dialog';
@@ -86,7 +87,7 @@ export class PostEditComponent implements OnInit {
         formValue.hideDeadTimestamp = !formValue.deadTimestamp;
         this.postForm.patchValue(formValue);
       } else {
-        this.postForm.patchValue({hideLiveTimestamp: true});
+        this.postForm.patchValue({hideLiveTimestamp: true, deadTimestamp: moment().add(1, 'month').hours(0).minutes(0).toISOString()});
       }
       this.configureTimestampControl('liveTimestamp');
       this.configureTimestampControl('deadTimestamp');

@@ -1,13 +1,3 @@
 <section class="section">
-  <md-card>
-    <md-card-header class="header-full">
-      <md-card-title>
-        <div fxFill fxLayout="row" fxLayoutAlign="space-between center" class="full">
-          <h2>{{department.name}}</h2>
-        </div>
-      </md-card-title>
-    </md-card-header>
-    <p-tabMenu [model]="items"></p-tabMenu>
-    <router-outlet></router-outlet>
-  </md-card>
+  <router-outlet></router-outlet>
 </section>

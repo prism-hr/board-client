@@ -33,7 +33,7 @@ export class DepartmentEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.data.subscribe(data => {
+    this.route.parent.data.subscribe(data => {
       this.department = data['department'];
       this.departmentForm.reset(this.department);
       this.departmentForm.get('handle').setValidators(this.department && [Validators.required, Validators.maxLength(25)]);

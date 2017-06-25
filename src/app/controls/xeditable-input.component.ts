@@ -1,6 +1,7 @@
 import {Component, ElementRef, HostListener, Input} from '@angular/core';
-import {ResourceService} from '../services/resource.service';
 import {Response} from '@angular/http';
+import * as _ from 'lodash';
+import {ResourceService} from '../services/resource.service';
 
 @Component({
   selector: 'b-xeditable-input',
@@ -53,9 +54,10 @@ export class XeditableInputComponent {
   }
 
   ok() {
-    this.resourceService.patchBoard(this.resource.id, {[this.propertyName]: this.editedName})
-      .subscribe(board => {
-        this.resource[this.propertyName] = board[this.propertyName];
+    const scopeCapitalized = _.capitalize(this.resource.scope);
+    this.resourceService['patch' + scopeCapitalized](this.resource.id, {[this.propertyName]: this.editedName})
+      .subscribe(resource => {
+        this.resource[this.propertyName] = resource[this.propertyName];
         this.editing = false;
       }, (error: Response) => {
         if (error.status === 422) {
