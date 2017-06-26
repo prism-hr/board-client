@@ -52,6 +52,10 @@ export class BoardNewComponent implements OnInit {
   }
 
   submit() {
+    this.boardForm['submitted'] = true;
+    if (this.boardForm.invalid) {
+      return;
+    }
     const board: BoardDTO = _.pick(this.boardForm.value, ['name', 'summary', 'postCategories', 'documentLogo', 'department']);
     board.department.documentLogo = board.documentLogo;
 

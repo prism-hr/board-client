@@ -39,7 +39,7 @@
                 </span>
               </p-header>
             </p-editor>
-            <control-messages [control]="postForm.controls.description"></control-messages>
+            <control-messages [control]="postForm.get('description')"></control-messages>
           </div>
 
           <div *ngIf="hasAvailablePostCategories" class="grid__item one-whole input-holder">
@@ -49,20 +49,20 @@
                 <p-checkbox name="postCategoriesMap" [value]="category" [label]="category"
                             formControlName="postCategories"></p-checkbox>
               </span>
-              <control-messages [control]="postForm.controls.postCategories"></control-messages>
+              <control-messages [control]="postForm.get('postCategories')"></control-messages>
             </div>
           </div>
 
           <div class="grid__item small--one-whole medium-up--one-half input-holder">
             <label for="organizationName">Your organization</label>
             <input id="organizationName" pInputText formControlName="organizationName" required>
-            <control-messages [control]="postForm.controls.organizationName"></control-messages>
+            <control-messages [control]="postForm.get('organizationName')"></control-messages>
           </div>
 
           <div class="grid__item small--one-whole medium-up--one-half input-holder">
             <label>Location</label>
             <b-places-autocomplete formControlName="location"></b-places-autocomplete>
-            <control-messages [control]="postForm.controls.location"></control-messages>
+            <control-messages [control]="postForm.get('location')"></control-messages>
           </div>
 
           <div *ngIf="showExistingRelation">
@@ -73,7 +73,7 @@
                              formControlName="existingRelation"
                              [label]="'definitions.existingRelation.' + relation + '.name'| translate">
               </p-radioButton>
-              <control-messages [control]="postForm.controls.existingRelation"></control-messages>
+              <control-messages [control]="postForm.get('existingRelation')"></control-messages>
             </div>
 
             <div *ngIf="['COLLABORATOR', 'EMPLOYER', 'OTHER'].indexOf(postForm.value.existingRelation) > -1"
@@ -84,7 +84,7 @@
               </label>
               <textarea pInputTextarea formControlName="existingRelationExplanation" required
                         class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
-              <control-messages [control]="postForm.controls.existingRelationExplanation"></control-messages>
+              <control-messages [control]="postForm.get('existingRelationExplanation')"></control-messages>
             </div>
           </div>
 
@@ -111,22 +111,22 @@
               <p-radioButton value="email" name="applyType" formControlName="applyType"
                              label="By sending an email"></p-radioButton>
             </div>
-            <control-messages [control]="postForm.controls.applyType"></control-messages>
+            <control-messages [control]="postForm.get('applyType')"></control-messages>
           </div>
-          <div *ngIf="postForm.value.applyType === 'website'" class="grid__item one-whole input-holder">
+          <div *ngIf="postForm.get('applyType').value === 'website'" class="grid__item one-whole input-holder">
             <label>Your website address</label>
             <input pInputText type="url" formControlName="applyWebsite" required>
-            <control-messages [control]="postForm.controls.applyWebsite"></control-messages>
+            <control-messages [control]="postForm.get('applyWebsite')"></control-messages>
           </div>
 
-          <div *ngIf="postForm.value.applyType === 'document'" class="grid__item one-whole input-holder">
+          <div *ngIf="postForm.get('applyType').value === 'document'" class="grid__item one-whole input-holder">
             <b-file-upload formControlName="applyDocument" type="document" class="uploader"></b-file-upload>
-            <control-messages [control]="postForm.controls.applyDocument"></control-messages>
+            <control-messages [control]="postForm.get('applyDocument')"></control-messages>
           </div>
-          <div *ngIf="postForm.value.applyType === 'email'" class="grid__item one-whole input-holder">
+          <div *ngIf="postForm.get('applyType').value === 'email'" class="grid__item one-whole input-holder">
             <label>Email address</label>
             <input pInputText type="email" formControlName="applyEmail" placeholder="e.g. apply@example.com" required>
-            <control-messages [control]="postForm.controls.applyEmail"></control-messages>
+            <control-messages [control]="postForm.get('applyEmail')"></control-messages>
           </div>
 
           <div class="grid__item one-whole input-holder">
@@ -173,18 +173,15 @@
         </span>
 
         <span *ngIf="actionView === 'CORRECT'">
-          <button pButton [disabled]="postForm.invalid" label="Correct" class="ui-button-warning"
-                  (click)="executeAction('CORRECT', true)"></button>
+          <button pButton label="Correct" class="ui-button-warning" (click)="executeAction('CORRECT', true)"></button>
         </span>
 
         <span *ngIf="actionView === 'EDIT'">
-          <button pButton class="ui-button-success" [disabled]="postForm.invalid" label="Save"
-                  (click)="update()"></button>
+          <button pButton class="ui-button-success" label="Save" (click)="update()"></button>
         </span>
 
         <span *ngIf="actionView === 'CREATE'">
-          <button pButton class="ui-button-success" [disabled]="postForm.invalid" label="Submit"
-                  (click)="create()"></button>
+          <button pButton class="ui-button-success" label="Submit" (click)="create()"></button>
         </span>
       </md-card-actions>
     </form>

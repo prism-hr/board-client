@@ -43,6 +43,10 @@ export class BoardSettingsComponent implements OnInit {
   }
 
   submit() {
+    this.boardForm['submitted'] = true;
+    if (this.boardForm.invalid) {
+      return;
+    }
     const board: BoardPatchDTO = _.pick(this.boardForm.value, this.boardProperties);
     this.resourceService.patchBoard(this.board.id, board)
       .subscribe(() => {

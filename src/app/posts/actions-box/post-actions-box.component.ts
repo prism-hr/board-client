@@ -25,7 +25,7 @@ export class PostActionsBoxComponent implements OnChanges {
   }
 
   gotoSettings() {
-    this.router.navigate([this.post.board.department.handle, this.post.board.handle, this.post.id, 'settings']);
+    return this.router.navigate([this.post.board.department.handle, this.post.board.handle, this.post.id, 'settings']);
   }
 
   private generateActionItems() {
@@ -33,7 +33,7 @@ export class PostActionsBoxComponent implements OnChanges {
     this.postService.getActionItems(this.post, post => {
       Object.assign(this.post, post);
       this.generateActionItems();
-      this.snackBar.open('Your action was executed successfully.', null, {duration: 1500});
+      this.snackBar.open('Your action was executed successfully.', null, {duration: 3000});
     })
       .subscribe(actions => {
         this.actions = actions;

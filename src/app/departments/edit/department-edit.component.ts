@@ -19,6 +19,7 @@ export class DepartmentEditComponent implements OnInit {
   departmentForm: FormGroup;
   urlPrefix: string;
   actionView: string;
+  formProperties = ['name', 'summary', 'memberCategories', 'documentLogo'];
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router,
               private snackBar: MdSnackBar, private resourceService: ResourceService, private definitionsService: DefinitionsService) {
@@ -43,28 +44,36 @@ export class DepartmentEditComponent implements OnInit {
   }
 
   update() {
+    this.departmentForm['submitted'] = true;
+    if (this.departmentForm.invalid) {
+      return;
+    }
     this.resourceService.patchDepartment(this.department.id, this.generateDepartmentRequestBody())
       .subscribe(department => {
+        Object.assign(this.department, _.pick(this.departmentForm.value, this.formProperties));
         this.router.navigate([department.handle])
           .then(() => {
-            this.snackBar.open('Department Saved!', null, {duration: 1500});
+            this.snackBar.open('Department Saved!', null, {duration: 3000});
           });
       }, this.handleErrors);
   }
 
   create() {
+    this.departmentForm['submitted'] = true;
+    if (this.departmentForm.invalid) {
+      return;
+    }
     this.resourceService.postDepartment(this.generateDepartmentRequestBody())
       .subscribe(department => {
         this.router.navigate([department.handle])
           .then(() => {
-            this.snackBar.open('Department Created!', null, {duration: 1500});
+            this.snackBar.open('Department Created!', null, {duration: 3000});
           });
       }, this.handleErrors);
   }
 
   private generateDepartmentRequestBody(): DepartmentPatchDTO {
-    const departmentDTO: DepartmentPatchDTO = _.pick(this.departmentForm.value,
-      ['name', 'summary', 'memberCategories', 'documentLogo']);
+    const departmentDTO: DepartmentPatchDTO = _.pick(this.departmentForm.value, this.formProperties);
     if (this.departmentForm.get('handle').value) {
       departmentDTO.handle = this.departmentForm.get('handle').value;
     }

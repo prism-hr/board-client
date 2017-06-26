@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {AbstractControl, FormControl} from '@angular/forms';
 import {ValidationService} from './validation.service';
 
 @Component({
@@ -16,8 +16,13 @@ export class ControlMessagesComponent {
   @Input() control: FormControl;
 
   errorMessage() {
+    let control: AbstractControl = this.control;
+    while (control.parent) {
+      control = control.parent;
+    }
+    const form = control as FormControl;
     for (const propertyName in this.control.errors) {
-      if (this.control.errors.hasOwnProperty(propertyName) && this.control.touched) {
+      if (this.control.errors.hasOwnProperty(propertyName) && (this.control.touched || form['submitted'])) {
         return ValidationService.getValidatorErrorMessage(propertyName, this.control.errors[propertyName]);
       }
     }

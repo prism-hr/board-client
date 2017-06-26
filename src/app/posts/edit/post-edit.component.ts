@@ -135,6 +135,10 @@ export class PostEditComponent implements OnInit {
   }
 
   update() {
+    this.postForm['submitted'] = true;
+    if (this.postForm.invalid) {
+      return;
+    }
     this.postService.update(this.post, this.generatePostRequestBody())
       .subscribe(() => {
         Object.assign(this.post, _.pick(this.postForm.value, this.formProperties));
@@ -143,6 +147,10 @@ export class PostEditComponent implements OnInit {
   }
 
   create() {
+    this.postForm['submitted'] = true;
+    if (this.postForm.invalid) {
+      return;
+    }
     this.postService.create(this.board, this.generatePostRequestBody())
       .subscribe(() => {
         return this.router.navigate([this.board.department.handle, this.board.handle]);
@@ -150,6 +158,10 @@ export class PostEditComponent implements OnInit {
   }
 
   executeAction(action: string, sendForm?: boolean) {
+    this.postForm['submitted'] = true;
+    if (this.postForm.invalid) {
+      return;
+    }
     const dialogRef = this.dialog.open(PostCommentDialogComponent, {data: {action, post: this.post}});
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

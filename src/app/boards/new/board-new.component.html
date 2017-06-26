@@ -20,12 +20,12 @@
               <div class="grid__item one-whole input-holder">
                 <label for="boardName">Board Name</label>
                 <input id="boardName" pInputText formControlName="name" required>
-                <control-messages [control]="boardForm.controls.name"></control-messages>
+                <control-messages [control]="boardForm.get('name')"></control-messages>
               </div>
               <div class="grid__item one-whole input-holder">
                 <label for="summary">Board Purpose</label>
                 <textarea id="summary" pInputTextarea formControlName="summary" required class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
-                <control-messages [control]="boardForm.controls.summary"></control-messages>
+                <control-messages [control]="boardForm.get('summary')"></control-messages>
               </div>
             </div>
           </div>
@@ -64,7 +64,7 @@
       <md-card-actions>
         <a pButton routerLink="/boards"
            class="ui-button-secondary" label="Cancel"></a>
-        <button pButton class="ui-button-success" type="submit" [disabled]="boardForm.invalid" label="Submit"></button>
+        <button pButton class="ui-button-success" type="submit" label="Submit"></button>
       </md-card-actions>
     </md-card>
   </form>
