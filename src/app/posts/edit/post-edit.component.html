@@ -14,14 +14,14 @@
           <div class="grid__item one-whole input-holder">
             <label for="name">Title of your post</label>
             <input id="name" pInputText formControlName="name" required>
-            <control-messages [control]="postForm.controls.name"></control-messages>
+            <control-messages [control]="postForm.get('name')"></control-messages>
           </div>
 
           <div class="grid__item one-whole input-holder">
             <label for="summary">Summary of your post</label>
             <textarea id="summary" pInputTextarea formControlName="summary" required rows="5"
                       class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
-            <control-messages [control]="postForm.controls.summary"></control-messages>
+            <control-messages [control]="postForm.get('summary')"></control-messages>
           </div>
 
           <div class="grid__item one-whole input-holder">
@@ -128,7 +128,7 @@
             <input pInputText type="email" formControlName="applyEmail" placeholder="e.g. apply@example.com" required>
             <control-messages [control]="postForm.controls.applyEmail"></control-messages>
           </div>
-{{postForm.value | json}}
+
           <div class="grid__item one-whole input-holder">
             <label class="big">Post Availability</label>
             <div class="grid">

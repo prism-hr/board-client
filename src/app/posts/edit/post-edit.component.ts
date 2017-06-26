@@ -35,8 +35,7 @@ export class PostEditComponent implements OnInit {
     'memberCategories', 'liveTimestamp', 'deadTimestamp'];
 
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private cdf: ChangeDetectorRef,
-              private dialog: MdDialog,
-              private definitionsService: DefinitionsService, private postService: PostService) {
+              private dialog: MdDialog, private definitionsService: DefinitionsService, private postService: PostService) {
     this.definitions = definitionsService.getDefinitions();
   }
 
@@ -139,14 +138,14 @@ export class PostEditComponent implements OnInit {
     this.postService.update(this.post, this.generatePostRequestBody())
       .subscribe(() => {
         Object.assign(this.post, _.pick(this.postForm.value, this.formProperties));
-        this.router.navigate([this.board.department.handle, this.board.handle, this.post.id]);
+        return this.router.navigate([this.board.department.handle, this.board.handle, this.post.id]);
       });
   }
 
   create() {
     this.postService.create(this.board, this.generatePostRequestBody())
       .subscribe(() => {
-        this.router.navigate([this.board.department.handle, this.board.handle]);
+        return this.router.navigate([this.board.department.handle, this.board.handle]);
       });
   }
 
@@ -158,7 +157,7 @@ export class PostEditComponent implements OnInit {
         requestBody.comment = result.comment;
         this.postService.executeAction(this.post, action, requestBody)
           .subscribe(() => {
-            this.router.navigate([this.board.department.handle, this.board.handle]);
+            return this.router.navigate([this.board.department.handle, this.board.handle]);
           });
       }
     });

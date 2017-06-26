@@ -8,8 +8,8 @@ import 'moment-timezone';
   template: `
     <p-calendar [(ngModel)]="date" (ngModelChange)="dateTimeChanged($event)" dateFormat="yy-mm-dd"
                 dataType="string" (onBlur)="touched()" [disabled]="isDisabled"></p-calendar>
-    <p-calendar [(ngModel)]="time" (ngModelChange)="dateTimeChanged($event)" [timeOnly]="true"
-                dataType="string" [stepMinute]="5" (onBlur)="touched()" [disabled]="isDisabled"></p-calendar>
+    <p-inputMask [(ngModel)]="time" (ngModelChange)="dateTimeChanged($event)"
+                 (onBlur)="touched()" [disabled]="isDisabled" mask="99:99"></p-inputMask>
     <div *ngIf="currentTz !== mainTz" class="ui-radiobutton-inline">
       <p-radioButton [name]="timezoneRadioGroupName" [value]="mainTz" [label]="mainTz" [(ngModel)]="selectedTz"
                      (ngModelChange)="dateTimeChanged($event)" [disabled]="isDisabled"></p-radioButton>
@@ -53,7 +53,7 @@ export class DateTimeComponent implements ControlValueAccessor, OnInit {
 
   dateTimeChanged() {
     const iso = (moment as any).tz(this.date + ' ' + this.time, this.selectedTz).tz(this.currentTz);
-    this.propagateChange(iso.format().slice(0, -6));
+    this.propagateChange(iso.isValid() ? iso.format().slice(0, -6) : null);
   }
 
   touched() {

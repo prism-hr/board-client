@@ -1,5 +1,6 @@
 import {Component, forwardRef, Input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {MdSnackBar} from '@angular/material';
 
 @Component({
   selector: 'b-resource-handle',
@@ -11,7 +12,8 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
           <input pInputText [(ngModel)]="handle" (change)="handleChanged($event)" required>
         </span>
         <span class="host-url__button">
-          <button pButton type="button" ngxClipboard [cbContent]="fullUrl" class="ui-button-success" icon="fa-docs"></button>
+          <button pButton type="button" ngxClipboard [cbContent]="fullUrl" class="ui-button-success" icon="fa-docs"
+                  (cbOnSuccess)="copySuccess()"></button>
         </span>
       </div>
     </div>
@@ -28,12 +30,16 @@ export class ResourceHandleComponent implements ControlValueAccessor {
   handle: string;
   fullUrl: string;
 
-  constructor() {
+  constructor(private snackBar: MdSnackBar) {
   }
 
   handleChanged() {
     this.propagateChange(this.handle);
     this.fullUrl = this.urlPrefix + this.handle;
+  }
+
+  copySuccess() {
+    this.snackBar.open('URL copied!', null, {duration: 1500});
   }
 
   writeValue(handle: string): void {
