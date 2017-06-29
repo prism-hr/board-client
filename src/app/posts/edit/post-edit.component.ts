@@ -6,7 +6,6 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ValidationService} from '../../validation/validation.service';
-import {PostCommentDialogComponent} from '../post-comment.dialog';
 import {PostService} from '../post.service';
 import DepartmentDTO = b.DepartmentDTO;
 import BoardDTO = b.BoardDTO;
@@ -16,6 +15,8 @@ import PostDTO = b.PostDTO;
 import PostRepresentation = b.PostRepresentation;
 import Action = b.Action;
 import PostPatchDTO = b.PostPatchDTO;
+import {ResourceService} from '../../services/resource.service';
+import {ResourceCommentDialogComponent} from '../../resource/resource-comment.dialog';
 
 @Component({
   templateUrl: 'post-edit.component.html',
@@ -35,7 +36,8 @@ export class PostEditComponent implements OnInit {
     'memberCategories', 'liveTimestamp', 'deadTimestamp'];
 
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private cdf: ChangeDetectorRef,
-              private dialog: MdDialog, private definitionsService: DefinitionsService, private postService: PostService) {
+              private dialog: MdDialog, private definitionsService: DefinitionsService, private postService: PostService,
+              private resourceService: ResourceService) {
     this.definitions = definitionsService.getDefinitions();
   }
 
@@ -102,7 +104,7 @@ export class PostEditComponent implements OnInit {
         this.postForm.get('existingRelation').setValidators([Validators.required]);
       }
 
-      this.actionView = this.post ? this.postService.getActionView(this.post) : 'CREATE';
+      this.actionView = this.post ? this.resourceService.getActionView(this.post) : 'CREATE';
       this.availableActions = this.post ? this.post.actions.map(a => a.action) : [];
 
       this.cdf.detectChanges();
@@ -162,14 +164,14 @@ export class PostEditComponent implements OnInit {
     if (this.postForm.invalid) {
       return;
     }
-    const dialogRef = this.dialog.open(PostCommentDialogComponent, {data: {action, post: this.post}});
+    const dialogRef = this.dialog.open(ResourceCommentDialogComponent, {data: {action, resource: this.post}});
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const requestBody = sendForm ? this.generatePostRequestBody() : {};
         requestBody.comment = result.comment;
-        this.postService.executeAction(this.post, action, requestBody)
+        this.resourceService.executeAction(this.post, action, requestBody)
           .subscribe(() => {
-            return this.router.navigate([this.board.department.handle, this.board.handle]);
+            return this.router.navigate([this.board.department.handle, this.board.handle, this.post.id]);
           });
       }
     });

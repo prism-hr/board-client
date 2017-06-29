@@ -10,10 +10,7 @@
                              fieldType="input"></b-xeditable-input>
         </h1>
       </div>
-      <div class="admin-actions">
-        <button pButton routerLink="/{{board.department.handle}}/{{board.handle}}/settings"
-                class="ui-button-info ui-button-icon-only" icon="fa-settings" *ngIf="canEdit"></button>
-      </div>
+      <b-resource-actions-box [resource]="board" class="admin-actions"></b-resource-actions-box>
     </div>
     <div class="summary-holder">
       <b-xeditable-input [resource]="board" propertyName="summary" [canEdit]="canEdit"

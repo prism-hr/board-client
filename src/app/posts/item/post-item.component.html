@@ -26,7 +26,9 @@
           <span class="number">30</span>
         </div>
         <div class="boxes-list__item {{ post.state | lowercase }}">
-          <div class="title"><i class="fa-{{ post.state | lowercase }}"></i> {{'definitions.state.' + post.state | translate}} </div>
+          <div class="title">
+            <i class="fa-{{ post.state | lowercase }}"></i> {{'definitions.state.' + post.state | translate}}
+          </div>
         </div>
       </div>
     </md-card-content>

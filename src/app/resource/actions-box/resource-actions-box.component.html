@@ -1,0 +1,16 @@
+<span *ngIf="actionView === 'REVISE'">
+  <p-splitButton label="Revise" icon="fa-gear" (onClick)="gotoSettings(resource)" [model]="actions"
+                 class="ui-button-info"></p-splitButton>
+</span>
+<span *ngIf="actionView === 'CORRECT'">
+  <p-splitButton label="Correct" icon="fa-gear" (onClick)="gotoSettings(resource)" [model]="actions"
+                 class="ui-button-info"></p-splitButton>
+</span>
+<span *ngIf="actionView === 'EDIT'">
+  <p-splitButton icon="fa-gear" (onClick)="gotoSettings(resource)" [model]="actions"
+                 class="ui-button-info"></p-splitButton>
+</span>
+<span *ngIf="actionView === 'RESTORE'">
+  <button pButton class="ui-button-info" (click)="openActionDialog('RESTORE')" label="Restore"></button>
+</span>
+

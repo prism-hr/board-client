@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-05-29 09:18:11.
+// Generated using typescript-generator version 1.23.311 on 2017-06-28 11:20:52.
 
 declare namespace b {
 
@@ -7,35 +7,29 @@ declare namespace b {
     nextState?: State;
   }
 
-  interface BoardDTO {
-    name?: string;
+  interface BoardDTO extends ResourceDTO {
     documentLogo?: DocumentDTO;
-    summary?: string;
     postCategories?: string[];
     department?: DepartmentDTO;
   }
 
-  interface BoardPatchDTO {
-    name?: string;
-    summary?: string;
+  interface BoardPatchDTO extends ResourcePatchDTO {
     documentLogo?: DocumentDTO;
     handle?: string;
     postCategories?: string[];
     defaultPostVisibility?: PostVisibility;
   }
 
-  interface DepartmentDTO {
+  interface DepartmentDTO extends ResourceDTO {
     id?: number;
-    name?: string;
     documentLogo?: DocumentDTO;
-    memberCategories?: string[];
+    memberCategories?: MemberCategory[];
   }
 
-  interface DepartmentPatchDTO {
-    name?: string;
+  interface DepartmentPatchDTO extends ResourcePatchDTO {
     documentLogo?: DocumentDTO;
     handle?: string;
-    memberCategories?: string[];
+    memberCategories?: MemberCategory[];
   }
 
   interface DocumentDTO extends DocumentDefinition {
@@ -56,16 +50,14 @@ declare namespace b {
     redirectUri?: string;
   }
 
-  interface PostDTO {
-    name?: string;
-    summary?: string;
+  interface PostDTO extends ResourceDTO {
     description?: string;
     organizationName?: string;
     location?: LocationDTO;
     existingRelation?: ExistingRelation;
     existingRelationExplanation?: { [index: string]: any };
     postCategories?: string[];
-    memberCategories?: string[];
+    memberCategories?: MemberCategory[];
     applyWebsite?: string;
     applyDocument?: DocumentDTO;
     applyEmail?: string;
@@ -73,9 +65,7 @@ declare namespace b {
     deadTimestamp?: LocalDateTime;
   }
 
-  interface PostPatchDTO {
-    name?: string;
-    summary?: string;
+  interface PostPatchDTO extends ResourcePatchDTO {
     description?: string;
     organizationName?: string;
     location?: LocationDTO;
@@ -83,12 +73,11 @@ declare namespace b {
     applyDocument?: DocumentDTO;
     applyEmail?: string;
     postCategories?: string[];
-    memberCategories?: string[];
+    memberCategories?: MemberCategory[];
     existingRelation?: ExistingRelation;
     existingRelationExplanation?: { [index: string]: any };
     liveTimestamp?: LocalDateTime;
     deadTimestamp?: LocalDateTime;
-    comment?: string;
   }
 
   interface RegisterDTO {
@@ -102,6 +91,11 @@ declare namespace b {
     email?: string;
   }
 
+  interface ResourceDTO {
+    name?: string;
+    summary?: string;
+  }
+
   interface ResourceFilterDTO {
     scope?: Scope;
     id?: number;
@@ -109,6 +103,12 @@ declare namespace b {
     parentId?: number;
     includePublicResources?: boolean;
     orderStatement?: string;
+  }
+
+  interface ResourcePatchDTO {
+    name?: string;
+    summary?: string;
+    comment?: string;
   }
 
   interface ResourceUserDTO {
@@ -137,7 +137,7 @@ declare namespace b {
   interface UserRoleDTO {
     role?: Role;
     expiryDate?: LocalDate;
-    categories?: string[];
+    categories?: MemberCategory[];
   }
 
   interface ActionRepresentation extends Comparable<ActionRepresentation> {
@@ -148,7 +148,6 @@ declare namespace b {
 
   interface BoardRepresentation extends ResourceRepresentation {
     documentLogo?: DocumentRepresentation;
-    summary?: string;
     handle?: string;
     department?: DepartmentRepresentation;
     postCategories?: string[];
@@ -158,7 +157,7 @@ declare namespace b {
   interface DepartmentRepresentation extends ResourceRepresentation {
     documentLogo?: DocumentRepresentation;
     handle?: string;
-    memberCategories?: string[];
+    memberCategories?: MemberCategory[];
   }
 
   interface DocumentRepresentation extends DocumentDefinition {
@@ -169,14 +168,13 @@ declare namespace b {
   }
 
   interface PostRepresentation extends ResourceRepresentation {
-    summary?: string;
     description?: string;
     organizationName?: string;
     location?: LocationRepresentation;
     existingRelation?: ExistingRelation;
     existingRelationExplanation?: { [index: string]: any };
     postCategories?: string[];
-    memberCategories?: string[];
+    memberCategories?: MemberCategory[];
     applyWebsite?: string;
     applyDocument?: DocumentRepresentation;
     applyEmail?: string;
@@ -197,6 +195,7 @@ declare namespace b {
     id?: number;
     scope?: Scope;
     name?: string;
+    summary?: string;
     state?: State;
     createdTimestamp?: LocalDateTime;
     updatedTimestamp?: LocalDateTime;
@@ -220,13 +219,13 @@ declare namespace b {
   interface UserRoleRepresentation {
     role?: Role;
     expiryDate?: LocalDate;
-    categories?: string[];
+    categories?: MemberCategory[];
   }
 
   interface DocumentDefinition {
-    fileName?: string;
     cloudinaryId?: string;
     cloudinaryUrl?: string;
+    fileName?: string;
   }
 
   interface LocationDefinition {
@@ -246,8 +245,8 @@ declare namespace b {
     year?: number;
     hour?: number;
     minute?: number;
-    nano?: number;
     second?: number;
+    nano?: number;
   }
 
   interface LocalDate extends Temporal, TemporalAdjuster, ChronoLocalDate, Serializable {
@@ -305,6 +304,8 @@ declare namespace b {
   type State = 'DRAFT' | 'SUSPENDED' | 'PENDING' | 'ACCEPTED' | 'EXPIRED' | 'REJECTED' | 'WITHDRAWN' | 'PREVIOUS';
 
   type PostVisibility = 'PUBLIC' | 'PRIVATE' | 'PART_PRIVATE';
+
+  type MemberCategory = 'UNDERGRADUATE_STUDENT' | 'MASTER_STUDENT' | 'RESEARCH_STUDENT' | 'RESEARCH_STAFF' | 'ACADEMIC_STAFF' | 'PROFESSIONAL_STAFF';
 
   type ExistingRelation = 'STAFF' | 'STUDENT' | 'COLLABORATOR' | 'EMPLOYER' | 'OTHER';
 

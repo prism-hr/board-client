@@ -42,7 +42,8 @@
       "RESTORE": "Restore",
       "EDIT": "Edit",
       "EXTEND": "Create",
-      "PUBLISH": "Publish"
+      "PUBLISH": "Publish",
+      "RETIRE": "Retire"
     },
     "state": {
       "DRAFT": "Draft",

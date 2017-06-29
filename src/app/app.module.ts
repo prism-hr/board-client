@@ -23,7 +23,8 @@ import {
   ChipsModule,
   DataTableModule,
   DropdownModule,
-  EditorModule, InputMaskModule,
+  EditorModule,
+  InputMaskModule,
   InputTextModule,
   MessagesModule,
   RadioButtonModule,
@@ -50,6 +51,7 @@ import {XeditableInputComponent} from './controls/xeditable-input.component';
 import {DepartmentManageComponent} from './departments/department-manage.component';
 import {DepartmentResolver} from './departments/department-resolver.service';
 import {DepartmentEditComponent} from './departments/edit/department-edit.component';
+import {DepartmentHeaderComponent} from './departments/header/department-header.component';
 import {DepartmentListComponent} from './departments/list/department-list.component';
 import {DepartmentViewComponent} from './departments/view/department-view.component';
 import {FooterComponent} from './footer/footer.component';
@@ -62,13 +64,13 @@ import {HomeComponent} from './home/home.component';
 import {StudentLogoComponent} from './home/student-logo.component';
 import {UniLogoComponent} from './home/uni-logo.component';
 import {NotFoundComponent} from './not-found.component';
-import {PostActionsBoxComponent} from './posts/actions-box/post-actions-box.component';
 import {PostEditComponent} from './posts/edit/post-edit.component';
 import {PostItemComponent} from './posts/item/post-item.component';
-import {PostCommentDialogComponent} from './posts/post-comment.dialog';
 import {PostResolver} from './posts/post-resolver.service';
 import {PostService} from './posts/post.service';
 import {PostViewComponent} from './posts/view/post-view.component';
+import {ResourceActionsBoxComponent} from './resource/actions-box/resource-actions-box.component';
+import {ResourceCommentDialogComponent} from './resource/resource-comment.dialog';
 import {ResourceUsersResolver} from './resource/resource-users-resolver.service';
 import {ResourceUserEditDialogComponent} from './resource/users/resource-user-edit-dialog.component';
 import {ResourceUserRoleFormPartComponent} from './resource/users/resource-user-role-form-part.component';
@@ -81,7 +83,6 @@ import {ResourceService} from './services/resource.service';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
-import {DepartmentHeaderComponent} from './departments/header/department-header.component';
 
 @NgModule({
   declarations: [
@@ -120,8 +121,8 @@ import {DepartmentHeaderComponent} from './departments/header/department-header.
     PostEditComponent,
     PostViewComponent,
     PostItemComponent,
-    PostActionsBoxComponent,
-    PostCommentDialogComponent,
+    ResourceActionsBoxComponent,
+    ResourceCommentDialogComponent,
     UserImageDialogComponent
   ],
   imports: [
@@ -280,7 +281,8 @@ import {DepartmentHeaderComponent} from './departments/header/department-header.
     AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, ResourceUsersResolver, PostService, UserService,
     FileUploadService
   ],
-  entryComponents: [AuthenticationDialogComponent, PostCommentDialogComponent, UserImageDialogComponent, ResourceUserEditDialogComponent],
+  entryComponents: [AuthenticationDialogComponent, ResourceCommentDialogComponent, UserImageDialogComponent,
+    ResourceUserEditDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
-import PostRepresentation = b.PostRepresentation;
+import ResourceRepresentation = b.ResourceRepresentation;
 
 @Component({
   template: `
@@ -22,24 +22,24 @@ import PostRepresentation = b.PostRepresentation;
     </md-dialog-actions>
   `
 })
-export class PostCommentDialogComponent {
+export class ResourceCommentDialogComponent {
 
   comment: string;
   action: string;
-  post: PostRepresentation;
+  resource: ResourceRepresentation;
   commentType: string;
 
-  constructor(private dialogRef: MdDialogRef<PostCommentDialogComponent>, @Inject(MD_DIALOG_DATA) private data: any) {
+  constructor(private dialogRef: MdDialogRef<ResourceCommentDialogComponent>, @Inject(MD_DIALOG_DATA) private data: any) {
     this.action = data.action;
-    this.post = data.post;
+    this.resource = data.resource;
     if (this.action === 'SUSPEND' || this.action === 'REJECT') {
       this.commentType = 'required';
     } else if (this.action === 'ACCEPT' || this.action === 'CORRECT') {
       this.commentType = 'optional';
     } else if (this.action === 'RESTORE') {
-      if ((<any>this.post.state) === 'REJECTED') {
+      if ((<any>this.resource.state) === 'REJECTED') {
         this.commentType = 'optional';
-      } else if ((<any>this.post.state) === 'WITHDRAWN') {
+      } else if ((<any>this.resource.state) === 'WITHDRAWN') {
         this.commentType = 'no';
       }
     }
