@@ -19,7 +19,7 @@ form, .form {
   .input-holder {
     margin-bottom: 15px;
     > label {
-      font-weight:500;
+      font-weight:00;
     }
   }
   .date-holder {
@@ -48,4 +48,13 @@ button.ui-button {
 }
 button.ui-state-default {
   border-color: transparent;
+}
+.board-filter {
+  background: $greyBackground;
+  padding:5px 10px;
+  .input-holder  {
+    margin-bottom:0;
+    width: 25%;
+  }
+  margin-bottom:15px;
 }

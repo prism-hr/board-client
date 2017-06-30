@@ -415,8 +415,17 @@
   line-height: normal;
 }
 header {
-  .ui-button .ui-button-text {
-    color: white;
+  .ui-button {
+    &.active {
+      .ui-button-text {
+        color: $uclred;
+        background: white;
+        border-radius: 2px;
+      }
+    }
+    .ui-button-text {
+      color: white;
+    }
   }
 }
 .ui-button:focus, .ui-button:enabled:hover {
@@ -959,6 +968,7 @@ button.ui-button::-moz-focus-inner {
   white-space: nowrap;
   position: relative;
   margin-right: .5em;
+  margin-bottom: 5px;
   border: 0 none;
   font-size: 1em;
   background: $tips;
@@ -3492,7 +3502,7 @@ button.ui-button::-moz-focus-inner {
   }
 }
 
-p-splitbutton.ui-button-info .ui-buttonset {
+p-splitbutton.ui-button-info .ui-buttonset, {
   .ui-state-default {
     background-color: $uclblue;
     border-color: $uclblue;
@@ -3506,6 +3516,33 @@ p-splitbutton.ui-button-info .ui-buttonset {
       color: #ffffff;
     }
   }
+}
+.ui-selectbutton {
+  .ui-button {
+    margin-right:-1px;
+  }
+}
+p-selectbutton .ui-button-info {
+  .ui-state-default {
+    border-color: #999;
+    background: white;
+    color: $uclred;
+    cursor: pointer;
+  }
+  .ui-state-active {
+    background-color: $uclblue;
+    border-color: $uclblue;
+    color: #ffffff;
+    &:enabled:hover, &:focus {
+      background-color: $uclblue3;
+      color: #ffffff;
+    }
+    &:enabled:active {
+      background-color: $uclblue3;
+      color: #ffffff;
+    }
+  }
+  font-size: 0.9em;
 }
 
 /** TabMenu **/
@@ -4682,4 +4719,7 @@ cl-image > img {
     border-color: $uclred;
   }
 
+}
+.ui-button .fa-user {
+  color: white;
 }

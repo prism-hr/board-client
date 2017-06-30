@@ -127,6 +127,7 @@ $simple-line-icon-prefix: "fa-" !default;
   &present,
   &playlist,
   &pin,
+  &retire,
   &picture,
   &handbag,
   &globe-alt,
@@ -295,7 +296,7 @@ $simple-line-icon-prefix: "fa-" !default;
   content: "\e066";
 }
 
-.#{$simple-line-icon-prefix}logout:before {
+.#{$simple-line-icon-prefix}logout:before, .#{$simple-line-icon-prefix}retire:before {
   content: "\e065";
 }
 

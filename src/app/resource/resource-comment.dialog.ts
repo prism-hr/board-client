@@ -4,23 +4,28 @@ import ResourceRepresentation = b.ResourceRepresentation;
 
 @Component({
   template: `
-    <h2 md-dialog-title>{{'definitions.action.' + action | translate}}</h2>
+    <div class="dialog-holder">
+      <h2 md-dialog-title>{{'definitions.action.' + action | translate}}</h2>
 
-    <md-dialog-content>
-      <form>
-        <div *ngIf="this.commentType !== 'no'">
-          <span>Your comments <span *ngIf="commentType === 'optional'">(optional)</span>:</span>
-          <textarea name="comment" [(ngModel)]="comment"></textarea>
-        </div>
-      </form>
-    </md-dialog-content>
+      <md-dialog-content>
+        <form>
+          <div *ngIf="this.commentType !== 'no'" class="input-holder">
+            <label style="display: block">Your comments <span *ngIf="commentType === 'optional'">(optional)</span></label>
+            <textarea name="comment" [(ngModel)]="comment" class="ui-inputtext"></textarea>
+          </div>
+        </form>
+      </md-dialog-content>
 
-    <md-dialog-actions>
-      <button pButton class="ui-button-success" [disabled]="commentType === 'required' && !comment"
-              label="Submit" type="submit" (click)="submit()"></button>
-      <button pButton class="ui-button-text" label="Cancel" md-dialog-close></button>
-    </md-dialog-actions>
-  `
+      <md-dialog-actions fxLayout="row" fxLayoutAlign="space-between">
+        <button pButton class="ui-button-secondary" label="Cancel" md-dialog-close></button>
+
+        <button pButton class="ui-button ui-button-warning" [disabled]="commentType === 'required' && !comment"
+                label="Submit" type="submit" (click)="submit()"></button>
+
+      </md-dialog-actions>
+    </div>
+  `,
+  styles: ['.dialog-holder {min-width: 350px;}']
 })
 export class ResourceCommentDialogComponent {
 

@@ -6,17 +6,17 @@ import DocumentRepresentation = b.DocumentRepresentation;
 
 @Component({
   template: `
-    <h2 md-dialog-title>Would you like to specify your avatar?</h2>
+    <h2 md-dialog-title>Please upload a picture profile</h2>
 
     <md-dialog-content>
       <b-file-upload [(ngModel)]="image" type="logo" class="avatar"></b-file-upload>
     </md-dialog-content>
 
-    <md-dialog-actions>
-      <button pButton class="ui-button-secondary" label="Ok" (click)="ok()" *ngIf="image"></button>
-      <button *ngIf="user.documentImageRequestState !== 'DISPLAY_FIRST'" pButton class="ui-button-warning full-width"
+    <md-dialog-actions  fxLayout="row" fxLayoutAlign="space-between">
+      <button *ngIf="user.documentImageRequestState !== 'DISPLAY_FIRST'" pButton class="ui-button-secondary full-width"
               label="Do not show it again" (click)="skip('DISPLAY_NEVER')"></button>
-      <button pButton class="ui-button-warning full-width" label="I'll do it later" (click)="skip('DISPLAY_AGAIN')"></button>
+      <button pButton class="ui-button-secondary full-width" label="I'll do it later" (click)="skip('DISPLAY_AGAIN')"></button>
+      <button pButton class="ui-button-warning" label="Ok" (click)="ok()" *ngIf="image"></button>
     </md-dialog-actions>
   `
 })

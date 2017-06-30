@@ -1,0 +1,35 @@
+.preloader {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 22222;
+  background: white;
+  .spinner{
+    margin: 0;
+    left: 50%;
+    margin-top: -20px;
+    margin-left: -20px;
+    position: absolute;
+    top: 50%;
+    z-index: 11111;
+  }
+}
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+  background-color: #e75223;
+  animation: sk-rotateplane 1.2s infinite ease-in-out;
+}
+@keyframes sk-rotateplane {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+
+  }
+  100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}

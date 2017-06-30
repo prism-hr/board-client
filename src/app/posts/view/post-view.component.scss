@@ -34,7 +34,7 @@
       font-size:1.5em;
       font-weight:bold;
       color: $uclred;
-      padding: 7px 0;
+      padding: 0 0 7px 0;
     }
     h2 {
       font-size:1.2em;
@@ -64,7 +64,7 @@
     .post-action-content {
       color: $fontColor1;
       padding: 5px 0;
-      font-weight:600;
+      font-weight:700;
       .ui-button-text-only .ui-button-text {
         padding: 0.1em 1em 0.22em;
         font-weight:400;
@@ -101,7 +101,7 @@
     .post-timeline--time {
       color: #575858;
       font-size: 15px;
-      font-weight:600;
+      font-weight:700;
       display: block;
       text-align: right;
     }
@@ -189,7 +189,7 @@
       border-color: $fundingColor;
     }
   }
-  .action-withdraw {
+  .action-withdraw, .action-retire {
     .post-timeline--icon {
       color: $uclred;
       border-color: $uclred;
@@ -198,7 +198,7 @@
 }
 .publisher {
   md-card-title h3{
-    font-weight:600;
+    font-weight:700;
     font-size:1.2em;
     color: $fontColor1;
   }

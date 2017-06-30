@@ -4,6 +4,7 @@ import {ResourceService} from '../../../services/resource.service';
 import BoardRepresentation = b.BoardRepresentation;
 import PostRepresentation = b.PostRepresentation;
 
+
 @Component({
   templateUrl: 'board-view.component.html',
   styleUrls: ['board-view.component.scss']

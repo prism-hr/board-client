@@ -7,7 +7,7 @@ span {
   button.ui-widget {
     font-size:70%;
   }
-  &.editable {
+  &:hover.editable {
     border-bottom:1px dashed $uclred;
   }
   .input-container {
@@ -30,4 +30,20 @@ span {
 }
 .ui-button-success {
     margin-top:4px;
+}
+.edit-container {
+  width: 100%;
+  display: block;
+  textarea {
+    width: 90%;
+    float: left;
+  }
+  input {
+    float: left;
+  }
+  .edit-actions {
+    float: left;
+    margin-left: 15px;
+    margin-top: -3px;
+  }
 }

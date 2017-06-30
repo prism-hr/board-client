@@ -3,7 +3,7 @@
     <div class="resource-header" fxLayout="row" fxLayoutAlign="space-between top">
       <div>
         <div class="board-visibility">
-          {{'definitions.postVisibility.' + board.defaultPostVisibility | translate}}
+          <span class="ui-chips-token ui-corner-all visibility-chip">{{'definitions.postVisibility.' + board.defaultPostVisibility | translate}}</span>
         </div>
         <h1><a routerLink="/{{board.department.handle}}">{{board.department.name}}</a> -
           <b-xeditable-input [resource]="board" propertyName="name" [canEdit]="canEdit"

@@ -6,6 +6,19 @@
       <h1>Boards</h1>
       <a pButton routerLink="/newBoard" class="ui-button-success" icon="fa-plus" label="New Board"></a>
     </div>
+    <div class="board-filter">
+      <form fxLayout="row" fxLayoutAlign="space-between center" >
+        <div class="input-holder">
+          <input name="text-filter" placeholder="eg: Employment" class="ui-inputtext">
+        </div>
+        <div class="categories-filter">
+          <p-selectButton styleClass="ui-button-info" [options]="categories" [(ngModel)]="selectedCategories" multiple="multiple" name="selected"></p-selectButton>
+        </div>
+        <div class="status-filter">
+          <p-selectButton styleClass="ui-button-info" [options]="statuses" [(ngModel)]="selectedStatuses" multiple="multiple" name="selected"></p-selectButton>
+        </div>
+      </form>
+    </div>
     <div class="grid list-container">
       <div *ngFor="let board of boards" class="list-container__item">
         <md-card>
@@ -18,11 +31,11 @@
               </cl-image>
             </div>
             <md-card-title>
-              <h3><a [routerLink]="['/', board.department.handle, board.handle]">{{board.name}}</a></h3>
+              <h3><a [routerLink]="['/', board.department.handle, board.handle]">{{board.name}}</a> <span class="ui-chips-token ui-corner-all visibility-chip">{{'definitions.postVisibility.' + board.defaultPostVisibility | translate}}</span></h3>
             </md-card-title>
             <md-card-subtitle>
               <h6>
-                <a [routerLink]="['/', board.department.handle]">{{board.department.name}}</a>
+               {{board.department.name}}
               </h6>
             </md-card-subtitle>
           </md-card-header>
@@ -52,7 +65,7 @@
           </md-card-content>
           <md-card-actions>
             <a pButton routerLink="/{{board.department.handle}}/{{board.handle}}" class="ui-button-secondary "
-               icon="fa-eye" label="View"></a>
+              label="See the board"></a>
           </md-card-actions>
         </md-card>
       </div>

@@ -28,6 +28,7 @@ import {
   InputTextModule,
   MessagesModule,
   RadioButtonModule,
+  SelectButtonModule,
   SplitButtonModule,
   ToggleButtonModule
 } from 'primeng/primeng';
@@ -239,6 +240,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
     SplitButtonModule,
     EditorModule,
     DataTableModule,
+    SelectButtonModule,
     // Material modules
     ToggleButtonModule,
     MdDialogModule,

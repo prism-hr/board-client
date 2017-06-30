@@ -1,3 +1,5 @@
+@import 'assets/preloader';
+
 @import url('https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,900');
 @import 'assets/variables';
 
@@ -74,14 +76,8 @@ a {
   -o-transition: all 200ms;
   transition: all 200ms;
   cursor: pointer !important;
-  &:hover,
-  &:focus {
+  &:hover{
     opacity: $opacity-link-hover;
-  }
-  &.classic-link {
-    text-decoration: underline;
-  }
-  &:hover {
     text-decoration: none;
   }
 }
@@ -201,4 +197,12 @@ control-messages {
     border-radius: 50%;
     overflow: hidden;
   }
+}
+.visibility-chip {
+  background: #a3a6b7;
+  font-size: 11px;
+  margin-top: -3px;
+  margin-left: 6px;
+  margin-bottom: 0;
+  border-radius: 10px;
 }

@@ -8,10 +8,10 @@ import {ResourceService} from '../services/resource.service';
   template: `
     <span [hidden]="editing" [ngClass]="{editable: canEdit}" (click)="edit()"><span>{{resource[propertyName]}}</span>
     </span>
-    <span *ngIf="editing">
+    <span *ngIf="editing" class="edit-container">
       <input *ngIf="fieldType === 'input'" pInputText [(ngModel)]="editedName" required>
       <textarea class="ui-inputtext" *ngIf="fieldType === 'textarea'" pInputTextarea [(ngModel)]="editedName" required></textarea>
-      <div [ngClass]="{'textarea-container':fieldType === 'textarea', 'input-container':fieldType === 'input' }">
+      <div [ngClass]="{'textarea-container':fieldType === 'textarea', 'input-container':fieldType === 'input' }" class="edit-actions">
         <button pButton type="button" class="ui-button-success ui-button-small" (click)="ok()" icon="fa-check"></button>
       <button pButton type="button" class="ui-button-warning ui-button-small" (click)="cancel()" icon="fa-close"></button>
       </div>
