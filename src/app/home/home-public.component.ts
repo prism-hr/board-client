@@ -12,7 +12,7 @@ export class HomePublicComponent implements OnInit {
 
   boardForm: FormGroup;
 
-  constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private authGuard: AuthGuard) {
+  constructor(private router: Router, private fb: FormBuilder, private authGuard: AuthGuard) {
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       departmentName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]]
@@ -20,10 +20,6 @@ export class HomePublicComponent implements OnInit {
   }
 
   ngOnInit() {
-    const showLogin = this.route.snapshot.queryParams.showLogin;
-    if (showLogin) {
-      this.authGuard.ensureAuthenticated().subscribe();
-    }
   }
 
   submit() {

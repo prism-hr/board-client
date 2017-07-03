@@ -4,7 +4,6 @@ import {UserService} from '../services/user.service';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import UserRepresentation = b.UserRepresentation;
-import {AuthGuard} from '../authentication/auth-guard.service';
 
 @Component({
   templateUrl: './home.component.html',
@@ -15,7 +14,7 @@ export class HomeComponent implements OnInit {
   user: UserRepresentation | boolean;
   posts: BoardRepresentation[];
 
-  constructor(private resourceService: ResourceService, private userService: UserService, private authGuard: AuthGuard) {
+  constructor(private resourceService: ResourceService, private userService: UserService) {
   }
 
   ngOnInit(): void {
