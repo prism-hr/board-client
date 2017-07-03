@@ -5,10 +5,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
-import DepartmentDTO = b.DepartmentDTO;
 import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
-import BoardRepresentation = b.BoardRepresentation;
 
 @Component({
   templateUrl: 'board-new.component.html',
@@ -19,6 +17,8 @@ export class BoardNewComponent implements OnInit {
   availableMemberCategories: string[];
   board: BoardDTO;
   boardForm: FormGroup;
+  departmentSuggestions: string[];
+  selectedDepartment: DepartmentRepresentation;
 
   constructor(private router: Router, private route: ActivatedRoute, private resourceService: ResourceService, private fb: FormBuilder,
               private definitionsService: DefinitionsService) {
@@ -71,6 +71,22 @@ export class BoardNewComponent implements OnInit {
           }
         }
       });
+  }
+
+  searchDepartments(event) {
+    this.resourceService.getDepartments(event.query).subscribe((departments: DepartmentRepresentation[]) => {
+      this.departmentSuggestions = departments.map(d => d.name);
+    })
+  }
+
+  departmentChosen() {
+    const departmentName = this.boardForm.get('department').get('name').value;
+    if (departmentName) {
+      this.resourceService.getDepartments(departmentName).subscribe((departments: DepartmentRepresentation[]) => {
+        this.selectedDepartment = departments.find(d => d.name === departmentName);
+      });
+    }
+
   }
 
 }

@@ -14,17 +14,22 @@
             <div class="grid">
               <div class="grid__item one-whole input-holder" formGroupName="department">
                 <label for="departmentName">Department Name</label>
-                <input id="departmentName" pInputText formControlName="name" required >
+                <p-autoComplete id="departmentName" formControlName="name" [suggestions]="departmentSuggestions"
+                                (completeMethod)="searchDepartments($event)"
+                                (onBlur)="departmentChosen()"></p-autoComplete>
                 <control-messages [control]="boardForm.get('department').get('name')"></control-messages>
               </div>
+
               <div class="grid__item one-whole input-holder">
                 <label for="boardName">Board Name</label>
                 <input id="boardName" pInputText formControlName="name" required>
                 <control-messages [control]="boardForm.get('name')"></control-messages>
               </div>
+
               <div class="grid__item one-whole input-holder">
                 <label for="summary">Board Purpose</label>
-                <textarea id="summary" pInputTextarea formControlName="summary" required class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
+                <textarea id="summary" pInputTextarea formControlName="summary" required
+                          class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
                 <control-messages [control]="boardForm.get('summary')"></control-messages>
               </div>
             </div>
@@ -42,23 +47,26 @@
         <p-messages
           [value]="[{severity:'info', detail:'Define some categories to describe the topics that will be covered by your board. Members will be able to use these categories for filtering.'}]"
           [closable]="false"></p-messages>
-        <div class="grid">
-          <div class="grid__item one-whole input-holder" formGroupName="department">
-            <label>Member Categories</label>
-            <div class="ui-checkbox-inline">
+
+        <div *ngIf="!selectedDepartment">
+          <div class="grid">
+            <div class="grid__item one-whole input-holder" formGroupName="department">
+              <label>Member Categories</label>
+              <div class="ui-checkbox-inline">
                <span *ngFor="let category of availableMemberCategories">
                   <p-checkbox name="memberCategoriesMap" [value]="category"
                               [label]="'definitions.memberCategory.' + category | translate"
                               formControlName="memberCategories"></p-checkbox>
                 </span>
-              <control-messages [control]="boardForm.get('department').get('memberCategories')"></control-messages>
+                <control-messages [control]="boardForm.get('department').get('memberCategories')"></control-messages>
+              </div>
             </div>
           </div>
-        </div>
 
-        <p-messages
-          [value]="[{severity:'info', detail:'Define some categories to describe the groups of members in your department. Contributors will be able to use these categories for targeting.'}]"
-          [closable]="false"></p-messages>
+          <p-messages
+            [value]="[{severity:'info', detail:'Define some categories to describe the groups of members in your department. Contributors will be able to use these categories for targeting.'}]"
+            [closable]="false"></p-messages>
+        </div>
 
       </md-card-content>
       <md-card-actions>

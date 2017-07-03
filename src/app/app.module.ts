@@ -17,6 +17,7 @@ import {Ng2UiAuthModule} from 'ng2-ui-auth';
 import {ClipboardModule} from 'ngx-clipboard/dist';
 import {ShareButtonsModule} from 'ngx-sharebuttons';
 import {
+  AutoCompleteModule,
   ButtonModule,
   CalendarModule,
   CheckboxModule,
@@ -266,6 +267,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
     EditorModule,
     DataTableModule,
     SelectButtonModule,
+    AutoCompleteModule,
     // Material modules
     ToggleButtonModule,
     MdDialogModule,

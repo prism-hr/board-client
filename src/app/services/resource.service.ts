@@ -37,8 +37,8 @@ export class ResourceService {
     return this.http.get('/api/boards').map(res => res.json());
   }
 
-  getDepartments(): Observable<DepartmentRepresentation[]> {
-    return this.http.get('/api/departments').map(res => res.json());
+  getDepartments(query?: string): Observable<DepartmentRepresentation[]> {
+    return this.http.get('/api/departments' + (query ? '?query=' + query : '')).map(res => res.json());
   }
 
   getPost(id: number): Observable<PostRepresentation[]> {
