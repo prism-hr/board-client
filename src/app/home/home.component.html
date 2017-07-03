@@ -4,6 +4,7 @@
   <div *ngIf="user">
     <div  class="section-header" fxLayout="row" fxLayoutAlign="space-between center">
       <h1>Posts</h1>
+      <a pButton (click)="newPost.toggle($event)" class="ui-button-success" icon="fa-plus" label="New Post"></a>
     </div>
 
     <div class="grid list-container">
@@ -14,3 +15,7 @@
 
   </div>
 </section>
+
+<p-overlayPanel #newPost>
+  <b-post-new-panel></b-post-new-panel>
+</p-overlayPanel>

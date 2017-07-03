@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ResourceService} from '../services/resource.service';
 import {UserService} from '../services/user.service';
-import BoardRepresentation = b.BoardRepresentation;
-import DepartmentRepresentation = b.DepartmentRepresentation;
 import UserRepresentation = b.UserRepresentation;
+import PostRepresentation = b.PostRepresentation;
 
 @Component({
   templateUrl: './home.component.html',
@@ -12,7 +11,7 @@ import UserRepresentation = b.UserRepresentation;
 export class HomeComponent implements OnInit {
 
   user: UserRepresentation | boolean;
-  posts: BoardRepresentation[];
+  posts: PostRepresentation[];
 
   constructor(private resourceService: ResourceService, private userService: UserService) {
   }

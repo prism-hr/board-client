@@ -28,6 +28,7 @@ import {
   InputMaskModule,
   InputTextModule,
   MessagesModule,
+  OverlayPanelModule,
   RadioButtonModule,
   SelectButtonModule,
   SplitButtonModule,
@@ -65,6 +66,7 @@ import {HeaderComponent} from './header/header.component';
 import {EmployerLogoComponent} from './home/employer-logo.component';
 import {HomePublicComponent} from './home/home-public.component';
 import {HomeComponent} from './home/home.component';
+import {PostNewPanelComponent} from './home/post-new-panel-component';
 import {StudentLogoComponent} from './home/student-logo.component';
 import {UniLogoComponent} from './home/uni-logo.component';
 import {NotFoundComponent} from './not-found.component';
@@ -98,6 +100,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
     AuthenticationDialogComponent,
     NotFoundComponent,
     HomeComponent,
+    PostNewPanelComponent,
     HomePublicComponent,
     UniLogoComponent,
     EmployerLogoComponent,
@@ -268,6 +271,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
     DataTableModule,
     SelectButtonModule,
     AutoCompleteModule,
+    OverlayPanelModule,
     // Material modules
     ToggleButtonModule,
     MdDialogModule,
