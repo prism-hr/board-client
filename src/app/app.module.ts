@@ -30,6 +30,7 @@ import {
   RadioButtonModule,
   SelectButtonModule,
   SplitButtonModule,
+  TabMenuModule,
   ToggleButtonModule
 } from 'primeng/primeng';
 import {AccountComponent} from './account/account.component';
@@ -43,13 +44,14 @@ import {BoardHeaderComponent} from './boards/header/board-header.component';
 import {BoardListComponent} from './boards/list/board-list.component';
 import {BoardManageComponent} from './boards/manage/board-manage.component';
 import {BoardResolver} from './boards/manage/board-resolver.service';
-import {BoardSettingsComponent} from './boards/manage/settings/board-settings.component';
+import {BoardEditComponent} from './boards/manage/edit/board-edit.component';
 import {BoardViewComponent} from './boards/manage/view/board-view.component';
 import {BoardNewComponent} from './boards/new/board-new.component';
 import {DateTimeComponent} from './controls/datetime.component';
 import {ResourceHandleComponent} from './controls/resource-handle.component';
 import {XeditableInputComponent} from './controls/xeditable-input.component';
 import {DepartmentManageComponent} from './departments/department-manage.component';
+import {DepartmentNewComponent} from './departments/department-new.component';
 import {DepartmentResolver} from './departments/department-resolver.service';
 import {DepartmentEditComponent} from './departments/edit/department-edit.component';
 import {DepartmentHeaderComponent} from './departments/header/department-header.component';
@@ -109,11 +111,12 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
     BoardNewComponent,
     BoardManageComponent,
     BoardViewComponent,
-    BoardSettingsComponent,
+    BoardEditComponent,
     DepartmentListComponent,
     DepartmentManageComponent,
     DepartmentViewComponent,
     DepartmentEditComponent,
+    DepartmentNewComponent,
     DepartmentHeaderComponent,
     ResourceUsersComponent,
     ResourceUserRoleFormPartComponent,
@@ -138,8 +141,14 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
       },
       {
         path: 'newDepartment',
-        component: DepartmentEditComponent,
-        canActivate: [AuthGuard]
+        component: DepartmentNewComponent,
+        canActivate: [AuthGuard],
+        children: [
+          {
+            path: '',
+            component: DepartmentEditComponent
+          }
+        ]
       },
       {
         path: 'account',
@@ -151,7 +160,6 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
         children: [
           {
             path: '',
-            component: DepartmentManageComponent,
             data: {
               resourceScope: 'department'
             },
@@ -164,37 +172,53 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
                 component: DepartmentViewComponent
               },
               {
-                path: 'edit',
-                component: DepartmentEditComponent
-              },
-              {
-                path: 'users',
-                component: ResourceUsersComponent,
-                canActivate: [AuthGuard],
-                resolve: {
-                  users: ResourceUsersResolver
-                }
+                path: '',
+                component: DepartmentManageComponent,
+                children: [
+                  {
+                    path: 'edit',
+                    component: DepartmentEditComponent
+                  },
+                  {
+                    path: 'users',
+                    component: ResourceUsersComponent,
+                    canActivate: [AuthGuard],
+                    resolve: {
+                      users: ResourceUsersResolver
+                    }
+                  }
+                ]
               }
             ]
           },
           {
             path: ':boardHandle',
+            data: {
+              resourceScope: 'board'
+            },
             resolve: {
               board: BoardResolver
             },
             children: [
               {
                 path: '',
+                component: BoardViewComponent
+              },
+              {
+                path: '',
                 component: BoardManageComponent,
                 children: [
                   {
-                    path: '',
-                    component: BoardViewComponent
+                    path: 'edit',
+                    component: BoardEditComponent
                   },
                   {
-                    path: 'settings',
-                    component: BoardSettingsComponent,
-                    canActivate: [AuthGuard]
+                    path: 'users',
+                    component: ResourceUsersComponent,
+                    canActivate: [AuthGuard],
+                    resolve: {
+                      users: ResourceUsersResolver
+                    }
                   }
                 ]
               },
@@ -215,7 +239,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
                     component: PostViewComponent,
                   },
                   {
-                    path: 'settings',
+                    path: 'edit',
                     component: PostEditComponent,
                     canActivate: [AuthGuard]
                   }
@@ -233,6 +257,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
     MessagesModule,
     ChipsModule,
     RadioButtonModule,
+    TabMenuModule,
     CheckboxModule,
     DropdownModule,
     CalendarModule,

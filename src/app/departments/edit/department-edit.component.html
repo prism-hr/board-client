@@ -1,67 +1,54 @@
-<section class="section">
-  <md-card>
-    <md-card-header class="header-full">
-      <md-card-title>
-        <div>
-          <h2 *ngIf="!department">Create New Department</h2>
-          <h2 *ngIf="department">Edit Department</h2>
+<form [formGroup]="departmentForm">
+  <div class="grid">
+    <div class="grid__item small--one-whole medium-up--two-thirds">
+      <div class="grid">
+        <div class="grid__item one-whole input-holder">
+          <label for="name">Department Name</label>
+          <input id="name" pInputText formControlName="name" required>
+          <control-messages [control]="departmentForm.get('name')"></control-messages>
         </div>
-      </md-card-title>
-    </md-card-header>
-    <form [formGroup]="departmentForm">
-      <md-card-content>
-        <div class="grid">
-          <div class="grid__item small--one-whole medium-up--two-thirds">
-            <div class="grid">
-              <div class="grid__item one-whole input-holder">
-                <label for="name">Department Name</label>
-                <input id="name" pInputText formControlName="name" required>
-                <control-messages [control]="departmentForm.get('name')"></control-messages>
-              </div>
 
-              <div class="grid__item one-whole input-holder">
-                <label for="summary">Department Summary</label>
-                <textarea id="summary" pInputTextarea formControlName="summary" required
-                          class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
-                <control-messages [control]="departmentForm.get('summary')"></control-messages>
-              </div>
+        <div class="grid__item one-whole input-holder">
+          <label for="summary">Department Summary</label>
+          <textarea id="summary" pInputTextarea formControlName="summary" required
+                    class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
+          <control-messages [control]="departmentForm.get('summary')"></control-messages>
+        </div>
 
-              <div class="grid__item one-whole input-holder">
-                <label>Member Categories</label>
-                <div class="ui-checkbox-inline">
+        <div class="grid__item one-whole input-holder">
+          <label>Member Categories</label>
+          <div class="ui-checkbox-inline">
                <span *ngFor="let category of availableMemberCategories">
                   <p-checkbox name="memberCategoriesMap" [value]="category"
                               [label]="'definitions.memberCategory.' + category | translate"
                               formControlName="memberCategories"></p-checkbox>
                 </span>
-                  <control-messages [control]="departmentForm.get('memberCategories')"></control-messages>
-                </div>
-              </div>
-
-              <div *ngIf="department" class="grid__item one-whole input-holder">
-                <label>Department URL</label>
-                <b-resource-handle formControlName="handle" [urlPrefix]="urlPrefix"></b-resource-handle>
-              </div>
-            </div>
-          </div>
-
-          <div class="grid__item small--one-whole medium-up--one-third">
-            <b-file-upload formControlName="documentLogo" type="logo"></b-file-upload>
+            <control-messages [control]="departmentForm.get('memberCategories')"></control-messages>
           </div>
         </div>
-      </md-card-content>
-      <md-card-actions>
-        <div class="grid grid--half-gutters">
-          <div class="grid__item one-whole">
-            <button pButton [routerLink]="['/', department ? department.handle : 'departments']"
-                    class="ui-button-secondary" label="Cancel"></button>
-            <button *ngIf="actionView === 'EDIT'" pButton (click)="update()"
-                    class="ui-button-warning" label="Save"></button>
-            <button *ngIf="actionView === 'CREATE'" pButton (click)="create()"
-                    class="ui-button-warning" label="Submit"></button>
-          </div>
+
+        <div *ngIf="department" class="grid__item one-whole input-holder">
+          <label>Department URL</label>
+          <b-resource-handle formControlName="handle" [urlPrefix]="urlPrefix"></b-resource-handle>
         </div>
-      </md-card-actions>
-    </form>
-  </md-card>
-</section>
+      </div>
+    </div>
+
+    <div class="grid__item small--one-whole medium-up--one-third">
+      <b-file-upload formControlName="documentLogo" type="logo"></b-file-upload>
+    </div>
+  </div>
+  
+  <md-card-actions>
+    <div class="grid grid--half-gutters">
+      <div class="grid__item one-whole">
+        <button pButton [routerLink]="['/', department ? department.handle : 'departments']"
+                class="ui-button-secondary" label="Cancel"></button>
+        <button *ngIf="actionView === 'EDIT'" pButton (click)="update()"
+                class="ui-button-warning" label="Save"></button>
+        <button *ngIf="actionView === 'CREATE'" pButton (click)="create()"
+                class="ui-button-warning" label="Submit"></button>
+      </div>
+    </div>
+  </md-card-actions>
+</form>

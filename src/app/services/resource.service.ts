@@ -82,7 +82,7 @@ export class ResourceService {
   }
 
   executeAction(resource: ResourceRepresentation, action: string, resourcePatch: ResourcePatchDTO): Observable<ResourceRepresentation> {
-    return this.http.post('/api/' + resource.scope.toLowerCase() + 's/' + resource.id + '/' + action.toLowerCase(), resourcePatch)
+    return this.http.post('/api/' + resource.scope.toLowerCase() + 's/' + resource.id + '/actions/' + action.toLowerCase(), resourcePatch)
       .map(res => res.json());
   }
 

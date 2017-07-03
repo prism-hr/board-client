@@ -9,10 +9,10 @@ import BoardRepresentation = b.BoardRepresentation;
 import BoardPatchDTO = b.BoardPatchDTO;
 
 @Component({
-  templateUrl: 'board-settings.component.html',
-  styleUrls: ['board-settings.component.scss']
+  templateUrl: 'board-edit.component.html',
+  styleUrls: ['board-edit.component.scss']
 })
-export class BoardSettingsComponent implements OnInit {
+export class BoardEditComponent implements OnInit {
   availablePostVisibilities: string[];
   board: BoardRepresentation;
   boardForm: FormGroup;

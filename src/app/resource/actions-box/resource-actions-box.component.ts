@@ -26,7 +26,7 @@ export class ResourceActionsBoxComponent implements OnChanges {
   }
 
   gotoSettings() {
-    return this.router.navigate(['settings'], {relativeTo: this.route});
+    return this.router.navigate(['edit'], {relativeTo: this.route});
   }
 
   openActionDialog(action: Action) {
