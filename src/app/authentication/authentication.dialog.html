@@ -21,13 +21,14 @@
         <div class="divider-or"><span>OR</span></div>
       </div>
       <div class="grid__item one-whole">
-        <form #form="ngForm" (ngSubmit)="login(form.value)" autocomplete="off">
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
           <div class="input-holder">
-            <input pInputText placeholder="Email" name="email" [(ngModel)]="loginFormModel.email" required type="email">
+            <input pInputText type="email" placeholder="Email" formControlName="email">
+            <control-messages [control]="loginForm.get('email')"></control-messages>
           </div>
           <div class="input-holder">
-            <input pInputText placeholder="Password" name="password" [(ngModel)]="loginFormModel.password" required
-                   type="password">
+            <input pInputText type="password" placeholder="Password" formControlName="password">
+            <control-messages [control]="loginForm.get('password')"></control-messages>
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">
             <div>
@@ -58,24 +59,23 @@
         <div class="divider-or"><span>OR</span></div>
       </div>
       <div class="grid__item one-whole">
-        <form #form="ngForm" (ngSubmit)="register(form.value)" autocomplete="off">
+        <form [formGroup]="registrationForm" (ngSubmit)="register()" autocomplete="off">
           <div class="grid">
             <div class="grid__item small--one-whole medium-up--one-half input-holder">
-              <input pInputText placeholder="First Name" name="givenName" [(ngModel)]="registrationFormModel.givenName"
-                     required>
+              <input pInputText placeholder="First Name" formControlName="givenName">
+              <control-messages [control]="registrationForm.get('givenName')"></control-messages>
             </div>
             <div class="grid__item small--one-whole medium-up--one-half input-holder">
-              <input pInputText laceholder="Last Name" name="surname" [(ngModel)]="registrationFormModel.surname"
-                     required>
+              <input pInputText placeholder="Last Name" formControlName="surname">
+              <control-messages [control]="registrationForm.get('surname')"></control-messages>
             </div>
             <div class="grid__item one-whole input-holder">
-              <input pInputText placeholder="Email" name="email" [(ngModel)]="registrationFormModel.email" required
-                     type="email">
+              <input pInputText type="email" placeholder="Email" formControlName="email">
+              <control-messages [control]="registrationForm.get('email')"></control-messages>
             </div>
             <div class="grid__item one-whole input-holder">
-              <input pInputText placeholder="Password" name="password" [(ngModel)]="registrationFormModel.password"
-                     required
-                     type="password">
+              <input pInputText type="password" placeholder="Password" formControlName="password">
+              <control-messages [control]="registrationForm.get('password')"></control-messages>
             </div>
           </div>
           <p-messages
@@ -94,10 +94,10 @@
   </div>
 
   <div *ngIf="view === 'FORGOT'" class="forgot-container">
-    <form *ngIf="!forgottenSent" #form="ngForm" (ngSubmit)="sendForgotten(form.value)" autocomplete="off">
+    <form *ngIf="!forgottenSent" [formGroup]="forgotPasswordForm" (ngSubmit)="sendForgotten()" autocomplete="off">
       <div class="index-padding input-holder">
-        <input pInputText placeholder="Email" name="email" [(ngModel)]="forgotPasswordFormModel.email" required
-               type="email">
+        <input pInputText type="email" placeholder="Email" formControlName="email">
+        <control-messages [control]="forgotPasswordForm.get('email')"></control-messages>
       </div>
 
       <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">

@@ -1,9 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MD_DIALOG_DATA, MdDialog, MdDialogRef} from '@angular/material';
-import {UserImageDialogComponent} from './user-image.dialog';
-import {UserService} from '../services/user.service';
 import {TranslateService} from '@ngx-translate/core';
+import {UserService} from '../services/user.service';
+import {UserImageDialogComponent} from './user-image.dialog';
 import UserRepresentation = b.UserRepresentation;
+import {ValidationService} from '../validation/validation.service';
 
 @Component({
   templateUrl: './authentication.dialog.html',
@@ -11,20 +13,31 @@ import UserRepresentation = b.UserRepresentation;
 })
 export class AuthenticationDialogComponent implements OnInit {
 
-  loginFormModel: any;
-  registrationFormModel: any;
-  forgotPasswordFormModel: any;
+  loginForm: FormGroup;
+  registrationForm: FormGroup;
+  forgotPasswordForm: FormGroup;
   error: string;
   loading: boolean;
   view: AuthenticationView;
   forgottenSent: any;
   dialogData: any;
 
-  constructor(private dialogRef: MdDialogRef<AuthenticationDialogComponent>, @Inject(MD_DIALOG_DATA) data: any,
-              private translate: TranslateService, private dialog: MdDialog, private userService: UserService) {
-    this.loginFormModel = <any>{};
-    this.registrationFormModel = <any>{};
-    this.forgotPasswordFormModel = <any>{};
+  constructor(private dialogRef: MdDialogRef<AuthenticationDialogComponent>, private fb: FormBuilder,
+              @Inject(MD_DIALOG_DATA) data: any, private translate: TranslateService, private dialog: MdDialog,
+              private userService: UserService) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, ValidationService.emailValidator]],
+      password: ['', [Validators.required, Validators.max(100)]]
+    });
+    this.registrationForm = this.fb.group({
+      givenName: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
+      surname: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
+      email: ['', [Validators.required, ValidationService.emailValidator]],
+      password: ['', [Validators.required, ValidationService.passwordValidator]]
+    });
+    this.forgotPasswordForm = this.fb.group({
+      email: ['', [Validators.required, ValidationService.emailValidator]]
+    });
     this.dialogData = data;
   }
 
@@ -39,8 +52,12 @@ export class AuthenticationDialogComponent implements OnInit {
 
   login(): void {
     this.error = null;
+    this.loginForm['submitted'] = true;
+    if (this.loginForm.invalid) {
+      return;
+    }
     this.loading = true;
-    this.userService.login(this.loginFormModel)
+    this.userService.login(this.loginForm.value)
       .then((user: UserRepresentation) => {
           this.afterAuthenticated(user);
         },
@@ -51,8 +68,12 @@ export class AuthenticationDialogComponent implements OnInit {
 
   register(): void {
     this.error = null;
+    this.registrationForm['submitted'] = true;
+    if (this.registrationForm.invalid) {
+      return;
+    }
     this.loading = true;
-    this.userService.signup(this.registrationFormModel)
+    this.userService.signup(this.registrationForm.value)
       .then((user: UserRepresentation) => {
           this.afterAuthenticated(user);
         },
@@ -76,8 +97,12 @@ export class AuthenticationDialogComponent implements OnInit {
 
   sendForgotten(): void {
     this.error = null;
+    this.forgotPasswordForm['submitted'] = true;
+    if (this.forgotPasswordForm.invalid) {
+      return;
+    }
     this.loading = true;
-    this.userService.resetPassword(this.forgotPasswordFormModel.email)
+    this.userService.resetPassword(this.forgotPasswordForm.get('email').value)
       .subscribe({
         error: (response: any) => {
           this.loading = false;

@@ -38,7 +38,7 @@
     "moment-timezone": "^0.5.13",
     "ng2-file-upload": "^1.2.0",
     "ng2-ui-auth": "^6.2.0",
-    "ngx-clipboard": "^8.0.2",
+    "ngx-clipboard": "^8.0.3",
     "ngx-sharebuttons": "^3.0.0",
     "primeng": "4.0.3",
     "quill": "^1.2.4",
