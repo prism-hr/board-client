@@ -44,7 +44,7 @@ import UserRoleRepresentation = b.UserRoleRepresentation;
           </div>
         </div>
       </div>
-
+      <control-messages [control]="parentForm.get('roles')"></control-messages>
 
     </div>
   `,
@@ -75,7 +75,7 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
 
     const userRoles = this.resourceUser ? this.resourceUser.roles : [];
 
-    const rolesValidators = [Validators.required]
+    const rolesValidators = [Validators.required];
     if (this.lastAdminRole) {
       rolesValidators.push(this.lastAdminValidator);
     }

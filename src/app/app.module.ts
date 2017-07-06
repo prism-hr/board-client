@@ -89,6 +89,7 @@ import {ResourceService} from './services/resource.service';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
+import {UserLookupComponent} from './general/user-lookup';
 
 @NgModule({
   declarations: [
@@ -109,6 +110,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
     DateTimeComponent,
     XeditableInputComponent,
     AuthedComponent,
+    UserLookupComponent,
     BoardListComponent,
     ResourceHandleComponent,
     BoardHeaderComponent,

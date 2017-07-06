@@ -101,6 +101,11 @@ export class ResourceService {
     return this.http.post('/api/' + resourceCol + '/' + resource.id + '/users/bulk', usersBulk);
   }
 
+  lookupUsers(resource: ResourceRepresentation, query: string): Observable<UserRepresentation[]> {
+    const resourceCol = (<any>resource.scope).toLowerCase() + 's';
+    return this.http.get('/api/' + resourceCol + '/' + resource.id + '/lookupUsers?query=' + query).map(res => res.json());
+  }
+
   removeUser(resource: ResourceRepresentation, user: UserRepresentation) {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
     return this.http.delete('/api/' + resourceCol + '/' + resource.id + '/users/' + user.id);

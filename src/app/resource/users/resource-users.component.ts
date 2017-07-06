@@ -5,13 +5,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ValidationService} from '../../validation/validation.service';
 import {ResourceUserEditDialogComponent} from './resource-user-edit-dialog.component';
 import {MdDialog} from '@angular/material';
-import UserRepresentation = b.UserRepresentation;
+import * as _ from 'lodash';
 import ResourceUserRepresentation = b.ResourceUserRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
-import Role = b.Role;
-import DepartmentRepresentation = b.DepartmentRepresentation;
-import BoardDTO = b.BoardDTO;
-import BoardRepresentation = b.BoardRepresentation;
 import ResourceUserDTO = b.ResourceUserDTO;
 
 @Component({
@@ -31,6 +27,7 @@ export class ResourceUsersComponent implements OnInit {
               private resourceService: ResourceService) {
     this.userForm = this.fb.group({
       user: this.fb.group({
+        id: [],
         givenName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
         surname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],
         email: ['', [Validators.required, ValidationService.emailValidator]],
@@ -51,9 +48,13 @@ export class ResourceUsersComponent implements OnInit {
   }
 
   createNewUser() {
+    this.userForm['submitted'] = true;
+    if (this.userForm.invalid) {
+      return;
+    }
     this.loading = true;
     const formValue = this.userForm.value;
-    const userDTO: ResourceUserDTO = {user: formValue.user};
+    const userDTO: ResourceUserDTO = {user: _.pick(formValue.user, ['id', 'givenName', 'surname', 'email'])};
     userDTO.roles = formValue.roles.map(r => ({
       role: r,
       expiryDate: formValue.roleDefinitions[r].expiryDate,
@@ -62,6 +63,7 @@ export class ResourceUsersComponent implements OnInit {
     this.resourceService.addUser(this.resource, userDTO)
       .subscribe(user => {
         this.loading = false;
+        this.userForm['submitted'] = false;
         this.userForm.reset({roles: []});
         this.preprocessUser(user);
         this.users.push(user);

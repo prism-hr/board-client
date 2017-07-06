@@ -1,5 +1,5 @@
-import {Component, Host, Input, Optional, SkipSelf} from '@angular/core';
-import {AbstractControl, ControlContainer, FormControl} from '@angular/forms';
+import {Component, Input} from '@angular/core';
+import {AbstractControl, FormControl} from '@angular/forms';
 import {ValidationService} from './validation.service';
 
 @Component({
