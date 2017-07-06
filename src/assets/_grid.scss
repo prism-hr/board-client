@@ -750,6 +750,8 @@ $grid-breakpoints: (
   width: 100%;
   .list-container__item {
     break-inside: avoid;
+    page-break-inside: avoid;
     width: 100%;
+    column-span: none;
   }
 }
