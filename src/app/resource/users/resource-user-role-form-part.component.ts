@@ -14,7 +14,7 @@ import UserRoleRepresentation = b.UserRoleRepresentation;
   selector: 'b-resource-user-role-form-part',
   template: `
     <div [formGroup]="parentForm">
-      <div *ngFor="let role of availableRoles; let index = index" class="grid__item one-whole input-holder">
+      <div *ngFor="let role of availableRoles; let index = index" class="grid__item one-third input-holder">
         <p-checkbox [value]="role" [label]="'definitions.role.' + role | translate"
                     formControlName="roles" (onChange)="roleChanged(role)"></p-checkbox>
 
@@ -44,8 +44,9 @@ import UserRoleRepresentation = b.UserRoleRepresentation;
           </div>
         </div>
       </div>
-      <control-messages [control]="parentForm.get('roles')"></control-messages>
-
+      <div class="grid__item one-whole">
+        <control-messages [control]="parentForm.get('roles')"></control-messages>
+      </div>
     </div>
   `,
   styles: ['']

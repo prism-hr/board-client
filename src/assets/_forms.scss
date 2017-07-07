@@ -58,3 +58,35 @@ button.ui-state-default {
   }
   margin-bottom:15px;
 }
+.overlay-content {
+  max-width: 310px;
+  .overlay-title {
+    background: $fadeGrey;
+    margin: -10px -19px 8px -18px;
+    padding: 14px;
+    border-radius: 4px 4px 0 0;
+  }
+  .overlay-footer {
+    background: $fadeGrey;
+    margin: 6px -19px -8px -18px;
+    padding: 14px;
+    border-radius: 0 0 4px 4px;
+    h6 {
+      display: inline-block;
+    }
+    a {
+      margin-left: 10px;
+    }
+  }
+  .small {
+    font-size: 0.8rem;
+  }
+  .boards {
+    display: inline-block;
+    margin-right: 4px;
+    margin-bottom:4px;
+    a {
+      font-size: 0.8rem;
+    }
+  }
+}

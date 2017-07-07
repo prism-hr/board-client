@@ -3303,6 +3303,10 @@ button.ui-button::-moz-focus-inner {
     margin-right:15px;
     padding-left:4px;
   }
+  span{
+    display: inline-block;
+    margin-bottom:4px;
+  }
 }
 
 .ui-radiobutton-inline {
