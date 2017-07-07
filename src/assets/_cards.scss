@@ -10,7 +10,7 @@ md-card {
     margin: 0px -24px 0px -24px ;
   }
   &.mat-card {
-    font-family:'lato';
+    font-family:'Roboto';
   }
 }
 md-card.mat-card>:first-child {
@@ -99,8 +99,9 @@ b-file-upload[type=logo] {
     display: flex;
   }
 }
-b-file-upload[type=logo].avatar {
+b-file-upload[type=avatar].avatar {
   width: 131px;
+  margin: auto;
   label.drop-area.logo {
     border-radius: 50% ;
     width: 131px ;

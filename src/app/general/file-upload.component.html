@@ -1,20 +1,27 @@
-<div *ngIf="type === 'logo'">
+<div *ngIf="type === 'logo' || type === 'avatar'">
   <label for="uploader-input" ng2FileDrop
          [uploader]="uploader"
          (fileOver)="fileOver($event)"
          [ngClass]="{'dragover': isDragOver}"
          class="drop-area logo">
     <span *ngIf="!model">Drop your image here</span>
-    <div *ngIf="model" class="logo-flex">
+    <div *ngIf="model && type === 'logo'" class="logo-flex">
       <div class="logo">
         <cl-image public-id="{{model.cloudinaryId}}" class="img">
           <cl-transformation height="250" width="400" crop="mfit"></cl-transformation>
         </cl-image>
       </div>
     </div>
+    <div *ngIf="model && type === 'avatar'" class="avatar-flex">
+      <div class="avatar" *ngIf="type === 'avatar'">
+        <cl-image public-id="{{model.cloudinaryId}}" class="img">
+          <cl-transformation gravity="face" width="400" height="400" crop="fill">
+          </cl-transformation>
+        </cl-image>
+      </div>
+    </div>
   </label>
 </div>
-
 <div *ngIf="type === 'document'">
   <label for="uploader-input"
          class="ui-button-success ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left">

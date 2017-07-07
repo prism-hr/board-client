@@ -26,7 +26,8 @@
             <div *ngIf="user.documentImage">
               <cl-image public-id="{{user.documentImage.cloudinaryId}}"
                         class="img">
-                <cl-transformation gravity="north_west" height="40" width="40" crop="mfit"></cl-transformation>
+                <cl-transformation gravity="face" width="150" height="150" radius="max" crop="thumb">
+                </cl-transformation>
               </cl-image>
             </div>
             <i *ngIf="!user.documentImage" class="fa-user"></i>

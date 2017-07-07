@@ -8,7 +8,8 @@
     border: 3px dashed $inactiveGrey;
     width: 206px;
     height: 131px;
-    display: inline-block;
+    display: block;
+    margin: auto;
     text-align: center;
   }
   &.background {
@@ -24,7 +25,10 @@
     border: 3px dashed $error;
   }
 }
-
+.avatar-flex {
+  display: flex;
+  justify-content: center;
+}
 .logo-flex {
   background: #ffffff;
   display: flex;
