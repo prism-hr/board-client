@@ -81,15 +81,27 @@ md-card.mat-card {
       width: auto;
       img {
         max-height: 45px;
+        line-height:0;
       }
     }
+    &.avatar {
+      border-radius: 50%;
+      overflow: hidden;
+    }
   }
+}
+cl-image {
+  display: block;
+  line-height:0;
 }
 .section-header {
   background: $greyBackground;
   padding:10px;
   margin-bottom:15px;
   border-bottom:1px solid $fadeGrey;
+  h1 {
+    font-size:1.6rem;
+  }
 }
 b-file-upload[type=logo] {
   margin: auto;

@@ -31,13 +31,13 @@
             <control-messages [control]="loginForm.get('password')"></control-messages>
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">
+            <button pButton type="submit" class="ui-button-success" label="Submit" fxFlexOrder="1"></button>
             <div>
               <button pButton type="button" class="ui-button-secondary" label="Forgot password?"
                       (click)="setView('FORGOT')"></button>
               <button pButton type="button" class="ui-button-secondary" label="Register"
                       (click)="setView('REGISTER')"></button>
             </div>
-            <button pButton type="submit" class="ui-button-success" label="Submit"></button>
           </div>
         </form>
       </div>
@@ -82,11 +82,8 @@
             [value]="[{severity:'info', detail:'By registering, you agree to NoticeBoard\'s User Agreement, Privacy Policy, and Cookie Policy.'}]"
             [closable]="false"></p-messages>
           <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">
-            <div>
-              <button pButton class="ui-button-secondary" label="Already Registered?"
-                      (click)="setView('LOGIN')"></button>
-            </div>
-            <button pButton class="ui-button-success" type="submit" label="Submit"></button>
+            <button pButton class="ui-button-success" type="submit" label="Submit" fxFlexOrder="1"></button>
+            <button pButton class="ui-button-secondary" label="Already Registered?" (click)="setView('LOGIN')"></button>
           </div>
         </form>
       </div>
@@ -101,9 +98,9 @@
       </div>
 
       <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">
+        <button pButton type="submit" class="ui-button-warning full-width" label="Reset Password" fxFlexOrder="1"></button>
         <button pButton class="ui-button-secondary" label="Back"
                 (click)="setView('LOGIN')"></button>
-        <button pButton type="submit" class="ui-button-warning full-width" label="Reset Password"></button>
       </div>
     </form>
     <div *ngIf="forgottenSent">

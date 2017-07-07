@@ -8,7 +8,7 @@
   }
   .post-content--excerpt {
     font-size: 110%;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.6rem;
     margin-bottom:15px;
   }
@@ -32,13 +32,11 @@
     }
     h1 {
       font-size:1.5em;
-      font-weight:bold;
       color: $uclred;
       padding: 0 0 7px 0;
     }
     h2 {
       font-size:1.2em;
-      font-weight:bold;
       padding: 0 0 5px;
       em {
         font-weight:400;

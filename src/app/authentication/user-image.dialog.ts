@@ -11,7 +11,7 @@ import DocumentRepresentation = b.DocumentRepresentation;
     </div>
 
     <md-dialog-content>
-      <b-file-upload [(ngModel)]="image" type="logo" class="avatar"></b-file-upload>
+      <b-file-upload [(ngModel)]="image" type="avatar" class="avatar"></b-file-upload>
     </md-dialog-content>
 
     <md-dialog-actions  fxLayout="row" fxLayoutAlign="space-between" class="avatar-footer">

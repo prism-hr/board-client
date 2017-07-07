@@ -1,8 +1,7 @@
 <md-card-content>
   <div *ngIf="!bulkMode">
-    <h4>New User</h4>
-
     <form [formGroup]="userForm" (ngSubmit)="createNewUser()" autocomplete="off" novalidate>
+      <h4>New User</h4>
       <div formGroupName="user" class="grid">
         <b-user-lookup [parentForm]="userForm.get('user')" [resource]="resource"></b-user-lookup>
       </div>
@@ -24,12 +23,12 @@
     <div *ngFor="let resourceUser of users" class="grid__item small--one-whole medium-up--one-half">
       <md-card>
         <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
-          <div md-card-avatar class="logo-holder-small default-logo"
+          <div md-card-avatar class="avatar"
                [ngClass]="{'no-background': resourceUser.user.documentImage}">
             <cl-image *ngIf="resourceUser.user.documentImage"
                       public-id="{{resourceUser.user.documentImage.cloudinaryId}}"
                       class="img">
-              <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
+              <cl-transformation gravity="face" width="150" height="150" radius="max" crop="thumb"></cl-transformation>
             </cl-image>
           </div>
           <md-card-title>

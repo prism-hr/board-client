@@ -9,6 +9,9 @@ import UserRepresentation = b.UserRepresentation;
   template: `
     <div [formGroup]="parentForm">
       <div *ngIf="!parentForm.get('showDetails').value">
+        <div class="grid__item one-whole text-right input-holder">
+        <button pButton type="button" (click)="cannotFindUser()" label="Cannot find user?" class="ui-button ui-button-warning"></button>
+        </div>
         <div class="grid__item one-whole input-holder">
           <p-autoComplete id="userLookup" formControlName="userLookup" [suggestions]="userSuggestions"
                           (completeMethod)="searchUsers($event)" (onSelect)="userSelected()" placeholder="Lookup user">
@@ -17,9 +20,6 @@ import UserRepresentation = b.UserRepresentation;
             </ng-template>
           </p-autoComplete>
           <control-messages [control]="parentForm.get('userLookup')"></control-messages>
-        </div>
-        <div class="grid__item one-whole text-right input-holder">
-          <button pButton type="button" (click)="cannotFindUser()" label="Cannot find user?" class="ui-button ui-button-warning"></button>
         </div>
       </div>
       <div *ngIf="parentForm.get('showDetails').value">
