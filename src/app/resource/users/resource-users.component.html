@@ -10,17 +10,19 @@
       </div>
 
       <div class="action-holder" fxLayout="row" fxLayoutAlign="space-between center">
-        <button pButton class="ui-button-success" type="submit" label="Add user"></button>
         <button pButton class="ui-button-secondary" (click)="bulkMode = true" label="Add users in bulk"></button>
+        <button pButton class="ui-button-success" type="submit" label="Add user" fxFlexOrder="1"></button>
       </div>
     </form>
   </div>
 
   <b-resource-users-bulk *ngIf="bulkMode" [resource]="resource" (close)="closeBulkMode($event)">
   </b-resource-users-bulk>
-
+  <div class="section-header">
+    <h1>Users</h1>
+  </div>
   <div class="grid grid--half-gutters">
-    <div *ngFor="let resourceUser of users" class="grid__item small--one-whole medium-up--one-half">
+    <div *ngFor="let resourceUser of users" class="grid__item small--one-whole medium-up--one-third">
       <md-card>
         <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
           <div md-card-avatar class="avatar"
@@ -39,14 +41,15 @@
         </md-card-header>
         <md-card-content>
           <div>
-            Roles:
-            <div *ngFor="let userRole of resourceUser.roles">
-              * {{'definitions.role.' + userRole.role | translate}}
+            <div *ngFor="let userRole of resourceUser.roles" class="{{ userRole.role | lowercase}}">
+              <span class="ui-chips-token ui-corner-all">{{'definitions.role.' + userRole.role | translate}}</span>
               <span *ngIf="userRole.expiryDate">
-                [Expiry date: {{userRole.expiryDate | date : 'shortDate'}}]
+                Expiry date: {{userRole.expiryDate | date : 'shortDate'}}
               </span>
               <span *ngIf="userRole.categories.length > 0">
-                [Member categories: <span *ngFor="let category of userRole.categories">{{category}}</span>]
+                <span *ngFor="let category of userRole.categories" class="ui-chips-token ui-corner-all child-token">
+                {{'definitions.memberCategory.' + category | translate}}
+              </span>
               </span>
             </div>
           </div>

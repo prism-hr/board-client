@@ -1,13 +1,6 @@
 <form class="form" [formGroup]="usersForm">
   <h4>Bulk Users</h4>
   <div class="grid">
-    <b-resource-user-role-form-part [resource]="resource" [parentForm]="usersForm"></b-resource-user-role-form-part>
-
-    <div class="grid__item one-whole">
-      <label>First line contains header</label>
-      <p-checkbox formControlName="firstLineHeader" [binary]="true" (onChange)="computeUsers()"></p-checkbox>
-    </div>
-
     <div class="grid__item one-whole">
       <label for="csv-uploader-input" ng2FileDrop
              [uploader]="uploader"
@@ -19,28 +12,39 @@
       <input #csvUploaderInput type="file" ng2FileSelect [uploader]="uploader"
              id="csv-uploader-input" style="display:none"/>
 
-      <a pButton class="ui-button-secondary" href="assets/user-list.csv">
-        Download CSV template
-      </a>
-    </div>
+      <button pButton class="ui-button-secondary" href="assets/user-list.csv" label="Download CSV template">
 
-    <div *ngIf="userErrors?.length > 0">
-      <div *ngFor="let error of userErrors">
-        Line {{error.line}}: {{error.message}}
+      </button>
+    </div>
+    <div class="grid__item one-whole">
+      <label>The first line will contain headers</label>
+      <p-checkbox formControlName="firstLineHeader" [binary]="true" (onChange)="computeUsers()"></p-checkbox>
+    </div>
+    <div class="grid__item one-whole">
+      <div *ngIf="users?.length > 0" class="user-bulk-table">
+        <p-dataTable [value]="users" [responsive]="true">
+          <p-column field="givenName" header="First name"></p-column>
+          <p-column field="surname" header="Last name"></p-column>
+          <p-column field="email" header="Email"></p-column>
+        </p-dataTable>
+      </div>
+      <div *ngIf="userErrors?.length > 0">
+        <div *ngFor="let error of userErrors" class="ui-message ui-messages-error ui-corner-all">
+          <i class="fa fa-close"></i> Line {{error.line}}: {{error.message}}
+        </div>
       </div>
     </div>
 
     <div *ngIf="users?.length > 0">
-      <p-dataTable [value]="users">
-        <p-column field="givenName" header="First name"></p-column>
-        <p-column field="surname" header="Last name"></p-column>
-        <p-column field="email" header="Email"></p-column>
-      </p-dataTable>
+      <div class="grid__item one-whole">
+        <label>Apply the following roles to all users:</label>
+      </div>
+      <b-resource-user-role-form-part [resource]="resource" [parentForm]="usersForm"></b-resource-user-role-form-part>
     </div>
 
   </div>
   <div class="action-holder" fxLayout="row" fxLayoutAlign="space-between center">
-    <button pButton class="ui-button-success" (click)="submit()" label="Submit"></button>
+    <button pButton class="ui-button-success" (click)="submit()" label="Submit" fxFlexOrder="1"></button>
     <button pButton class="ui-button-secondary" (click)="closeBulkMode()" label="Add users individually"></button>
   </div>
 </form>

@@ -1,7 +1,42 @@
+@import "../../../assets/variables";
 .action-holder {
   margin-top: 15px;
   margin-bottom:30px;
+  .ui-button {
+    font-size:1.1rem;
+  }
+  padding-bottom: 15px;
+  border-bottom:1px solid $fadeGrey;
 }
 h4{
   margin-bottom:15px;
+}
+
+.administrator {
+  display: block;
+  margin-bottom:3px;
+  border-bottom:1px solid $fadeGrey;
+  .ui-chips-token {
+    background: $uclred;
+  }
+}
+.author {
+  margin-bottom:3px;
+  border-bottom:1px solid $fadeGrey;
+  .ui-chips-token {
+    background: $uclblue3;
+    color: white;
+  }
+}
+.member {
+  .ui-chips-token {
+    background: $fundingColor;
+    font-size:0.8em;
+    border-radius: 12px;
+  }
+  > .ui-chips-token {
+    background: $uclfooter;
+    font-size:1em;
+    border-radius: 2px;
+  }
 }

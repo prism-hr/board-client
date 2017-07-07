@@ -1,5 +1,4 @@
 @import 'variables';
-
 form, .form {
   .ui-inputtext {
     padding: 0.6em;
@@ -34,7 +33,11 @@ form, .form {
     display: inline-block;
   }
 }
-
+.input-beside-title {
+  margin-top: -44px;
+  float: right;
+  display: inline-block;
+}
 button.ui-button {
   .ui-button-text {
     display: inline-block;
