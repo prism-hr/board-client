@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {PostService} from '../post.service';
-import {ResourceService} from '../../services/resource.service';
 import * as _ from 'lodash';
 import {Observable} from 'rxjs/Observable';
 import {AuthGuard} from '../../authentication/auth-guard.service';
+import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
+import {PostService} from '../post.service';
 import PostRepresentation = b.PostRepresentation;
 import ResourceOperationRepresentation = b.ResourceOperationRepresentation;
 import UserRepresentation = b.UserRepresentation;
@@ -21,6 +21,8 @@ export class PostViewComponent implements OnInit {
   publishedTimestamp: string;
   today: Date;
   user$: Observable<UserRepresentation | boolean>;
+  showOperationDetails: boolean;
+  selectedOperation: ResourceOperationRepresentation;
 
   constructor(private route: ActivatedRoute, private userService: UserService, private postService: PostService,
               private resourceService: ResourceService, private authGuard: AuthGuard) {
@@ -66,4 +68,8 @@ export class PostViewComponent implements OnInit {
       });
   }
 
+  openChangeDetails(operation) {
+    this.selectedOperation = operation;
+    this.showOperationDetails = true;
+  }
 }

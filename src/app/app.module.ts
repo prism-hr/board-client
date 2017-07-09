@@ -23,12 +23,12 @@ import {
   CheckboxModule,
   ChipsModule,
   DataTableModule,
+  DialogModule,
   DropdownModule,
   EditorModule,
   InputMaskModule,
   InputTextModule,
   MessagesModule,
-  OverlayPanelModule,
   RadioButtonModule,
   SelectButtonModule,
   SplitButtonModule,
@@ -62,11 +62,11 @@ import {DepartmentViewComponent} from './departments/view/department-view.compon
 import {FooterComponent} from './footer/footer.component';
 import {FileUploadComponent} from './general/file-upload.component';
 import {PlacesModule} from './general/places/places.module';
+import {UserLookupComponent} from './general/user-lookup';
 import {HeaderComponent} from './header/header.component';
 import {EmployerLogoComponent} from './home/employer-logo.component';
 import {HomePublicComponent} from './home/home-public.component';
 import {HomeComponent} from './home/home.component';
-import {PostNewPanelComponent} from './home/post-new-panel-component';
 import {StudentLogoComponent} from './home/student-logo.component';
 import {UniLogoComponent} from './home/uni-logo.component';
 import {NotFoundComponent} from './not-found.component';
@@ -89,7 +89,6 @@ import {ResourceService} from './services/resource.service';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
-import {UserLookupComponent} from './general/user-lookup';
 
 @NgModule({
   declarations: [
@@ -101,7 +100,6 @@ import {UserLookupComponent} from './general/user-lookup';
     AuthenticationDialogComponent,
     NotFoundComponent,
     HomeComponent,
-    PostNewPanelComponent,
     HomePublicComponent,
     UniLogoComponent,
     EmployerLogoComponent,
@@ -273,7 +271,7 @@ import {UserLookupComponent} from './general/user-lookup';
     DataTableModule,
     SelectButtonModule,
     AutoCompleteModule,
-    OverlayPanelModule,
+    DialogModule,
     // Material modules
     ToggleButtonModule,
     MdDialogModule,

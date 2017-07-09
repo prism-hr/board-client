@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-06-28 11:20:52.
+// Generated using typescript-generator version 1.23.311 on 2017-07-09 19:38:07.
 
 declare namespace b {
 
@@ -122,6 +122,7 @@ declare namespace b {
   }
 
   interface UserDTO {
+    id?: number;
     givenName?: string;
     surname?: string;
     email?: string;
@@ -223,9 +224,9 @@ declare namespace b {
   }
 
   interface DocumentDefinition {
+    fileName?: string;
     cloudinaryId?: string;
     cloudinaryUrl?: string;
-    fileName?: string;
   }
 
   interface LocationDefinition {

@@ -20,3 +20,12 @@
 .logo-holder-small {
   border-radius: 3px;
 }
+
+.boards {
+  display: inline-block;
+  margin-right: 4px;
+  margin-bottom:4px;
+  a {
+    font-size: 0.8rem;
+  }
+}

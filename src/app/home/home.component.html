@@ -4,7 +4,7 @@
   <div *ngIf="user">
     <div  class="section-header" fxLayout="row" fxLayoutAlign="space-between center">
       <h1>Posts</h1>
-      <a pButton (click)="newPost.toggle($event)" class="ui-button-success" icon="fa-plus" label="New Post"></a>
+      <a pButton (click)="openPostNewDialog()" class="ui-button-success" icon="fa-plus" label="New Post"></a>
     </div>
 
     <div class="grid list-container">
@@ -16,6 +16,16 @@
   </div>
 </section>
 
-<p-overlayPanel #newPost>
-  <b-post-new-panel></b-post-new-panel>
-</p-overlayPanel>
+<p-dialog [(visible)]="showPostNewDialog">
+  <p-header>
+    Select a board you want to create a post for:
+  </p-header>
+  <div *ngFor="let board of boards" class="boards">
+    <a pButton [routerLink]="['/', board.department.handle, board.handle, 'newPost']" class="ui-button-warning" icon="fa-folder"
+       [label]=board.name></a>
+  </div>
+  <p-footer>
+    <h6>Otherwise create a new board:</h6>
+    <a pButton routerLink="/newBoard" class="ui-button-success small" icon="fa-plus" label="New Board"></a>
+  </p-footer>
+</p-dialog>
