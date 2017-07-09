@@ -72,5 +72,18 @@
       "REGISTER": "Register",
       "FORGOT": "Forgot Password?"
     }
+  },
+  "resourceProperty": {
+    "name": "Name",
+    "summary": "Summary",
+    "description": "Description",
+    "organizationName": "Organization name",
+    "location": "Location",
+    "applyWebsite": "Apply Website",
+    "applyDocument": "Apply Document",
+    "applyEmail": "Apply Email",
+    "existingRelationExplanation": "Interest in us",
+    "liveTimestamp": "Opening Date",
+    "deadTimestamp": "Closing Date"
   }
 }

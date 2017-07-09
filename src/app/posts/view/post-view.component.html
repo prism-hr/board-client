@@ -52,7 +52,8 @@
         </div>
       </div>
 
-      <share-buttons [title]="post.name" [description]="post.summary" [pinterest]="false" [stumbleUpOn]="false" [reddit]="false" [reddit]="false" [whatsApp]="false" [tumblr]="false"
+      <share-buttons [title]="post.name" [description]="post.summary" [pinterest]="false" [stumbleUpOn]="false"
+                     [reddit]="false" [reddit]="false" [whatsApp]="false" [tumblr]="false"
                      [image]="post.board.documentLogo?.cloudinaryUrl"></share-buttons>
 
     </div>
@@ -66,7 +67,7 @@
         <md-card-content>
           <div class="grid">
             <div class="grid__item one-whole">
-              <div  *ngIf="post.board.department.documentLogo" md-card-avatar class="logo-holder-small default-logo">
+              <div *ngIf="post.board.department.documentLogo" md-card-avatar class="logo-holder-small default-logo">
                 <cl-image public-id="{{post.board.department.documentLogo.cloudinaryId}}"
                           class="img">
                   <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
@@ -106,14 +107,12 @@
           Comment: {{operation.comment}}
         </div>
         <div *ngIf="operation.changeList">
-          <div>Changes:</div>
-          <div *ngFor="let change of operation.changeList">
-            {{change.property}} changed from {{change.oldValue}} to {{change.newValue}}
-          </div>
+          <div>Changed properties:</div>
+          <span *ngFor="let change of operation.changeList; let isLast=last">
+            {{'resourceProperty.' + change.property | translate}}{{isLast ? '' : ', '}}
+          </span>
         </div>
       </div>
-
-
     </li>
   </ul>
 </section>
