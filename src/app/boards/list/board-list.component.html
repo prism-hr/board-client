@@ -31,7 +31,12 @@
               </cl-image>
             </div>
             <md-card-title>
-              <h3><a [routerLink]="['/', board.department.handle, board.handle]">{{board.name}}</a> <span class="ui-chips-token ui-corner-all visibility-chip">{{'definitions.postVisibility.' + board.defaultPostVisibility | translate}}</span></h3>
+              <h3>
+                <a [routerLink]="['/', board.department.handle, board.handle]">{{board.name}}</a>
+                <!--<span class="ui-chips-token ui-corner-all visibility-chip">-->
+                  <!--{{'definitions.postVisibility.' + board.defaultPostVisibility | translate}}-->
+                <!--</span>-->
+              </h3>
             </md-card-title>
             <md-card-subtitle>
               <h6>
