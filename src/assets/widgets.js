@@ -150,7 +150,7 @@
               if (element.find('.slider-list').length > 0) {
                 initSlider(element);
               }
-            }            );
+            });
 
         });
       };
