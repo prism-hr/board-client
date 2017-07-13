@@ -77,3 +77,49 @@ button.ui-state-default {
   padding: 14px;
   border-radius: 0 0 4px 4px;
 }
+p-dialog {
+  display: block;
+  .ui-dialog-content {
+    max-width: 90%;
+  }
+  p-header {
+    display: block;
+    background: $fadeGrey;
+    margin: -10px -19px 8px -18px;
+    padding: 14px;
+    border-radius: 4px 4px 0 0;
+  }
+  .ui-dialog-titlebar-close {
+    position: absolute;
+    top: 12px;
+    right: 11px;
+    color: black !important;
+    &:hover {
+      border-color: transparent !important;
+    }
+  }
+  p-footer {
+    display: block;
+    background: $fadeGrey;
+    margin: 6px -19px -8px -18px;
+    padding: 14px;
+    border-radius: 0 0 4px 4px;
+    h6 {
+      display: inline-block;
+    }
+    a {
+      margin-left: 10px;
+    }
+  }
+  .small {
+    font-size: 0.8rem;
+  }
+  .boards {
+    display: inline-block;
+    margin-right: 4px;
+    margin-bottom:4px;
+    a {
+      font-size: 0.8rem;
+    }
+  }
+}

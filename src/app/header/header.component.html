@@ -1,7 +1,7 @@
 <header class="main-nav">
   <div class="page-width">
-    <div class="grid grid--no-gutters">
-      <div class="grid__item two-thirds" fxLayout="row" fxLayoutAlign=" center">
+    <div fxLayout="row" fxLayoutAlign="space-between" >
+      <div fxLayout="row" fxLayoutAlign="center">
         <div class="logo-holder">
           <a class="prism-logo" fxHide.xs routerLink="/">
             <img src="assets/prism.svg">
@@ -10,19 +10,19 @@
             <img src="assets/prism-logo.svg">
           </a>
         </div>
-        <div *ngIf="user" class="top-nav">
+        <div *ngIf="user" class="top-nav" fxLayout="row">
           <a pButton class="ui-button" routerLink="/" routerLinkActive="active"
              [routerLinkActiveOptions]="{exact:true}" label="Posts"></a>
           <a pButton class="ui-button" routerLink="/boards" routerLinkActive="active" label="Boards"></a>
           <a pButton class="ui-button" routerLink="/departments" routerLinkActive="active" label="Departments"></a>
         </div>
       </div>
-      <nav class="grid__item one-third text-right">
+      <nav class="text-right" fxLayout="row">
         <div *ngIf="!user">
           <button pButton (click)="showLogin()" class="ui-button-warning" label="Log in"></button>
         </div>
-        <div *ngIf="user" class="user-header-profile">
-          <a routerLink="/account" pButton class="ui-button" label=" Welcome, {{user.givenName}}">
+        <div *ngIf="user" class="user-header-profile" fxLayout="row">
+          <a routerLink="/account" pButton class="ui-button" label=" Welcome, {{user.givenName}}" fxLayout="row">
             <div *ngIf="user.documentImage">
               <cl-image public-id="{{user.documentImage.cloudinaryId}}"
                         class="img">

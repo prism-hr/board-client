@@ -110,7 +110,7 @@
       });
       css_link.appendTo('head');
 
-      $.fn.prismInitializeWidget = function () {
+      $.fn.prismInitializeWidget = function (e) {
         debugger;
         return this.each(function () {
           var element = $(this);

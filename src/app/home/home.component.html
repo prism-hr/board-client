@@ -17,14 +17,14 @@
 </section>
 
 <p-dialog [(visible)]="showPostNewDialog">
-  <p-header>
-    Select a board you want to create a post for:
+  <p-header class="overlay-title">
+    <h5>Select a board you want to create a post for:</h5>
   </p-header>
   <div *ngFor="let board of boards" class="boards">
     <a pButton [routerLink]="['/', board.department.handle, board.handle, 'newPost']" class="ui-button-warning" icon="fa-folder"
        [label]=board.name></a>
   </div>
-  <p-footer>
+  <p-footer class="overlay-footer">
     <h6>Otherwise create a new board:</h6>
     <a pButton routerLink="/newBoard" class="ui-button-success small" icon="fa-plus" label="New Board"></a>
   </p-footer>
