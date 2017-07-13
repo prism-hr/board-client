@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-07-09 19:38:07.
+// Generated using typescript-generator version 1.23.311 on 2017-07-13 15:28:16.
 
 declare namespace b {
 
@@ -141,6 +141,12 @@ declare namespace b {
     categories?: MemberCategory[];
   }
 
+  interface WidgetOptionsDTO extends ResourceDTO {
+    badgeType?: BadgeType;
+    badgeListType?: BadgeListType;
+    postCount?: number;
+  }
+
   interface ActionRepresentation extends Comparable<ActionRepresentation> {
     action?: Action;
     scope?: Scope;
@@ -206,6 +212,11 @@ declare namespace b {
   interface ResourceUserRepresentation {
     user?: UserRepresentation;
     roles?: UserRoleRepresentation[];
+  }
+
+  interface UserNotificationSuppressionRepresentation {
+    resource?: ResourceRepresentation;
+    suppressed?: boolean;
   }
 
   interface UserRepresentation {
@@ -315,6 +326,10 @@ declare namespace b {
   type DocumentRequestState = 'DISPLAY_FIRST' | 'DISPLAY_AGAIN' | 'DISPLAY_NEVER';
 
   type Role = 'ADMINISTRATOR' | 'AUTHOR' | 'MEMBER' | 'PUBLIC';
+
+  type BadgeType = 'SIMPLE' | 'LIST';
+
+  type BadgeListType = 'STATIC' | 'SLIDER';
 
   type DayOfWeek = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
 

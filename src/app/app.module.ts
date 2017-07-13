@@ -30,7 +30,7 @@ import {
   InputTextModule,
   MessagesModule,
   RadioButtonModule,
-  SelectButtonModule,
+  SelectButtonModule, SpinnerModule,
   SplitButtonModule,
   TabMenuModule,
   ToggleButtonModule
@@ -89,6 +89,7 @@ import {ResourceService} from './services/resource.service';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
+import {ResourceBadgeComponent} from './resource/resource-badge.component';
 
 @NgModule({
   declarations: [
@@ -126,6 +127,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
     ResourceUserRoleFormPartComponent,
     ResourceUserEditDialogComponent,
     ResourceUsersBulkComponent,
+    ResourceBadgeComponent,
     PostEditComponent,
     PostViewComponent,
     PostItemComponent,
@@ -272,6 +274,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
     SelectButtonModule,
     AutoCompleteModule,
     DialogModule,
+    SpinnerModule,
     // Material modules
     ToggleButtonModule,
     MdDialogModule,
