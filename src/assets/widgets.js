@@ -111,7 +111,6 @@
       css_link.appendTo('head');
 
       $.fn.prismInitializeWidget = function () {
-        debugger;
         return this.each(function () {
           var element = $(this);
            // KUBA, The elemet here is the whole screen, I don;t really know what you wan tot achive here
