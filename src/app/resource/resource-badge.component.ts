@@ -46,7 +46,7 @@ import BadgeListType = b.BadgeListType;
     </script>
 
     <div #badgePreview data-prism-widget="badge" data-resource="board#3"
-         data-options='{"badgeType":"SIMPLE","badgeListType":"STATIC","postCount":3}'>
+         data-options='{"badgeType":"LIST","badgeListType":"STATIC","postCount":3}'>
     </div>
   `,
   styles: []
@@ -55,7 +55,7 @@ export class ResourceBadgeComponent implements OnInit {
 
   @Input() resource: any;
   badgeSnippet: string;
-  badgeType: BadgeType = 'SIMPLE';
+  badgeType: BadgeType = 'LIST';
   badgeListType: BadgeListType = 'STATIC';
   postCount = 3;
   @ViewChild('badgePreview') badgePreview: ElementRef;
@@ -67,7 +67,7 @@ export class ResourceBadgeComponent implements OnInit {
     this.refreshSnippet();
     const badgePreview = this.badgePreview;
     window['alumeniPrismJQuery'](document).ready(function ($) {
-      $(badgePreview).prismInitializeWidget();
+      $(badgePreview.nativeElement).prismInitializeWidget();
     });
   }
 
