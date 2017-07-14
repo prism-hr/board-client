@@ -21,9 +21,9 @@
 
     setTimer();
 
-    var slider = $('.prism-connect .slider-list');
-    var sliderContainer = $('.prism-connect .slider-list > ul');
-    var sliderItem = $('.prism-connect .slider-list > ul > li');
+    var slider = $('.prism-connect .slider');
+    var sliderContainer = $('.prism-connect .slider > ul');
+    var sliderItem = $('.prism-connect .slider > ul > li');
 
     var slideCount = 0;
     var slideItem = 1;
@@ -46,12 +46,12 @@
 
     setSizes();
 
-    $('.prism-connect .slider-list >  ul > li:last-child').prependTo(sliderContainer);
+    $('.prism-connect .slider >  ul > li:last-child').prependTo(sliderContainer);
 
     function moveLeft() {
       sliderContainer.animate({left: +slideWidth}, 400,
         function () {
-          $('.prism-connect .slider-list >  ul > li:last-child').prependTo(sliderContainer);
+          $('.prism-connect .slider >  ul > li:last-child').prependTo(sliderContainer);
           sliderContainer.css('left', '');
         });
       slideItem = slideItem - 1;
@@ -61,7 +61,7 @@
     function moveRight() {
       sliderContainer.animate({left: -slideWidth}, 400,
         function () {
-          $('.prism-connect .slider-list >  ul > li:first-child').appendTo(sliderContainer);
+          $('.prism-connect .slider >  ul > li:first-child').appendTo(sliderContainer);
           sliderContainer.css('left', '');
         });
       slideItem = slideItem + 1;
@@ -147,7 +147,7 @@
               $(window).bind('resize', function () {
                 containerSize();
               });
-              if (element.find('.slider-list').length > 0) {
+              if (element.find('.slider').length > 0) {
                 initSlider(element);
               }
             });

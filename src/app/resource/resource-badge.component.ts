@@ -19,19 +19,21 @@ import BadgeListType = b.BadgeListType;
           <p-radioButton name="badgeType" value="LIST" label="List" [(ngModel)]="badgeType"
                          (ngModelChange)="refreshSnippet($event)"></p-radioButton>
         </div>
-        <div>
-          <p-radioButton name="badgeListType" value="STATIC" label="Static" [(ngModel)]="badgeListType"
-                         (ngModelChange)="refreshSnippet($event)"></p-radioButton>
-          <p-radioButton name="badgeListType" value="SLIDER" label="Slider" [(ngModel)]="badgeListType"
-                         (ngModelChange)="refreshSnippet($event)"></p-radioButton>
+        <div *ngIf="badgeType === 'LIST'">
+          <div>
+            <p-radioButton name="badgeListType" value="STATIC" label="Static" [(ngModel)]="badgeListType"
+                           (ngModelChange)="refreshSnippet($event)"></p-radioButton>
+            <p-radioButton name="badgeListType" value="SLIDER" label="Slider" [(ngModel)]="badgeListType"
+                           (ngModelChange)="refreshSnippet($event)"></p-radioButton>
+          </div>
+          <p-spinner size="30" [(ngModel)]="postCount" [min]="1" [max]="10" (ngModelChange)="refreshSnippet($event)"></p-spinner>
         </div>
-        <p-spinner size="30" [(ngModel)]="postCount" [min]="1" [max]="10"></p-spinner>
       </div>
     </div>
 
     <div class="grid__item one-whole input-holder">
       <label>Badge Snippet</label>
-      <textarea pInputTextarea [(ngModel)]="badgeSnippet" required
+      <textarea pInputTextarea [ngModel]="badgeSnippet" required
                 class="ui-inputtext ui-corner-all ui-state-default ui-widget" readonly></textarea>
     </div>
 
@@ -46,7 +48,7 @@ import BadgeListType = b.BadgeListType;
     </script>
 
     <div #badgePreview data-prism-widget="badge" data-resource="board#3"
-         data-options='{"badgeType":"LIST","badgeListType":"STATIC","postCount":3}'>
+         [attr.data-options]="widgetOptionsStringified">
     </div>
   `,
   styles: []
@@ -59,22 +61,20 @@ export class ResourceBadgeComponent implements OnInit {
   badgeListType: BadgeListType = 'STATIC';
   postCount = 3;
   @ViewChild('badgePreview') badgePreview: ElementRef;
+  widgetOptionsStringified: string;
 
   constructor(private definitionsService: DefinitionsService) {
   }
 
   ngOnInit() {
     this.refreshSnippet();
-    const badgePreview = this.badgePreview;
-    window['alumeniPrismJQuery'](document).ready(function ($) {
-      $(badgePreview.nativeElement).prismInitializeWidget();
-    });
   }
 
   refreshSnippet() {
     const widgetsUrlPrefix = this.definitionsService.getDefinitions()['applicationUrl'];
     const widgetOptions: WidgetOptionsDTO = {badgeType: this.badgeType, badgeListType: this.badgeListType, postCount: this.postCount};
-    const resourceSerialized = this.resource.scope.toLowerCase() + '#' + this.resource.id;
+    this.widgetOptionsStringified = JSON.stringify(widgetOptions);
+    const resourceStringified = this.resource.scope.toLowerCase() + '#' + this.resource.id;
     this.badgeSnippet =
       `<script>
 var js, fjs = document.getElementsByTagName("script")[0];
@@ -85,7 +85,12 @@ js.src = "${widgetsUrlPrefix}/assets/widgets.js";
 fjs.parentNode.insertBefore(js, fjs);
 }
 </script>
-<div data-prism-widget="badge" data-resource="${resourceSerialized}" data-options='${JSON.stringify(widgetOptions)}'></div>`;
+<div data-prism-widget="badge" data-resource="${resourceStringified}" data-options='${JSON.stringify(widgetOptions)}'></div>`;
+
+    const badgePreview = this.badgePreview;
+    window['alumeniPrismJQuery'](document).ready(function ($) {
+      $(badgePreview.nativeElement).prismInitializeWidget();
+    });
   }
 
 }

@@ -87,21 +87,21 @@
   padding-top: 10px;
   padding-bottom: 0;
 }
-.prism-connect.opportunity.list .prism-main.slider-list {
+.prism-connect.opportunity.list .prism-main.slider {
   padding: 5px 0 0;
   margin: 0 13px;
   overflow: hidden;
 }
-.prism-connect.opportunity.list .prism-main.slider-list > ul {
+.prism-connect.opportunity.list .prism-main.slider > ul {
   position: relative;
   list-style: none;
 }
-.prism-connect.opportunity.list .prism-main.slider-list > ul > li {
+.prism-connect.opportunity.list .prism-main.slider > ul > li {
   position: relative;
   display: block;
   float: left;
 }
-.prism-connect.opportunity.list .prism-main.slider-list > ul > li .prism-apply-holder {
+.prism-connect.opportunity.list .prism-main.slider > ul  > li .prism-apply-holder {
   padding-top: 0;
   padding-bottom: 10px;
 }
