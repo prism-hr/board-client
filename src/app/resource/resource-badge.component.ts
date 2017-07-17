@@ -6,9 +6,9 @@ import ResourceUserDTO = b.ResourceUserDTO;
 import BadgeType = b.BadgeType;
 import WidgetOptionsDTO = b.WidgetOptionsDTO;
 import BadgeListType = b.BadgeListType;
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
-  selector: 'b-resource-badge',
   template: `
     <div class="grid__item one-whole">
       <label>Badge Options</label>
@@ -55,7 +55,7 @@ import BadgeListType = b.BadgeListType;
 })
 export class ResourceBadgeComponent implements OnInit {
 
-  @Input() resource: any;
+  resource: ResourceRepresentation;
   badgeSnippet: string;
   badgeType: BadgeType = 'LIST';
   badgeListType: BadgeListType = 'STATIC';
@@ -63,11 +63,15 @@ export class ResourceBadgeComponent implements OnInit {
   @ViewChild('badgePreview') badgePreview: ElementRef;
   widgetOptionsStringified: string;
 
-  constructor(private definitionsService: DefinitionsService) {
+  constructor(private route: ActivatedRoute, private definitionsService: DefinitionsService) {
   }
 
   ngOnInit() {
-    this.refreshSnippet();
+    this.route.parent.data.subscribe(data => {
+      const resourceScope = data['resourceScope'];
+      this.resource = data[resourceScope];
+      this.refreshSnippet();
+    });
   }
 
   refreshSnippet() {

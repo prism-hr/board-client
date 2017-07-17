@@ -42,6 +42,11 @@ export class BoardManageComponent implements OnInit {
           label: 'Users',
           routerLink: ['/', this.board.department.handle, this.board.handle, 'users'],
           routerLinkActiveOptions: {exact: true}
+        },
+        {
+          label: 'Badge',
+          routerLink: ['/', this.board.department.handle, this.board.handle, 'badge'],
+          routerLinkActiveOptions: {exact: true}
         }];
     });
     this.route.url.subscribe(url => {

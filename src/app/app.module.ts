@@ -30,7 +30,8 @@ import {
   InputTextModule,
   MessagesModule,
   RadioButtonModule,
-  SelectButtonModule, SpinnerModule,
+  SelectButtonModule,
+  SpinnerModule,
   SplitButtonModule,
   TabMenuModule,
   ToggleButtonModule
@@ -76,6 +77,7 @@ import {PostResolver} from './posts/post-resolver.service';
 import {PostService} from './posts/post.service';
 import {PostViewComponent} from './posts/view/post-view.component';
 import {ResourceActionsBoxComponent} from './resource/actions-box/resource-actions-box.component';
+import {ResourceBadgeComponent} from './resource/resource-badge.component';
 import {ResourceCommentDialogComponent} from './resource/resource-comment.dialog';
 import {ResourceUsersResolver} from './resource/resource-users-resolver.service';
 import {ResourceUserEditDialogComponent} from './resource/users/resource-user-edit-dialog.component';
@@ -89,7 +91,6 @@ import {ResourceService} from './services/resource.service';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
-import {ResourceBadgeComponent} from './resource/resource-badge.component';
 
 @NgModule({
   declarations: [
@@ -180,6 +181,7 @@ import {ResourceBadgeComponent} from './resource/resource-badge.component';
               {
                 path: '',
                 component: DepartmentManageComponent,
+                canActivate: [AuthGuard],
                 children: [
                   {
                     path: 'edit',
@@ -188,7 +190,6 @@ import {ResourceBadgeComponent} from './resource/resource-badge.component';
                   {
                     path: 'users',
                     component: ResourceUsersComponent,
-                    canActivate: [AuthGuard],
                     resolve: {
                       users: ResourceUsersResolver
                     }
@@ -213,6 +214,7 @@ import {ResourceBadgeComponent} from './resource/resource-badge.component';
               {
                 path: '',
                 component: BoardManageComponent,
+                canActivate: [AuthGuard],
                 children: [
                   {
                     path: 'edit',
@@ -221,10 +223,13 @@ import {ResourceBadgeComponent} from './resource/resource-badge.component';
                   {
                     path: 'users',
                     component: ResourceUsersComponent,
-                    canActivate: [AuthGuard],
                     resolve: {
                       users: ResourceUsersResolver
                     }
+                  },
+                  {
+                    path: 'badge',
+                    component: ResourceBadgeComponent
                   }
                 ]
               },
