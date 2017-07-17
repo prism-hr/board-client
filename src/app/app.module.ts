@@ -91,6 +91,7 @@ import {ResourceService} from './services/resource.service';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
+import {AccountSuppressionsResolver} from './account/account-suppressions-resolver';
 
 @NgModule({
   declarations: [
@@ -160,7 +161,10 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
       {
         path: 'account',
         component: AccountComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        resolve: {
+          suppressions: AccountSuppressionsResolver
+        }
       },
       {
         path: ':departmentHandle',
@@ -319,7 +323,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
       deps: [DefinitionsService],
       multi: true
     },
-    AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, ResourceUsersResolver, PostService, UserService,
+    AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, ResourceUsersResolver, AccountSuppressionsResolver, PostService, UserService,
     FileUploadService
   ],
   entryComponents: [AuthenticationDialogComponent, ResourceCommentDialogComponent, UserImageDialogComponent,

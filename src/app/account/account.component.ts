@@ -1,18 +1,21 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {UserService} from '../services/user.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdSnackBar} from '@angular/material';
+import {ActivatedRoute} from '@angular/router';
+import {UserService} from '../services/user.service';
 import UserRepresentation = b.UserRepresentation;
 import UserPatchDTO = b.UserPatchDTO;
+import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
 @Component({
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
 
-  accountForm: any;
+  accountForm: FormGroup;
+  suppressions: UserNotificationSuppressionRepresentation[];
 
-  constructor(private fb: FormBuilder, private snackBar: MdSnackBar, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private snackBar: MdSnackBar, private userService: UserService) {
     this.accountForm = this.fb.group({
       givenName: ['', [Validators.required, Validators.maxLength(30)]],
       surname: ['', [Validators.required, Validators.maxLength(40)]],
@@ -27,6 +30,9 @@ export class AccountComponent implements OnInit {
           this.accountForm.reset(user);
         }
       });
+    this.route.data.subscribe(data => {
+      this.suppressions = data['suppressions'];
+    });
   }
 
   submit(): void {
@@ -39,6 +45,11 @@ export class AccountComponent implements OnInit {
       .subscribe(() => {
         this.snackBar.open('Your account was saved successfully.', null, {duration: 3000});
       });
+  }
+
+  suppressionChanged(suppression: UserNotificationSuppressionRepresentation) {
+    this.userService.setSuppression(suppression.resource, suppression.suppressed)
+      .subscribe();
   }
 
 }

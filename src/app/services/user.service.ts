@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
 import {RequestOptionsArgs, Response} from '@angular/http';
-import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {AuthService, JwtHttp} from 'ng2-ui-auth';
+import {Observable} from 'rxjs/Observable';
+import {ReplaySubject} from 'rxjs/ReplaySubject';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import DepartmentPatchDTO = b.DepartmentPatchDTO;
@@ -11,6 +11,7 @@ import PostRepresentation = b.PostRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
 import UserRepresentation = b.UserRepresentation;
 import UserPatchDTO = b.UserPatchDTO;
+import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
 
 @Injectable()
 export class UserService {
@@ -89,4 +90,14 @@ export class UserService {
       });
   }
 
+  getSuppressions(): Observable<UserNotificationSuppressionRepresentation[]> {
+    return this.http.get('/api/user/suppressions').map(res => res.json());
+  }
+
+  setSuppression(resource: ResourceRepresentation, suppressed: boolean): Observable<Response> {
+    if (suppressed) {
+      return this.http.post('/api/user/suppressions/' + resource.id, {});
+    }
+    return this.http.delete('/api/user/suppressions/' + resource.id);
+  }
 }

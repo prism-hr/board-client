@@ -1,7 +1,7 @@
 <section>
-  <form [formGroup]="accountForm" (ngSubmit)="submit()" autocomplete="off">
-    <div class="grid" fxLayout="row" fxLayoutAlign="center">
-      <div class="grid__item small--one-whole medium-up--three-eighths">
+  <div class="grid" fxLayout="row" fxLayoutAlign="center">
+    <div class="grid__item small--one-whole medium-up--three-eighths">
+      <form [formGroup]="accountForm" (ngSubmit)="submit()" autocomplete="off">
         <md-card>
           <md-card-header>
             <md-card-title>
@@ -17,11 +17,11 @@
             <div class="grid">
               <div class="grid__item small--one-whole medium-up--one-half input-holder">
                 <input pInputText formControlName="givenName" placeholder="First Name" required>
-                <control-messages [control]="accountForm.controls.givenName"></control-messages>
+                <control-messages [control]="accountForm.get('givenName')"></control-messages>
               </div>
               <div class="grid__item small--one-whole medium-up--one-half">
                 <input pInputText formControlName="surname" placeholder="Last Name" required>
-                <control-messages [control]="accountForm.controls.surname"></control-messages>
+                <control-messages [control]="accountForm.get('surname')"></control-messages>
               </div>
             </div>
             <div class="grid">
@@ -53,54 +53,38 @@
             <button pButton class="ui-button-warning" type="submit" label="Submit"></button>
           </md-card-actions>
         </md-card>
-      </div>
-      <div class="grid__item small--one-whole medium-up--three-eighths">
-        <md-card>
-          <md-card-header>
-            <md-card-title>
-              <h2>Boards Subscriptions</h2>
-            </md-card-title>
-          </md-card-header>
-          <md-card-content>
-            <ul class="board-block">
-              <li class="board-subscription-item" fxLayout="row" fxLayoutAlign="space-between center">
-                <div class="board-description">
-                  <h3><a [routerLink]="">Board Name</a></h3>
-                  <h6><a [routerLink]="">Department name</a></h6>
-                </div>
-                <div class="board-subscription-switch">
-                  <p-toggleButton styleClass="ui-button-info" onLabel="On" offLabel="Off"></p-toggleButton>
-                </div>
-              </li>
-              <li class="board-subscription-item" fxLayout="row" fxLayoutAlign="space-between center">
-                <div class="board-description">
-                  <h3><a [routerLink]="">Board Name</a></h3>
-                  <h6><a [routerLink]="">Department name</a></h6>
-                </div>
-                <div class="board-subscription-switch">
-                  <p-toggleButton styleClass="ui-button-info" onLabel="On" offLabel="Off"></p-toggleButton>
-                </div>
-              </li>
-              <li class="board-subscription-item" fxLayout="row" fxLayoutAlign="space-between center">
-                <div class="board-description">
-                  <h3><a [routerLink]="">Board Name</a></h3>
-                  <h6><a [routerLink]="">Department name</a></h6>
-                </div>
-                <div class="board-subscription-switch">
-                  <p-toggleButton styleClass="ui-button-info" onLabel="On" offLabel="Off"></p-toggleButton>
-                </div>
-              </li>
-            </ul>
-
-            <hr class="hr">
-
-            <div class="subscription-all" fxLayout="row" fxLayoutAlign="space-between center">
-              <h3>All boards</h3>
-              <p-toggleButton styleClass="ui-button-info" onLabel="On" offLabel="Off"></p-toggleButton>
-            </div>
-          </md-card-content>
-        </md-card>
-      </div>
+      </form>
     </div>
-  </form>
+    <div class="grid__item small--one-whole medium-up--three-eighths">
+      <md-card>
+        <md-card-header>
+          <md-card-title>
+            <h2>Boards Subscriptions</h2>
+          </md-card-title>
+        </md-card-header>
+        <md-card-content>
+          <ul class="board-block">
+            <li *ngFor="let suppression of suppressions" class="board-subscription-item" fxLayout="row"
+                fxLayoutAlign="space-between center">
+              <div class="board-description">
+                <h3><a [routerLink]="">{{suppression.resource.name}}</a></h3>
+                <h6><a [routerLink]="">{{suppression.resource['department'].name}}</a></h6>
+              </div>
+              <div class="board-subscription-switch">
+                <p-toggleButton [(ngModel)]="suppression.suppressed" styleClass="ui-button-info" onLabel="Off"
+                                offLabel="On" (onChange)="suppressionChanged(suppression)"></p-toggleButton>
+              </div>
+            </li>
+          </ul>
+
+          <hr class="hr">
+
+          <div class="subscription-all" fxLayout="row" fxLayoutAlign="space-between center">
+            <h3>All boards</h3>
+            <p-toggleButton styleClass="ui-button-info" onLabel="On" offLabel="Off"></p-toggleButton>
+          </div>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
 </section>
