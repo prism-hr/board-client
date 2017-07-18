@@ -100,4 +100,11 @@ export class UserService {
     }
     return this.http.delete('/api/user/suppressions/' + resource.id);
   }
+
+  setAllSuppressions(suppressed: boolean): Observable<Response> {
+    if (suppressed) {
+      return this.http.post('/api/user/suppressions', {});
+    }
+    return this.http.delete('/api/user/suppressions');
+  }
 }

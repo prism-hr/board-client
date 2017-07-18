@@ -92,6 +92,7 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {AccountSuppressionsResolver} from './account/account-suppressions-resolver';
+import {AccountNotificationsComponent} from './account/account-notifications.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import {AccountSuppressionsResolver} from './account/account-suppressions-resolv
     HeaderComponent,
     FooterComponent,
     AccountComponent,
+    AccountNotificationsComponent,
     AuthenticationDialogComponent,
     NotFoundComponent,
     HomeComponent,

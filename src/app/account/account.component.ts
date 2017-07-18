@@ -6,6 +6,7 @@ import {UserService} from '../services/user.service';
 import UserRepresentation = b.UserRepresentation;
 import UserPatchDTO = b.UserPatchDTO;
 import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
+
 @Component({
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
@@ -45,11 +46,6 @@ export class AccountComponent implements OnInit {
       .subscribe(() => {
         this.snackBar.open('Your account was saved successfully.', null, {duration: 3000});
       });
-  }
-
-  suppressionChanged(suppression: UserNotificationSuppressionRepresentation) {
-    this.userService.setSuppression(suppression.resource, suppression.suppressed)
-      .subscribe();
   }
 
 }

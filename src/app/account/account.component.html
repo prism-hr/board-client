@@ -59,30 +59,11 @@
       <md-card>
         <md-card-header>
           <md-card-title>
-            <h2>Boards Subscriptions</h2>
+            <h2>Notifications</h2>
           </md-card-title>
         </md-card-header>
         <md-card-content>
-          <ul class="board-block">
-            <li *ngFor="let suppression of suppressions" class="board-subscription-item" fxLayout="row"
-                fxLayoutAlign="space-between center">
-              <div class="board-description">
-                <h3><a [routerLink]="">{{suppression.resource.name}}</a></h3>
-                <h6><a [routerLink]="">{{suppression.resource['department'].name}}</a></h6>
-              </div>
-              <div class="board-subscription-switch">
-                <p-toggleButton [(ngModel)]="suppression.suppressed" styleClass="ui-button-info" onLabel="Off"
-                                offLabel="On" (onChange)="suppressionChanged(suppression)"></p-toggleButton>
-              </div>
-            </li>
-          </ul>
-
-          <hr class="hr">
-
-          <div class="subscription-all" fxLayout="row" fxLayoutAlign="space-between center">
-            <h3>All boards</h3>
-            <p-toggleButton styleClass="ui-button-info" onLabel="On" offLabel="Off"></p-toggleButton>
-          </div>
+          <b-account-notifications [suppressions]="suppressions"></b-account-notifications>
         </md-card-content>
       </md-card>
     </div>
