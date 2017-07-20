@@ -1,23 +1,29 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {MdSnackBar} from '@angular/material';
+import {MdDialog, MdSnackBar} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MenuItem} from 'primeng/primeng';
 import {ResourceService} from '../../services/resource.service';
+import {ResourceCommentDialogComponent} from '../resource-comment.dialog';
 import Action = b.Action;
-import BoardRepresentation = b.BoardRepresentation;
-import ResourceRepresentation = b.ResourceRepresentation;
 
 @Component({
   selector: 'b-resource-actions-box',
-  templateUrl: 'resource-actions-box.component.html',
-  styleUrls: ['resource-actions-box.component.scss']
+  template: `
+    <div *ngIf="actionView !== 'VIEW' && actionView !== 'EDIT'">
+      <a pButton class="ui-button-info" routerLink="edit" [label]="'actionView.' + actionView | translate"></a>
+    </div>
+    <div *ngFor="let action of actions">
+      <button pButton class="ui-button-warning" (click)="openActionDialog(action)"
+              [label]="'definitions.action.' + action | translate"></button>
+    </div>
+  `,
+  styleUrls: []
 })
 export class ResourceActionsBoxComponent implements OnChanges {
   @Input() resource: any;
   actionView: string;
-  actions: MenuItem[];
+  actions: Action[];
 
-  constructor(private router: Router, private route: ActivatedRoute, private snackBar: MdSnackBar,
+  constructor(private router: Router, private route: ActivatedRoute, private snackBar: MdSnackBar, private dialog: MdDialog,
               private resourceService: ResourceService) {
   }
 
@@ -30,15 +36,22 @@ export class ResourceActionsBoxComponent implements OnChanges {
   }
 
   openActionDialog(action: Action) {
-    this.resourceService.openActionDialog(this.resource, action, post => this.postActionHandler(post));
+    const dialogRef = this.dialog.open(ResourceCommentDialogComponent, {data: {action, resource: this.resource}});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const requestBody: any = {};
+        requestBody.comment = result.comment;
+        this.resourceService.executeAction(this.resource, action, requestBody)
+          .subscribe(newPost => {
+            this.postActionHandler(newPost);
+          });
+      }
+    });
   }
 
   private generateActionItems() {
     this.actionView = this.resourceService.getActionView(this.resource);
-    this.resourceService.getActionItems(this.resource, post => this.postActionHandler(post))
-      .subscribe(actions => {
-        this.actions = actions;
-      });
+    this.actions = this.resourceService.getActions(this.resource);
   }
 
   private postActionHandler(post) {

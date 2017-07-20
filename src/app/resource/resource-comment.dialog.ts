@@ -20,7 +20,7 @@ import ResourceRepresentation = b.ResourceRepresentation;
         <button pButton class="ui-button-secondary" label="Cancel" md-dialog-close></button>
 
         <button pButton class="ui-button ui-button-warning" [disabled]="commentType === 'required' && !comment"
-                label="Submit" type="submit" (click)="submit()"></button>
+                label="Submit" (click)="submit()"></button>
 
       </md-dialog-actions>
     </div>

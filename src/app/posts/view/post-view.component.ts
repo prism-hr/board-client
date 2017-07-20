@@ -16,6 +16,7 @@ import UserRepresentation = b.UserRepresentation;
 })
 export class PostViewComponent implements OnInit {
   post: PostRepresentation;
+  canEdit: boolean;
   operations: ResourceOperationRepresentation[];
   operationsLoading: boolean;
   publishedTimestamp: string;
@@ -34,6 +35,7 @@ export class PostViewComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.post = data['post'];
 
+      this.canEdit = this.resourceService.canEdit(this.post);
       const canAudit = this.resourceService.canAudit(this.post);
       if (canAudit) {
         this.operationsLoading = true;

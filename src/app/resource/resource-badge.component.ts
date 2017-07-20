@@ -1,12 +1,10 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {DefinitionsService} from '../services/definitions.service';
-import ResourceUserRepresentation = b.ResourceUserRepresentation;
-import ResourceRepresentation = b.ResourceRepresentation;
-import ResourceUserDTO = b.ResourceUserDTO;
-import BadgeType = b.BadgeType;
-import WidgetOptionsDTO = b.WidgetOptionsDTO;
-import BadgeListType = b.BadgeListType;
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {DefinitionsService} from '../services/definitions.service';
+import BadgeListType = b.BadgeListType;
+import BadgeType = b.BadgeType;
+import ResourceRepresentation = b.ResourceRepresentation;
+import WidgetOptionsDTO = b.WidgetOptionsDTO;
 
 @Component({
   template: `
@@ -26,7 +24,12 @@ import {ActivatedRoute} from '@angular/router';
             <p-radioButton name="badgeListType" value="SLIDER" label="Slider" [(ngModel)]="badgeListType"
                            (ngModelChange)="refreshSnippet($event)"></p-radioButton>
           </div>
-          <p-spinner size="30" [(ngModel)]="postCount" [min]="1" [max]="10" (ngModelChange)="refreshSnippet($event)"></p-spinner>
+          <div>
+            <p-radioButton name="postCount" [value]="1" [(ngModel)]="postCount" label="Show 1 post"
+                           (ngModelChange)="refreshSnippet($event)"></p-radioButton>
+            <p-radioButton name="postCount" [value]="2" [(ngModel)]="postCount" label="Show 2 posts"
+                           (ngModelChange)="refreshSnippet($event)"></p-radioButton>
+          </div>
         </div>
       </div>
     </div>
@@ -59,7 +62,7 @@ export class ResourceBadgeComponent implements OnInit {
   badgeSnippet: string;
   badgeType: BadgeType = 'LIST';
   badgeListType: BadgeListType = 'STATIC';
-  postCount = 3;
+  postCount = 2;
   @ViewChild('badgePreview') badgePreview: ElementRef;
   widgetOptionsStringified: string;
 

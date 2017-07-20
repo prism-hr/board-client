@@ -42,7 +42,7 @@
     "ng2-ui-auth": "^7.0.2",
     "ngx-clipboard": "^8.0.3",
     "ngx-sharebuttons": "^3.0.0",
-    "primeng": "4.1.0",
+    "primeng": "4.1.1",
     "quill": "^1.2.4",
     "rxjs": "^5.4.2",
     "simple-line-icons": "^2.4.1",

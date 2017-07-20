@@ -85,5 +85,9 @@
     "existingRelationExplanation": "Interest in us",
     "liveTimestamp": "Opening Date",
     "deadTimestamp": "Closing Date"
+  },
+  "actionView": {
+    "REVISE": "Revise",
+    "CORRECT": "Correct"
   }
 }

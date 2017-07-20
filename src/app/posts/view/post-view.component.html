@@ -15,7 +15,9 @@
           <h2><em>at</em> {{post.organizationName}} <span class="location"><i class="fa fa-location-pin"></i> {{post.location.name}}</span>
           </h2>
         </div>
-        <b-resource-actions-box [resource]="post" class="admin-actions"></b-resource-actions-box>
+        <div *ngIf="canEdit">
+          <a pButton routerLink="edit" class="ui-button-info" icon="fa-gear"></a>
+        </div>
       </div>
       <div class="post-content">
         <div class=" post-content--excerpt">
@@ -80,8 +82,9 @@
         </md-card-content>
       </md-card>
       <div class="category-list">
-        <span class="ui-chips-token  ui-corner-all" *ngFor="let category of post.postCategories">{{category}}</span>
+        <span class="ui-chips-token ui-corner-all" *ngFor="let category of post.postCategories">{{category}}</span>
       </div>
+      <b-resource-actions-box [resource]="post" class="admin-actions"></b-resource-actions-box>
     </div>
   </div>
 </section>

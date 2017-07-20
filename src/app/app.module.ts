@@ -31,11 +31,12 @@ import {
   MessagesModule,
   RadioButtonModule,
   SelectButtonModule,
-  SpinnerModule,
   SplitButtonModule,
   TabMenuModule,
   ToggleButtonModule
 } from 'primeng/primeng';
+import {AccountNotificationsComponent} from './account/account-notifications.component';
+import {AccountSuppressionsResolver} from './account/account-suppressions-resolver';
 import {AccountComponent} from './account/account.component';
 import {AppComponent} from './app.component';
 import {MyAuthConfig} from './auth.config';
@@ -91,8 +92,6 @@ import {ResourceService} from './services/resource.service';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
-import {AccountSuppressionsResolver} from './account/account-suppressions-resolver';
-import {AccountNotificationsComponent} from './account/account-notifications.component';
 
 @NgModule({
   declarations: [
@@ -285,7 +284,6 @@ import {AccountNotificationsComponent} from './account/account-notifications.com
     SelectButtonModule,
     AutoCompleteModule,
     DialogModule,
-    SpinnerModule,
     // Material modules
     ToggleButtonModule,
     MdDialogModule,

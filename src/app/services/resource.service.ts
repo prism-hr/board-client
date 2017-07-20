@@ -1,32 +1,27 @@
 import {Injectable} from '@angular/core';
 import {URLSearchParams} from '@angular/http';
-import {MdDialog} from '@angular/material';
-import {TranslateService} from '@ngx-translate/core';
 import * as _ from 'lodash';
 import {JwtHttp} from 'ng2-ui-auth';
-import {MenuItem} from 'primeng/primeng';
 import {Observable} from 'rxjs/Observable';
-import {ResourceCommentDialogComponent} from '../resource/resource-comment.dialog';
-import BoardRepresentation = b.BoardRepresentation;
-import DepartmentRepresentation = b.DepartmentRepresentation;
-import DepartmentPatchDTO = b.DepartmentPatchDTO;
+import Action = b.Action;
+import BoardDTO = b.BoardDTO;
 import BoardPatchDTO = b.BoardPatchDTO;
+import BoardRepresentation = b.BoardRepresentation;
+import DepartmentDTO = b.DepartmentDTO;
+import DepartmentPatchDTO = b.DepartmentPatchDTO;
+import DepartmentRepresentation = b.DepartmentRepresentation;
 import PostRepresentation = b.PostRepresentation;
+import ResourcePatchDTO = b.ResourcePatchDTO;
 import ResourceRepresentation = b.ResourceRepresentation;
-import Scope = b.Scope;
-import UserRepresentation = b.UserRepresentation;
 import ResourceUserDTO = b.ResourceUserDTO;
 import ResourceUserRepresentation = b.ResourceUserRepresentation;
-import BoardDTO = b.BoardDTO;
 import ResourceUsersDTO = b.ResourceUsersDTO;
-import DepartmentDTO = b.DepartmentDTO;
-import ResourcePatchDTO = b.ResourcePatchDTO;
-import Action = b.Action;
+import UserRepresentation = b.UserRepresentation;
 
 @Injectable()
 export class ResourceService {
 
-  constructor(private http: JwtHttp, private translate: TranslateService, private dialog: MdDialog) {
+  constructor(private http: JwtHttp) {
   }
 
   getPosts(): Observable<PostRepresentation[]> {
@@ -81,7 +76,7 @@ export class ResourceService {
     return this.http.patch('/api/departments/' + id, department).map(res => res.json());
   }
 
-  executeAction(resource: ResourceRepresentation, action: string, resourcePatch: ResourcePatchDTO): Observable<ResourceRepresentation> {
+  executeAction(resource: ResourceRepresentation, action: Action, resourcePatch: ResourcePatchDTO): Observable<ResourceRepresentation> {
     return this.http.post('/api/' + resource.scope.toLowerCase() + 's/' + resource.id + '/actions/' + action.toLowerCase(), resourcePatch)
       .map(res => res.json());
   }
@@ -119,10 +114,7 @@ export class ResourceService {
     return !!resource.actions.find(a => a.action === 'AUDIT');
   }
 
-  getActionView(resource: ResourceRepresentation): string {
-    if (!resource.actions) {
-      return 'EDIT'; // creating new resource
-    }
+  getActionView(resource: ResourceRepresentation): ResourceActionView {
     const actionNames = resource.actions.map(a => a.action);
     if (_.difference(['ACCEPT', 'SUSPEND', 'REJECT'], actionNames).length === 0) {
       return 'REVISE';
@@ -130,43 +122,17 @@ export class ResourceService {
     if (_.difference(['CORRECT'], actionNames).length === 0) {
       return 'CORRECT';
     }
-    if (_.difference(['RESTORE'], actionNames).length === 0) {
-      return 'RESTORE';
-    }
     if (_.difference(['EDIT'], actionNames).length === 0) {
       return 'EDIT';
     }
     return 'VIEW';
   }
 
-  getActionItems(resource: ResourceRepresentation, actionCallback: (post: ResourceRepresentation) => void): Observable<MenuItem[]> {
+  getActions(resource: ResourceRepresentation): Action[] {
     const actions: Action[] = ['SUSPEND', 'REJECT', 'WITHDRAW', 'RESTORE', 'ACCEPT'];
-    const availableActions = actions.filter(a => resource.actions.find(actionDef => actionDef.action === a));
-    return this.translate.get('definitions.action')
-      .map(actionTranslations => {
-        return availableActions.map(action => {
-          return {
-            label: actionTranslations[action], command: () => {
-              this.openActionDialog(resource, action, actionCallback);
-            }
-          };
-        });
-      });
+    return actions.filter(a => resource.actions.find(actionDef => actionDef.action === a));
   }
-
-  openActionDialog(resource: ResourceRepresentation, action: Action, actionCallback: (post: ResourceRepresentation) => void) {
-    const dialogRef = this.dialog.open(ResourceCommentDialogComponent, {data: {action, resource}});
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        const requestBody: any = {};
-        requestBody.comment = result.comment;
-        this.executeAction(resource, action, requestBody)
-          .subscribe(newPost => {
-            actionCallback(newPost);
-          });
-      }
-    });
-  }
-
 
 }
+
+export type ResourceActionView = 'VIEW' | 'EDIT' | 'REVISE' | 'CORRECT' | 'CREATE';

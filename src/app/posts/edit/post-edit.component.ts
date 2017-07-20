@@ -15,7 +15,7 @@ import PostDTO = b.PostDTO;
 import PostRepresentation = b.PostRepresentation;
 import Action = b.Action;
 import PostPatchDTO = b.PostPatchDTO;
-import {ResourceService} from '../../services/resource.service';
+import {ResourceActionView, ResourceService} from '../../services/resource.service';
 import {ResourceCommentDialogComponent} from '../../resource/resource-comment.dialog';
 
 @Component({
@@ -28,7 +28,7 @@ export class PostEditComponent implements OnInit {
   postForm: FormGroup;
   definitions: { [key: string]: any };
   showExistingRelation: boolean;
-  actionView: string;
+  actionView: ResourceActionView;
   availableActions: Action[];
   hasAvailablePostCategories: boolean;
   hasAvailableMemberCategories: boolean;
@@ -159,7 +159,7 @@ export class PostEditComponent implements OnInit {
       });
   }
 
-  executeAction(action: string, sendForm?: boolean) {
+  executeAction(action: Action, sendForm?: boolean) {
     this.postForm['submitted'] = true;
     if (this.postForm.invalid) {
       return;
