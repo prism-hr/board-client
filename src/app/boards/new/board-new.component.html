@@ -15,8 +15,15 @@
               <div class="grid__item one-whole input-holder" formGroupName="department">
                 <label for="departmentName">Department Name</label>
                 <p-autoComplete id="departmentName" formControlName="name" [suggestions]="departmentSuggestions"
-                                (completeMethod)="searchDepartments($event)"
-                                (onBlur)="departmentChosen()"></p-autoComplete>
+                                (completeMethod)="searchDepartments($event)" field="name"
+                                (onBlur)="departmentChosen()" (onSelect)="departmentSelected($event)">
+                  <ng-template let-department pTemplate="item">
+                    <cl-image *ngIf="department.documentLogo" public-id="{{department.documentLogo.cloudinaryId}}" class="img">
+                      <cl-transformation height="150" width="200" crop="mfit"></cl-transformation>
+                    </cl-image>
+                    {{department.name}}
+                  </ng-template>
+                </p-autoComplete>
                 <control-messages [control]="boardForm.get('department').get('name')"></control-messages>
               </div>
 

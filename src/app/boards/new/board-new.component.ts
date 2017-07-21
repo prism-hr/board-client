@@ -17,7 +17,7 @@ export class BoardNewComponent implements OnInit {
   availableMemberCategories: string[];
   board: BoardDTO;
   boardForm: FormGroup;
-  departmentSuggestions: string[];
+  departmentSuggestions: DepartmentRepresentation[];
   selectedDepartment: DepartmentRepresentation;
 
   constructor(private router: Router, private route: ActivatedRoute, private resourceService: ResourceService, private fb: FormBuilder,
@@ -46,6 +46,7 @@ export class BoardNewComponent implements OnInit {
               name: prepopulateDetails.name,
               department: {name: prepopulateDetails.departmentName}
             });
+            this.departmentChosen();
           }
         }
       });
@@ -75,8 +76,12 @@ export class BoardNewComponent implements OnInit {
 
   searchDepartments(event) {
     this.resourceService.getDepartments(event.query).subscribe((departments: DepartmentRepresentation[]) => {
-      this.departmentSuggestions = departments.map(d => d.name);
+      this.departmentSuggestions = departments;
     })
+  }
+
+  departmentSelected(event) {
+    this.boardForm.get('department').get('name').setValue(event.name);
   }
 
   departmentChosen() {

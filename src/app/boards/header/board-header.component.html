@@ -7,8 +7,7 @@
             <!--<span class="ui-chips-token ui-corner-all visibility-chip">{{'definitions.postVisibility.' + board.defaultPostVisibility | translate}}</span>-->
           <!--</div>-->
           <h1><a routerLink="/{{board.department.handle}}">{{board.department.name}}</a> -
-            <b-xeditable-input [resource]="board" propertyName="name" [canEdit]="canEdit"
-                               fieldType="input"></b-xeditable-input>
+            {{board.name}}
           </h1>
         </div>
         <div *ngIf="canEdit">
@@ -16,8 +15,7 @@
         </div>
       </div>
       <div class="summary-holder">
-        <b-xeditable-input [resource]="board" propertyName="summary" [canEdit]="canEdit"
-                           fieldType="textarea"></b-xeditable-input>
+        {{board.summary}}
       </div>
     </div>
     <div class="grid__item medium-up--one-quarter small-one-whole resource-logo-holder">

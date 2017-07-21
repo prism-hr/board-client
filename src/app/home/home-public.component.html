@@ -9,12 +9,22 @@
       <md-card-content>
         <div class="grid">
           <div class="grid__item small--one-whole medium-up--one-half">
-            <input pInputText formControlName="departmentName" placeholder="Department Name" required>
-            <control-messages [control]="boardForm.controls.departmentName"></control-messages>
+            <p-autoComplete formControlName="departmentName" [suggestions]="departmentSuggestions"
+                            (completeMethod)="searchDepartments($event)" placeholder="Department Name"
+                            field="name" (onSelect)="departmentSelected($event)">
+              <ng-template let-department pTemplate="item">
+                <cl-image *ngIf="department.documentLogo" public-id="{{department.documentLogo.cloudinaryId}}" class="img">
+                  <cl-transformation height="150" width="200" crop="mfit"></cl-transformation>
+                </cl-image>
+                {{department.name}}
+              </ng-template>
+            </p-autoComplete>
+            <control-messages [control]="boardForm.get('departmentName')"></control-messages>
           </div>
+
           <div class="grid__item small--one-whole medium-up--one-half">
-            <input pInputText formControlName="name" placeholder="Board Name" required>
-            <control-messages [control]="boardForm.controls.name"></control-messages>
+            <input pInputText formControlName="name" placeholder="Board Name">
+            <control-messages [control]="boardForm.get('name')"></control-messages>
           </div>
         </div>
       </md-card-content>

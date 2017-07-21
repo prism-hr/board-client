@@ -53,7 +53,6 @@ import {BoardViewComponent} from './boards/manage/view/board-view.component';
 import {BoardNewComponent} from './boards/new/board-new.component';
 import {DateTimeComponent} from './controls/datetime.component';
 import {ResourceHandleComponent} from './controls/resource-handle.component';
-import {XeditableInputComponent} from './controls/xeditable-input.component';
 import {DepartmentManageComponent} from './departments/department-manage.component';
 import {DepartmentNewComponent} from './departments/department-new.component';
 import {DepartmentResolver} from './departments/department-resolver.service';
@@ -110,7 +109,6 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
     StudentLogoComponent,
     FileUploadComponent,
     DateTimeComponent,
-    XeditableInputComponent,
     AuthedComponent,
     UserLookupComponent,
     BoardListComponent,
