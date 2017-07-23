@@ -4,19 +4,15 @@ import {MdDialog} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import {ResourceCommentDialogComponent} from '../../resource/resource-comment.dialog';
 import {DefinitionsService} from '../../services/definitions.service';
+import {ResourceActionView, ResourceService} from '../../services/resource.service';
 import {ValidationService} from '../../validation/validation.service';
 import {PostService} from '../post.service';
-import DepartmentDTO = b.DepartmentDTO;
-import BoardDTO = b.BoardDTO;
-import DepartmentRepresentation = b.DepartmentRepresentation;
-import BoardRepresentation = b.BoardRepresentation;
-import PostDTO = b.PostDTO;
-import PostRepresentation = b.PostRepresentation;
 import Action = b.Action;
+import BoardRepresentation = b.BoardRepresentation;
 import PostPatchDTO = b.PostPatchDTO;
-import {ResourceActionView, ResourceService} from '../../services/resource.service';
-import {ResourceCommentDialogComponent} from '../../resource/resource-comment.dialog';
+import PostRepresentation = b.PostRepresentation;
 
 @Component({
   templateUrl: 'post-edit.component.html',
@@ -30,6 +26,7 @@ export class PostEditComponent implements OnInit {
   showExistingRelation: boolean;
   actionView: ResourceActionView;
   availableActions: Action[];
+  organizationSuggestions: string[];
   hasAvailablePostCategories: boolean;
   hasAvailableMemberCategories: boolean;
   formProperties = ['name', 'summary', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories',
@@ -175,6 +172,12 @@ export class PostEditComponent implements OnInit {
           });
       }
     });
+  }
+
+  searchOrganizations(event) {
+    this.resourceService.lookupOrganizations(event.query).subscribe((organizations: string[]) => {
+      this.organizationSuggestions = organizations;
+    })
   }
 
   private generatePostRequestBody(): PostPatchDTO {

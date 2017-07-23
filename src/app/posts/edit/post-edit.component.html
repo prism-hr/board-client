@@ -57,7 +57,10 @@
 
           <div class="grid__item small--one-whole medium-up--one-half input-holder">
             <label for="organizationName">Your organization</label>
-            <input id="organizationName" pInputText formControlName="organizationName" required>
+            <p-autoComplete id="organizationName" formControlName="organizationName"
+                            [suggestions]="organizationSuggestions"
+                            (completeMethod)="searchOrganizations($event)" placeholder="Organization Name">
+            </p-autoComplete>
             <control-messages [control]="postForm.get('organizationName')"></control-messages>
           </div>
 

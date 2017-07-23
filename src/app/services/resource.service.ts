@@ -106,6 +106,10 @@ export class ResourceService {
     return this.http.delete('/api/' + resourceCol + '/' + resource.id + '/users/' + user.id);
   }
 
+  lookupOrganizations(query: string) {
+    return this.http.get('/api/lookupOrganizations?query=' + query).map(res => res.json());
+  }
+
   canEdit(resource: ResourceRepresentation) {
     return !!resource.actions.find(a => a.action === 'EDIT');
   }
