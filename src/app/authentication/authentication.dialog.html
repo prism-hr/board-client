@@ -31,7 +31,7 @@
             <control-messages [control]="loginForm.get('password')"></control-messages>
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">
-            <button pButton type="submit" class="ui-button-success" label="Submit" fxFlexOrder="1"></button>
+            <button pButton class="ui-button-success" label="Submit" fxFlexOrder="1"></button>
             <div>
               <button pButton type="button" class="ui-button-secondary" label="Forgot password?"
                       (click)="setView('FORGOT')"></button>
@@ -82,7 +82,7 @@
             [value]="[{severity:'info', detail:'By registering, you agree to NoticeBoard\'s User Agreement, Privacy Policy, and Cookie Policy.'}]"
             [closable]="false"></p-messages>
           <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">
-            <button pButton class="ui-button-success" type="submit" label="Submit" fxFlexOrder="1"></button>
+            <button pButton class="ui-button-success" label="Submit" fxFlexOrder="1"></button>
             <button pButton class="ui-button-secondary" label="Already Registered?" (click)="setView('LOGIN')"></button>
           </div>
         </form>
