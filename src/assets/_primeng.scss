@@ -258,6 +258,9 @@
     margin: 1px 0;
     padding: 0.186em 0.313em;
     text-align: left;
+    cl-image {
+      max-width: 80px;
+    }
   }
 }
 
@@ -3312,33 +3315,43 @@ button.ui-button::-moz-focus-inner {
     display: inline-block;
     margin-bottom:4px;
   }
-}
-
-.ui-radiobutton-inline {
-  clear: both;
-  display: block;
-  padding: 0.30em 0;
-  label {
-    margin-bottom:0;
-  }
-  .ui-radiobutton-label{
-    margin-right:15px;
-    padding-left:4px;
+  &.special {
+    span {
+      display: block;
+    }
   }
 }
 
-.ui-radiobutton-icon {
-  display: block;
-  font-size: 1.14em;
-  margin-left: -1px;
-  margin-top: -1px;
-  line-height: inherit;
+.form, form {
+  .ui-radiobutton-inline {
+    clear: both;
+    display: block;
+    padding: 0.30em 0;
+    label {
+      margin-bottom:0;
+    }
+    .ui-radiobutton-label{
+      margin-right:15px;
+      padding-left:4px;
+    }
+  }
+  .ui-radiobutton-icon {
+    display: block;
+    font-size: 1.14em;
+    margin-left: -1px;
+    margin-top: -1px;
+    line-height: inherit;
+  }
+  .ui-radiobutton, .ui-radiobutton-label {
+    vertical-align: middle;
+    display: inline-block;
+  }
 }
 
-.ui-radiobutton, .ui-radiobutton-label {
-  vertical-align: middle;
-  display: inline-block;
-}
+
+
+
+
 
 .ui-fluid .fc .ui-button {
   width: auto;
