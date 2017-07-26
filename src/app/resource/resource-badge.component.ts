@@ -58,7 +58,7 @@ import WidgetOptionsDTO = b.WidgetOptionsDTO;
 })
 export class ResourceBadgeComponent implements OnInit {
 
-  resource: ResourceRepresentation;
+  resource: ResourceRepresentation<any>;
   badgeSnippet: string;
   badgeType: BadgeType = 'LIST';
   badgeListType: BadgeListType = 'STATIC';

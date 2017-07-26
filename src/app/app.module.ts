@@ -28,7 +28,7 @@ import {
   EditorModule,
   InputMaskModule,
   InputTextModule,
-  MessagesModule,
+  MessagesModule, OverlayPanelModule,
   RadioButtonModule,
   SelectButtonModule,
   SplitButtonModule,
@@ -282,6 +282,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
     SelectButtonModule,
     AutoCompleteModule,
     DialogModule,
+    OverlayPanelModule,
     // Material modules
     ToggleButtonModule,
     MdDialogModule,

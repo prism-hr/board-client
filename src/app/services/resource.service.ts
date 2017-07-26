@@ -76,32 +76,33 @@ export class ResourceService {
     return this.http.patch('/api/departments/' + id, department).map(res => res.json());
   }
 
-  executeAction(resource: ResourceRepresentation, action: Action, resourcePatch: ResourcePatchDTO): Observable<ResourceRepresentation> {
+  executeAction(resource: ResourceRepresentation<any>, action: Action,
+                resourcePatch: ResourcePatchDTO<any>): Observable<ResourceRepresentation<any>> {
     return this.http.post('/api/' + resource.scope.toLowerCase() + 's/' + resource.id + '/actions/' + action.toLowerCase(), resourcePatch)
       .map(res => res.json());
   }
 
-  updateResourceUser(resource: ResourceRepresentation, user: UserRepresentation, resourceUserDTO: ResourceUserDTO) {
+  updateResourceUser(resource: ResourceRepresentation<any>, user: UserRepresentation, resourceUserDTO: ResourceUserDTO) {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
     return this.http.put('/api/' + resourceCol + '/' + resource.id + '/users/' + user.id, resourceUserDTO).map(res => res.json());
   }
 
-  addUser(resource: ResourceRepresentation, user: ResourceUserDTO) {
+  addUser(resource: ResourceRepresentation<any>, user: ResourceUserDTO) {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
     return this.http.post('/api/' + resourceCol + '/' + resource.id + '/users', user).map(res => res.json());
   }
 
-  addUsersInBulk(resource: ResourceRepresentation, usersBulk: ResourceUsersDTO) {
+  addUsersInBulk(resource: ResourceRepresentation<any>, usersBulk: ResourceUsersDTO) {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
     return this.http.post('/api/' + resourceCol + '/' + resource.id + '/users/bulk', usersBulk);
   }
 
-  lookupUsers(resource: ResourceRepresentation, query: string): Observable<UserRepresentation[]> {
+  lookupUsers(resource: ResourceRepresentation<any>, query: string): Observable<UserRepresentation[]> {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
     return this.http.get('/api/' + resourceCol + '/' + resource.id + '/lookupUsers?query=' + query).map(res => res.json());
   }
 
-  removeUser(resource: ResourceRepresentation, user: UserRepresentation) {
+  removeUser(resource: ResourceRepresentation<any>, user: UserRepresentation) {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
     return this.http.delete('/api/' + resourceCol + '/' + resource.id + '/users/' + user.id);
   }
@@ -110,15 +111,15 @@ export class ResourceService {
     return this.http.get('/api/lookupOrganizations?query=' + query).map(res => res.json());
   }
 
-  canEdit(resource: ResourceRepresentation) {
+  canEdit(resource: ResourceRepresentation<any>) {
     return !!resource.actions.find(a => a.action === 'EDIT');
   }
 
-  canAudit(resource: ResourceRepresentation) {
+  canAudit(resource: ResourceRepresentation<any>) {
     return !!resource.actions.find(a => a.action === 'AUDIT');
   }
 
-  getActionView(resource: ResourceRepresentation): ResourceActionView {
+  getActionView(resource: ResourceRepresentation<any>): ResourceActionView {
     const actionNames = resource.actions.map(a => a.action);
     if (_.difference(['ACCEPT', 'SUSPEND', 'REJECT'], actionNames).length === 0) {
       return 'REVISE';
@@ -132,9 +133,21 @@ export class ResourceService {
     return 'VIEW';
   }
 
-  getActions(resource: ResourceRepresentation): Action[] {
+  getActions(resource: ResourceRepresentation<any>): Action[] {
     const actions: Action[] = ['SUSPEND', 'REJECT', 'WITHDRAW', 'RESTORE', 'ACCEPT'];
     return actions.filter(a => resource.actions.find(actionDef => actionDef.action === a));
+  }
+
+  routerLink(resource: ResourceRepresentation<any>): string {
+    if (resource.scope === 'DEPARTMENT') {
+      return '/' + (<DepartmentRepresentation>resource).handle;
+    } else if (resource.scope === 'BOARD') {
+      const board: BoardRepresentation = resource;
+      return '/' + board.department.handle + '/' + board.handle;
+    } else if (resource.scope === 'POST') {
+      const post: PostRepresentation = resource;
+      return '/' + post.board.department.handle + '/' + post.board.handle + '/' + post.id;
+    }
   }
 
 }

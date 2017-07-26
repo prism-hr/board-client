@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-07-13 15:28:16.
+// Generated using typescript-generator version 1.23.311 on 2017-07-24 18:02:41.
 
 declare namespace b {
 
@@ -7,26 +7,26 @@ declare namespace b {
     nextState?: State;
   }
 
-  interface BoardDTO extends ResourceDTO {
+  interface BoardDTO extends ResourceDTO<BoardDTO> {
     documentLogo?: DocumentDTO;
     postCategories?: string[];
     department?: DepartmentDTO;
   }
 
-  interface BoardPatchDTO extends ResourcePatchDTO {
+  interface BoardPatchDTO extends ResourcePatchDTO<BoardPatchDTO> {
     documentLogo?: DocumentDTO;
     handle?: string;
     postCategories?: string[];
     defaultPostVisibility?: PostVisibility;
   }
 
-  interface DepartmentDTO extends ResourceDTO {
+  interface DepartmentDTO extends ResourceDTO<DepartmentDTO> {
     id?: number;
     documentLogo?: DocumentDTO;
     memberCategories?: MemberCategory[];
   }
 
-  interface DepartmentPatchDTO extends ResourcePatchDTO {
+  interface DepartmentPatchDTO extends ResourcePatchDTO<DepartmentPatchDTO> {
     documentLogo?: DocumentDTO;
     handle?: string;
     memberCategories?: MemberCategory[];
@@ -50,7 +50,7 @@ declare namespace b {
     redirectUri?: string;
   }
 
-  interface PostDTO extends ResourceDTO {
+  interface PostDTO extends ResourceDTO<PostDTO> {
     description?: string;
     organizationName?: string;
     location?: LocationDTO;
@@ -65,7 +65,7 @@ declare namespace b {
     deadTimestamp?: LocalDateTime;
   }
 
-  interface PostPatchDTO extends ResourcePatchDTO {
+  interface PostPatchDTO extends ResourcePatchDTO<PostPatchDTO> {
     description?: string;
     organizationName?: string;
     location?: LocationDTO;
@@ -91,7 +91,7 @@ declare namespace b {
     email?: string;
   }
 
-  interface ResourceDTO {
+  interface ResourceDTO<T> {
     name?: string;
     summary?: string;
   }
@@ -105,7 +105,7 @@ declare namespace b {
     orderStatement?: string;
   }
 
-  interface ResourcePatchDTO {
+  interface ResourcePatchDTO<T> {
     name?: string;
     summary?: string;
     comment?: string;
@@ -131,6 +131,9 @@ declare namespace b {
   interface UserPatchDTO {
     givenName?: string;
     surname?: string;
+    email?: string;
+    password?: string;
+    oldPassword?: string;
     documentImage?: DocumentDTO;
     documentImageRequestState?: DocumentRequestState;
   }
@@ -141,7 +144,7 @@ declare namespace b {
     categories?: MemberCategory[];
   }
 
-  interface WidgetOptionsDTO extends ResourceDTO {
+  interface WidgetOptionsDTO extends ResourceDTO<any> {
     badgeType?: BadgeType;
     badgeListType?: BadgeListType;
     postCount?: number;
@@ -153,7 +156,14 @@ declare namespace b {
     state?: State;
   }
 
-  interface BoardRepresentation extends ResourceRepresentation {
+  interface ActivityRepresentation {
+    id?: number;
+    resource?: ResourceRepresentation<any>;
+    userRole?: UserRoleRepresentation;
+    category?: Activity;
+  }
+
+  interface BoardRepresentation extends ResourceRepresentation<BoardRepresentation> {
     documentLogo?: DocumentRepresentation;
     handle?: string;
     department?: DepartmentRepresentation;
@@ -161,7 +171,7 @@ declare namespace b {
     defaultPostVisibility?: PostVisibility;
   }
 
-  interface DepartmentRepresentation extends ResourceRepresentation {
+  interface DepartmentRepresentation extends ResourceRepresentation<DepartmentRepresentation> {
     documentLogo?: DocumentRepresentation;
     handle?: string;
     memberCategories?: MemberCategory[];
@@ -174,7 +184,7 @@ declare namespace b {
   interface LocationRepresentation extends LocationDefinition {
   }
 
-  interface PostRepresentation extends ResourceRepresentation {
+  interface PostRepresentation extends ResourceRepresentation<PostRepresentation> {
     description?: string;
     organizationName?: string;
     location?: LocationRepresentation;
@@ -198,7 +208,7 @@ declare namespace b {
     createdTimestamp?: LocalDateTime;
   }
 
-  interface ResourceRepresentation {
+  interface ResourceRepresentation<T> {
     id?: number;
     scope?: Scope;
     name?: string;
@@ -215,7 +225,7 @@ declare namespace b {
   }
 
   interface UserNotificationSuppressionRepresentation {
-    resource?: ResourceRepresentation;
+    resource?: ResourceRepresentation<any>;
     suppressed?: boolean;
   }
 
@@ -229,7 +239,9 @@ declare namespace b {
   }
 
   interface UserRoleRepresentation {
+    user?: UserRepresentation;
     role?: Role;
+    state?: State;
     expiryDate?: LocalDate;
     categories?: MemberCategory[];
   }
@@ -257,8 +269,8 @@ declare namespace b {
     year?: number;
     hour?: number;
     minute?: number;
-    second?: number;
     nano?: number;
+    second?: number;
   }
 
   interface LocalDate extends Temporal, TemporalAdjuster, ChronoLocalDate, Serializable {
@@ -311,7 +323,7 @@ declare namespace b {
   interface AbstractChronology extends Chronology {
   }
 
-  type Action = 'VIEW' | 'AUDIT' | 'EDIT' | 'EXTEND' | 'ACCEPT' | 'SUSPEND' | 'CORRECT' | 'REJECT' | 'PUBLISH' | 'RETIRE' | 'RESTORE' | 'WITHDRAW';
+  type Action = 'VIEW' | 'PURSUE' | 'AUDIT' | 'EDIT' | 'EXTEND' | 'ACCEPT' | 'SUSPEND' | 'CORRECT' | 'REJECT' | 'PUBLISH' | 'RETIRE' | 'RESTORE' | 'WITHDRAW';
 
   type State = 'DRAFT' | 'SUSPENDED' | 'PENDING' | 'ACCEPTED' | 'EXPIRED' | 'REJECTED' | 'WITHDRAWN' | 'PREVIOUS';
 
@@ -330,6 +342,8 @@ declare namespace b {
   type BadgeType = 'SIMPLE' | 'LIST';
 
   type BadgeListType = 'STATIC' | 'SLIDER';
+
+  type Activity = 'ACCEPT_BOARD_ACTIVITY' | 'ACCEPT_POST_ACTIVITY' | 'CORRECT_POST_ACTIVITY' | 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' | 'NEW_BOARD_PARENT_ACTIVITY' | 'NEW_POST_PARENT_ACTIVITY' | 'PUBLISH_POST_ACTIVITY' | 'PUBLISH_POST_MEMBER_ACTIVITY' | 'REJECT_BOARD_ACTIVITY' | 'REJECT_POST_ACTIVITY' | 'RESET_PASSWORD_ACTIVITY' | 'RESTORE_BOARD_ACTIVITY' | 'RESTORE_POST_ACTIVITY' | 'RETIRE_POST_ACTIVITY' | 'SUSPEND_POST_ACTIVITY';
 
   type DayOfWeek = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
 

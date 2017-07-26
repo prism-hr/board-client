@@ -31,7 +31,7 @@ export class ResourceCommentDialogComponent {
 
   comment: string;
   action: string;
-  resource: ResourceRepresentation;
+  resource: ResourceRepresentation<any>;
   commentType: string;
 
   constructor(private dialogRef: MdDialogRef<ResourceCommentDialogComponent>, @Inject(MD_DIALOG_DATA) private data: any) {

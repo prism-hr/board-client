@@ -3,26 +3,24 @@ import {RequestOptionsArgs, Response} from '@angular/http';
 import {AuthService, JwtHttp} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
-import BoardRepresentation = b.BoardRepresentation;
-import DepartmentRepresentation = b.DepartmentRepresentation;
-import DepartmentPatchDTO = b.DepartmentPatchDTO;
-import BoardPatchDTO = b.BoardPatchDTO;
-import PostRepresentation = b.PostRepresentation;
+import ActivityRepresentation = b.ActivityRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
-import UserRepresentation = b.UserRepresentation;
-import UserPatchDTO = b.UserPatchDTO;
 import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
+import UserPatchDTO = b.UserPatchDTO;
+import UserRepresentation = b.UserRepresentation;
 
 @Injectable()
 export class UserService {
 
   public user$: Observable<UserRepresentation>;
   public userSource: ReplaySubject<UserRepresentation>;
+  public activities$: ReplaySubject<ActivityRepresentation[]>;
 
   constructor(private http: JwtHttp, private auth: AuthService) {
     this.userSource = new ReplaySubject<UserRepresentation>(1);
     this.user$ = this.userSource.asObservable();
-    this.loadUser();
+    this.activities$ = new ReplaySubject<UserRepresentation>(1);
+    this.initializeUser();
   }
 
   login(user: any, opts?: RequestOptionsArgs): Promise<UserRepresentation> {
@@ -30,7 +28,7 @@ export class UserService {
       .toPromise()
       .then((response: Response) => {
         this.auth.setToken(response.json().token);
-        return this.loadUser();
+        return this.initializeUser();
       });
   }
 
@@ -39,14 +37,7 @@ export class UserService {
       .toPromise()
       .then((response: Response) => {
         this.auth.setToken(response.json().token);
-        return this.loadUser();
-      });
-  }
-
-  logout(): Observable<void> {
-    return this.auth.logout()
-      .do(() => {
-        this.loadUser();
+        return this.initializeUser();
       });
   }
 
@@ -55,7 +46,14 @@ export class UserService {
       .toPromise()
       .then((response: Response) => {
         this.auth.setToken(response.json().token);
-        return this.loadUser();
+        return this.initializeUser();
+      });
+  }
+
+  logout(): Observable<void> {
+    return this.auth.logout()
+      .do(() => {
+        this.loadUser();
       });
   }
 
@@ -94,7 +92,7 @@ export class UserService {
     return this.http.get('/api/user/suppressions').map(res => res.json());
   }
 
-  setSuppression(resource: ResourceRepresentation, suppressed: boolean): Observable<Response> {
+  setSuppression(resource: ResourceRepresentation<any>, suppressed: boolean): Observable<Response> {
     if (suppressed) {
       return this.http.post('/api/user/suppressions/' + resource.id, {});
     }
@@ -106,5 +104,20 @@ export class UserService {
       return this.http.post('/api/user/suppressions', {});
     }
     return this.http.delete('/api/user/suppressions');
+  }
+
+  dismissActivity(activity: ActivityRepresentation) {
+    return this.http.delete('/api/user/activities/' + activity.id);
+  }
+
+  private initializeUser() {
+    this.http.get('/api/user/activities')
+      .subscribe(activities => this.activities$.next(activities.json()));
+    Observable
+      .interval(50000)
+      .startWith(0)
+      .switchMap(() => this.http.get('/api/user/activities/refresh'))
+      .subscribe(activities => this.activities$.next(activities.json()));
+    return this.loadUser();
   }
 }

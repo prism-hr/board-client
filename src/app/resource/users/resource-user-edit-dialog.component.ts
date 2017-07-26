@@ -23,13 +23,13 @@ import ResourceUserRepresentation = b.ResourceUserRepresentation;
     <md-dialog-actions  fxLayout="row" fxLayoutAlign="space-between">
       <button pButton class="ui-button-secondary" label="Cancel" md-dialog-close></button>
       <button pButton class="ui-button-warning" [disabled]="userForm.invalid"
-      label="Save" type="submit" (click)="save()"></button>
+      label="Save" (click)="save()"></button>
     </md-dialog-actions>
   `
 })
 export class ResourceUserEditDialogComponent implements OnInit {
 
-  resource: ResourceRepresentation;
+  resource: ResourceRepresentation<any>;
   resourceUser: ResourceUserRepresentation;
   userForm: FormGroup;
   lastAdminRole: boolean;

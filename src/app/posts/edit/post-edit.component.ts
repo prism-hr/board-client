@@ -51,7 +51,7 @@ export class PostEditComponent implements OnInit {
         name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
         summary: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
         description: [''],
-        organizationName: ['', [Validators.required, Validators.maxLength(255)]],
+        organizationName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
         location: [null, Validators.required],
         existingRelation: [],
         existingRelationExplanation: [],

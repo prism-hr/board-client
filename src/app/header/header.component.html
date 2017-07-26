@@ -1,6 +1,6 @@
 <header class="main-nav">
   <div class="page-width">
-    <div fxLayout="row" fxLayoutAlign="space-between" >
+    <div fxLayout="row" fxLayoutAlign="space-between">
       <div fxLayout="row" fxLayoutAlign="center">
         <div class="logo-holder">
           <a class="prism-logo" fxHide.xs routerLink="/">
@@ -22,7 +22,8 @@
           <button pButton (click)="showLogin()" class="ui-button-warning" label="Log in"></button>
         </div>
         <div *ngIf="user" class="user-header-profile" fxLayout="row">
-          <a routerLink="/account" pButton class="ui-button" label=" Welcome, {{user.givenName}}" fxLayout="row">
+          <button type="text" pButton label="Activities" (click)="activitiesPanel.toggle($event)"></button>
+          <a routerLink="/account" pButton class="ui-button" label="{{user.givenName}}" fxLayout="row">
             <div *ngIf="user.documentImage">
               <cl-image public-id="{{user.documentImage.cloudinaryId}}"
                         class="img">
@@ -38,3 +39,13 @@
     </div>
   </div>
 </header>
+
+<p-overlayPanel #activitiesPanel>
+  <div *ngFor="let activity of activities">
+    <div *ngIf="activity.category === 'SUSPEND_POST_ACTIVITY'">
+      <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
+        New change request for post {{activity.resource.name}}
+      </a>
+    </div>
+  </div>
+</p-overlayPanel>

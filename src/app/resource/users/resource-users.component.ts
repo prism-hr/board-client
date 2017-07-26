@@ -17,7 +17,7 @@ import ResourceUserDTO = b.ResourceUserDTO;
 export class ResourceUsersComponent implements OnInit {
 
   users: ResourceUserRepresentation[];
-  resource: ResourceRepresentation;
+  resource: ResourceRepresentation<any>;
   loading: boolean;
   userForm: FormGroup;
   lastAdminRole: boolean;

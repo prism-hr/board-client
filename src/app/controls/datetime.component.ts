@@ -9,7 +9,7 @@ import 'moment-timezone';
     <label>Specify Day / time / time zome</label>
     <p-calendar class="calendar-item" [(ngModel)]="date" (ngModelChange)="dateTimeChanged($event)" dateFormat="yy-mm-dd"
                 dataType="string" (onBlur)="touched()" [disabled]="isDisabled"></p-calendar>
-    <p-inputMask  class="time-item" [(ngModel)]="time" (ngModelChange)="dateTimeChanged($event)"
+    <p-inputMask class="time-item" [(ngModel)]="time" (ngModelChange)="dateTimeChanged($event)"
                  (onBlur)="touched()" [disabled]="isDisabled" mask="99:99"></p-inputMask>
     <div *ngIf="currentTz !== mainTz" class="ui-radiobutton-inline time-zome-selector">
       <p-radioButton [name]="timezoneRadioGroupName" [value]="mainTz" [label]="mainTz" [(ngModel)]="selectedTz"
@@ -18,7 +18,23 @@ import 'moment-timezone';
                      (ngModelChange)="dateTimeChanged($event)" [disabled]="isDisabled"></p-radioButton>
     </div>
   `,
-  styles: ['label {display: block} .calendar-item, .time-item, .time-zome-selector {display: inline-block;} .time-item {width:64px} .time-zome-selector{padding-left: 10px;}'],
+  styles: [`
+    label {
+      display: block
+    }
+
+    .calendar-item, .time-item, .time-zome-selector {
+      display: inline-block;
+    }
+
+    .time-item {
+      width: 64px
+    }
+
+    .time-zome-selector {
+      padding-left: 10px;
+    }
+  `],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
