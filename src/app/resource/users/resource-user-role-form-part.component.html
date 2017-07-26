@@ -19,7 +19,7 @@
 
         <div *ngIf="role === 'MEMBER'" class="members">
           <label>Specify member categories</label>
-          <div class="ui-checkbox-inline">
+          <div class="ui-checkbox-inline special">
                 <span *ngFor="let category of availableMemberCategories">
                   <p-checkbox formControlName="categories" [value]="category" [label]="('definitions.memberCategory.' + category | translate)"></p-checkbox>
                 </span>

@@ -18,10 +18,13 @@
                                 (completeMethod)="searchDepartments($event)" field="name"
                                 (onBlur)="departmentChosen()" (onSelect)="departmentSelected($event)">
                   <ng-template let-department pTemplate="item">
-                    <cl-image *ngIf="department.documentLogo" public-id="{{department.documentLogo.cloudinaryId}}" class="img">
-                      <cl-transformation height="150" width="200" crop="mfit"></cl-transformation>
-                    </cl-image>
-                    {{department.name}}
+                    <div fxLayout="row" fxLayoutAlign="space-between center">
+                      <span>{{department.name}}</span>
+                      <cl-image *ngIf="department.documentLogo" public-id="{{department.documentLogo.cloudinaryId}}" class="img">
+                        <cl-transformation width="35" height="35" crop="mfit"></cl-transformation>
+                      </cl-image>
+                    </div>
+
                   </ng-template>
                 </p-autoComplete>
                 <control-messages [control]="boardForm.get('department').get('name')"></control-messages>

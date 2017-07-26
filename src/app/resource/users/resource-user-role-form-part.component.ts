@@ -13,7 +13,7 @@ import UserRoleRepresentation = b.UserRoleRepresentation;
 @Component({
   selector: 'b-resource-user-role-form-part',
   templateUrl: 'resource-user-role-form-part.component.html',
-  styles: ['']
+  styles: ['.members{margin-top: 10px;} label {font-weight:500;}']
 })
 export class ResourceUserRoleFormPartComponent implements OnInit {
 
