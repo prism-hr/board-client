@@ -25,14 +25,12 @@ export class BoardNewComponent implements OnInit {
     this.applicationUrl = this.definitionsService.getDefinitions()['applicationUrl'];
     this.availableMemberCategories = definitionsService.getDefinitions()['memberCategory'];
     this.boardForm = this.fb.group({
+      department: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       summary: ['', [Validators.required, Validators.maxLength(1000)]],
       postCategories: [[]],
-      documentLogo: [],
-      department: this.fb.group({
-        name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-        memberCategories: [[]]
-      })
+      memberCategories: [[]],
+      documentLogo: []
     });
   }
 
@@ -57,8 +55,14 @@ export class BoardNewComponent implements OnInit {
     if (this.boardForm.invalid) {
       return;
     }
-    const board: BoardDTO = _.pick(this.boardForm.value, ['name', 'summary', 'postCategories', 'documentLogo', 'department']);
-    board.department.documentLogo = board.documentLogo;
+    const board: BoardDTO = _.pick(this.boardForm.value, ['name', 'summary', 'postCategories', 'documentLogo']);
+    const department = this.boardForm.get('department').value;
+    if (typeof department === 'object') {
+      board.department = _.pick(department, ['id', 'name']);
+    } else {
+      board.department = {name: department, memberCategories: this.boardForm.get('memberCategories').value};
+      board.department.documentLogo = board.documentLogo;
+    }
 
     this.resourceService.postBoard(board)
       .subscribe(saved => {

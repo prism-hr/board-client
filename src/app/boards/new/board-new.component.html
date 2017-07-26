@@ -12,22 +12,23 @@
         <div class="grid">
           <div class="grid__item small--one-whole medium-up--two-thirds">
             <div class="grid">
-              <div class="grid__item one-whole input-holder" formGroupName="department">
+              <div class="grid__item one-whole input-holder">
                 <label for="departmentName">Department Name</label>
-                <p-autoComplete id="departmentName" formControlName="name" [suggestions]="departmentSuggestions"
-                                (completeMethod)="searchDepartments($event)" field="name"
-                                (onBlur)="departmentChosen()" (onSelect)="departmentSelected($event)">
+                <p-autoComplete id="departmentName" formControlName="department"
+                                [suggestions]="departmentSuggestions" (completeMethod)="searchDepartments($event)"
+                                field="name" (onBlur)="departmentChosen()" (onSelect)="departmentSelected($event)">
                   <ng-template let-department pTemplate="item">
                     <div fxLayout="row" fxLayoutAlign="space-between center">
                       <span>{{department.name}}</span>
-                      <cl-image *ngIf="department.documentLogo" public-id="{{department.documentLogo.cloudinaryId}}" class="img">
+                      <cl-image *ngIf="department.documentLogo" public-id="{{department.documentLogo.cloudinaryId}}"
+                                class="img">
                         <cl-transformation width="35" height="35" crop="mfit"></cl-transformation>
                       </cl-image>
                     </div>
 
                   </ng-template>
                 </p-autoComplete>
-                <control-messages [control]="boardForm.get('department').get('name')"></control-messages>
+                <control-messages [control]="boardForm.get('department')"></control-messages>
               </div>
 
               <div class="grid__item one-whole input-holder">
@@ -60,7 +61,7 @@
 
         <div *ngIf="!selectedDepartment">
           <div class="grid">
-            <div class="grid__item one-whole input-holder" formGroupName="department">
+            <div class="grid__item one-whole input-holder">
               <label>Member Categories</label>
               <div class="ui-checkbox-inline">
                <span *ngFor="let category of availableMemberCategories">
@@ -68,7 +69,7 @@
                               [label]="'definitions.memberCategory.' + category | translate"
                               formControlName="memberCategories"></p-checkbox>
                 </span>
-                <control-messages [control]="boardForm.get('department').get('memberCategories')"></control-messages>
+                <control-messages [control]="boardForm.get('memberCategories')"></control-messages>
               </div>
             </div>
           </div>

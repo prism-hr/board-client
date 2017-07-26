@@ -47,5 +47,11 @@
         New change request for post {{activity.resource.name}}
       </a>
     </div>
+    <div *ngIf="activity.category === 'CORRECT_POST_ACTIVITY'">
+      <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
+        The post has been corected. Please revise it {{activity.resource.name}}
+      </a>
+    </div>
   </div>
+
 </p-overlayPanel>
