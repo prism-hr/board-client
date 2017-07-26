@@ -44,7 +44,7 @@
     }
   </script>
 
-  <div #badgePreview data-prism-widget="badge" data-resource="board#3"
+  <div #badgePreview data-prism-widget="badge" [attr.data-resource]="resourceStringified"
        [attr.data-options]="widgetOptionsStringified">
   </div>
 </md-card-content>

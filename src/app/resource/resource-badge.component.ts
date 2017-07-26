@@ -19,6 +19,7 @@ export class ResourceBadgeComponent implements OnInit {
   postCount = 2;
   @ViewChild('badgePreview') badgePreview: ElementRef;
   widgetOptionsStringified: string;
+  resourceStringified: string;
 
   constructor(private route: ActivatedRoute, private definitionsService: DefinitionsService) {
   }
@@ -36,6 +37,7 @@ export class ResourceBadgeComponent implements OnInit {
     const widgetOptions: WidgetOptionsDTO = {badgeType: this.badgeType, badgeListType: this.badgeListType, postCount: this.postCount};
     this.widgetOptionsStringified = JSON.stringify(widgetOptions);
     const resourceStringified = this.resource.scope.toLowerCase() + '#' + this.resource.id;
+    this.resourceStringified = resourceStringified;
     this.badgeSnippet =
       `<script>
 var js, fjs = document.getElementsByTagName("script")[0];
