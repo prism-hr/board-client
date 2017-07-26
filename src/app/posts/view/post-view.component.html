@@ -19,6 +19,8 @@
           <a pButton routerLink="edit" class="ui-button-info" icon="fa-gear"></a>
         </div>
       </div>
+      <b-resource-actions-box [resource]="post" class="admin-actions" fxLayout="row"
+                              fxLayoutAlign="space-between center"></b-resource-actions-box>
       <div class="post-content">
         <div class=" post-content--excerpt">
           {{post.summary}}
@@ -84,20 +86,6 @@
       <div class="category-list">
         <span class="ui-chips-token ui-corner-all" *ngFor="let category of post.postCategories">{{category}}</span>
       </div>
-      <md-card class="resource-actions">
-        <md-card-header class="header-full">
-          <md-card-title>
-            <h3>Actions</h3>
-          </md-card-title>
-        </md-card-header>
-        <md-card-content>
-          <div class="grid">
-            <div class="grid__item one-whole">
-              <b-resource-actions-box [resource]="post" class="admin-actions" fxLayout="row" fxLayoutAlign="space-between center"></b-resource-actions-box>
-            </div>
-          </div>
-        </md-card-content>
-      </md-card>
 
     </div>
   </div>

@@ -2,14 +2,14 @@
   <div class="grid form">
     <div class="grid__item one-whole">
       <h4>Badge Options</h4>
-      <div class="input-holder">
-        <div class="ui-radiobutton-inline">
-          <p-radioButton name="badgeType" value="SIMPLE" label="Simple" [(ngModel)]="badgeType"
-                         (ngModelChange)="refreshSnippet($event)"></p-radioButton>
-          <p-radioButton name="badgeType" value="LIST" label="List" [(ngModel)]="badgeType"
-                         (ngModelChange)="refreshSnippet($event)"></p-radioButton>
-        </div>
-      </div>
+      <!--<div class="input-holder">-->
+        <!--<div class="ui-radiobutton-inline">-->
+          <!--<p-radioButton name="badgeType" value="SIMPLE" label="Simple" [(ngModel)]="badgeType"-->
+                         <!--(ngModelChange)="refreshSnippet($event)"></p-radioButton>-->
+          <!--<p-radioButton name="badgeType" value="LIST" label="List" [(ngModel)]="badgeType"-->
+                         <!--(ngModelChange)="refreshSnippet($event)"></p-radioButton>-->
+        <!--</div>-->
+      <!--</div>-->
       <div class="input-holder">
         <div *ngIf="badgeType === 'LIST'" class="ui-radiobutton-inline">
           <p-radioButton name="badgeListType" value="STATIC" label="Static" [(ngModel)]="badgeListType"
