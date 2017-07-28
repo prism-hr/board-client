@@ -11,6 +11,23 @@
     <form [formGroup]="postForm" novalidate>
       <md-card-content>
         <div class="grid">
+          <div *ngIf="!post" class="grid__item one-whole input-holder">
+            <label for="board">Board</label>
+            <p-dropdown id="board" formControlName="board" [options]="boardOptions" (onChange)="boardChanged($event)"
+                        placeholder="Select a board">
+              <ng-template let-board pTemplate="item">
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                  <span>{{board.label}}</span>
+                  <cl-image *ngIf="board.value.documentLogo" public-id="{{board.value.documentLogo.cloudinaryId}}"
+                            class="img">
+                    <cl-transformation width="35" height="35" crop="mfit"></cl-transformation>
+                  </cl-image>
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <control-messages [control]="postForm.get('board')"></control-messages>
+          </div>
+
           <div class="grid__item one-whole input-holder">
             <label for="name">Title of your post</label>
             <input id="name" pInputText formControlName="name" required>
@@ -42,17 +59,16 @@
             <control-messages [control]="postForm.get('description')"></control-messages>
           </div>
 
-          <div *ngIf="hasAvailablePostCategories" class="grid__item one-whole input-holder">
+          <div *ngIf="availablePostCategories" class="grid__item one-whole input-holder">
             <label>What is your post about?</label>
             <div class="ui-checkbox-inline">
-              <span *ngFor="let category of board.postCategories">
+              <span *ngFor="let category of availablePostCategories">
                 <p-checkbox name="postCategoriesMap" [value]="category" [label]="category"
                             formControlName="postCategories"></p-checkbox>
               </span>
               <control-messages [control]="postForm.get('postCategories')"></control-messages>
             </div>
           </div>
-
 
 
           <div class="grid__item small--one-whole medium-up--one-half input-holder">
@@ -84,8 +100,8 @@
             <div *ngIf="['COLLABORATOR', 'EMPLOYER', 'OTHER'].indexOf(postForm.value.existingRelation) > -1"
                  class="grid__item one-whole input-holder">
               <label>
-                {{'definitions.existingRelation.' + postForm.value.existingRelation + ".explanationPrompt" |
-                translate}}
+                {{'definitions.existingRelation.' + postForm.value.existingRelation
+                + ".explanationPrompt" | translate}}
               </label>
               <textarea pInputTextarea formControlName="existingRelationExplanation" required
                         class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
@@ -93,10 +109,10 @@
             </div>
           </div>
 
-          <div *ngIf="hasAvailableMemberCategories" class="grid__item one-whole input-holder">
+          <div *ngIf="availableMemberCategories" class="grid__item one-whole input-holder">
             <label>Who do you want to share your post with?</label>
             <div class="ui-checkbox-inline">
-               <span *ngFor="let category of board.department.memberCategories">
+               <span *ngFor="let category of availableMemberCategories">
                   <p-checkbox name="memberCategoriesMap" [value]="category"
                               [label]="'definitions.memberCategory.' + category | translate"
                               formControlName="memberCategories"></p-checkbox>
@@ -167,8 +183,9 @@
         </div>
       </md-card-content>
       <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
-        <a pButton [routerLink]="['/', board.department.handle, board.handle, post ? post.id : '']"
+        <a *ngIf="post" pButton [routerLink]="routerLink(post)"
            class="ui-button-secondary" label="Cancel"></a>
+        <a *ngIf="!post" pButton [routerLink]="['/']" class="ui-button-secondary" label="Cancel"></a>
         <span *ngIf="actionView === 'REVISE'">
           <button pButton [disabled]="postForm.invalid" label="Accept"
                   (click)="executeAction('ACCEPT', true)"></button>

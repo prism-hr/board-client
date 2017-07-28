@@ -30,11 +30,4 @@ export class HomeComponent implements OnInit {
       }
     });
   }
-
-  openPostNewDialog() {
-    this.resourceService.getBoards().subscribe(boards => {
-      this.boards = boards;
-      this.showPostNewDialog = true;
-    });
-  }
 }

@@ -28,8 +28,12 @@ export class ResourceService {
     return this.http.get('/api/posts').map(res => res.json());
   }
 
-  getBoards(): Observable<BoardRepresentation[]> {
-    return this.http.get('/api/boards').map(res => res.json());
+  getPublicBoards(): Observable<BoardRepresentation[]> {
+    return this.http.get('/api/boards?includePublicBoards=true').map(res => res.json());
+  }
+
+  getBoards(query?: string): Observable<BoardRepresentation[]> {
+    return this.http.get('/api/boards' + (query ? '?query=' + query : '')).map(res => res.json());
   }
 
   getDepartments(query?: string): Observable<DepartmentRepresentation[]> {
@@ -138,15 +142,15 @@ export class ResourceService {
     return actions.filter(a => resource.actions.find(actionDef => actionDef.action === a));
   }
 
-  routerLink(resource: ResourceRepresentation<any>): string {
+  routerLink(resource: ResourceRepresentation<any>): any[] {
     if (resource.scope === 'DEPARTMENT') {
-      return '/' + (<DepartmentRepresentation>resource).handle;
+      return ['/', (<DepartmentRepresentation>resource).handle];
     } else if (resource.scope === 'BOARD') {
       const board: BoardRepresentation = resource;
-      return '/' + board.department.handle + '/' + board.handle;
+      return ['/', board.department.handle, board.handle];
     } else if (resource.scope === 'POST') {
       const post: PostRepresentation = resource;
-      return '/' + post.board.department.handle + '/' + post.board.handle + '/' + post.id;
+      return ['/', post.board.department.handle, post.board.handle, post.id];
     }
   }
 

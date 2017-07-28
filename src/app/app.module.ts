@@ -91,6 +91,7 @@ import {ResourceService} from './services/resource.service';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
+import {BoardsResolver} from './boards/manage/boards-resolver.service';
 
 @NgModule({
   declarations: [
@@ -142,11 +143,6 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
       {path: 'boards', component: BoardListComponent},
       {path: 'departments', component: DepartmentListComponent},
       {
-        path: 'newBoard',
-        component: BoardNewComponent,
-        canActivate: [AuthGuard]
-      },
-      {
         path: 'newDepartment',
         component: DepartmentNewComponent,
         canActivate: [AuthGuard],
@@ -156,6 +152,20 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
             component: DepartmentEditComponent
           }
         ]
+      },
+      {
+        path: 'newBoard',
+        component: BoardNewComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'newPost',
+        component: PostEditComponent,
+        canActivate: [AuthGuard],
+        data: {showRegister: true},
+        resolve: {
+          boards: BoardsResolver
+        },
       },
       {
         path: 'account',
@@ -237,12 +247,6 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
                 ]
               },
               {
-                path: 'newPost',
-                component: PostEditComponent,
-                canActivate: [AuthGuard],
-                data: {showRegister: true}
-              },
-              {
                 path: ':postId',
                 resolve: {
                   post: PostResolver
@@ -322,7 +326,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
       deps: [DefinitionsService],
       multi: true
     },
-    AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, ResourceUsersResolver, AccountSuppressionsResolver, PostService, UserService,
+    AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, BoardsResolver, ResourceUsersResolver, AccountSuppressionsResolver, PostService, UserService,
     FileUploadService
   ],
   entryComponents: [AuthenticationDialogComponent, ResourceCommentDialogComponent, UserImageDialogComponent,

@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdDialog} from '@angular/material';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import {ResourceCommentDialogComponent} from '../../resource/resource-comment.dialog';
@@ -13,24 +13,26 @@ import Action = b.Action;
 import BoardRepresentation = b.BoardRepresentation;
 import PostPatchDTO = b.PostPatchDTO;
 import PostRepresentation = b.PostRepresentation;
+import ResourceRepresentation = b.ResourceRepresentation;
 
 @Component({
   templateUrl: 'post-edit.component.html',
   styleUrls: ['post-edit.component.scss']
 })
 export class PostEditComponent implements OnInit {
-  board: BoardRepresentation;
+  boardOptions: any[];
   post: PostRepresentation;
+  board: BoardRepresentation;
   postForm: FormGroup;
   definitions: { [key: string]: any };
   showExistingRelation: boolean;
   actionView: ResourceActionView;
   availableActions: Action[];
   organizationSuggestions: string[];
-  hasAvailablePostCategories: boolean;
-  hasAvailableMemberCategories: boolean;
+  availablePostCategories: string[];
+  availableMemberCategories: string[];
   formProperties = ['name', 'summary', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories',
-    'memberCategories', 'liveTimestamp', 'deadTimestamp'];
+    'memberCategories', 'liveTimestamp', 'deadTimestamp', 'applyWebsite', 'applyDocument', 'applyEmail'];
 
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private cdf: ChangeDetectorRef,
               private dialog: MdDialog, private definitionsService: DefinitionsService, private postService: PostService,
@@ -40,97 +42,89 @@ export class PostEditComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      if (data['board']) {
-        this.board = data['board'];
+      if (data['boards']) {
+        this.boardOptions = data['boards'].map(b => ({label: b.name, value: b}));
       }
       if (data['post']) {
         this.post = data['post'];
       }
+      if (data['board']) {
+        this.board = data['board'];
+      }
+      this.route.paramMap.subscribe((params: ParamMap) => {
+        if (!this.board && params.get('boardId')) {
+          this.board = this.boardOptions.find(o => o.value.id === parseInt(params.get('boardId'), 10)).value;
+        }
 
-      this.postForm = this.fb.group({
-        name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-        summary: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
-        description: [''],
-        organizationName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-        location: [null, Validators.required],
-        existingRelation: [],
-        existingRelationExplanation: [],
-        postCategories: [[]],
-        memberCategories: [[]],
-        applyType: [null, Validators.required],
-        applyWebsite: [null, Validators.maxLength(255)],
-        applyDocument: [],
-        applyEmail: [null, Validators.maxLength(254)],
-        hideLiveTimestamp: [],
-        liveTimestamp: [],
-        hideDeadTimestamp: [],
-        deadTimestamp: []
+        this.postForm = this.fb.group({
+          board: [this.board, Validators.required],
+          name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+          summary: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
+          description: [''],
+          organizationName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+          location: [null, Validators.required],
+          existingRelation: [],
+          existingRelationExplanation: [],
+          postCategories: [[]],
+          memberCategories: [[]],
+          applyType: [null, Validators.required],
+          applyWebsite: [null, Validators.maxLength(255)],
+          applyDocument: [],
+          applyEmail: [null, Validators.maxLength(254)],
+          hideLiveTimestamp: [],
+          liveTimestamp: [],
+          hideDeadTimestamp: [],
+          deadTimestamp: []
+        });
+
+        if (this.post) {
+          const formValue: any = _.pick(this.post, this.formProperties);
+          formValue.applyType = formValue.applyWebsite ? 'website' :
+            (formValue.applyDocument ? 'document' : (formValue.applyEmail ? 'email' : null));
+          formValue.hideLiveTimestamp = !formValue.liveTimestamp;
+          formValue.hideDeadTimestamp = !formValue.deadTimestamp;
+          this.postForm.patchValue(formValue);
+        } else {
+          this.postForm.patchValue({hideLiveTimestamp: true, deadTimestamp: moment().add(1, 'month').hours(0).minutes(0).toISOString()});
+        }
+        this.configureTimestampControl('liveTimestamp');
+        this.configureTimestampControl('deadTimestamp');
+
+        this.actionView = this.post ? this.resourceService.getActionView(this.post) : 'CREATE';
+        this.availableActions = this.post ? this.post.actions.map(a => a.action) : [];
+
+        this.postForm.get('existingRelation').valueChanges.subscribe((existingRelation: string) => {
+          this.postForm.patchValue({existingRelationExplanation: null});
+          this.postForm.get('existingRelationExplanation')
+            .setValidators(existingRelation === 'OTHER' && [Validators.required, Validators.maxLength(1000)]);
+        });
+
+        this.postForm.get('applyType').valueChanges.subscribe((applyType: string) => {
+          this.postForm.get('applyWebsite').setValidators(applyType === 'website' && [Validators.required, Validators.maxLength(255)]);
+          this.postForm.get('applyDocument').setValidators(applyType === 'document' && Validators.required);
+          this.postForm.get('applyEmail').setValidators(applyType === 'email' && [Validators.required, ValidationService.emailValidator]);
+          this.postForm.get('applyWebsite').updateValueAndValidity();
+          this.postForm.get('applyDocument').updateValueAndValidity();
+          this.postForm.get('applyEmail').updateValueAndValidity();
+        });
+
+        this.postForm.get('hideLiveTimestamp').valueChanges.subscribe(() => {
+          this.postForm.patchValue({liveTimestamp: null});
+          this.configureTimestampControl('liveTimestamp');
+        });
+
+        this.postForm.get('hideDeadTimestamp').valueChanges.subscribe(() => {
+          this.postForm.patchValue({deadTimestamp: null});
+          this.configureTimestampControl('deadTimestamp');
+        });
+
+        this.boardChanged();
+
+        this.cdf.detectChanges();
       });
 
-      this.hasAvailablePostCategories = this.board.postCategories && this.board.postCategories.length > 0;
-      if (this.hasAvailablePostCategories) {
-        this.postForm.get('postCategories').setValidators(Validators.required);
-      }
-
-      this.hasAvailableMemberCategories = this.board.department.memberCategories && this.board.department.memberCategories.length > 0;
-      if (this.hasAvailableMemberCategories) {
-        this.postForm.get('memberCategories').setValidators(Validators.required);
-      }
-
-      if (this.post) {
-        const formValue: any = Object.assign({}, this.post);
-        formValue.applyType = formValue.applyWebsite ? 'website' :
-          (formValue.applyDocument ? 'document' : (formValue.applyEmail ? 'email' : null));
-        formValue.hideLiveTimestamp = !formValue.liveTimestamp;
-        formValue.hideDeadTimestamp = !formValue.deadTimestamp;
-        this.postForm.patchValue(formValue);
-      } else {
-        this.postForm.patchValue({hideLiveTimestamp: true, deadTimestamp: moment().add(1, 'month').hours(0).minutes(0).toISOString()});
-      }
-      this.configureTimestampControl('liveTimestamp');
-      this.configureTimestampControl('deadTimestamp');
-
-      // initialize existing relation
-      const extendAction = this.board.actions.find(a => (a.action as any as string) === 'EXTEND' && (a.scope as any as string) === 'POST');
-      const creatingNewPostAsUntrustedPerson = !this.post && (extendAction.state as any as string) === 'DRAFT';
-      if (creatingNewPostAsUntrustedPerson || _.get(this.post, 'existingRelation')) {
-        this.showExistingRelation = true;
-        if (_.get(this.post, 'existingRelationExplanation')) {
-          this.postForm.patchValue({existingRelationExplanation: this.post.existingRelationExplanation['text']});
-        }
-        this.postForm.get('existingRelation').setValidators([Validators.required]);
-      }
-
-      this.actionView = this.post ? this.resourceService.getActionView(this.post) : 'CREATE';
-      this.availableActions = this.post ? this.post.actions.map(a => a.action) : [];
-
-      this.cdf.detectChanges();
     });
 
-    this.postForm.get('existingRelation').valueChanges.subscribe((existingRelation: string) => {
-      this.postForm.patchValue({existingRelationExplanation: null});
-      this.postForm.get('existingRelationExplanation')
-        .setValidators(existingRelation === 'OTHER' && [Validators.required, Validators.maxLength(1000)]);
-    });
-
-    this.postForm.get('applyType').valueChanges.subscribe((applyType: string) => {
-      this.postForm.get('applyWebsite').setValidators(applyType === 'website' && [Validators.required, Validators.maxLength(255)]);
-      this.postForm.get('applyDocument').setValidators(applyType === 'document' && Validators.required);
-      this.postForm.get('applyEmail').setValidators(applyType === 'email' && [Validators.required, ValidationService.emailValidator]);
-      this.postForm.get('applyWebsite').updateValueAndValidity();
-      this.postForm.get('applyDocument').updateValueAndValidity();
-      this.postForm.get('applyEmail').updateValueAndValidity();
-    });
-
-    this.postForm.get('hideLiveTimestamp').valueChanges.subscribe(() => {
-      this.postForm.patchValue({liveTimestamp: null});
-      this.configureTimestampControl('liveTimestamp');
-    });
-
-    this.postForm.get('hideDeadTimestamp').valueChanges.subscribe(() => {
-      this.postForm.patchValue({deadTimestamp: null});
-      this.configureTimestampControl('deadTimestamp');
-    });
   }
 
   update() {
@@ -141,7 +135,7 @@ export class PostEditComponent implements OnInit {
     this.postService.update(this.post, this.generatePostRequestBody())
       .subscribe(() => {
         Object.assign(this.post, _.pick(this.postForm.value, this.formProperties));
-        return this.router.navigate([this.board.department.handle, this.board.handle, this.post.id]);
+        return this.router.navigate(this.resourceService.routerLink(this.post));
       });
   }
 
@@ -150,9 +144,9 @@ export class PostEditComponent implements OnInit {
     if (this.postForm.invalid) {
       return;
     }
-    this.postService.create(this.board, this.generatePostRequestBody())
-      .subscribe(() => {
-        return this.router.navigate([this.board.department.handle, this.board.handle]);
+    this.postService.create(this.postForm.get('board').value, this.generatePostRequestBody())
+      .subscribe(post => {
+        return this.router.navigate(this.resourceService.routerLink(post));
       });
   }
 
@@ -168,16 +162,48 @@ export class PostEditComponent implements OnInit {
         requestBody.comment = result.comment;
         this.resourceService.executeAction(this.post, action, requestBody)
           .subscribe(() => {
-            return this.router.navigate([this.board.department.handle, this.board.handle, this.post.id]);
+            return this.router.navigate(this.resourceService.routerLink(this.post));
           });
       }
     });
+  }
+
+  boardChanged() {
+    const board = this.postForm.get('board').value;
+    this.availablePostCategories = board && board.postCategories.length > 0 ? board.postCategories : null;
+    if (!this.post) {
+      this.postForm.get('postCategories').reset();
+    }
+    if (this.availablePostCategories) {
+      this.postForm.get('postCategories').setValidators(Validators.required);
+    }
+
+    this.availableMemberCategories = board && board.department.memberCategories.length > 0 ? board.department.memberCategories : null;
+    if (!this.post) {
+      this.postForm.get('memberCategories').reset();
+    }
+    if (this.availableMemberCategories) {
+      this.postForm.get('memberCategories').setValidators(Validators.required);
+    }
+
+    // initialize existing relation
+    const extendAction = board && board.actions
+      .find(a => (a.action as any as string) === 'EXTEND' && a.scope === 'POST');
+    const creatingNewPostAsUntrustedPerson = !this.post && extendAction && extendAction.state === 'DRAFT';
+    this.showExistingRelation = creatingNewPostAsUntrustedPerson || !!_.get(this.post, 'existingRelation');
+    this.postForm.get('existingRelation').setValue(this.post && this.post.existingRelation);
+    this.postForm.get('existingRelationExplanation').setValue(this.post && this.post.existingRelationExplanation);
+    this.postForm.get('existingRelation').setValidators(this.showExistingRelation && Validators.required);
   }
 
   searchOrganizations(event) {
     this.resourceService.lookupOrganizations(event.query).subscribe((organizations: string[]) => {
       this.organizationSuggestions = organizations;
     })
+  }
+
+  routerLink(resource: ResourceRepresentation<any>) {
+    return this.resourceService.routerLink(resource);
   }
 
   private generatePostRequestBody(): PostPatchDTO {
