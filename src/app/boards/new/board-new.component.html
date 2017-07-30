@@ -56,7 +56,7 @@
         </div>
 
         <p-messages
-          [value]="[{severity:'info', detail:'Define some categories to describe the topics that will be covered by your board. Members will be able to use these categories for filtering.'}]"
+          [value]="[{severity:'info', detail:'Create tags to describe the categories of post in your board, e.g. employment, internship'}]"
           [closable]="false"></p-messages>
 
         <div *ngIf="!selectedDepartment">
@@ -75,7 +75,7 @@
           </div>
 
           <p-messages
-            [value]="[{severity:'info', detail:'Define some categories to describe the groups of members in your department. Contributors will be able to use these categories for targeting.'}]"
+            [value]="[{severity:'info', detail:'Select the groups that you want to be notified about new posts in your board'}]"
             [closable]="false"></p-messages>
         </div>
 
