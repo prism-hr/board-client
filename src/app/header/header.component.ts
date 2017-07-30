@@ -17,7 +17,8 @@ export class HeaderComponent implements OnInit {
   user: UserRepresentation;
   activities: ActivityRepresentation[];
 
-  constructor(private router: Router, private userService: UserService, private resourceService: ResourceService, private authGuard: AuthGuard) {
+  constructor(private router: Router, private userService: UserService, private resourceService: ResourceService,
+              private authGuard: AuthGuard) {
   }
 
   ngOnInit(): void {
