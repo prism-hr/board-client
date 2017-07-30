@@ -112,7 +112,7 @@ export class ResourceService {
   }
 
   lookupOrganizations(query: string) {
-    return this.http.get('/api/lookupOrganizations?query=' + query).map(res => res.json());
+    return this.http.get('/api/posts/organizations?query=' + query).map(res => res.json());
   }
 
   canEdit(resource: ResourceRepresentation<any>) {
