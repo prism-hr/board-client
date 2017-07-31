@@ -1,7 +1,7 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {FileItem, FileUploader, ParsedResponseHeaders} from 'ng2-file-upload';
+import {Component, EventEmitter, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {FileUploadService} from '../services/file-upload.service';
+import {UploadFile, UploadInput, UploadOutput} from 'ngx-uploader';
+import {environment} from '../../environments/environment';
 import DocumentDTO = b.DocumentDTO;
 
 @Component({
@@ -20,34 +20,46 @@ export class FileUploadComponent implements ControlValueAccessor, OnInit {
 
   @Input() type: string;
 
-  uploader: FileUploader;
+  uploadInput: EventEmitter<UploadInput>;
+  file: UploadFile;
   propagateChange: any;
   progressPercentage: Number = null;
   isDragOver: boolean;
   model: DocumentDTO;
 
-  constructor(private fileUploadService: FileUploadService) {
-    this.uploader = fileUploadService.createUploader();
+  constructor() {
+    this.uploadInput = new EventEmitter<UploadInput>();
   }
 
   ngOnInit(): void {
-    this.uploader.onBeforeUploadItem = fileItem => {
-      fileItem.withCredentials = false;
-      this.progressPercentage = 0;
-      return {fileItem};
-    };
-    this.uploader.onProgressItem = (item: FileItem, progress: any) => {
-      this.progressPercentage = progress;
-    };
-    this.uploader.onCompleteItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+  }
+
+  onUploadOutput(output: UploadOutput) {
+    if (output.type === 'allAddedToQueue') { // when all files added in queue
+      const event: UploadInput = {
+        type: 'uploadAll',
+        url: 'https://api.cloudinary.com/v1_1/' + environment.cloudinaryCloudName + '/upload',
+        method: 'POST',
+        data: {upload_preset: 'unsigned', folder: environment.cloudinaryFolder},
+        concurrency: 0
+      };
+      this.uploadInput.emit(event);
+    } else if (output.type === 'addedToQueue') {
+      this.file = output.file;
+    } else if (output.type === 'uploading') {
+      this.progressPercentage = output.file.progress.data.percentage;
+    } else if (output.type === 'dragOver') { // drag over event
+      this.isDragOver = true;
+    } else if (output.type === 'dragOut') { // drag out event
+      this.isDragOver = false;
+    } else if (output.type === 'done') {
       this.progressPercentage = null;
-      const result = JSON.parse(response);
-      this.model = {cloudinaryId: result.public_id, cloudinaryUrl: result.url, fileName: item.file.name};
+      const response = output.file.response;
+      this.model = {cloudinaryId: response.public_id, cloudinaryUrl: response.url, fileName: output.file.name};
       if (this.propagateChange) {
         this.propagateChange(this.model);
       }
-      return {item, response, status, headers};
-    };
+    }
   }
 
   writeValue(obj: any): void {
@@ -59,9 +71,5 @@ export class FileUploadComponent implements ControlValueAccessor, OnInit {
   }
 
   registerOnTouched(fn: any): void {
-  }
-
-  fileOver(event: any) {
-    this.isDragOver = event;
   }
 }

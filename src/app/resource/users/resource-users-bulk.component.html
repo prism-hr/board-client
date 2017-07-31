@@ -2,14 +2,16 @@
   <h4>Bulk Users</h4>
   <div class="grid">
     <div class="grid__item one-whole">
-      <label for="csv-uploader-input" ng2FileDrop
-             [uploader]="uploader"
-             (fileOver)="fileOver($event)"
+      <label for="csv-uploader-input" ngFileDrop
+             (uploadOutput)="onUploadOutput($event)"
+             [uploadInput]="uploadInput"
              [ngClass]="{'dragover': isDragOver}"
              class="drop-area">
         <span>Click to upload or Drag and Drop CSV file</span>
       </label>
-      <input #csvUploaderInput type="file" ng2FileSelect [uploader]="uploader"
+      <input #csvUploaderInput type="file" ngFileSelect
+             (uploadOutput)="onUploadOutput($event)"
+             [uploadInput]="uploadInput"
              id="csv-uploader-input" style="display:none"/>
 
       <button pButton class="ui-button-secondary" href="assets/user-list.csv" label="Download CSV template">
