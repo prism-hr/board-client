@@ -16,7 +16,7 @@
                 <label for="departmentName">Department Name</label>
                 <p-autoComplete id="departmentName" formControlName="department"
                                 [suggestions]="departmentSuggestions" (completeMethod)="searchDepartments($event)"
-                                field="name" (onBlur)="departmentChosen()" (onSelect)="departmentSelected($event)">
+                                field="name" (onBlur)="departmentChosen()">
                   <ng-template let-department pTemplate="item">
                     <div fxLayout="row" fxLayoutAlign="space-between center">
                       <span>{{department.name}}</span>

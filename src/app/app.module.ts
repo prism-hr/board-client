@@ -12,10 +12,10 @@ import {AgmCoreModule} from 'angular2-google-maps/core';
 import {MomentModule} from 'angular2-moment';
 import {RlTagInputModule} from 'angular2-tag-input/dist';
 import * as Cloudinary from 'cloudinary-core';
-import {FileUploadModule} from 'ng2-file-upload';
 import {Ng2UiAuthModule} from 'ng2-ui-auth';
 import {ClipboardModule} from 'ngx-clipboard/dist';
 import {ShareButtonsModule} from 'ngx-sharebuttons';
+import {NgUploaderModule} from 'ngx-uploader';
 import {
   AutoCompleteModule,
   ButtonModule,
@@ -28,7 +28,8 @@ import {
   EditorModule,
   InputMaskModule,
   InputTextModule,
-  MessagesModule, OverlayPanelModule,
+  MessagesModule,
+  OverlayPanelModule,
   RadioButtonModule,
   SelectButtonModule,
   SplitButtonModule,
@@ -48,6 +49,7 @@ import {BoardHeaderComponent} from './boards/header/board-header.component';
 import {BoardListComponent} from './boards/list/board-list.component';
 import {BoardManageComponent} from './boards/manage/board-manage.component';
 import {BoardResolver} from './boards/manage/board-resolver.service';
+import {BoardsResolver} from './boards/manage/boards-resolver.service';
 import {BoardEditComponent} from './boards/manage/edit/board-edit.component';
 import {BoardViewComponent} from './boards/manage/view/board-view.component';
 import {BoardNewComponent} from './boards/new/board-new.component';
@@ -86,12 +88,10 @@ import {ResourceUsersBulkComponent} from './resource/users/resource-users-bulk.c
 import {ResourceUsersComponent} from './resource/users/resource-users.component';
 import './rxjs-extensions';
 import {DefinitionsLoader, DefinitionsService} from './services/definitions.service';
-import {FileUploadService} from './services/file-upload.service';
 import {ResourceService} from './services/resource.service';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
-import {BoardsResolver} from './boards/manage/boards-resolver.service';
 
 @NgModule({
   declarations: [
@@ -299,7 +299,7 @@ import {BoardsResolver} from './boards/manage/boards-resolver.service';
     ReactiveFormsModule,
     HttpModule,
     CloudinaryModule.forRoot(Cloudinary, {cloud_name: 'bitfoot'}),
-    FileUploadModule,
+    NgUploaderModule,
     RlTagInputModule,
     TranslateModule.forRoot({
       loader: {
@@ -326,8 +326,8 @@ import {BoardsResolver} from './boards/manage/boards-resolver.service';
       deps: [DefinitionsService],
       multi: true
     },
-    AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, BoardsResolver, ResourceUsersResolver, AccountSuppressionsResolver, PostService, UserService,
-    FileUploadService
+    AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, BoardsResolver, ResourceUsersResolver,
+    AccountSuppressionsResolver, PostService, UserService
   ],
   entryComponents: [AuthenticationDialogComponent, ResourceCommentDialogComponent, UserImageDialogComponent,
     ResourceUserEditDialogComponent],

@@ -1,14 +1,11 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {ResourceService} from '../../services/resource.service';
-import {FileItem, FileUploader} from 'ng2-file-upload';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import * as csv from 'csv-js';
+import {UploadInput, UploadOutput} from 'ngx-uploader';
+import {ResourceService} from '../../services/resource.service';
 import {ValidationService} from '../../validation/validation.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import UserRepresentation = b.UserRepresentation;
-import ResourceRepresentation = b.ResourceRepresentation;
 import UserDTO = b.UserDTO;
 import UserRoleDTO = b.UserRoleDTO;
-import Role = b.Role;
 
 @Component({
   selector: 'b-resource-users-bulk',
@@ -19,7 +16,7 @@ export class ResourceUsersBulkComponent implements OnInit {
 
   csvText: string;
   usersForm: FormGroup;
-  uploader: FileUploader;
+  uploadInput: EventEmitter<UploadInput>;
   isDragOver: boolean;
   users: UserDTO[];
   userErrors: any[];
@@ -31,20 +28,33 @@ export class ResourceUsersBulkComponent implements OnInit {
     this.usersForm = this.fb.group({
       firstLineHeader: [true]
     });
-    this.uploader = new FileUploader({});
+    this.uploadInput = new EventEmitter<UploadInput>();
   }
 
   ngOnInit() {
-    this.uploader.onAfterAddingFile = (item: FileItem) => {
+    // this.uploader.onAfterAddingFile = (item: FileItem) => {
+    //   const reader = new FileReader();
+    //   reader.onload = e => {
+    //     this.csvText = (<any>e.target).result;
+    //     this.computeUsers();
+    //     this.uploader.removeFromQueue(item);
+    //     this.uploadElRef.nativeElement.value = null;
+    //   };
+    //   reader.readAsText(item._file);
+    // };
+  }
+
+  onUploadOutput(output: UploadOutput) {
+    if (output.type === 'addedToQueue') {
       const reader = new FileReader();
       reader.onload = e => {
         this.csvText = (<any>e.target).result;
         this.computeUsers();
-        this.uploader.removeFromQueue(item);
+        this.uploadInput.emit({type: 'removeAll'});
         this.uploadElRef.nativeElement.value = null;
       };
-      reader.readAsText(item._file);
-    };
+      reader.readAsText(output.nativeFile);
+    }
   }
 
   computeUsers() {
@@ -91,10 +101,6 @@ export class ResourceUsersBulkComponent implements OnInit {
       .subscribe(() => {
         this.close.emit('refresh');
       });
-  }
-
-  fileOver(event: any) {
-    this.isDragOver = event;
   }
 
   closeBulkMode() {

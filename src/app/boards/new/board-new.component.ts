@@ -68,11 +68,9 @@ export class BoardNewComponent implements OnInit {
       .subscribe(saved => {
         this.router.navigate([saved.department.handle, saved.handle]);
       }, (error: Response) => {
-        if (error.status === 422) {
-          if (error.json().exceptionCode === 'DUPLICATE_DEPARTMENT_HANDLE') {
-            (this.boardForm.controls['handles'] as FormGroup).controls['departmentHandle'].setErrors({duplicateHandle: true});
-          } else if (error.json().exceptionCode === 'DUPLICATE_BOARD_HANDLE') {
-            (this.boardForm.controls['handles'] as FormGroup).controls['boardHandle'].setErrors({duplicateHandle: true});
+        if (error.status === 409) {
+          if (error.json().exceptionCode === 'DUPLICATE_BOARD') {
+            this.boardForm.get('name').setErrors({duplicateBoard: true});
           }
         }
       });
@@ -84,12 +82,8 @@ export class BoardNewComponent implements OnInit {
     })
   }
 
-  departmentSelected(event) {
-    this.boardForm.get('department').get('name').setValue(event.name);
-  }
-
   departmentChosen() {
-    const departmentName = this.boardForm.get('department').get('name').value;
+    const departmentName = this.boardForm.get('department').value.name;
     if (departmentName) {
       this.resourceService.getDepartments(departmentName).subscribe((departments: DepartmentRepresentation[]) => {
         this.selectedDepartment = departments.find(d => d.name === departmentName);
