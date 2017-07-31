@@ -160,7 +160,7 @@ declare namespace b {
     id?: number;
     resource?: ResourceRepresentation<any>;
     userRole?: UserRoleRepresentation;
-    category?: Activity;
+    activity?: Activity;
   }
 
   interface BoardRepresentation extends ResourceRepresentation<BoardRepresentation> {

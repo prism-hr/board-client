@@ -42,7 +42,7 @@
 
 <p-overlayPanel #activitiesPanel>
   <div *ngFor="let activity of activities">
-    <div [ngSwitch]="activity.category">
+    <div [ngSwitch]="activity.activity">
       <div *ngSwitchCase="'SUSPEND_POST_ACTIVITY'">
         <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
           New change request for post {{activity.resource.name}}
@@ -54,7 +54,7 @@
         </a>
       </div>
       <div *ngSwitchDefault>
-        Unhandled activity: {{activity.category}}
+        Unhandled activity: {{activity.activity}}
       </div>
     </div>
   </div>
