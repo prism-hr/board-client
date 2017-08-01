@@ -32,16 +32,6 @@ export class ResourceUsersBulkComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.uploader.onAfterAddingFile = (item: FileItem) => {
-    //   const reader = new FileReader();
-    //   reader.onload = e => {
-    //     this.csvText = (<any>e.target).result;
-    //     this.computeUsers();
-    //     this.uploader.removeFromQueue(item);
-    //     this.uploadElRef.nativeElement.value = null;
-    //   };
-    //   reader.readAsText(item._file);
-    // };
   }
 
   onUploadOutput(output: UploadOutput) {

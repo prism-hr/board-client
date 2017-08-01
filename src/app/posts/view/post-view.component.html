@@ -28,33 +28,7 @@
         <div *ngIf="post.description" class="post-content--description" [innerHtml]="post.description">
         </div>
       </div>
-      <div class="post-actions">
-        <div class="post-actions-how-to">
-          <h4>How to Apply?</h4>
-          <div *ngIf="(user$ | async) === false" class="post-action-content">
-            <a (click)="showLogin()">Login</a> to check this job offer contact details.
-          </div>
-          <div *ngIf="user$ | async" class="post-action-content">
-            <div *ngIf="post.applyWebsite">
-              Apply on this website <a href="{{post.applyWebsite}}"
-                                       class="ui-button-success small ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
-                                       target="_blank"><span class="ui-button-text ui-c">Apply</span></a>
-            </div>
-            <div *ngIf="post.applyDocument">
-              Download and follow the instructions on the following document:
-              <a target="_blank" href="{{post.applyDocument.cloudinaryUrl}}">
-                {{post.applyDocument.fileName}}
-              </a>
-            </div>
-            <div *ngIf="post.applyEmail">
-              Send an email to
-              <a href="mailto:{{post.applyEmail}}">
-                {{post.applyEmail}}
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <b-post-apply [post]="post" (onChange)="membershipRequested()"></b-post-apply>
 
       <share-buttons [title]="post.name" [description]="post.summary" [pinterest]="false" [stumbleUpOn]="false"
                      [reddit]="false" [reddit]="false" [whatsApp]="false" [tumblr]="false"

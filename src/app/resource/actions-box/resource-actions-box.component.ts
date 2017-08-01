@@ -8,7 +8,7 @@ import Action = b.Action;
 @Component({
   selector: 'b-resource-actions-box',
   template: `
-    <md-card class="resource-actions">
+    <md-card *ngIf="actions.length > 0" class="resource-actions">
       <md-card-header class="header-full">
         <md-card-title>
           <h3>Actions</h3>

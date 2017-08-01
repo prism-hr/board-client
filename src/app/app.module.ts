@@ -94,6 +94,8 @@ import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ResetPasswordDialogComponent} from './authentication/reset-password.dialog';
 import {ValidationService} from './validation/validation.service';
+import {PostApplyComponent} from './posts/apply/post-apply.component';
+import {DepartmentRequestMembershipDialogComponent} from './departments/request-membership/department-request-membership.dialog';
 
 @NgModule({
   declarations: [
@@ -128,6 +130,7 @@ import {ValidationService} from './validation/validation.service';
     DepartmentEditComponent,
     DepartmentNewComponent,
     DepartmentHeaderComponent,
+    DepartmentRequestMembershipDialogComponent,
     ResourceUsersComponent,
     ResourceUserRoleFormPartComponent,
     ResourceUserEditDialogComponent,
@@ -135,6 +138,7 @@ import {ValidationService} from './validation/validation.service';
     ResourceBadgeComponent,
     PostEditComponent,
     PostViewComponent,
+    PostApplyComponent,
     PostItemComponent,
     ResourceActionsBoxComponent,
     ResourceCommentDialogComponent,
@@ -335,7 +339,7 @@ import {ValidationService} from './validation/validation.service';
     AccountSuppressionsResolver, PostService, UserService, ValidationService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, ResourceCommentDialogComponent, UserImageDialogComponent,
-    ResourceUserEditDialogComponent],
+    ResourceUserEditDialogComponent, DepartmentRequestMembershipDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

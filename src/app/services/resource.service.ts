@@ -123,6 +123,10 @@ export class ResourceService {
     return !!resource.actions.find(a => a.action === 'AUDIT');
   }
 
+  canPursue(resource: ResourceRepresentation<any>) {
+    return !!resource.actions.find(a => a.action === 'PURSUE');
+  }
+
   getActionView(resource: ResourceRepresentation<any>): ResourceActionView {
     const actionNames = resource.actions.map(a => a.action);
     if (_.difference(['ACCEPT', 'SUSPEND', 'REJECT'], actionNames).length === 0) {

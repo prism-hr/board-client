@@ -17,13 +17,13 @@
     font-weight: 400;
     line-height: 1rem;
   }
-  .post-actions, .post-title {
+
+  .post-title {
     background: $greyBackground;
     border-top: 1px solid $fadeGrey;
     border-bottom: 1px solid $fadeGrey;
     padding: 10px;
-  }
-  .post-title {
+
     .admin-actions {
       font-size:0.8rem;
     }
@@ -50,22 +50,6 @@
       padding-top: 5px;
       i {
         color: $goldColor;
-      }
-    }
-  }
-  .post-actions {
-    h4 {
-      font-size:1.1em;
-      font-weight:900;
-      padding: 5px 0;
-    }
-    .post-action-content {
-      color: $fontColor1;
-      padding: 5px 0;
-      font-weight:700;
-      .ui-button-text-only .ui-button-text {
-        padding: 0.1em 1em 0.22em;
-        font-weight:400;
       }
     }
   }
