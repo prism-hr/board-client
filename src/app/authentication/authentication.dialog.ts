@@ -59,7 +59,7 @@ export class AuthenticationDialogComponent implements OnInit {
     this.loading = true;
     this.userService.login(this.loginForm.value)
       .then((user: UserRepresentation) => {
-          this.afterAuthenticated(user);
+          this.afterAuthenticated();
         },
         (response: any) => {
           this.afterError(response);
@@ -75,7 +75,7 @@ export class AuthenticationDialogComponent implements OnInit {
     this.loading = true;
     this.userService.signup(this.registrationForm.value)
       .then((user: UserRepresentation) => {
-          this.afterAuthenticated(user);
+          this.afterAuthenticated();
         },
         (response: any) => {
           this.afterError(response);
@@ -87,7 +87,7 @@ export class AuthenticationDialogComponent implements OnInit {
     this.loading = true;
     this.userService.authenticate(name)
       .then((user: UserRepresentation) => {
-          this.afterAuthenticated(user);
+          this.afterAuthenticated();
         },
         (response: any) => {
           this.afterError(response);
@@ -114,11 +114,8 @@ export class AuthenticationDialogComponent implements OnInit {
       });
   }
 
-  private afterAuthenticated(user: UserRepresentation) {
+  private afterAuthenticated() {
     this.dialogRef.close(true);
-    if (!user.documentImage && user.documentImageRequestState !== 'DISPLAY_NEVER') {
-      this.dialog.open(UserImageDialogComponent, {disableClose: true});
-    }
   }
 
   private afterError(response) {

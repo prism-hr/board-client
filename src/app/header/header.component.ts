@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import {MdDialog} from '@angular/material';
 import {Router} from '@angular/router';
 import {AuthGuard} from '../authentication/auth-guard.service';
+import {UserImageDialogComponent} from '../authentication/user-image.dialog';
 import {ResourceService} from '../services/resource.service';
 import {UserService} from '../services/user.service';
 import ActivityRepresentation = b.ActivityRepresentation;
@@ -17,7 +19,7 @@ export class HeaderComponent implements OnInit {
   user: UserRepresentation;
   activities: ActivityRepresentation[];
 
-  constructor(private router: Router, private userService: UserService, private resourceService: ResourceService,
+  constructor(private router: Router, private dialog: MdDialog, private userService: UserService, private resourceService: ResourceService,
               private authGuard: AuthGuard) {
   }
 
@@ -32,7 +34,13 @@ export class HeaderComponent implements OnInit {
     this.authGuard.ensureAuthenticated().first() // open dialog if not authenticated
       .subscribe(authenticated => {
         if (authenticated) {
-          return this.router.navigate(['/']);
+          return this.router.navigate(['/']).then(() => {
+            this.userService.user$.subscribe(user => {
+              if (!user.documentImage && user.documentImageRequestState !== 'DISPLAY_NEVER') {
+                this.dialog.open(UserImageDialogComponent, {disableClose: true});
+              }
+            });
+          });
         }
       });
   }
