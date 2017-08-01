@@ -130,15 +130,45 @@ button {
 .top-nav {
   margin-left:25px;
 }
-
+a.btn-user {
+  display: flex;
+  margin: 0 15px;
+  color: white;
+  span {
+    display: block;
+    padding: 5px 5px 5px 0;
+    line-height: 24px;
+  }
+  cl-image {
+    margin-top: 4px;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+}
+.activity {
+  position: relative;
+  .activity-badge {
+    position: absolute;
+    top: -3px;
+    left: -4px;
+    font-size: 11px;
+    color: black;
+    background: $greyBackground;
+    font-weight: bold;
+    border-radius: 10px;
+    display: block;
+    padding: 2px 6px 3px;
+    &.active {
+      background: $uclred;
+      color: white;
+    }
+  }
+}
 .page-width {
   @include clearfix();
   max-width: $width-site;
   margin: 0 auto;
   width: 100%;
-}
-
-.page-width {
   padding-left: 15px;
   padding-right: 15px;
 }
