@@ -11,23 +11,26 @@
     <form [formGroup]="postForm" novalidate>
       <md-card-content>
         <div class="grid">
-          <div *ngIf="board">
-            Board: {{board.name}}
+          <div *ngIf="board" class="grid__item one-whole input-holder">
+            <label>Board</label>
+            <h3>{{board.name}}</h3>
           </div>
           <div *ngIf="!post && !board" class="grid__item one-whole input-holder">
             <label for="board">Board</label>
-            <p-dropdown id="board" formControlName="board" [options]="boardOptions" (onChange)="boardChanged($event)"
-                        placeholder="Select a board">
-              <ng-template let-board pTemplate="item">
-                <div fxLayout="row" fxLayoutAlign="space-between center">
-                  <span>{{board.label}}</span>
-                  <cl-image *ngIf="board.value.documentLogo" public-id="{{board.value.documentLogo.cloudinaryId}}"
-                            class="img">
-                    <cl-transformation width="35" height="35" crop="mfit"></cl-transformation>
-                  </cl-image>
-                </div>
-              </ng-template>
-            </p-dropdown>
+            <div class="ui-corner-all ui-state-default ui-widget dropdown-select">
+              <p-dropdown id="board" formControlName="board" [options]="boardOptions" (onChange)="boardChanged($event)"
+                          placeholder="Select a board">
+                <ng-template let-board pTemplate="item">
+                  <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <span>{{board.label}}</span>
+                    <cl-image *ngIf="board.value.documentLogo" public-id="{{board.value.documentLogo.cloudinaryId}}"
+                              class="img">
+                      <cl-transformation width="35" height="35"></cl-transformation>
+                    </cl-image>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </div>
             <control-messages [control]="postForm.get('board')"></control-messages>
           </div>
 
