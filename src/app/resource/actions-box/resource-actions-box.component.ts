@@ -8,13 +8,15 @@ import Action = b.Action;
 @Component({
   selector: 'b-resource-actions-box',
   template: `
-    <span *ngIf="actionView !== 'VIEW' && actionView !== 'EDIT'">
-      <a pButton class="ui-button-info small-xs" routerLink="edit" [label]="'actionView.' + actionView | translate"></a>
-    </span>
-    <span *ngFor="let action of actions">
-      <button pButton class="ui-button-warning small-xs" (click)="openActionDialog(action)"
+    <div *ngIf="actions.length > 0">
+      <span *ngIf="actionView !== 'VIEW' && actionView !== 'EDIT'">
+        <a pButton class="ui-button-info small-xs" routerLink="edit" [label]="'actionView.' + actionView | translate"></a>
+      </span>
+      <span *ngFor="let action of actions">
+        <button pButton class="ui-button-warning small-xs" (click)="openActionDialog(action)"
               [label]="'definitions.action.' + action | translate"></button>
-    </span>
+      </span>
+    </div>
   `,
   styles: ['button.small-xs { margin-left: 4px;}']
 })
