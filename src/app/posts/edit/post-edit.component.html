@@ -11,7 +11,10 @@
     <form [formGroup]="postForm" novalidate>
       <md-card-content>
         <div class="grid">
-          <div *ngIf="!post" class="grid__item one-whole input-holder">
+          <div *ngIf="board">
+            Board: {{board.name}}
+          </div>
+          <div *ngIf="!post && !board" class="grid__item one-whole input-holder">
             <label for="board">Board</label>
             <p-dropdown id="board" formControlName="board" [options]="boardOptions" (onChange)="boardChanged($event)"
                         placeholder="Select a board">
