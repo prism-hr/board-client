@@ -22,15 +22,18 @@
           <button pButton (click)="showLogin()" class="ui-button-warning" label="Log in"></button>
         </div>
         <div *ngIf="user" class="user-header-profile" fxLayout="row">
-          <button type="text" pButton label="Activities" (click)="activitiesPanel.toggle($event)"></button>
-          <a routerLink="/account" pButton class="ui-button" label="{{user.givenName}}" fxLayout="row">
-            <div *ngIf="user.documentImage">
-              <cl-image public-id="{{user.documentImage.cloudinaryId}}"
-                        class="img">
-                <cl-transformation gravity="face" width="150" height="150" radius="max" crop="thumb">
-                </cl-transformation>
-              </cl-image>
-            </div>
+          <div class="activity">
+            <a pButton label="Activities" (click)="activitiesPanel.toggle($event)" class="ui-button-info ui-button-icon-only"
+               icon="fa-globe"></a>
+            <span class="activity-badge active">2</span>
+          </div>
+          <a routerLink="/account" class="btn-user">
+            <span>{{user.givenName}}</span>
+            <cl-image public-id="{{user.documentImage.cloudinaryId}}"
+                        class="img" *ngIf="user.documentImage">
+              <cl-transformation gravity="face" width="150" height="150" radius="max" crop="thumb">
+              </cl-transformation>
+            </cl-image>
             <i *ngIf="!user.documentImage" class="fa-user"></i>
           </a>
           <button pButton (click)="logout()" class="ui-button-warning" label="Log out"></button>
