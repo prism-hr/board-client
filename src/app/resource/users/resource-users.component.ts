@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ResourceService} from '../../services/resource.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ValidationService} from '../../validation/validation.service';
+import {ValidationUtils} from '../../validation/validation.utils';
 import {ResourceUserEditDialogComponent} from './resource-user-edit-dialog.component';
 import {MdDialog} from '@angular/material';
 import * as _ from 'lodash';
@@ -30,7 +30,7 @@ export class ResourceUsersComponent implements OnInit {
         id: [],
         givenName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
         surname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],
-        email: ['', [Validators.required, ValidationService.emailValidator]],
+        email: ['', [Validators.required, ValidationUtils.emailValidator]],
       })
     });
   }

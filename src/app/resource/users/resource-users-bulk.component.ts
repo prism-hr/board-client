@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import * as csv from 'csv-js';
 import {UploadInput, UploadOutput} from 'ngx-uploader';
 import {ResourceService} from '../../services/resource.service';
-import {ValidationService} from '../../validation/validation.service';
+import {ValidationUtils} from '../../validation/validation.utils';
 import UserDTO = b.UserDTO;
 import UserRoleDTO = b.UserRoleDTO;
 
@@ -82,7 +82,7 @@ export class ResourceUsersBulkComponent implements OnInit {
       } else if (user.email === '') {
         this.userErrors.push({line: line, message: 'Missing email address'});
         return;
-      } else if (!ValidationService.EMAIL_REGEX.test(user.email)) {
+      } else if (!ValidationUtils.EMAIL_REGEX.test(user.email)) {
         this.userErrors.push({line: line, message: 'Incorrect email address'});
         return;
       }

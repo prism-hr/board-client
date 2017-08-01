@@ -1,11 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MD_DIALOG_DATA, MdDialog, MdDialogRef} from '@angular/material';
-import {TranslateService} from '@ngx-translate/core';
 import {UserService} from '../services/user.service';
+import {ValidationService} from '../validation/validation.service';
+import {ValidationUtils} from '../validation/validation.utils';
 import {UserImageDialogComponent} from './user-image.dialog';
 import UserRepresentation = b.UserRepresentation;
-import {ValidationService} from '../validation/validation.service';
 
 @Component({
   templateUrl: './authentication.dialog.html',
@@ -23,20 +23,20 @@ export class AuthenticationDialogComponent implements OnInit {
   dialogData: any;
 
   constructor(private dialogRef: MdDialogRef<AuthenticationDialogComponent>, private fb: FormBuilder,
-              @Inject(MD_DIALOG_DATA) data: any, private translate: TranslateService, private dialog: MdDialog,
-              private userService: UserService) {
+              @Inject(MD_DIALOG_DATA) data: any, private dialog: MdDialog, private userService: UserService,
+              private validationService: ValidationService) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, ValidationService.emailValidator]],
+      email: ['', [Validators.required, ValidationUtils.emailValidator]],
       password: ['', [Validators.required, Validators.max(100)]]
     });
     this.registrationForm = this.fb.group({
       givenName: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
       surname: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
-      email: ['', [Validators.required, ValidationService.emailValidator]],
-      password: ['', [Validators.required, ValidationService.passwordValidator]]
+      email: ['', [Validators.required, ValidationUtils.emailValidator]],
+      password: ['', [Validators.required, ValidationUtils.passwordValidator]]
     });
     this.forgotPasswordForm = this.fb.group({
-      email: ['', [Validators.required, ValidationService.emailValidator]]
+      email: ['', [Validators.required, ValidationUtils.emailValidator]]
     });
     this.dialogData = data;
   }
@@ -122,14 +122,9 @@ export class AuthenticationDialogComponent implements OnInit {
   }
 
   private afterError(response) {
-    this.translate.get('definitions.exceptionCode')
-      .subscribe(codeTranslations => {
-        const code = response.json && response.json().exceptionCode;
-        if (code) {
-          this.error = codeTranslations[code] || code;
-        }
-      });
+    this.validationService.extractResponseError(response, error => this.error = error);
   }
+
 
 }
 

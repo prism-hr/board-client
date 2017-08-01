@@ -4,6 +4,7 @@ import {MdSnackBar} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../services/user.service';
 import {ValidationService} from '../validation/validation.service';
+import {ValidationUtils} from '../validation/validation.utils';
 import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
 import UserRepresentation = b.UserRepresentation;
 
@@ -14,15 +15,17 @@ import UserRepresentation = b.UserRepresentation;
 export class AccountComponent implements OnInit {
 
   accountForm: FormGroup;
+  accountFormError: string;
   suppressions: UserNotificationSuppressionRepresentation[];
   changePasswordRequested: boolean;
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private snackBar: MdSnackBar, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private snackBar: MdSnackBar, private userService: UserService,
+              private validationService: ValidationService) {
     this.accountForm = this.fb.group({
       givenName: ['', [Validators.required, Validators.maxLength(30)]],
       surname: ['', [Validators.required, Validators.maxLength(40)]],
-      email: ['', [Validators.required, ValidationService.emailValidator]],
-      documentImage: [],
+      email: ['', [Validators.required, ValidationUtils.emailValidator]],
+      documentImage: []
     });
   }
 
@@ -45,8 +48,11 @@ export class AccountComponent implements OnInit {
     }
     this.userService.patchUser(this.accountForm.value)
       .subscribe(() => {
-        this.snackBar.open('Your account was saved successfully.', null, {duration: 3000});
-      });
+          this.snackBar.open('Your account was saved successfully.', null, {duration: 3000});
+        },
+        (response: any) => {
+          this.validationService.extractResponseError(response, error => this.accountFormError = error);
+        });
   }
 
   requestPasswordChange() {

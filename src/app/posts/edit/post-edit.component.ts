@@ -7,7 +7,7 @@ import * as moment from 'moment';
 import {ResourceCommentDialogComponent} from '../../resource/resource-comment.dialog';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceActionView, ResourceService} from '../../services/resource.service';
-import {ValidationService} from '../../validation/validation.service';
+import {ValidationUtils} from '../../validation/validation.utils';
 import {PostService} from '../post.service';
 import Action = b.Action;
 import BoardRepresentation = b.BoardRepresentation;
@@ -102,7 +102,7 @@ export class PostEditComponent implements OnInit {
         this.postForm.get('applyType').valueChanges.subscribe((applyType: string) => {
           this.postForm.get('applyWebsite').setValidators(applyType === 'website' && [Validators.required, Validators.maxLength(255)]);
           this.postForm.get('applyDocument').setValidators(applyType === 'document' && Validators.required);
-          this.postForm.get('applyEmail').setValidators(applyType === 'email' && [Validators.required, ValidationService.emailValidator]);
+          this.postForm.get('applyEmail').setValidators(applyType === 'email' && [Validators.required, ValidationUtils.emailValidator]);
           this.postForm.get('applyWebsite').updateValueAndValidity();
           this.postForm.get('applyDocument').updateValueAndValidity();
           this.postForm.get('applyEmail').updateValueAndValidity();

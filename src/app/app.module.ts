@@ -93,6 +93,7 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ResetPasswordDialogComponent} from './authentication/reset-password.dialog';
+import {ValidationService} from './validation/validation.service';
 
 @NgModule({
   declarations: [
@@ -331,7 +332,7 @@ import {ResetPasswordDialogComponent} from './authentication/reset-password.dial
       multi: true
     },
     AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, BoardsResolver, ResourceUsersResolver,
-    AccountSuppressionsResolver, PostService, UserService
+    AccountSuppressionsResolver, PostService, UserService, ValidationService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, ResourceCommentDialogComponent, UserImageDialogComponent,
     ResourceUserEditDialogComponent],

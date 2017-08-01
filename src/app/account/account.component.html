@@ -9,6 +9,9 @@
             </md-card-title>
           </md-card-header>
           <md-card-content>
+            <div *ngIf="accountFormError">
+              <p-messages [value]="[{severity:'error', detail:accountFormError}]"></p-messages>
+            </div>
             <div class="block-avatar">
               <div>
                 <b-file-upload formControlName="documentImage" type="avatar" class="avatar"></b-file-upload>
@@ -45,7 +48,8 @@
         </md-card-header>
         <md-card-content>
           <div *ngIf="!changePasswordRequested">
-            <button pButton (click)="requestPasswordChange()" class="ui-button-warning" label="Change Password"></button>
+            <button pButton (click)="requestPasswordChange()" class="ui-button-warning"
+                    label="Change Password"></button>
           </div>
           <div *ngIf="changePasswordRequested">
             An email has been sent to you. You will find a password change link inside.
