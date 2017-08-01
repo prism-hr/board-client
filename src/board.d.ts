@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-07-24 18:02:41.
+// Generated using typescript-generator version 1.23.311 on 2017-08-01 09:41:25.
 
 declare namespace b {
 
@@ -128,12 +128,15 @@ declare namespace b {
     email?: string;
   }
 
+  interface UserPasswordDTO {
+    uuid?: string;
+    password?: string;
+  }
+
   interface UserPatchDTO {
     givenName?: string;
     surname?: string;
     email?: string;
-    password?: string;
-    oldPassword?: string;
     documentImage?: DocumentDTO;
     documentImageRequestState?: DocumentRequestState;
   }
@@ -269,8 +272,8 @@ declare namespace b {
     year?: number;
     hour?: number;
     minute?: number;
-    nano?: number;
     second?: number;
+    nano?: number;
   }
 
   interface LocalDate extends Temporal, TemporalAdjuster, ChronoLocalDate, Serializable {

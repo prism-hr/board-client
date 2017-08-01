@@ -92,6 +92,7 @@ import {ResourceService} from './services/resource.service';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
+import {ResetPasswordDialogComponent} from './authentication/reset-password.dialog';
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
     AccountComponent,
     AccountNotificationsComponent,
     AuthenticationDialogComponent,
+    ResetPasswordDialogComponent,
     NotFoundComponent,
     HomeComponent,
     HomePublicComponent,
@@ -140,6 +142,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
   imports: [
     RouterModule.forRoot([
       {path: '', component: HomeComponent},
+      {path: 'home', component: HomeComponent},
       {path: 'boards', component: BoardListComponent},
       {path: 'departments', component: DepartmentListComponent},
       {
@@ -251,6 +254,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
                 resolve: {
                   post: PostResolver
                 },
+                canActivate: [],
                 children: [
                   {
                     path: '',
@@ -329,7 +333,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
     AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, BoardsResolver, ResourceUsersResolver,
     AccountSuppressionsResolver, PostService, UserService
   ],
-  entryComponents: [AuthenticationDialogComponent, ResourceCommentDialogComponent, UserImageDialogComponent,
+  entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, ResourceCommentDialogComponent, UserImageDialogComponent,
     ResourceUserEditDialogComponent],
   bootstrap: [AppComponent]
 })

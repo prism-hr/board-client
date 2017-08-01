@@ -30,30 +30,30 @@
                 <control-messages [control]="accountForm.get('email')"></control-messages>
               </div>
             </div>
-            <hr class="hr">
-            <h4>Password Change</h4>
-            <div class="grid">
-              <div class="grid__item medium-up--one-half input-holder">
-                <input pInputText formControlName="oldPassword" type="password" placeholder="Old Password">
-                <control-messages [control]="accountForm.get('oldPassword')"></control-messages>
-              </div>
-            </div>
-            <div class="grid">
-              <div class="grid__item small--one-whole medium-up--one-half input-holder">
-                <input pInputText formControlName="password" type="password" placeholder="New Password" (change)="passwordChanged()">
-                <control-messages [control]="accountForm.get('password')"></control-messages>
-              </div>
-              <div class="grid__item small--one-whole medium-up--one-half input-holder">
-                <input pInputText formControlName="repeatPassword" type="password" placeholder="Repeat Password">
-                <control-messages [control]="accountForm.get('repeatPassword')"></control-messages>
-              </div>
-            </div>
           </md-card-content>
           <md-card-actions>
             <button pButton class="ui-button-warning" label="Submit"></button>
           </md-card-actions>
         </md-card>
       </form>
+
+      <md-card>
+        <md-card-header>
+          <md-card-title>
+            <h2>Password</h2>
+          </md-card-title>
+        </md-card-header>
+        <md-card-content>
+          <div *ngIf="!changePasswordRequested">
+            <button pButton (click)="requestPasswordChange()" class="ui-button-warning" label="Change Password"></button>
+          </div>
+          <div *ngIf="changePasswordRequested">
+            An email has been sent to you. You will find a password change link inside.
+          </div>
+        </md-card-content>
+        <md-card-actions>
+        </md-card-actions>
+      </md-card>
     </div>
     <div class="grid__item small--one-whole medium-up--three-eighths">
       <md-card>

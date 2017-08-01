@@ -63,7 +63,8 @@
     },
     "exceptionCode": {
       "UNREGISTERED_USER": "The user is not registered.",
-      "DUPLICATE_USER": "This email is already taken."
+      "DUPLICATE_USER": "This email is already taken.",
+      "FORBIDDEN_PASSWORD_RESET": "The reset password link is expired. Please request another one."
     }
   },
   "authenticate": {

@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {ConfigService} from 'ng2-ui-auth';
-import BoardRepresentation = b.BoardRepresentation;
-import DepartmentRepresentation = b.DepartmentRepresentation;
 
 @Injectable()
 export class DefinitionsService {

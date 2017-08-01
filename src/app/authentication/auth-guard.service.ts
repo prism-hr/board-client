@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {MdDialog, MdDialogConfig} from '@angular/material';
-import {ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, ParamMap, Router} from '@angular/router';
 import {AuthService} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
 import {AuthenticationDialogComponent} from './authentication.dialog';
+import {ResetPasswordDialogComponent} from './reset-password.dialog';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -27,19 +28,33 @@ export class AuthGuard implements CanActivate {
     }
   }
 
-  requestSecuredEndpoint<T>(endpointCall: () => Observable<T>): Observable<T> {
+  requestSecuredEndpoint<T>(endpointCall: () => Observable<T>, paramMap: ParamMap): Observable<T> {
+    const modal = paramMap.get('modal');
     return endpointCall()
       .catch((error: Response) => {
         if (error.status === 401) {
-          return this.ensureAuthenticated()
+          return this.ensureAuthenticated(modal === 'register')
             .mergeMap(loggedIn => {
               if (loggedIn) {
                 return endpointCall();
               } else {
                 this.router.navigate(['/']);
+                return Observable.of(null);
               }
             });
         }
       });
   }
+
+  showInitialModalIfNecessary(paramMap: ParamMap): void {
+    const modal = paramMap.get('modal');
+    if (modal === 'register' || modal === 'login') {
+      this.ensureAuthenticated(modal === 'register').subscribe();
+    } else if (modal === 'resetPassword') {
+      const config = new MdDialogConfig();
+      config.data = {uuid: paramMap.get('uuid')};
+      this.dialog.open(ResetPasswordDialogComponent, config);
+    }
+  }
+
 }

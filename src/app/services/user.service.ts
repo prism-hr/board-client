@@ -8,6 +8,7 @@ import ResourceRepresentation = b.ResourceRepresentation;
 import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
 import UserPatchDTO = b.UserPatchDTO;
 import UserRepresentation = b.UserRepresentation;
+import UserPasswordDTO = b.UserPasswordDTO;
 
 @Injectable()
 export class UserService {
@@ -86,6 +87,10 @@ export class UserService {
         this.loadUser();
         return user;
       });
+  }
+
+  patchPassword(userPasswordDTO: UserPasswordDTO): Observable<Response> {
+    return this.http.patch('/api/user/password', userPasswordDTO);
   }
 
   getSuppressions(): Observable<UserNotificationSuppressionRepresentation[]> {

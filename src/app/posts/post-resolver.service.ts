@@ -14,7 +14,7 @@ export class PostResolver implements Resolve<PostRepresentation> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<PostRepresentation> {
     const id = +route.params['postId'];
-    return this.authGuard.requestSecuredEndpoint(() => this.resourceService.getPost(id));
+    return this.authGuard.requestSecuredEndpoint(() => this.resourceService.getPost(id), route.paramMap);
   }
 
 }

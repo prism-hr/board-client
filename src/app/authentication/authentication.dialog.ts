@@ -19,7 +19,7 @@ export class AuthenticationDialogComponent implements OnInit {
   error: string;
   loading: boolean;
   view: AuthenticationView;
-  forgottenSent: any;
+  forgottenSent: boolean;
   dialogData: any;
 
   constructor(private dialogRef: MdDialogRef<AuthenticationDialogComponent>, private fb: FormBuilder,
