@@ -4658,6 +4658,23 @@ p-togglebutton.ng-dirty.ng-invalid .ui-button {
 p-autocomplete {
   display: block;
 }
+
+.dropdown-select {
+  p-dropdown {
+    .ui-dropdown {
+      width: 100% !important;
+      .ui-dropdown-trigger .fa {
+        margin-top: 1em;
+        margin-left: -0.5em;
+        display: block;
+      }
+      cl-image > img {
+        height: 35px;
+      }
+    }
+  }
+}
+
 /* Cornering */
 .ui-corner-tl {
   -moz-border-radius-topleft: $borderRadius;

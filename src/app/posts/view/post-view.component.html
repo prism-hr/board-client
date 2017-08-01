@@ -15,12 +15,13 @@
           <h2><em>at</em> {{post.organizationName}} <span class="location"><i class="fa fa-location-pin"></i> {{post.location.name}}</span>
           </h2>
         </div>
-        <div *ngIf="canEdit">
-          <a pButton routerLink="edit" class="ui-button-info" icon="fa-gear"></a>
+        <div fxLayout="column" fxLayoutAlign="space-between flex-end" class="admin-actions">
+          <div *ngIf="canEdit">
+            <a pButton routerLink="edit" class="ui-button-info" icon="fa-gear"></a>
+          </div>
+          <b-resource-actions-box [resource]="post" class="admin-actions" fxLayout="row" fxLayoutAlign="space-between center"></b-resource-actions-box>
         </div>
       </div>
-      <b-resource-actions-box [resource]="post" class="admin-actions" fxLayout="row"
-                              fxLayoutAlign="space-between center"></b-resource-actions-box>
       <div class="post-content">
         <div class=" post-content--excerpt">
           {{post.summary}}

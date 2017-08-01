@@ -8,28 +8,15 @@ import Action = b.Action;
 @Component({
   selector: 'b-resource-actions-box',
   template: `
-    <md-card *ngIf="actions.length > 0" class="resource-actions">
-      <md-card-header class="header-full">
-        <md-card-title>
-          <h3>Actions</h3>
-        </md-card-title>
-      </md-card-header>
-      <md-card-content>
-        <div class="grid">
-          <div class="grid__item one-whole">
-            <span *ngIf="actionView !== 'VIEW' && actionView !== 'EDIT'">
-              <a pButton class="ui-button-info small" routerLink="edit" [label]="'actionView.' + actionView | translate"></a>
-            </span>
-            <span *ngFor="let action of actions">
-              <button pButton class="ui-button-warning small" (click)="openActionDialog(action)"
-                      [label]="'definitions.action.' + action | translate"></button>
-            </span>
-          </div>
-        </div>
-      </md-card-content>
-    </md-card>
+    <span *ngIf="actionView !== 'VIEW' && actionView !== 'EDIT'">
+      <a pButton class="ui-button-info small-xs" routerLink="edit" [label]="'actionView.' + actionView | translate"></a>
+    </span>
+    <span *ngFor="let action of actions">
+      <button pButton class="ui-button-warning small-xs" (click)="openActionDialog(action)"
+              [label]="'definitions.action.' + action | translate"></button>
+    </span>
   `,
-  styleUrls: []
+  styles: ['button.small-xs { margin-left: 4px;}']
 })
 export class ResourceActionsBoxComponent implements OnChanges {
   @Input() resource: any;

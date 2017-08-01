@@ -1,3 +1,15 @@
 .date-item {
   margin-top:15px;
 }
+.dropdown-select {
+  width: 100%;
+  p-dropdown {
+    width: 100%;
+    border: 1px solid #dde4e2;
+    display: block;
+    border-radius: 2px;
+    &:hover {
+      border-color: black;
+    }
+  }
+}
