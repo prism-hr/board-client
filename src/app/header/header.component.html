@@ -23,14 +23,15 @@
         </div>
         <div *ngIf="user" class="user-header-profile" fxLayout="row">
           <div class="activity">
-            <a pButton label="Activities" (click)="activitiesPanel.toggle($event)" class="ui-button-info ui-button-icon-only"
+            <a pButton label="Activities" (click)="activitiesPanel.toggle($event)"
+               class="ui-button-info ui-button-icon-only"
                icon="fa-globe"></a>
             <span class="activity-badge active">2</span>
           </div>
           <a routerLink="/account" class="btn-user">
             <span>{{user.givenName}}</span>
             <cl-image public-id="{{user.documentImage.cloudinaryId}}"
-                        class="img" *ngIf="user.documentImage">
+                      class="img" *ngIf="user.documentImage">
               <cl-transformation gravity="face" width="150" height="150" radius="max" crop="thumb">
               </cl-transformation>
             </cl-image>
@@ -55,6 +56,12 @@
         <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
           The post {{activity.resource.name}} has been corrected. Please revise it
         </a>
+      </div>
+      <div *ngSwitchCase="'JOIN_DEPARTMENT_REQUEST_ACTIVITY'">
+        {{activity.userRole.user.givenName}} {{activity.userRole.user.surname}} has requested membership for
+        {{activity.resource.name}}
+        <button pButton class="ui-button-success" label="Accept"></button>
+        <button pButton class="ui-button-warning" label="Reject"> </button>
       </div>
       <div *ngSwitchDefault>
         Unhandled activity: {{activity.activity}}
