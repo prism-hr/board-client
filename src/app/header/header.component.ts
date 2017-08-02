@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
       .subscribe(authenticated => {
         if (authenticated) {
           return this.router.navigate(['/']).then(() => {
-            this.userService.user$.subscribe(user => {
+            this.userService.user$.first().subscribe(user => {
               if (!user.documentImage && user.documentImageRequestState !== 'DISPLAY_NEVER') {
                 this.dialog.open(UserImageDialogComponent, {disableClose: true});
               }
