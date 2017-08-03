@@ -6,11 +6,10 @@ import {UserImageDialogComponent} from '../authentication/user-image.dialog';
 import {ResourceService} from '../services/resource.service';
 import {UserService} from '../services/user.service';
 import ActivityRepresentation = b.ActivityRepresentation;
-import ResourceRepresentation = b.ResourceRepresentation;
 import UserRepresentation = b.UserRepresentation;
 
 @Component({
-  selector: 'b-header-component',
+  selector: 'b-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
@@ -50,11 +49,4 @@ export class HeaderComponent implements OnInit {
     return this.router.navigate(['']);
   }
 
-  activityClicked(activity: ActivityRepresentation) {
-    this.userService.dismissActivity(activity).subscribe();
-  }
-
-  routerLink(resource: ResourceRepresentation<any>) {
-    return this.resourceService.routerLink(resource);
-  }
 }

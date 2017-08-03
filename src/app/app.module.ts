@@ -96,12 +96,14 @@ import {ResetPasswordDialogComponent} from './authentication/reset-password.dial
 import {ValidationService} from './validation/validation.service';
 import {PostApplyComponent} from './posts/apply/post-apply.component';
 import {DepartmentRequestMembershipDialogComponent} from './departments/request-membership/department-request-membership.dialog';
+import {HeaderActivityComponent} from './header/header-activity.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ControlMessagesComponent,
     HeaderComponent,
+    HeaderActivityComponent,
     FooterComponent,
     AccountComponent,
     AccountNotificationsComponent,
