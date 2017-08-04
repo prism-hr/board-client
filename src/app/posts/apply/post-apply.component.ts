@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {MdDialog, MdDialogConfig} from '@angular/material';
+import {ActivatedRoute} from '@angular/router';
+import {AuthGuard} from '../../authentication/auth-guard.service';
 import {DepartmentRequestMembershipDialogComponent} from '../../departments/request-membership/department-request-membership.dialog';
 import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
@@ -16,7 +18,8 @@ export class PostApplyComponent implements OnInit, OnChanges {
   canPursue: boolean;
   @Output() onChange: EventEmitter<any> = new EventEmitter();
 
-  constructor(private dialog: MdDialog, private userService: UserService, private resourceService: ResourceService) {
+  constructor(private route: ActivatedRoute, private dialog: MdDialog, private userService: UserService,
+              private resourceService: ResourceService, private authGuard: AuthGuard) {
   }
 
   ngOnInit() {
@@ -39,5 +42,21 @@ export class PostApplyComponent implements OnInit, OnChanges {
         this.onChange.emit('membershipRequested');
       }
     });
+  }
+
+  showLogin() {
+    this.authGuard.ensureAuthenticated().first() // open dialog if not authenticated
+      .subscribe(authenticated => {
+        if (!authenticated) {
+          return;
+        }
+        this.resourceService.getPost(this.post.id)
+          .subscribe(post => {
+            this.route.data.first().subscribe(data => {
+              data['post'] = post;
+              (<any>this.route.data).next(data);
+            });
+          });
+      });
   }
 }

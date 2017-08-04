@@ -1,29 +1,39 @@
 <div class="post-apply">
   <h4>How to Apply?</h4>
-  <!--<div *ngIf="!user" class="post-action-content">-->
-  <!--<a (click)="showLogin()">Login</a> to check this job offer contact details.-->
-  <!--</div>-->
-  <div *ngIf="!canPursue" class="post-apply-content">
-    You are not a member of {{post.board.department.name}} department.
-    <button pButton type="button" (click)="requestMembership()" label="Request Membership"></button>
-  </div>
-  <div *ngIf="canPursue" class="post-apply-content">
-    <div *ngIf="post.applyWebsite">
-      Apply on this website <a href="{{post.applyWebsite}}"
-                               class="ui-button-success small ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
-                               target="_blank"><span class="ui-button-text ui-c">Apply</span></a>
+
+  <div class="post-apply-content">
+    <div *ngIf="!user">
+      <a (click)="showLogin()">Login</a> to check this job offer contact details.
     </div>
-    <div *ngIf="post.applyDocument">
-      Download and follow the instructions on the following document:
-      <a target="_blank" href="{{post.applyDocument.cloudinaryUrl}}">
-        {{post.applyDocument.fileName}}
-      </a>
-    </div>
-    <div *ngIf="post.applyEmail">
-      Send an email to
-      <a href="mailto:{{post.applyEmail}}">
-        {{post.applyEmail}}
-      </a>
+
+    <div *ngIf="user">
+      <div *ngIf="!canPursue">
+        You are not a member of {{post.board.department.name}} department.
+        <button pButton type="button" (click)="requestMembership()" label="Request Membership"></button>
+      </div>
+
+      <div *ngIf="canPursue">
+        <div *ngIf="post.applyWebsite">
+          Apply on this website
+          <a href="{{post.applyWebsite}}"
+             class="ui-button-success small ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+             target="_blank">
+            <span class="ui-button-text ui-c">Apply</span>
+          </a>
+        </div>
+        <div *ngIf="post.applyDocument">
+          Download and follow the instructions on the following document:
+          <a target="_blank" href="{{post.applyDocument.cloudinaryUrl}}">
+            {{post.applyDocument.fileName}}
+          </a>
+        </div>
+        <div *ngIf="post.applyEmail">
+          Send an email to
+          <a href="mailto:{{post.applyEmail}}">
+            {{post.applyEmail}}
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
