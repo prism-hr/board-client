@@ -44,6 +44,10 @@ export class ResourceUsersBulkComponent implements OnInit {
         this.uploadElRef.nativeElement.value = null;
       };
       reader.readAsText(output.nativeFile);
+    } else if (output.type === 'dragOver') { // drag over event
+      this.isDragOver = true;
+    } else if (output.type === 'dragOut') { // drag out event
+      this.isDragOver = false;
     }
   }
 

@@ -7,7 +7,7 @@
              [uploadInput]="uploadInput"
              [ngClass]="{'dragover': isDragOver}"
              class="drop-area">
-        <span>Click to upload or Drag and Drop CSV file</span>
+        <span>Click to upload CSV file</span>
       </label>
       <input #csvUploaderInput type="file" ngFileSelect
              (uploadOutput)="onUploadOutput($event)"
