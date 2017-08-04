@@ -28,8 +28,8 @@ export class DepartmentEditComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       summary: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
       memberCategories: [],
-      documentLogo: [],
-      handle: []
+      handle: [],
+      documentLogo: []
     });
   }
 

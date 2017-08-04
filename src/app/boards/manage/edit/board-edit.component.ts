@@ -18,7 +18,7 @@ export class BoardEditComponent implements OnInit {
   boardForm: FormGroup;
   urlPrefix: string;
 
-  boardProperties = ['name', 'summary', 'postCategories', 'defaultPostVisibility', 'handle'];
+  boardProperties = ['name', 'summary', 'postCategories', 'defaultPostVisibility', 'handle', 'documentLogo'];
 
   constructor(private route: ActivatedRoute, private cdf: ChangeDetectorRef, private fb: FormBuilder, private router: Router,
               private resourceService: ResourceService, private definitionsService: DefinitionsService) {
@@ -28,7 +28,8 @@ export class BoardEditComponent implements OnInit {
       summary: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
       postCategories: [[]],
       defaultPostVisibility: [null, Validators.required],
-      handle: ['', [Validators.required, Validators.maxLength(25)]]
+      handle: ['', [Validators.required, Validators.maxLength(25)]],
+      documentLogo: [],
     });
   }
 
