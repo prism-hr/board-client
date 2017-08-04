@@ -9,8 +9,14 @@
           <a pButton routerLink="edit" class="ui-button-info" icon="fa-gear"></a>
         </div>
       </div>
-      <div class="summary-holder">
+      <div  class="summary-holder">
+        <div *ngIf="department.summary">
         {{department.summary}}
+        </div>
+        <div *ngIf="!department.summary">
+          No summary provided.
+          <a pButton routerLink="edit" class="ui-button-info" icon="fa-gear" label="Provide"></a>
+        </div>
       </div>
     </div>
     <div class="grid__item medium-up--one-quarter small-one-whole resource-logo-holder">
