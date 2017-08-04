@@ -56,13 +56,15 @@ export class BoardNewComponent implements OnInit {
       return;
     }
     const board: BoardDTO = _.pick(this.boardForm.value, ['name', 'summary', 'postCategories', 'documentLogo']);
-    const department = this.boardForm.get('department').value;
+    let department = this.boardForm.get('department').value;
     if (typeof department === 'object') {
-      board.department = _.pick(department, ['id', 'name']);
+      department = _.pick(department, ['id', 'name']);
     } else {
-      board.department = {name: department, memberCategories: this.boardForm.get('memberCategories').value};
-      board.department.documentLogo = board.documentLogo;
+      department = {name: department};
     }
+    board.department = department;
+    board.department.memberCategories = this.boardForm.get('memberCategories').value;
+    board.department.documentLogo = board.documentLogo;
 
     this.resourceService.postBoard(board)
       .subscribe(saved => {
