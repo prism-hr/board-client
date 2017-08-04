@@ -51,8 +51,9 @@
         </div>
 
         <div>
-          <label>Post categories</label>
-          <p-chips formControlName="postCategories"></p-chips>
+          <label for="postCategories">Post categories</label>
+          <p-chips formControlName="postCategories" placeholder="e.g. Biochemistry, Computer Science"
+                   inputId="postCategories" [allowDuplicate]="false"></p-chips>
         </div>
 
         <p-messages

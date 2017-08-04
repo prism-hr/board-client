@@ -45,8 +45,13 @@
 </header>
 
 <p-overlayPanel #activitiesPanel>
-  <div *ngFor="let activity of activities">
-    <b-header-activity [activity]="activity"></b-header-activity>
+  <div *ngIf="activities">
+    <div *ngFor="let activity of activities">
+      <b-header-activity [activity]="activity"></b-header-activity>
+    </div>
+  </div>
+  <div *ngIf="!activities">
+    No new messages.
   </div>
 
 </p-overlayPanel>

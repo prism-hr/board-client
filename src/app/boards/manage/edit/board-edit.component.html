@@ -15,8 +15,9 @@
         </div>
 
         <div class="grid__item one-whole input-holder">
-          <label>Post categories</label>
-          <p-chips formControlName="postCategories"></p-chips>
+          <label for="postCategories">Post categories</label>
+          <p-chips formControlName="postCategories" placeholder="e.g. Biochemistry, Computer Science"
+                   inputId="postCategories" [allowDuplicate]="false"></p-chips>
         </div>
 
         <!--<div class="grid__item one-whole input-holder">-->
