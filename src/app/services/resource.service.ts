@@ -64,6 +64,10 @@ export class ResourceService {
     return this.http.get('/api/boards/' + boardId + '/posts').map(res => res.json());
   }
 
+  getDepartmentBoards(departmentId: number): Observable<BoardRepresentation[]> {
+    return this.http.get('/api/departments/' + departmentId + '/boards').map(res => res.json());
+  }
+
   postBoard(board: BoardDTO) {
     return this.http.post('/api/boards', board).map(res => res.json());
   }

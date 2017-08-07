@@ -21,58 +21,7 @@
     </div>
     <div class="grid list-container">
       <div *ngFor="let board of boards" class="list-container__item">
-        <md-card>
-          <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
-            <div md-card-avatar class="logo-holder-small default-logo"
-                            [ngClass]="{'no-background': board.documentLogo}">
-              <cl-image *ngIf="board.documentLogo" public-id="{{board.documentLogo.cloudinaryId}}"
-                        class="img">
-                <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
-              </cl-image>
-            </div>
-            <md-card-title>
-              <h3>
-                <a [routerLink]="['/', board.department.handle, board.handle]">{{board.name}}</a>
-                <!--<span class="ui-chips-token ui-corner-all visibility-chip">-->
-                  <!--{{'definitions.postVisibility.' + board.defaultPostVisibility | translate}}-->
-                <!--</span>-->
-              </h3>
-            </md-card-title>
-            <md-card-subtitle>
-              <h6>
-               {{board.department.name}}
-              </h6>
-            </md-card-subtitle>
-          </md-card-header>
-          <md-card-content>
-            <div class="general-card-summary">
-              {{board.summary}}
-            </div>
-            <div class="boxes-list" fxLayout="row" fxLayoutAlign="space-between center">
-              <div class="boxes-list__item posts">
-                <div class="title"><i class="fa-book-open"></i> Post</div>
-                <span class="number">30</span>
-              </div>
-              <div class="boxes-list__item connections">
-                <div class="title"><i class="fa-share"></i> Connections</div>
-                <span class="number">30</span>
-              </div>
-              <div class="boxes-list__item reports">
-                <div class="title"><i class="fa-pie-chart"></i> Reports</div>
-                <span class="number">30</span>
-              </div>
-              <div class="boxes-list__item {{ board.state | lowercase }}">
-                <div class="title">
-                  <i class="fa-{{ board.state | lowercase }}"></i> {{'definitions.state.' + board.state | translate}}
-                </div>
-              </div>
-            </div>
-          </md-card-content>
-          <md-card-actions>
-            <a pButton routerLink="/{{board.department.handle}}/{{board.handle}}" class="ui-button-secondary "
-              label="Go to board"></a>
-          </md-card-actions>
-        </md-card>
+        <b-board-item [board]="board"></b-board-item>
       </div>
     </div>
 

@@ -97,6 +97,7 @@ import {ValidationService} from './validation/validation.service';
 import {PostApplyComponent} from './posts/apply/post-apply.component';
 import {DepartmentRequestMembershipDialogComponent} from './departments/request-membership/department-request-membership.dialog';
 import {HeaderActivityComponent} from './header/header-activity.component';
+import {BoardItemComponent} from './boards/item/board-item.component';
 
 @NgModule({
   declarations: [
@@ -126,6 +127,7 @@ import {HeaderActivityComponent} from './header/header-activity.component';
     BoardManageComponent,
     BoardViewComponent,
     BoardEditComponent,
+    BoardItemComponent,
     DepartmentListComponent,
     DepartmentManageComponent,
     DepartmentViewComponent,

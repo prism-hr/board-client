@@ -1,39 +1,42 @@
-  <md-card>
-    <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
-      <div md-card-avatar class="logo-holder-small default-logo" [ngClass]="{'no-background': post.board.department.documentLogo}">
-        <cl-image *ngIf="post.board.department.documentLogo" public-id="{{post.board.department.documentLogo.cloudinaryId}}" class="img">
-          <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
-        </cl-image>
+<md-card>
+  <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
+    <div md-card-avatar class="logo-holder-small default-logo"
+         [ngClass]="{'no-background': post.board.department.documentLogo}">
+      <cl-image *ngIf="post.board.department.documentLogo"
+                public-id="{{post.board.department.documentLogo.cloudinaryId}}" class="img">
+        <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
+      </cl-image>
+    </div>
+    <md-card-title>
+      <h3>
+        <a [routerLink]="['/', post.board.department.handle, post.board.handle, post.id]">{{post.name}}</a>
+      </h3>
+    </md-card-title>
+    <md-card-subtitle><h6>{{post.board.department.name}} > {{post.board.name}}</h6></md-card-subtitle>
+  </md-card-header>
+  <md-card-content>
+    <div class="general-card-summary">
+      {{post.summary}}
+    </div>
+    <div class="boxes-list" fxLayout="row" fxLayoutAlign="space-between center">
+      <div class="boxes-list__item views">
+        <div class="title"><i class="fa-eye"></i> Views</div>
+        <span class="number">30</span>
       </div>
-      <md-card-title>
-        <h3>
-          <a [routerLink]="['/', post.board.department.handle, post.board.handle, post.id]">{{post.name}}</a>
-        </h3>
-      </md-card-title>
-      <md-card-subtitle><h6>{{post.board.department.name}} > {{post.board.name}}</h6></md-card-subtitle>
-    </md-card-header>
-    <md-card-content>
-      <div class="general-card-summary">
-        {{post.summary}}
+      <div class="boxes-list__item responses">
+        <div class="title"><i class="fa-share-alt"></i> Responses</div>
+        <span class="number">30</span>
       </div>
-      <div class="boxes-list" fxLayout="row" fxLayoutAlign="space-between center">
-        <div class="boxes-list__item views">
-          <div class="title"><i class="fa-eye"></i> Views</div>
-          <span class="number">30</span>
-        </div>
-        <div class="boxes-list__item responses">
-          <div class="title"><i class="fa-share-alt"></i> Responses</div>
-          <span class="number">30</span>
-        </div>
-        <div class="boxes-list__item {{ post.state | lowercase }}">
-          <div class="title">
-            <i class="fa-{{ post.state | lowercase }}"></i> {{'definitions.state.' + post.state | translate}}
-          </div>
+      <div class="boxes-list__item {{ post.state | lowercase }}">
+        <div class="title">
+          <i class="fa-{{ post.state | lowercase }}"></i> {{'definitions.state.' + post.state | translate}}
         </div>
       </div>
-    </md-card-content>
-    <md-card-actions>
-      <a pButton [routerLink]="['/', post.board.department.handle, post.board.handle, post.id]" class="ui-button-secondary "
-         label="Go to post"></a>
-    </md-card-actions>
-  </md-card>
+    </div>
+  </md-card-content>
+  <md-card-actions>
+    <a pButton [routerLink]="['/', post.board.department.handle, post.board.handle, post.id]"
+       class="ui-button-secondary "
+       label="Go to post"></a>
+  </md-card-actions>
+</md-card>

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ResourceService} from '../../services/resource.service';
+import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 
 @Component({
@@ -10,6 +11,7 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
 export class DepartmentViewComponent implements OnInit {
   department: DepartmentRepresentation;
   canEdit: boolean;
+  boards: BoardRepresentation[];
 
   constructor(private route: ActivatedRoute, private resourceService: ResourceService) {
   }
@@ -19,6 +21,9 @@ export class DepartmentViewComponent implements OnInit {
       this.department = data['department'];
       this.canEdit = this.resourceService.canEdit(this.department);
     });
+    this.resourceService.getDepartmentBoards(this.department.id)
+      .subscribe(boards => this.boards = boards);
+
   }
 
 }
