@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as csv from 'csv-js';
 import {UploadInput, UploadOutput} from 'ngx-uploader';
 import {ResourceService} from '../../services/resource.service';
@@ -53,38 +53,59 @@ export class ResourceUsersBulkComponent implements OnInit {
 
   computeUsers() {
     csv.IGNORE_RECORD_LENGTH = true;
-    let rows = csv.parse(this.csvText || '');
-    rows = rows.slice(this.usersForm.value.firstLineHeader ? 1 : 0);
     this.userErrors = [];
     this.users = [];
-    rows.forEach((row, idx) => {
-      const line = idx + 1 + (this.usersForm.value.firstLineHeader ? 1 : 0);
-      if (row.length === 0) {
-        return; // empty line, skip
+    try {
+      let rows = csv.parse(this.csvText || '');
+      rows = rows.slice(this.usersForm.value.firstLineHeader ? 1 : 0);
+
+      for (let idx in rows) {
+        if (!rows.hasOwnProperty(idx)) {
+          continue;
+        }
+        if (this.userErrors.length > 6) {
+          this.users = [];
+          break;
+        }
+        const row = rows[idx];
+        const line = +idx + 1 + (this.usersForm.value.firstLineHeader ? 1 : 0);
+        if (row.length === 0) {
+          continue; // empty line, skip
+        }
+        if (row.length !== 3) {
+          this.userErrors.push({line: line, message: 'Row expected to have exactly 3 columns'});
+          continue;
+        }
+        const user = {givenName: row[0].trim(), surname: row[1].trim(), email: row[2].trim()};
+        if (user.givenName === '') {
+          this.userErrors.push({line: line, message: 'Missing first name'});
+          continue;
+        } else if (user.surname === '') {
+          this.userErrors.push({line: line, message: 'Missing last name'});
+          continue;
+        } else if (user.email === '') {
+          this.userErrors.push({line: line, message: 'Missing email address'});
+          continue;
+        } else if (!ValidationUtils.EMAIL_REGEX.test(user.email)) {
+          this.userErrors.push({line: line, message: 'Incorrect email address'});
+          continue;
+        }
+        this.users.push(user);
       }
-      if (row.length !== 3) {
-        this.userErrors.push({line: line, message: 'Row expected to have exactly 3 columns'});
-        return;
+    } catch (e) {
+      if (e.startsWith('UNEXPECTED_CHARACTER')) {
+        this.userErrors = [{message: 'Could not parse given CSV file.'}];
       }
-      const user = {givenName: row[0].trim(), surname: row[1].trim(), email: row[2].trim()};
-      if (user.givenName === '') {
-        this.userErrors.push({line: line, message: 'Missing first name'});
-        return;
-      } else if (user.surname === '') {
-        this.userErrors.push({line: line, message: 'Missing last name'});
-        return;
-      } else if (user.email === '') {
-        this.userErrors.push({line: line, message: 'Missing email address'});
-        return;
-      } else if (!ValidationUtils.EMAIL_REGEX.test(user.email)) {
-        this.userErrors.push({line: line, message: 'Incorrect email address'});
-        return;
-      }
-      this.users.push(user);
-    });
+    }
+
+
   }
 
   submit() {
+    this.usersForm['submitted'] = true;
+    if (this.usersForm.invalid) {
+      return;
+    }
     const formValue = this.usersForm.value;
     const roles: UserRoleDTO[] = formValue.roles.map(r => ({
       role: r,
