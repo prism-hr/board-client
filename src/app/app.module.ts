@@ -7,6 +7,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {CloudinaryModule} from '@cloudinary/angular-4.x';
+import {MetaGuard, MetaLoader, MetaModule} from '@ngx-meta/core';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {MomentModule} from 'angular2-moment';
@@ -44,8 +45,10 @@ import {MyAuthConfig} from './auth.config';
 import {AuthGuard} from './authentication/auth-guard.service';
 import {AuthedComponent} from './authentication/authed.component';
 import {AuthenticationDialogComponent} from './authentication/authentication.dialog';
+import {ResetPasswordDialogComponent} from './authentication/reset-password.dialog';
 import {UserImageDialogComponent} from './authentication/user-image.dialog';
 import {BoardHeaderComponent} from './boards/header/board-header.component';
+import {BoardItemComponent} from './boards/item/board-item.component';
 import {BoardListComponent} from './boards/list/board-list.component';
 import {BoardManageComponent} from './boards/manage/board-manage.component';
 import {BoardResolver} from './boards/manage/board-resolver.service';
@@ -61,11 +64,13 @@ import {DepartmentResolver} from './departments/department-resolver.service';
 import {DepartmentEditComponent} from './departments/edit/department-edit.component';
 import {DepartmentHeaderComponent} from './departments/header/department-header.component';
 import {DepartmentListComponent} from './departments/list/department-list.component';
+import {DepartmentRequestMembershipDialogComponent} from './departments/request-membership/department-request-membership.dialog';
 import {DepartmentViewComponent} from './departments/view/department-view.component';
 import {FooterComponent} from './footer/footer.component';
 import {FileUploadComponent} from './general/file-upload.component';
 import {PlacesModule} from './general/places/places.module';
 import {UserLookupComponent} from './general/user-lookup';
+import {HeaderActivityComponent} from './header/header-activity.component';
 import {HeaderComponent} from './header/header.component';
 import {EmployerLogoComponent} from './home/employer-logo.component';
 import {HomePublicComponent} from './home/home-public.component';
@@ -73,6 +78,7 @@ import {HomeComponent} from './home/home.component';
 import {StudentLogoComponent} from './home/student-logo.component';
 import {UniLogoComponent} from './home/uni-logo.component';
 import {NotFoundComponent} from './not-found.component';
+import {PostApplyComponent} from './posts/apply/post-apply.component';
 import {PostEditComponent} from './posts/edit/post-edit.component';
 import {PostItemComponent} from './posts/item/post-item.component';
 import {PostResolver} from './posts/post-resolver.service';
@@ -88,16 +94,12 @@ import {ResourceUsersBulkComponent} from './resource/users/resource-users-bulk.c
 import {ResourceUsersComponent} from './resource/users/resource-users.component';
 import './rxjs-extensions';
 import {DefinitionsLoader, DefinitionsService} from './services/definitions.service';
+import {metaFactory} from './services/meta.service';
 import {ResourceService} from './services/resource.service';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
-import {ResetPasswordDialogComponent} from './authentication/reset-password.dialog';
 import {ValidationService} from './validation/validation.service';
-import {PostApplyComponent} from './posts/apply/post-apply.component';
-import {DepartmentRequestMembershipDialogComponent} from './departments/request-membership/department-request-membership.dialog';
-import {HeaderActivityComponent} from './header/header-activity.component';
-import {BoardItemComponent} from './boards/item/board-item.component';
 
 @NgModule({
   declarations: [
@@ -150,137 +152,141 @@ import {BoardItemComponent} from './boards/item/board-item.component';
   ],
   imports: [
     RouterModule.forRoot([
-      {path: '', component: HomeComponent},
-      {path: 'home', component: HomeComponent},
-      {path: 'boards', component: BoardListComponent},
-      {path: 'departments', component: DepartmentListComponent},
       {
-        path: 'newDepartment',
-        component: DepartmentNewComponent,
-        canActivate: [AuthGuard],
+        path: '',
+        canActivateChild: [MetaGuard],
         children: [
+          {path: '', component: HomeComponent},
+          {path: 'home', component: HomeComponent},
+          {path: 'boards', component: BoardListComponent},
+          {path: 'departments', component: DepartmentListComponent},
           {
-            path: '',
-            component: DepartmentEditComponent
-          }
-        ]
-      },
-      {
-        path: 'newBoard',
-        component: BoardNewComponent,
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'newPost',
-        component: PostEditComponent,
-        canActivate: [AuthGuard],
-        data: {showRegister: true},
-        resolve: {
-          boards: BoardsResolver
-        },
-      },
-      {
-        path: 'account',
-        component: AccountComponent,
-        canActivate: [AuthGuard],
-        resolve: {
-          suppressions: AccountSuppressionsResolver
-        }
-      },
-      {
-        path: ':departmentHandle',
-        children: [
-          {
-            path: '',
-            data: {
-              resourceScope: 'department'
-            },
-            resolve: {
-              department: DepartmentResolver,
-            },
+            path: 'newDepartment',
+            component: DepartmentNewComponent,
+            canActivate: [AuthGuard],
             children: [
               {
                 path: '',
-                component: DepartmentViewComponent
-              },
+                component: DepartmentEditComponent
+              }
+            ]
+          },
+          {
+            path: 'newBoard',
+            component: BoardNewComponent,
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'newPost',
+            component: PostEditComponent,
+            canActivate: [AuthGuard],
+            data: {showRegister: true},
+            resolve: {
+              boards: BoardsResolver
+            },
+          },
+          {
+            path: 'account',
+            component: AccountComponent,
+            canActivate: [AuthGuard],
+            resolve: {
+              suppressions: AccountSuppressionsResolver
+            }
+          },
+          {
+            path: ':departmentHandle',
+            children: [
               {
                 path: '',
-                component: DepartmentManageComponent,
-                canActivate: [AuthGuard],
+                data: {
+                  resourceScope: 'department'
+                },
+                resolve: {
+                  department: DepartmentResolver,
+                },
                 children: [
                   {
-                    path: 'edit',
-                    component: DepartmentEditComponent
+                    path: '',
+                    component: DepartmentViewComponent,
                   },
                   {
-                    path: 'users',
-                    component: ResourceUsersComponent,
+                    path: '',
+                    component: DepartmentManageComponent,
+                    canActivate: [AuthGuard],
+                    children: [
+                      {
+                        path: 'edit',
+                        component: DepartmentEditComponent
+                      },
+                      {
+                        path: 'users',
+                        component: ResourceUsersComponent,
+                        resolve: {
+                          users: ResourceUsersResolver
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                path: ':boardHandle',
+                data: {
+                  resourceScope: 'board'
+                },
+                resolve: {
+                  board: BoardResolver
+                },
+                children: [
+                  {
+                    path: '',
+                    component: BoardViewComponent
+                  },
+                  {
+                    path: '',
+                    component: BoardManageComponent,
+                    canActivate: [AuthGuard],
+                    children: [
+                      {
+                        path: 'edit',
+                        component: BoardEditComponent
+                      },
+                      {
+                        path: 'users',
+                        component: ResourceUsersComponent,
+                        resolve: {
+                          users: ResourceUsersResolver
+                        }
+                      },
+                      {
+                        path: 'badge',
+                        component: ResourceBadgeComponent
+                      }
+                    ]
+                  },
+                  {
+                    path: ':postId',
                     resolve: {
-                      users: ResourceUsersResolver
-                    }
+                      post: PostResolver
+                    },
+                    children: [
+                      {
+                        path: '',
+                        component: PostViewComponent,
+                      },
+                      {
+                        path: 'edit',
+                        component: PostEditComponent,
+                        canActivate: [AuthGuard]
+                      }
+                    ]
                   }
                 ]
               }
             ]
           },
-          {
-            path: ':boardHandle',
-            data: {
-              resourceScope: 'board'
-            },
-            resolve: {
-              board: BoardResolver
-            },
-            children: [
-              {
-                path: '',
-                component: BoardViewComponent
-              },
-              {
-                path: '',
-                component: BoardManageComponent,
-                canActivate: [AuthGuard],
-                children: [
-                  {
-                    path: 'edit',
-                    component: BoardEditComponent
-                  },
-                  {
-                    path: 'users',
-                    component: ResourceUsersComponent,
-                    resolve: {
-                      users: ResourceUsersResolver
-                    }
-                  },
-                  {
-                    path: 'badge',
-                    component: ResourceBadgeComponent
-                  }
-                ]
-              },
-              {
-                path: ':postId',
-                resolve: {
-                  post: PostResolver
-                },
-                canActivate: [],
-                children: [
-                  {
-                    path: '',
-                    component: PostViewComponent,
-                  },
-                  {
-                    path: 'edit',
-                    component: PostEditComponent,
-                    canActivate: [AuthGuard]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {path: '**', component: NotFoundComponent}
+          {path: '**', component: NotFoundComponent}]
+      }
     ]),
     // PrimeNG modules
     InputTextModule,
@@ -329,7 +335,11 @@ import {BoardItemComponent} from './boards/item/board-item.component';
     PlacesModule,
     MomentModule,
     ShareButtonsModule.forRoot(),
-    ClipboardModule
+    ClipboardModule,
+    MetaModule.forRoot({
+      provide: MetaLoader,
+      useFactory: metaFactory
+    })
   ],
   providers: [
     DefinitionsService,

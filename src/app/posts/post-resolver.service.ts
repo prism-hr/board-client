@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import {ResourceService} from '../services/resource.service';
 import {AuthGuard} from '../authentication/auth-guard.service';
-import DepartmentDTO = b.DepartmentDTO;
+import {ResourceService} from '../services/resource.service';
 import PostRepresentation = b.PostRepresentation;
 
 @Injectable()

@@ -32,8 +32,8 @@
       <b-post-apply [post]="post" (onChange)="membershipRequested()"></b-post-apply>
 
       <share-buttons [title]="post.name" [description]="post.summary" [pinterest]="false" [stumbleUpOn]="false"
-                     [reddit]="false" [reddit]="false" [whatsApp]="false" [tumblr]="false"
-                     [image]="post.board.documentLogo?.cloudinaryUrl"></share-buttons>
+                     [reddit]="false" [whatsApp]="false" [tumblr]="false"
+                     [image]="post.board.documentLogo?.cloudinaryUrl" [showCount]="true"></share-buttons>
 
     </div>
     <div class="grid__item medium-up--one-quarter small-one-whole publisher">

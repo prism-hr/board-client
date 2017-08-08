@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
+import {Meta} from '@angular/platform-browser';
 import {ActivatedRoute} from '@angular/router';
 import * as _ from 'lodash';
 import {ResourceService} from '../../services/resource.service';
 import {PostService} from '../post.service';
 import PostRepresentation = b.PostRepresentation;
 import ResourceOperationRepresentation = b.ResourceOperationRepresentation;
+import {MetaService} from '@ngx-meta/core';
 
 @Component({
   templateUrl: 'post-view.component.html',
@@ -20,13 +22,17 @@ export class PostViewComponent implements OnInit {
   showOperationDetails: boolean;
   selectedOperation: ResourceOperationRepresentation;
 
-  constructor(private route: ActivatedRoute, private postService: PostService, private resourceService: ResourceService) {
+  constructor(private meta: MetaService, private route: ActivatedRoute, private postService: PostService,
+              private resourceService: ResourceService) {
   }
 
   ngOnInit() {
     this.today = new Date();
     this.route.data.subscribe(data => {
       this.post = data['post'];
+      this.meta.setTitle(this.post.name);
+      this.meta.setTag('description', this.post.summary);
+      this.meta.setTag('og:image' ,this.post.board.documentLogo.cloudinaryUrl);
 
       this.canEdit = this.resourceService.canEdit(this.post);
       const canAudit = this.resourceService.canAudit(this.post);
