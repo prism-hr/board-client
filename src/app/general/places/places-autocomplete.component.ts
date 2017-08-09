@@ -10,7 +10,7 @@ import AutocompletePrediction = google.maps.places.AutocompletePrediction;
   selector: 'b-places-autocomplete',
   template: `
     <p-autoComplete [(ngModel)]="model" (completeMethod)="search($event)"
-                    (onBlur)="onTouch($event)" placeholder="e.g. London"
+                    (onBlur)="onTouch()" placeholder="e.g. London"
                     [suggestions]="results" field="name" (onSelect)="locationSelected()"></p-autoComplete>
   `,
   providers: [

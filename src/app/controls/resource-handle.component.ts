@@ -9,7 +9,7 @@ import {MdSnackBar} from '@angular/material';
       <div class="grid__item one-whole host-url">
         <span>{{urlPrefix}}</span>
         <span class="host-url__input">
-          <input pInputText [(ngModel)]="handle" (change)="handleChanged($event)" required>
+          <input pInputText [(ngModel)]="handle" (change)="handleChanged()" required>
         </span>
         <span class="host-url__button">
           <button pButton type="button" ngxClipboard [cbContent]="fullUrl" class="ui-button-success" icon="fa-docs"

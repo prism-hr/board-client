@@ -2,6 +2,7 @@
 
 # compiled output
 /dist
+/dist-server
 /tmp
 /out-tsc
 
@@ -41,3 +42,4 @@ debug.log
 # System Files
 .DS_Store
 Thumbs.db
+

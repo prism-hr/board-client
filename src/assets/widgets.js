@@ -113,7 +113,6 @@
       $.fn.prismInitializeWidget = function () {
         return this.each(function () {
           var element = $(this);
-           // KUBA, The elemet here is the whole screen, I don;t really know what you wan tot achive here
           element.removeAttr('prism-widget');
           element.removeAttr('data-prism-widget');
           var resource = element.attr('data-resource').split('#');
