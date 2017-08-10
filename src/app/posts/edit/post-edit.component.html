@@ -188,9 +188,7 @@
         </div>
       </md-card-content>
       <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
-        <a *ngIf="post" pButton [routerLink]="routerLink(post)"
-           class="ui-button-secondary" label="Cancel"></a>
-        <a *ngIf="!post" pButton [routerLink]="['/']" class="ui-button-secondary" label="Cancel"></a>
+        <a pButton [routerLink]="cancelLink()" class="ui-button-secondary" label="Cancel"></a>
         <span *ngIf="actionView === 'REVISE'">
           <button pButton [disabled]="postForm.invalid" label="Accept"
                   (click)="executeAction('ACCEPT', true)"></button>

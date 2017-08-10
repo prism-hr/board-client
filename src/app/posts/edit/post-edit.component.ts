@@ -13,7 +13,6 @@ import Action = b.Action;
 import BoardRepresentation = b.BoardRepresentation;
 import PostPatchDTO = b.PostPatchDTO;
 import PostRepresentation = b.PostRepresentation;
-import ResourceRepresentation = b.ResourceRepresentation;
 
 @Component({
   templateUrl: 'post-edit.component.html',
@@ -202,8 +201,13 @@ export class PostEditComponent implements OnInit {
     })
   }
 
-  routerLink(resource: ResourceRepresentation<any>) {
-    return this.resourceService.routerLink(resource);
+  cancelLink() {
+    if (this.post) {
+      return this.resourceService.routerLink(this.post);
+    } else if (this.board) {
+      return this.resourceService.routerLink(this.board);
+    }
+    return ['/'];
   }
 
   private generatePostRequestBody(): PostPatchDTO {

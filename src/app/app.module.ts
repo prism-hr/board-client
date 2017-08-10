@@ -1,7 +1,8 @@
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Http, HttpModule} from '@angular/http';
+import {HttpModule} from '@angular/http';
 import {MdCardModule, MdDialogModule, MdSnackBarModule} from '@angular/material';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -320,11 +321,12 @@ import {ValidationService} from './validation/validation.service';
     CloudinaryModule.forRoot(Cloudinary, {cloud_name: 'bitfoot'}),
     NgUploaderModule,
     RlTagInputModule,
+    HttpClientModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: createTranslateLoader,
-        deps: [Http]
+        deps: [HttpClient]
       }
     }),
     AgmCoreModule.forRoot({
