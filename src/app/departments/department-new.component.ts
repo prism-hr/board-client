@@ -11,9 +11,7 @@ import {Component} from '@angular/core';
             </div>
           </md-card-title>
         </md-card-header>
-        <md-card-content>
           <router-outlet></router-outlet>
-        </md-card-content>
       </md-card>
     </section>
   `

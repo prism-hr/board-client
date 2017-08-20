@@ -722,7 +722,7 @@ $grid-breakpoints: (
   display: flex;
   margin-bottom: 0px;
   width: 100%;
-  b-post-item {
+  b-post-item, b-board-item {
     width: 100%;
     align-self: stretch;
     display: flex;

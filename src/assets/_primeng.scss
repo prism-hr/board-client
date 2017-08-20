@@ -259,7 +259,24 @@
     padding: 0.186em 0.313em;
     text-align: left;
     cl-image {
+      float: right;
       max-width: 80px;
+    }
+  }
+}
+#userLookup {
+  .ui-autocomplete-panel {
+    .ui-autocomplete-list-item {
+      line-height:30px;
+    }
+    .ui-autocomplete-list-item {
+      cl-image {
+        float: left;
+        border-radius: 50%;
+        overflow: hidden;
+        max-width: 30px;
+        margin-right: 10px;
+      }
     }
   }
 }
@@ -1004,7 +1021,7 @@ button.ui-button::-moz-focus-inner {
   padding: .25em .25em .25em 0;
   .ui-inputtext, input {
     border: 0 none;
-    width: 10em;
+    width: 17em;
     outline: medium none;
     background-color: transparent;
     margin: 0;

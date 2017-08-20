@@ -9,7 +9,7 @@
     <div *ngIf="user">
       <div *ngIf="!canPursue">
         You are not a member of {{post.board.department.name}} department.
-        <button pButton type="button" (click)="requestMembership()" label="Request Membership"></button>
+        <button pButton type="button" (click)="requestMembership()" label="Request Membership"  class="ui-button-success small" ></button>
       </div>
 
       <div *ngIf="canPursue">

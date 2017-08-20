@@ -148,7 +148,7 @@ b-file-upload[type=avatar].avatar {
     .number {
       display: inline-block;
       line-height: 1.9em;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: bold;
       padding: 0 10px 0 9px;
     }
@@ -171,7 +171,7 @@ b-file-upload[type=avatar].avatar {
         background: $uclblue;
       }
     }
-    &.members {
+    &.members, &.draft {
       .title {
         background: $uclblue2;
       }

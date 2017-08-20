@@ -169,7 +169,7 @@ $simple-line-icon-prefix: "fa-" !default;
   &rocket,
   &question,
   &pie-chart,
-  &pencil,
+  &pencil,&draft,
   &edit,
   &note,
   &loop,
@@ -720,7 +720,7 @@ $simple-line-icon-prefix: "fa-" !default;
   content: "\e05e";
 }
 
-.#{$simple-line-icon-prefix}pencil:before, .#{$simple-line-icon-prefix}edit:before {
+.#{$simple-line-icon-prefix}pencil:before, .#{$simple-line-icon-prefix}edit:before, .#{$simple-line-icon-prefix}draft:before {
   content: "\e05f";
 }
 

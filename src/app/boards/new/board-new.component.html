@@ -9,7 +9,7 @@
       </md-card-header>
       <md-card-content>
 
-        <div class="grid">
+        <div class="grid" fxLayout="row">
           <div class="grid__item small--one-whole medium-up--two-thirds">
             <div class="grid">
               <div class="grid__item one-whole input-holder">
@@ -45,7 +45,7 @@
               </div>
             </div>
           </div>
-          <div class="grid__item small--one-whole medium-up--one-third">
+          <div class="grid__item small--one-whole medium-up--one-third logo-container">
             <b-file-upload formControlName="documentLogo" class="logo-uploader" type="logo"></b-file-upload>
           </div>
         </div>
@@ -81,7 +81,7 @@
         </div>
 
       </md-card-content>
-      <md-card-actions>
+      <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
         <a pButton routerLink="/boards"
            class="ui-button-secondary" label="Cancel"></a>
         <button pButton class="ui-button-success" type="submit" label="Submit"></button>
