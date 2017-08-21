@@ -73,25 +73,34 @@
         <span class="post-timeline--time">{{operation.createdTimestamp | date:'shortTime'}}</span>
         <span class="post-timeline--day">{{operation.createdTimestamp | date:'shortDate'}}</span>
       </time>
-      <div class="post-timeline--icon">
+      <div class="post-timeline--icon" pTooltip="{{'definitions.action.' + operation.action | translate}}" tooltipPosition="top">
         <i class="fa fa-{{ operation.action | lowercase }}"></i>
       </div>
-      <div class="post-timeline--label">
+      <div class="post-timeline--label" fxLayout="row">
+
         <div *ngIf="operation.user" class="post-timeline--user">
-          <h5>{{operation.user.givenName}} {{operation.user.surname}}
-            <small>{{operation.user.email}}</small>
-          </h5>
+          <div class="post-timeline--user_image" pTooltip="{{operation.user.email}}" tooltipPosition="top">
+            <cl-image public-id="{{operation.user.documentImage.cloudinaryId}}"
+                      class="img" *ngIf="operation.user.documentImage">
+              <cl-transformation gravity="face" width="40" height="40" radius="max" crop="thumb">
+              </cl-transformation>
+            </cl-image>
+            <i *ngIf="!operation.user.documentImage" class="fa-user"></i>
+          </div>
+          <h5>{{operation.user.givenName}} {{operation.user.surname}}</h5>
         </div>
-        <div>{{'definitions.action.' + operation.action | translate}}</div>
-        <div *ngIf="operation.comment">
-          Comment: {{operation.comment}}
-        </div>
-        <div *ngIf="operation.changeList">
-          <div>Changed properties:</div>
-          <span *ngFor="let change of operation.changeList; let isLast=last">
+        <div class="post-timeline--details">
+          <h5 *ngIf="operation.comment">Comment: </h5>
+          <p *ngIf="operation.comment">{{operation.comment}}</p>
+          <div *ngIf="operation.changeList">
+            <h5>Changed properties:</h5>
+            <p>
+            <span *ngFor="let change of operation.changeList; let isLast=last">
             {{'resourceProperty.' + change.property | translate}}{{isLast ? '' : ', '}}
-          </span>
-          <button pButton type="button" (click)="openChangeDetails(operation)" label="Show details"></button>
+            </span>
+              <button pButton type="button" class="ui-button-info small-xs" (click)="openChangeDetails(operation)" label="Show more details"></button>
+            </p>
+          </div>
         </div>
       </div>
     </li>
@@ -103,10 +112,10 @@
     Changes:
   </p-header>
   <div *ngFor="let change of selectedOperation.changeList" class="boards">
-    Property: {{'resourceProperty.' + change.property | translate}}
+    <strong>{{'resourceProperty.' + change.property | translate}} :</strong>
     changed from
-    {{change.oldValue | json}}
+    <code>{{change.oldValue | json}}</code>
     to
-    {{change.newValue | json}}
+    <code>{{change.newValue | json}}</code>
   </div>
 </p-dialog>

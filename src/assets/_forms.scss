@@ -79,15 +79,17 @@ button.ui-state-default {
 }
 p-dialog {
   display: block;
-  .ui-dialog-content {
+  .ui-dialog {
     max-width: 90%;
   }
   p-header {
     display: block;
     background: $fadeGrey;
-    margin: -10px -19px 8px -18px;
+    //margin: -10px -19px 8px -18px;
     padding: 14px;
     border-radius: 4px 4px 0 0;
+    color: black;
+    font-weight:500;
   }
   .ui-dialog-titlebar-close {
     position: absolute;

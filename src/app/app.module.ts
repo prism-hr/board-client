@@ -36,7 +36,7 @@ import {
   SelectButtonModule,
   SplitButtonModule,
   TabMenuModule,
-  ToggleButtonModule
+  ToggleButtonModule, TooltipModule
 } from 'primeng/primeng';
 import {AccountNotificationsComponent} from './account/account-notifications.component';
 import {AccountSuppressionsResolver} from './account/account-suppressions-resolver';
@@ -291,6 +291,7 @@ import {ValidationService} from './validation/validation.service';
     ]),
     // PrimeNG modules
     InputTextModule,
+    TooltipModule,
     ButtonModule,
     MessagesModule,
     ChipsModule,

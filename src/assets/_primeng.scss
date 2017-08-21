@@ -1439,7 +1439,7 @@ button.ui-button::-moz-focus-inner {
   position: fixed;
   padding: 0;
   overflow: hidden;
-  .ui-dialog-titlebar {
+  span.ui-dialog-titlebar {
     padding: .5em .75em;
     position: relative;
     border: 0;
@@ -1451,6 +1451,9 @@ button.ui-button::-moz-focus-inner {
     background: none;
     overflow: auto;
     zoom: 1;
+    .boards {
+      display: block;
+    }
   }
   .ui-dialog-buttonpane {
     text-align: left;
