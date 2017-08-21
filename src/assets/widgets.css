@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Lato);
+@import url(https://fonts.googleapis.com/css?family=Roboto);
 .clearfix {
   *zoom: 1;
 }
@@ -42,7 +42,7 @@
   font-size: 11px;
 }
 .prism-connect {
-  font-family: 'lato';
+  font-family: 'Roboto';
 }
 .prism-connect a {
   text-decoration: none;
@@ -163,7 +163,7 @@
   font-size: 22px;
   margin-top: 2px;
   margin-bottom: 5px;
-  font-family: 'lato';
+  font-family: 'Roboto';
 }
 .prism-connect .prism-main h1 a {
   font-weight: 400;
@@ -177,7 +177,7 @@
   color: #57ACD5;
 }
 .prism-connect .prism-main .label {
-  font-family: 'lato';
+  font-family: 'Roboto';
   float: right;
   font-size: 12px;
   font-weight: 300;
@@ -345,7 +345,7 @@
   border-color: #adadad;
 }
 .prism-connect .prism-summary {
-  font-family: 'lato';
+  font-family: 'Roboto';
 }
 .prism-connect .prism-summary .projects {
   width: 25%;

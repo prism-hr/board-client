@@ -16,6 +16,7 @@ h4{
   border: 3px dashed $inactiveGrey;
   height: 100px;
   text-align: center;
+  width: 100%;
   &.dragover {
     border: 3px dashed $uclblue;
   }
