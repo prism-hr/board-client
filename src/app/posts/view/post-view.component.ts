@@ -27,40 +27,34 @@ export class PostViewComponent implements OnInit {
 
   ngOnInit() {
     this.today = new Date();
-    this.route.data.subscribe(data => {
-      this.post = data['post'];
-      this.meta.setTitle(this.post.name);
-      this.meta.setTag('description', this.post.summary);
-      if (this.post.board.documentLogo) {
-        this.meta.setTag('og:image', this.post.board.documentLogo.cloudinaryUrl);
-      }
-
-      this.canEdit = this.resourceService.canEdit(this.post);
-      const canAudit = this.resourceService.canAudit(this.post);
-      if (canAudit) {
-        this.operationsLoading = true;
-        this.postService.loadOperations(this.post)
-          .subscribe(operations => {
-            this.operations = operations;
-            this.operationsLoading = false;
-
-            this.publishedTimestamp = <any>this.post.liveTimestamp;
-            if (!this.publishedTimestamp) {
-              const publishOperation = this.operations.reverse().find(o => o.action as any === 'PUBLISH');
-              this.publishedTimestamp = _.get(publishOperation, 'createdTimestamp') as any;
-            }
-          });
-      }
-    });
-  }
-
-  membershipRequested() {
-    this.resourceService.getPost(this.post.id)
+    this.route.paramMap
+      .flatMap(map => {
+        return this.postService.getPost(+map.get('postId'));
+      })
       .subscribe(post => {
-        this.route.data.first().subscribe(data => {
-          data['post'] = post;
-          (<any>this.route.data).next(data);
-        });
+        this.post = post;
+        this.meta.setTitle(this.post.name);
+        this.meta.setTag('description', this.post.summary);
+        if (this.post.board.documentLogo) {
+          this.meta.setTag('og:image', this.post.board.documentLogo.cloudinaryUrl);
+        }
+
+        this.canEdit = this.resourceService.canEdit(this.post);
+        const canAudit = this.resourceService.canAudit(this.post);
+        if (canAudit) {
+          this.operationsLoading = true;
+          this.postService.loadOperations(this.post)
+            .subscribe(operations => {
+              this.operations = operations;
+              this.operationsLoading = false;
+
+              this.publishedTimestamp = <any>this.post.liveTimestamp;
+              if (!this.publishedTimestamp) {
+                const publishOperation = this.operations.reverse().find(o => o.action as any === 'PUBLISH');
+                this.publishedTimestamp = _.get(publishOperation, 'createdTimestamp') as any;
+              }
+            });
+        }
       });
   }
 

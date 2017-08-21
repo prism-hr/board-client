@@ -1,9 +1,11 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdDialog} from '@angular/material';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
 import {ResourceCommentDialogComponent} from '../../resource/resource-comment.dialog';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceActionView, ResourceService} from '../../services/resource.service';
@@ -18,7 +20,8 @@ import PostRepresentation = b.PostRepresentation;
   templateUrl: 'post-edit.component.html',
   styleUrls: ['post-edit.component.scss']
 })
-export class PostEditComponent implements OnInit {
+export class PostEditComponent implements OnInit, OnDestroy {
+
   boardOptions: any[];
   post: PostRepresentation;
   board: BoardRepresentation;
@@ -30,6 +33,7 @@ export class PostEditComponent implements OnInit {
   organizationSuggestions: string[];
   availablePostCategories: string[];
   availableMemberCategories: string[];
+  paramsSubscription: Subscription;
   formProperties = ['name', 'summary', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories',
     'memberCategories', 'liveTimestamp', 'deadTimestamp', 'applyWebsite', 'applyDocument', 'applyEmail'];
 
@@ -40,90 +44,99 @@ export class PostEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.postForm = this.fb.group({
+      board: [null, Validators.required],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      summary: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
+      description: [''],
+      organizationName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      location: [null, Validators.required],
+      existingRelation: [],
+      existingRelationExplanation: [],
+      postCategories: [[]],
+      memberCategories: [[]],
+      applyType: [null, Validators.required],
+      applyWebsite: [null, Validators.maxLength(255)],
+      applyDocument: [],
+      applyEmail: [null, Validators.maxLength(254)],
+      hideLiveTimestamp: [],
+      liveTimestamp: [],
+      hideDeadTimestamp: [],
+      deadTimestamp: []
+    });
+
+
     this.route.data.subscribe(data => {
       if (data['boards']) {
         this.boardOptions = data['boards'].map(b => ({label: b.name, value: b}));
       }
-      if (data['post']) {
-        this.post = data['post'];
-      }
       if (data['board']) {
         this.board = data['board'];
       }
-      this.route.paramMap.subscribe((params: ParamMap) => {
-        if (!this.board && params.get('boardId')) {
-          this.board = this.boardOptions.find(o => o.value.id === parseInt(params.get('boardId'), 10)).value;
-        }
+      this.paramsSubscription = this.route.paramMap
+        .flatMap(params => {
+          const postObservable = params.get('postId') ? this.postService.getPost(+params.get('postId')) : Observable.of(null);
+          return postObservable.map(post => [post, params]);
+        })
+        .subscribe(([post, params]: [PostRepresentation, ParamMap]) => {
+          this.post = post;
+          if (!this.board && params.get('boardId')) {
+            this.board = this.boardOptions.find(o => o.value.id === +params.get('boardId')).value;
+          }
 
-        this.postForm = this.fb.group({
-          board: [this.board, Validators.required],
-          name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-          summary: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
-          description: [''],
-          organizationName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-          location: [null, Validators.required],
-          existingRelation: [],
-          existingRelationExplanation: [],
-          postCategories: [[]],
-          memberCategories: [[]],
-          applyType: [null, Validators.required],
-          applyWebsite: [null, Validators.maxLength(255)],
-          applyDocument: [],
-          applyEmail: [null, Validators.maxLength(254)],
-          hideLiveTimestamp: [],
-          liveTimestamp: [],
-          hideDeadTimestamp: [],
-          deadTimestamp: []
-        });
+          this.postForm.get('board').setValue(this.board);
 
-        if (this.post) {
-          const formValue: any = _.pick(this.post, this.formProperties);
-          formValue.applyType = formValue.applyWebsite ? 'website' :
-            (formValue.applyDocument ? 'document' : (formValue.applyEmail ? 'email' : null));
-          formValue.hideLiveTimestamp = !formValue.liveTimestamp;
-          formValue.hideDeadTimestamp = !formValue.deadTimestamp;
-          this.postForm.patchValue(formValue);
-        } else {
-          this.postForm.patchValue({hideLiveTimestamp: true, deadTimestamp: moment().add(1, 'month').hours(0).minutes(0).toISOString()});
-        }
-        this.configureTimestampControl('liveTimestamp');
-        this.configureTimestampControl('deadTimestamp');
-
-        this.actionView = this.post ? this.resourceService.getActionView(this.post) : 'CREATE';
-        this.availableActions = this.post ? this.post.actions.map(a => a.action) : [];
-
-        this.postForm.get('existingRelation').valueChanges.subscribe((existingRelation: string) => {
-          this.postForm.patchValue({existingRelationExplanation: null});
-          this.postForm.get('existingRelationExplanation')
-            .setValidators(existingRelation === 'OTHER' && [Validators.required, Validators.maxLength(1000)]);
-        });
-
-        this.postForm.get('applyType').valueChanges.subscribe((applyType: string) => {
-          this.postForm.get('applyWebsite').setValidators(applyType === 'website' && [Validators.required, Validators.maxLength(255)]);
-          this.postForm.get('applyDocument').setValidators(applyType === 'document' && Validators.required);
-          this.postForm.get('applyEmail').setValidators(applyType === 'email' && [Validators.required, ValidationUtils.emailValidator]);
-          this.postForm.get('applyWebsite').updateValueAndValidity();
-          this.postForm.get('applyDocument').updateValueAndValidity();
-          this.postForm.get('applyEmail').updateValueAndValidity();
-        });
-
-        this.postForm.get('hideLiveTimestamp').valueChanges.subscribe(() => {
-          this.postForm.patchValue({liveTimestamp: null});
+          if (this.post) {
+            const formValue: any = _.pick(this.post, this.formProperties);
+            formValue.applyType = formValue.applyWebsite ? 'website' :
+              (formValue.applyDocument ? 'document' : (formValue.applyEmail ? 'email' : null));
+            formValue.hideLiveTimestamp = !formValue.liveTimestamp;
+            formValue.hideDeadTimestamp = !formValue.deadTimestamp;
+            this.postForm.patchValue(formValue);
+          } else {
+            this.postForm.patchValue({hideLiveTimestamp: true, deadTimestamp: moment().add(1, 'month').hours(0).minutes(0).toISOString()});
+          }
           this.configureTimestampControl('liveTimestamp');
-        });
-
-        this.postForm.get('hideDeadTimestamp').valueChanges.subscribe(() => {
-          this.postForm.patchValue({deadTimestamp: null});
           this.configureTimestampControl('deadTimestamp');
+
+          this.actionView = this.post ? this.resourceService.getActionView(this.post) : 'CREATE';
+          this.availableActions = this.post ? this.post.actions.map(a => a.action) : [];
+
+          this.postForm.get('existingRelation').valueChanges.subscribe((existingRelation: string) => {
+            this.postForm.patchValue({existingRelationExplanation: null});
+            this.postForm.get('existingRelationExplanation')
+              .setValidators(existingRelation === 'OTHER' && [Validators.required, Validators.maxLength(1000)]);
+          });
+
+          this.postForm.get('applyType').valueChanges.subscribe((applyType: string) => {
+            this.postForm.get('applyWebsite').setValidators(applyType === 'website' && [Validators.required, ValidationUtils.urlValidator]);
+            this.postForm.get('applyDocument').setValidators(applyType === 'document' && Validators.required);
+            this.postForm.get('applyEmail').setValidators(applyType === 'email' && [Validators.required, ValidationUtils.emailValidator]);
+            this.postForm.get('applyWebsite').updateValueAndValidity();
+            this.postForm.get('applyDocument').updateValueAndValidity();
+            this.postForm.get('applyEmail').updateValueAndValidity();
+          });
+
+          this.postForm.get('hideLiveTimestamp').valueChanges.subscribe(() => {
+            this.postForm.patchValue({liveTimestamp: null});
+            this.configureTimestampControl('liveTimestamp');
+          });
+
+          this.postForm.get('hideDeadTimestamp').valueChanges.subscribe(() => {
+            this.postForm.patchValue({deadTimestamp: null});
+            this.configureTimestampControl('deadTimestamp');
+          });
+
+          this.boardChanged();
+
+          this.cdf.detectChanges();
         });
-
-        this.boardChanged();
-
-        this.cdf.detectChanges();
-      });
-
     });
 
+  }
+
+  ngOnDestroy(): void {
+    this.paramsSubscription.unsubscribe();
   }
 
   update() {
@@ -133,7 +146,6 @@ export class PostEditComponent implements OnInit {
     }
     this.postService.update(this.post, this.generatePostRequestBody())
       .subscribe(() => {
-        Object.assign(this.post, _.pick(this.postForm.value, this.formProperties));
         return this.router.navigate(this.resourceService.routerLink(this.post));
       });
   }

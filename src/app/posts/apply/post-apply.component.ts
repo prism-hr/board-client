@@ -1,10 +1,13 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {MdDialog, MdDialogConfig} from '@angular/material';
-import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
 import {AuthGuard} from '../../authentication/auth-guard.service';
 import {DepartmentRequestMembershipDialogComponent} from '../../departments/request-membership/department-request-membership.dialog';
 import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
+import {PostService} from '../post.service';
+import {PostApplyDialogComponent} from './post-apply.dialog';
+import PostRepresentation = b.PostRepresentation;
 import UserRepresentation = b.UserRepresentation;
 
 @Component({
@@ -13,13 +16,12 @@ import UserRepresentation = b.UserRepresentation;
   styleUrls: ['post-apply.component.scss']
 })
 export class PostApplyComponent implements OnInit, OnChanges {
-  @Input() post: any;
+  @Input() post: PostRepresentation & {};
   user: UserRepresentation;
   canPursue: boolean;
-  @Output() onChange: EventEmitter<any> = new EventEmitter();
 
-  constructor(private route: ActivatedRoute, private dialog: MdDialog, private userService: UserService,
-              private resourceService: ResourceService, private authGuard: AuthGuard) {
+  constructor(private dialog: MdDialog, private userService: UserService, private resourceService: ResourceService,
+              private postService: PostService, private authGuard: AuthGuard) {
   }
 
   ngOnInit() {
@@ -33,30 +35,69 @@ export class PostApplyComponent implements OnInit, OnChanges {
     this.canPursue = this.resourceService.canPursue(this.post);
   }
 
-  requestMembership() {
-    const config = new MdDialogConfig();
-    config.data = {department: this.post.board.department};
-    const dialogRef = this.dialog.open(DepartmentRequestMembershipDialogComponent, config);
-    dialogRef.afterClosed().subscribe((result: boolean) => {
-      if (result) {
-        this.onChange.emit('membershipRequested');
-      }
-    });
+  apply(post: PostRepresentation) {
+    if (!this.user) {
+      this.showLogin();
+    } else if (!this.resourceService.canPursue(post)) {
+      this.requestMembership();
+    } else {
+      this.doRespond();
+    }
   }
 
   showLogin() {
     this.authGuard.ensureAuthenticated().first() // open dialog if not authenticated
-      .subscribe(authenticated => {
+      .flatMap(authenticated => {
         if (!authenticated) {
-          return;
+          return Observable.of(null);
         }
-        this.resourceService.getPost(this.post.id)
-          .subscribe(post => {
-            this.route.data.first().subscribe(data => {
-              data['post'] = post;
-              (<any>this.route.data).next(data);
-            });
-          });
+        return this.postService.getPost(this.post.id, true);
+      })
+      .subscribe(post => {
+        if (post) {
+          this.apply(post);
+        }
       });
+  }
+
+  requestMembership() {
+    const config = new MdDialogConfig();
+    config.data = {department: this.post.board.department};
+    const dialogRef = this.dialog.open(DepartmentRequestMembershipDialogComponent, config);
+    dialogRef.afterClosed()
+      .flatMap((result: boolean) => {
+        return result ? this.postService.getPost(this.post.id, true) : Observable.of(null);
+      })
+      .subscribe(post => {
+        if (post) {
+          this.apply(post);
+        }
+      });
+  }
+
+  doRespond() {
+    this.postService.getPostApply(this.post).subscribe(apply => {
+      let respondPrompt: Observable<any>;
+      if (apply.forwardCandidates || apply.applyEmail) {
+        const config = new MdDialogConfig();
+        config.data = {apply, post: this.post};
+        const dialogRef = this.dialog.open(PostApplyDialogComponent, config);
+        respondPrompt = dialogRef.afterClosed();
+      } else {
+        respondPrompt = Observable.of(true);
+      }
+      respondPrompt.subscribe((result: boolean) => {
+        if (result) {
+          if (apply.applyEmail) {
+            this.post.responded = true;
+          }
+          if (apply.applyDocument) {
+            window.open(apply.applyDocument.cloudinaryUrl);
+          } else if (apply.applyWebsite) {
+            window.open(apply.applyWebsite);
+          }
+        }
+      });
+    })
   }
 }

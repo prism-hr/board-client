@@ -52,8 +52,8 @@ export class ResourceActionsBoxComponent implements OnChanges {
   }
 
   private generateActionItems() {
-    this.actionView = this.resourceService.getActionView(this.resource);
-    this.actions = this.resourceService.getActions(this.resource);
+    this.actionView = this.resource && this.resourceService.getActionView(this.resource);
+    this.actions = this.resource && this.resourceService.getActions(this.resource);
   }
 
   private postActionHandler(post) {

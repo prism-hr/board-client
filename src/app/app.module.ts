@@ -36,7 +36,8 @@ import {
   SelectButtonModule,
   SplitButtonModule,
   TabMenuModule,
-  ToggleButtonModule, TooltipModule
+  ToggleButtonModule,
+  TooltipModule
 } from 'primeng/primeng';
 import {AccountNotificationsComponent} from './account/account-notifications.component';
 import {AccountSuppressionsResolver} from './account/account-suppressions-resolver';
@@ -80,9 +81,9 @@ import {StudentLogoComponent} from './home/student-logo.component';
 import {UniLogoComponent} from './home/uni-logo.component';
 import {NotFoundComponent} from './not-found.component';
 import {PostApplyComponent} from './posts/apply/post-apply.component';
+import {PostApplyDialogComponent} from './posts/apply/post-apply.dialog';
 import {PostEditComponent} from './posts/edit/post-edit.component';
 import {PostItemComponent} from './posts/item/post-item.component';
-import {PostResolver} from './posts/post-resolver.service';
 import {PostService} from './posts/post.service';
 import {PostViewComponent} from './posts/view/post-view.component';
 import {ResourceActionsBoxComponent} from './resource/actions-box/resource-actions-box.component';
@@ -146,6 +147,7 @@ import {ValidationService} from './validation/validation.service';
     PostEditComponent,
     PostViewComponent,
     PostApplyComponent,
+    PostApplyDialogComponent,
     PostItemComponent,
     ResourceActionsBoxComponent,
     ResourceCommentDialogComponent,
@@ -267,9 +269,6 @@ import {ValidationService} from './validation/validation.service';
                   },
                   {
                     path: ':postId',
-                    resolve: {
-                      post: PostResolver
-                    },
                     children: [
                       {
                         path: '',
@@ -352,11 +351,11 @@ import {ValidationService} from './validation/validation.service';
       deps: [DefinitionsService],
       multi: true
     },
-    AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, BoardsResolver, ResourceUsersResolver,
+    AuthGuard, ResourceService, DepartmentResolver, BoardResolver, BoardsResolver, ResourceUsersResolver,
     AccountSuppressionsResolver, PostService, UserService, ValidationService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, ResourceCommentDialogComponent, UserImageDialogComponent,
-    ResourceUserEditDialogComponent, DepartmentRequestMembershipDialogComponent],
+    ResourceUserEditDialogComponent, DepartmentRequestMembershipDialogComponent, PostApplyDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

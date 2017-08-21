@@ -17,6 +17,7 @@ import ResourceUserDTO = b.ResourceUserDTO;
 import ResourceUserRepresentation = b.ResourceUserRepresentation;
 import ResourceUsersDTO = b.ResourceUsersDTO;
 import UserRepresentation = b.UserRepresentation;
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class ResourceService {
@@ -38,10 +39,6 @@ export class ResourceService {
 
   getDepartments(query?: string): Observable<DepartmentRepresentation[]> {
     return this.http.get('/api/departments' + (query ? '?query=' + query : '')).map(res => res.json());
-  }
-
-  getPost(id: number): Observable<PostRepresentation[]> {
-    return this.http.get('/api/posts/' + id).map(res => res.json());
   }
 
   getBoard(departmentHandle: string, boardHandle: string): Observable<BoardRepresentation[]> {

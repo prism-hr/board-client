@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-08-01 09:41:25.
+// Generated using typescript-generator version 1.23.311 on 2017-08-21 13:42:51.
 
 declare namespace b {
 
@@ -61,6 +61,7 @@ declare namespace b {
     applyWebsite?: string;
     applyDocument?: DocumentDTO;
     applyEmail?: string;
+    forwardCandidates?: boolean;
     liveTimestamp?: LocalDateTime;
     deadTimestamp?: LocalDateTime;
   }
@@ -69,13 +70,14 @@ declare namespace b {
     description?: string;
     organizationName?: string;
     location?: LocationDTO;
+    existingRelation?: ExistingRelation;
+    existingRelationExplanation?: { [index: string]: any };
+    postCategories?: string[];
+    memberCategories?: MemberCategory[];
     applyWebsite?: string;
     applyDocument?: DocumentDTO;
     applyEmail?: string;
-    postCategories?: string[];
-    memberCategories?: MemberCategory[];
-    existingRelation?: ExistingRelation;
-    existingRelationExplanation?: { [index: string]: any };
+    forwardCandidates?: boolean;
     liveTimestamp?: LocalDateTime;
     deadTimestamp?: LocalDateTime;
   }
@@ -94,6 +96,13 @@ declare namespace b {
   interface ResourceDTO<T> {
     name?: string;
     summary?: string;
+  }
+
+  interface ResourceEventDTO {
+    defaultResume?: boolean;
+    documentResume?: DocumentDTO;
+    websiteResume?: string;
+    coveringNote?: string;
   }
 
   interface ResourceFilterDTO {
@@ -139,6 +148,8 @@ declare namespace b {
     email?: string;
     documentImage?: DocumentDTO;
     documentImageRequestState?: DocumentRequestState;
+    documentResume?: DocumentDTO;
+    websiteResume?: string;
   }
 
   interface UserRoleDTO {
@@ -172,12 +183,16 @@ declare namespace b {
     department?: DepartmentRepresentation;
     postCategories?: string[];
     defaultPostVisibility?: PostVisibility;
+    postCount?: number;
+    authorCount?: number;
   }
 
   interface DepartmentRepresentation extends ResourceRepresentation<DepartmentRepresentation> {
     documentLogo?: DocumentRepresentation;
     handle?: string;
     memberCategories?: MemberCategory[];
+    boardCount?: number;
+    memberCount?: number;
   }
 
   interface DocumentRepresentation extends DocumentDefinition {
@@ -185,6 +200,13 @@ declare namespace b {
   }
 
   interface LocationRepresentation extends LocationDefinition {
+  }
+
+  interface PostApplyRepresentation {
+    applyWebsite?: string;
+    applyDocument?: DocumentRepresentation;
+    applyEmail?: string;
+    forwardCandidates?: boolean;
   }
 
   interface PostRepresentation extends ResourceRepresentation<PostRepresentation> {
@@ -198,9 +220,28 @@ declare namespace b {
     applyWebsite?: string;
     applyDocument?: DocumentRepresentation;
     applyEmail?: string;
+    forwardCandidates?: boolean;
     board?: BoardRepresentation;
     liveTimestamp?: LocalDateTime;
     deadTimestamp?: LocalDateTime;
+    viewCount?: number;
+    referralCount?: number;
+    responseCount?: number;
+    lastViewTimestamp?: LocalDateTime;
+    lastReferralTimestamp?: LocalDateTime;
+    lastResponseTimestamp?: LocalDateTime;
+    responded?: boolean;
+  }
+
+  interface ResourceEventRepresentation {
+    event?: ResourceEvent;
+    user?: UserRepresentation;
+    ipAddress?: string;
+    documentResume?: DocumentRepresentation;
+    websiteResume?: string;
+    coveringNote?: string;
+    createdTimestamp?: LocalDateTime;
+    viewed?: boolean;
   }
 
   interface ResourceOperationRepresentation {
@@ -239,6 +280,8 @@ declare namespace b {
     email?: string;
     documentImage?: DocumentRepresentation;
     documentImageRequestState?: DocumentRequestState;
+    documentResume?: DocumentRepresentation;
+    websiteResume?: string;
   }
 
   interface UserRoleRepresentation {
@@ -247,20 +290,21 @@ declare namespace b {
     state?: State;
     expiryDate?: LocalDate;
     categories?: MemberCategory[];
+    viewed?: boolean;
   }
 
   interface DocumentDefinition {
     fileName?: string;
-    cloudinaryId?: string;
     cloudinaryUrl?: string;
+    cloudinaryId?: string;
   }
 
   interface LocationDefinition {
     name?: string;
     domicile?: string;
-    googleId?: string;
-    latitude?: number;
     longitude?: number;
+    latitude?: number;
+    googleId?: string;
   }
 
   interface LocalDateTime extends Temporal, TemporalAdjuster, ChronoLocalDateTime<LocalDate>, Serializable {
@@ -346,7 +390,9 @@ declare namespace b {
 
   type BadgeListType = 'STATIC' | 'SLIDER';
 
-  type Activity = 'ACCEPT_BOARD_ACTIVITY' | 'ACCEPT_POST_ACTIVITY' | 'CORRECT_POST_ACTIVITY' | 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' | 'NEW_BOARD_PARENT_ACTIVITY' | 'NEW_POST_PARENT_ACTIVITY' | 'PUBLISH_POST_ACTIVITY' | 'PUBLISH_POST_MEMBER_ACTIVITY' | 'REJECT_BOARD_ACTIVITY' | 'REJECT_POST_ACTIVITY' | 'RESET_PASSWORD_ACTIVITY' | 'RESTORE_BOARD_ACTIVITY' | 'RESTORE_POST_ACTIVITY' | 'RETIRE_POST_ACTIVITY' | 'SUSPEND_POST_ACTIVITY';
+  type Activity = 'ACCEPT_BOARD_ACTIVITY' | 'ACCEPT_POST_ACTIVITY' | 'CORRECT_POST_ACTIVITY' | 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' | 'NEW_BOARD_PARENT_ACTIVITY' | 'NEW_POST_PARENT_ACTIVITY' | 'PUBLISH_POST_ACTIVITY' | 'PUBLISH_POST_MEMBER_ACTIVITY' | 'REJECT_BOARD_ACTIVITY' | 'REJECT_POST_ACTIVITY' | 'RESET_PASSWORD_ACTIVITY' | 'RESTORE_BOARD_ACTIVITY' | 'RESTORE_POST_ACTIVITY' | 'RETIRE_POST_ACTIVITY' | 'SUSPEND_POST_ACTIVITY' | 'RESPOND_POST_ACTIVITY';
+
+  type ResourceEvent = 'VIEW' | 'REFERRAL' | 'RESPONSE';
 
   type DayOfWeek = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
 

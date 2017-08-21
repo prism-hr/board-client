@@ -1,39 +1,8 @@
 <div class="post-apply">
-  <h4>How to Apply?</h4>
-
-  <div class="post-apply-content">
-    <div *ngIf="!user">
-      <a (click)="showLogin()">Login</a> to check this job offer contact details.
-    </div>
-
-    <div *ngIf="user">
-      <div *ngIf="!canPursue">
-        You are not a member of {{post.board.department.name}} department.
-        <button pButton type="button" (click)="requestMembership()" label="Request Membership"  class="ui-button-success small" ></button>
-      </div>
-
-      <div *ngIf="canPursue">
-        <div *ngIf="post.applyWebsite">
-          Apply on this website
-          <a href="{{post.applyWebsite}}"
-             class="ui-button-success small ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
-             target="_blank">
-            <span class="ui-button-text ui-c">Apply</span>
-          </a>
-        </div>
-        <div *ngIf="post.applyDocument">
-          Download and follow the instructions on the following document:
-          <a target="_blank" href="{{post.applyDocument.cloudinaryUrl}}">
-            {{post.applyDocument.fileName}}
-          </a>
-        </div>
-        <div *ngIf="post.applyEmail">
-          Send an email to
-          <a href="mailto:{{post.applyEmail}}">
-            {{post.applyEmail}}
-          </a>
-        </div>
-      </div>
-    </div>
+  <div *ngIf="!post?.responded" class="post-apply-content">
+    <button pButton type="button" (click)="apply(post)" label="Apply" class="ui-button-success small"></button>
+  </div>
+  <div *ngIf="post?.responded">
+    You already responded to this post.
   </div>
 </div>

@@ -26,7 +26,7 @@
             <a pButton label="Activities" (click)="activitiesPanel.toggle($event)"
                class="ui-button-info ui-button-icon-only"
                icon="fa-globe"></a>
-            <span class="activity-badge active">{{activities && activities.length}}</span>
+            <span *ngIf="activities" class="activity-badge active">{{activities.length}}</span>
           </div>
           <a routerLink="/account" class="btn-user">
             <span>{{user.givenName}}</span>

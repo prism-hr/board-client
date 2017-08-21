@@ -3,6 +3,7 @@ import {AbstractControl, ValidatorFn} from '@angular/forms';
 export class ValidationUtils {
 
   static EMAIL_REGEX = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+  static URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
   static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
     const config = {
@@ -24,10 +25,20 @@ export class ValidationUtils {
   static emailValidator(control: AbstractControl) {
     // RFC 2822 compliant regex
 
-    if (control.value && control.value.match(ValidationUtils.EMAIL_REGEX)) {
+    const isSpecified = control.value && control.value !== '';
+    if (!isSpecified || control.value.match(ValidationUtils.EMAIL_REGEX)) {
       return null;
     } else {
       return {email: true};
+    }
+  }
+
+  static urlValidator(control: AbstractControl) {
+    const isSpecified = control.value && control.value !== '';
+    if (!isSpecified || control.value.match(ValidationUtils.URL_REGEX)) {
+      return null;
+    } else {
+      return {url: true};
     }
   }
 

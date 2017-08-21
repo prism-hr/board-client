@@ -1,4 +1,4 @@
-<section class="section">
+<section *ngIf="post" class="section">
   <div class="grid">
     <div class="grid__item medium-up--three-quarters small-one-whole post">
       <div class="post-title" fxLayout="row" fxLayoutAlign="space-between top">
@@ -29,7 +29,7 @@
         <div *ngIf="post.description" class="post-content--description" [innerHtml]="post.description">
         </div>
       </div>
-      <b-post-apply [post]="post" (onChange)="membershipRequested()"></b-post-apply>
+      <b-post-apply [post]="post"></b-post-apply>
 
       <share-buttons [title]="post.name" [description]="post.summary" [pinterest]="false" [stumbleUpOn]="false"
                      [reddit]="false" [whatsApp]="false" [tumblr]="false"
