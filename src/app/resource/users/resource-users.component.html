@@ -27,11 +27,8 @@
         <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
           <div md-card-avatar class="avatar"
                [ngClass]="{'no-background': resourceUser.user.documentImage}">
-            <cl-image *ngIf="resourceUser.user.documentImage"
-                      public-id="{{resourceUser.user.documentImage.cloudinaryId}}"
-                      class="img">
-              <cl-transformation gravity="face" width="150" height="150" radius="max" crop="thumb"></cl-transformation>
-            </cl-image>
+            <b-image [publicId]="resourceUser.user.documentImage?.cloudinaryId"
+                     gravity="face" width="150" height="150" radius="max" crop="thumb"></b-image>
           </div>
           <md-card-title>
             <h3>

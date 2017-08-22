@@ -27,7 +27,6 @@
         "../node_modules/lodash/lodash.js",
         "../node_modules/moment/moment.js",
         "../node_modules/moment-timezone/moment-timezone.js",
-        "../node_modules/cloudinary-core/cloudinary-core-shrinkwrap.js",
         "../node_modules/quill/dist/quill.js",
         "../node_modules/csv-js/csv.js",
         "../src/assets/widgets.js"

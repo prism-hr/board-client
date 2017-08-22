@@ -20,10 +20,8 @@
                   <ng-template let-department pTemplate="item">
                     <div fxLayout="row" fxLayoutAlign="space-between center">
                       <span>{{department.name}}</span>
-                      <cl-image *ngIf="department.documentLogo" public-id="{{department.documentLogo.cloudinaryId}}"
-                                class="img">
-                        <cl-transformation width="35" height="35" crop="mfit"></cl-transformation>
-                      </cl-image>
+                      <b-image [publicId]="department.documentLogo?.cloudinaryId"
+                               width="35" height="35" crop="mfit"></b-image>
                     </div>
 
                   </ng-template>

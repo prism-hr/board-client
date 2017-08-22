@@ -7,13 +7,11 @@ import {MdCardModule, MdDialogModule, MdSnackBarModule} from '@angular/material'
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
-import {CloudinaryModule} from '@cloudinary/angular-4.x';
 import {MetaGuard, MetaLoader, MetaModule} from '@ngx-meta/core';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {MomentModule} from 'angular2-moment';
 import {RlTagInputModule} from 'angular2-tag-input/dist';
-import * as Cloudinary from 'cloudinary-core';
 import {Ng2UiAuthModule} from 'ng2-ui-auth';
 import {ClipboardModule} from 'ngx-clipboard/dist';
 import {ShareButtonsModule} from 'ngx-sharebuttons';
@@ -102,11 +100,13 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
+import {ImageComponent} from './general/image.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ControlMessagesComponent,
+    ImageComponent,
     HeaderComponent,
     HeaderActivityComponent,
     FooterComponent,
@@ -318,7 +318,6 @@ import {ValidationService} from './validation/validation.service';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    CloudinaryModule.forRoot(Cloudinary, {cloud_name: 'bitfoot'}),
     NgUploaderModule,
     RlTagInputModule,
     HttpClientModule,

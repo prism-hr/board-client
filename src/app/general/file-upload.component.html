@@ -7,17 +7,12 @@
     <span *ngIf="!model">Drop your image here</span>
     <div *ngIf="model && type === 'logo'" class="logo-flex">
       <div class="logo">
-        <cl-image public-id="{{model.cloudinaryId}}" class="img">
-          <cl-transformation height="250" width="400" crop="mfit"></cl-transformation>
-        </cl-image>
+        <b-image [publicId]="model.cloudinaryId" height="250" width="400" crop="mfit"></b-image>
       </div>
     </div>
     <div *ngIf="model && type === 'avatar'" class="avatar-flex">
       <div class="avatar" *ngIf="type === 'avatar'">
-        <cl-image public-id="{{model.cloudinaryId}}" class="img">
-          <cl-transformation gravity="face" width="400" height="400" crop="fill">
-          </cl-transformation>
-        </cl-image>
+        <b-image [publicId]="model.cloudinaryId" gravity="face" width="400" height="400" crop="fill"></b-image>
       </div>
     </div>
   </label>

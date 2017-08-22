@@ -5,11 +5,10 @@ import {MdSnackBarModule} from '@angular/material';
 import {By} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
-import {CloudinaryModule} from '@cloudinary/angular-4.x';
-import * as Cloudinary from 'cloudinary-core';
 import {ButtonModule, ChipsModule, FileUploadModule} from 'primeng/primeng';
 import {ResourceHandleComponent} from '../../controls/resource-handle.component';
 import {FileUploadComponent} from '../../general/file-upload.component';
+import '../../rxjs-extensions';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
 import {FakeDefinitionsService} from '../../testing/fake-definitions.service';
@@ -18,7 +17,6 @@ import {click, newEvent} from '../../testing/index';
 import {ActivatedRouteStub, RouterStub} from '../../testing/router-stubs';
 import {ControlMessagesComponent} from '../../validation/control-messages.component';
 import {DepartmentEditComponent} from './department-edit.component';
-import '../../rxjs-extensions';
 
 describe('DepartmentView', () => {
 
@@ -52,8 +50,7 @@ describe('DepartmentView', () => {
       declarations: [
         DepartmentEditComponent, ControlMessagesComponent, ResourceHandleComponent, FileUploadComponent
       ],
-      imports: [ReactiveFormsModule, RouterTestingModule, MdSnackBarModule, ButtonModule, ChipsModule,
-        CloudinaryModule.forRoot(Cloudinary, {cloud_name: 'bitfoot'}), FileUploadModule],
+      imports: [ReactiveFormsModule, RouterTestingModule, MdSnackBarModule, ButtonModule, ChipsModule, FileUploadModule],
       providers: [{
         provide: ActivatedRoute,
         useValue: activatedRoute

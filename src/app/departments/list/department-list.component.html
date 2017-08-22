@@ -6,7 +6,8 @@
   <div *ngIf="user">
     <div class="section-header" fxLayout="row" fxLayoutAlign="space-between center">
       <h1>Departments</h1>
-      <button pButton routerLink="/newDepartment" class="ui-button-success" icon="fa-plus" label="New Department"></button>
+      <button pButton routerLink="/newDepartment" class="ui-button-success" icon="fa-plus"
+              label="New Department"></button>
     </div>
     <div class="grid list-container">
       <div *ngFor="let department of departments" class="list-container__item">
@@ -17,10 +18,8 @@
             </md-card-title>
             <div md-card-avatar class="logo-holder-small default-logo"
                  [ngClass]="{'no-background': department.documentLogo}">
-              <cl-image *ngIf="department.documentLogo" public-id="{{department.documentLogo.cloudinaryId}}"
-                        class="img">
-                <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
-              </cl-image>
+              <b-image [publicId]="department.documentLogo?.cloudinaryId"
+                       gravity="north_west" height="150" width="200" crop="mfit"></b-image>
             </div>
           </md-card-header>
           <md-card-content>
@@ -44,7 +43,7 @@
           </md-card-content>
           <md-card-actions>
             <a pButton [routerLink]="['/', department.handle]" class="ui-button-secondary "
-                label="Go to department"></a>
+               label="Go to department"></a>
           </md-card-actions>
         </md-card>
       </div>

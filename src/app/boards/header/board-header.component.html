@@ -32,9 +32,8 @@
         <md-card-content>
           <b-file-upload *ngIf="canEdit" [(ngModel)]="board.documentLogo" (ngModelChange)="logoChanged()"
                          type="logo"></b-file-upload>
-          <cl-image *ngIf="!canEdit && board.documentLogo" public-id="{{board.documentLogo.cloudinaryId}}" class="img">
-            <cl-transformation height="150" width="200" crop="mfit"></cl-transformation>
-          </cl-image>
+          <b-image *ngIf="!canEdit" [publicId]="board.documentLogo?.cloudinaryId"
+                   height="150" width="200" crop="mfit"></b-image>
         </md-card-content>
       </md-card>
       <div class="category-list">

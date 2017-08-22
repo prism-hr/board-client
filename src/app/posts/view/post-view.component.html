@@ -19,7 +19,8 @@
           <div *ngIf="canEdit">
             <a pButton routerLink="edit" class="ui-button-info" icon="fa-gear"></a>
           </div>
-          <b-resource-actions-box [resource]="post" class="admin-actions" fxLayout="row" fxLayoutAlign="space-between center"></b-resource-actions-box>
+          <b-resource-actions-box [resource]="post" class="admin-actions" fxLayout="row"
+                                  fxLayoutAlign="space-between center"></b-resource-actions-box>
         </div>
       </div>
       <div class="post-content">
@@ -47,10 +48,8 @@
           <div class="grid">
             <div class="grid__item one-whole">
               <div *ngIf="post.board.department.documentLogo" md-card-avatar class="logo-holder-small default-logo">
-                <cl-image public-id="{{post.board.department.documentLogo.cloudinaryId}}"
-                          class="img">
-                  <cl-transformation gravity="north_west" height="150" width="200" crop="mfit"></cl-transformation>
-                </cl-image>
+                <b-image [publicId]="post.board.department.documentLogo.cloudinaryId"
+                         gravity="north_west" height="150" width="200" crop="mfit"></b-image>
               </div>
               <h3><a [routerLink]="['/', post.board.department.handle]">{{post.board.department.name}}</a></h3>
               <h4><a [routerLink]="['/', post.board.department.handle, post.board.handle]">{{post.board.name}}</a></h4>
@@ -73,18 +72,16 @@
         <span class="post-timeline--time">{{operation.createdTimestamp | date:'shortTime'}}</span>
         <span class="post-timeline--day">{{operation.createdTimestamp | date:'shortDate'}}</span>
       </time>
-      <div class="post-timeline--icon" pTooltip="{{'definitions.action.' + operation.action | translate}}" tooltipPosition="top">
+      <div class="post-timeline--icon" pTooltip="{{'definitions.action.' + operation.action | translate}}"
+           tooltipPosition="top">
         <i class="fa fa-{{ operation.action | lowercase }}"></i>
       </div>
       <div class="post-timeline--label" fxLayout="row">
 
         <div *ngIf="operation.user" class="post-timeline--user">
           <div class="post-timeline--user_image" pTooltip="{{operation.user.email}}" tooltipPosition="top">
-            <cl-image public-id="{{operation.user.documentImage.cloudinaryId}}"
-                      class="img" *ngIf="operation.user.documentImage">
-              <cl-transformation gravity="face" width="40" height="40" radius="max" crop="thumb">
-              </cl-transformation>
-            </cl-image>
+            <b-image [publicId]="operation.user.documentImage?.cloudinaryId"
+                     gravity="face" width="40" height="40" radius="max" crop="thumb"></b-image>
             <i *ngIf="!operation.user.documentImage" class="fa-user"></i>
           </div>
           <h5>{{operation.user.givenName}} {{operation.user.surname}}</h5>
@@ -98,7 +95,8 @@
             <span *ngFor="let change of operation.changeList; let isLast=last">
             {{'resourceProperty.' + change.property | translate}}{{isLast ? '' : ', '}}
             </span>
-              <button pButton type="button" class="ui-button-info small-xs" (click)="openChangeDetails(operation)" label="Show more details"></button>
+              <button pButton type="button" class="ui-button-info small-xs" (click)="openChangeDetails(operation)"
+                      label="Show more details"></button>
             </p>
           </div>
         </div>

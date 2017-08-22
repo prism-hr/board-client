@@ -22,10 +22,8 @@
                 <ng-template let-board pTemplate="item">
                   <div fxLayout="row" fxLayoutAlign="space-between center">
                     <span>{{board.label}}</span>
-                    <cl-image *ngIf="board.value.documentLogo" public-id="{{board.value.documentLogo.cloudinaryId}}"
-                              class="img">
-                      <cl-transformation width="35" height="35"></cl-transformation>
-                    </cl-image>
+                    <b-image [publicId]="board.value.documentLogo?.cloudinaryId"
+                             width="35" height="35"></b-image>
                   </div>
                 </ng-template>
               </p-dropdown>

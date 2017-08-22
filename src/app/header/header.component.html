@@ -30,11 +30,8 @@
           </div>
           <a routerLink="/account" class="btn-user">
             <span>{{user.givenName}}</span>
-            <cl-image public-id="{{user.documentImage.cloudinaryId}}"
-                      class="img" *ngIf="user.documentImage">
-              <cl-transformation gravity="face" width="150" height="150" radius="max" crop="thumb">
-              </cl-transformation>
-            </cl-image>
+            <b-image [publicId]="user.documentImage.cloudinaryId"
+                     gravity="face" width="150" height="150" radius="max" crop="thumb"></b-image>
             <i *ngIf="!user.documentImage" class="fa-user"></i>
           </a>
           <button pButton (click)="logout()" class="ui-button-warning" label="Log out"></button>

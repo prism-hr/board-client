@@ -13,9 +13,8 @@
                             (completeMethod)="searchDepartments($event)" placeholder="Department Name"
                             field="name" (onSelect)="departmentSelected($event)">
               <ng-template let-department pTemplate="item">
-                <cl-image *ngIf="department.documentLogo" public-id="{{department.documentLogo.cloudinaryId}}" class="img">
-                  <cl-transformation height="150" width="200" crop="mfit"></cl-transformation>
-                </cl-image>
+                <b-image [publicId]="department.documentLogo?.cloudinaryId"
+                         height="150" width="200" crop="mfit"></b-image>
                 {{department.name}}
               </ng-template>
             </p-autoComplete>

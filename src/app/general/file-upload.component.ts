@@ -1,7 +1,7 @@
 import {Component, EventEmitter, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {UploadFile, UploadInput, UploadOutput} from 'ngx-uploader';
-import {environment} from '../../environments/environment';
+import {DefinitionsService} from '../services/definitions.service';
 import DocumentDTO = b.DocumentDTO;
 
 @Component({
@@ -27,7 +27,7 @@ export class FileUploadComponent implements ControlValueAccessor, OnInit {
   isDragOver: boolean;
   model: DocumentDTO;
 
-  constructor() {
+  constructor(private definitionsService: DefinitionsService) {
     this.uploadInput = new EventEmitter<UploadInput>();
   }
 
@@ -35,12 +35,13 @@ export class FileUploadComponent implements ControlValueAccessor, OnInit {
   }
 
   onUploadOutput(output: UploadOutput) {
+    const cloudName = 'bitfoot';
     if (output.type === 'allAddedToQueue') { // when all files added in queue
       const event: UploadInput = {
         type: 'uploadAll',
-        url: 'https://api.cloudinary.com/v1_1/' + environment.cloudinaryCloudName + '/upload',
+        url: 'https://api.cloudinary.com/v1_1/' + cloudName + '/upload',
         method: 'POST',
-        data: {upload_preset: 'unsigned', folder: environment.cloudinaryFolder},
+        data: {upload_preset: 'unsigned', folder: this.definitionsService.getDefinitions()['cloudinaryFolder']},
         concurrency: 0
       };
       this.uploadInput.emit(event);
