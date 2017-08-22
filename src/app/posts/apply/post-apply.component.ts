@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MdDialog, MdDialogConfig} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import {AuthGuard} from '../../authentication/auth-guard.service';
@@ -12,13 +12,31 @@ import UserRepresentation = b.UserRepresentation;
 
 @Component({
   selector: 'b-post-apply',
-  templateUrl: 'post-apply.component.html',
+  template: `
+    <div class="post-apply">
+      <div *ngIf="!post?.responded" class="post-apply-content">
+        <div *ngIf="!documentUrl && !websiteUrl">
+          <button pButton type="button" (click)="apply(post)" label="Apply" class="ui-button-success small"></button>
+        </div>
+        <div *ngIf="documentUrl">
+          <a pButton type="button" href="{{documentUrl}}" download class="ui-button-success small" label="Download apply instructions"></a>
+        </div>
+        <div *ngIf="websiteUrl">
+          <a pButton type="button" href="{{websiteUrl}}" target="_blank" class="ui-button-success small" label="Open apply website"></a>
+        </div>
+      </div>
+      <div *ngIf="post?.responded">
+        You already responded to this post.
+      </div>
+    </div>
+  `,
   styleUrls: ['post-apply.component.scss']
 })
-export class PostApplyComponent implements OnInit, OnChanges {
+export class PostApplyComponent implements OnInit {
   @Input() post: PostRepresentation & {};
   user: UserRepresentation;
-  canPursue: boolean;
+  websiteUrl: string;
+  documentUrl: string;
 
   constructor(private dialog: MdDialog, private userService: UserService, private resourceService: ResourceService,
               private postService: PostService, private authGuard: AuthGuard) {
@@ -28,11 +46,6 @@ export class PostApplyComponent implements OnInit, OnChanges {
     this.userService.user$.subscribe(user => {
       this.user = user;
     });
-    this.canPursue = this.resourceService.canPursue(this.post);
-  }
-
-  ngOnChanges(changes: any) {
-    this.canPursue = this.resourceService.canPursue(this.post);
   }
 
   apply(post: PostRepresentation) {
@@ -90,11 +103,10 @@ export class PostApplyComponent implements OnInit, OnChanges {
         if (result) {
           if (apply.applyEmail) {
             this.post.responded = true;
-          }
-          if (apply.applyDocument) {
-            window.open(apply.applyDocument.cloudinaryUrl);
+          } else if (apply.applyDocument) {
+            this.documentUrl = apply.applyDocument.cloudinaryUrl;
           } else if (apply.applyWebsite) {
-            window.open(apply.applyWebsite);
+            this.websiteUrl = apply.applyWebsite;
           }
         }
       });

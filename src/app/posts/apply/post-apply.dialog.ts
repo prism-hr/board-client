@@ -16,6 +16,7 @@ import {UserService} from '../../services/user.service';
     <h2 md-dialog-title>Apply for {{post.name}}</h2>
     <md-dialog-content>
       <form [formGroup]="eventForm" novalidate>
+        <h3>Would you like to have your details be forwarded to the recruiter?</h3>
         <div class="grid__item one-whole input-holder">
           <b-file-upload formControlName="documentResume" type="document" class="uploader"></b-file-upload>
           <control-messages [control]="eventForm.get('documentResume')"></control-messages>
@@ -32,7 +33,7 @@ import {UserService} from '../../services/user.service';
           <p-checkbox formControlName="defaultResume" [binary]="true"></p-checkbox>
         </div>
 
-        <div class="grid__item one-whole input-holder">
+        <div *ngIf="apply.applyEmail" class="grid__item one-whole input-holder">
           <label>Covering Note</label>
           <p-editor formControlName="coveringNote" [style]="{'height':'150px'}">
             <p-header>
@@ -54,6 +55,8 @@ import {UserService} from '../../services/user.service';
     </md-dialog-content>
     <md-dialog-actions>
       <button pButton (click)="submit()" class="ui-button-success" label="Submit"></button>
+      <button pButton (click)="skip()" class="ui-button-warning" label="Skip"></button>
+      <button pButton (click)="cancel()" class="ui-button-secondary" label="Cancel"></button>
     </md-dialog-actions>
   `,
   styles: [`
@@ -94,6 +97,14 @@ export class PostApplyDialogComponent implements OnInit {
     this.postService.respond(this.post, form.value).subscribe(() => {
       this.dialogRef.close(true);
     });
+  }
+
+  skip() {
+    this.dialogRef.close(true);
+  }
+
+  cancel() {
+    this.dialogRef.close(null);
   }
 
 }

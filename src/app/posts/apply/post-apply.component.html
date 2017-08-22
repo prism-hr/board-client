@@ -1,8 +1,0 @@
-<div class="post-apply">
-  <div *ngIf="!post?.responded" class="post-apply-content">
-    <button pButton type="button" (click)="apply(post)" label="Apply" class="ui-button-success small"></button>
-  </div>
-  <div *ngIf="post?.responded">
-    You already responded to this post.
-  </div>
-</div>
