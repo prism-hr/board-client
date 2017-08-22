@@ -48,7 +48,7 @@
           <div class="grid">
             <div class="grid__item one-whole">
               <div *ngIf="post.board.department.documentLogo" md-card-avatar class="logo-holder-small default-logo">
-                <b-image [publicId]="post.board.department.documentLogo.cloudinaryId"
+                <b-image [publicId]="post.board.department.documentLogo?.cloudinaryId"
                          gravity="north_west" height="150" width="200" crop="mfit"></b-image>
               </div>
               <h3><a [routerLink]="['/', post.board.department.handle]">{{post.board.department.name}}</a></h3>

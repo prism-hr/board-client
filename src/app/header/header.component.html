@@ -30,7 +30,7 @@
           </div>
           <a routerLink="/account" class="btn-user">
             <span>{{user.givenName}}</span>
-            <b-image [publicId]="user.documentImage.cloudinaryId"
+            <b-image [publicId]="user.documentImage?.cloudinaryId"
                      gravity="face" width="150" height="150" radius="max" crop="thumb"></b-image>
             <i *ngIf="!user.documentImage" class="fa-user"></i>
           </a>
