@@ -24,7 +24,7 @@
     "@angular/platform-browser": "^4.2.4",
     "@angular/platform-browser-dynamic": "^4.2.4",
     "@angular/router": "^4.2.4",
-    "@cloudinary/angular-4.x": "git://github.com/cloudinary/cloudinary_angular#92e78aff8f65155f7017549fcf81641ce4fbd14e",
+    "@cloudinary/angular-4.x": "^1.0.0",
     "@ngx-meta/core": "^0.4.0-rc.2",
     "@ngx-translate/core": "^7.0.0",
     "@ngx-translate/http-loader": "1.0.2",
