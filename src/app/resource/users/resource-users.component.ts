@@ -58,7 +58,7 @@ export class ResourceUsersComponent implements OnInit {
     userDTO.roles = formValue.roles.map(r => ({
       role: r,
       expiryDate: formValue.roleDefinitions[r].expiryDate,
-      categories: formValue.roleDefinitions[r].categories
+      categories: [formValue.roleDefinitions[r].category]
     }));
     this.resourceService.addUser(this.resource, userDTO)
       .subscribe(user => {

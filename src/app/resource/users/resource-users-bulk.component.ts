@@ -43,7 +43,7 @@ export class ResourceUsersBulkComponent implements OnInit {
         this.uploadInput.emit({type: 'removeAll'});
         this.uploadElRef.nativeElement.value = null;
       };
-      reader.readAsText(output.nativeFile);
+      reader.readAsText(output.file.nativeFile);
     } else if (output.type === 'dragOver') { // drag over event
       this.isDragOver = true;
     } else if (output.type === 'dragOut') { // drag out event
@@ -110,7 +110,7 @@ export class ResourceUsersBulkComponent implements OnInit {
     const roles: UserRoleDTO[] = formValue.roles.map(r => ({
       role: r,
       expiryDate: formValue.roleDefinitions[r].expiryDate,
-      categories: formValue.roleDefinitions[r].categories
+      categories: [formValue.roleDefinitions[r].category]
     }));
     this.resourceService.addUsersInBulk(this.resource, {users: this.users, roles})
       .subscribe(() => {

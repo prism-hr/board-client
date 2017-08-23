@@ -54,7 +54,7 @@ export class ResourceUserEditDialogComponent implements OnInit {
     const roles = formValue.roles.map(r => ({
       role: r,
       expiryDate: formValue.roleDefinitions[r].expiryDate,
-      categories: formValue.roleDefinitions[r].categories
+      categories: [formValue.roleDefinitions[r].category]
     }));
     this.resourceService.updateResourceUser(this.resource, this.resourceUser.user, {roles})
       .subscribe(resourceUser => {

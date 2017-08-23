@@ -41,7 +41,7 @@ export class DepartmentRequestMembershipDialogComponent implements OnInit {
 
   membershipForm: FormGroup;
   department: DepartmentRepresentation;
-  memberCategoryOptions: any[];
+  memberCategoryOptions: { label: string, value: any }[];
 
   constructor(private fb: FormBuilder, private dialogRef: MdDialogRef<DepartmentRequestMembershipDialogComponent>,
               @Inject(MD_DIALOG_DATA) data: any, private translate: TranslateService, private postService: PostService) {

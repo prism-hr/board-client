@@ -18,13 +18,10 @@
         </div>
 
         <div *ngIf="role === 'MEMBER'" class="members">
-          <label>Specify member categories</label>
-          <div class="ui-checkbox-inline special">
-                <span *ngFor="let category of availableMemberCategories">
-                  <p-checkbox formControlName="categories" [value]="category" [label]="('definitions.memberCategory.' + category | translate)"></p-checkbox>
-                </span>
-            <control-messages [control]="parentForm.get('roleDefinitions').get('MEMBER').get('categories')"></control-messages>
-          </div>
+          <label for="category">Specify member category</label>
+          <p-dropdown id="category" formControlName="category" [options]="memberCategoryOptions"
+                      placeholder="Select a category"></p-dropdown>
+          <control-messages [control]="parentForm.get('roleDefinitions').get('MEMBER').get('category')"></control-messages>
         </div>
       </div>
     </div>
