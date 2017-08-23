@@ -49,7 +49,8 @@ export class PostViewComponent implements OnInit {
 
               this.publishedTimestamp = <any>this.post.liveTimestamp;
               if (!this.publishedTimestamp) {
-                const publishOperation = this.operations.find(o => o.action as any === 'PUBLISH');
+                const operationsCopy = _.clone(this.operations);
+                const publishOperation = operationsCopy.reverse().find(o => o.action as any === 'PUBLISH');
                 this.publishedTimestamp = _.get(publishOperation, 'createdTimestamp') as any;
               }
             });
