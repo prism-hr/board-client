@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
+import {TranslateService} from '@ngx-translate/core';
 import {PostService} from '../../posts/post.service';
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import UserRoleDTO = b.UserRoleDTO;
@@ -21,15 +22,11 @@ import UserRoleDTO = b.UserRoleDTO;
           <control-messages [control]="membershipForm.get('expiryDate')"></control-messages>
         </div>
 
-        <div class="members">
-          <label>Specify member categories</label>
-          <div class="ui-checkbox-inline special">
-                <span *ngFor="let category of department.memberCategories">
-                  <p-checkbox formControlName="categories" [value]="category"
-                              [label]="('definitions.memberCategory.' + category | translate)"></p-checkbox>
-                </span>
-            <control-messages [control]="membershipForm.get('categories')"></control-messages>
-          </div>
+        <div>
+          <label for="category">Which category describes you best?</label>
+          <p-dropdown id="category" formControlName="category" [options]="memberCategoryOptions"
+                      placeholder="Select a category"></p-dropdown>
+          <control-messages [control]="membershipForm.get('category')"></control-messages>
         </div>
       </form>
     </md-dialog-content>
@@ -44,18 +41,22 @@ export class DepartmentRequestMembershipDialogComponent implements OnInit {
 
   membershipForm: FormGroup;
   department: DepartmentRepresentation;
+  memberCategoryOptions: any[];
 
   constructor(private fb: FormBuilder, private dialogRef: MdDialogRef<DepartmentRequestMembershipDialogComponent>,
-              @Inject(MD_DIALOG_DATA) data: any, private postService: PostService) {
+              @Inject(MD_DIALOG_DATA) data: any, private translate: TranslateService, private postService: PostService) {
     this.department = data.department;
     this.membershipForm = this.fb.group({
       noExpiryDate: [true],
       expiryDate: [],
-      categories: [[], Validators.required]
+      category: [null, Validators.required]
     });
   }
 
   ngOnInit() {
+    this.translate.get('definitions.memberCategory').subscribe(categoryTranslations => {
+      this.memberCategoryOptions = this.department.memberCategories.map(c => ({label: categoryTranslations[c], value: c}));
+    });
   }
 
   noExpiryDateChanged() {
@@ -72,7 +73,7 @@ export class DepartmentRequestMembershipDialogComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    const userRoleDTO: UserRoleDTO = {expiryDate: form.get('expiryDate').value, categories: form.get('categories').value};
+    const userRoleDTO: UserRoleDTO = {expiryDate: form.get('expiryDate').value, categories: [form.get('category').value]};
     this.postService.requestDepartmentMembership(this.department, userRoleDTO).subscribe(() => {
       this.dialogRef.close(true);
     });

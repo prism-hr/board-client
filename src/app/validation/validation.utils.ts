@@ -16,10 +16,11 @@ export class ValidationUtils {
       duplicateHandle: 'The alias is already taken.',
       duplicateDepartment: 'Another department with this name already exists.',
       duplicateBoard: 'Another board with this name already exists.',
-      lastAdminRole: 'Cannot remove last admin role.'
+      lastAdminRole: 'Cannot remove last admin role.',
+      resume: 'You need to upload a document or specify a website containing your CV.'
     };
 
-    return config[validatorName];
+    return config[validatorName] || 'Form validation error';
   }
 
   static emailValidator(control: AbstractControl) {

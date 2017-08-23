@@ -2,21 +2,17 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
 import {PostService} from '../../posts/post.service';
-import DepartmentRepresentation = b.DepartmentRepresentation;
-import UserRoleDTO = b.UserRoleDTO;
-import PostRepresentation = b.PostRepresentation;
-import ResourceEventDTO = b.ResourceEventDTO;
-import ResourceEventRepresentation = b.ResourceEventRepresentation;
-import PostApplyRepresentation = b.PostApplyRepresentation;
-import {ValidationUtils} from '../../validation/validation.utils';
 import {UserService} from '../../services/user.service';
+import {ValidationUtils} from '../../validation/validation.utils';
+import PostApplyRepresentation = b.PostApplyRepresentation;
+import PostRepresentation = b.PostRepresentation;
 
 @Component({
   template: `
-    <h2 md-dialog-title>Apply for {{post.name}}</h2>
+    <h2 *ngIf="apply.applyEmail" md-dialog-title>Apply for {{post.name}}</h2>
+    <h2 *ngIf="!apply.applyEmail" md-dialog-title>Would you like to have your details be forwarded to the recruiter?</h2>
     <md-dialog-content>
       <form [formGroup]="eventForm" novalidate>
-        <h3>Would you like to have your details be forwarded to the recruiter?</h3>
         <div class="grid__item one-whole input-holder">
           <b-file-upload formControlName="documentResume" type="document" class="uploader"></b-file-upload>
           <control-messages [control]="eventForm.get('documentResume')"></control-messages>
@@ -27,6 +23,8 @@ import {UserService} from '../../services/user.service';
           <input pInputText type="url" formControlName="websiteResume">
           <control-messages [control]="eventForm.get('websiteResume')"></control-messages>
         </div>
+
+        <control-messages [control]="eventForm"></control-messages>
 
         <div class="grid__item one-whole">
           <label>Save Resume as default</label>
@@ -55,7 +53,7 @@ import {UserService} from '../../services/user.service';
     </md-dialog-content>
     <md-dialog-actions>
       <button pButton (click)="submit()" class="ui-button-success" label="Submit"></button>
-      <button pButton (click)="skip()" class="ui-button-warning" label="Skip"></button>
+      <button *ngIf="!apply.applyEmail" pButton (click)="skip()" class="ui-button-warning" label="Skip"></button>
       <button pButton (click)="cancel()" class="ui-button-secondary" label="Cancel"></button>
     </md-dialog-actions>
   `,
@@ -76,14 +74,18 @@ export class PostApplyDialogComponent implements OnInit {
   ngOnInit() {
     this.userService.user$.subscribe(user => {
       const coveringNoteValidators = [Validators.maxLength(1000)];
-      if(this.apply.applyEmail) {
+      if (this.apply.applyEmail) {
         coveringNoteValidators.push(Validators.required);
       }
       this.eventForm = this.fb.group({
-        defaultResume: [false],
+        defaultResume: [true],
         documentResume: [user.documentResume],
         websiteResume: [user.websiteResume, ValidationUtils.urlValidator],
         coveringNote: [null, coveringNoteValidators]
+      }, {
+        validator: (g: FormGroup) => {
+          return g.get('documentResume').value || g.get('websiteResume').value ? null : {resume: true};
+        }
       });
     });
   }

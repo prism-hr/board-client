@@ -1,13 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import UserRepresentation = b.UserRepresentation;
-import ResourceUserRepresentation = b.ResourceUserRepresentation;
-import ResourceRepresentation = b.ResourceRepresentation;
-import Role = b.Role;
-import DepartmentRepresentation = b.DepartmentRepresentation;
-import BoardDTO = b.BoardDTO;
 import BoardRepresentation = b.BoardRepresentation;
-import ResourceUserDTO = b.ResourceUserDTO;
+import DepartmentRepresentation = b.DepartmentRepresentation;
+import Role = b.Role;
 import UserRoleRepresentation = b.UserRoleRepresentation;
 
 @Component({
