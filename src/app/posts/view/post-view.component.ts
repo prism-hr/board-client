@@ -40,8 +40,7 @@ export class PostViewComponent implements OnInit {
         }
 
         this.canEdit = this.resourceService.canEdit(this.post);
-        const canAudit = this.resourceService.canAudit(this.post);
-        if (canAudit) {
+        if (this.canEdit) {
           this.operationsLoading = true;
           this.postService.loadOperations(this.post)
             .subscribe(operations => {

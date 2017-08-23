@@ -120,10 +120,6 @@ export class ResourceService {
     return !!resource.actions.find(a => a.action === 'EDIT');
   }
 
-  canAudit(resource: ResourceRepresentation<any>) {
-    return !!resource.actions.find(a => a.action === 'AUDIT');
-  }
-
   canPursue(resource: ResourceRepresentation<any>) {
     return !!resource.actions.find(a => a.action === 'PURSUE');
   }
