@@ -61,7 +61,6 @@ declare namespace b {
     applyWebsite?: string;
     applyDocument?: DocumentDTO;
     applyEmail?: string;
-    forwardCandidates?: boolean;
     liveTimestamp?: LocalDateTime;
     deadTimestamp?: LocalDateTime;
   }
@@ -77,7 +76,6 @@ declare namespace b {
     applyWebsite?: string;
     applyDocument?: DocumentDTO;
     applyEmail?: string;
-    forwardCandidates?: boolean;
     liveTimestamp?: LocalDateTime;
     deadTimestamp?: LocalDateTime;
   }
@@ -206,7 +204,6 @@ declare namespace b {
     applyWebsite?: string;
     applyDocument?: DocumentRepresentation;
     applyEmail?: string;
-    forwardCandidates?: boolean;
   }
 
   interface PostRepresentation extends ResourceRepresentation<PostRepresentation> {
@@ -220,7 +217,6 @@ declare namespace b {
     applyWebsite?: string;
     applyDocument?: DocumentRepresentation;
     applyEmail?: string;
-    forwardCandidates?: boolean;
     board?: BoardRepresentation;
     liveTimestamp?: LocalDateTime;
     deadTimestamp?: LocalDateTime;
@@ -376,7 +372,7 @@ declare namespace b {
 
   type PostVisibility = 'PUBLIC' | 'PRIVATE' | 'PART_PRIVATE';
 
-  type MemberCategory = 'UNDERGRADUATE_STUDENT' | 'MASTER_STUDENT' | 'RESEARCH_STUDENT' | 'RESEARCH_STAFF' | 'ACADEMIC_STAFF' | 'PROFESSIONAL_STAFF';
+  type MemberCategory = 'UNDERGRADUATE_STUDENT' | 'MASTER_STUDENT' | 'RESEARCH_STUDENT' | 'RESEARCH_STAFF';
 
   type ExistingRelation = 'STAFF' | 'STUDENT' | 'COLLABORATOR' | 'EMPLOYER' | 'OTHER';
 

@@ -35,7 +35,7 @@ export class PostEditComponent implements OnInit, OnDestroy {
   availableMemberCategories: string[];
   paramsSubscription: Subscription;
   formProperties = ['name', 'summary', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories',
-    'memberCategories', 'liveTimestamp', 'deadTimestamp', 'applyWebsite', 'applyDocument', 'applyEmail', 'forwardCandidates'];
+    'memberCategories', 'liveTimestamp', 'deadTimestamp', 'applyWebsite', 'applyDocument', 'applyEmail'];
 
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private cdf: ChangeDetectorRef,
               private dialog: MdDialog, private definitionsService: DefinitionsService, private postService: PostService,
@@ -59,7 +59,6 @@ export class PostEditComponent implements OnInit, OnDestroy {
       applyWebsite: [null, Validators.maxLength(255)],
       applyDocument: [],
       applyEmail: [null, Validators.maxLength(254)],
-      forwardCandidates: [],
       hideLiveTimestamp: [],
       liveTimestamp: [],
       hideDeadTimestamp: [],
