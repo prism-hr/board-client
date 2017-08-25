@@ -6,9 +6,9 @@ import {ReplaySubject} from 'rxjs/ReplaySubject';
 import ActivityRepresentation = b.ActivityRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
 import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
+import UserPasswordDTO = b.UserPasswordDTO;
 import UserPatchDTO = b.UserPatchDTO;
 import UserRepresentation = b.UserRepresentation;
-import UserPasswordDTO = b.UserPasswordDTO;
 
 @Injectable()
 export class UserService {
@@ -116,13 +116,18 @@ export class UserService {
   }
 
   private initializeUser() {
-    this.http.get('/api/user/activities')
-      .subscribe(activities => this.activities$.next(activities.json()));
-    Observable
-      .interval(50000)
-      .startWith(0)
-      .switchMap(() => this.http.get('/api/user/activities/refresh'))
-      .subscribe(activities => this.activities$.next(activities.json()));
-    return this.loadUser();
+    return this.loadUser()
+      .then(user => {
+        if (user) {
+          this.http.get('/api/user/activities')
+            .subscribe(activities => this.activities$.next(activities.json()));
+          Observable
+            .interval(50000)
+            .startWith(0)
+            .switchMap(() => this.http.get('/api/user/activities/refresh'))
+            .subscribe(activities => this.activities$.next(activities.json()));
+        }
+        return user;
+      });
   }
 }

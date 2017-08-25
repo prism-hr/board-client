@@ -12,7 +12,6 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {MomentModule} from 'angular2-moment';
 import {RlTagInputModule} from 'angular2-tag-input/dist';
-import {Ng2UiAuthModule} from 'ng2-ui-auth';
 import {ClipboardModule} from 'ngx-clipboard/dist';
 import {ShareButtonsModule} from 'ngx-sharebuttons';
 import {NgUploaderModule} from 'ngx-uploader';
@@ -101,6 +100,7 @@ import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
 import {ImageComponent} from './general/image.component';
+import {Ng2UiAuthModule} from './authentication/ng2-ui-auth.module';
 
 @NgModule({
   declarations: [

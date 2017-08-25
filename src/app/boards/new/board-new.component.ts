@@ -28,7 +28,7 @@ export class BoardNewComponent implements OnInit {
       department: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       summary: ['', [Validators.required, Validators.maxLength(1000)]],
-      postCategories: [[]],
+      postCategories: [['Category 1', 'Category 2']],
       memberCategories: [[]],
       documentLogo: []
     });

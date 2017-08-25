@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
   }
 
   ensureAuthenticated(showRegister?: boolean): Observable<boolean> {
-    if (this.authService.getToken()) {
+    if (this.authService.isAuthenticated()) {
       return Observable.of(true);
     } else {
       const config = new MdDialogConfig();
