@@ -63,7 +63,7 @@ export class ResourceUsersBulkComponent implements OnInit {
         if (!rows.hasOwnProperty(idx)) {
           continue;
         }
-        if (this.userErrors.length > 6) {
+        if (this.userErrors.length > 0) {
           this.users = [];
           break;
         }

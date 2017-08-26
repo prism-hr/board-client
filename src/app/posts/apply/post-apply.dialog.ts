@@ -79,13 +79,9 @@ export class PostApplyDialogComponent implements OnInit {
       }
       this.eventForm = this.fb.group({
         defaultResume: [true],
-        documentResume: [user.documentResume],
+        documentResume: [user.documentResume, Validators.required],
         websiteResume: [user.websiteResume, ValidationUtils.urlValidator],
         coveringNote: [null, coveringNoteValidators]
-      }, {
-        validator: (g: FormGroup) => {
-          return g.get('documentResume').value || g.get('websiteResume').value ? null : {resume: true};
-        }
       });
     });
   }

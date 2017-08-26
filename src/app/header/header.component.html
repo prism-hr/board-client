@@ -22,11 +22,11 @@
           <button pButton (click)="showLogin()" class="ui-button-warning" label="Log in"></button>
         </div>
         <div *ngIf="user" class="user-header-profile" fxLayout="row">
-          <div class="activity">
+          <div *ngIf="activities?.length > 0" class="activity">
             <a pButton label="Activities" (click)="activitiesPanel.toggle($event)"
                class="ui-button-info ui-button-icon-only"
                icon="fa-globe"></a>
-            <span *ngIf="activities" class="activity-badge active">{{activities.length}}</span>
+            <span class="activity-badge active">{{activities.length}}</span>
           </div>
           <a routerLink="/account" class="btn-user">
             <span>{{user.givenName}}</span>
