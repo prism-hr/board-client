@@ -91,7 +91,7 @@ export class PostApplyComponent implements OnInit {
   doRespond() {
     this.postService.getPostApply(this.post).subscribe(apply => {
       let respondPrompt: Observable<any>;
-      if (apply.forwardCandidates || apply.applyEmail) {
+      if (apply.applyEmail) {
         const config = new MdDialogConfig();
         config.data = {apply, post: this.post};
         const dialogRef = this.dialog.open(PostApplyDialogComponent, config);

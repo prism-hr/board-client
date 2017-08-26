@@ -29,9 +29,7 @@
       "UNDERGRADUATE_STUDENT": "Undergraduate Student",
       "MASTER_STUDENT": "Master Student",
       "RESEARCH_STUDENT": "Research Student",
-      "RESEARCH_STAFF": "Research Staff",
-      "ACADEMIC_STAFF": "Academic Staff",
-      "PROFESSIONAL_STAFF": "Professional Staff"
+      "RESEARCH_STAFF": "Research Staff"
     },
     "action": {
       "ACCEPT": "Accept",
@@ -85,7 +83,6 @@
     "applyWebsite": "Apply Website",
     "applyDocument": "Apply Document",
     "applyEmail": "Apply Email",
-    "forwardCandidates ": "Forward Candidates",
     "existingRelationExplanation": "Interest in us",
     "liveTimestamp": "Opening Date",
     "deadTimestamp": "Closing Date"
