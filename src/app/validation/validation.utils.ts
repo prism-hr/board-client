@@ -1,4 +1,4 @@
-import {AbstractControl, ValidatorFn} from '@angular/forms';
+import {AbstractControl, FormArray, ValidatorFn} from '@angular/forms';
 
 export class ValidationUtils {
 
@@ -17,7 +17,8 @@ export class ValidationUtils {
       duplicateDepartment: 'Another department with this name already exists.',
       duplicateBoard: 'Another board with this name already exists.',
       lastAdminRole: 'Cannot remove last admin role.',
-      resume: 'You need to upload a document or specify a website containing your CV.'
+      resume: 'You need to upload a document or specify a website containing your CV.',
+      checkboxArrayMin: 'You have to select a value.'
     };
 
     return config[validatorName] || 'Form validation error';
@@ -60,6 +61,15 @@ export class ValidationUtils {
     return (control: AbstractControl) => {
       if (control.value !== password) {
         return {repeatPassword: true};
+      }
+    };
+  }
+
+  static checkboxArrayMin(min: number): ValidatorFn {
+    return (control: FormArray) => {
+      const array: boolean[] = control.value;
+      if(array.filter(v => v).length < min) {
+        return {checkboxArrayMin: true}
       }
     };
   }

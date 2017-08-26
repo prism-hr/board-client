@@ -55,11 +55,13 @@ export class ResourceUsersComponent implements OnInit {
     this.loading = true;
     const formValue = this.userForm.value;
     const userDTO: ResourceUserDTO = {user: _.pick(formValue.user, ['id', 'givenName', 'surname', 'email'])};
-    userDTO.roles = formValue.roles.map(r => ({
-      role: r,
-      expiryDate: formValue.roleDefinitions[r].expiryDate,
-      categories: [formValue.roleDefinitions[r].category]
-    }));
+    userDTO.roles = formValue.roles
+      .filter(roleDef => roleDef.checked)
+      .map(roleDef => ({
+        role: roleDef.roleId,
+        expiryDate: roleDef.expiryDate,
+        categories: [roleDef.category]
+      }));
     this.resourceService.addUser(this.resource, userDTO)
       .subscribe(user => {
         this.loading = false;

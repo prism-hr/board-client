@@ -107,11 +107,13 @@ export class ResourceUsersBulkComponent implements OnInit {
       return;
     }
     const formValue = this.usersForm.value;
-    const roles: UserRoleDTO[] = formValue.roles.map(r => ({
-      role: r,
-      expiryDate: formValue.roleDefinitions[r].expiryDate,
-      categories: [formValue.roleDefinitions[r].category]
-    }));
+    const roles: UserRoleDTO[] = formValue.roles
+      .filter(roleDef => roleDef.checked)
+      .map(roleDef => ({
+        role: roleDef.roleId,
+        expiryDate: roleDef.expiryDate,
+        categories: [roleDef.category]
+      }));
     this.resourceService.addUsersInBulk(this.resource, {users: this.users, roles})
       .subscribe(() => {
         this.close.emit('refresh');

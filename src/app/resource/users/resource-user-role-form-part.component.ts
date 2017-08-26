@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
+import {ValidationUtils} from '../../validation/validation.utils';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
@@ -26,6 +27,10 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
   constructor(private fb: FormBuilder, private translate: TranslateService) {
   }
 
+  get roles(): FormArray {
+    return this.parentForm.get('roles') as FormArray;
+  };
+
   ngOnInit() {
     this.translate.get('definitions.memberCategory').subscribe(categoryTranslations => {
       const availableMemberCategories = this.resource.scope === 'DEPARTMENT'
@@ -33,58 +38,55 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
         : (this.resource as BoardRepresentation).department.memberCategories;
       this.memberCategoryOptions = availableMemberCategories.map(c => ({label: categoryTranslations[c], value: c}));
     });
-      if (this.resource.scope === 'BOARD') {
-        this.availableRoles = ['ADMINISTRATOR', 'AUTHOR'];
-      } else {
-        this.availableRoles = ['ADMINISTRATOR', 'AUTHOR', 'MEMBER'];
-      }
-
-      const userRoles = this.resourceUser ? this.resourceUser.roles : [];
-
-      const rolesValidators = [Validators.required];
-      if (this.lastAdminRole) {
-        rolesValidators.push(this.lastAdminValidator);
-      }
-      this.parentForm.setControl('roles', this.fb.control(userRoles.map(r => r.role), rolesValidators));
-      const roleDefinitions = {};
-      this.availableRoles.forEach(role => {
-        const userRole: UserRoleRepresentation = userRoles.find(r => r.role === role) || {};
-        roleDefinitions[role] = this.fb.group({
-          noExpiryDate: [!userRole.expiryDate],
-          expiryDate: [userRole.expiryDate],
-          category: [userRole.categories && userRole.categories[0]]
-        });
-      });
-      this.parentForm.setControl('roleDefinitions', this.fb.group(roleDefinitions));
-
-  }
-
-  roleChanged(role: Role) {
-    const checked = this.parentForm.get('roles').value.indexOf(role) > -1;
-    if (role === 'MEMBER') {
-      this.parentForm.get('roleDefinitions').get(role).get('category').setValidators(checked && Validators.required);
-      this.parentForm.patchValue({roleDefinitions: {MEMBER: {category: null}}});
+    if (this.resource.scope === 'BOARD') {
+      this.availableRoles = ['ADMINISTRATOR', 'AUTHOR'];
+    } else {
+      this.availableRoles = ['ADMINISTRATOR', 'AUTHOR', 'MEMBER'];
     }
-    this.refreshValidators(role);
+
+    const userRoles: UserRoleRepresentation[] = this.resourceUser ? this.resourceUser.roles : [];
+
+    const rolesArray = this.availableRoles.map(role => {
+      const userRole = userRoles.find(ur => ur.role === role);
+      return this.fb.group({
+        roleId: [role],
+        checked: [!!userRole, this.lastAdminRole && role === 'ADMINISTRATOR' && this.lastAdminValidator],
+        noExpiryDate: [userRole && !userRole.expiryDate],
+        expiryDate: [userRole && userRole.expiryDate],
+        category: [userRole && userRole.categories && userRole.categories[0]]
+      });
+    });
+    this.parentForm.setControl('roles', this.fb.array(rolesArray, ValidationUtils.checkboxArrayMin(1)));
+
   }
 
-  noExpiryDateChanged(role: Role) {
-    this.parentForm.get('roleDefinitions').get(role).get('expiryDate').setValue(null);
-    this.refreshValidators(role);
+  roleChanged(index: number) {
+    const checked = this.parentForm.get('roles').get('' + index).get('checked').value;
+    const role = this.availableRoles[index];
+    if (role === 'MEMBER') {
+      const categoryControl = this.parentForm.get('roles').get('' + index).get('category');
+      categoryControl.setValidators(checked && Validators.required);
+    }
+    this.refreshValidators(index);
+  }
+
+  noExpiryDateChanged(index: number) {
+    this.parentForm.get('roles').get('' + index).get('expiryDate').setValue(null);
+    this.refreshValidators(index);
   }
 
   private lastAdminValidator(control: AbstractControl) {
-    const administratorChecked = control.value.indexOf('ADMINISTRATOR') > -1;
-    if (!administratorChecked) {
+    if (!control.value) {
       return {lastAdminRole: true};
     }
-    return null;
   }
 
-  private refreshValidators(role: Role) {
-    const noExpiryDate = this.parentForm.get('roleDefinitions').get(role).get('noExpiryDate').value;
-    const expiryDateControl = this.parentForm.get('roleDefinitions').get(role).get('expiryDate');
-    expiryDateControl.setValidators(!noExpiryDate && Validators.required);
+  private refreshValidators(index: number) {
+    const roleGroup = this.parentForm.get('roles').get('' + index);
+    const roleChecked = roleGroup.get('checked').value;
+    const noExpiryDate = roleGroup.get('noExpiryDate').value;
+    const expiryDateControl = roleGroup.get('expiryDate');
+    expiryDateControl.setValidators(roleChecked && !noExpiryDate && Validators.required);
     expiryDateControl.updateValueAndValidity();
   }
 }

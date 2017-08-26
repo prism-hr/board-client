@@ -23,12 +23,12 @@
     <div class="grid">
       <div class="grid__item one-whole input-holder">
         <label>Member Categories</label>
-        <div class="ui-checkbox-inline">
-               <span *ngFor="let category of availableMemberCategories">
-                  <p-checkbox name="memberCategoriesMap" [value]="category"
-                              [label]="'definitions.memberCategory.' + category | translate"
-                              formControlName="memberCategories"></p-checkbox>
-                </span>
+        <div formArrayName="memberCategories" class="ui-checkbox-inline">
+          <span *ngFor="let category of memberCategories.controls; let i=index">
+            <p-checkbox name="memberCategoriesMap" [value]="availableMemberCategories[i]"
+                        [label]="'definitions.memberCategory.' + availableMemberCategories[i] | translate"
+                        [formControlName]="i" binary="true  "></p-checkbox>
+          </span>
           <control-messages [control]="departmentForm.get('memberCategories')"></control-messages>
         </div>
       </div>

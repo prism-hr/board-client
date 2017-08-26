@@ -11,7 +11,7 @@ export class BoardsResolver implements Resolve<BoardRepresentation[]> {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<BoardRepresentation[]> {
-    return this.resourceService.getPublicBoards();
+    return this.resourceService.getBoards();
   }
 
 }

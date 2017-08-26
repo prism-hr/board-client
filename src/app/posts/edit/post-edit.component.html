@@ -62,12 +62,12 @@
             <control-messages [control]="postForm.get('description')"></control-messages>
           </div>
 
-          <div *ngIf="availablePostCategories" class="grid__item one-whole input-holder">
+          <div *ngIf="availablePostCategories.length > 0" class="grid__item one-whole input-holder">
             <label>What is your post about?</label>
-            <div class="ui-checkbox-inline">
-              <span *ngFor="let category of availablePostCategories">
-                <p-checkbox name="postCategoriesMap" [value]="category" [label]="category"
-                            formControlName="postCategories"></p-checkbox>
+            <div formArrayName="postCategories" class="ui-checkbox-inline">
+              <span *ngFor="let category of postCategories.controls; let i=index">
+                <p-checkbox [value]="availablePostCategories[i]" [label]="availablePostCategories[i]"
+                            [formControlName]="i" binary="true"></p-checkbox>
               </span>
               <control-messages [control]="postForm.get('postCategories')"></control-messages>
             </div>
@@ -112,14 +112,14 @@
             </div>
           </div>
 
-          <div *ngIf="availableMemberCategories" class="grid__item one-whole input-holder">
+          <div *ngIf="availableMemberCategories.length > 0" class="grid__item one-whole input-holder">
             <label>Who do you want to share your post with?</label>
-            <div class="ui-checkbox-inline">
-               <span *ngFor="let category of availableMemberCategories">
-                  <p-checkbox name="memberCategoriesMap" [value]="category"
-                              [label]="'definitions.memberCategory.' + category | translate"
-                              formControlName="memberCategories"></p-checkbox>
-                </span>
+            <div formArrayName="memberCategories" class="ui-checkbox-inline">
+              <span *ngFor="let category of memberCategories.controls; let i=index">
+                <p-checkbox [value]="availableMemberCategories[i]"
+                            [label]="'definitions.memberCategory.' + availableMemberCategories[i] | translate"
+                            [formControlName]="i" binary="true"></p-checkbox>
+              </span>
               <control-messages [control]="postForm.get('memberCategories')"></control-messages>
             </div>
           </div>
@@ -155,7 +155,7 @@
 
           <div class="grid__item one-whole">
             <label>Should we notify you when new candidates are interested?</label>
-            <p-checkbox formControlName="forwardCandidates" [binary]="true"></p-checkbox>
+            <p-checkbox formControlName="forwardCandidates" binary="true"></p-checkbox>
           </div>
 
           <div class="grid__item one-whole input-holder">

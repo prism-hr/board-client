@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Response} from '@angular/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
@@ -7,6 +7,8 @@ import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
 import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
+import MemberCategory = b.MemberCategory;
+import {CheckboxUtils} from '../../services/checkbox.utils';
 
 @Component({
   templateUrl: 'board-new.component.html',
@@ -14,10 +16,10 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
 })
 export class BoardNewComponent implements OnInit {
   applicationUrl: string;
-  availableMemberCategories: string[];
   board: BoardDTO;
   boardForm: FormGroup;
   departmentSuggestions: DepartmentRepresentation[];
+  availableMemberCategories: MemberCategory[];
   selectedDepartment: DepartmentRepresentation;
 
   constructor(private router: Router, private route: ActivatedRoute, private resourceService: ResourceService, private fb: FormBuilder,
@@ -29,10 +31,14 @@ export class BoardNewComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       summary: ['', [Validators.required, Validators.maxLength(1000)]],
       postCategories: [['Category 1', 'Category 2']],
-      memberCategories: [[]],
+      memberCategories: this.fb.array(this.availableMemberCategories.map(c => [false])),
       documentLogo: []
     });
   }
+
+  get memberCategories(): FormArray {
+    return this.boardForm.get('memberCategories') as FormArray;
+  };
 
   ngOnInit() {
     this.route.queryParams
@@ -63,7 +69,8 @@ export class BoardNewComponent implements OnInit {
       department = {name: department};
     }
     board.department = department;
-    board.department.memberCategories = this.boardForm.get('memberCategories').value;
+    board.department.memberCategories = CheckboxUtils
+      .fromFormFormat(this.availableMemberCategories, this.boardForm.get('memberCategories').value);
     board.department.documentLogo = board.documentLogo;
 
     this.resourceService.postBoard(board)

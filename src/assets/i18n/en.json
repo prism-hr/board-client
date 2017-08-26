@@ -80,6 +80,8 @@
     "description": "Description",
     "organizationName": "Organization name",
     "location": "Location",
+    "postCategories": "Post Categories",
+    "memberCategories": "Member Categories",
     "applyWebsite": "Apply Website",
     "applyDocument": "Apply Document",
     "applyEmail": "Apply Email",

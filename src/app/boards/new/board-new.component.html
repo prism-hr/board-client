@@ -50,8 +50,7 @@
 
         <div>
           <label for="postCategories">Post categories</label>
-          <p-chips formControlName="postCategories" placeholder="e.g. Biochemistry, Computer Science"
-                   inputId="postCategories" [allowDuplicate]="false"></p-chips>
+          <p-chips formControlName="postCategories" inputId="postCategories" [allowDuplicate]="false"></p-chips>
         </div>
 
         <p-messages
@@ -62,11 +61,11 @@
           <div class="grid">
             <div class="grid__item one-whole input-holder">
               <label>Member Categories</label>
-              <div class="ui-checkbox-inline">
-               <span *ngFor="let category of availableMemberCategories">
-                  <p-checkbox name="memberCategoriesMap" [value]="category"
-                              [label]="'definitions.memberCategory.' + category | translate"
-                              formControlName="memberCategories"></p-checkbox>
+              <div formArrayName="memberCategories" class="ui-checkbox-inline">
+               <span *ngFor="let category of memberCategories.controls; let i=index">
+                  <p-checkbox name="memberCategoriesMap" [value]="availableMemberCategories[i]"
+                              [label]="'definitions.memberCategory.' + availableMemberCategories[i] | translate"
+                              [formControlName]="i" binary="true  "></p-checkbox>
                 </span>
                 <control-messages [control]="boardForm.get('memberCategories')"></control-messages>
               </div>
@@ -82,7 +81,7 @@
       <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
         <a pButton routerLink="/boards"
            class="ui-button-secondary" label="Cancel"></a>
-        <button pButton class="ui-button-success" type="submit" label="Submit"></button>
+        <button pButton class="ui-button-success" label="Submit"></button>
       </md-card-actions>
     </md-card>
   </form>

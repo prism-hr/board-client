@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdDialog} from '@angular/material';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import * as _ from 'lodash';
@@ -7,12 +7,14 @@ import * as moment from 'moment';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {ResourceCommentDialogComponent} from '../../resource/resource-comment.dialog';
+import {CheckboxUtils} from '../../services/checkbox.utils';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceActionView, ResourceService} from '../../services/resource.service';
 import {ValidationUtils} from '../../validation/validation.utils';
 import {PostService} from '../post.service';
 import Action = b.Action;
 import BoardRepresentation = b.BoardRepresentation;
+import MemberCategory = b.MemberCategory;
 import PostPatchDTO = b.PostPatchDTO;
 import PostRepresentation = b.PostRepresentation;
 
@@ -32,16 +34,24 @@ export class PostEditComponent implements OnInit, OnDestroy {
   availableActions: Action[];
   organizationSuggestions: string[];
   availablePostCategories: string[];
-  availableMemberCategories: string[];
+  availableMemberCategories: MemberCategory[];
   paramsSubscription: Subscription;
-  formProperties = ['name', 'summary', 'description', 'organizationName', 'location', 'existingRelation', 'postCategories',
-    'memberCategories', 'liveTimestamp', 'deadTimestamp', 'applyWebsite', 'applyDocument', 'applyEmail', 'forwardCandidates'];
+  formProperties = ['name', 'summary', 'description', 'organizationName', 'location', 'existingRelation',
+    'liveTimestamp', 'deadTimestamp', 'applyWebsite', 'applyDocument', 'applyEmail', 'forwardCandidates'];
 
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private cdf: ChangeDetectorRef,
               private dialog: MdDialog, private definitionsService: DefinitionsService, private postService: PostService,
               private resourceService: ResourceService) {
     this.definitions = definitionsService.getDefinitions();
   }
+
+  get postCategories(): FormArray {
+    return this.postForm.get('postCategories') as FormArray;
+  };
+
+  get memberCategories(): FormArray {
+    return this.postForm.get('memberCategories') as FormArray;
+  };
 
   ngOnInit() {
     this.postForm = this.fb.group({
@@ -53,8 +63,8 @@ export class PostEditComponent implements OnInit, OnDestroy {
       location: [null, Validators.required],
       existingRelation: [],
       existingRelationExplanation: [],
-      postCategories: [[]],
-      memberCategories: [[]],
+      postCategories: this.fb.array([]),
+      memberCategories: this.fb.array([]),
       applyType: [null, Validators.required],
       applyWebsite: [null, Validators.maxLength(255)],
       applyDocument: [],
@@ -182,20 +192,20 @@ export class PostEditComponent implements OnInit, OnDestroy {
 
   boardChanged() {
     const board = this.postForm.get('board').value;
-    this.availablePostCategories = board && board.postCategories.length > 0 ? board.postCategories : null;
-    if (!this.post) {
-      this.postForm.get('postCategories').reset();
-    }
+    this.availablePostCategories = board && board.postCategories.length > 0 ? board.postCategories : [];
+    const selectedPostCategories = this.post ? this.post.postCategories : [];
+    this.postForm.setControl('postCategories', this.fb.array(
+      this.availablePostCategories.map(c => [selectedPostCategories.includes(c)])));
     if (this.availablePostCategories) {
-      this.postForm.get('postCategories').setValidators(Validators.required);
+      this.postForm.get('postCategories').setValidators(this.availablePostCategories.length > 0 && ValidationUtils.checkboxArrayMin(1));
     }
 
-    this.availableMemberCategories = board && board.department.memberCategories.length > 0 ? board.department.memberCategories : null;
-    if (!this.post) {
-      this.postForm.get('memberCategories').reset();
-    }
+    this.availableMemberCategories = board && board.department.memberCategories.length > 0 ? board.department.memberCategories : [];
+    const selectedMemberCategories = this.post ? this.post.memberCategories : [];
+    this.postForm.setControl('memberCategories', this.fb.array(
+      this.availableMemberCategories.map(c => [selectedMemberCategories.includes(c)])));
     if (this.availableMemberCategories) {
-      this.postForm.get('memberCategories').setValidators(Validators.required);
+      this.postForm.get('memberCategories').setValidators(this.availableMemberCategories.length > 0 && ValidationUtils.checkboxArrayMin(1));
     }
 
     // initialize existing relation
@@ -225,6 +235,10 @@ export class PostEditComponent implements OnInit, OnDestroy {
 
   private generatePostRequestBody(): PostPatchDTO {
     const post: PostPatchDTO = _.pick(this.postForm.value, this.formProperties);
+    post.postCategories = CheckboxUtils
+      .fromFormFormat(this.availablePostCategories, this.postForm.get('postCategories').value);
+    post.memberCategories = CheckboxUtils
+      .fromFormFormat(this.availableMemberCategories, this.postForm.get('memberCategories').value);
     post.applyWebsite = this.postForm.value.applyType === 'website' ? this.postForm.value.applyWebsite : null;
     post.applyDocument = this.postForm.value.applyType === 'document' ? this.postForm.value.applyDocument : null;
     post.applyEmail = this.postForm.value.applyType === 'email' ? this.postForm.value.applyEmail : null;

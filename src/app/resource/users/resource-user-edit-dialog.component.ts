@@ -2,9 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
 import {ResourceService} from '../../services/resource.service';
-import PostRepresentation = b.PostRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
-import UserRepresentation = b.UserRepresentation;
 import ResourceUserRepresentation = b.ResourceUserRepresentation;
 
 @Component({
@@ -20,10 +18,10 @@ import ResourceUserRepresentation = b.ResourceUserRepresentation;
       </form>
     </md-dialog-content>
 
-    <md-dialog-actions  fxLayout="row" fxLayoutAlign="space-between">
+    <md-dialog-actions fxLayout="row" fxLayoutAlign="space-between">
       <button pButton class="ui-button-secondary" label="Cancel" md-dialog-close></button>
       <button pButton class="ui-button-warning" [disabled]="userForm.invalid"
-      label="Save" (click)="save()"></button>
+              label="Save" (click)="save()"></button>
     </md-dialog-actions>
   `
 })
@@ -51,11 +49,13 @@ export class ResourceUserEditDialogComponent implements OnInit {
   save(): void {
     this.progress = true;
     const formValue = this.userForm.value;
-    const roles = formValue.roles.map(r => ({
-      role: r,
-      expiryDate: formValue.roleDefinitions[r].expiryDate,
-      categories: [formValue.roleDefinitions[r].category]
-    }));
+    const roles = formValue.roles
+      .filter(roleDef => roleDef.checked)
+      .map(roleDef => ({
+        role: roleDef.roleId,
+        expiryDate: roleDef.expiryDate,
+        categories: [roleDef.category]
+      }));
     this.resourceService.updateResourceUser(this.resource, this.resourceUser.user, {roles})
       .subscribe(resourceUser => {
         this.progress = false;
