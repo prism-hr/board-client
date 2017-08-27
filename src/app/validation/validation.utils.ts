@@ -18,7 +18,8 @@ export class ValidationUtils {
       duplicateBoard: 'Another board with this name already exists.',
       lastAdminRole: 'Cannot remove last admin role.',
       resume: 'You need to upload a document or specify a website containing your CV.',
-      checkboxArrayMin: 'You have to select a value.'
+      checkboxArrayMin: 'You have to select a value.',
+      fakeCategory: 'You cannot leave example categories.'
     };
 
     return config[validatorName] || 'Form validation error';

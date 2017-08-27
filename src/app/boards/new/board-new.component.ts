@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Response} from '@angular/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
@@ -30,7 +30,7 @@ export class BoardNewComponent implements OnInit {
       department: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       summary: ['', [Validators.required, Validators.maxLength(1000)]],
-      postCategories: [['Category 1', 'Category 2']],
+      postCategories: [['Category 1', 'Category 2'], this.fakeCategoryValidator],
       memberCategories: this.fb.array(this.availableMemberCategories.map(c => [false])),
       documentLogo: []
     });
@@ -99,6 +99,14 @@ export class BoardNewComponent implements OnInit {
       });
     }
 
+  }
+
+
+  private fakeCategoryValidator(control: FormControl) {
+    const value: string[] = control.value;
+    if (value && (value.includes('Category 1') || value.includes('Category 2'))) {
+      return {fakeCategory: true};
+    }
   }
 
 }

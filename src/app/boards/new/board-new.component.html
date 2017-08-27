@@ -51,6 +51,7 @@
         <div>
           <label for="postCategories">Post categories</label>
           <p-chips formControlName="postCategories" inputId="postCategories" [allowDuplicate]="false"></p-chips>
+          <control-messages [control]="boardForm.get('postCategories')"></control-messages>
         </div>
 
         <p-messages
