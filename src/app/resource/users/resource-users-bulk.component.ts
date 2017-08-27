@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import * as csv from 'csv-js';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {PapaParseService} from 'ngx-papaparse';
 import {UploadInput, UploadOutput} from 'ngx-uploader';
 import {ResourceService} from '../../services/resource.service';
 import {ValidationUtils} from '../../validation/validation.utils';
@@ -24,7 +24,7 @@ export class ResourceUsersBulkComponent implements OnInit {
   @Output() close: EventEmitter<any> = new EventEmitter();
   @ViewChild('csvUploaderInput') uploadElRef: ElementRef;
 
-  constructor(private fb: FormBuilder, private resourceService: ResourceService) {
+  constructor(private fb: FormBuilder, private papa: PapaParseService, private resourceService: ResourceService) {
     this.usersForm = this.fb.group({
       firstLineHeader: [true]
     });
@@ -52,53 +52,51 @@ export class ResourceUsersBulkComponent implements OnInit {
   }
 
   computeUsers() {
-    csv.IGNORE_RECORD_LENGTH = true;
     this.userErrors = [];
     this.users = [];
-    try {
-      let rows = csv.parse(this.csvText || '');
-      rows = rows.slice(this.usersForm.value.firstLineHeader ? 1 : 0);
+    const result = this.papa.parse(this.csvText || '');
 
-      for (let idx in rows) {
-        if (!rows.hasOwnProperty(idx)) {
-          continue;
-        }
-        if (this.userErrors.length > 0) {
-          this.users = [];
-          break;
-        }
-        const row = rows[idx];
-        const line = +idx + 1 + (this.usersForm.value.firstLineHeader ? 1 : 0);
-        if (row.length === 0) {
-          continue; // empty line, skip
-        }
-        if (row.length !== 3) {
-          this.userErrors.push({line: line, message: 'Row expected to have exactly 3 columns'});
-          continue;
-        }
-        const user = {givenName: row[0].trim(), surname: row[1].trim(), email: row[2].trim()};
-        if (user.givenName === '') {
-          this.userErrors.push({line: line, message: 'Missing first name'});
-          continue;
-        } else if (user.surname === '') {
-          this.userErrors.push({line: line, message: 'Missing last name'});
-          continue;
-        } else if (user.email === '') {
-          this.userErrors.push({line: line, message: 'Missing email address'});
-          continue;
-        } else if (!ValidationUtils.EMAIL_REGEX.test(user.email)) {
-          this.userErrors.push({line: line, message: 'Incorrect email address'});
-          continue;
-        }
-        this.users.push(user);
-      }
-    } catch (e) {
-      if (e.startsWith('UNEXPECTED_CHARACTER')) {
-        this.userErrors = [{message: 'Could not parse given CSV file.'}];
-      }
+    if (result.errors.length > 0) {
+      this.userErrors = [{message: 'Could not parse given CSV file.'}];
+      return;
     }
 
+    let rows = result.data;
+    rows = rows.slice(this.usersForm.value.firstLineHeader ? 1 : 0);
 
+    for (let idx in rows) {
+      if (!rows.hasOwnProperty(idx)) {
+        continue;
+      }
+      if (this.userErrors.length > 0) {
+        this.users = [];
+        break;
+      }
+      const row = rows[idx];
+      const line = +idx + 1 + (this.usersForm.value.firstLineHeader ? 1 : 0);
+      if (row.length === 0) {
+        continue; // empty line, skip
+      }
+      if (row.length !== 3) {
+        this.userErrors.push({line: line, message: 'Row expected to have exactly 3 columns'});
+        continue;
+      }
+      const user = {givenName: row[0].trim(), surname: row[1].trim(), email: row[2].trim()};
+      if (user.givenName === '') {
+        this.userErrors.push({line: line, message: 'Missing first name'});
+        continue;
+      } else if (user.surname === '') {
+        this.userErrors.push({line: line, message: 'Missing last name'});
+        continue;
+      } else if (user.email === '') {
+        this.userErrors.push({line: line, message: 'Missing email address'});
+        continue;
+      } else if (!ValidationUtils.EMAIL_REGEX.test(user.email)) {
+        this.userErrors.push({line: line, message: 'Incorrect email address'});
+        continue;
+      }
+      this.users.push(user);
+    }
   }
 
   submit() {

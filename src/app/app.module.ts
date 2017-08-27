@@ -101,6 +101,7 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
 import {ValidationService} from './validation/validation.service';
 import {ImageComponent} from './general/image.component';
 import {Ng2UiAuthModule} from './authentication/ng2-ui-auth.module';
+import {PapaParseModule} from 'ngx-papaparse';
 
 @NgModule({
   declarations: [
@@ -340,7 +341,8 @@ import {Ng2UiAuthModule} from './authentication/ng2-ui-auth.module';
     MetaModule.forRoot({
       provide: MetaLoader,
       useFactory: metaFactory
-    })
+    }),
+    PapaParseModule
   ],
   providers: [
     DefinitionsService,
