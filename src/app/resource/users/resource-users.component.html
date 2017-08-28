@@ -23,39 +23,31 @@
   </div>
   <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
     <div *ngFor="let resourceUser of users" class="grid__item small--one-whole medium-up--one-third">
-      <md-card>
-        <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
+      <md-card class="users">
+        <md-card-header fxLayout="row" fxLayoutAlign="space-between center" (click)="openUserSettings(resourceUser)">
           <div md-card-avatar class="avatar"
                [ngClass]="{'no-background': resourceUser.user.documentImage}">
             <b-image [publicId]="resourceUser.user.documentImage?.cloudinaryId"
-                     gravity="face" width="150" height="150" radius="max" crop="thumb"></b-image>
+                     gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec"></b-image>
           </div>
           <md-card-title>
-            <h3>
-              {{resourceUser.user.givenName}} {{resourceUser.user.surname}}
-            </h3>
+            <div>
+              <h3>
+                {{resourceUser.user.givenName}} {{resourceUser.user.surname}}
+              </h3>
+              <div class="role-item-container">
+                <div class="role-indicator {{ userRole.role | lowercase}}" [ngClass]="{'expire' : userRole.expiryDate}"  *ngFor="let userRole of resourceUser.roles">
+                  <span class="role-item" pTooltip="{{'definitions.role.' + userRole.role | translate}} - {{'definitions.memberCategory.' + userRole.categories[0] | translate}}" tooltipPosition="top" *ngIf="userRole.role === 'MEMBER'"></span>
+                  <span class="role-item" pTooltip="{{'definitions.role.' + userRole.role | translate}}" tooltipPosition="top" *ngIf="userRole.role != 'MEMBER'"></span>
+                  <span class="role-expire" *ngIf="userRole.expiryDate" pTooltip="Expiry date: {{userRole.expiryDate | date : 'shortDate'}}" tooltipPosition="bottom"></span>
+                </div>
+              </div>
+            </div>
           </md-card-title>
         </md-card-header>
-        <md-card-content>
-          <div>
-            <div *ngFor="let userRole of resourceUser.roles" class="{{ userRole.role | lowercase}}">
-              <span class="ui-chips-token ui-corner-all">{{'definitions.role.' + userRole.role | translate}}</span>
-              <span *ngIf="userRole.expiryDate">
-                Expiry date: {{userRole.expiryDate | date : 'shortDate'}}
-              </span>
-              <span *ngIf="userRole.categories.length > 0">
-                <span *ngFor="let category of userRole.categories" class="ui-chips-token ui-corner-all child-token">
-                {{'definitions.memberCategory.' + category | translate}}
-              </span>
-              </span>
-            </div>
-          </div>
-        </md-card-content>
         <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
           <button pButton (click)="removeUser(resourceUser)" class="ui-button-secondary" label="Remove"
                   [disabled]="loading || (lastAdminRole && isAdmin(resourceUser))"></button>
-          <a pButton (click)="openUserSettings(resourceUser)" class="ui-button-info ui-button-icon-only"
-             icon="fa-settings"></a>
         </md-card-actions>
       </md-card>
 

@@ -10,3 +10,10 @@
     height: 40px;
   }
 }
+.activity-content {
+  font-size:0.8rem;
+  .activity-item {
+    border-bottom: 1px solid $uclfooter;
+    line-height: 30px;
+  }
+}

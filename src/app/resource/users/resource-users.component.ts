@@ -85,7 +85,7 @@ export class ResourceUsersComponent implements OnInit {
 
   openUserSettings(resourceUser) {
     const dialogRef = this.dialog.open(ResourceUserEditDialogComponent,
-      {width: '80%', data: {resource: this.resource, lastAdminRole: this.lastAdminRole && this.isAdmin(resourceUser), resourceUser}});
+      {width: '80%', panelClass: 'user-settings', data: {resource: this.resource, lastAdminRole: this.lastAdminRole && this.isAdmin(resourceUser), resourceUser}});
     dialogRef.afterClosed().subscribe((savedResourceUser: ResourceUserRepresentation) => {
       if (savedResourceUser) {
         this.preprocessUser(savedResourceUser);

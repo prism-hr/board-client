@@ -13,6 +13,7 @@ import DocumentDTO = b.DocumentDTO;
 })
 export class ImageComponent implements OnInit, OnChanges {
   @Input() publicId: string;
+  @Input() background: string;
   @Input() width: number;
   @Input() height: number;
   @Input() gravity: string;
@@ -44,6 +45,9 @@ export class ImageComponent implements OnInit, OnChanges {
     }
     if(this.radius) {
       transformations.push('r_' + this.radius);
+    }
+    if(this.background) {
+      transformations.push('b_rgb:' + this.background);
     }
     let transformation = transformations.join(',');
     if(transformation.length > 0) {

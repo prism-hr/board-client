@@ -16,13 +16,13 @@
           </div>
 
           <div *ngIf="!parentForm.get('roles').get('' + i).get('noExpiryDate').value" class="input-holder">
-            <label>{{'definitions.role.' + availableRoles[i] | translate}} expiration date:</label>
+            <label style="display: block">{{'definitions.role.' + availableRoles[i] | translate}} expiration date:</label>
             <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string"></p-calendar>
             <control-messages
               [control]="parentForm.get('roles').get('' + i).get('expiryDate')"></control-messages>
           </div>
 
-          <div *ngIf="availableRoles[i] === 'MEMBER'" class="members">
+          <div *ngIf="availableRoles[i] === 'MEMBER'" class="members dropdown-select">
             <label for="category">Specify member category</label>
             <p-dropdown id="category" formControlName="category" [options]="memberCategoryOptions"
                         placeholder="Select a category"></p-dropdown>

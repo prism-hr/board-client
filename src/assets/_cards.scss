@@ -233,3 +233,29 @@ b-file-upload[type=avatar].avatar {
     }
   }
 }
+md-card.users.mat-card .mat-card-header-text {
+  height: auto;
+  padding: 11px 0 8px;
+  margin: 0 15px;
+  font-size:14px;
+}
+md-card.users.mat-card .mat-card-avatar.no-background img {
+  max-height: 35px;
+}
+md-card.users.mat-card .mat-card-header{
+  cursor: pointer !important;
+  &:hover {
+    background: $activeGrey;
+  }
+}
+b-image {
+  line-height: 0;
+  display: block;
+}
+
+.user-settings {
+  overflow: visible !important;
+  md-dialog-content, .mat-dialog-container {
+    overflow: visible !important;
+  }
+}

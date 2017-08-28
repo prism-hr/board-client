@@ -4327,10 +4327,16 @@ p-checkbox:hover {
 }
 
 /* Forms */
-.ui-inputtext {
+.ui-inputtext{
   background: $inputBgColor;
   color: $inputTextColor;
   border: 1px solid $inactiveGrey;
+}
+.dropdown-select p-dropdown label {
+  border: 1px solid $inactiveGrey !important;
+}
+.dropdown-select p-dropdown:hover label {
+  border-color: $stateHoverBorderColor !important;
 }
 
 .ui-inputtext:enabled:hover {
