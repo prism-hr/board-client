@@ -42,8 +42,8 @@
 </header>
 
 <p-overlayPanel #activitiesPanel>
-  <div *ngIf="activities">
-    <div *ngFor="let activity of activities">
+  <div *ngIf="activities" class="activity-content">
+    <div *ngFor="let activity of activities" class="activity-item">
       <b-header-activity [activity]="activity"></b-header-activity>
     </div>
   </div>

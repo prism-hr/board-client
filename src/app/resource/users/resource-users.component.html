@@ -28,7 +28,8 @@
           <div md-card-avatar class="avatar"
                [ngClass]="{'no-background': resourceUser.user.documentImage}">
             <b-image [publicId]="resourceUser.user.documentImage?.cloudinaryId"
-                     gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec"></b-image>
+                     gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec" *ngIf="resourceUser.user.documentImage"></b-image>
+            <i *ngIf="!resourceUser.user.documentImage" class="fa-user"></i>
           </div>
           <md-card-title>
             <div>

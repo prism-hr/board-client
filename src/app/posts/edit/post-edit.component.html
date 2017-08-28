@@ -12,7 +12,7 @@
       <md-card-content>
         <div class="grid">
           <div *ngIf="board" class="grid__item one-whole input-holder">
-            <h3>{{board.name}}</h3>
+            <h3>{{board.department.name}} - {{board.name}}</h3>
           </div>
           <div *ngIf="!post && !board" class="grid__item one-whole input-holder">
             <label for="board">Board</label>

@@ -7,8 +7,8 @@ import ResourceRepresentation = b.ResourceRepresentation;
 @Component({
   selector: 'b-header-activity',
   template: `
-    <div [ngSwitch]="activity.activity" class="activity-content">
-      <div *ngSwitchCase="'SUSPEND_POST_ACTIVITY'" class="activity-item">
+    <div [ngSwitch]="activity.activity">
+      <div *ngSwitchCase="'SUSPEND_POST_ACTIVITY'">
         <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
           New change request for post {{activity.resource.name}}
         </a>

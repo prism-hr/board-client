@@ -258,7 +258,7 @@
     margin: 1px 0;
     padding: 0.186em 0.313em;
     text-align: left;
-    cl-image {
+    b-image {
       float: right;
       max-width: 80px;
     }
@@ -4332,12 +4332,7 @@ p-checkbox:hover {
   color: $inputTextColor;
   border: 1px solid $inactiveGrey;
 }
-.dropdown-select p-dropdown label {
-  border: 1px solid $inactiveGrey !important;
-}
-.dropdown-select p-dropdown:hover label {
-  border-color: $stateHoverBorderColor !important;
-}
+
 
 .ui-inputtext:enabled:hover {
   border-color: $stateHoverBorderColor;
@@ -4805,4 +4800,14 @@ cl-image > img {
 }
 .ui-button .fa-user {
   color: white;
+}
+.activity-content {
+  font-size:0.8rem;
+  .activity-item {
+    border-bottom: 1px solid $inactiveGrey;
+    line-height: 30px;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
 }

@@ -103,4 +103,18 @@ h4{
   }
 }
 
+.no-background {
+  i {
+    background: white;
+  }
+}
 
+md-card.mat-card .mat-card-avatar.avatar {
+  border-radius: 50%;
+  overflow: hidden;
+  background: white;
+  height: 30px;
+  width: 30px;
+  text-align: center;
+  line-height: 30px;
+}
