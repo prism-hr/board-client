@@ -57,12 +57,12 @@ export class ResourceService {
     return this.http.get('/api/' + scope + 's' + '/' + id + '/users').map(res => res.json());
   }
 
-  getBoardPosts(boardId: number): Observable<PostRepresentation[]> {
-    return this.http.get('/api/boards/' + boardId + '/posts').map(res => res.json());
+  getBoardPosts(boardId: number, includePublicPosts: boolean): Observable<PostRepresentation[]> {
+    return this.http.get('/api/boards/' + boardId + '/posts?includePublicPosts' + includePublicPosts).map(res => res.json());
   }
 
-  getDepartmentBoards(departmentId: number): Observable<BoardRepresentation[]> {
-    return this.http.get('/api/departments/' + departmentId + '/boards').map(res => res.json());
+  getDepartmentBoards(departmentId: number, includePublicBoards: boolean): Observable<BoardRepresentation[]> {
+    return this.http.get('/api/departments/' + departmentId + '/boards/?includePublicBoards=' + includePublicBoards).map(res => res.json());
   }
 
   postBoard(board: BoardDTO) {

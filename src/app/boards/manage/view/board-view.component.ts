@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ResourceService} from '../../../services/resource.service';
 import BoardRepresentation = b.BoardRepresentation;
 import PostRepresentation = b.PostRepresentation;
+import {UserService} from "../../../services/user.service";
 
 
 @Component({
@@ -14,7 +15,8 @@ export class BoardViewComponent implements OnInit {
   canEdit: boolean;
   posts: PostRepresentation[];
 
-  constructor(private route: ActivatedRoute, private resourceService: ResourceService) {
+  constructor(private route: ActivatedRoute, private resourceService: ResourceService,
+              private userService: UserService) {
   }
 
   ngOnInit() {
@@ -22,8 +24,18 @@ export class BoardViewComponent implements OnInit {
       this.board = data['board'];
       this.canEdit = this.resourceService.canEdit(this.board);
     });
-    this.resourceService.getBoardPosts(this.board.id)
-      .subscribe(posts => this.posts = posts);
+
+    this.userService.user$.subscribe(user => {
+      if (user) {
+        this.resourceService.getBoardPosts(this.board.id, true).subscribe(posts => {
+          this.posts = posts;
+        });
+      } else {
+        this.resourceService.getBoardPosts(this.board.id, false).subscribe(posts => {
+          this.posts = posts;
+        });
+      }
+    });
   }
 
 }
