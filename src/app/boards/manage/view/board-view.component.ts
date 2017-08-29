@@ -26,15 +26,9 @@ export class BoardViewComponent implements OnInit {
     });
 
     this.userService.user$.subscribe(user => {
-      if (user) {
-        this.resourceService.getBoardPosts(this.board.id, true).subscribe(posts => {
-          this.posts = posts;
-        });
-      } else {
-        this.resourceService.getBoardPosts(this.board.id, false).subscribe(posts => {
-          this.posts = posts;
-        });
-      }
+      this.resourceService.getBoardPosts(this.board.id, !user).subscribe(posts => {
+        this.posts = posts;
+      });
     });
   }
 

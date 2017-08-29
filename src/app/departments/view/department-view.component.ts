@@ -25,15 +25,9 @@ export class DepartmentViewComponent implements OnInit {
     });
 
     this.userService.user$.subscribe(user => {
-      if (user) {
-        this.resourceService.getDepartmentBoards(this.department.id, true).subscribe(boards => {
-          this.boards = boards;
-        });
-      } else {
-        this.resourceService.getDepartmentBoards(this.department.id, false).subscribe(boards => {
-          this.boards = boards;
-        });
-      }
+      this.resourceService.getDepartmentBoards(this.department.id, !user).subscribe(boards => {
+        this.boards = boards;
+      });
     });
   }
 
