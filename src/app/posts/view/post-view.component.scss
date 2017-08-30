@@ -1,4 +1,5 @@
 @import '../../../assets/variables';
+
 .post {
   .post-content {
     padding: 25px 10px 45px;
@@ -10,7 +11,7 @@
     font-size: 110%;
     font-weight: 500;
     line-height: 1.6rem;
-    margin-bottom:15px;
+    margin-bottom: 15px;
   }
   .post-content--description {
     font-size: 95%;
@@ -19,7 +20,7 @@
   }
 
   .admin-actions {
-    font-size:0.8rem;
+    font-size: 0.8rem;
     min-width: 187px;
     text-align: right;
   }
@@ -30,24 +31,24 @@
     border-bottom: 1px solid $fadeGrey;
     padding: 10px;
     .date {
-      font-size:0.9em;
+      font-size: 0.9em;
     }
     h1 {
-      font-size:1.5em;
+      font-size: 1.5em;
       color: $uclred;
       padding: 0 0 7px 0;
     }
     h2 {
-      font-size:1.2em;
+      font-size: 1.2em;
       padding: 0 0 5px;
       em {
-        font-weight:400;
+        font-weight: 400;
         color: $activeGrey;
       }
     }
     .location {
-      padding-left:15px;
-      font-weight:400;
+      padding-left: 15px;
+      font-weight: 400;
       font-size: 0.9em;
       padding-top: 5px;
       i {
@@ -56,171 +57,22 @@
     }
   }
 }
-.post-timeline {
-  ul {
-    padding: 0;
-    position: relative;
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      background: $fadeGrey;
-      width: 5px;
-      margin-left: -6px;
-      left: 15%;
-    }
-    li {
-      list-style: none;
-      padding: 0;
-      position: relative;
-    }
-  }
-  time {
-    display: block;
-    width: 20%;
-    padding-right: 100px;
-    position: absolute;
-    top: 12px;
-    .post-timeline--time {
-      color: #575858;
-      font-size: 15px;
-      font-weight:700;
-      display: block;
-      text-align: right;
-    }
-    .post-timeline--day {
-      display: block;
-      text-align: right;
-      font-size:12px;
-    }
-  }
-  .post-timeline--icon {
-    width: 40px;
-    height: 40px;
-    speak: none;
-    font-size: 1.2em;
-    line-height: 37px;
-    -webkit-font-smoothing: antialiased;
-    position: absolute;
-    background-color: white;
-    color: $uclblue;
-    border-radius: 50%;
-    border: 3px solid $uclblue;
-    text-align: center;
-    left: 15%;
-    top: 10px;
-    margin: 0 0 0 -24px;
-  }
-  .post-timeline--label {
-    margin-left:20%;
-    background: $fadeGrey;
-    margin-bottom: 30px;
-    padding: 20px;
-    -webkit-border-radius: 0px;
-    -webkit-background-clip: padding-box;
-    -moz-border-radius: 0px;
-    -moz-background-clip: padding;
-    border-radius: 0px;
-    background-clip: padding-box;
-    position: relative;
-    &:after {
-      right: 100%;
-      border: solid transparent;
-      content: " ";
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-      border-right-color: $fadeGrey;
-      border-width: 10px;
-      top: 20px;
-    }
-  }
-  .post-timeline--user{
-    text-align: center;
-    border-right:1px solid $uclhue2;
-    padding-right: 20px;
-    margin-right: 20px;
-    flex: 0 1 15%;
-    h5 {
-      font-size: 11px;
-      font-weight: 900;
-      text-transform: uppercase;
-    }
-  }
-  .post-timeline--details {
-    h5 {
-      font-size: 14px;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-    p {
-      margin-bottom:0;
-    }
-  }
-  .post-timeline--user_image {
-    overflow: hidden;
-    border-radius: 50%;
-    display: inline-block;
-  }
-  .action-extend {
-    .post-timeline--icon {
-      color: $goldColor;
-      border-color: $goldColor;
-    }
-  }
-  .action-accept {
-    .post-timeline--icon {
-      color: $uclgreen;
-      border-color: $uclgreen;
-    }
-  }
-  .action-correct {
-    .post-timeline--icon {
-      color: $qualificationsColor;
-      border-color: $qualificationsColor;
-    }
-  }
-  .action-reject {
-    .post-timeline--icon {
-      color: $error;
-      border-color: $error;
-    }
-  }
-  .action-suspend {
-    .post-timeline--icon {
-      color: $programColor;
-      border-color: $programColor;
-    }
-  }
-  .action-restore {
-    .post-timeline--icon {
-      color: $fundingColor;
-      border-color: $fundingColor;
-    }
-  }
-  .action-withdraw, .action-retire {
-    .post-timeline--icon {
-      color: $uclred;
-      border-color: $uclred;
-    }
-  }
-}
+
 .publisher {
-  md-card-title h3{
-    font-weight:700;
-    font-size:1.2em;
+  md-card-title h3 {
+    font-weight: 700;
+    font-size: 1.2em;
     color: $fontColor1;
   }
   md-card-content {
-    padding-bottom:0;
+    padding-bottom: 0;
     h3 {
-      margin-top:10px;
-      padding-bottom:5px;
+      margin-top: 10px;
+      padding-bottom: 5px;
     }
   }
 }
+
 .resource-actions {
-  margin-top:20px;
+  margin-top: 20px;
 }

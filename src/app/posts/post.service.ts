@@ -49,10 +49,6 @@ export class PostService {
       });
   }
 
-  loadOperations(post: PostRepresentation): Observable<ResourceOperationRepresentation[]> {
-    return this.http.get('/api/posts/' + post.id + '/operations').map(res => res.json());
-  }
-
   getPostApply(post: PostRepresentation): Observable<PostApplyRepresentation> {
     return this.http.get('/api/posts/' + post.id + '/apply').map(res => res.json());
   }

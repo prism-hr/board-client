@@ -11,13 +11,13 @@ import DepartmentDTO = b.DepartmentDTO;
 import DepartmentPatchDTO = b.DepartmentPatchDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import PostRepresentation = b.PostRepresentation;
+import ResourceOperationRepresentation = b.ResourceOperationRepresentation;
 import ResourcePatchDTO = b.ResourcePatchDTO;
 import ResourceRepresentation = b.ResourceRepresentation;
 import ResourceUserDTO = b.ResourceUserDTO;
 import ResourceUserRepresentation = b.ResourceUserRepresentation;
 import ResourceUsersDTO = b.ResourceUsersDTO;
 import UserRepresentation = b.UserRepresentation;
-import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class ResourceService {
@@ -105,6 +105,11 @@ export class ResourceService {
   lookupUsers(resource: ResourceRepresentation<any>, query: string): Observable<UserRepresentation[]> {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
     return this.http.get('/api/' + resourceCol + '/' + resource.id + '/lookupUsers?query=' + query).map(res => res.json());
+  }
+
+  loadOperations(resource: ResourceRepresentation<any>): Observable<ResourceOperationRepresentation[]> {
+    const resourceCol = (<any>resource.scope).toLowerCase() + 's';
+    return this.http.get('/api/' + resourceCol + '/' + resource.id + '/operations').map(res => res.json());
   }
 
   removeUser(resource: ResourceRepresentation<any>, user: UserRepresentation) {

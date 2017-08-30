@@ -85,7 +85,9 @@
     "applyEmail": "Apply Email",
     "existingRelationExplanation": "Interest in us",
     "liveTimestamp": "Opening Date",
-    "deadTimestamp": "Closing Date"
+    "deadTimestamp": "Closing Date",
+    "handle": "URL Handle",
+    "documentLogo": "Logo image"
   },
   "actionView": {
     "REVISE": "Revise",

@@ -67,56 +67,5 @@
     </div>
   </div>
 </section>
-<section class="section post-timeline" *ngIf="operations">
-  <h2>Post Timeline</h2>
-  <ul>
-    <li *ngFor="let operation of operations" class="action-{{ operation.action | lowercase }}">
-      <time>
-        <span class="post-timeline--time">{{operation.createdTimestamp | date:'shortTime'}}</span>
-        <span class="post-timeline--day">{{operation.createdTimestamp | date:'shortDate'}}</span>
-      </time>
-      <div class="post-timeline--icon" pTooltip="{{'definitions.action.' + operation.action | translate}}"
-           tooltipPosition="top">
-        <i class="fa fa-{{ operation.action | lowercase }}"></i>
-      </div>
-      <div class="post-timeline--label" fxLayout="row">
 
-        <div *ngIf="operation.user" class="post-timeline--user">
-          <div class="post-timeline--user_image" pTooltip="{{operation.user.email}}" tooltipPosition="top">
-            <b-image [publicId]="operation.user.documentImage?.cloudinaryId"
-                     gravity="face" width="40" height="40" radius="max" crop="thumb"></b-image>
-            <i *ngIf="!operation.user.documentImage" class="fa-user"></i>
-          </div>
-          <h5>{{operation.user.givenName}} {{operation.user.surname}}</h5>
-        </div>
-        <div class="post-timeline--details">
-          <h5 *ngIf="operation.comment">Comment: </h5>
-          <p *ngIf="operation.comment">{{operation.comment}}</p>
-          <div *ngIf="operation.changeList">
-            <h5>Changed properties:</h5>
-            <p>
-            <span *ngFor="let change of operation.changeList; let isLast=last">
-            {{'resourceProperty.' + change.property | translate}}{{isLast ? '' : ', '}}
-            </span>
-              <button pButton type="button" class="ui-button-info small-xs" (click)="openChangeDetails(operation)"
-                      label="Show more details"></button>
-            </p>
-          </div>
-        </div>
-      </div>
-    </li>
-  </ul>
-</section>
-
-<p-dialog [(visible)]="showOperationDetails" *ngIf="selectedOperation">
-  <p-header>
-    Changes:
-  </p-header>
-  <div *ngFor="let change of selectedOperation.changeList" class="boards">
-    <strong>{{'resourceProperty.' + change.property | translate}} :</strong>
-    changed from
-    <code>{{change.oldValue | json}}</code>
-    to
-    <code>{{change.newValue | json}}</code>
-  </div>
-</p-dialog>
+<b-resource-timeline *ngIf="post" [resource]="post"></b-resource-timeline>

@@ -102,6 +102,7 @@ import {ValidationService} from './validation/validation.service';
 import {ImageComponent} from './general/image.component';
 import {Ng2UiAuthModule} from './authentication/ng2-ui-auth.module';
 import {PapaParseModule} from 'ngx-papaparse';
+import {ResourceTimelineComponent} from './resource/timeline/resource-timeline.component';
 
 @NgModule({
   declarations: [
@@ -145,6 +146,7 @@ import {PapaParseModule} from 'ngx-papaparse';
     ResourceUserEditDialogComponent,
     ResourceUsersBulkComponent,
     ResourceBadgeComponent,
+    ResourceTimelineComponent,
     PostEditComponent,
     PostViewComponent,
     PostApplyComponent,
