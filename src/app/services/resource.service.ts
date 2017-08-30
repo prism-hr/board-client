@@ -58,7 +58,7 @@ export class ResourceService {
   }
 
   getBoardPosts(boardId: number, includePublicPosts: boolean): Observable<PostRepresentation[]> {
-    return this.http.get('/api/boards/' + boardId + '/posts?includePublicPosts' + includePublicPosts).map(res => res.json());
+    return this.http.get('/api/boards/' + boardId + '/posts?includePublicPosts=' + includePublicPosts).map(res => res.json());
   }
 
   getDepartmentBoards(departmentId: number, includePublicBoards: boolean): Observable<BoardRepresentation[]> {
