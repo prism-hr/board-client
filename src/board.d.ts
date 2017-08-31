@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-08-21 13:42:51.
+// Generated using typescript-generator version 1.23.311 on 2017-08-31 07:53:48.
 
 declare namespace b {
 
@@ -17,7 +17,6 @@ declare namespace b {
     documentLogo?: DocumentDTO;
     handle?: string;
     postCategories?: string[];
-    defaultPostVisibility?: PostVisibility;
   }
 
   interface DepartmentDTO extends ResourceDTO<DepartmentDTO> {
@@ -97,9 +96,9 @@ declare namespace b {
   }
 
   interface ResourceEventDTO {
-    defaultResume?: boolean;
     documentResume?: DocumentDTO;
     websiteResume?: string;
+    defaultResume?: boolean;
     coveringNote?: string;
   }
 
@@ -180,7 +179,6 @@ declare namespace b {
     handle?: string;
     department?: DepartmentRepresentation;
     postCategories?: string[];
-    defaultPostVisibility?: PostVisibility;
     postCount?: number;
     authorCount?: number;
   }
@@ -198,12 +196,6 @@ declare namespace b {
   }
 
   interface LocationRepresentation extends LocationDefinition {
-  }
-
-  interface PostApplyRepresentation {
-    applyWebsite?: string;
-    applyDocument?: DocumentRepresentation;
-    applyEmail?: string;
   }
 
   interface PostRepresentation extends ResourceRepresentation<PostRepresentation> {
@@ -226,7 +218,8 @@ declare namespace b {
     lastViewTimestamp?: LocalDateTime;
     lastReferralTimestamp?: LocalDateTime;
     lastResponseTimestamp?: LocalDateTime;
-    responded?: boolean;
+    referral?: string;
+    response?: ResourceEventRepresentation;
   }
 
   interface ResourceEventRepresentation {
@@ -291,16 +284,16 @@ declare namespace b {
 
   interface DocumentDefinition {
     fileName?: string;
-    cloudinaryUrl?: string;
     cloudinaryId?: string;
+    cloudinaryUrl?: string;
   }
 
   interface LocationDefinition {
     name?: string;
-    domicile?: string;
     longitude?: number;
-    latitude?: number;
+    domicile?: string;
     googleId?: string;
+    latitude?: number;
   }
 
   interface LocalDateTime extends Temporal, TemporalAdjuster, ChronoLocalDateTime<LocalDate>, Serializable {
@@ -369,8 +362,6 @@ declare namespace b {
   type Action = 'VIEW' | 'PURSUE' | 'EDIT' | 'EXTEND' | 'ACCEPT' | 'SUSPEND' | 'CORRECT' | 'REJECT' | 'PUBLISH' | 'RETIRE' | 'RESTORE' | 'WITHDRAW';
 
   type State = 'DRAFT' | 'SUSPENDED' | 'PENDING' | 'ACCEPTED' | 'EXPIRED' | 'REJECTED' | 'WITHDRAWN' | 'PREVIOUS';
-
-  type PostVisibility = 'PUBLIC' | 'PRIVATE' | 'PART_PRIVATE';
 
   type MemberCategory = 'UNDERGRADUATE_STUDENT' | 'MASTER_STUDENT' | 'RESEARCH_STUDENT' | 'RESEARCH_STAFF';
 

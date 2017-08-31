@@ -8,24 +8,27 @@ import {UserService} from '../../services/user.service';
 import {PostService} from '../post.service';
 import {PostApplyDialogComponent} from './post-apply.dialog';
 import PostRepresentation = b.PostRepresentation;
+import ResourceEventRepresentation = b.ResourceEventRepresentation;
 import UserRepresentation = b.UserRepresentation;
 
 @Component({
   selector: 'b-post-apply',
   template: `
     <div class="post-apply">
-      <div *ngIf="!post?.responded" class="post-apply-content">
-        <div *ngIf="!documentUrl && !websiteUrl">
-          <button pButton type="button" (click)="apply(post)" label="Apply" class="ui-button-success small"></button>
-        </div>
-        <div *ngIf="documentUrl">
-          <a pButton type="button" href="{{documentUrl}}" download class="ui-button-success small" label="Download apply instructions"></a>
-        </div>
-        <div *ngIf="websiteUrl">
-          <a pButton type="button" href="{{websiteUrl}}" target="_blank" class="ui-button-success small" label="Open apply website"></a>
-        </div>
+      <div *ngIf="!post?.response" class="post-apply-content">
+        <!--<div *ngIf="!post.applyDocument && !post.applyWebsite">-->
+        <button pButton type="button" (click)="apply(post)" label="Apply" class="ui-button-success small"></button>
+        <!--</div>-->
+        <!--<div *ngIf="post.applyDocument">-->
+        <!--<a pButton type="button" href="{{post.applyDocument.cloudinaryUrl}}" download class="ui-button-success small"-->
+        <!--label="Download apply instructions"></a>-->
+        <!--</div>-->
+        <!--<div *ngIf="post.applyWebsite">-->
+        <!--<a pButton type="button" href="{{post.applyWebsite}}" target="_blank" class="ui-button-success small"-->
+        <!--label="Open apply website"></a>-->
+        <!--</div>-->
       </div>
-      <div *ngIf="post?.responded">
+      <div *ngIf="post?.response">
         You already responded to this post.
       </div>
     </div>
@@ -35,8 +38,6 @@ import UserRepresentation = b.UserRepresentation;
 export class PostApplyComponent implements OnInit {
   @Input() post: PostRepresentation & {};
   user: UserRepresentation;
-  websiteUrl: string;
-  documentUrl: string;
 
   constructor(private dialog: MdDialog, private userService: UserService, private resourceService: ResourceService,
               private postService: PostService, private authGuard: AuthGuard) {
@@ -89,27 +90,16 @@ export class PostApplyComponent implements OnInit {
   }
 
   doRespond() {
-    this.postService.getPostApply(this.post).subscribe(apply => {
-      let respondPrompt: Observable<any>;
-      if (apply.applyEmail) {
-        const config = new MdDialogConfig();
-        config.data = {apply, post: this.post};
-        const dialogRef = this.dialog.open(PostApplyDialogComponent, config);
-        respondPrompt = dialogRef.afterClosed();
-      } else {
-        respondPrompt = Observable.of(true);
-      }
-      respondPrompt.subscribe((result: boolean) => {
-        if (result) {
-          if (apply.applyEmail) {
-            this.post.responded = true;
-          } else if (apply.applyDocument) {
-            this.documentUrl = apply.applyDocument.cloudinaryUrl;
-          } else if (apply.applyWebsite) {
-            this.websiteUrl = apply.applyWebsite;
-          }
-        }
-      });
-    })
+    if (this.post.applyEmail) {
+      const config = new MdDialogConfig();
+      config.data = {post: this.post};
+      const dialogRef = this.dialog.open(PostApplyDialogComponent, config);
+      dialogRef.afterClosed()
+        .subscribe((response: ResourceEventRepresentation) => {
+          this.post.response = response;
+        });
+    } else {
+      window.open('api/posts/referrals/' + this.post.referral, '_blank');
+    }
   }
 }

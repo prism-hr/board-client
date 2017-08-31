@@ -6,13 +6,11 @@ import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {Subject} from 'rxjs/Subject';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
-import PostApplyRepresentation = b.PostApplyRepresentation;
 import PostDTO = b.PostDTO;
 import PostPatchDTO = b.PostPatchDTO;
 import PostRepresentation = b.PostRepresentation;
 import ResourceEventDTO = b.ResourceEventDTO;
 import ResourceEventRepresentation = b.ResourceEventRepresentation;
-import ResourceOperationRepresentation = b.ResourceOperationRepresentation;
 import UserRoleDTO = b.UserRoleDTO;
 
 @Injectable()
@@ -47,10 +45,6 @@ export class PostService {
       .do(post => {
         this.postSubjects[post.id].next(post);
       });
-  }
-
-  getPostApply(post: PostRepresentation): Observable<PostApplyRepresentation> {
-    return this.http.get('/api/posts/' + post.id + '/apply').map(res => res.json());
   }
 
   respond(post: PostRepresentation, eventDTO: ResourceEventDTO): Observable<ResourceEventRepresentation> {
