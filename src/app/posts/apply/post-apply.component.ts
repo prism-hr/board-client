@@ -65,7 +65,7 @@ export class PostApplyComponent implements OnInit {
         if (!authenticated) {
           return Observable.of(null);
         }
-        return this.postService.getPost(this.post.id, true);
+        return this.postService.getPost(this.post.id, {returnComplete: true, reload: true});
       })
       .subscribe(post => {
         if (post) {
@@ -80,7 +80,7 @@ export class PostApplyComponent implements OnInit {
     const dialogRef = this.dialog.open(DepartmentRequestMembershipDialogComponent, config);
     dialogRef.afterClosed()
       .flatMap((result: boolean) => {
-        return result ? this.postService.getPost(this.post.id, true) : Observable.of(null);
+        return result ? this.postService.getPost(this.post.id, {returnComplete: true, reload: true}) : Observable.of(null);
       })
       .subscribe(post => {
         if (post) {

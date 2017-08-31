@@ -12,6 +12,7 @@ import PostRepresentation = b.PostRepresentation;
 import ResourceEventDTO = b.ResourceEventDTO;
 import ResourceEventRepresentation = b.ResourceEventRepresentation;
 import UserRoleDTO = b.UserRoleDTO;
+import {AsyncSubject} from 'rxjs/AsyncSubject';
 
 @Injectable()
 export class PostService {
@@ -21,18 +22,30 @@ export class PostService {
   constructor(private http: JwtHttp) {
   }
 
-  getPost(id: number, returnFresh = false): Observable<PostRepresentation> {
+  getPost(id: number, options: {returnComplete?: boolean, reload?: boolean} = {}): Observable<PostRepresentation> {
     if (!this.postSubjects[id]) {
       this.postSubjects[id] = new ReplaySubject(1);
     }
-    const observable = this.http.get('/api/posts/' + id).map(res => res.json())
-      .do(post => {
-        this.postSubjects[id].next(post);
-      });
-    if (returnFresh) {
-      return observable;
+    let directObservable;
+    if(options.reload) {
+      directObservable = this.http.get('/api/posts/' + id).map(res => res.json())
+        .do(post => {
+          this.postSubjects[id].next(post);
+        });
+    } else {
+      directObservable = new AsyncSubject();
+      this.postSubjects[id].subscribe(post => {
+        directObservable.next(post);
+        directObservable.complete();
+      })
     }
-    observable.subscribe();
+    if (options.returnComplete) {
+      return directObservable;
+    }
+
+    if(options.reload) {
+      directObservable.subscribe(); // force http request
+    }
     return this.postSubjects[id].asObservable();
   }
 

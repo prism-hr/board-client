@@ -103,6 +103,7 @@ import {ImageComponent} from './general/image.component';
 import {Ng2UiAuthModule} from './authentication/ng2-ui-auth.module';
 import {PapaParseModule} from 'ngx-papaparse';
 import {ResourceTimelineComponent} from './resource/timeline/resource-timeline.component';
+import {PostResolver} from './posts/post-resolver.service';
 
 @NgModule({
   declarations: [
@@ -272,6 +273,9 @@ import {ResourceTimelineComponent} from './resource/timeline/resource-timeline.c
                   },
                   {
                     path: ':postId',
+                    resolve: {
+                      post: PostResolver,
+                    },
                     children: [
                       {
                         path: '',
@@ -354,7 +358,7 @@ import {ResourceTimelineComponent} from './resource/timeline/resource-timeline.c
       deps: [DefinitionsService],
       multi: true
     },
-    AuthGuard, ResourceService, DepartmentResolver, BoardResolver, BoardsResolver, ResourceUsersResolver,
+    AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, BoardsResolver, ResourceUsersResolver,
     AccountSuppressionsResolver, PostService, UserService, ValidationService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, ResourceCommentDialogComponent, UserImageDialogComponent,
