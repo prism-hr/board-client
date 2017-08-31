@@ -22,17 +22,6 @@
                      inputId="postCategories" [allowDuplicate]="false"></p-chips>
           </div>
 
-          <!--<div class="grid__item one-whole input-holder">-->
-          <!--<label>Default post visibility:</label>-->
-          <!--<div class="ui-radiobutton-inline">-->
-          <!--<p-radioButton *ngFor="let postVisibility of availablePostVisibilities"-->
-          <!--[value]="postVisibility" name="defaultPostVisibility"-->
-          <!--formControlName="defaultPostVisibility"-->
-          <!--[label]="'definitions.postVisibility.' + postVisibility | translate">-->
-          <!--</p-radioButton>-->
-          <!--</div>-->
-          <!--</div>-->
-
           <div class="grid__item one-whole input-holder">
             <label>Board URL</label>
             <b-resource-handle formControlName="handle" [urlPrefix]="urlPrefix"></b-resource-handle>
