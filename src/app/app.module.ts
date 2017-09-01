@@ -13,6 +13,7 @@ import {AgmCoreModule} from 'angular2-google-maps/core';
 import {MomentModule} from 'angular2-moment';
 import {RlTagInputModule} from 'angular2-tag-input/dist';
 import {ClipboardModule} from 'ngx-clipboard/dist';
+import {PapaParseModule} from 'ngx-papaparse';
 import {ShareButtonsModule} from 'ngx-sharebuttons';
 import {NgUploaderModule} from 'ngx-uploader';
 import {
@@ -44,6 +45,7 @@ import {MyAuthConfig} from './auth.config';
 import {AuthGuard} from './authentication/auth-guard.service';
 import {AuthedComponent} from './authentication/authed.component';
 import {AuthenticationDialogComponent} from './authentication/authentication.dialog';
+import {Ng2UiAuthModule} from './authentication/ng2-ui-auth.module';
 import {ResetPasswordDialogComponent} from './authentication/reset-password.dialog';
 import {UserImageDialogComponent} from './authentication/user-image.dialog';
 import {BoardHeaderComponent} from './boards/header/board-header.component';
@@ -67,6 +69,7 @@ import {DepartmentRequestMembershipDialogComponent} from './departments/request-
 import {DepartmentViewComponent} from './departments/view/department-view.component';
 import {FooterComponent} from './footer/footer.component';
 import {FileUploadComponent} from './general/file-upload.component';
+import {ImageComponent} from './general/image.component';
 import {PlacesModule} from './general/places/places.module';
 import {UserLookupComponent} from './general/user-lookup';
 import {HeaderActivityComponent} from './header/header-activity.component';
@@ -81,12 +84,17 @@ import {PostApplyComponent} from './posts/apply/post-apply.component';
 import {PostApplyDialogComponent} from './posts/apply/post-apply.dialog';
 import {PostEditComponent} from './posts/edit/post-edit.component';
 import {PostItemComponent} from './posts/item/post-item.component';
+import {PostResolver} from './posts/post-resolver.service';
+import {PostTabComponent} from './posts/post-tab.component';
 import {PostService} from './posts/post.service';
+import {PostResponsesResolver} from './posts/responses/post-responses-resolver.service';
+import {PostResponsesComponent} from './posts/responses/post-responses.component';
 import {PostViewComponent} from './posts/view/post-view.component';
 import {ResourceActionsBoxComponent} from './resource/actions-box/resource-actions-box.component';
 import {ResourceBadgeComponent} from './resource/resource-badge.component';
 import {ResourceCommentDialogComponent} from './resource/resource-comment.dialog';
 import {ResourceUsersResolver} from './resource/resource-users-resolver.service';
+import {ResourceTimelineComponent} from './resource/timeline/resource-timeline.component';
 import {ResourceUserEditDialogComponent} from './resource/users/resource-user-edit-dialog.component';
 import {ResourceUserRoleFormPartComponent} from './resource/users/resource-user-role-form-part.component';
 import {ResourceUsersBulkComponent} from './resource/users/resource-users-bulk.component';
@@ -99,11 +107,6 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
-import {ImageComponent} from './general/image.component';
-import {Ng2UiAuthModule} from './authentication/ng2-ui-auth.module';
-import {PapaParseModule} from 'ngx-papaparse';
-import {ResourceTimelineComponent} from './resource/timeline/resource-timeline.component';
-import {PostResolver} from './posts/post-resolver.service';
 
 @NgModule({
   declarations: [
@@ -148,10 +151,12 @@ import {PostResolver} from './posts/post-resolver.service';
     ResourceUsersBulkComponent,
     ResourceBadgeComponent,
     ResourceTimelineComponent,
+    PostTabComponent,
     PostEditComponent,
     PostViewComponent,
     PostApplyComponent,
     PostApplyDialogComponent,
+    PostResponsesComponent,
     PostItemComponent,
     ResourceActionsBoxComponent,
     ResourceCommentDialogComponent,
@@ -276,6 +281,7 @@ import {PostResolver} from './posts/post-resolver.service';
                     resolve: {
                       post: PostResolver,
                     },
+                    component: PostTabComponent,
                     children: [
                       {
                         path: '',
@@ -284,6 +290,14 @@ import {PostResolver} from './posts/post-resolver.service';
                       {
                         path: 'edit',
                         component: PostEditComponent,
+                        canActivate: [AuthGuard]
+                      },
+                      {
+                        path: 'responses',
+                        component: PostResponsesComponent,
+                        resolve: {
+                          responses: PostResponsesResolver
+                        },
                         canActivate: [AuthGuard]
                       }
                     ]
@@ -358,8 +372,8 @@ import {PostResolver} from './posts/post-resolver.service';
       deps: [DefinitionsService],
       multi: true
     },
-    AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, BoardsResolver, ResourceUsersResolver,
-    AccountSuppressionsResolver, PostService, UserService, ValidationService
+    AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostResponsesResolver, BoardsResolver,
+    ResourceUsersResolver, AccountSuppressionsResolver, PostService, UserService, ValidationService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, ResourceCommentDialogComponent, UserImageDialogComponent,
     ResourceUserEditDialogComponent, DepartmentRequestMembershipDialogComponent, PostApplyDialogComponent],

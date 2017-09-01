@@ -1,10 +1,9 @@
 <section class="section">
   <md-card>
-    <md-card-header class="header-full">
+    <md-card-header *ngIf="!post" class="header-full">
       <md-card-title>
         <div>
-          <h2 *ngIf="!post">Create a new post</h2>
-          <h2 *ngIf="post">Edit Post</h2>
+          <h2>Create a new post</h2>
         </div>
       </md-card-title>
     </md-card-header>

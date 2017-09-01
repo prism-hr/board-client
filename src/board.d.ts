@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-08-31 07:53:48.
+// Generated using typescript-generator version 1.23.311 on 2017-09-01 16:21:39.
 
 declare namespace b {
 
@@ -290,10 +290,10 @@ declare namespace b {
 
   interface LocationDefinition {
     name?: string;
-    longitude?: number;
-    domicile?: string;
-    googleId?: string;
     latitude?: number;
+    longitude?: number;
+    googleId?: string;
+    domicile?: string;
   }
 
   interface LocalDateTime extends Temporal, TemporalAdjuster, ChronoLocalDateTime<LocalDate>, Serializable {
@@ -305,8 +305,8 @@ declare namespace b {
     year?: number;
     hour?: number;
     minute?: number;
-    second?: number;
     nano?: number;
+    second?: number;
   }
 
   interface LocalDate extends Temporal, TemporalAdjuster, ChronoLocalDate, Serializable {

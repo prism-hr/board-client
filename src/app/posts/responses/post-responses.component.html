@@ -1,0 +1,23 @@
+<section class="section">
+  <md-card>
+    <md-card-content>
+      <div class="grid">
+        <div *ngFor="let response of responses">
+          <h3>{{response.user.givenName}} {{response.user.surname}}</h3>
+          <span>{{response.createdTimestamp | amCalendar}}</span>
+          <div *ngIf="response.documentResume">
+            <a href="{{response.documentResume.cloudinaryUrl}}">Download Resume</a>
+          </div>
+          <div *ngIf="response.websiteResume">
+            <a href="{{response.websiteResume}}">Website</a>
+          </div>
+          <div>
+            {{response.coveringNote}}
+          </div>
+        </div>
+      </div>
+    </md-card-content>
+    <md-card-actions>
+    </md-card-actions>
+  </md-card>
+</section>

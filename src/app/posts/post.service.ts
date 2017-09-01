@@ -68,4 +68,8 @@ export class PostService {
     return this.http.post('/api/departments/' + department.id + '/memberships', userRoleDTO);
   }
 
+  getResponses(post: PostRepresentation): Observable<ResourceEventRepresentation[]> {
+    return this.http.get('/api/posts/' + post.id + '/responses').map(res => res.json());
+  }
+
 }

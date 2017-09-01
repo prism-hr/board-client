@@ -75,15 +75,16 @@ export class PostEditComponent implements OnInit, OnDestroy {
       deadTimestamp: []
     });
 
-
-    this.route.data.subscribe(data => {
+    this.route.parent.data.flatMap(parentData => {
+      if (parentData['board']) {
+        this.board = parentData['board'];
+      }
+      return this.route.data;
+    }).subscribe(data => {
       if (data['boards']) {
         this.boardOptions = data['boards'].map(b => ({label: b.name, value: b}));
       }
-      if (data['board']) {
-        this.board = data['board'];
-      }
-      this.paramsSubscription = this.route.paramMap
+      this.paramsSubscription = this.route.parent.paramMap
         .flatMap(params => {
           const postObservable = params.get('postId') ? this.postService.getPost(+params.get('postId')) : Observable.of(null);
           return postObservable.map(post => [post, params]);
