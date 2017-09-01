@@ -4,7 +4,6 @@ import {MenuItem} from 'primeng/primeng';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {ResourceService} from '../services/resource.service';
-import {PostService} from './post.service';
 import PostRepresentation = b.PostRepresentation;
 
 @Component({
@@ -16,19 +15,19 @@ import PostRepresentation = b.PostRepresentation;
   `,
   styles: []
 })
-export class PostTabComponent implements OnInit {
+export class PostTabsComponent implements OnInit {
   post: PostRepresentation;
   items: MenuItem[];
   canEdit: boolean;
   paramsSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private postService: PostService, private resourceService: ResourceService) {
+  constructor(private route: ActivatedRoute, private resourceService: ResourceService) {
   }
 
   ngOnInit() {
     this.paramsSubscription = this.route.paramMap
       .flatMap(params => {
-        return params.get('postId') ? this.postService.getPost(+params.get('postId')) : Observable.of(null);
+        return params.get('postId') ? this.resourceService.getResource('POST', +params.get('postId')) : Observable.of(null);
       })
       .subscribe(post => {
         this.post = post;

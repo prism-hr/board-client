@@ -86,7 +86,7 @@ export class PostEditComponent implements OnInit, OnDestroy {
       }
       this.paramsSubscription = this.route.parent.paramMap
         .flatMap(params => {
-          const postObservable = params.get('postId') ? this.postService.getPost(+params.get('postId')) : Observable.of(null);
+          const postObservable = params.get('postId') ? this.resourceService.getResource('POST', +params.get('postId')) : Observable.of(null);
           return postObservable.map(post => [post, params]);
         })
         .subscribe(([post, params]: [PostRepresentation, ParamMap]) => {

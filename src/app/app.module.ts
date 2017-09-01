@@ -62,9 +62,12 @@ import {ResourceHandleComponent} from './controls/resource-handle.component';
 import {DepartmentManageComponent} from './departments/department-manage.component';
 import {DepartmentNewComponent} from './departments/department-new.component';
 import {DepartmentResolver} from './departments/department-resolver.service';
+import {DepartmentService} from './departments/department.service';
 import {DepartmentEditComponent} from './departments/edit/department-edit.component';
 import {DepartmentHeaderComponent} from './departments/header/department-header.component';
 import {DepartmentListComponent} from './departments/list/department-list.component';
+import {DepartmentMembershipsResolverService} from './departments/memberships/department-memberships-resolver.service';
+import {DepartmentMembershipsComponent} from './departments/memberships/department-memberships.component';
 import {DepartmentRequestMembershipDialogComponent} from './departments/request-membership/department-request-membership.dialog';
 import {DepartmentViewComponent} from './departments/view/department-view.component';
 import {FooterComponent} from './footer/footer.component';
@@ -85,7 +88,7 @@ import {PostApplyDialogComponent} from './posts/apply/post-apply.dialog';
 import {PostEditComponent} from './posts/edit/post-edit.component';
 import {PostItemComponent} from './posts/item/post-item.component';
 import {PostResolver} from './posts/post-resolver.service';
-import {PostTabComponent} from './posts/post-tab.component';
+import {PostTabsComponent} from './posts/post-tabs.component';
 import {PostService} from './posts/post.service';
 import {PostResponsesResolver} from './posts/responses/post-responses-resolver.service';
 import {PostResponsesComponent} from './posts/responses/post-responses.component';
@@ -142,6 +145,7 @@ import {ValidationService} from './validation/validation.service';
     DepartmentManageComponent,
     DepartmentViewComponent,
     DepartmentEditComponent,
+    DepartmentMembershipsComponent,
     DepartmentNewComponent,
     DepartmentHeaderComponent,
     DepartmentRequestMembershipDialogComponent,
@@ -151,7 +155,7 @@ import {ValidationService} from './validation/validation.service';
     ResourceUsersBulkComponent,
     ResourceBadgeComponent,
     ResourceTimelineComponent,
-    PostTabComponent,
+    PostTabsComponent,
     PostEditComponent,
     PostViewComponent,
     PostApplyComponent,
@@ -219,13 +223,13 @@ import {ValidationService} from './validation/validation.service';
                 children: [
                   {
                     path: '',
-                    component: DepartmentViewComponent,
-                  },
-                  {
-                    path: '',
                     component: DepartmentManageComponent,
                     canActivate: [AuthGuard],
                     children: [
+                      {
+                        path: '',
+                        component: DepartmentViewComponent,
+                      },
                       {
                         path: 'edit',
                         component: DepartmentEditComponent
@@ -236,7 +240,16 @@ import {ValidationService} from './validation/validation.service';
                         resolve: {
                           users: ResourceUsersResolver
                         }
+                      },
+                      {
+                        path: 'memberships',
+                        component: DepartmentMembershipsComponent,
+                        resolve: {
+                          memberships: DepartmentMembershipsResolverService
+                        },
+                        canActivate: [AuthGuard]
                       }
+
                     ]
                   }
                 ]
@@ -281,7 +294,7 @@ import {ValidationService} from './validation/validation.service';
                     resolve: {
                       post: PostResolver,
                     },
-                    component: PostTabComponent,
+                    component: PostTabsComponent,
                     children: [
                       {
                         path: '',
@@ -372,8 +385,9 @@ import {ValidationService} from './validation/validation.service';
       deps: [DefinitionsService],
       multi: true
     },
-    AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostResponsesResolver, BoardsResolver,
-    ResourceUsersResolver, AccountSuppressionsResolver, PostService, UserService, ValidationService
+    AuthGuard, ResourceService, DepartmentResolver, DepartmentMembershipsResolverService, BoardResolver, PostResolver,
+    PostResponsesResolver, BoardsResolver, ResourceUsersResolver, AccountSuppressionsResolver, PostService, DepartmentService, UserService,
+    ValidationService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, ResourceCommentDialogComponent, UserImageDialogComponent,
     ResourceUserEditDialogComponent, DepartmentRequestMembershipDialogComponent, PostApplyDialogComponent],

@@ -1,0 +1,21 @@
+<section class="section">
+  <md-card>
+    <md-card-content>
+      <div class="grid">
+        <div *ngFor="let membership of memberships">
+          <h3>{{membership.user.givenName}} {{membership.user.surname}}</h3>
+          <div>Role: {{'definitions.role.' + membership.role | translate}}</div>
+          <div>State: {{'definitions.state.' + membership.state | translate}}</div>
+          <div>Categories:
+            <span class="ui-chips-token ui-corner-all" *ngFor="let category of membership.categories">
+              {{'definitions.memberCategory.' + category | translate}}
+            </span>
+          </div>
+          <div>Viewed: {{membership.viewed}}</div>
+        </div>
+      </div>
+    </md-card-content>
+    <md-card-actions>
+    </md-card-actions>
+  </md-card>
+</section>

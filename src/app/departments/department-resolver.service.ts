@@ -12,7 +12,7 @@ export class DepartmentResolver implements Resolve<DepartmentRepresentation> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<DepartmentRepresentation> {
     const departmentHandle = route.parent.params['departmentHandle'];
-    return this.resourceService.getDepartment(departmentHandle);
+    return this.resourceService.getResourceByHandle('DEPARTMENT', departmentHandle);
   }
 
 }

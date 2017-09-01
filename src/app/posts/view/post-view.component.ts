@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MetaService} from '@ngx-meta/core';
 import {ResourceService} from '../../services/resource.service';
-import {PostService} from '../post.service';
 import PostRepresentation = b.PostRepresentation;
 import ResourceOperationRepresentation = b.ResourceOperationRepresentation;
 
@@ -19,15 +18,14 @@ export class PostViewComponent implements OnInit {
   showOperationDetails: boolean;
   selectedOperation: ResourceOperationRepresentation;
 
-  constructor(private meta: MetaService, private route: ActivatedRoute, private resourceService: ResourceService,
-              private postService: PostService) {
+  constructor(private meta: MetaService, private route: ActivatedRoute, private resourceService: ResourceService) {
   }
 
   ngOnInit() {
     this.today = new Date();
     this.route.paramMap
       .flatMap(map => {
-        return this.postService.getPost(+map.get('postId'));
+        return this.resourceService.getResource('POST', +map.get('postId'));
       })
       .subscribe(post => {
         this.post = post;

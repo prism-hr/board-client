@@ -18,11 +18,66 @@ import ResourceUserDTO = b.ResourceUserDTO;
 import ResourceUserRepresentation = b.ResourceUserRepresentation;
 import ResourceUsersDTO = b.ResourceUsersDTO;
 import UserRepresentation = b.UserRepresentation;
+import {Subject} from 'rxjs/Subject';
+import Scope = b.Scope;
+import {ReplaySubject} from 'rxjs/ReplaySubject';
+import {AsyncSubject} from 'rxjs/AsyncSubject';
 
 @Injectable()
 export class ResourceService {
 
+  private resourceSubjects: { [index: string]: { [index: number]: Subject<PostRepresentation> } } = {};
+
   constructor(private http: JwtHttp) {
+    const scopes: Scope[] = ['DEPARTMENT', 'DEPARTMENT', 'POST'];
+    for(let scope of scopes) {
+      this.resourceSubjects[scope] = {};
+    }
+  }
+
+  getResourceByHandle(scope: Scope, handle: string): Observable<ResourceRepresentation<any>> {
+    const params = new URLSearchParams();
+    params.set('handle', handle);
+    return this.http.get('/api/' + scope.toLowerCase() + 's/', {search: params}).map(res => res.json())
+      .do(resource => {
+        const subjects = this.resourceSubjects[scope];
+        if (!subjects[resource.id]) {
+          subjects[resource.id] = new ReplaySubject(1);
+        }
+        subjects[resource.id].next(resource);
+      });
+  }
+
+  getResource(scope: Scope, id: number, options: {returnComplete?: boolean, reload?: boolean} = {}): Observable<ResourceRepresentation<any>> {
+    const subjects = this.resourceSubjects[scope];
+    if (!subjects[id]) {
+      subjects[id] = new ReplaySubject(1);
+    }
+    let directObservable;
+    if(options.reload) {
+      directObservable = this.http.get('/api/' + scope.toLowerCase() + 's/' + id).map(res => res.json())
+        .do(post => {
+          subjects[id].next(post);
+        });
+    } else {
+      directObservable = new AsyncSubject();
+      subjects[id].subscribe(post => {
+        directObservable.next(post);
+        directObservable.complete();
+      })
+    }
+    if (options.returnComplete) {
+      return directObservable;
+    }
+
+    if(options.reload) {
+      directObservable.subscribe(); // force http request
+    }
+    return subjects[id].asObservable();
+  }
+
+  resourceUpdated(resource: ResourceRepresentation<any>) {
+    this.resourceSubjects[resource.scope][resource.id].next(resource);
   }
 
   getPosts(): Observable<PostRepresentation[]> {
