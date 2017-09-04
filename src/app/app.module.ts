@@ -51,7 +51,7 @@ import {UserImageDialogComponent} from './authentication/user-image.dialog';
 import {BoardHeaderComponent} from './boards/header/board-header.component';
 import {BoardItemComponent} from './boards/item/board-item.component';
 import {BoardListComponent} from './boards/list/board-list.component';
-import {BoardManageComponent} from './boards/manage/board-manage.component';
+import {BoardTabsComponent} from './boards/manage/board-tabs.component';
 import {BoardResolver} from './boards/manage/board-resolver.service';
 import {BoardsResolver} from './boards/manage/boards-resolver.service';
 import {BoardEditComponent} from './boards/manage/edit/board-edit.component';
@@ -59,7 +59,7 @@ import {BoardViewComponent} from './boards/manage/view/board-view.component';
 import {BoardNewComponent} from './boards/new/board-new.component';
 import {DateTimeComponent} from './controls/datetime.component';
 import {ResourceHandleComponent} from './controls/resource-handle.component';
-import {DepartmentManageComponent} from './departments/department-manage.component';
+import {DepartmentTabsComponent} from './departments/department-tabs.component';
 import {DepartmentNewComponent} from './departments/department-new.component';
 import {DepartmentResolver} from './departments/department-resolver.service';
 import {DepartmentService} from './departments/department.service';
@@ -138,12 +138,12 @@ import {PostHeaderComponent} from './posts/header/post-header.component';
     ResourceHandleComponent,
     BoardHeaderComponent,
     BoardNewComponent,
-    BoardManageComponent,
+    BoardTabsComponent,
     BoardViewComponent,
     BoardEditComponent,
     BoardItemComponent,
     DepartmentListComponent,
-    DepartmentManageComponent,
+    DepartmentTabsComponent,
     DepartmentViewComponent,
     DepartmentEditComponent,
     DepartmentMembershipsComponent,
@@ -225,7 +225,7 @@ import {PostHeaderComponent} from './posts/header/post-header.component';
                 children: [
                   {
                     path: '',
-                    component: DepartmentManageComponent,
+                    component: DepartmentTabsComponent,
                     canActivate: [AuthGuard],
                     children: [
                       {
@@ -271,7 +271,7 @@ import {PostHeaderComponent} from './posts/header/post-header.component';
                   },
                   {
                     path: '',
-                    component: BoardManageComponent,
+                    component: BoardTabsComponent,
                     canActivate: [AuthGuard],
                     children: [
                       {

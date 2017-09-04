@@ -13,7 +13,7 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
   `,
   styles: []
 })
-export class DepartmentManageComponent implements OnInit {
+export class DepartmentTabsComponent implements OnInit {
   department: DepartmentRepresentation;
   items: MenuItem[];
   canEdit: boolean;

@@ -22,7 +22,7 @@ import BoardRepresentation = b.BoardRepresentation;
 `,
   styles: []
 })
-export class BoardManageComponent implements OnInit {
+export class BoardTabsComponent implements OnInit {
   board: BoardRepresentation;
   items: MenuItem[];
 
