@@ -110,6 +110,7 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
+import {PostHeaderComponent} from './posts/header/post-header.component';
 
 @NgModule({
   declarations: [
@@ -155,6 +156,7 @@ import {ValidationService} from './validation/validation.service';
     ResourceUsersBulkComponent,
     ResourceBadgeComponent,
     ResourceTimelineComponent,
+    PostHeaderComponent,
     PostTabsComponent,
     PostEditComponent,
     PostViewComponent,

@@ -1,28 +1,6 @@
 <section *ngIf="post" class="section">
   <div class="grid">
     <div class="grid__item medium-up--three-quarters small-one-whole post">
-      <div class="post-title" fxLayout="row" fxLayoutAlign="space-between top">
-        <div>
-          <div *ngIf="publishedTimestamp" class="date">
-            <div *ngIf="(publishedTimestamp | amDifference: today) >= 0">
-              Going live: {{publishedTimestamp | amCalendar}}
-            </div>
-            <div *ngIf="(publishedTimestamp | amDifference: today) < 0">
-              Published: {{publishedTimestamp | amCalendar}}
-            </div>
-          </div>
-          <h1>{{post.name}}</h1>
-          <h2><em>at</em> {{post.organizationName}} <span class="location"><i class="fa fa-location-pin"></i> {{post.location.name}}</span>
-          </h2>
-        </div>
-        <div fxLayout="column" fxLayoutAlign="space-between flex-end" class="admin-actions">
-          <div *ngIf="canEdit">
-            <a pButton routerLink="edit" class="ui-button-info" icon="fa-gear"></a>
-          </div>
-          <b-resource-actions-box [resource]="post" class="admin-actions" fxLayout="row"
-                                  fxLayoutAlign="space-between center"></b-resource-actions-box>
-        </div>
-      </div>
       <div class="post-content">
         <div class=" post-content--excerpt">
           {{post.summary}}

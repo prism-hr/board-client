@@ -5,9 +5,6 @@
         <h1>
           {{department.name}}
         </h1>
-        <div *ngIf="canEdit" class="admin-actions">
-          <a pButton routerLink="edit" class="ui-button-info" icon="fa-gear"></a>
-        </div>
       </div>
       <div class="summary-holder">
         <div *ngIf="department.summary">

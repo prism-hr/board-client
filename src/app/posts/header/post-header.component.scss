@@ -1,0 +1,40 @@
+@import '../../../assets/variables';
+
+.post-title {
+  background: $greyBackground;
+  border-top: 1px solid $fadeGrey;
+  border-bottom: 1px solid $fadeGrey;
+  padding: 10px;
+  .date {
+    font-size: 0.9em;
+  }
+  h1 {
+    font-size: 1.5em;
+    color: $uclred;
+    padding: 0 0 7px 0;
+  }
+  h2 {
+    font-size: 1.2em;
+    padding: 0 0 5px;
+    em {
+      font-weight: 400;
+      color: $activeGrey;
+    }
+  }
+
+  .admin-actions {
+    font-size: 0.8rem;
+    min-width: 187px;
+    text-align: right;
+  }
+
+  .location {
+    padding-left: 15px;
+    font-weight: 400;
+    font-size: 0.9em;
+    padding-top: 5px;
+    i {
+      color: $goldColor;
+    }
+  }
+}
