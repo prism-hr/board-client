@@ -13,7 +13,7 @@ import Action = b.Action;
         <a pButton class="ui-button-info small-xs" routerLink="edit" [label]="'actionView.' + actionView | translate"></a>
       </span>
       <span *ngFor="let action of actions">
-        <button pButton class="ui-button-warning small-xs" (click)="openActionDialog(action)"
+        <button pButton class="ui-button-warning small" (click)="openActionDialog(action)"
               [label]="'definitions.action.' + action | translate"></button>
       </span>
     </div>

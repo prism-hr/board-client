@@ -184,6 +184,12 @@ section {
     padding-top: $section-spacing;
     padding-bottom: $section-spacing;
   }
+  &.edit-post {
+    padding-top:0;
+    @include media-query($medium-up) {
+      padding-top:0;
+    }
+  }
 }
 
 .main-content {
@@ -243,4 +249,15 @@ control-messages {
 }
 .logo-container {
   display: flex;
+}
+.ql-editor-view {
+  p {
+    margin: 0 !important;
+    line-height: 1.3rem;
+  }
+}
+.inside-tabs {
+  .ui-tabmenu {
+    border-bottom: 1px solid $fadeGrey !important;
+  }
 }

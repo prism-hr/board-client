@@ -10,7 +10,7 @@ import PostRepresentation = b.PostRepresentation;
   template: `
     <section class="section">
       <b-post-header [post]="post"></b-post-header>
-      <p-tabMenu *ngIf="canEdit" [model]="items"></p-tabMenu>
+      <p-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></p-tabMenu>
       <router-outlet></router-outlet>
     </section>
   `,
