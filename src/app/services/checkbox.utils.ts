@@ -1,7 +1,7 @@
 export class CheckboxUtils {
 
   static toFormFormat<T>(availableValues: T[], currentValues: T[]) {
-    return availableValues.map(c => currentValues.includes(c))
+    return availableValues.map(c => currentValues ? currentValues.includes(c) : false)
   }
 
   static fromFormFormat<T>(availableValues: T[], currentValues: boolean[]) {

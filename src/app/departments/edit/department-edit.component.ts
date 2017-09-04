@@ -43,8 +43,9 @@ export class DepartmentEditComponent implements OnInit {
     this.route.parent.data.subscribe(data => {
       this.department = data['department'];
       this.departmentForm.reset(_.pick(this.department, [...this.formProperties, 'handle']));
+      const formFormat = CheckboxUtils.toFormFormat(this.availableMemberCategories, this.department && this.department.memberCategories);
       (<FormArray>this.departmentForm.get('memberCategories'))
-        .setValue(CheckboxUtils.toFormFormat(this.availableMemberCategories, this.department.memberCategories));
+        .setValue(formFormat);
       this.departmentForm.get('handle').setValidators(this.department && [Validators.required, Validators.maxLength(25)]);
       this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/';
       this.actionView = this.department ? 'EDIT' : 'CREATE';

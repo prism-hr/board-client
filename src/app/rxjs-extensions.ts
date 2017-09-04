@@ -5,3 +5,4 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/combineLatest';

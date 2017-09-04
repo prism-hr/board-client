@@ -1,12 +1,23 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ResourceService} from '../../services/resource.service';
+import {UserService} from '../../services/user.service';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
-import {UserService} from "../../services/user.service";
 
 @Component({
-  templateUrl: 'department-view.component.html',
+  template: `
+    <section>
+      <div fxLayout="row" fxLayoutAlign="space-between top" class="section-header">
+        <h2>Boards</h2>
+      </div>
+      <div class="list-container">
+        <b-board-item [board]="board" *ngFor="let board of boards" class="list-container__item"></b-board-item>
+      </div>
+    </section>
+  
+    <b-resource-timeline *ngIf="department" [resource]="department"></b-resource-timeline>
+`,
   styleUrls: ['department-view.component.scss']
 })
 export class DepartmentViewComponent implements OnInit {

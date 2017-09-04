@@ -226,7 +226,6 @@ import {PostHeaderComponent} from './posts/header/post-header.component';
                   {
                     path: '',
                     component: DepartmentTabsComponent,
-                    canActivate: [AuthGuard],
                     children: [
                       {
                         path: '',
@@ -234,11 +233,13 @@ import {PostHeaderComponent} from './posts/header/post-header.component';
                       },
                       {
                         path: 'edit',
-                        component: DepartmentEditComponent
+                        component: DepartmentEditComponent,
+                        canActivate: [AuthGuard]
                       },
                       {
                         path: 'users',
                         component: ResourceUsersComponent,
+                        canActivate: [AuthGuard],
                         resolve: {
                           users: ResourceUsersResolver
                         }
@@ -246,10 +247,10 @@ import {PostHeaderComponent} from './posts/header/post-header.component';
                       {
                         path: 'memberships',
                         component: DepartmentMembershipsComponent,
+                        canActivate: [AuthGuard],
                         resolve: {
                           memberships: DepartmentMembershipsResolverService
-                        },
-                        canActivate: [AuthGuard]
+                        }
                       }
 
                     ]
@@ -267,27 +268,29 @@ import {PostHeaderComponent} from './posts/header/post-header.component';
                 children: [
                   {
                     path: '',
-                    component: BoardViewComponent
-                  },
-                  {
-                    path: '',
                     component: BoardTabsComponent,
-                    canActivate: [AuthGuard],
                     children: [
                       {
+                        path: '',
+                        component: BoardViewComponent
+                      },
+                      {
                         path: 'edit',
-                        component: BoardEditComponent
+                        component: BoardEditComponent,
+                        canActivate: [AuthGuard]
                       },
                       {
                         path: 'users',
                         component: ResourceUsersComponent,
+                        canActivate: [AuthGuard],
                         resolve: {
                           users: ResourceUsersResolver
                         }
                       },
                       {
                         path: 'badge',
-                        component: ResourceBadgeComponent
+                        component: ResourceBadgeComponent,
+                        canActivate: [AuthGuard]
                       }
                     ]
                   },
