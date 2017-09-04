@@ -23,8 +23,8 @@
   </div>
   <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
     <div *ngFor="let resourceUser of users" class="grid__item small--one-whole medium-up--one-third">
-      <md-card class="users">
-        <md-card-header fxLayout="row" fxLayoutAlign="space-between center" (click)="openUserSettings(resourceUser)">
+      <md-card>
+        <md-card-header fxLayout="x" fxLayoutAlign="space-between center" (click)="openUserSettings(resourceUser)">
           <div md-card-avatar class="avatar"
                [ngClass]="{'no-background': resourceUser.user.documentImage}">
             <b-image [publicId]="resourceUser.user.documentImage?.cloudinaryId"
@@ -46,10 +46,6 @@
             </div>
           </md-card-title>
         </md-card-header>
-        <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
-          <button pButton (click)="removeUser(resourceUser)" class="ui-button-secondary" label="Remove"
-                  [disabled]="loading || (lastAdminRole && isAdmin(resourceUser))"></button>
-        </md-card-actions>
       </md-card>
 
     </div>

@@ -20,8 +20,11 @@ import ResourceUserRepresentation = b.ResourceUserRepresentation;
 
     <md-dialog-actions fxLayout="row" fxLayoutAlign="space-between">
       <button pButton class="ui-button-secondary" label="Cancel" md-dialog-close></button>
-      <button pButton class="ui-button-warning" [disabled]="userForm.invalid"
-              label="Save" (click)="save()"></button>
+      <div>
+        <button pButton (click)="removeUser(resourceUser)" class="ui-button-secondary" label="Remove"
+                [disabled]="lastAdminRole"></button>
+        <button pButton class="ui-button-warning" [disabled]="userForm.invalid" label="Save" (click)="save()"></button>
+      </div>
     </md-dialog-actions>
   `
 })
@@ -59,7 +62,16 @@ export class ResourceUserEditDialogComponent implements OnInit {
     this.resourceService.updateResourceUser(this.resource, this.resourceUser.user, {roles})
       .subscribe(resourceUser => {
         this.progress = false;
-        this.dialogRef.close(resourceUser);
+        this.dialogRef.close({action: 'edited', resourceUser});
+      });
+  }
+
+  removeUser(resourceUser) {
+    this.progress = true;
+    this.resourceService.removeUser(this.resource, resourceUser.user)
+      .subscribe(() => {
+        this.progress = false;
+        this.dialogRef.close({action: 'deleted', resourceUser: this.resourceUser});
       });
   }
 

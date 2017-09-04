@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Data} from '@angular/router';
+import {combineLatest} from 'rxjs/observable/combineLatest';
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import UserRoleRepresentation = b.UserRoleRepresentation;
 
@@ -16,18 +17,10 @@ export class DepartmentMembershipsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.parent.data
-      .map(data => {
-        return data['department'];
-      })
-      .flatMap(department => {
-        return this.route.data.map(data => {
-          return [department, data['memberships']];
-        });
-      })
-      .subscribe(([department, memberships]) => {
-        this.department = department;
-        this.memberships = memberships;
+    combineLatest(this.route.parent.data, this.route.data)
+      .subscribe(([parentData, data]: [Data, Data]) => {
+        this.department = parentData['department'];
+        this.memberships = data['memberships'];
       });
   }
 

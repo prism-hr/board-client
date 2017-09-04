@@ -73,24 +73,19 @@ export class ResourceUsersComponent implements OnInit {
       });
   }
 
-  removeUser(resourceUser) {
-    this.resourceService.removeUser(this.resource, resourceUser.user)
-      .subscribe(() => {
-        this.loading = false;
-        const idx = this.users.indexOf(resourceUser);
-        this.users.splice(idx, 1);
-        this.calculateAdminsCount();
-      });
-  }
 
   openUserSettings(resourceUser) {
     const dialogRef = this.dialog.open(ResourceUserEditDialogComponent,
       {width: '80%', panelClass: 'user-settings', data: {resource: this.resource, lastAdminRole: this.lastAdminRole && this.isAdmin(resourceUser), resourceUser}});
-    dialogRef.afterClosed().subscribe((savedResourceUser: ResourceUserRepresentation) => {
-      if (savedResourceUser) {
-        this.preprocessUser(savedResourceUser);
-        const idx = this.users.findIndex(ru => ru.user.id === savedResourceUser.user.id);
-        this.users.splice(idx, 1, savedResourceUser);
+    dialogRef.afterClosed().subscribe(({action, resourceUser}: {action : string, resourceUser: ResourceUserRepresentation}) => {
+      if (action === 'edited') {
+        this.preprocessUser(resourceUser);
+        const idx = this.users.findIndex(ru => ru.user.id === resourceUser.user.id);
+        this.users.splice(idx, 1, resourceUser);
+        this.calculateAdminsCount();
+      } else if (action === 'deleted') {
+        const idx = this.users.findIndex(ru => ru.user.id === resourceUser.user.id);
+        this.users.splice(idx, 1);
         this.calculateAdminsCount();
       }
     });
