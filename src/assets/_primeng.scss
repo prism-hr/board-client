@@ -1557,7 +1557,6 @@ button.ui-button::-moz-focus-inner {
   }
   .ui-dropdown-label {
     display: block;
-    border: none;
     white-space: nowrap;
     overflow: hidden;
     font-weight: normal;
@@ -3340,6 +3339,8 @@ button.ui-button::-moz-focus-inner {
       display: block;
     }
   }
+}
+p-radiobutton {
   &.administrator, &.author, &.member {
     label:after{
       content: '';
@@ -3358,8 +3359,6 @@ button.ui-button::-moz-focus-inner {
     background: $uclfooter;
   }
 }
-md-dialog-container .definitions{border-top: 1px solid $uclfooter;}
-
 .form, form {
   .ui-radiobutton-inline {
     clear: both;
@@ -3372,6 +3371,7 @@ md-dialog-container .definitions{border-top: 1px solid $uclfooter;}
       margin-right:15px;
       padding-left:4px;
     }
+
   }
   .ui-radiobutton-icon {
     display: block;
