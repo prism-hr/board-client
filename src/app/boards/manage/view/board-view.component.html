@@ -4,10 +4,13 @@
       <div class="summary-holder">
         {{board.summary}}
       </div>
+      <div class="category-list">
+        <span class="ui-chips-token ui-corner-all" *ngFor="let category of board.postCategories">{{category}}</span>
+      </div>
     </div>
     <div class="grid__item medium-up--one-quarter small-one-whole resource-logo-holder">
       <md-card>
-        <md-card-header class="header-full">
+        <md-card-header class="header-full" *ngIf="canEdit">
           <md-card-title>
             <h3>Board Logo</h3>
           </md-card-title>
@@ -19,9 +22,6 @@
                    height="150" width="200" crop="mfit"></b-image>
         </md-card-content>
       </md-card>
-      <div class="category-list">
-        <span class="ui-chips-token ui-corner-all" *ngFor="let category of board.postCategories">{{category}}</span>
-      </div>
     </div>
   </div>
 </section>

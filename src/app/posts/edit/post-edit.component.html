@@ -1,12 +1,8 @@
 <section class="section" [ngClass]="{'edit-post':post}">
+  <div *ngIf="!post" class="section-header">
+    <h2>Create a new post</h2>
+  </div>
   <md-card>
-    <md-card-header *ngIf="!post" class="header-full">
-      <md-card-title>
-        <div>
-          <h2>Create a new post</h2>
-        </div>
-      </md-card-title>
-    </md-card-header>
     <form [formGroup]="postForm" novalidate>
       <md-card-content>
         <div class="grid">

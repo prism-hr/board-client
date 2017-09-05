@@ -1,14 +1,10 @@
 <section>
-  <form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
-
+  <div class="section-header">
+    <h2>Create a new Board</h2>
+  </div>
     <md-card>
-      <md-card-header class="header-full">
-        <md-card-title>
-          <h2>Create a new Board</h2>
-        </md-card-title>
-      </md-card-header>
+      <form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
       <md-card-content>
-
         <div class="grid" fxLayout="row">
           <div class="grid__item small--one-whole medium-up--two-thirds">
             <div class="grid">
@@ -84,6 +80,6 @@
            class="ui-button-secondary" label="Cancel"></a>
         <button pButton class="ui-button-success" label="Submit"></button>
       </md-card-actions>
+      </form>
     </md-card>
-  </form>
 </section>
