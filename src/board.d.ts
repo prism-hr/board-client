@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-09-01 16:21:39.
+// Generated using typescript-generator version 1.23.311 on 2017-09-05 11:10:52.
 
 declare namespace b {
 
@@ -102,15 +102,6 @@ declare namespace b {
     coveringNote?: string;
   }
 
-  interface ResourceFilterDTO {
-    scope?: Scope;
-    id?: number;
-    handle?: string;
-    parentId?: number;
-    includePublicResources?: boolean;
-    orderStatement?: string;
-  }
-
   interface ResourcePatchDTO<T> {
     name?: string;
     summary?: string;
@@ -171,6 +162,7 @@ declare namespace b {
     id?: number;
     resource?: ResourceRepresentation<any>;
     userRole?: UserRoleRepresentation;
+    resourceEvent?: ResourceEventRepresentation;
     activity?: Activity;
   }
 
@@ -223,6 +215,7 @@ declare namespace b {
   }
 
   interface ResourceEventRepresentation {
+    id?: number;
     event?: ResourceEvent;
     user?: UserRepresentation;
     ipAddress?: string;
@@ -231,6 +224,11 @@ declare namespace b {
     coveringNote?: string;
     createdTimestamp?: LocalDateTime;
     viewed?: boolean;
+  }
+
+  interface ResourceMembershipRepresentation {
+    memberCount?: number;
+    requests?: UserRoleRepresentation[];
   }
 
   interface ResourceOperationRepresentation {
@@ -284,16 +282,16 @@ declare namespace b {
 
   interface DocumentDefinition {
     fileName?: string;
-    cloudinaryId?: string;
     cloudinaryUrl?: string;
+    cloudinaryId?: string;
   }
 
   interface LocationDefinition {
     name?: string;
     latitude?: number;
-    longitude?: number;
     googleId?: string;
     domicile?: string;
+    longitude?: number;
   }
 
   interface LocalDateTime extends Temporal, TemporalAdjuster, ChronoLocalDateTime<LocalDate>, Serializable {
@@ -305,8 +303,8 @@ declare namespace b {
     year?: number;
     hour?: number;
     minute?: number;
-    nano?: number;
     second?: number;
+    nano?: number;
   }
 
   interface LocalDate extends Temporal, TemporalAdjuster, ChronoLocalDate, Serializable {
@@ -359,15 +357,13 @@ declare namespace b {
   interface AbstractChronology extends Chronology {
   }
 
-  type Action = 'VIEW' | 'PURSUE' | 'EDIT' | 'EXTEND' | 'ACCEPT' | 'SUSPEND' | 'CORRECT' | 'REJECT' | 'PUBLISH' | 'RETIRE' | 'RESTORE' | 'WITHDRAW';
+  type Action = 'VIEW' | 'PURSUE' | 'EDIT' | 'EXTEND' | 'ACCEPT' | 'SUSPEND' | 'CORRECT' | 'REJECT' | 'PUBLISH' | 'RETIRE' | 'RESTORE' | 'WITHDRAW' | 'ARCHIVE';
 
-  type State = 'DRAFT' | 'SUSPENDED' | 'PENDING' | 'ACCEPTED' | 'EXPIRED' | 'REJECTED' | 'WITHDRAWN' | 'PREVIOUS';
+  type State = 'DRAFT' | 'SUSPENDED' | 'PENDING' | 'ACCEPTED' | 'EXPIRED' | 'REJECTED' | 'WITHDRAWN' | 'ARCHIVED' | 'PREVIOUS';
 
   type MemberCategory = 'UNDERGRADUATE_STUDENT' | 'MASTER_STUDENT' | 'RESEARCH_STUDENT' | 'RESEARCH_STAFF';
 
   type ExistingRelation = 'STAFF' | 'STUDENT' | 'COLLABORATOR' | 'EMPLOYER' | 'OTHER';
-
-  type Scope = 'DEPARTMENT' | 'BOARD' | 'POST';
 
   type DocumentRequestState = 'DISPLAY_FIRST' | 'DISPLAY_AGAIN' | 'DISPLAY_NEVER';
 
@@ -376,6 +372,8 @@ declare namespace b {
   type BadgeType = 'SIMPLE' | 'LIST';
 
   type BadgeListType = 'STATIC' | 'SLIDER';
+
+  type Scope = 'DEPARTMENT' | 'BOARD' | 'POST';
 
   type Activity = 'ACCEPT_BOARD_ACTIVITY' | 'ACCEPT_POST_ACTIVITY' | 'CORRECT_POST_ACTIVITY' | 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' | 'NEW_BOARD_PARENT_ACTIVITY' | 'NEW_POST_PARENT_ACTIVITY' | 'PUBLISH_POST_ACTIVITY' | 'PUBLISH_POST_MEMBER_ACTIVITY' | 'REJECT_BOARD_ACTIVITY' | 'REJECT_POST_ACTIVITY' | 'RESET_PASSWORD_ACTIVITY' | 'RESTORE_BOARD_ACTIVITY' | 'RESTORE_POST_ACTIVITY' | 'RETIRE_POST_ACTIVITY' | 'SUSPEND_POST_ACTIVITY' | 'RESPOND_POST_ACTIVITY';
 

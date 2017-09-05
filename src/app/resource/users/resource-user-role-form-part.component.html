@@ -9,14 +9,17 @@
           <control-messages [control]="parentForm.get('roles').get('' + i).get('checked')"></control-messages>
         </div>
 
-        <div *ngIf="parentForm.get('roles').get('' + i).get('checked').value" class="definitions">
+        <div
+          *ngIf="parentForm.get('roles').get('' + i).get('checked').value && parentForm.get('roles').get('' + i).get('roleId').value === 'MEMBER'"
+          class="definitions">
           <div class="ui-checkbox-inline">
             <p-checkbox label="No expiry date" formControlName="noExpiryDate" binary="true"
                         (onChange)="noExpiryDateChanged(i)"></p-checkbox>
           </div>
 
           <div *ngIf="!parentForm.get('roles').get('' + i).get('noExpiryDate').value" class="input-holder">
-            <label style="display: block">{{'definitions.role.' + availableRoles[i] | translate}} expiration date:</label>
+            <label style="display: block">{{'definitions.role.' + availableRoles[i] | translate}} expiration
+              date:</label>
             <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string"></p-calendar>
             <control-messages
               [control]="parentForm.get('roles').get('' + i).get('expiryDate')"></control-messages>

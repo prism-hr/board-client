@@ -61,10 +61,12 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
   }
 
   roleChanged(index: number) {
-    const checked = this.parentForm.get('roles').get('' + index).get('checked').value;
+    const roleGroup = this.parentForm.get('roles').get('' + index);
+    const checked = roleGroup.get('checked').value;
     const role = this.availableRoles[index];
+    roleGroup.get('noExpiryDate').setValue(checked && role !== 'MEMBER');
     if (role === 'MEMBER') {
-      const categoryControl = this.parentForm.get('roles').get('' + index).get('category');
+      const categoryControl = roleGroup.get('category');
       categoryControl.setValidators(checked && Validators.required);
     }
     this.refreshValidators(index);

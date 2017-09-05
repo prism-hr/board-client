@@ -24,4 +24,7 @@ export class DepartmentMembershipsComponent implements OnInit {
       });
   }
 
+  openMembership(membership: UserRoleRepresentation) {
+
+  }
 }
