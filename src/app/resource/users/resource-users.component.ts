@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {ResourceService} from '../../services/resource.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MdDialog} from '@angular/material';
+import {ActivatedRoute} from '@angular/router';
+import * as _ from 'lodash';
+import {ResourceService} from '../../services/resource.service';
 import {ValidationUtils} from '../../validation/validation.utils';
 import {ResourceUserEditDialogComponent} from './resource-user-edit-dialog.component';
-import {MdDialog} from '@angular/material';
-import * as _ from 'lodash';
-import ResourceUserRepresentation = b.ResourceUserRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
 import ResourceUserDTO = b.ResourceUserDTO;
+import ResourceUserRepresentation = b.ResourceUserRepresentation;
 
 @Component({
   templateUrl: 'resource-users.component.html',
@@ -53,15 +53,15 @@ export class ResourceUsersComponent implements OnInit {
       return;
     }
     this.loading = true;
-    const formValue = this.userForm.value;
-    const userDTO: ResourceUserDTO = {user: _.pick(formValue.user, ['id', 'givenName', 'surname', 'email'])};
-    userDTO.roles = formValue.roles
-      .filter(roleDef => roleDef.checked)
-      .map(roleDef => ({
-        role: roleDef.roleId,
-        expiryDate: roleDef.expiryDate,
-        categories: [roleDef.category]
-      }));
+    const userValue = this.userForm.get('user').value;
+    const userDTO: ResourceUserDTO = {user: _.pick(userValue, ['id', 'givenName', 'surname', 'email'])};
+    const roleDef = this.userForm.get('roleGroup').value;
+    userDTO.roles = [{
+      role: roleDef.role,
+      expiryDate: roleDef.expiryDate,
+      categories: [roleDef.category]
+    }];
+
     this.resourceService.addUser(this.resource, userDTO)
       .subscribe(user => {
         this.loading = false;
@@ -73,13 +73,16 @@ export class ResourceUsersComponent implements OnInit {
       });
   }
 
-
   openUserSettings(resourceUser) {
     const dialogRef = this.dialog.open(ResourceUserEditDialogComponent,
-      {width: '80%', panelClass: 'user-settings', data: {resource: this.resource, lastAdminRole: this.lastAdminRole && this.isAdmin(resourceUser), resourceUser}});
+      {
+        width: '80%',
+        panelClass: 'user-settings',
+        data: {resource: this.resource, lastAdminRole: this.lastAdminRole && this.isAdmin(resourceUser), resourceUser}
+      });
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-        const {action, resourceUser}: {action : string, resourceUser: ResourceUserRepresentation} = result;
+      if (result) {
+        const {action, resourceUser}: { action: string, resourceUser: ResourceUserRepresentation } = result;
         if (action === 'edited') {
           this.preprocessUser(resourceUser);
           const idx = this.users.findIndex(ru => ru.user.id === resourceUser.user.id);

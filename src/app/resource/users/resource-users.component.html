@@ -1,6 +1,6 @@
-<md-card  *ngIf="!bulkMode">
+<md-card *ngIf="!bulkMode">
   <form [formGroup]="userForm" (ngSubmit)="createNewUser()" autocomplete="off" novalidate>
-  <md-card-content>
+    <md-card-content>
       <h4>New User</h4>
       <div formGroupName="user" class="grid">
         <b-user-lookup [parentForm]="userForm.get('user')" [resource]="resource"></b-user-lookup>
@@ -8,9 +8,9 @@
       <div *ngIf="resource" class="grid">
         <b-resource-user-role-form-part [resource]="resource" [parentForm]="userForm"></b-resource-user-role-form-part>
       </div>
-  </md-card-content>
+    </md-card-content>
     <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
-      <button pButton class="ui-button-secondary" (click)="bulkMode = true" label="Add users in bulk"></button>
+      <button pButton class="ui-button-secondary" (click)="bulkMode = true" label="Add members in bulk"></button>
       <button pButton class="ui-button-success" type="submit" label="Add user" fxFlexOrder="1"></button>
     </md-card-actions>
   </form>
@@ -19,36 +19,43 @@
 </b-resource-users-bulk>
 
 
-  <div class="section-header">
-    <h1>Users</h1>
-  </div>
-  <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
-    <div *ngFor="let resourceUser of users" class="grid__item small--one-whole medium-up--one-third">
-      <md-card class="no-content users">
-        <md-card-header fxLayout="row" fxLayoutAlign="space-between center" (click)="openUserSettings(resourceUser)">
-          <div md-card-avatar class="avatar"
-               [ngClass]="{'no-background': resourceUser.user.documentImage}">
-            <b-image [publicId]="resourceUser.user.documentImage?.cloudinaryId"
-                     gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec" *ngIf="resourceUser.user.documentImage"></b-image>
-            <i *ngIf="!resourceUser.user.documentImage" class="fa-user"></i>
-          </div>
-          <md-card-title>
-            <div>
-              <h3>
-                {{resourceUser.user.givenName}} {{resourceUser.user.surname}}
-              </h3>
-              <div class="role-item-container">
-                <div class="role-indicator {{ userRole.role | lowercase}}" [ngClass]="{'expire' : userRole.expiryDate}"  *ngFor="let userRole of resourceUser.roles">
-                  <span class="role-item" pTooltip="{{'definitions.role.' + userRole.role | translate}} - {{'definitions.memberCategory.' + userRole.categories[0] | translate}}" tooltipPosition="top" *ngIf="userRole.role === 'MEMBER'"></span>
-                  <span class="role-item" pTooltip="{{'definitions.role.' + userRole.role | translate}}" tooltipPosition="top" *ngIf="userRole.role != 'MEMBER'"></span>
-                  <span class="role-expire" *ngIf="userRole.expiryDate" pTooltip="Expiry date: {{userRole.expiryDate | date : 'shortDate'}}" tooltipPosition="bottom"></span>
-                </div>
+<div class="section-header">
+  <h1>Users</h1>
+</div>
+<div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
+  <div *ngFor="let resourceUser of users" class="grid__item small--one-whole medium-up--one-third">
+    <md-card class="no-content users">
+      <md-card-header fxLayout="row" fxLayoutAlign="space-between center" (click)="openUserSettings(resourceUser)">
+        <div md-card-avatar class="avatar"
+             [ngClass]="{'no-background': resourceUser.user.documentImage}">
+          <b-image [publicId]="resourceUser.user.documentImage?.cloudinaryId"
+                   gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec"
+                   *ngIf="resourceUser.user.documentImage"></b-image>
+          <i *ngIf="!resourceUser.user.documentImage" class="fa-user"></i>
+        </div>
+        <md-card-title>
+          <div>
+            <h3>
+              {{resourceUser.user.givenName}} {{resourceUser.user.surname}}
+            </h3>
+            <div class="role-item-container">
+              <div class="role-indicator {{ userRole.role | lowercase}}" [ngClass]="{'expire' : userRole.expiryDate}"
+                   *ngFor="let userRole of resourceUser.roles">
+                <span class="role-item"
+                      pTooltip="{{'definitions.role.' + userRole.role | translate}} - {{'definitions.memberCategory.' + userRole.categories[0] | translate}}"
+                      tooltipPosition="top" *ngIf="userRole.role === 'MEMBER'"></span>
+                <span class="role-item" pTooltip="{{'definitions.role.' + userRole.role | translate}}"
+                      tooltipPosition="top" *ngIf="userRole.role != 'MEMBER'"></span>
+                <span class="role-expire" *ngIf="userRole.expiryDate"
+                      pTooltip="Expiry date: {{userRole.expiryDate | date : 'shortDate'}}"
+                      tooltipPosition="bottom"></span>
               </div>
             </div>
-          </md-card-title>
-        </md-card-header>
-      </md-card>
+          </div>
+        </md-card-title>
+      </md-card-header>
+    </md-card>
 
-    </div>
   </div>
+</div>
 

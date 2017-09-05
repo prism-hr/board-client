@@ -1,58 +1,59 @@
 <md-card>
-<form class="form" [formGroup]="usersForm">
-  <md-card-content>
-  <h4>Bulk Users</h4>
-  <div class="grid">
-    <div class="grid__item one-whole">
-      <label for="csv-uploader-input" ngFileDrop
-             (uploadOutput)="onUploadOutput($event)"
-             [uploadInput]="uploadInput"
-             [ngClass]="{'dragover': isDragOver}"
-             class="drop-area">
-        <span>Click to upload CSV file</span>
-      </label>
-      <input #csvUploaderInput type="file" ngFileSelect
-             (uploadOutput)="onUploadOutput($event)"
-             [uploadInput]="uploadInput"
-             id="csv-uploader-input" style="display:none"/>
-    </div>
-    <div class="grid__item one-half">
-      <label>The first line will contain headers</label>
-      <p-checkbox formControlName="firstLineHeader" [binary]="true" (onChange)="computeUsers()"></p-checkbox>
-    </div>
-    <div class="grid__item one-half" style="text-align: right">
-      <a pButton class="ui-button-secondary" href="assets/user-list.csv" label="Download CSV template"></a>
-    </div>
-    <div class="grid__item one-whole">
-      <div *ngIf="users?.length > 0" class="user-bulk-table">
-        <p-dataTable [value]="users" [responsive]="true">
-          <p-column field="givenName" header="First name"></p-column>
-          <p-column field="surname" header="Last name"></p-column>
-          <p-column field="email" header="Email"></p-column>
-        </p-dataTable>
-      </div>
-      <div *ngIf="userErrors?.length > 0">
-        <div *ngFor="let error of userErrors" class="ui-message ui-messages-error ui-corner-all">
-          <i class="fa fa-close"></i> Invalid file{{error.line && (' in line ' + error.line)}}: {{error.message}}
+  <form class="form" [formGroup]="usersForm">
+    <md-card-content>
+      <h4>Bulk Users</h4>
+      <div class="grid">
+        <div class="grid__item one-whole">
+          <label for="csv-uploader-input" ngFileDrop
+                 (uploadOutput)="onUploadOutput($event)"
+                 [uploadInput]="uploadInput"
+                 [ngClass]="{'dragover': isDragOver}"
+                 class="drop-area">
+            <span>Click to upload CSV file</span>
+          </label>
+          <input #csvUploaderInput type="file" ngFileSelect
+                 (uploadOutput)="onUploadOutput($event)"
+                 [uploadInput]="uploadInput"
+                 id="csv-uploader-input" style="display:none"/>
         </div>
-      </div>
-    </div>
+        <div class="grid__item one-half">
+          <label>The first line will contain headers</label>
+          <p-checkbox formControlName="firstLineHeader" [binary]="true" (onChange)="computeUsers()"></p-checkbox>
+        </div>
+        <div class="grid__item one-half" style="text-align: right">
+          <a pButton class="ui-button-secondary" href="assets/user-list.csv" label="Download CSV template"></a>
+        </div>
+        <div class="grid__item one-whole">
+          <div *ngIf="users?.length > 0" class="user-bulk-table">
+            <p-dataTable [value]="users" [responsive]="true">
+              <p-column field="givenName" header="First name"></p-column>
+              <p-column field="surname" header="Last name"></p-column>
+              <p-column field="email" header="Email"></p-column>
+            </p-dataTable>
+          </div>
+          <div *ngIf="userErrors?.length > 0">
+            <div *ngFor="let error of userErrors" class="ui-message ui-messages-error ui-corner-all">
+              <i class="fa fa-close"></i> Invalid file{{error.line && (' in line ' + error.line)}}: {{error.message}}
+            </div>
+          </div>
+        </div>
 
-    <div *ngIf="users?.length > 0">
-      <div class="grid__item one-whole">
-        <label>Apply the following roles to all users:</label>
-      </div>
-      <b-resource-user-role-form-part [resource]="resource" [parentForm]="usersForm"></b-resource-user-role-form-part>
-    </div>
+        <div *ngIf="users?.length > 0">
+          <div class="grid__item one-whole">
+            <label>Apply the following roles to all users:</label>
+          </div>
+          <b-resource-user-role-form-part [resource]="resource" [parentForm]="usersForm"
+                                          roleType="MEMBER"></b-resource-user-role-form-part>
+        </div>
 
-  </div>
-  </md-card-content>
-  <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
-    <button pButton class="ui-button-success" (click)="submit()" label="Submit" fxFlexOrder="1"
-            [disabled]="!users || users.length === 0"></button>
-    <button pButton class="ui-button-secondary" (click)="closeBulkMode()" label="Add users individually"></button>
-  </md-card-actions>
-</form>
+      </div>
+    </md-card-content>
+    <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+      <button pButton class="ui-button-success" (click)="submit()" label="Submit" fxFlexOrder="1"
+              [disabled]="!users || users.length === 0"></button>
+      <button pButton class="ui-button-secondary" (click)="closeBulkMode()" label="Add users individually"></button>
+    </md-card-actions>
+  </form>
 </md-card>
 
 

@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
 import {ResourceService} from '../../services/resource.service';
 import ResourceRepresentation = b.ResourceRepresentation;
@@ -24,8 +24,8 @@ import ResourceUserRepresentation = b.ResourceUserRepresentation;
         <button pButton (click)="removeUser(resourceUser)" class="ui-button-secondary remove-user" label="Remove"
                 [disabled]="lastAdminRole" icon="fa-trash"></button>
       </div>
-        <button pButton class="ui-button-warning" [disabled]="userForm.invalid" label="Save" (click)="save()"></button>
-      
+      <button pButton class="ui-button-warning" label="Save" (click)="save()"></button>
+
     </md-dialog-actions>
   `
 })
@@ -42,24 +42,24 @@ export class ResourceUserEditDialogComponent implements OnInit {
     this.resource = data.resource;
     this.resourceUser = data.resourceUser;
     this.lastAdminRole = data.lastAdminRole;
-    this.userForm = this.fb.group({
-      roles: [[], Validators.required]
-    });
+    this.userForm = this.fb.group({});
   }
 
   ngOnInit(): void {
   }
 
   save(): void {
+    this.userForm['submitted'] = true;
+    if (this.userForm.invalid) {
+      return;
+    }
     this.progress = true;
-    const formValue = this.userForm.value;
-    const roles = formValue.roles
-      .filter(roleDef => roleDef.checked)
-      .map(roleDef => ({
-        role: roleDef.roleId,
-        expiryDate: roleDef.expiryDate,
-        categories: [roleDef.category]
-      }));
+    const roleDef = this.userForm.get('roleGroup').value;
+    const roles = [{
+      role: roleDef.role,
+      expiryDate: roleDef.expiryDate,
+      categories: [roleDef.category]
+    }];
     this.resourceService.updateResourceUser(this.resource, this.resourceUser.user, {roles})
       .subscribe(resourceUser => {
         this.progress = false;

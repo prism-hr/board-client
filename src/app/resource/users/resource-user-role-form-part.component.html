@@ -1,42 +1,34 @@
 <div [formGroup]="parentForm">
+  <div formGroupName="roleGroup" class="grid__item one-third">
+    <div *ngIf="availableRoles.length > 1">
+      <p-radioButton *ngFor="let role of availableRoles"
+                     [value]="role" [label]="'definitions.role.' + role | translate" name="role"
+                     formControlName="role"></p-radioButton>
+      <control-messages [control]="parentForm.get('roleGroup').get('role')"></control-messages>
+    </div>
 
-  <div formArrayName="roles">
-    <div *ngFor="let roleControl of roles.controls; let i=index" class="grid__item one-third">
-      <div [formGroupName]="i">
-        <div class="ui-checkbox-inline {{availableRoles[i] | lowercase}}">
-          <p-checkbox [label]="'definitions.role.' + availableRoles[i] | translate"
-                      formControlName="checked" binary="true" (onChange)="roleChanged(i)"></p-checkbox>
-          <control-messages [control]="parentForm.get('roles').get('' + i).get('checked')"></control-messages>
-        </div>
+    <div *ngIf="parentForm.get('roleGroup').get('role').value === 'MEMBER'" class="definitions">
+      <div class="ui-checkbox-inline">
+        <p-checkbox label="No expiry date" formControlName="noExpiryDate" binary="true"
+                    (onChange)="noExpiryDateChanged(i)"></p-checkbox>
+      </div>
 
-        <div
-          *ngIf="parentForm.get('roles').get('' + i).get('checked').value && parentForm.get('roles').get('' + i).get('roleId').value === 'MEMBER'"
-          class="definitions">
-          <div class="ui-checkbox-inline">
-            <p-checkbox label="No expiry date" formControlName="noExpiryDate" binary="true"
-                        (onChange)="noExpiryDateChanged(i)"></p-checkbox>
-          </div>
+      <div *ngIf="!parentForm.get('roleGroup').get('noExpiryDate').value" class="input-holder">
+        <label style="display: block">
+          {{'definitions.role.' + parentForm.get('roleGroup').get('role').value | translate}} expiration date:
+        </label>
+        <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string"></p-calendar>
+        <control-messages
+          [control]="parentForm.get('roleGroup').get('expiryDate')"></control-messages>
+      </div>
 
-          <div *ngIf="!parentForm.get('roles').get('' + i).get('noExpiryDate').value" class="input-holder">
-            <label style="display: block">{{'definitions.role.' + availableRoles[i] | translate}} expiration
-              date:</label>
-            <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string"></p-calendar>
-            <control-messages
-              [control]="parentForm.get('roles').get('' + i).get('expiryDate')"></control-messages>
-          </div>
-
-          <div *ngIf="availableRoles[i] === 'MEMBER'" class="members dropdown-select">
-            <label for="category">Specify member category</label>
-            <p-dropdown id="category" formControlName="category" [options]="memberCategoryOptions"
-                        placeholder="Select a category"></p-dropdown>
-            <control-messages
-              [control]="parentForm.get('roles').get('' + i).get('category')"></control-messages>
-          </div>
-        </div>
+      <div class="members dropdown-select">
+        <label for="category">Specify member category</label>
+        <p-dropdown id="category" formControlName="category" [options]="memberCategoryOptions"
+                    placeholder="Select a category"></p-dropdown>
+        <control-messages
+          [control]="parentForm.get('roleGroup').get('category')"></control-messages>
       </div>
     </div>
-  </div>
-  <div class="grid__item one-whole">
-    <control-messages [control]="parentForm.get('roles')"></control-messages>
   </div>
 </div>
