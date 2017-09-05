@@ -177,14 +177,19 @@ b-file-upload[type=avatar].avatar {
         background: $uclblue;
       }
     }
-    &.members, &.draft {
+    &.draft {
       .title {
         background: $uclblue2;
       }
     }
-    &.connections {
+    &.members {
       .title {
-        background: $uclgreen;
+        background: $uclfooter;
+      }
+    }
+    &.authors {
+      .title {
+        background: $uclblue3;
       }
     }
     &.reports {
@@ -200,6 +205,11 @@ b-file-upload[type=avatar].avatar {
     &.responses {
       .title {
         background: $fundingColor;
+      }
+    }
+    &.referral {
+      .title {
+        background: $programColor;
       }
     }
     &.extend {

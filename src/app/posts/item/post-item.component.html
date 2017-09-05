@@ -20,11 +20,18 @@
     <div class="boxes-list" fxLayout="row" fxLayoutAlign="space-between center">
       <div class="boxes-list__item views">
         <div class="title"><i class="fa-eye"></i> Views</div>
-        <span class="number">30</span>
+        <span class="number" *ngIf="post.viewCount">{{post.viewCount}}</span>
+        <span class="number" *ngIf="!post.viewCount">0</span>
       </div>
-      <div class="boxes-list__item responses">
+      <div class="boxes-list__item responses" *ngIf="post.applyEmail">
         <div class="title"><i class="fa-share-alt"></i> Responses</div>
-        <span class="number">30</span>
+        <span class="number" *ngIf="post.responseCount">{{post.responseCount}}</span>
+        <span class="number" *ngIf="!post.responseCount">0</span>
+      </div>
+      <div class="boxes-list__item referral" *ngIf="!post.applyEmail">
+        <div class="title"><i class="fa-share-alt"></i> Referral</div>
+        <span class="number" *ngIf="post.referralCount">{{post.referralCount}}</span>
+        <span class="number" *ngIf="!post.referralCount">0</span>
       </div>
       <div class="boxes-list__item {{ post.state | lowercase }}">
         <div class="title">

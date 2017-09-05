@@ -26,13 +26,15 @@
     <div class="boxes-list" fxLayout="row" fxLayoutAlign="space-between center">
       <div class="boxes-list__item posts">
         <div class="title"><i class="fa-book-open"></i> Post</div>
-        <span class="number">30</span>
+        <span class="number" *ngIf="board.postCount">{{board.postCount}}</span>
+        <span class="number" *ngIf="!board.postCount">0</span>
       </div>
-      <div class="boxes-list__item connections">
-        <div class="title"><i class="fa-share"></i> Connections</div>
-        <span class="number">30</span>
+      <div class="boxes-list__item authors">
+        <div class="title"><i class="fa-people"></i> Authors</div>
+        <span class="number" *ngIf="board.authorCount">{{board.authorCount}}</span>
+        <span class="number" *ngIf="!board.authorCount">0</span>
       </div>
-      <div class="boxes-list__item reports">
+      <div class="boxes-list__item reports hidden">
         <div class="title"><i class="fa-pie-chart"></i> Reports</div>
         <span class="number">30</span>
       </div>

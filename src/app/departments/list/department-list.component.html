@@ -29,15 +29,18 @@
             <div class="boxes-list" fxLayout="row" fxLayoutAlign="space-between center">
               <div class="boxes-list__item boards">
                 <div class="title"><i class="fa-notebook"></i> Boards</div>
-                <div class="number">30</div>
-              </div>
-              <div class="boxes-list__item posts">
-                <div class="title"><i class="fa-book-open"></i> Posts</div>
-                <span class="number">30</span>
+                <div class="number" *ngIf="department.boardCount">{{department.boardCount}}</div>
+                <div class="number" *ngIf="!department.boardCount">0</div>
               </div>
               <div class="boxes-list__item members">
                 <div class="title"><i class="fa-people"></i> Members</div>
-                <span class="number">30</span>
+                <div class="number" *ngIf="department.memberCount">{{department.memberCount}}</div>
+                <div class="number" *ngIf="!department.memberCount">0</div>
+              </div>
+              <div class="boxes-list__item {{ department.state | lowercase }}">
+                <div class="title">
+                  <i class="fa-{{ department.state | lowercase }}"></i> {{'definitions.state.' + department.state | translate}}
+                </div>
               </div>
             </div>
           </md-card-content>
