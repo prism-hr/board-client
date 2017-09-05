@@ -29,9 +29,13 @@
   }
   h1 {
     font-size: 1.5em;
-    font-weight: bold;
+    font-weight: 500;
     color: $uclred;
     padding: 7px 0;
+    small {
+      font-size:80%;
+      color: $activeGrey;
+    }
   }
 }
 .resource-logo-holder {

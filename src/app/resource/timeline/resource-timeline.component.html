@@ -1,5 +1,8 @@
+
 <section class="section" *ngIf="operations">
-  <h2>Timeline</h2>
+  <div class="section-header">
+    <h2>Timeline</h2>
+  </div>
   <ul>
     <li *ngFor="let operation of operations" class="action-{{ operation.action | lowercase }}">
       <time>

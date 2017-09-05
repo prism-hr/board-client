@@ -55,7 +55,7 @@
     },
     "role": {
       "ADMINISTRATOR": "Administrator",
-      "AUTHOR": "Author",
+      "AUTHOR": "Contributor",
       "MEMBER": "Member",
       "PUBLIC": "Public"
     },
