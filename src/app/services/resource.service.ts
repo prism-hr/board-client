@@ -2,7 +2,10 @@ import {Injectable} from '@angular/core';
 import {URLSearchParams} from '@angular/http';
 import * as _ from 'lodash';
 import {JwtHttp} from 'ng2-ui-auth';
+import {AsyncSubject} from 'rxjs/AsyncSubject';
 import {Observable} from 'rxjs/Observable';
+import {ReplaySubject} from 'rxjs/ReplaySubject';
+import {Subject} from 'rxjs/Subject';
 import Action = b.Action;
 import BoardDTO = b.BoardDTO;
 import BoardPatchDTO = b.BoardPatchDTO;
@@ -15,13 +18,10 @@ import ResourceOperationRepresentation = b.ResourceOperationRepresentation;
 import ResourcePatchDTO = b.ResourcePatchDTO;
 import ResourceRepresentation = b.ResourceRepresentation;
 import ResourceUserDTO = b.ResourceUserDTO;
-import ResourceUserRepresentation = b.ResourceUserRepresentation;
 import ResourceUsersDTO = b.ResourceUsersDTO;
-import UserRepresentation = b.UserRepresentation;
-import {Subject} from 'rxjs/Subject';
 import Scope = b.Scope;
-import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {AsyncSubject} from 'rxjs/AsyncSubject';
+import UserRepresentation = b.UserRepresentation;
+import UserRolesRepresentation = b.UserRolesRepresentation;
 
 @Injectable()
 export class ResourceService {
@@ -108,7 +108,7 @@ export class ResourceService {
     return this.http.get('/api/departments', {search: params}).map(res => res.json());
   }
 
-  getResourceUsers(scope: string, id: number): Observable<ResourceUserRepresentation[]> {
+  getResourceUsers(scope: string, id: number): Observable<UserRolesRepresentation> {
     return this.http.get('/api/' + scope + 's' + '/' + id + '/users').map(res => res.json());
   }
 

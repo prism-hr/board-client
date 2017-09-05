@@ -4,7 +4,6 @@ import {TranslateService} from '@ngx-translate/core';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
-import ResourceUserRepresentation = b.ResourceUserRepresentation;
 import Role = b.Role;
 import UserRoleRepresentation = b.UserRoleRepresentation;
 
@@ -17,7 +16,7 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
 
   @Input() resource: ResourceRepresentation<any> & {};
   @Input() parentForm: FormGroup;
-  @Input() resourceUser: ResourceUserRepresentation & {};
+  @Input() userRole: UserRoleRepresentation & {};
   @Input() lastAdminRole: boolean;
   @Input() roleType: 'STAFF' | 'MEMBER';
 
@@ -27,8 +26,8 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
   constructor(private fb: FormBuilder, private translate: TranslateService) {
   }
 
-  get roles(): FormArray {
-    return this.parentForm.get('roles') as FormArray;
+  get roleGroup(): FormArray {
+    return this.parentForm.get('roleGr') as FormArray;
   };
 
   ngOnInit() {
@@ -46,22 +45,21 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
       this.availableRoles = ['ADMINISTRATOR', 'AUTHOR', 'MEMBER'];
     }
 
-    const userRole: UserRoleRepresentation = this.resourceUser ? this.resourceUser.roles[0] : null;
-    let role = userRole && userRole.role;
-    if(!role && this.availableRoles.length === 1) {
+    let role = this.userRole && this.userRole.role;
+    if (!role && this.availableRoles.length === 1) {
       role = this.availableRoles[0];
     }
 
     this.parentForm.setControl('roleGroup', this.fb.group({
       role: [role, this.lastAdminRole && role === 'ADMINISTRATOR' && this.lastAdminValidator],
-      noExpiryDate: [userRole && !userRole.expiryDate],
-      expiryDate: [userRole && userRole.expiryDate],
-      category: [userRole && userRole.categories && userRole.categories[0]]
+      noExpiryDate: [!this.userRole || !this.userRole.expiryDate],
+      expiryDate: [this.userRole && this.userRole.expiryDate],
+      category: [this.userRole && this.userRole.categories && this.userRole.categories[0]]
     }));
 
     this.parentForm.get('roleGroup').get('role').valueChanges.subscribe((role: Role) => {
       const roleGroup = this.parentForm.get('roleGroup');
-      roleGroup.get('noExpiryDate').setValue(role !== 'MEMBER');
+      roleGroup.get('noExpiryDate').setValue(true);
       this.refreshValidators();
     });
   }

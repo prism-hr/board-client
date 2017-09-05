@@ -18,44 +18,102 @@
 <b-resource-users-bulk *ngIf="bulkMode" [resource]="resource" (close)="closeBulkMode($event)">
 </b-resource-users-bulk>
 
-
 <div class="section-header">
   <h1>Users</h1>
 </div>
-<div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
-  <div *ngFor="let resourceUser of users" class="grid__item small--one-whole medium-up--one-third">
-    <md-card class="no-content users">
-      <md-card-header fxLayout="row" fxLayoutAlign="space-between center" (click)="openUserSettings(resourceUser)">
-        <div md-card-avatar class="avatar"
-             [ngClass]="{'no-background': resourceUser.user.documentImage}">
-          <b-image [publicId]="resourceUser.user.documentImage?.cloudinaryId"
-                   gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec"
-                   *ngIf="resourceUser.user.documentImage"></b-image>
-          <i *ngIf="!resourceUser.user.documentImage" class="fa-user"></i>
-        </div>
-        <md-card-title>
-          <div>
-            <h3>
-              {{resourceUser.user.givenName}} {{resourceUser.user.surname}}
-            </h3>
-            <div class="role-item-container">
-              <div class="role-indicator {{ userRole.role | lowercase}}" [ngClass]="{'expire' : userRole.expiryDate}"
-                   *ngFor="let userRole of resourceUser.roles">
-                <span class="role-item"
-                      pTooltip="{{'definitions.role.' + userRole.role | translate}} - {{'definitions.memberCategory.' + userRole.categories[0] | translate}}"
-                      tooltipPosition="top" *ngIf="userRole.role === 'MEMBER'"></span>
-                <span class="role-item" pTooltip="{{'definitions.role.' + userRole.role | translate}}"
-                      tooltipPosition="top" *ngIf="userRole.role != 'MEMBER'"></span>
-                <span class="role-expire" *ngIf="userRole.expiryDate"
-                      pTooltip="Expiry date: {{userRole.expiryDate | date : 'shortDate'}}"
-                      tooltipPosition="bottom"></span>
-              </div>
-            </div>
-          </div>
-        </md-card-title>
-      </md-card-header>
-    </md-card>
 
-  </div>
-</div>
+<p-tabView [activeIndex]="usersTabIndex">
+  <p-tabPanel header="Staff">
+    <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
+      <div *ngFor="let userRole of users.users" class="grid__item small--one-whole medium-up--one-third">
+        <md-card class="no-content users">
+          <md-card-header fxLayout="row" fxLayoutAlign="space-between center"
+                          (click)="openUserSettings(userRole, 'STAFF')">
+            <div md-card-avatar class="avatar"
+                 [ngClass]="{'no-background': userRole.user.documentImage}">
+              <b-image [publicId]="userRole.user.documentImage?.cloudinaryId"
+                       gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec"
+                       *ngIf="userRole.user.documentImage"></b-image>
+              <i *ngIf="!userRole.user.documentImage" class="fa-user"></i>
+            </div>
+            <md-card-title>
+              <div>
+                <h3>{{userRole.user.givenName}} {{userRole.user.surname}}</h3>
+                <div class="role-item-container">
+                  <div class="role-indicator {{ userRole.role | lowercase}}"
+                       [ngClass]="{'expire' : userRole.expiryDate}">
+                    <span class="role-item" pTooltip="{{'definitions.role.' + userRole.role | translate}}"
+                          tooltipPosition="top"></span>
+                  </div>
+                </div>
+              </div>
+            </md-card-title>
+          </md-card-header>
+        </md-card>
+      </div>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="Members">
+    <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
+      <div *ngFor="let userRole of members" class="grid__item small--one-whole medium-up--one-third">
+        <md-card class="no-content users">
+          <md-card-header fxLayout="row" fxLayoutAlign="space-between center"
+                          (click)="openUserSettings(userRole, 'MEMBER')">
+            <div md-card-avatar class="avatar"
+                 [ngClass]="{'no-background': userRole.user.documentImage}">
+              <b-image [publicId]="userRole.user.documentImage?.cloudinaryId"
+                       gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec"
+                       *ngIf="userRole.user.documentImage"></b-image>
+              <i *ngIf="!userRole.user.documentImage" class="fa-user"></i>
+            </div>
+            <md-card-title>
+              <div>
+                <h3>
+                  {{userRole.user.givenName}} {{userRole.user.surname}}
+                </h3>
+                <div class="role-item-container">
+                  <div class="role-indicator {{ userRole.role | lowercase}}"
+                       [ngClass]="{'expire' : userRole.expiryDate}">
+                    <span class="role-item"
+                          pTooltip="{{'definitions.role.' + userRole.role | translate}} - {{'definitions.memberCategory.' + userRole.categories[0] | translate}}"
+                          tooltipPosition="top"></span>
+                    <span class="role-expire" *ngIf="userRole.expiryDate"
+                          pTooltip="Expiry date: {{userRole.expiryDate | date : 'shortDate'}}"
+                          tooltipPosition="bottom"></span>
+                  </div>
+                </div>
+              </div>
+            </md-card-title>
+          </md-card-header>
+        </md-card>
+      </div>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="Membership Requests">
+    <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
+      <div *ngFor="let userRole of users.memberRequests" class="grid__item small--one-whole medium-up--one-third">
+        <md-card class="no-content users">
+          <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
+            <div md-card-avatar class="avatar"
+                 [ngClass]="{'no-background': userRole.user.documentImage}">
+              <b-image [publicId]="userRole.user.documentImage?.cloudinaryId"
+                       gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec"
+                       *ngIf="userRole.user.documentImage"></b-image>
+              <i *ngIf="!userRole.user.documentImage" class="fa-user"></i>
+            </div>
+            <md-card-title>
+              <div>
+                <h3>
+                  {{userRole.user.givenName}} {{userRole.user.surname}}
+                </h3>
+              </div>
+            </md-card-title>
+          </md-card-header>
+        </md-card>
+      </div>
+    </div>
+  </p-tabPanel>
+</p-tabView>
+
+
 

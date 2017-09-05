@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-09-05 11:10:52.
+// Generated using typescript-generator version 1.23.311 on 2017-09-05 19:50:59.
 
 declare namespace b {
 
@@ -110,7 +110,7 @@ declare namespace b {
 
   interface ResourceUserDTO {
     user?: UserDTO;
-    roles?: UserRoleDTO[];
+    role?: UserRoleDTO;
   }
 
   interface ResourceUsersDTO {
@@ -226,11 +226,6 @@ declare namespace b {
     viewed?: boolean;
   }
 
-  interface ResourceMembershipRepresentation {
-    memberCount?: number;
-    requests?: UserRoleRepresentation[];
-  }
-
   interface ResourceOperationRepresentation {
     action?: Action;
     user?: UserRepresentation;
@@ -248,11 +243,6 @@ declare namespace b {
     createdTimestamp?: LocalDateTime;
     updatedTimestamp?: LocalDateTime;
     actions?: ActionRepresentation[];
-  }
-
-  interface ResourceUserRepresentation {
-    user?: UserRepresentation;
-    roles?: UserRoleRepresentation[];
   }
 
   interface UserNotificationSuppressionRepresentation {
@@ -280,17 +270,23 @@ declare namespace b {
     viewed?: boolean;
   }
 
+  interface UserRolesRepresentation {
+    users?: UserRoleRepresentation[];
+    memberRequests?: UserRoleRepresentation[];
+    memberCount?: number;
+  }
+
   interface DocumentDefinition {
     fileName?: string;
-    cloudinaryUrl?: string;
     cloudinaryId?: string;
+    cloudinaryUrl?: string;
   }
 
   interface LocationDefinition {
     name?: string;
-    latitude?: number;
-    googleId?: string;
     domicile?: string;
+    googleId?: string;
+    latitude?: number;
     longitude?: number;
   }
 
@@ -303,8 +299,8 @@ declare namespace b {
     year?: number;
     hour?: number;
     minute?: number;
-    second?: number;
     nano?: number;
+    second?: number;
   }
 
   interface LocalDate extends Temporal, TemporalAdjuster, ChronoLocalDate, Serializable {

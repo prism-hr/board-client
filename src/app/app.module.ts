@@ -33,7 +33,7 @@ import {
   RadioButtonModule,
   SelectButtonModule,
   SplitButtonModule,
-  TabMenuModule,
+  TabMenuModule, TabViewModule,
   ToggleButtonModule,
   TooltipModule
 } from 'primeng/primeng';
@@ -51,23 +51,21 @@ import {UserImageDialogComponent} from './authentication/user-image.dialog';
 import {BoardHeaderComponent} from './boards/header/board-header.component';
 import {BoardItemComponent} from './boards/item/board-item.component';
 import {BoardListComponent} from './boards/list/board-list.component';
-import {BoardTabsComponent} from './boards/manage/board-tabs.component';
 import {BoardResolver} from './boards/manage/board-resolver.service';
+import {BoardTabsComponent} from './boards/manage/board-tabs.component';
 import {BoardsResolver} from './boards/manage/boards-resolver.service';
 import {BoardEditComponent} from './boards/manage/edit/board-edit.component';
 import {BoardViewComponent} from './boards/manage/view/board-view.component';
 import {BoardNewComponent} from './boards/new/board-new.component';
 import {DateTimeComponent} from './controls/datetime.component';
 import {ResourceHandleComponent} from './controls/resource-handle.component';
-import {DepartmentTabsComponent} from './departments/department-tabs.component';
 import {DepartmentNewComponent} from './departments/department-new.component';
 import {DepartmentResolver} from './departments/department-resolver.service';
+import {DepartmentTabsComponent} from './departments/department-tabs.component';
 import {DepartmentService} from './departments/department.service';
 import {DepartmentEditComponent} from './departments/edit/department-edit.component';
 import {DepartmentHeaderComponent} from './departments/header/department-header.component';
 import {DepartmentListComponent} from './departments/list/department-list.component';
-import {DepartmentMembershipsResolverService} from './departments/memberships/department-memberships-resolver.service';
-import {DepartmentMembershipsComponent} from './departments/memberships/department-memberships.component';
 import {DepartmentRequestMembershipDialogComponent} from './departments/request-membership/department-request-membership.dialog';
 import {DepartmentViewComponent} from './departments/view/department-view.component';
 import {FooterComponent} from './footer/footer.component';
@@ -86,6 +84,7 @@ import {NotFoundComponent} from './not-found.component';
 import {PostApplyComponent} from './posts/apply/post-apply.component';
 import {PostApplyDialogComponent} from './posts/apply/post-apply.dialog';
 import {PostEditComponent} from './posts/edit/post-edit.component';
+import {PostHeaderComponent} from './posts/header/post-header.component';
 import {PostItemComponent} from './posts/item/post-item.component';
 import {PostResolver} from './posts/post-resolver.service';
 import {PostTabsComponent} from './posts/post-tabs.component';
@@ -110,7 +109,6 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
-import {PostHeaderComponent} from './posts/header/post-header.component';
 
 @NgModule({
   declarations: [
@@ -146,7 +144,6 @@ import {PostHeaderComponent} from './posts/header/post-header.component';
     DepartmentTabsComponent,
     DepartmentViewComponent,
     DepartmentEditComponent,
-    DepartmentMembershipsComponent,
     DepartmentNewComponent,
     DepartmentHeaderComponent,
     DepartmentRequestMembershipDialogComponent,
@@ -243,16 +240,7 @@ import {PostHeaderComponent} from './posts/header/post-header.component';
                         resolve: {
                           users: ResourceUsersResolver
                         }
-                      },
-                      {
-                        path: 'memberships',
-                        component: DepartmentMembershipsComponent,
-                        canActivate: [AuthGuard],
-                        resolve: {
-                          memberships: DepartmentMembershipsResolverService
-                        }
                       }
-
                     ]
                   }
                 ]
@@ -335,6 +323,7 @@ import {PostHeaderComponent} from './posts/header/post-header.component';
     ChipsModule,
     RadioButtonModule,
     TabMenuModule,
+    TabViewModule,
     CheckboxModule,
     DropdownModule,
     CalendarModule,
@@ -390,9 +379,8 @@ import {PostHeaderComponent} from './posts/header/post-header.component';
       deps: [DefinitionsService],
       multi: true
     },
-    AuthGuard, ResourceService, DepartmentResolver, DepartmentMembershipsResolverService, BoardResolver, PostResolver,
-    PostResponsesResolver, BoardsResolver, ResourceUsersResolver, AccountSuppressionsResolver, PostService, DepartmentService, UserService,
-    ValidationService
+    AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostResponsesResolver, BoardsResolver,
+    ResourceUsersResolver, AccountSuppressionsResolver, PostService, DepartmentService, UserService, ValidationService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, ResourceCommentDialogComponent, UserImageDialogComponent,
     ResourceUserEditDialogComponent, DepartmentRequestMembershipDialogComponent, PostApplyDialogComponent],

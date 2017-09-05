@@ -3,12 +3,15 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdDialog} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
 import * as _ from 'lodash';
+import {MenuItem} from 'primeng/primeng';
+import {DepartmentService} from '../../departments/department.service';
 import {ResourceService} from '../../services/resource.service';
 import {ValidationUtils} from '../../validation/validation.utils';
 import {ResourceUserEditDialogComponent} from './resource-user-edit-dialog.component';
 import ResourceRepresentation = b.ResourceRepresentation;
 import ResourceUserDTO = b.ResourceUserDTO;
-import ResourceUserRepresentation = b.ResourceUserRepresentation;
+import UserRoleRepresentation = b.UserRoleRepresentation;
+import UserRolesRepresentation = b.UserRolesRepresentation;
 
 @Component({
   templateUrl: 'resource-users.component.html',
@@ -16,15 +19,19 @@ import ResourceUserRepresentation = b.ResourceUserRepresentation;
 })
 export class ResourceUsersComponent implements OnInit {
 
-  users: ResourceUserRepresentation[];
+  users: UserRolesRepresentation;
+  members: UserRoleRepresentation[];
   resource: ResourceRepresentation<any>;
   loading: boolean;
   userForm: FormGroup;
   lastAdminRole: boolean;
   bulkMode: boolean;
+  usersTabs: UserTabItem[];
+  activeUsersTab: UserTabItem;
+  usersTabIndex = 0;
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private dialog: MdDialog,
-              private resourceService: ResourceService) {
+              private resourceService: ResourceService, private departmentService: DepartmentService) {
     this.userForm = this.fb.group({
       user: this.fb.group({
         id: [],
@@ -39,12 +46,24 @@ export class ResourceUsersComponent implements OnInit {
     this.route.parent.data.subscribe(data => {
       const resourceScope = data['resourceScope'];
       this.resource = data[resourceScope];
+      if (this.resource.scope === 'DEPARTMENT') {
+        this.departmentService.getMembers(this.resource)
+          .subscribe(members => {
+            this.members = members;
+          });
+      }
     });
     this.route.data.subscribe(data => {
       this.users = data['users'];
-      this.users.forEach(user => this.preprocessUser(user));
       this.calculateAdminsCount();
     });
+
+    this.usersTabs = [
+      {label: 'Staff', icon: 'fa-bar-chart', collectionName: 'users', roleType: 'STAFF'},
+      {label: 'Members', icon: 'fa-calendar', collectionName: 'members', roleType: 'MEMBER'},
+      {label: 'Membership Requests', icon: 'fa-book', collectionName: 'memberRequests'}
+    ];
+    this.activeUsersTab = this.usersTabs[0];
   }
 
   createNewUser() {
@@ -56,41 +75,43 @@ export class ResourceUsersComponent implements OnInit {
     const userValue = this.userForm.get('user').value;
     const userDTO: ResourceUserDTO = {user: _.pick(userValue, ['id', 'givenName', 'surname', 'email'])};
     const roleDef = this.userForm.get('roleGroup').value;
-    userDTO.roles = [{
+    userDTO.role = {
       role: roleDef.role,
       expiryDate: roleDef.expiryDate,
       categories: [roleDef.category]
-    }];
+    };
 
     this.resourceService.addUser(this.resource, userDTO)
       .subscribe(user => {
         this.loading = false;
         this.userForm['submitted'] = false;
-        this.userForm.reset({roles: []});
-        this.preprocessUser(user);
-        this.users.push(user);
+        this.userForm.reset();
+        const usersCollection = this.users[this.activeUsersTab.collectionName];
+        if (usersCollection) {
+          usersCollection.push(user);
+        }
         this.calculateAdminsCount();
       });
   }
 
-  openUserSettings(resourceUser) {
+  openUserSettings(userRole: UserRoleRepresentation, roleType: 'STAFF' | 'MEMBER') {
     const dialogRef = this.dialog.open(ResourceUserEditDialogComponent,
       {
         width: '80%',
         panelClass: 'user-settings',
-        data: {resource: this.resource, lastAdminRole: this.lastAdminRole && this.isAdmin(resourceUser), resourceUser}
+        data: {resource: this.resource, lastAdminRole: this.lastAdminRole && userRole.role === 'ADMINISTRATOR', userRole, roleType}
       });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const {action, resourceUser}: { action: string, resourceUser: ResourceUserRepresentation } = result;
+        const {action, userRole}: { action: string, userRole: UserRoleRepresentation } = result;
+        const usersCollection = this.users[this.activeUsersTab.collectionName];
         if (action === 'edited') {
-          this.preprocessUser(resourceUser);
-          const idx = this.users.findIndex(ru => ru.user.id === resourceUser.user.id);
-          this.users.splice(idx, 1, resourceUser);
+          const idx = usersCollection.findIndex(ru => ru.user.id === userRole.user.id);
+          usersCollection.splice(idx, 1, userRole);
           this.calculateAdminsCount();
         } else if (action === 'deleted') {
-          const idx = this.users.findIndex(ru => ru.user.id === resourceUser.user.id);
-          this.users.splice(idx, 1);
+          const idx = usersCollection.findIndex(ru => ru.user.id === userRole.user.id);
+          usersCollection.splice(idx, 1);
           this.calculateAdminsCount();
         }
       }
@@ -109,18 +130,14 @@ export class ResourceUsersComponent implements OnInit {
     }
   }
 
-  isAdmin(user: ResourceUserRepresentation) {
-    return user.roles.findIndex(r => r.role === 'ADMINISTRATOR') > -1;
-  }
-
-  private preprocessUser(user: ResourceUserRepresentation) {
-    const rolesOrder = ['ADMINISTRATOR', 'AUTHOR', 'MEMBER'];
-    user.roles = user.roles.sort((a, b) => rolesOrder.indexOf(a.role) - rolesOrder.indexOf(b.role));
-  }
-
   private calculateAdminsCount() {
-    const adminsCount = this.users.filter(u => u.roles.map(ur => ur.role).indexOf('ADMINISTRATOR') > -1).length;
-    this.lastAdminRole = this.resource.scope === 'DEPARTMENT' && adminsCount === 1;
+    const adminsCount = this.users.users
+      .filter(u => u.role === 'ADMINISTRATOR').length;
+    this.lastAdminRole = adminsCount === 1;
   }
+}
 
+interface UserTabItem extends MenuItem {
+  collectionName: string;
+  roleType?: 'STAFF' | 'MEMBER';
 }
