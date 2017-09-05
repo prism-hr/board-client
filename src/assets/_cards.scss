@@ -95,7 +95,7 @@ md-card.mat-card {
     }
   }
 }
-cl-image {
+b-image {
   display: block;
   line-height:0;
 }
@@ -104,6 +104,7 @@ cl-image {
   padding:10px;
   margin-bottom:15px;
   border-bottom:1px solid $fadeGrey;
+  min-height: 36px;
   h1 {
     font-size:1.6rem;
   }

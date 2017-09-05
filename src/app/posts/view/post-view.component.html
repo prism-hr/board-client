@@ -20,11 +20,6 @@
     </div>
     <div class="grid__item medium-up--one-quarter small-one-whole publisher">
       <md-card>
-        <md-card-header class="header-full">
-          <md-card-title>
-            <h3>Posted on</h3>
-          </md-card-title>
-        </md-card-header>
         <md-card-content>
           <div class="grid">
             <div class="grid__item one-whole">
@@ -32,8 +27,7 @@
                 <b-image [publicId]="post.board.department.documentLogo?.cloudinaryId"
                          gravity="north_west" height="150" width="200" crop="mfit"></b-image>
               </div>
-              <h3><a [routerLink]="['/', post.board.department.handle]">{{post.board.department.name}}</a></h3>
-              <h4><a [routerLink]="['/', post.board.department.handle, post.board.handle]">{{post.board.name}}</a></h4>
+              <h3><a [routerLink]="['/', post.board.department.handle, post.board.handle]">{{post.board.name}}</a> <small>from</small> <a [routerLink]="['/', post.board.department.handle]">{{post.board.department.name}}</a></h3>
             </div>
           </div>
         </md-card-content>

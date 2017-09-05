@@ -270,7 +270,7 @@
       line-height:30px;
     }
     .ui-autocomplete-list-item {
-      cl-image {
+      b-image {
         float: left;
         border-radius: 50%;
         overflow: hidden;
@@ -4711,7 +4711,7 @@ p-autocomplete {
         margin-left: -0.5em;
         display: block;
       }
-      cl-image > img {
+      b-image > img {
         height: 35px;
       }
     }
@@ -4784,7 +4784,7 @@ p-autocomplete {
   -webkit-border-radius: $borderRadius;
   border-radius: $borderRadius;
 }
-cl-image > img {
+b-image > img {
   max-height: 100%;
 }
 .hidden {

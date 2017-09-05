@@ -17,7 +17,7 @@ import UserRepresentation = b.UserRepresentation;
     <div class="post-apply">
       <div *ngIf="!post?.response" class="post-apply-content">
         <!--<div *ngIf="!post.applyDocument && !post.applyWebsite">-->
-        <button pButton type="button" (click)="apply(post)" label="Apply" class="ui-button-success small"></button>
+        <button pButton type="button" (click)="apply(post)" label="Apply" class="ui-button-success"></button>
         <!--</div>-->
         <!--<div *ngIf="post.applyDocument">-->
         <!--<a pButton type="button" href="{{post.applyDocument.cloudinaryUrl}}" download class="ui-button-success small"-->
