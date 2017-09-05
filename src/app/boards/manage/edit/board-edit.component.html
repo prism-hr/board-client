@@ -1,3 +1,4 @@
+<md-card>
 <form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
   <md-card-content>
     <div class="grid">
@@ -34,7 +35,7 @@
       </div>
     </div>
   </md-card-content>
-  <md-card-actions>
+  <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
     <div class="grid grid--half-gutters">
       <div class="grid__item one-whole">
         <button pButton [routerLink]="['/', board.department.handle, board.handle]"
@@ -44,4 +45,4 @@
     </div>
   </md-card-actions>
 </form>
-
+</md-card>

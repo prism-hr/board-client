@@ -19,12 +19,13 @@ import ResourceUserRepresentation = b.ResourceUserRepresentation;
     </md-dialog-content>
 
     <md-dialog-actions fxLayout="row" fxLayoutAlign="space-between">
-      <button pButton class="ui-button-secondary" label="Cancel" md-dialog-close></button>
       <div>
-        <button pButton (click)="removeUser(resourceUser)" class="ui-button-secondary" label="Remove"
-                [disabled]="lastAdminRole"></button>
-        <button pButton class="ui-button-warning" [disabled]="userForm.invalid" label="Save" (click)="save()"></button>
+        <button pButton class="ui-button-secondary" label="Cancel" md-dialog-close></button>
+        <button pButton (click)="removeUser(resourceUser)" class="ui-button-secondary remove-user" label="Remove"
+                [disabled]="lastAdminRole" icon="fa-trash"></button>
       </div>
+        <button pButton class="ui-button-warning" [disabled]="userForm.invalid" label="Save" (click)="save()"></button>
+      
     </md-dialog-actions>
   `
 })

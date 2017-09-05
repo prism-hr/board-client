@@ -1,6 +1,6 @@
-<md-card-content>
-  <div *ngIf="!bulkMode">
-    <form [formGroup]="userForm" (ngSubmit)="createNewUser()" autocomplete="off" novalidate>
+<md-card  *ngIf="!bulkMode">
+  <form [formGroup]="userForm" (ngSubmit)="createNewUser()" autocomplete="off" novalidate>
+  <md-card-content>
       <h4>New User</h4>
       <div formGroupName="user" class="grid">
         <b-user-lookup [parentForm]="userForm.get('user')" [resource]="resource"></b-user-lookup>
@@ -8,23 +8,24 @@
       <div *ngIf="resource" class="grid">
         <b-resource-user-role-form-part [resource]="resource" [parentForm]="userForm"></b-resource-user-role-form-part>
       </div>
+  </md-card-content>
+    <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+      <button pButton class="ui-button-secondary" (click)="bulkMode = true" label="Add users in bulk"></button>
+      <button pButton class="ui-button-success" type="submit" label="Add user" fxFlexOrder="1"></button>
+    </md-card-actions>
+  </form>
+</md-card>
+<b-resource-users-bulk *ngIf="bulkMode" [resource]="resource" (close)="closeBulkMode($event)">
+</b-resource-users-bulk>
 
-      <div class="action-holder" fxLayout="row" fxLayoutAlign="space-between center">
-        <button pButton class="ui-button-secondary" (click)="bulkMode = true" label="Add users in bulk"></button>
-        <button pButton class="ui-button-success" type="submit" label="Add user" fxFlexOrder="1"></button>
-      </div>
-    </form>
-  </div>
 
-  <b-resource-users-bulk *ngIf="bulkMode" [resource]="resource" (close)="closeBulkMode($event)">
-  </b-resource-users-bulk>
   <div class="section-header">
     <h1>Users</h1>
   </div>
   <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
     <div *ngFor="let resourceUser of users" class="grid__item small--one-whole medium-up--one-third">
-      <md-card>
-        <md-card-header fxLayout="x" fxLayoutAlign="space-between center" (click)="openUserSettings(resourceUser)">
+      <md-card class="no-content users">
+        <md-card-header fxLayout="row" fxLayoutAlign="space-between center" (click)="openUserSettings(resourceUser)">
           <div md-card-avatar class="avatar"
                [ngClass]="{'no-background': resourceUser.user.documentImage}">
             <b-image [publicId]="resourceUser.user.documentImage?.cloudinaryId"
@@ -50,4 +51,4 @@
 
     </div>
   </div>
-</md-card-content>
+

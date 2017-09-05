@@ -573,7 +573,7 @@ button.ui-button::-moz-focus-inner {
       background-color: #e6e6e6;
     }
   }
-  &.ui-button-success {
+  &.ui-button-success, &.accept {
     &.ui-state-default {
       background-color: $uclgreen;
       border-color: $uclgreen;
@@ -590,7 +590,7 @@ button.ui-button::-moz-focus-inner {
       color: #ffffff;
     }
   }
-  &.ui-button-info {
+  &.ui-button-info, &.suspend {
     &.ui-state-default {
       background-color: $uclblue;
       border-color: $uclblue;
@@ -605,7 +605,7 @@ button.ui-button::-moz-focus-inner {
       color: #ffffff;
     }
   }
-  &.ui-button-warning {
+  &.ui-button-warning, &.withdraw {
     &.ui-state-default {
       background-color: $employmentColor;
       border-color: $employmentColor;
@@ -620,7 +620,7 @@ button.ui-button::-moz-focus-inner {
       color: #ffffff;
     }
   }
-  &.ui-button-danger {
+  &.ui-button-danger, &.reject {
     &.ui-state-default {
       background-color: $uclred;
       border-color: $uclred;
@@ -4596,7 +4596,11 @@ p-checkbox:hover {
   }
   border: none !important;
 }
-
+.inside-tabs {
+  .ui-tabmenu {
+    border-bottom: 1px solid $fadeGrey !important;
+  }
+}
 .ui-steps {
   .ui-steps-item:not(.ui-state-highlight):not(.ui-state-disabled):hover {
     @include hover-element();
@@ -4785,6 +4789,9 @@ cl-image > img {
 }
 .hidden {
   display: none;
+}
+.remove-user {
+  margin-left:25px;
 }
 .ui-button.ui-button-info.ui-state-default.ui-togglebutton {
   &:not(.ui-state-active) {

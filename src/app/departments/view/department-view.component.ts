@@ -6,18 +6,7 @@ import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 
 @Component({
-  template: `
-    <section>
-      <div fxLayout="row" fxLayoutAlign="space-between top" class="section-header">
-        <h2>Boards</h2>
-      </div>
-      <div class="list-container">
-        <b-board-item [board]="board" *ngFor="let board of boards" class="list-container__item"></b-board-item>
-      </div>
-    </section>
-  
-    <b-resource-timeline *ngIf="department" [resource]="department"></b-resource-timeline>
-`,
+  templateUrl: 'department-view.component.html',
   styleUrls: ['department-view.component.scss']
 })
 export class DepartmentViewComponent implements OnInit {

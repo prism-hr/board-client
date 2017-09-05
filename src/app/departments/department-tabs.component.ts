@@ -8,7 +8,7 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
   template: `
     <section class="section">
       <b-department-header [department]="department"></b-department-header>
-      <p-tabMenu *ngIf="canEdit" [model]="items"></p-tabMenu>
+      <p-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></p-tabMenu>
       <router-outlet></router-outlet>
     </section>
   `,

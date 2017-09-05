@@ -25,6 +25,11 @@ md-card.mat-card {
   .mat-input-placeholder, .mat-input-placeholder-wrapper {
     padding-top:0.6em;
   }
+  &.no-content {
+    .mat-card-header {
+      margin: -24px;
+    }
+  }
   .mat-card-header {
     margin: -24px -24px 0 -24px ;
     background: $fadeGrey;
@@ -98,6 +103,7 @@ cl-image {
   background: $greyBackground;
   padding:10px;
   margin-bottom:15px;
+  margin-top:25px;
   border-bottom:1px solid $fadeGrey;
   h1 {
     font-size:1.6rem;

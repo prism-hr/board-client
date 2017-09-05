@@ -8,7 +8,7 @@ import {ResourceService} from '../../services/resource.service';
   template: `
     <section class="section">
       <b-board-header [board]="board"></b-board-header>
-      <p-tabMenu *ngIf="canEdit" [model]="items"></p-tabMenu>
+      <p-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></p-tabMenu>
       <router-outlet></router-outlet>
     </section>
   `,

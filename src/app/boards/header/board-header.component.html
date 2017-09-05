@@ -1,41 +1,15 @@
-<section>
-  <div class="grid">
-    <div class="grid__item medium-up--three-quarters small-one-whole board">
-      <div class="resource-header" fxLayout="row" fxLayoutAlign="space-between top">
-        <div>
-          <h1><a routerLink="/{{board.department.handle}}">{{board.department.name}}</a> -
-            {{board.name}}
-          </h1>
-        </div>
-        <div fxLayout="column" fxLayoutAlign="space-between flex-end" class="admin-actions">
-          <div *ngIf="canEdit">
-            <a pButton routerLink="edit" class="ui-button-info" icon="fa-gear"></a>
-          </div>
-          <b-resource-actions-box [resource]="board" class="admin-actions" fxLayout="row"
-                                  fxLayoutAlign="space-between center"></b-resource-actions-box>
-        </div>
+<div class="grid">
+  <div class="grid__item small-one-whole">
+    <div class="resource-header" fxLayout="row" fxLayoutAlign="space-between center">
+      <div>
+        <h1><a routerLink="/{{board.department.handle}}">{{board.department.name}}</a> -
+          {{board.name}}
+        </h1>
       </div>
-      <div class="summary-holder">
-        {{board.summary}}
-      </div>
-    </div>
-    <div class="grid__item medium-up--one-quarter small-one-whole resource-logo-holder">
-      <md-card>
-        <md-card-header class="header-full">
-          <md-card-title>
-            <h3>Board Logo</h3>
-          </md-card-title>
-        </md-card-header>
-        <md-card-content>
-          <b-file-upload *ngIf="canEdit" [(ngModel)]="board.documentLogo" (ngModelChange)="logoChanged()"
-                         type="logo"></b-file-upload>
-          <b-image *ngIf="!canEdit" [publicId]="board.documentLogo?.cloudinaryId"
-                   height="150" width="200" crop="mfit"></b-image>
-        </md-card-content>
-      </md-card>
-      <div class="category-list">
-        <span class="ui-chips-token ui-corner-all" *ngFor="let category of board.postCategories">{{category}}</span>
+      <div fxLayout="column" fxLayoutAlign="space-between flex-end" class="admin-actions">
+        <b-resource-actions-box [resource]="board" class="admin-actions" fxLayout="row"
+                                fxLayoutAlign="space-between center"></b-resource-actions-box>
       </div>
     </div>
   </div>
-</section>
+</div>
