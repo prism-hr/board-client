@@ -7,7 +7,6 @@ import {MdCardModule, MdDialogModule, MdSnackBarModule} from '@angular/material'
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
-import {MetaGuard, MetaLoader, MetaModule} from '@ngx-meta/core';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {MomentModule} from 'angular2-moment';
@@ -33,7 +32,8 @@ import {
   RadioButtonModule,
   SelectButtonModule,
   SplitButtonModule,
-  TabMenuModule, TabViewModule,
+  TabMenuModule,
+  TabViewModule,
   ToggleButtonModule,
   TooltipModule
 } from 'primeng/primeng';
@@ -103,7 +103,6 @@ import {ResourceUsersBulkComponent} from './resource/users/resource-users-bulk.c
 import {ResourceUsersComponent} from './resource/users/resource-users.component';
 import './rxjs-extensions';
 import {DefinitionsLoader, DefinitionsService} from './services/definitions.service';
-import {metaFactory} from './services/meta.service';
 import {ResourceService} from './services/resource.service';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
@@ -169,7 +168,6 @@ import {ValidationService} from './validation/validation.service';
     RouterModule.forRoot([
       {
         path: '',
-        canActivateChild: [MetaGuard],
         children: [
           {path: '', component: HomeComponent},
           {path: 'home', component: HomeComponent},
@@ -365,10 +363,6 @@ import {ValidationService} from './validation/validation.service';
     MomentModule,
     ShareButtonsModule.forRoot(),
     ClipboardModule,
-    MetaModule.forRoot({
-      provide: MetaLoader,
-      useFactory: metaFactory
-    }),
     PapaParseModule
   ],
   providers: [
