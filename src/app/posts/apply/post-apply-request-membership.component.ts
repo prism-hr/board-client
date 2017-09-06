@@ -8,7 +8,7 @@ import UserRoleDTO = b.UserRoleDTO;
 @Component({
   selector: 'b-post-apply-request-membership',
   template: `
-    <h2>Request membership for {{post.board.department.name}}</h2>
+    <h2>Request membership for {{department.name}}</h2>
     <form [formGroup]="membershipForm" novalidate>
       <div>
         <label for="category">Which category describes you best?</label>

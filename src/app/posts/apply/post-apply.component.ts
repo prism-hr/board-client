@@ -29,8 +29,8 @@ import UserRepresentation = b.UserRepresentation;
               </div>
             </div>
             <div *ngIf="!post.applyEmail">
-              <a pButton type="button" href="{{'api/posts/referrals/' + post.referralCode}}" target="_blank" class="ui-button-success small"
-                 (click)="referralCodeUsed()" label="See apply instructions"></a>
+              <a pButton type="button" href="{{'api/posts/referrals/' + post.referral.referral}}" target="_blank" class="ui-button-success small"
+                 (click)="referralCodeUsed()" label="Read more"></a>
             </div>
           </div>
         </div>

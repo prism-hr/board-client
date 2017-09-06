@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-09-06 09:07:44.
+// Generated using typescript-generator version 1.23.311 on 2017-09-06 17:56:25.
 
 declare namespace b {
 
@@ -201,7 +201,7 @@ declare namespace b {
     lastViewTimestamp?: LocalDateTime;
     lastReferralTimestamp?: LocalDateTime;
     lastResponseTimestamp?: LocalDateTime;
-    referral?: string;
+    referral?: ResourceEventRepresentation;
     response?: ResourceEventRepresentation;
   }
 
@@ -210,6 +210,7 @@ declare namespace b {
     event?: ResourceEvent;
     user?: UserRepresentation;
     ipAddress?: string;
+    referral?: string;
     documentResume?: DocumentRepresentation;
     websiteResume?: string;
     coveringNote?: string;
@@ -250,6 +251,7 @@ declare namespace b {
     documentImageRequestState?: DocumentRequestState;
     documentResume?: DocumentRepresentation;
     websiteResume?: string;
+    scopes?: Scope[];
   }
 
   interface UserRoleRepresentation {
@@ -269,16 +271,16 @@ declare namespace b {
 
   interface DocumentDefinition {
     fileName?: string;
-    cloudinaryId?: string;
     cloudinaryUrl?: string;
+    cloudinaryId?: string;
   }
 
   interface LocationDefinition {
     name?: string;
+    longitude?: number;
     domicile?: string;
     googleId?: string;
     latitude?: number;
-    longitude?: number;
   }
 
   interface LocalDateTime extends Temporal, TemporalAdjuster, ChronoLocalDateTime<LocalDate>, Serializable {
