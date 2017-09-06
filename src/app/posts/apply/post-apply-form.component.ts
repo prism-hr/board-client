@@ -1,14 +1,14 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
 import {PostService} from '../../posts/post.service';
 import {UserService} from '../../services/user.service';
 import {ValidationUtils} from '../../validation/validation.utils';
 import PostRepresentation = b.PostRepresentation;
 
 @Component({
+  selector: 'b-post-apply-form',
   template: `
-    <h2 md-dialog-title>Apply for {{post.name}}</h2>
+    <h2>Apply</h2>
     <md-dialog-content>
       <form [formGroup]="eventForm" novalidate>
         <div class="grid">
@@ -48,21 +48,18 @@ import PostRepresentation = b.PostRepresentation;
       </form>
     </md-dialog-content>
     <md-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
-      <button pButton (click)="cancel()" class="ui-button-secondary" label="Cancel"></button>
-      
       <button pButton (click)="submit()" class="ui-button-success" label="Submit"></button>
     </md-dialog-actions>
   `,
   styles: [`
   `]
 })
-export class PostApplyDialogComponent implements OnInit {
-  post: PostRepresentation;
+export class PostApplyFormComponent implements OnInit {
+  @Input() post: PostRepresentation & {};
+  @Output() applied: EventEmitter<boolean> = new EventEmitter();
   eventForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private dialogRef: MdDialogRef<PostApplyDialogComponent>,
-              @Inject(MD_DIALOG_DATA) data: any, private postService: PostService, private userService: UserService) {
-    this.post = data.post;
+  constructor(private fb: FormBuilder, private postService: PostService, private userService: UserService) {
   }
 
   ngOnInit() {
@@ -87,12 +84,9 @@ export class PostApplyDialogComponent implements OnInit {
       return;
     }
     this.postService.respond(this.post, form.value).subscribe(response => {
-      this.dialogRef.close(response);
+      this.applied.emit(true);
     });
   }
 
-  cancel() {
-    this.dialogRef.close(null);
-  }
 
 }

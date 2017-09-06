@@ -1,46 +1,52 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MdDialog, MdDialogConfig} from '@angular/material';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {AuthGuard} from '../../authentication/auth-guard.service';
-import {DepartmentRequestMembershipDialogComponent} from '../../departments/request-membership/department-request-membership.dialog';
 import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
-import {PostService} from '../post.service';
-import {PostApplyDialogComponent} from './post-apply.dialog';
 import PostRepresentation = b.PostRepresentation;
-import ResourceEventRepresentation = b.ResourceEventRepresentation;
 import UserRepresentation = b.UserRepresentation;
 
 @Component({
   selector: 'b-post-apply',
   template: `
     <div class="post-apply">
-      <div *ngIf="!post?.response" class="post-apply-content">
-        <!--<div *ngIf="!post.applyDocument && !post.applyWebsite">-->
-        <button pButton type="button" (click)="apply(post)" label="Apply" class="ui-button-success"></button>
-        <!--</div>-->
-        <!--<div *ngIf="post.applyDocument">-->
-        <!--<a pButton type="button" href="{{post.applyDocument.cloudinaryUrl}}" download class="ui-button-success small"-->
-        <!--label="Download apply instructions"></a>-->
-        <!--</div>-->
-        <!--<div *ngIf="post.applyWebsite">-->
-        <!--<a pButton type="button" href="{{post.applyWebsite}}" target="_blank" class="ui-button-success small"-->
-        <!--label="Open apply website"></a>-->
-        <!--</div>-->
+      <div class="post-apply-content">
+        <div *ngIf="!user">
+          <button pButton type="button" (click)="authenticate()" label="Log in to apply" class="ui-button-success"></button>
+        </div>
+        <div *ngIf="user">
+          <div *ngIf="!canPursue">
+            <b-post-apply-request-membership [department]="post.board.department"
+                                             (requested)="membershipRequested()"></b-post-apply-request-membership>
+          </div>
+          <div *ngIf="canPursue">
+            <div *ngIf="post.applyEmail">
+              <div *ngIf="!post.response">
+                <b-post-apply-form [post]="post" (applied)="postApplied()"></b-post-apply-form>
+              </div>
+              <div *ngIf="post.response">
+                You already responded to this post.
+              </div>
+            </div>
+            <div *ngIf="!post.applyEmail">
+              <a pButton type="button" href="{{'api/posts/referrals/' + post.referralCode}}" target="_blank" class="ui-button-success small"
+                 (click)="referralCodeUsed()" label="See apply instructions"></a>
+            </div>
+          </div>
+        </div>
       </div>
-      <div *ngIf="post?.response">
-        You already responded to this post.
-      </div>
+
     </div>
   `,
   styleUrls: ['post-apply.component.scss']
 })
-export class PostApplyComponent implements OnInit {
+export class PostApplyComponent implements OnInit, OnChanges {
+
   @Input() post: PostRepresentation & {};
   user: UserRepresentation;
+  canPursue: boolean;
 
-  constructor(private dialog: MdDialog, private userService: UserService, private resourceService: ResourceService,
-              private postService: PostService, private authGuard: AuthGuard) {
+  constructor(private userService: UserService, private resourceService: ResourceService, private authGuard: AuthGuard) {
   }
 
   ngOnInit() {
@@ -49,59 +55,34 @@ export class PostApplyComponent implements OnInit {
     });
   }
 
-  apply(post: PostRepresentation) {
-    if (!this.user) {
-      this.showLogin();
-    } else if (!this.resourceService.canPursue(post)) {
-      this.requestMembership(post);
-    } else {
-      this.doRespond(post);
-    }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.canPursue = this.resourceService.canPursue(this.post);
   }
 
-  showLogin() {
+  authenticate() {
     this.authGuard.ensureAuthenticated(true).first() // open dialog if not authenticated
       .flatMap(authenticated => {
         if (!authenticated) {
           return Observable.of(null);
         }
-        return this.resourceService.getResource('POST', this.post.id, {returnComplete: true, reload: true});
+        return this.reloadPost();
       })
-      .subscribe(post => {
-        if (post) {
-          this.apply(post);
-        }
-      });
+      .subscribe();
   }
 
-  requestMembership(post: PostRepresentation) {
-    const config = new MdDialogConfig();
-    config.data = {department: post.board.department};
-    const dialogRef = this.dialog.open(DepartmentRequestMembershipDialogComponent, config);
-    dialogRef.afterClosed()
-      .flatMap((result: boolean) => {
-        return result ? this.resourceService.getResource('POST', post.id, {returnComplete: true, reload: true}) : Observable.of(null);
-      })
-      .subscribe(post => {
-        if (post) {
-          this.apply(post);
-        }
-      });
+  membershipRequested() {
+    this.reloadPost().subscribe();
   }
 
-  doRespond(post: PostRepresentation) {
-    if (post.applyEmail) {
-      if (!post.response) {
-        const config = new MdDialogConfig();
-        config.data = {post: post};
-        const dialogRef = this.dialog.open(PostApplyDialogComponent, config);
-        dialogRef.afterClosed()
-          .subscribe((response: ResourceEventRepresentation) => {
-            post.response = response;
-          });
-      }
-    } else {
-      window.open('api/posts/referrals/' + post.referral, '_blank');
-    }
+  postApplied() {
+    this.reloadPost().subscribe();
+  }
+
+  referralCodeUsed() {
+    this.reloadPost().subscribe();
+  }
+
+  private reloadPost() {
+    return this.resourceService.getResource('POST', this.post.id, {returnComplete: true, reload: true});
   }
 }

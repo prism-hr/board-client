@@ -66,7 +66,6 @@ import {DepartmentService} from './departments/department.service';
 import {DepartmentEditComponent} from './departments/edit/department-edit.component';
 import {DepartmentHeaderComponent} from './departments/header/department-header.component';
 import {DepartmentListComponent} from './departments/list/department-list.component';
-import {DepartmentRequestMembershipDialogComponent} from './departments/request-membership/department-request-membership.dialog';
 import {DepartmentViewComponent} from './departments/view/department-view.component';
 import {FooterComponent} from './footer/footer.component';
 import {FileUploadComponent} from './general/file-upload.component';
@@ -82,7 +81,6 @@ import {StudentLogoComponent} from './home/student-logo.component';
 import {UniLogoComponent} from './home/uni-logo.component';
 import {NotFoundComponent} from './not-found.component';
 import {PostApplyComponent} from './posts/apply/post-apply.component';
-import {PostApplyDialogComponent} from './posts/apply/post-apply.dialog';
 import {PostEditComponent} from './posts/edit/post-edit.component';
 import {PostHeaderComponent} from './posts/header/post-header.component';
 import {PostItemComponent} from './posts/item/post-item.component';
@@ -108,6 +106,8 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
+import {PostApplyRequestMembershipComponent} from './posts/apply/post-apply-request-membership.component';
+import {PostApplyFormComponent} from './posts/apply/post-apply-form.component';
 
 @NgModule({
   declarations: [
@@ -145,7 +145,6 @@ import {ValidationService} from './validation/validation.service';
     DepartmentEditComponent,
     DepartmentNewComponent,
     DepartmentHeaderComponent,
-    DepartmentRequestMembershipDialogComponent,
     ResourceUsersComponent,
     ResourceUserRoleFormPartComponent,
     ResourceUserEditDialogComponent,
@@ -157,7 +156,8 @@ import {ValidationService} from './validation/validation.service';
     PostEditComponent,
     PostViewComponent,
     PostApplyComponent,
-    PostApplyDialogComponent,
+    PostApplyRequestMembershipComponent,
+    PostApplyFormComponent,
     PostResponsesComponent,
     PostItemComponent,
     ResourceActionsBoxComponent,
@@ -377,7 +377,7 @@ import {ValidationService} from './validation/validation.service';
     ResourceUsersResolver, AccountSuppressionsResolver, PostService, DepartmentService, UserService, ValidationService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, ResourceCommentDialogComponent, UserImageDialogComponent,
-    ResourceUserEditDialogComponent, DepartmentRequestMembershipDialogComponent, PostApplyDialogComponent],
+    ResourceUserEditDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {
