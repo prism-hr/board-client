@@ -17,11 +17,11 @@ import PostRepresentation = b.PostRepresentation;
 import ResourceOperationRepresentation = b.ResourceOperationRepresentation;
 import ResourcePatchDTO = b.ResourcePatchDTO;
 import ResourceRepresentation = b.ResourceRepresentation;
-import ResourceUserDTO = b.ResourceUserDTO;
-import ResourceUsersDTO = b.ResourceUsersDTO;
 import Scope = b.Scope;
 import UserRepresentation = b.UserRepresentation;
 import UserRolesRepresentation = b.UserRolesRepresentation;
+import UserRoleDTO = b.UserRoleDTO;
+import UserRoleRepresentation = b.UserRoleRepresentation;
 
 @Injectable()
 export class ResourceService {
@@ -142,19 +142,19 @@ export class ResourceService {
       .map(res => res.json());
   }
 
-  updateResourceUser(resource: ResourceRepresentation<any>, user: UserRepresentation, resourceUserDTO: ResourceUserDTO) {
+  updateResourceUser(resource: ResourceRepresentation<any>, user: UserRepresentation, userRoleDTO: UserRoleDTO): Observable<UserRoleRepresentation> {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
-    return this.http.put('/api/' + resourceCol + '/' + resource.id + '/users/' + user.id, resourceUserDTO).map(res => res.json());
+    return this.http.put('/api/' + resourceCol + '/' + resource.id + '/users/' + user.id, userRoleDTO).map(res => res.json());
   }
 
-  addUser(resource: ResourceRepresentation<any>, user: ResourceUserDTO) {
+  addUser(resource: ResourceRepresentation<any>, user: UserRoleDTO): Observable<UserRoleRepresentation> {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
     return this.http.post('/api/' + resourceCol + '/' + resource.id + '/users', user).map(res => res.json());
   }
 
-  addUsersInBulk(resource: ResourceRepresentation<any>, usersBulk: ResourceUsersDTO) {
+  addUsersInBulk(resource: ResourceRepresentation<any>, users: UserRoleDTO[]): Observable<number> {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
-    return this.http.post('/api/' + resourceCol + '/' + resource.id + '/users/bulk', usersBulk);
+    return this.http.post('/api/' + resourceCol + '/' + resource.id + '/users/bulk', users).map(res => res.json());
   }
 
   lookupUsers(resource: ResourceRepresentation<any>, query: string): Observable<UserRepresentation[]> {

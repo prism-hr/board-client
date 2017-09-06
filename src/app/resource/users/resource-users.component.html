@@ -89,7 +89,7 @@
       </div>
     </div>
   </p-tabPanel>
-  <p-tabPanel header="Membership Requests">
+  <p-tabPanel *ngIf="users.memberRequests.length > 0" header="Membership Requests">
     <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
       <div *ngFor="let userRole of users.memberRequests" class="grid__item small--one-whole medium-up--one-third">
         <md-card class="no-content users">
@@ -106,6 +106,10 @@
                 <h3>
                   {{userRole.user.givenName}} {{userRole.user.surname}}
                 </h3>
+                <button pButton class="ui-button-secondary" (click)="respondToMemberRequest(userRole, 'accepted')"
+                        label="Accept"></button>
+                <button pButton class="ui-button-secondary" (click)="respondToMemberRequest(userRole, 'rejected')"
+                        label="Reject"></button>
               </div>
             </md-card-title>
           </md-card-header>

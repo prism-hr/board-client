@@ -9,7 +9,7 @@ import {ResourceService} from '../../services/resource.service';
 import {ValidationUtils} from '../../validation/validation.utils';
 import {ResourceUserEditDialogComponent} from './resource-user-edit-dialog.component';
 import ResourceRepresentation = b.ResourceRepresentation;
-import ResourceUserDTO = b.ResourceUserDTO;
+import UserRoleDTO = b.UserRoleDTO;
 import UserRoleRepresentation = b.UserRoleRepresentation;
 import UserRolesRepresentation = b.UserRolesRepresentation;
 
@@ -73,12 +73,12 @@ export class ResourceUsersComponent implements OnInit {
     }
     this.loading = true;
     const userValue = this.userForm.get('user').value;
-    const userDTO: ResourceUserDTO = {user: _.pick(userValue, ['id', 'givenName', 'surname', 'email'])};
     const roleDef = this.userForm.get('roleGroup').value;
-    userDTO.role = {
+    const userDTO: UserRoleDTO = {
       role: roleDef.role,
       expiryDate: roleDef.expiryDate,
-      categories: [roleDef.category]
+      categories: [roleDef.category],
+      user: _.pick(userValue, ['id', 'givenName', 'surname', 'email'])
     };
 
     this.resourceService.addUser(this.resource, userDTO)
@@ -86,11 +86,10 @@ export class ResourceUsersComponent implements OnInit {
         this.loading = false;
         this.userForm['submitted'] = false;
         this.userForm.reset();
-        const usersCollection = this.users[this.activeUsersTab.collectionName];
-        if (usersCollection) {
-          usersCollection.push(user);
+        if (user.role !== 'MEMBER') { // only staff members collection should be updated
+          this.users.users.push(user);
+          this.calculateAdminsCount();
         }
-        this.calculateAdminsCount();
       });
   }
 
@@ -128,6 +127,14 @@ export class ResourceUsersComponent implements OnInit {
     } else {
       this.bulkMode = false;
     }
+  }
+
+  respondToMemberRequest(userRole: UserRoleRepresentation, state: string) {
+    this.departmentService.respondToMemberRequest(this.resource, userRole.user, state)
+      .subscribe(() => {
+        const idx = this.users.memberRequests.indexOf(userRole);
+        this.users.memberRequests.splice(idx, 1);
+      });
   }
 
   private calculateAdminsCount() {

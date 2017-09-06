@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-09-05 19:50:59.
+// Generated using typescript-generator version 1.23.311 on 2017-09-06 09:07:44.
 
 declare namespace b {
 
@@ -108,16 +108,6 @@ declare namespace b {
     comment?: string;
   }
 
-  interface ResourceUserDTO {
-    user?: UserDTO;
-    role?: UserRoleDTO;
-  }
-
-  interface ResourceUsersDTO {
-    users?: UserDTO[];
-    roles?: UserRoleDTO[];
-  }
-
   interface UserDTO {
     id?: number;
     givenName?: string;
@@ -141,6 +131,7 @@ declare namespace b {
   }
 
   interface UserRoleDTO {
+    user?: UserDTO;
     role?: Role;
     expiryDate?: LocalDate;
     categories?: MemberCategory[];

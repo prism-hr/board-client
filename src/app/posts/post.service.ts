@@ -34,7 +34,7 @@ export class PostService {
   }
 
   requestDepartmentMembership(department: DepartmentRepresentation, userRoleDTO: UserRoleDTO): Observable<Response> {
-    return this.http.post('/api/departments/' + department.id + '/memberships', userRoleDTO);
+    return this.http.post('/api/departments/' + department.id + '/memberRequests', userRoleDTO);
   }
 
   getResponses(post: PostRepresentation): Observable<ResourceEventRepresentation[]> {

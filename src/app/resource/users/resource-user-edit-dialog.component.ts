@@ -63,9 +63,9 @@ export class ResourceUserEditDialogComponent implements OnInit {
       categories: [roleDef.category]
     };
     this.resourceService.updateResourceUser(this.resource, this.userRole.user, role)
-      .subscribe(resourceUser => {
+      .subscribe(userRole => {
         this.progress = false;
-        this.dialogRef.close({action: 'edited', resourceUser});
+        this.dialogRef.close({action: 'edited', userRole});
       });
   }
 
@@ -74,7 +74,7 @@ export class ResourceUserEditDialogComponent implements OnInit {
     this.resourceService.removeUser(this.resource, resourceUser.user)
       .subscribe(() => {
         this.progress = false;
-        this.dialogRef.close({action: 'deleted', resourceUser: this.userRole});
+        this.dialogRef.close({action: 'deleted', userRole: this.userRole});
       });
   }
 
