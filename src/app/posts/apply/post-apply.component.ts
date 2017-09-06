@@ -53,9 +53,9 @@ export class PostApplyComponent implements OnInit {
     if (!this.user) {
       this.showLogin();
     } else if (!this.resourceService.canPursue(post)) {
-      this.requestMembership();
+      this.requestMembership(post);
     } else {
-      this.doRespond();
+      this.doRespond(post);
     }
   }
 
@@ -74,13 +74,13 @@ export class PostApplyComponent implements OnInit {
       });
   }
 
-  requestMembership() {
+  requestMembership(post: PostRepresentation) {
     const config = new MdDialogConfig();
-    config.data = {department: this.post.board.department};
+    config.data = {department: post.board.department};
     const dialogRef = this.dialog.open(DepartmentRequestMembershipDialogComponent, config);
     dialogRef.afterClosed()
       .flatMap((result: boolean) => {
-        return result ? this.resourceService.getResource('POST', this.post.id, {returnComplete: true, reload: true}) : Observable.of(null);
+        return result ? this.resourceService.getResource('POST', post.id, {returnComplete: true, reload: true}) : Observable.of(null);
       })
       .subscribe(post => {
         if (post) {
@@ -89,17 +89,19 @@ export class PostApplyComponent implements OnInit {
       });
   }
 
-  doRespond() {
-    if (this.post.applyEmail) {
-      const config = new MdDialogConfig();
-      config.data = {post: this.post};
-      const dialogRef = this.dialog.open(PostApplyDialogComponent, config);
-      dialogRef.afterClosed()
-        .subscribe((response: ResourceEventRepresentation) => {
-          this.post.response = response;
-        });
+  doRespond(post: PostRepresentation) {
+    if (post.applyEmail) {
+      if (!post.response) {
+        const config = new MdDialogConfig();
+        config.data = {post: post};
+        const dialogRef = this.dialog.open(PostApplyDialogComponent, config);
+        dialogRef.afterClosed()
+          .subscribe((response: ResourceEventRepresentation) => {
+            post.response = response;
+          });
+      }
     } else {
-      window.open('api/posts/referrals/' + this.post.referral, '_blank');
+      window.open('api/posts/referrals/' + post.referral, '_blank');
     }
   }
 }

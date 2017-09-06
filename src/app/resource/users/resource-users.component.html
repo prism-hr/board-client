@@ -25,7 +25,8 @@
 <p-tabView [activeIndex]="usersTabIndex">
   <p-tabPanel header="Staff">
     <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
-      <div *ngFor="let userRole of users.users" class="grid__item small--one-whole medium-up--one-third">
+      <div *ngFor="let userRole of users.users" class="grid__item small--one-whole medium-up--one-third"
+           [ngClass]="{lastAdmin: lastAdminRole && userRole.role === 'ADMINISTRATOR'}">
         <md-card class="no-content users">
           <md-card-header fxLayout="row" fxLayoutAlign="space-between center"
                           (click)="openUserSettings(userRole, 'STAFF')">

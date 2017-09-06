@@ -27,7 +27,7 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
   }
 
   get roleGroup(): FormArray {
-    return this.parentForm.get('roleGr') as FormArray;
+    return this.parentForm.get('roleGroup') as FormArray;
   };
 
   ngOnInit() {
@@ -51,7 +51,7 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
     }
 
     this.parentForm.setControl('roleGroup', this.fb.group({
-      role: [role, this.lastAdminRole && role === 'ADMINISTRATOR' && this.lastAdminValidator],
+        role: [role, this.lastAdminRole && role === 'ADMINISTRATOR' && this.lastAdminValidator],
       noExpiryDate: [!this.userRole || !this.userRole.expiryDate],
       expiryDate: [this.userRole && this.userRole.expiryDate],
       category: [this.userRole && this.userRole.categories && this.userRole.categories[0]]

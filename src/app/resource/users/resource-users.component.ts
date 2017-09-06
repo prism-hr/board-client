@@ -94,6 +94,9 @@ export class ResourceUsersComponent implements OnInit {
   }
 
   openUserSettings(userRole: UserRoleRepresentation, roleType: 'STAFF' | 'MEMBER') {
+    if(this.lastAdminRole && userRole.role === 'ADMINISTRATOR') {
+      return;
+    }
     const dialogRef = this.dialog.open(ResourceUserEditDialogComponent,
       {
         width: '80%',
