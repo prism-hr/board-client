@@ -10,14 +10,19 @@ import UserRepresentation = b.UserRepresentation;
   selector: 'b-post-apply',
   template: `
     <div class="post-apply">
+      <div class="post-apply-title">
+        <h4>Apply</h4>
+      </div>
       <div class="post-apply-content">
         <div *ngIf="!user">
-          <button pButton type="button" (click)="authenticate()" label="Log in to apply" class="ui-button-success"></button>
+          <button pButton type="button" (click)="authenticate()" label="Log in to apply" class="ui-button-success">
+          </button>
         </div>
         <div *ngIf="user">
           <div *ngIf="!canPursue">
-            <b-post-apply-request-membership [department]="post.board.department"
-                                             (requested)="membershipRequested()"></b-post-apply-request-membership>
+            <b-post-apply-request-membership
+              [department]="post.board.department" (requested)="membershipRequested()">
+            </b-post-apply-request-membership>
           </div>
           <div *ngIf="canPursue">
             <div *ngIf="post.applyEmail">
@@ -29,13 +34,12 @@ import UserRepresentation = b.UserRepresentation;
               </div>
             </div>
             <div *ngIf="!post.applyEmail">
-              <a pButton type="button" href="{{'api/posts/referrals/' + post.referral.referral}}" target="_blank" class="ui-button-success small"
-                 (click)="referralCodeUsed()" label="Read more"></a>
+              <a pButton type="button" href="{{'api/posts/referrals/' + post.referral.referral}}" target="_blank"
+                 class="ui-button-success small" (click)="referralCodeUsed()" label="How to Apply"></a>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   `,
   styleUrls: ['post-apply.component.scss']

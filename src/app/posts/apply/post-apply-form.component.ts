@@ -8,24 +8,11 @@ import PostRepresentation = b.PostRepresentation;
 @Component({
   selector: 'b-post-apply-form',
   template: `
-    <h2>Apply</h2>
-    <md-dialog-content>
       <form [formGroup]="eventForm" novalidate>
         <div class="grid">
           <div class="grid__item one-whole input-holder">
             <b-file-upload formControlName="documentResume" type="document" class="uploader"></b-file-upload>
             <control-messages [control]="eventForm.get('documentResume')"></control-messages>
-          </div>
-          <div class="grid__item one-whole input-holder">
-            <label>Your Resume URL</label>
-            <input pInputText type="url" formControlName="websiteResume">
-            <control-messages [control]="eventForm.get('websiteResume')"></control-messages>
-          </div>
-          <control-messages [control]="eventForm"></control-messages>
-          <div class="grid__item one-whole input-holder">
-            <div class="ui-checkbox-inline">
-              <p-checkbox formControlName="defaultResume" [binary]="true" label="Save Resume as default"></p-checkbox>
-            </div>
           </div>
           <div class="grid__item one-whole input-holder">
             <label>Covering Note</label>
@@ -44,12 +31,22 @@ import PostRepresentation = b.PostRepresentation;
             </p-editor>
             <control-messages [control]="eventForm.get('coveringNote')"></control-messages>
           </div>
+          <div class="grid__item one-whole input-holder">
+            <label>Your Resume URL</label>
+            <input pInputText type="url" formControlName="websiteResume">
+            <control-messages [control]="eventForm.get('websiteResume')"></control-messages>
+          </div>
+          <control-messages [control]="eventForm"></control-messages>
+          <div class="grid__item one-whole input-holder">
+            <div class="ui-checkbox-inline">
+              <p-checkbox formControlName="defaultResume" [binary]="true" label="Save Resume as default"></p-checkbox>
+            </div>
+          </div>
         </div>
       </form>
-    </md-dialog-content>
-    <md-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
-      <button pButton (click)="submit()" class="ui-button-success" label="Submit"></button>
-    </md-dialog-actions>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button pButton (click)="submit()" class="ui-button-success" label="Submit"></button>
+      </div>
   `,
   styles: [`
   `]

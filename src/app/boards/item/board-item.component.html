@@ -38,7 +38,7 @@
         <div class="title"><i class="fa-pie-chart"></i> Reports</div>
         <span class="number">30</span>
       </div>
-      <div class="boxes-list__item {{ board.state | lowercase }}">
+      <div class="boxes-list__item {{ board.state | lowercase }}" *ngIf="canEdit">
         <div class="title">
           <i class="fa-{{ board.state | lowercase }}"></i> {{'definitions.state.' + board.state | translate}}
         </div>

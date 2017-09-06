@@ -33,10 +33,19 @@
         <span class="number" *ngIf="post.referralCount">{{post.referralCount}}</span>
         <span class="number" *ngIf="!post.referralCount">0</span>
       </div>
-      <div class="boxes-list__item {{ post.state | lowercase }}">
+      <div class="boxes-list__item {{ post.state | lowercase }}" *ngIf="canEdit">
         <div class="title">
           <i class="fa-{{ post.state | lowercase }}"></i> {{'definitions.state.' + post.state | translate}}
         </div>
+      </div>
+      <div class="boxes-list__item" *ngIf="!canEdit" [ngClass]="{'applied': post.response, 'no-applied' : !post.response }">
+        <div class="title" *ngIf="post.response">
+          <i class="fa-accepted"></i> Applied
+        </div>
+        <div class="title" *ngIf="!post.response">
+          <i class="fa-edit"></i> Not Applied
+        </div>
+        <span class="number" *ngIf="post.response">{{post.response.createdTimestamp | date : 'shortDate'}}</span>
       </div>
     </div>
   </md-card-content>

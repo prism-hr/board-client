@@ -12,9 +12,9 @@
         </div>
         <div *ngIf="user" class="top-nav" fxLayout="row">
           <a pButton class="ui-button" routerLink="/" routerLinkActive="active"
-             [routerLinkActiveOptions]="{exact:true}" label="Posts"></a>
-          <a pButton class="ui-button" routerLink="/boards" routerLinkActive="active" label="Boards"></a>
-          <a pButton class="ui-button" routerLink="/departments" routerLinkActive="active" label="Departments"></a>
+             [routerLinkActiveOptions]="{exact:true}" label="Posts" *ngIf="user.scopes.indexOf('POST') > -1"></a>
+          <a pButton class="ui-button" routerLink="/boards" routerLinkActive="active" label="Boards"  *ngIf="user.scopes.indexOf('BOARD') > -1"></a>
+          <a pButton class="ui-button" routerLink="/departments" routerLinkActive="active" label="Departments"  *ngIf="user.scopes.indexOf('DEPARTMENT') > -1"></a>
         </div>
       </div>
       <nav class="text-right">
