@@ -60,7 +60,7 @@ export class PostApplyComponent implements OnInit {
   }
 
   showLogin() {
-    this.authGuard.ensureAuthenticated().first() // open dialog if not authenticated
+    this.authGuard.ensureAuthenticated(true).first() // open dialog if not authenticated
       .flatMap(authenticated => {
         if (!authenticated) {
           return Observable.of(null);

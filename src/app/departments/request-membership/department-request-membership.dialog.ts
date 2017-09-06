@@ -11,22 +11,19 @@ import UserRoleDTO = b.UserRoleDTO;
     <h2 md-dialog-title>Request membership for {{department.name}}</h2>
     <md-dialog-content>
       <form [formGroup]="membershipForm" novalidate>
-        <div class="ui-checkbox-inline">
-          <p-checkbox label="No expiry date" formControlName="noExpiryDate" binary="true"
-                      (onChange)="noExpiryDateChanged()"></p-checkbox>
-        </div>
-
-        <div *ngIf="!membershipForm.get('noExpiryDate').value" class="input-holder">
-          <label>Expiration date:</label>
-          <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string"></p-calendar>
-          <control-messages [control]="membershipForm.get('expiryDate')"></control-messages>
-        </div>
-
         <div>
           <label for="category">Which category describes you best?</label>
           <p-dropdown id="category" formControlName="category" [options]="memberCategoryOptions"
-                      placeholder="Select a category"></p-dropdown>
+                      placeholder="Select a category" (onChange)="categoryChanged($event)"></p-dropdown>
           <control-messages [control]="membershipForm.get('category')"></control-messages>
+        </div>
+
+        <div *ngIf="membershipForm.get('category').value">
+          <div class="input-holder">
+            <label>{{expiryLabel | translate}}</label>
+            <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string"></p-calendar>
+            <control-messages [control]="membershipForm.get('expiryDate')"></control-messages>
+          </div>
         </div>
       </form>
     </md-dialog-content>
@@ -42,12 +39,12 @@ export class DepartmentRequestMembershipDialogComponent implements OnInit {
   membershipForm: FormGroup;
   department: DepartmentRepresentation;
   memberCategoryOptions: { label: string, value: any }[];
+  expiryLabel: string;
 
   constructor(private fb: FormBuilder, private dialogRef: MdDialogRef<DepartmentRequestMembershipDialogComponent>,
               @Inject(MD_DIALOG_DATA) data: any, private translate: TranslateService, private postService: PostService) {
     this.department = data.department;
     this.membershipForm = this.fb.group({
-      noExpiryDate: [true],
       expiryDate: [],
       category: [null, Validators.required]
     });
@@ -59,12 +56,12 @@ export class DepartmentRequestMembershipDialogComponent implements OnInit {
     });
   }
 
-  noExpiryDateChanged() {
-    const expiryDateControl = this.membershipForm.get('expiryDate');
-    const noExpiryDate = this.membershipForm.get('noExpiryDate').value;
-    expiryDateControl.setValue(null);
-    expiryDateControl.setValidators(!noExpiryDate && Validators.required);
-    expiryDateControl.updateValueAndValidity();
+  categoryChanged(event) {
+    if (event.value === 'RESEARCH_STAFF') {
+      this.expiryLabel = 'When does your contract finish?';
+    } else {
+      this.expiryLabel = 'When do you graduate?';
+    }
   }
 
   submit() {
