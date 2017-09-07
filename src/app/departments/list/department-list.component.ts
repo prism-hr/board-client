@@ -28,4 +28,10 @@ export class DepartmentListComponent implements OnInit {
     });
   }
 
+  filterApplied(filter) {
+    this.resourceService.getDepartments(filter.searchTerm).subscribe(departments => {
+      this.departments = departments;
+    });
+  }
+
 }

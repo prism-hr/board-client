@@ -57,7 +57,7 @@
             <control-messages [control]="postForm.get('description')"></control-messages>
           </div>
 
-          <div *ngIf="availablePostCategories.length > 0" class="grid__item one-whole input-holder">
+          <div *ngIf="availablePostCategories?.length > 0" class="grid__item one-whole input-holder">
             <label>What is your post about?</label>
             <div formArrayName="postCategories" class="ui-checkbox-inline">
               <span *ngFor="let category of postCategories.controls; let i=index">
@@ -107,7 +107,7 @@
             </div>
           </div>
 
-          <div *ngIf="availableMemberCategories.length > 0" class="grid__item one-whole input-holder">
+          <div *ngIf="availableMemberCategories?.length > 0" class="grid__item one-whole input-holder">
             <label>Who do you want to share your post with?</label>
             <div formArrayName="memberCategories" class="ui-checkbox-inline">
               <span *ngFor="let category of memberCategories.controls; let i=index">

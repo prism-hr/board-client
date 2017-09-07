@@ -9,6 +9,7 @@
       <button pButton routerLink="/newDepartment" class="ui-button-success" icon="fa-plus"
               label="New Department"></button>
     </div>
+    <b-filter resourceScope="DEPARTMENT" (applied)="filterApplied($event)"></b-filter>
     <div class="grid list-container">
       <div *ngFor="let department of departments" class="list-container__item">
         <md-card>

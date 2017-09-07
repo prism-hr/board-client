@@ -19,9 +19,9 @@ import ResourcePatchDTO = b.ResourcePatchDTO;
 import ResourceRepresentation = b.ResourceRepresentation;
 import Scope = b.Scope;
 import UserRepresentation = b.UserRepresentation;
-import UserRolesRepresentation = b.UserRolesRepresentation;
 import UserRoleDTO = b.UserRoleDTO;
 import UserRoleRepresentation = b.UserRoleRepresentation;
+import UserRolesRepresentation = b.UserRolesRepresentation;
 
 @Injectable()
 export class ResourceService {
@@ -30,7 +30,7 @@ export class ResourceService {
 
   constructor(private http: JwtHttp) {
     const scopes: Scope[] = ['DEPARTMENT', 'DEPARTMENT', 'POST'];
-    for(let scope of scopes) {
+    for (let scope of scopes) {
       this.resourceSubjects[scope] = {};
     }
   }
@@ -47,14 +47,15 @@ export class ResourceService {
         subjects[resource.id].next(resource);
       });
   }
+
 // FIXME use take(1) or first() instead of returnComplete
-  getResource(scope: Scope, id: number, options: {returnComplete?: boolean, reload?: boolean} = {}): Observable<ResourceRepresentation<any>> {
+  getResource(scope: Scope, id: number, options: { returnComplete?: boolean, reload?: boolean } = {}): Observable<ResourceRepresentation<any>> {
     const subjects = this.resourceSubjects[scope];
     if (!subjects[id]) {
       subjects[id] = new ReplaySubject(1);
     }
     let directObservable;
-    if(options.reload) {
+    if (options.reload) {
       directObservable = this.http.get('/api/' + scope.toLowerCase() + 's/' + id).map(res => res.json())
         .do(post => {
           subjects[id].next(post);
@@ -70,7 +71,7 @@ export class ResourceService {
       return directObservable;
     }
 
-    if(options.reload) {
+    if (options.reload) {
       directObservable.subscribe(); // force http request
     }
     return subjects[id].asObservable();
@@ -88,12 +89,20 @@ export class ResourceService {
     return this.http.get('/api/boards?includePublicBoards=true').map(res => res.json());
   }
 
-  getBoards(query?: string): Observable<BoardRepresentation[]> {
-    return this.http.get('/api/boards' + (query ? '?query=' + query : '')).map(res => res.json());
+  getBoards(searchTerm?: string): Observable<BoardRepresentation[]> {
+    const params = new URLSearchParams();
+    if (searchTerm) {
+      params.set('searchTerm', searchTerm);
+    }
+    return this.http.get('/api/boards', {search: params}).map(res => res.json());
   }
 
-  getDepartments(query?: string): Observable<DepartmentRepresentation[]> {
-    return this.http.get('/api/departments' + (query ? '?query=' + query : '')).map(res => res.json());
+  getDepartments(searchTerm?: string): Observable<DepartmentRepresentation[]> {
+    const params = new URLSearchParams();
+    if (searchTerm) {
+      params.set('searchTerm', searchTerm);
+    }
+    return this.http.get('/api/departments', {search: params}).map(res => res.json());
   }
 
   getBoard(departmentHandle: string, boardHandle: string): Observable<BoardRepresentation[]> {
