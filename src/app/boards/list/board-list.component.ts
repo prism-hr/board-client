@@ -33,6 +33,7 @@ export class BoardListComponent implements OnInit {
       {label: 'Suspended', value: 'SUSPENDED'},
       {label: 'Expired', value: 'EXPIRED'},
       {label: 'Rejected', value: 'REJECTED'},
+      {label: 'Draft', value: 'DRAFT'},
     ];
   }
 

@@ -59,6 +59,12 @@ button.ui-state-default {
     margin-bottom:0;
     width: 25%;
   }
+  .ui-widget {
+    font-size:1rem;
+  }
+  .ui-button-text-only .ui-button-text {
+    padding: 0.2em 0.5em;
+  }
   margin-bottom:15px;
 }
 .avatar-title {
