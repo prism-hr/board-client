@@ -19,7 +19,9 @@
           <div class="timeline--user_image" pTooltip="{{operation.user.email}}" tooltipPosition="top">
             <b-image [publicId]="operation.user.documentImage?.cloudinaryId"
                      gravity="face" width="40" height="40" radius="max" crop="thumb"></b-image>
-            <i *ngIf="!operation.user.documentImage" class="fa-user"></i>
+            <div class="avatar" *ngIf="!operation.user.documentImage" >
+              <i class="fa-user"></i>
+            </div>
           </div>
           <h5>{{operation.user.givenName}} {{operation.user.surname}}</h5>
         </div>

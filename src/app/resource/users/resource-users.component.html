@@ -18,7 +18,7 @@
 <b-resource-users-bulk *ngIf="bulkMode" [resource]="resource" (close)="closeBulkMode($event)">
 </b-resource-users-bulk>
 
-<div class="section-header">
+<div class="section-header" fxLayout="row" fxLayoutAlign="space-between center">
   <h1>Users</h1>
   <b-filter *ngIf="usersTabIndex !== 0" (applied)="membersFilterApplied($event)"></b-filter>
 </div>
@@ -27,10 +27,11 @@
 <p-tabView [activeIndex]="usersTabIndex" (onChange)="usersTabChanged($event)">
   <p-tabPanel header="Staff">
     <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
+
       <div *ngFor="let userRole of users.users" class="grid__item small--one-whole medium-up--one-third"
-           [ngClass]="{lastAdmin: lastAdminRole && userRole.role === 'ADMINISTRATOR'}">
+           [ngClass]="{'last-admin': lastAdminRole && userRole.role === 'ADMINISTRATOR'}">
         <md-card class="no-content users">
-          <md-card-header fxLayout="row" fxLayoutAlign="space-between center"
+          <md-card-header fxLayout="row" fxLayoutAlign="flex-start center"
                           (click)="openUserSettings(userRole, 'STAFF')">
             <div md-card-avatar class="avatar"
                  [ngClass]="{'no-background': userRole.user.documentImage}">
@@ -60,7 +61,7 @@
     <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
       <div *ngFor="let userRole of users.members" class="grid__item small--one-whole medium-up--one-third">
         <md-card class="no-content users">
-          <md-card-header fxLayout="row" fxLayoutAlign="space-between center"
+          <md-card-header fxLayout="row" fxLayoutAlign="flex-start center"
                           (click)="openUserSettings(userRole, 'MEMBER')">
             <div md-card-avatar class="avatar"
                  [ngClass]="{'no-background': userRole.user.documentImage}">
@@ -95,8 +96,8 @@
   <p-tabPanel *ngIf="users.memberRequests.length > 0" header="Membership Requests">
     <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
       <div *ngFor="let userRole of users.memberRequests" class="grid__item small--one-whole medium-up--one-third">
-        <md-card class="no-content users">
-          <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
+        <md-card class="no-content users no-popup">
+          <md-card-header fxLayout="row" fxLayoutAlign="flex-start center">
             <div md-card-avatar class="avatar"
                  [ngClass]="{'no-background': userRole.user.documentImage}">
               <b-image [publicId]="userRole.user.documentImage?.cloudinaryId"
@@ -105,14 +106,14 @@
               <i *ngIf="!userRole.user.documentImage" class="fa-user"></i>
             </div>
             <md-card-title>
-              <div>
-                <h3>
-                  {{userRole.user.givenName}} {{userRole.user.surname}}
-                </h3>
-                <button pButton class="ui-button-secondary" (click)="respondToMemberRequest(userRole, 'accepted')"
-                        label="Accept"></button>
-                <button pButton class="ui-button-secondary" (click)="respondToMemberRequest(userRole, 'rejected')"
+              <h3>
+                {{userRole.user.givenName}} {{userRole.user.surname}}
+              </h3>
+              <div class="card-actions">
+                <button pButton class="ui-button-warning small-xs" (click)="respondToMemberRequest(userRole, 'rejected')"
                         label="Reject"></button>
+                <button pButton class="ui-button-success small-xs" (click)="respondToMemberRequest(userRole, 'accepted')"
+                        label="Accept"></button>
               </div>
             </md-card-title>
           </md-card-header>
