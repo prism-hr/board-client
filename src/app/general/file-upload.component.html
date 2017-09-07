@@ -29,5 +29,5 @@
 </div>
 
 <span *ngIf="progressPercentage !== null">Progress: {{progressPercentage}}</span>
-<input type="file" ngFileSelect (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput"
+<input type="file" accept="application/pdf" ngFileSelect (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput"
        id="uploader-input" style="display:none"/>

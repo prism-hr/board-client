@@ -108,12 +108,14 @@ import {ControlMessagesComponent} from './validation/control-messages.component'
 import {ValidationService} from './validation/validation.service';
 import {PostApplyRequestMembershipComponent} from './posts/apply/post-apply-request-membership.component';
 import {PostApplyFormComponent} from './posts/apply/post-apply-form.component';
+import {FilterComponent} from './general/filter/filter.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ControlMessagesComponent,
     ImageComponent,
+    FilterComponent,
     HeaderComponent,
     HeaderActivityComponent,
     FooterComponent,

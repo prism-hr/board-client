@@ -46,12 +46,6 @@ export class ResourceUsersComponent implements OnInit {
     this.route.parent.data.subscribe(data => {
       const resourceScope = data['resourceScope'];
       this.resource = data[resourceScope];
-      if (this.resource.scope === 'DEPARTMENT') {
-        this.departmentService.getMembers(this.resource)
-          .subscribe(members => {
-            this.members = members;
-          });
-      }
     });
     this.route.data.subscribe(data => {
       this.users = data['users'];
@@ -130,6 +124,13 @@ export class ResourceUsersComponent implements OnInit {
     } else {
       this.bulkMode = false;
     }
+  }
+
+  membersFilterApplied(filter) {
+    this.departmentService.getMembers(this.resource, filter.searchTerm)
+      .subscribe(members => {
+        this.members = members;
+      });
   }
 
   respondToMemberRequest(userRole: UserRoleRepresentation, state: string) {
