@@ -112,6 +112,19 @@ time {
   overflow: hidden;
   border-radius: 50%;
   display: inline-block;
+  .avatar {
+    border-radius: 50%;
+    overflow: hidden;
+    background: white;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+    i {
+      font-size: 1.2rem;
+      line-height: 40px;
+    }
+  }
 }
 
 .action-extend {
