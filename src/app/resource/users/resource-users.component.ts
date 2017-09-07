@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdDialog} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
 import * as _ from 'lodash';
-import {MenuItem} from 'primeng/primeng';
+import {Observable} from 'rxjs/Observable';
 import {DepartmentService} from '../../departments/department.service';
 import {ResourceService} from '../../services/resource.service';
 import {ValidationUtils} from '../../validation/validation.utils';
@@ -19,16 +19,14 @@ import UserRolesRepresentation = b.UserRolesRepresentation;
 })
 export class ResourceUsersComponent implements OnInit {
 
-  users: UserRolesRepresentation;
-  members: UserRoleRepresentation[];
+  users: ExtendedUserRolesRepresentation;
   resource: ResourceRepresentation<any>;
   loading: boolean;
   userForm: FormGroup;
   lastAdminRole: boolean;
   bulkMode: boolean;
-  usersTabs: UserTabItem[];
-  activeUsersTab: UserTabItem;
   usersTabIndex = 0;
+  tabCollections = ['users', 'members', 'memberRequests'];
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private dialog: MdDialog,
               private resourceService: ResourceService, private departmentService: DepartmentService) {
@@ -51,13 +49,6 @@ export class ResourceUsersComponent implements OnInit {
       this.users = data['users'];
       this.calculateAdminsCount();
     });
-
-    this.usersTabs = [
-      {label: 'Staff', icon: 'fa-bar-chart', collectionName: 'users', roleType: 'STAFF'},
-      {label: 'Members', icon: 'fa-calendar', collectionName: 'members', roleType: 'MEMBER'},
-      {label: 'Membership Requests', icon: 'fa-book', collectionName: 'memberRequests'}
-    ];
-    this.activeUsersTab = this.usersTabs[0];
   }
 
   createNewUser() {
@@ -88,7 +79,7 @@ export class ResourceUsersComponent implements OnInit {
   }
 
   openUserSettings(userRole: UserRoleRepresentation, roleType: 'STAFF' | 'MEMBER') {
-    if(this.lastAdminRole && userRole.role === 'ADMINISTRATOR') {
+    if (this.lastAdminRole && userRole.role === 'ADMINISTRATOR') {
       return;
     }
     const dialogRef = this.dialog.open(ResourceUserEditDialogComponent,
@@ -100,7 +91,7 @@ export class ResourceUsersComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const {action, userRole}: { action: string, userRole: UserRoleRepresentation } = result;
-        const usersCollection = this.users[this.activeUsersTab.collectionName];
+        const usersCollection = this.users[this.tabCollections[this.usersTabIndex]];
         if (action === 'edited') {
           const idx = usersCollection.findIndex(ru => ru.user.id === userRole.user.id);
           usersCollection.splice(idx, 1, userRole);
@@ -131,10 +122,15 @@ export class ResourceUsersComponent implements OnInit {
   }
 
   membersFilterApplied(filter) {
-    this.departmentService.getMembers(this.resource, filter.searchTerm)
-      .subscribe(members => {
-        this.members = members;
-      });
+    let usersObservable: Observable<UserRoleRepresentation[]>;
+    if (this.usersTabIndex === 1) {
+      usersObservable = this.departmentService.getMembers(this.resource, filter.searchTerm)
+    } else if (this.usersTabIndex === 2) {
+      usersObservable = this.departmentService.getMemberRequests(this.resource, filter.searchTerm);
+    }
+    usersObservable.subscribe(users => {
+      this.users[this.tabCollections[this.usersTabIndex]] = users;
+    });
   }
 
   respondToMemberRequest(userRole: UserRoleRepresentation, state: string) {
@@ -145,14 +141,13 @@ export class ResourceUsersComponent implements OnInit {
       });
   }
 
-  private calculateAdminsCount() {
+  calculateAdminsCount() {
     const adminsCount = this.users.users
       .filter(u => u.role === 'ADMINISTRATOR').length;
     this.lastAdminRole = adminsCount === 1;
   }
 }
 
-interface UserTabItem extends MenuItem {
-  collectionName: string;
-  roleType?: 'STAFF' | 'MEMBER';
+interface ExtendedUserRolesRepresentation extends UserRolesRepresentation {
+  members?: UserRoleRepresentation[];
 }

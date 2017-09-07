@@ -58,7 +58,7 @@
   </p-tabPanel>
   <p-tabPanel header="Members">
     <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
-      <div *ngFor="let userRole of members" class="grid__item small--one-whole medium-up--one-third">
+      <div *ngFor="let userRole of users.members" class="grid__item small--one-whole medium-up--one-third">
         <md-card class="no-content users">
           <md-card-header fxLayout="row" fxLayoutAlign="space-between center"
                           (click)="openUserSettings(userRole, 'MEMBER')">

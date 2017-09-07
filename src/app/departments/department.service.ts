@@ -12,8 +12,10 @@ export class DepartmentService {
   constructor(private http: JwtHttp) {
   }
 
-  getMemberRequests(department: DepartmentRepresentation): Observable<UserRoleRepresentation[]> {
-    return this.http.get('/api/departments/' + department.id + '/memberRequests').map(res => res.json());
+  getMemberRequests(department: DepartmentRepresentation, searchTerm: string): Observable<UserRoleRepresentation[]> {
+    const params = new URLSearchParams();
+    params.set('searchTerm', searchTerm);
+    return this.http.get('/api/departments/' + department.id + '/memberRequests', {search: params}).map(res => res.json());
   }
 
   getMembers(department: DepartmentRepresentation, searchTerm: string): Observable<UserRoleRepresentation[]> {
