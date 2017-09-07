@@ -1,19 +1,22 @@
 @import '../../../assets/variables';
 
 .post-apply {
-  background: $greyBackground;
   border-top: 1px solid $fadeGrey;
   border-bottom: 1px solid $fadeGrey;
-  padding: 10px;
-  h4 {
-    font-size:1.1em;
-    font-weight:900;
-    padding: 5px 0;
+  .post-apply-title {
+    background: $greyBackground;
+    border-bottom: 1px solid $fadeGrey;
+    padding: 5px 10px;
+    h4 {
+      font-size:1.1em;
+      font-weight:900;
+      padding: 5px 0;
+    }
   }
   .post-apply-content {
+    padding: 20px 10px;
     color: $fontColor1;
-    padding: 5px 0;
-    font-weight:700;
+    font-size:90%;
     .ui-button-success {
       font-weight:400;
     }

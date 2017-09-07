@@ -3607,10 +3607,10 @@ p-selectbutton .ui-button-info {
 
 /** TabMenu **/
 
-.ui-tabmenu .ui-tabmenu-nav {
+.ui-tabmenu .ui-tabmenu-nav, .ui-tabview .ui-tabview-nav {
   margin: 0;
   padding: 0 .5em 0 0;
-  .ui-tabmenuitem {
+  .ui-tabmenuitem, li {
     list-style: none;
     float: left;
     position: relative;
@@ -3629,6 +3629,9 @@ p-selectbutton .ui-button-info {
   }
   a {
     padding: 0.5em 1em;
+  }
+  .ui-tabview-selected {
+    font-weight:bold;
   }
   .ui-tabmenuitem {
     .ui-icon {
@@ -3691,62 +3694,61 @@ p-selectbutton .ui-button-info {
   }
 }
 
-.ui-tabview {
-  padding: .25em;
-  .ui-tabview-nav {
-    margin: 0;
-    li {
-      list-style: none;
-      float: left;
-      position: relative;
-      margin: 0 .125em 1px 0;
-      padding: 0;
-      white-space: nowrap;
-      a {
-        float: left;
-        padding: .5em 1em;
-        text-decoration: none;
-      }
-      &.ui-tabview-selected a, &.ui-state-disabled a, &.ui-state-processing a {
-        cursor: text;
-      }
-      a {
-        cursor: pointer;
-      }
-    }
-  }
-  &.ui-tabview-collapsible .ui-tabview-nav li.ui-tabview-selected a {
-    cursor: pointer;
-  }
-  .ui-tabview-panel {
-    border-width: 0;
-    padding: 1em;
-    background: none;
-  }
-  .ui-tabview-nav li {
-    display: block;
-    .ui-tabview-left-icon, .ui-tabview-right-icon, .ui-tabview-title {
-      vertical-align: middle;
-    }
-    .ui-tabview-close {
-      margin: 0.5em 0.3em 0 0;
-      cursor: pointer;
-    }
-  }
-  &.ui-tabview-top > .ui-tabview-nav {
-    li {
-      border-bottom: 0;
-      top: 1px;
-    }
-    padding: .2em .2em 0;
-  }
-  &.ui-tabview-bottom > .ui-tabview-nav {
-    padding: 0 .2em .2em;
-    li {
-      border-top: 0;
-    }
-  }
-}
+//.ui-tabview {
+//  .ui-tabview-nav {
+//    margin: 0;
+//    li {
+//      list-style: none;
+//      float: left;
+//      position: relative;
+//      margin: 0 .125em 1px 0;
+//      padding: 0;
+//      white-space: nowrap;
+//      a {
+//        float: left;
+//        padding: .5em 1em;
+//        text-decoration: none;
+//      }
+//      &.ui-tabview-selected a, &.ui-state-disabled a, &.ui-state-processing a {
+//        cursor: text;
+//      }
+//      a {
+//        cursor: pointer;
+//      }
+//    }
+//  }
+//  &.ui-tabview-collapsible .ui-tabview-nav li.ui-tabview-selected a {
+//    cursor: pointer;
+//  }
+//  .ui-tabview-panel {
+//    border-width: 0;
+//    padding: 1em;
+//    background: none;
+//  }
+//  .ui-tabview-nav li {
+//    display: block;
+//    .ui-tabview-left-icon, .ui-tabview-right-icon, .ui-tabview-title {
+//      vertical-align: middle;
+//    }
+//    .ui-tabview-close {
+//      margin: 0.5em 0.3em 0 0;
+//      cursor: pointer;
+//    }
+//  }
+//  &.ui-tabview-top > .ui-tabview-nav {
+//    li {
+//      border-bottom: 0;
+//      top: 1px;
+//    }
+//    padding: .2em .2em 0;
+//  }
+//  &.ui-tabview-bottom > .ui-tabview-nav {
+//    padding: 0 .2em .2em;
+//    li {
+//      border-top: 0;
+//    }
+//  }
+//}
 
 /* per orientation settings */
 /* top and bottom */
@@ -4816,5 +4818,20 @@ b-image > img {
     &:last-child {
       border-bottom: none;
     }
+  }
+}
+p-tabview {
+  display: block;
+  margin-top:-15px;
+  .ui-widget-content {
+    border: none;
+  }
+  .ui-widget-header {
+    border-left: none;
+    border-top:none;
+  }
+  .ui-tabview-panel {
+    background: white;
+    padding-top:25px;
   }
 }

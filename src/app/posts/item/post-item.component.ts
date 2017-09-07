@@ -1,15 +1,21 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import PostRepresentation = b.PostRepresentation;
+import {ResourceService} from '../../services/resource.service';
 
 @Component({
   selector: 'b-post-item',
   templateUrl: 'post-item.component.html',
   styles: [``]
 })
-export class PostItemComponent {
+export class PostItemComponent implements OnInit {
   @Input() post: PostRepresentation & {};
+  canEdit: boolean;
 
-  constructor() {
+  constructor(private resourceService: ResourceService) {
+  }
+
+  ngOnInit(): void {
+    this.canEdit = this.resourceService.canEdit(this.post);
   }
 
 }
