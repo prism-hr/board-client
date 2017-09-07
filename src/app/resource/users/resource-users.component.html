@@ -20,9 +20,11 @@
 
 <div class="section-header">
   <h1>Users</h1>
+  <b-filter *ngIf="usersTabIndex !== 0" (applied)="membersFilterApplied($event)"></b-filter>
 </div>
 
-<p-tabView [activeIndex]="usersTabIndex">
+
+<p-tabView [activeIndex]="usersTabIndex" (onChange)="usersTabChanged($event)">
   <p-tabPanel header="Staff">
     <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
       <div *ngFor="let userRole of users.users" class="grid__item small--one-whole medium-up--one-third"
@@ -55,7 +57,6 @@
     </div>
   </p-tabPanel>
   <p-tabPanel header="Members">
-    <b-filter (applied)="membersFilterApplied($event)"></b-filter>
     <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
       <div *ngFor="let userRole of members" class="grid__item small--one-whole medium-up--one-third">
         <md-card class="no-content users">

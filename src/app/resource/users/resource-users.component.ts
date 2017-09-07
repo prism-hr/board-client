@@ -126,6 +126,10 @@ export class ResourceUsersComponent implements OnInit {
     }
   }
 
+  usersTabChanged(event) {
+    this.usersTabIndex = event.index;
+  }
+
   membersFilterApplied(filter) {
     this.departmentService.getMembers(this.resource, filter.searchTerm)
       .subscribe(members => {
