@@ -6,8 +6,8 @@
           {{department.summary}}
         </div>
         <div *ngIf="!department.summary">
-          No summary provided. Please provide a Summary
-          <a pButton routerLink="edit" class="ui-button-info " icon="fa-gear" label="Add Summary"></a>
+          No summary provided.
+          <button pButton routerLink="edit" class="ui-button-info small-xs" label="Add Summary"></button>
         </div>
       </div>
       <div class="category-list">

@@ -9,11 +9,11 @@ import Scope = b.Scope;
       <form fxLayout="row" fxLayoutAlign="space-between center">
         <div class="input-holder">
           <input name="text-filter" [(ngModel)]="searchTerm" placeholder="Search" class="ui-inputtext">
+          <button pButton (click)="search()" label="Filter">
+            <i class="fa-search"></i>
+          </button>
+          <button pButton (click)="clear()" label="Clear"></button>
         </div>
-        <button pButton (click)="search()" label="Filter">
-          <i class="fa-search"></i>
-        </button>
-        <button pButton (click)="clear()" label="Clear"></button>
         <div *ngIf="resourceScope">
           <p-selectButton styleClass="ui-button-info" [options]="statuses" [(ngModel)]="selectedStatuses" multiple="multiple"
                           name="selected"></p-selectButton>

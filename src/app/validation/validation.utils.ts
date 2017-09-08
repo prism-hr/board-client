@@ -9,7 +9,7 @@ export class ValidationUtils {
     const config = {
       required: 'This field is required',
       email: 'Invalid email address',
-      password: 'Invalid password. Password must be at least 6 characters long and contain a number.',
+      password: 'Invalid password. Password must be at least 8 characters long and contain a number.',
       repeatPassword: 'You have to re-type your new password again.',
       minlength: `Minimum length ${validatorValue.requiredLength}`,
       maxlength: `Maximum length ${validatorValue.requiredLength}`,

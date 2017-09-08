@@ -19,10 +19,10 @@ import ResourceRepresentation = b.ResourceRepresentation;
         </a>
       </div>
       <div *ngSwitchCase="'JOIN_DEPARTMENT_REQUEST_ACTIVITY'" class="activity-item">
-        {{activity.userRole.user.givenName}} {{activity.userRole.user.surname}} has requested membership for
-        {{activity.resource.name}}
-        <button pButton class="ui-button-warning small-xs" label="Dismiss"></button>
-        <button pButton class="ui-button-success small-xs" label="Go"></button>
+        <a>
+          {{activity.userRole.user.givenName}} {{activity.userRole.user.surname}} has requested membership for
+          {{activity.resource.name}}
+        </a>
       </div>
       <div *ngSwitchDefault class="activity-item">
         Unhandled activity: {{activity.activity}}
