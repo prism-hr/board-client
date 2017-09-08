@@ -80,60 +80,64 @@ export class PostEditComponent implements OnInit {
         if (!this.board && params.get('boardId')) {
           this.board = this.boardOptions.find(o => o.value.id === +params.get('boardId')).value;
         }
-        const postId = (<PostRepresentation>parentData['post']).id;
-        this.resourceService.getResource('POST', postId).subscribe(post => {
-          this.post = post;
 
-          this.postForm.get('board').setValue(this.board);
+        if (parentData['post']) {
+          const postId = (<PostRepresentation>parentData['post']).id;
+          this.resourceService.getResource('POST', postId).subscribe(post => {
+            this.post = post;
 
-          if (this.post) {
-            const formValue: any = _.pick(this.post, this.formProperties);
-            formValue.applyType = formValue.applyWebsite ? 'website' :
-              (formValue.applyDocument ? 'document' : (formValue.applyEmail ? 'email' : null));
-            formValue.hideLiveTimestamp = !formValue.liveTimestamp;
-            formValue.hideDeadTimestamp = !formValue.deadTimestamp;
-            this.postForm.patchValue(formValue);
-          } else {
-            this.postForm.patchValue({
-              hideLiveTimestamp: true,
-              deadTimestamp: moment().add(1, 'month').hours(0).minutes(0).toISOString()
-            });
-          }
-          this.configureTimestampControl('liveTimestamp');
-          this.configureTimestampControl('deadTimestamp');
+            this.postForm.get('board').setValue(this.board);
 
-          this.actionView = this.post ? this.resourceService.getActionView(this.post) : 'CREATE';
-          this.availableActions = this.post ? this.post.actions.map(a => a.action) : [];
+            if (this.post) {
+              const formValue: any = _.pick(this.post, this.formProperties);
+              formValue.applyType = formValue.applyWebsite ? 'website' :
+                (formValue.applyDocument ? 'document' : (formValue.applyEmail ? 'email' : null));
+              formValue.hideLiveTimestamp = !formValue.liveTimestamp;
+              formValue.hideDeadTimestamp = !formValue.deadTimestamp;
+              this.postForm.patchValue(formValue);
+            } else {
+              this.postForm.patchValue({
+                hideLiveTimestamp: true,
+                deadTimestamp: moment().add(1, 'month').hours(0).minutes(0).toISOString()
+              });
+            }
 
-          this.postForm.get('existingRelation').valueChanges.subscribe((existingRelation: string) => {
-            this.postForm.patchValue({existingRelationExplanation: null});
-            this.postForm.get('existingRelationExplanation')
-              .setValidators(existingRelation === 'OTHER' && [Validators.required, Validators.maxLength(1000)]);
-          });
-
-          this.postForm.get('applyType').valueChanges.subscribe((applyType: string) => {
-            this.postForm.get('applyWebsite').setValidators(applyType === 'website' && [Validators.required, ValidationUtils.urlValidator]);
-            this.postForm.get('applyDocument').setValidators(applyType === 'document' && Validators.required);
-            this.postForm.get('applyEmail').setValidators(applyType === 'email' && [Validators.required, ValidationUtils.emailValidator]);
-            this.postForm.get('applyWebsite').updateValueAndValidity();
-            this.postForm.get('applyDocument').updateValueAndValidity();
-            this.postForm.get('applyEmail').updateValueAndValidity();
-          });
-
-          this.postForm.get('hideLiveTimestamp').valueChanges.subscribe(() => {
-            this.postForm.patchValue({liveTimestamp: null});
             this.configureTimestampControl('liveTimestamp');
-          });
-
-          this.postForm.get('hideDeadTimestamp').valueChanges.subscribe(() => {
-            this.postForm.patchValue({deadTimestamp: null});
             this.configureTimestampControl('deadTimestamp');
+
+            this.actionView = this.post ? this.resourceService.getActionView(this.post) : 'CREATE';
+            this.availableActions = this.post ? this.post.actions.map(a => a.action) : [];
+
+            this.postForm.get('existingRelation').valueChanges.subscribe((existingRelation: string) => {
+              this.postForm.patchValue({existingRelationExplanation: null});
+              this.postForm.get('existingRelationExplanation')
+                .setValidators(existingRelation === 'OTHER' && [Validators.required, Validators.maxLength(1000)]);
+            });
+
+            this.postForm.get('applyType').valueChanges.subscribe((applyType: string) => {
+              this.postForm.get('applyWebsite').setValidators(applyType === 'website' && [Validators.required, ValidationUtils.urlValidator]);
+              this.postForm.get('applyDocument').setValidators(applyType === 'document' && Validators.required);
+              this.postForm.get('applyEmail').setValidators(applyType === 'email' && [Validators.required, ValidationUtils.emailValidator]);
+              this.postForm.get('applyWebsite').updateValueAndValidity();
+              this.postForm.get('applyDocument').updateValueAndValidity();
+              this.postForm.get('applyEmail').updateValueAndValidity();
+            });
+
+            this.postForm.get('hideLiveTimestamp').valueChanges.subscribe(() => {
+              this.postForm.patchValue({liveTimestamp: null});
+              this.configureTimestampControl('liveTimestamp');
+            });
+
+            this.postForm.get('hideDeadTimestamp').valueChanges.subscribe(() => {
+              this.postForm.patchValue({deadTimestamp: null});
+              this.configureTimestampControl('deadTimestamp');
+            });
+
+            this.boardChanged();
+
+            this.cdf.detectChanges();
           });
-
-          this.boardChanged();
-
-          this.cdf.detectChanges();
-        });
+        }
 
       });
   }
