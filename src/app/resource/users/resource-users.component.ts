@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdDialog} from '@angular/material';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
 import {Observable} from 'rxjs/Observable';
 import {DepartmentService} from '../../departments/department.service';
@@ -28,7 +28,7 @@ export class ResourceUsersComponent implements OnInit {
   usersTabIndex = 0;
   tabCollections = ['users', 'members', 'memberRequests'];
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private dialog: MdDialog,
+  constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private dialog: MdDialog,
               private resourceService: ResourceService, private departmentService: DepartmentService) {
     this.userForm = this.fb.group({
       user: this.fb.group({
@@ -49,6 +49,10 @@ export class ResourceUsersComponent implements OnInit {
       this.users = data['users'];
       this.calculateAdminsCount();
     });
+    this.route.fragment.subscribe(fragment => {
+      const usersCategory = fragment || 'users';
+      this.usersTabIndex = this.tabCollections.indexOf(usersCategory);
+    })
   }
 
   createNewUser() {
@@ -118,6 +122,7 @@ export class ResourceUsersComponent implements OnInit {
   }
 
   usersTabChanged(event) {
+    this.router.navigate([], {fragment: event.index ? this.tabCollections[event.index] : null});
     this.usersTabIndex = event.index;
   }
 

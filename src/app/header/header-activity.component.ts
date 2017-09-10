@@ -19,7 +19,7 @@ import ResourceRepresentation = b.ResourceRepresentation;
         </a>
       </div>
       <div *ngSwitchCase="'JOIN_DEPARTMENT_REQUEST_ACTIVITY'" class="activity-item">
-        <a>
+        <a [routerLink]="resourceLink.concat('users')" fragment="memberRequests" (click)="activityClicked(activity)">
           {{activity.userRole.user.givenName}} {{activity.userRole.user.surname}} has requested membership for
           {{activity.resource.name}}
         </a>
@@ -33,11 +33,14 @@ import ResourceRepresentation = b.ResourceRepresentation;
 export class HeaderActivityComponent implements OnInit {
 
   @Input() activity: ActivityRepresentation & {};
+  resourceLink: any[];
 
   constructor(private userService: UserService, private resourceService: ResourceService) {
   }
 
   ngOnInit(): void {
+    const resource = this.activity.resource;
+    this.resourceLink = this.resourceService.routerLink(resource);
   }
 
   activityClicked(activity: ActivityRepresentation) {
