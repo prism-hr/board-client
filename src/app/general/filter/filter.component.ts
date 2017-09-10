@@ -6,13 +6,13 @@ import Scope = b.Scope;
   selector: 'b-filter',
   template: `
     <div class="search-filter">
-      <form fxLayout="row" fxLayoutAlign="space-between center">
+      <form fxLayout="row" fxLayoutAlign="space-between center" (submit)="search()">
         <div class="input-holder">
           <input name="text-filter" [(ngModel)]="searchTerm" placeholder="Search" class="ui-inputtext">
-          <button pButton (click)="search()" label="Filter">
+          <button pButton label="Filter">
             <i class="fa-search"></i>
           </button>
-          <button pButton (click)="clear()" label="Clear"></button>
+          <button pButton type="button" (click)="clear()" label="Clear"></button>
         </div>
         <div *ngIf="resourceScope">
           <p-selectButton styleClass="ui-button-info" [options]="statuses" [(ngModel)]="selectedStatuses" multiple="multiple"

@@ -19,7 +19,7 @@ import UserRolesRepresentation = b.UserRolesRepresentation;
 })
 export class ResourceUsersComponent implements OnInit {
 
-  users: ExtendedUserRolesRepresentation;
+  users: UserRolesRepresentation;
   resource: ResourceRepresentation<any>;
   loading: boolean;
   userForm: FormGroup;
@@ -146,8 +146,4 @@ export class ResourceUsersComponent implements OnInit {
       .filter(u => u.role === 'ADMINISTRATOR').length;
     this.lastAdminRole = adminsCount === 1;
   }
-}
-
-interface ExtendedUserRolesRepresentation extends UserRolesRepresentation {
-  members?: UserRoleRepresentation[];
 }

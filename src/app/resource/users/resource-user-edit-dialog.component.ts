@@ -9,24 +9,24 @@ import UserRoleRepresentation = b.UserRoleRepresentation;
   template: `
     <h2 md-dialog-title>{{userRole.user.givenName}} {{userRole.user.surname}}</h2>
 
-    <md-dialog-content>
-      <form [formGroup]="userForm" (ngSubmit)="save()" autocomplete="off" novalidate>
+    <form [formGroup]="userForm" (ngSubmit)="save()" autocomplete="off" novalidate>
+      <md-dialog-content>
         <div class="grid">
           <b-resource-user-role-form-part [resource]="resource" [parentForm]="userForm" [roleType]="roleType"
                                           [userRole]="userRole" [lastAdminRole]="lastAdminRole"></b-resource-user-role-form-part>
         </div>
-      </form>
-    </md-dialog-content>
+      </md-dialog-content>
 
-    <md-dialog-actions fxLayout="row" fxLayoutAlign="space-between">
-      <div>
-        <button pButton class="ui-button-secondary" label="Cancel" md-dialog-close></button>
-        <button pButton (click)="removeUser(userRole)" class="ui-button-secondary remove-user" label="Remove"
-                [disabled]="lastAdminRole" icon="fa-trash"></button>
-      </div>
-      <button pButton class="ui-button-warning" label="Save" (click)="save()"></button>
+      <md-dialog-actions fxLayout="row" fxLayoutAlign="space-between">
+        <div>
+          <button pButton type="button" class="ui-button-secondary" label="Cancel" md-dialog-close></button>
+          <button pButton type="button" (click)="removeUser(userRole)" class="ui-button-secondary remove-user" label="Remove"
+                  [disabled]="lastAdminRole" icon="fa-trash"></button>
+        </div>
+        <button pButton class="ui-button-warning" label="Save"></button>
 
-    </md-dialog-actions>
+      </md-dialog-actions>
+    </form>
   `
 })
 export class ResourceUserEditDialogComponent implements OnInit {

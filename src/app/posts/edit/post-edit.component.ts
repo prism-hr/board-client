@@ -148,8 +148,8 @@ export class PostEditComponent implements OnInit {
       return;
     }
     this.postService.update(this.post, this.generatePostRequestBody())
-      .subscribe(() => {
-        return this.router.navigate(this.resourceService.routerLink(this.post));
+      .subscribe(post => {
+        return this.router.navigate(this.resourceService.routerLink(post));
       });
   }
 
