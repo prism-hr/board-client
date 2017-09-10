@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
+import * as _ from 'lodash';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
@@ -37,12 +38,12 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
         : (this.resource as BoardRepresentation).department.memberCategories;
       this.memberCategoryOptions = availableMemberCategories.map(c => ({label: categoryTranslations[c], value: c}));
     });
-    if (this.resource.scope === 'BOARD' || this.roleType === 'STAFF') {
-      this.availableRoles = ['ADMINISTRATOR', 'AUTHOR'];
+
+    this.availableRoles = this.resource.scope === 'DEPARTMENT' ? ['ADMINISTRATOR', 'MEMBER'] : ['ADMINISTRATOR', 'AUTHOR'];
+    if (this.roleType === 'STAFF') {
+      this.availableRoles = _.without(this.availableRoles, 'MEMBER');
     } else if (this.roleType === 'MEMBER') {
       this.availableRoles = ['MEMBER'];
-    } else {
-      this.availableRoles = ['ADMINISTRATOR', 'AUTHOR', 'MEMBER'];
     }
 
     let role = this.userRole && this.userRole.role;
@@ -51,7 +52,7 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
     }
 
     this.parentForm.setControl('roleGroup', this.fb.group({
-        role: [role, this.lastAdminRole && role === 'ADMINISTRATOR' && this.lastAdminValidator],
+      role: [role, this.lastAdminRole && role === 'ADMINISTRATOR' && this.lastAdminValidator],
       noExpiryDate: [!this.userRole || !this.userRole.expiryDate],
       expiryDate: [this.userRole && this.userRole.expiryDate],
       category: [this.userRole && this.userRole.categories && this.userRole.categories[0]]

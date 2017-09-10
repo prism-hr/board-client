@@ -10,9 +10,10 @@
       </div>
     </md-card-content>
     <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
-      <button pButton class="ui-button-secondary" type="button" (click)="bulkMode = true" label="Add members in bulk">
+      <button pButton type="button" class="ui-button-secondary" *ngIf="resource.scope === 'DEPARTMENT'"
+              (click)="bulkMode = true" label="Add members in bulk">
       </button>
-      <button pButton class="ui-button-success" type="submit" label="Add user" fxFlexOrder="1"></button>
+      <button pButton type="submit" class="ui-button-success" label="Add user" fxFlexOrder="1"></button>
     </md-card-actions>
   </form>
 </md-card>
@@ -58,7 +59,7 @@
       </div>
     </div>
   </p-tabPanel>
-  <p-tabPanel header="Members">
+  <p-tabPanel *ngIf="resource.scope === 'DEPARTMENT'" header="Members">
     <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
       <div *ngFor="let userRole of users.members" class="grid__item small--one-whole medium-up--one-third">
         <md-card class="no-content users">
@@ -111,9 +112,11 @@
                 {{userRole.user.givenName}} {{userRole.user.surname}}
               </h3>
               <div class="card-actions">
-                <button pButton class="ui-button-warning small-xs" (click)="respondToMemberRequest(userRole, 'rejected')"
+                <button pButton class="ui-button-warning small-xs"
+                        (click)="respondToMemberRequest(userRole, 'rejected')"
                         label="Reject"></button>
-                <button pButton class="ui-button-success small-xs" (click)="respondToMemberRequest(userRole, 'accepted')"
+                <button pButton class="ui-button-success small-xs"
+                        (click)="respondToMemberRequest(userRole, 'accepted')"
                         label="Accept"></button>
               </div>
             </md-card-title>

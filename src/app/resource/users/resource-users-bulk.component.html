@@ -11,7 +11,7 @@
                  class="drop-area">
             <span>Click to upload CSV file</span>
           </label>
-          <input #csvUploaderInput type="file" ngFileSelect
+          <input #csvUploaderInput type="file" ngFileSelect accept="text/csv"
                  (uploadOutput)="onUploadOutput($event)"
                  [uploadInput]="uploadInput"
                  id="csv-uploader-input" style="display:none"/>
