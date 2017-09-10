@@ -48,7 +48,6 @@ export class ResourceService {
       });
   }
 
-// FIXME use take(1) or first() instead of returnComplete
   getResource(scope: Scope, id: number, options: { reload?: boolean } = {}): Observable<ResourceRepresentation<any>> {
     const subjects = this.resourceSubjects[scope];
     if (!subjects[id]) {
