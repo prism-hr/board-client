@@ -87,6 +87,6 @@ export class PostApplyComponent implements OnInit, OnChanges {
   }
 
   private reloadPost() {
-    return this.resourceService.getResource('POST', this.post.id, {returnComplete: true, reload: true});
+    return this.resourceService.getResource('POST', this.post.id, {reload: true});
   }
 }

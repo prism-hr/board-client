@@ -49,7 +49,7 @@ export class ResourceService {
   }
 
 // FIXME use take(1) or first() instead of returnComplete
-  getResource(scope: Scope, id: number, options: { returnComplete?: boolean, reload?: boolean } = {}): Observable<ResourceRepresentation<any>> {
+  getResource(scope: Scope, id: number, options: { reload?: boolean } = {}): Observable<ResourceRepresentation<any>> {
     const subjects = this.resourceSubjects[scope];
     if (!subjects[id]) {
       subjects[id] = new ReplaySubject(1);
@@ -61,20 +61,10 @@ export class ResourceService {
           subjects[id].next(post);
         });
     } else {
-      directObservable = new AsyncSubject();
-      subjects[id].subscribe(post => {
-        directObservable.next(post);
-        directObservable.complete();
-      })
-    }
-    if (options.returnComplete) {
-      return directObservable;
+      directObservable = subjects[id].asObservable();
     }
 
-    if (options.reload) {
-      directObservable.subscribe(); // force http request
-    }
-    return subjects[id].asObservable();
+    return directObservable;
   }
 
   resourceUpdated(resource: ResourceRepresentation<any>) {

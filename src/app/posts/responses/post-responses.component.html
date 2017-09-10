@@ -1,7 +1,7 @@
 <section class="section" [ngClass]="{'edit-post':post}">
   <md-card>
     <md-card-content>
-      <div class="grid">
+      <div *ngIf="responses.length > 0" class="grid">
         <div *ngFor="let response of responses">
           <h3>{{response.user.givenName}} {{response.user.surname}}</h3>
           <span>{{response.createdTimestamp | amCalendar}}</span>
@@ -15,6 +15,12 @@
             {{response.coveringNote}}
           </div>
         </div>
+      </div>
+      <div *ngIf="responses.length === 0" class="grid">
+        <p-messages
+          [value]="[{severity:'info', summary:'No Responses', detail:'No user has responded to your post yet'}]"
+          [closable]="false">
+        </p-messages>
       </div>
     </md-card-content>
     <md-card-actions>
