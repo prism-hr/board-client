@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ResourceService} from '../services/resource.service';
 import {UserService} from '../services/user.service';
 import ActivityRepresentation = b.ActivityRepresentation;
@@ -33,6 +33,7 @@ import ResourceRepresentation = b.ResourceRepresentation;
 export class HeaderActivityComponent implements OnInit {
 
   @Input() activity: ActivityRepresentation & {};
+  @Output() dismissed: EventEmitter<ActivityRepresentation> = new EventEmitter();
   resourceLink: any[];
 
   constructor(private userService: UserService, private resourceService: ResourceService) {
@@ -44,7 +45,9 @@ export class HeaderActivityComponent implements OnInit {
   }
 
   activityClicked(activity: ActivityRepresentation) {
-    this.userService.dismissActivity(activity).subscribe();
+    // this.userService.dismissActivity(activity).subscribe(() => {
+    // });
+    this.dismissed.emit(activity);
   }
 
   routerLink(resource: ResourceRepresentation<any>) {

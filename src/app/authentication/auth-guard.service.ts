@@ -5,12 +5,13 @@ import {AuthService} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
 import {AuthenticationDialogComponent} from './authentication.dialog';
 import {ResetPasswordDialogComponent} from './reset-password.dialog';
+import {UserService} from '../services/user.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
 
-  constructor(private router: Router, private dialog: MdDialog, private authService: AuthService) {
+  constructor(private router: Router, private dialog: MdDialog, private authService: AuthService, private userService: UserService) {
   }
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
@@ -21,6 +22,7 @@ export class AuthGuard implements CanActivate {
     if (this.authService.isAuthenticated()) {
       return Observable.of(true);
     } else {
+      this.userService.logout().subscribe();
       const config = new MdDialogConfig();
       config.data = {showRegister};
       const dialogRef = this.dialog.open(AuthenticationDialogComponent, config);

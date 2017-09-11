@@ -43,7 +43,6 @@ import {AccountComponent} from './account/account.component';
 import {AppComponent} from './app.component';
 import {MyAuthConfig} from './auth.config';
 import {AuthGuard} from './authentication/auth-guard.service';
-import {AuthedComponent} from './authentication/authed.component';
 import {AuthenticationDialogComponent} from './authentication/authentication.dialog';
 import {Ng2UiAuthModule} from './authentication/ng2-ui-auth.module';
 import {ResetPasswordDialogComponent} from './authentication/reset-password.dialog';
@@ -69,6 +68,7 @@ import {DepartmentListComponent} from './departments/list/department-list.compon
 import {DepartmentViewComponent} from './departments/view/department-view.component';
 import {FooterComponent} from './footer/footer.component';
 import {FileUploadComponent} from './general/file-upload.component';
+import {FilterComponent} from './general/filter/filter.component';
 import {ImageComponent} from './general/image.component';
 import {PlacesModule} from './general/places/places.module';
 import {UserLookupComponent} from './general/user-lookup';
@@ -80,6 +80,8 @@ import {HomeComponent} from './home/home.component';
 import {StudentLogoComponent} from './home/student-logo.component';
 import {UniLogoComponent} from './home/uni-logo.component';
 import {NotFoundComponent} from './not-found.component';
+import {PostApplyFormComponent} from './posts/apply/post-apply-form.component';
+import {PostApplyRequestMembershipComponent} from './posts/apply/post-apply-request-membership.component';
 import {PostApplyComponent} from './posts/apply/post-apply.component';
 import {PostEditComponent} from './posts/edit/post-edit.component';
 import {PostHeaderComponent} from './posts/header/post-header.component';
@@ -106,9 +108,6 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
-import {PostApplyRequestMembershipComponent} from './posts/apply/post-apply-request-membership.component';
-import {PostApplyFormComponent} from './posts/apply/post-apply-form.component';
-import {FilterComponent} from './general/filter/filter.component';
 
 @NgModule({
   declarations: [
@@ -131,7 +130,6 @@ import {FilterComponent} from './general/filter/filter.component';
     StudentLogoComponent,
     FileUploadComponent,
     DateTimeComponent,
-    AuthedComponent,
     UserLookupComponent,
     BoardListComponent,
     ResourceHandleComponent,
@@ -173,8 +171,8 @@ import {FilterComponent} from './general/filter/filter.component';
         children: [
           {path: '', component: HomeComponent},
           {path: 'home', component: HomeComponent},
-          {path: 'boards', component: BoardListComponent},
-          {path: 'departments', component: DepartmentListComponent},
+          {path: 'boards', component: BoardListComponent, canActivate: [AuthGuard]},
+          {path: 'departments', component: DepartmentListComponent, canActivate: [AuthGuard]},
           {
             path: 'newDepartment',
             component: DepartmentNewComponent,

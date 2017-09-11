@@ -44,7 +44,7 @@
 <p-overlayPanel #activitiesPanel>
   <div *ngIf="activities" class="activity-content">
     <div *ngFor="let activity of activities" class="activity-item">
-      <b-header-activity [activity]="activity"></b-header-activity>
+      <b-header-activity [activity]="activity" (dismissed)="activityDismissed(activity)"></b-header-activity>
     </div>
   </div>
   <div *ngIf="!activities">
