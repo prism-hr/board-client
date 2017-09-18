@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {URLSearchParams} from '@angular/http';
 import * as _ from 'lodash';
 import {JwtHttp} from 'ng2-ui-auth';
-import {AsyncSubject} from 'rxjs/AsyncSubject';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {Subject} from 'rxjs/Subject';

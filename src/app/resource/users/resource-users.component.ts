@@ -51,7 +51,9 @@ export class ResourceUsersComponent implements OnInit {
     });
     this.route.fragment.subscribe(fragment => {
       const usersCategory = fragment || 'users';
-      this.usersTabIndex = this.tabCollections.indexOf(usersCategory);
+      setTimeout(() => {
+        this.usersTabIndex = this.tabCollections.indexOf(usersCategory);
+      });
     })
   }
 

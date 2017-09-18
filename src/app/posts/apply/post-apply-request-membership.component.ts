@@ -4,6 +4,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {PostService} from '../post.service';
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import UserRoleDTO = b.UserRoleDTO;
+import * as moment from 'moment';
 
 @Component({
   selector: 'b-post-apply-request-membership',
@@ -20,7 +21,7 @@ import UserRoleDTO = b.UserRoleDTO;
       <div *ngIf="membershipForm.get('category').value">
         <div class="input-holder">
           <label>{{expiryLabel | translate}}</label>
-          <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string"></p-calendar>
+          <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string" [minDate]="tomorrow"></p-calendar>
           <control-messages [control]="membershipForm.get('expiryDate')"></control-messages>
         </div>
       </div>
@@ -37,6 +38,7 @@ export class PostApplyRequestMembershipComponent implements OnInit {
   membershipForm: FormGroup;
   memberCategoryOptions: { label: string, value: any }[];
   expiryLabel: string;
+  tomorrow: Date;
 
   constructor(private fb: FormBuilder, private translate: TranslateService, private postService: PostService) {
     this.membershipForm = this.fb.group({
@@ -46,6 +48,7 @@ export class PostApplyRequestMembershipComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.tomorrow = moment().add(1, 'day').toDate();
     this.translate.get('definitions.memberCategory').subscribe(categoryTranslations => {
       this.memberCategoryOptions = this.department.memberCategories.map(c => ({label: categoryTranslations[c], value: c}));
     });
