@@ -108,6 +108,7 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
+import {RedirectGuard} from './authentication/redirect-guard.service';
 
 @NgModule({
   declarations: [
@@ -168,6 +169,7 @@ import {ValidationService} from './validation/validation.service';
     RouterModule.forRoot([
       {
         path: '',
+        canActivate: [RedirectGuard],
         children: [
           {path: '', component: HomeComponent},
           {path: 'home', component: HomeComponent},
@@ -193,7 +195,7 @@ import {ValidationService} from './validation/validation.service';
             path: 'newPost',
             component: PostEditComponent,
             canActivate: [AuthGuard],
-            data: {showRegister: true},
+            data: {modalType: 'register'},
             resolve: {
               boards: BoardsResolver
             },
@@ -373,7 +375,7 @@ import {ValidationService} from './validation/validation.service';
       deps: [DefinitionsService],
       multi: true
     },
-    AuthGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostResponsesResolver, BoardsResolver,
+    AuthGuard, RedirectGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostResponsesResolver, BoardsResolver,
     ResourceUsersResolver, AccountSuppressionsResolver, PostService, DepartmentService, UserService, ValidationService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, ResourceCommentDialogComponent, UserImageDialogComponent,
