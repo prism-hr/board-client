@@ -20,7 +20,7 @@
 <b-resource-users-bulk *ngIf="bulkMode" [resource]="resource" (close)="closeBulkMode($event)">
 </b-resource-users-bulk>
 
-<div class="section-header" fxLayout="row" fxLayoutAlign="space-between center">
+<div class="section-header users-headers" fxLayout="row" fxLayoutAlign="space-between center">
   <h1>Users</h1>
   <b-filter *ngIf="usersTabIndex !== 0" (applied)="membersFilterApplied($event)"></b-filter>
 </div>

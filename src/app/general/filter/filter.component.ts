@@ -7,12 +7,10 @@ import Scope = b.Scope;
   template: `
     <div class="search-filter">
       <form fxLayout="row" fxLayoutAlign="space-between center" (submit)="search()">
-        <div class="input-holder">
-          <input name="text-filter" [(ngModel)]="searchTerm" placeholder="Search" class="ui-inputtext">
-          <button pButton label="Filter">
-            <i class="fa-search"></i>
-          </button>
-          <button pButton type="button" (click)="clear()" label="Clear"></button>
+        <div class="input-holder" fxLayout="row" fxLayoutAlign="flex-start center">
+          <input name="text-filter" [(ngModel)]="searchTerm" placeholder="Search" class="ui-inputtext" >
+          <button pButton icon="fa-magnifier" class="ui-button-success"></button>
+          <button pButton icon="fa-close" type="button" *ngIf="searchTerm" (click)="clear()" class="ui-button-warning"></button>
         </div>
         <div *ngIf="resourceScope">
           <p-selectButton styleClass="ui-button-info" [options]="statuses" [(ngModel)]="selectedStatuses" multiple="multiple"

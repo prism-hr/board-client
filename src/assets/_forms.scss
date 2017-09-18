@@ -52,12 +52,28 @@ button.ui-button {
 button.ui-state-default {
   border-color: transparent;
 }
+.users-headers {
+  .search-filter {
+    margin-bottom:0;
+    padding: 0;
+    .input-holder  {
+      width: auto;
+
+    }
+  }
+}
 .search-filter {
   background: $greyBackground;
   padding:5px 10px;
   .input-holder  {
     margin-bottom:0;
     width: 25%;
+    input {
+      margin-right:6px;
+    }
+    .ui-inputtext {
+      padding: 0.35em;
+    }
   }
   .ui-widget {
     font-size:1rem;
