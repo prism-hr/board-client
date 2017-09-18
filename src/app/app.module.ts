@@ -108,7 +108,7 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
-import {RedirectGuard} from './authentication/redirect-guard.service';
+import {InitializeGuard} from './authentication/initialize-guard.service';
 
 @NgModule({
   declarations: [
@@ -169,7 +169,7 @@ import {RedirectGuard} from './authentication/redirect-guard.service';
     RouterModule.forRoot([
       {
         path: '',
-        canActivate: [RedirectGuard],
+        canActivate: [InitializeGuard],
         children: [
           {path: '', component: HomeComponent},
           {path: 'home', component: HomeComponent},
@@ -375,7 +375,7 @@ import {RedirectGuard} from './authentication/redirect-guard.service';
       deps: [DefinitionsService],
       multi: true
     },
-    AuthGuard, RedirectGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostResponsesResolver, BoardsResolver,
+    AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostResponsesResolver, BoardsResolver,
     ResourceUsersResolver, AccountSuppressionsResolver, PostService, DepartmentService, UserService, ValidationService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, ResourceCommentDialogComponent, UserImageDialogComponent,

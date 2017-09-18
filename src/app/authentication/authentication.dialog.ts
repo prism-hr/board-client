@@ -19,24 +19,26 @@ export class AuthenticationDialogComponent implements OnInit {
   loading: boolean;
   view: AuthenticationView;
   forgottenSent: boolean;
-  dialogData: any;
+  dialogData: AuthenticationDialogData;
 
   constructor(private dialogRef: MdDialogRef<AuthenticationDialogComponent>, private fb: FormBuilder,
-              @Inject(MD_DIALOG_DATA) data: any, private userService: UserService, private validationService: ValidationService) {
+              @Inject(MD_DIALOG_DATA) data: AuthenticationDialogData, private userService: UserService, private validationService: ValidationService) {
+    this.dialogData = data;
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, ValidationUtils.emailValidator]],
-      password: ['', [Validators.required, Validators.max(100)]]
+      password: ['', [Validators.required, Validators.max(100)]],
+      uuid: [data.uuid]
     });
     this.registrationForm = this.fb.group({
       givenName: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
       surname: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
       email: ['', [Validators.required, ValidationUtils.emailValidator]],
-      password: ['', [Validators.required, ValidationUtils.passwordValidator]]
+      password: ['', [Validators.required, ValidationUtils.passwordValidator]],
+      uuid: [data.uuid]
     });
     this.forgotPasswordForm = this.fb.group({
       email: ['', [Validators.required, ValidationUtils.emailValidator]]
     });
-    this.dialogData = data;
   }
 
   ngOnInit() {
@@ -56,7 +58,7 @@ export class AuthenticationDialogComponent implements OnInit {
     }
     this.loading = true;
     this.userService.login(this.loginForm.value)
-      .then((user: UserRepresentation) => {
+      .then(() => {
           this.afterAuthenticated();
         },
         (response: any) => {
@@ -72,7 +74,7 @@ export class AuthenticationDialogComponent implements OnInit {
     }
     this.loading = true;
     this.userService.signup(this.registrationForm.value)
-      .then((user: UserRepresentation) => {
+      .then(() => {
           this.afterAuthenticated();
         },
         (response: any) => {
@@ -84,7 +86,7 @@ export class AuthenticationDialogComponent implements OnInit {
     this.error = null;
     this.loading = true;
     this.userService.authenticate(name)
-      .then((user: UserRepresentation) => {
+      .then(() => {
           this.afterAuthenticated();
         },
         (response: any) => {
@@ -120,7 +122,11 @@ export class AuthenticationDialogComponent implements OnInit {
     this.validationService.extractResponseError(response, error => this.error = error);
   }
 
-
 }
 
 type AuthenticationView = 'LOGIN' | 'REGISTER' | 'FORGOT';
+
+export interface AuthenticationDialogData {
+  showRegister?: boolean;
+  uuid?: string;
+}

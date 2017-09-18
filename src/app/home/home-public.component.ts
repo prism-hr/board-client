@@ -26,7 +26,7 @@ export class HomePublicComponent implements OnInit {
   }
 
   submit() {
-    this.authGuard.ensureAuthenticated('register').first() // open dialog if not authenticated
+    this.authGuard.ensureAuthenticated({modalType: 'register'}).first() // open dialog if not authenticated
       .subscribe(authenticated => {
         if (!authenticated) {
           return;

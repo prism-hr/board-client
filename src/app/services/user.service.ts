@@ -21,7 +21,6 @@ export class UserService {
     this.userSource = new ReplaySubject<UserRepresentation>(1);
     this.user$ = this.userSource.asObservable();
     this.activities$ = new ReplaySubject<UserRepresentation>(1);
-    this.initializeUser();
   }
 
   login(user: any, opts?: RequestOptionsArgs): Promise<UserRepresentation> {
@@ -115,7 +114,7 @@ export class UserService {
     return this.http.delete('/api/user/activities/' + activity.id);
   }
 
-  private initializeUser() {
+  initializeUser() {
     return this.loadUser()
       .then(user => {
         if (user) {
