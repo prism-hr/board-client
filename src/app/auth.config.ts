@@ -6,7 +6,7 @@ export class MyAuthConfig extends CustomConfig {
   refreshBeforeExpiration = 7200000;
   loginUrl = '/api/auth/login';
   signupUrl = '/api/auth/register';
-  refreshUrl = '/api/auth/refresh';
+  refreshUrl = '/api/auth/refreshToken';
   providers = {
     linkedin: {url: '/api/auth/linkedin', requiredUrlParams: ['state', 'scope']},
     facebook: {url: '/api/auth/facebook'}

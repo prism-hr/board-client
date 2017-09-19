@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
     if (this.authService.isAuthenticated()) {
       return Observable.of(true);
     } else {
-      this.userService.logout().subscribe();
+      this.userService.logout();
       const config = new MdDialogConfig();
       const dialogData: AuthenticationDialogData = {showRegister: options.modalType === 'register', uuid: options.uuid};
       config.data = dialogData;

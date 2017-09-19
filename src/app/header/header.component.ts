@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.userService.logout().subscribe();
+    this.userService.logout();
     return this.router.navigate(['']);
   }
 

@@ -1,10 +1,6 @@
-import {Component, OnInit, } from '@angular/core';
-import { NgModel } from '@angular/forms'
+import {Component, OnInit,} from '@angular/core';
 import {ResourceService} from '../../services/resource.service';
-import {UserService} from '../../services/user.service';
 import BoardRepresentation = b.BoardRepresentation;
-import UserRepresentation = b.UserRepresentation;
-import {SelectItem} from 'primeng/primeng';
 
 @Component({
   templateUrl: 'board-list.component.html',
@@ -12,21 +8,14 @@ import {SelectItem} from 'primeng/primeng';
 })
 export class BoardListComponent implements OnInit {
 
-  user: UserRepresentation | boolean;
   boards: BoardRepresentation[];
 
-  constructor(private resourceService: ResourceService, private userService: UserService) {
+  constructor(private resourceService: ResourceService) {
   }
 
   ngOnInit(): void {
-    this.userService.user$.subscribe(user => {
-      this.user = user;
-      this.boards = null;
-      if (user) {
-        this.resourceService.getBoards().subscribe(boards => {
-          this.boards = boards;
-        });
-      }
+    this.resourceService.getBoards().subscribe(boards => {
+      this.boards = boards;
     });
   }
 

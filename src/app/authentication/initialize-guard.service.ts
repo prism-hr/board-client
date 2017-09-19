@@ -20,7 +20,7 @@ export class InitializeGuard implements CanActivate {
     let observable: Observable<boolean>;
 
     if (modalType) {
-      this.userService.logout().subscribe();
+      this.userService.logout();
     } else {
       this.userService.initializeUser();
     }

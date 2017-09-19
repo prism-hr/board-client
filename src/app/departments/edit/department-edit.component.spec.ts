@@ -85,7 +85,6 @@ describe('DepartmentView', () => {
 
     click(page.submitBtn);
     fixture.detectChanges();
-    console.log('Dupa3 ' + JSON.stringify(page.submitSpy.calls.any()));
     expect(page.submitSpy.calls.any()).toBe(true);
     expect(page.submitSpy.calls.mostRecent().args).toEqual([8, {
       name: 'Dep2',

@@ -4,6 +4,7 @@ import {ConfigService, SharedService} from 'ng2-ui-auth';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/switchMap';
 import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
 
 export interface JwtRequestOptionsArgs extends RequestOptionsArgs {
   autoRefreshToken?: boolean;
@@ -11,6 +12,9 @@ export interface JwtRequestOptionsArgs extends RequestOptionsArgs {
 
 @Injectable()
 export class CustomJwtHttp {
+
+  private sessionExpired = new Subject();
+
   constructor(private _http: Http,
               private _shared: SharedService,
               private _config: ConfigService,) {
@@ -85,15 +89,20 @@ export class CustomJwtHttp {
       .get(this._config.refreshUrl, {
         headers: authHeader,
       })
-      .catch((res: Response) => {
-        if(res.status === 401) {
-          this._shared.removeToken();
-        }
-        return Observable.of(null);
-      })
       .do((res: Response) => {
         this._shared.setToken(res);
+      })
+      .catch((res: Response) => {
+        if (res.status === 401) {
+          this._shared.removeToken();
+          this.sessionExpired.next();
+        }
+        return Observable.of(null);
       });
+  }
+
+  getSessionsExpiredSubject() {
+    return this.sessionExpired;
   }
 
   protected actualRequest(url: string | Request, options?: JwtRequestOptionsArgs) {

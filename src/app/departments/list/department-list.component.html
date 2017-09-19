@@ -1,61 +1,56 @@
 <section class="section">
-  <div *ngIf="!user">
-    <h1 class="title">You're seconds away from creating your first board!</h1>
-    <b-home-public></b-home-public>
+  <div class="section-header" fxLayout="row" fxLayoutAlign="space-between center">
+    <h1>Departments</h1>
+    <button pButton routerLink="/newDepartment" class="ui-button-success" icon="fa-plus"
+            label="New Department"></button>
   </div>
-  <div *ngIf="user">
-    <div class="section-header" fxLayout="row" fxLayoutAlign="space-between center">
-      <h1>Departments</h1>
-      <button pButton routerLink="/newDepartment" class="ui-button-success" icon="fa-plus"
-              label="New Department"></button>
+  <b-filter resourceScope="DEPARTMENT" (applied)="filterApplied($event)"></b-filter>
+  <div class="grid list-container">
+    <div *ngFor="let department of departments" class="list-container__item">
+      <md-card>
+        <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
+          <md-card-title>
+            <h3><a [routerLink]="['/', department.handle]">{{department.name}}</a></h3>
+          </md-card-title>
+          <div md-card-avatar class="logo-holder-small default-logo"
+               [ngClass]="{'no-background': department.documentLogo}">
+            <b-image [publicId]="department.documentLogo?.cloudinaryId"
+                     gravity="north_west" height="150" width="200" crop="mfit"></b-image>
+          </div>
+        </md-card-header>
+        <md-card-content>
+          <div class="general-card-summary">
+            {{department.summary}}
+            <div *ngIf="!department.summary">
+              No summary provided.
+              <button pButton [routerLink]="['/', department.handle]" class="ui-button-info small-xs"
+                      label="Add Summary"></button>
+            </div>
+          </div>
+          <div class="boxes-list" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="boxes-list__item boards">
+              <div class="title"><i class="fa-notebook"></i> Boards</div>
+              <div class="number" *ngIf="department.boardCount">{{department.boardCount}}</div>
+              <div class="number" *ngIf="!department.boardCount">0</div>
+            </div>
+            <div class="boxes-list__item members">
+              <div class="title"><i class="fa-people"></i> Members</div>
+              <div class="number" *ngIf="department.memberCount">{{department.memberCount}}</div>
+              <div class="number" *ngIf="!department.memberCount">0</div>
+            </div>
+            <div class="boxes-list__item {{ department.state | lowercase }}">
+              <div class="title">
+                <i class="fa-{{ department.state | lowercase }}"></i> {{'definitions.state.' + department.state |
+                translate}}
+              </div>
+            </div>
+          </div>
+        </md-card-content>
+        <md-card-actions>
+          <a pButton [routerLink]="['/', department.handle]" class="ui-button-secondary "
+             label="Go to department"></a>
+        </md-card-actions>
+      </md-card>
     </div>
-    <b-filter resourceScope="DEPARTMENT" (applied)="filterApplied($event)"></b-filter>
-    <div class="grid list-container">
-      <div *ngFor="let department of departments" class="list-container__item">
-        <md-card>
-          <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
-            <md-card-title>
-              <h3><a [routerLink]="['/', department.handle]">{{department.name}}</a></h3>
-            </md-card-title>
-            <div md-card-avatar class="logo-holder-small default-logo"
-                 [ngClass]="{'no-background': department.documentLogo}">
-              <b-image [publicId]="department.documentLogo?.cloudinaryId"
-                       gravity="north_west" height="150" width="200" crop="mfit"></b-image>
-            </div>
-          </md-card-header>
-          <md-card-content>
-            <div class="general-card-summary">
-              {{department.summary}}
-              <div *ngIf="!department.summary">
-                No summary provided.
-                <button pButton [routerLink]="['/', department.handle]" class="ui-button-info small-xs" label="Add Summary"></button>
-              </div>
-            </div>
-            <div class="boxes-list" fxLayout="row" fxLayoutAlign="space-between center">
-              <div class="boxes-list__item boards">
-                <div class="title"><i class="fa-notebook"></i> Boards</div>
-                <div class="number" *ngIf="department.boardCount">{{department.boardCount}}</div>
-                <div class="number" *ngIf="!department.boardCount">0</div>
-              </div>
-              <div class="boxes-list__item members">
-                <div class="title"><i class="fa-people"></i> Members</div>
-                <div class="number" *ngIf="department.memberCount">{{department.memberCount}}</div>
-                <div class="number" *ngIf="!department.memberCount">0</div>
-              </div>
-              <div class="boxes-list__item {{ department.state | lowercase }}">
-                <div class="title">
-                  <i class="fa-{{ department.state | lowercase }}"></i> {{'definitions.state.' + department.state | translate}}
-                </div>
-              </div>
-            </div>
-          </md-card-content>
-          <md-card-actions>
-            <a pButton [routerLink]="['/', department.handle]" class="ui-button-secondary "
-               label="Go to department"></a>
-          </md-card-actions>
-        </md-card>
-      </div>
-    </div>
-
   </div>
 </section>

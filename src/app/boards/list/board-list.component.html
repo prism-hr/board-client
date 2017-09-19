@@ -1,17 +1,12 @@
 <section class="section">
-  <h1 class="title" *ngIf="!user">You're seconds away from creating your first board!</h1>
-  <b-home-public *ngIf="!user"></b-home-public>
-  <div *ngIf="user">
-    <div class="section-header" fxLayout="row" fxLayoutAlign="space-between center">
-      <h1>Boards</h1>
-      <a pButton routerLink="/newBoard" class="ui-button-success" icon="fa-plus" label="New Board"></a>
+  <div class="section-header" fxLayout="row" fxLayoutAlign="space-between center">
+    <h1>Boards</h1>
+    <a pButton routerLink="/newBoard" class="ui-button-success" icon="fa-plus" label="New Board"></a>
+  </div>
+  <b-filter resourceScope="BOARD" (applied)="filterApplied($event)"></b-filter>
+  <div class="grid list-container">
+    <div *ngFor="let board of boards" class="list-container__item">
+      <b-board-item [board]="board"></b-board-item>
     </div>
-    <b-filter resourceScope="BOARD" (applied)="filterApplied($event)"></b-filter>
-    <div class="grid list-container">
-      <div *ngFor="let board of boards" class="list-container__item">
-        <b-board-item [board]="board"></b-board-item>
-      </div>
-    </div>
-
   </div>
 </section>

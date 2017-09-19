@@ -1,8 +1,10 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {RequestOptionsArgs, Response} from '@angular/http';
 import {AuthService, JwtHttp} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
+import {Subscription} from 'rxjs/Subscription';
+import {CustomJwtHttp} from '../authentication/jwt-http.service';
 import ActivityRepresentation = b.ActivityRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
 import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
@@ -11,16 +13,24 @@ import UserPatchDTO = b.UserPatchDTO;
 import UserRepresentation = b.UserRepresentation;
 
 @Injectable()
-export class UserService {
-
-  public user$: Observable<UserRepresentation>;
-  public userSource: ReplaySubject<UserRepresentation>;
-  public activities$: ReplaySubject<ActivityRepresentation[]>;
+export class UserService implements OnInit {
+  user$: Observable<UserRepresentation>;
+  userSource: ReplaySubject<UserRepresentation>;
+  activities$: ReplaySubject<ActivityRepresentation[]>;
+  activitiesSubscription: Subscription;
 
   constructor(private http: JwtHttp, private auth: AuthService) {
     this.userSource = new ReplaySubject<UserRepresentation>(1);
     this.user$ = this.userSource.asObservable();
     this.activities$ = new ReplaySubject<UserRepresentation>(1);
+    (<CustomJwtHttp><any>this.http).getSessionsExpiredSubject()
+      .subscribe(() => {
+        this.logout();
+      });
+  }
+
+  ngOnInit(): void {
+
   }
 
   login(user: any, opts?: RequestOptionsArgs): Promise<UserRepresentation> {
@@ -50,10 +60,13 @@ export class UserService {
       });
   }
 
-  logout(): Observable<void> {
-    return this.auth.logout()
-      .do(() => {
-        this.loadUser();
+  logout() {
+    if (this.activitiesSubscription) {
+      this.activitiesSubscription.unsubscribe();
+    }
+    this.auth.logout().toPromise()
+      .then(() => {
+        return this.loadUser();
       });
   }
 
@@ -61,8 +74,8 @@ export class UserService {
     return this.http.post('/api/auth/resetPassword', {email});
   }
 
-  loadUser() {
-    return new Promise((resolve) => {
+  loadUser(): Promise<UserRepresentation> {
+    return new Promise(resolve => {
       const token = this.auth.getToken();
       if (token) {
         this.http.get('/api/user')
@@ -120,12 +133,14 @@ export class UserService {
       .then(user => {
         if (user) {
           this.http.get('/api/user/activities')
-            .subscribe(activities => this.activities$.next(activities.json()));
-          Observable
-            .interval(50000)
-            .startWith(0)
-            .switchMap(() => this.http.get('/api/user/activities/refresh'))
-            .subscribe(activities => this.activities$.next(activities.json()));
+            .subscribe(activities => {
+              this.activities$.next(activities.json())
+              this.activitiesSubscription = Observable
+                .interval(50000)
+                .startWith(0)
+                .switchMap(() => this.http.get('/api/user/activities/refresh'))
+                .subscribe(activities => this.activities$.next(activities.json()));
+            });
         }
         return user;
       });
