@@ -45,9 +45,9 @@ export class HeaderActivityComponent implements OnInit {
   }
 
   activityClicked(activity: ActivityRepresentation) {
-    // this.userService.dismissActivity(activity).subscribe(() => {
-    // });
-    this.dismissed.emit(activity);
+    this.userService.dismissActivity(activity).subscribe(() => {
+      this.dismissed.emit(activity);
+    });
   }
 
   routerLink(resource: ResourceRepresentation<any>) {
