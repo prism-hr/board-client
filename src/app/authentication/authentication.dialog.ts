@@ -85,7 +85,7 @@ export class AuthenticationDialogComponent implements OnInit {
   authenticate(name: string) {
     this.error = null;
     this.loading = true;
-    this.userService.authenticate(name)
+    this.userService.authenticate(name, {uuid: this.dialogData.uuid})
       .then(() => {
           this.afterAuthenticated();
         },

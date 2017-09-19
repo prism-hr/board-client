@@ -59,7 +59,7 @@ export class DepartmentEditComponent implements OnInit {
     }
     this.resourceService.patchDepartment(this.department.id, this.generateDepartmentRequestBody())
       .subscribe(department => {
-        Object.assign(this.department, _.pick(this.departmentForm.value, this.formProperties));
+        Object.assign(this.department, department);
         this.router.navigate([department.handle])
           .then(() => {
             this.snackBar.open('Department Saved!', null, {duration: 3000});
