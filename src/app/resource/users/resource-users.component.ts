@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdDialog} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
-import {Observable} from 'rxjs/Observable';
 import {DepartmentService} from '../../departments/department.service';
 import {ResourceService} from '../../services/resource.service';
 import {ValidationUtils} from '../../validation/validation.utils';
@@ -129,15 +128,10 @@ export class ResourceUsersComponent implements OnInit {
   }
 
   membersFilterApplied(filter) {
-    let usersObservable: Observable<UserRoleRepresentation[]>;
-    if (this.usersTabIndex === 1) {
-      usersObservable = this.departmentService.getMembers(this.resource, filter.searchTerm)
-    } else if (this.usersTabIndex === 2) {
-      usersObservable = this.departmentService.getMemberRequests(this.resource, filter.searchTerm);
-    }
-    usersObservable.subscribe(users => {
-      this.users[this.tabCollections[this.usersTabIndex]] = users;
-    });
+    this.departmentService.getUsers(this.resource, filter.searchTerm)
+      .subscribe(users => {
+        this.users = users;
+      });
   }
 
   respondToMemberRequest(userRole: UserRoleRepresentation, state: string) {

@@ -22,7 +22,7 @@
 
 <div class="section-header users-headers" fxLayout="row" fxLayoutAlign="space-between center">
   <h1>Users</h1>
-  <b-filter *ngIf="usersTabIndex !== 0" (applied)="membersFilterApplied($event)"></b-filter>
+  <b-filter (applied)="membersFilterApplied($event)"></b-filter>
 </div>
 
 
