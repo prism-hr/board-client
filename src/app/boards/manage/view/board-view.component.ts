@@ -1,9 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {MdDialog, MdDialogConfig} from '@angular/material';
+import {ActivatedRoute, Data, ParamMap} from '@angular/router';
+import {combineLatest} from 'rxjs/observable/combineLatest';
+import {UnsubscribeDialogComponent} from '../../../authentication/unsubscribe.dialog';
 import {ResourceService} from '../../../services/resource.service';
+import {UserService} from '../../../services/user.service';
 import BoardRepresentation = b.BoardRepresentation;
 import PostRepresentation = b.PostRepresentation;
-import {UserService} from "../../../services/user.service";
 
 
 @Component({
@@ -15,15 +18,27 @@ export class BoardViewComponent implements OnInit {
   canEdit: boolean;
   posts: PostRepresentation[];
 
-  constructor(private route: ActivatedRoute, private resourceService: ResourceService,
+  constructor(private route: ActivatedRoute, private dialog: MdDialog, private resourceService: ResourceService,
               private userService: UserService) {
   }
 
   ngOnInit() {
-    this.route.parent.data.subscribe(data => {
-      this.board = data['board'];
-      this.canEdit = this.resourceService.canEdit(this.board);
-    });
+    combineLatest(this.route.parent.data, this.route.queryParamMap)
+      .subscribe(([parentData, queryParamMap]: [Data, ParamMap]) => {
+        this.board = parentData['board'];
+        this.canEdit = this.resourceService.canEdit(this.board);
+
+        const modalType = queryParamMap.get('modal');
+        const uuid = queryParamMap.get('uuid');
+
+        if (modalType === 'unsubscribe') {
+          const config = new MdDialogConfig();
+          config.data = {uuid, resource: this.board};
+          setTimeout(() => {
+            this.dialog.open(UnsubscribeDialogComponent, config);
+          });
+        }
+      });
 
     this.userService.user$.subscribe(user => {
       this.resourceService.getBoardPosts(this.board.id, !user).subscribe(posts => {

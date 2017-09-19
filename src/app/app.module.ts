@@ -44,8 +44,10 @@ import {AppComponent} from './app.component';
 import {MyAuthConfig} from './auth.config';
 import {AuthGuard} from './authentication/auth-guard.service';
 import {AuthenticationDialogComponent} from './authentication/authentication.dialog';
+import {InitializeGuard} from './authentication/initialize-guard.service';
 import {Ng2UiAuthModule} from './authentication/ng2-ui-auth.module';
 import {ResetPasswordDialogComponent} from './authentication/reset-password.dialog';
+import {UnsubscribeDialogComponent} from './authentication/unsubscribe.dialog';
 import {UserImageDialogComponent} from './authentication/user-image.dialog';
 import {BoardHeaderComponent} from './boards/header/board-header.component';
 import {BoardItemComponent} from './boards/item/board-item.component';
@@ -108,7 +110,6 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
-import {InitializeGuard} from './authentication/initialize-guard.service';
 
 @NgModule({
   declarations: [
@@ -123,6 +124,7 @@ import {InitializeGuard} from './authentication/initialize-guard.service';
     AccountNotificationsComponent,
     AuthenticationDialogComponent,
     ResetPasswordDialogComponent,
+    UnsubscribeDialogComponent,
     NotFoundComponent,
     HomeComponent,
     HomePublicComponent,
@@ -378,8 +380,8 @@ import {InitializeGuard} from './authentication/initialize-guard.service';
     AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostResponsesResolver, BoardsResolver,
     ResourceUsersResolver, AccountSuppressionsResolver, PostService, DepartmentService, UserService, ValidationService
   ],
-  entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, ResourceCommentDialogComponent, UserImageDialogComponent,
-    ResourceUserEditDialogComponent],
+  entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, UnsubscribeDialogComponent, ResourceCommentDialogComponent,
+    UserImageDialogComponent, ResourceUserEditDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

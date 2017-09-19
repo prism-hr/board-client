@@ -96,11 +96,12 @@ export class UserService {
     return this.http.get('/api/user/suppressions').map(res => res.json());
   }
 
-  setSuppression(resource: ResourceRepresentation<any>, suppressed: boolean): Observable<Response> {
+  setSuppression(resource: ResourceRepresentation<any>, suppressed: boolean, uuid?: string): Observable<Response> {
+    const path = '/api/user/suppressions/' + resource.id + (uuid ? '?uuid=' + uuid : '');
     if (suppressed) {
-      return this.http.post('/api/user/suppressions/' + resource.id, {});
+      return this.http.post(path, {});
     }
-    return this.http.delete('/api/user/suppressions/' + resource.id);
+    return this.http.delete(path);
   }
 
   setAllSuppressions(suppressed: boolean): Observable<Response> {

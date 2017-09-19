@@ -30,7 +30,7 @@ export class InitializeGuard implements CanActivate {
       config.data = {uuid};
       const dialogRef = this.dialog.open(ResetPasswordDialogComponent, config);
       observable = dialogRef.afterClosed().map(() => true); // activate no matter if password was successfully changed
-    } else if (modalType) {
+    } else if (modalType === 'register' || modalType === 'login') {
       observable = this.authGuard.ensureAuthenticated({modalType, uuid});
     } else {
       observable = Observable.of(true);
