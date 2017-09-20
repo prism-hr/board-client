@@ -1,6 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 import {SelectItem} from 'primeng/primeng';
+import {DefinitionsService} from '../../services/definitions.service';
 import Scope = b.Scope;
+import State = b.State;
 
 @Component({
   selector: 'b-filter',
@@ -8,13 +11,12 @@ import Scope = b.Scope;
     <div class="search-filter">
       <form fxLayout="row" fxLayoutAlign="space-between center" (submit)="search()">
         <div class="input-holder" fxLayout="row" fxLayoutAlign="flex-start center">
-          <input name="text-filter" [(ngModel)]="searchTerm" placeholder="Search" class="ui-inputtext" >
+          <input name="text-filter" [(ngModel)]="searchTerm" placeholder="Search" class="ui-inputtext">
           <button pButton icon="fa-magnifier" class="ui-button-success"></button>
           <button pButton icon="fa-close" type="button" *ngIf="searchTerm" (click)="clear()" class="ui-button-warning"></button>
         </div>
         <div *ngIf="resourceScope">
-          <p-selectButton styleClass="ui-button-info" [options]="statuses" [(ngModel)]="selectedStatuses" multiple="multiple"
-                          name="selected"></p-selectButton>
+          <p-selectButton styleClass="ui-button-info" [options]="states" [(ngModel)]="state" name="selected"></p-selectButton>
         </div>
       </form>
     </div>
@@ -27,21 +29,26 @@ export class FilterComponent implements OnInit {
   @Output() applied: EventEmitter<{ searchTerm: string }> = new EventEmitter();
   searchTerm: string;
 
-  statuses: SelectItem[];
-  selectedStatuses: string[] = ['ACCEPTED'];
+  definitions: { [key: string]: any };
 
-  constructor() {
-    this.statuses = [
-      {label: 'Accepted', value: 'ACCEPTED'},
-      {label: 'Pending', value: 'PENDING'},
-      {label: 'Suspended', value: 'SUSPENDED'},
-      {label: 'Expired', value: 'EXPIRED'},
-      {label: 'Rejected', value: 'REJECTED'},
-      {label: 'Draft', value: 'DRAFT'},
-    ];
+  state: State = 'ACCEPTED';
+  states: SelectItem[];
+
+  constructor(private translate: TranslateService, private definitionsService: DefinitionsService) {
+    this.definitions = definitionsService.getDefinitions();
   }
 
   ngOnInit(): void {
+    const states = {
+      BOARD: ['DRAFT', 'ACCEPTED', 'REJECTED'],
+      POST: ['DRAFT', 'SUSPENDED', 'PENDING', 'ACCEPTED', 'REJECTED']
+    };
+
+    this.translate.get('definitions.state').subscribe(stateTranslations => {
+      if (states[this.resourceScope]) {
+        this.states = states[this.resourceScope].map(state => ({value: state, label: stateTranslations[state]}));
+      }
+    });
   }
 
   clear() {

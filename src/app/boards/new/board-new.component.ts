@@ -104,7 +104,7 @@ export class BoardNewComponent implements OnInit {
   }
 
   searchDepartments(event) {
-    this.resourceService.getDepartments(event.query).subscribe((departments: DepartmentRepresentation[]) => {
+    this.resourceService.getResources('DEPARTMENT', event.query).subscribe((departments: DepartmentRepresentation[]) => {
       this.departmentSuggestions = departments;
     })
   }
@@ -112,7 +112,7 @@ export class BoardNewComponent implements OnInit {
   departmentChosen() {
     const departmentName = this.boardForm.get('department').value.name;
     if (departmentName) {
-      this.resourceService.getDepartments(departmentName).subscribe((departments: DepartmentRepresentation[]) => {
+      this.resourceService.getResources('DEPARTMENT', departmentName).subscribe((departments: DepartmentRepresentation[]) => {
         this.selectedDepartment = departments.find(d => d.name === departmentName);
       });
     }
