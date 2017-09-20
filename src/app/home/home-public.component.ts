@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {AuthGuard} from '../authentication/auth-guard.service';
 import {ResourceService} from '../services/resource.service';
 import DepartmentRepresentation = b.DepartmentRepresentation;
 
@@ -15,7 +14,7 @@ export class HomePublicComponent implements OnInit {
   boardForm: FormGroup;
   departmentSuggestions: DepartmentRepresentation[];
 
-  constructor(private router: Router, private fb: FormBuilder, private authGuard: AuthGuard, private resourceService: ResourceService) {
+  constructor(private router: Router, private fb: FormBuilder, private resourceService: ResourceService) {
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       departmentName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]]
@@ -26,14 +25,8 @@ export class HomePublicComponent implements OnInit {
   }
 
   submit() {
-    this.authGuard.ensureAuthenticated({modalType: 'register'}).first() // open dialog if not authenticated
-      .subscribe(authenticated => {
-        if (!authenticated) {
-          return;
-        }
-        localStorage.setItem('newBoardPrepopulate', JSON.stringify(this.boardForm.value));
-        this.router.navigate(['newBoard'], {queryParams: {prepopulate: true}});
-      });
+    localStorage.setItem('newBoardPrepopulate', JSON.stringify(this.boardForm.value));
+    this.router.navigate(['newBoard'], {queryParams: {prepopulate: true}});
   }
 
   searchDepartments(event) {

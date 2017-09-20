@@ -190,8 +190,7 @@ import {ValidationService} from './validation/validation.service';
           },
           {
             path: 'newBoard',
-            component: BoardNewComponent,
-            canActivate: [AuthGuard]
+            component: BoardNewComponent
           },
           {
             path: 'newPost',

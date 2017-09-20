@@ -23,7 +23,7 @@
             {{department.summary}}
             <div *ngIf="!department.summary">
               No summary provided.
-              <button pButton [routerLink]="['/', department.handle]" class="ui-button-info small-xs"
+              <button pButton [routerLink]="['/', department.handle, 'edit']" class="ui-button-info small-xs"
                       label="Add Summary"></button>
             </div>
           </div>

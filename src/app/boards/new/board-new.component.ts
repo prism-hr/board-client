@@ -3,6 +3,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Response} from '@angular/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
+import {AuthGuard} from '../../authentication/auth-guard.service';
 import {CheckboxUtils} from '../../services/checkbox.utils';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
@@ -26,7 +27,7 @@ export class BoardNewComponent implements OnInit {
   user: UserRepresentation;
 
   constructor(private router: Router, private route: ActivatedRoute, private resourceService: ResourceService, private fb: FormBuilder,
-              private definitionsService: DefinitionsService, private userService: UserService) {
+              private definitionsService: DefinitionsService, private userService: UserService, private authGuard: AuthGuard) {
     this.applicationUrl = this.definitionsService.getDefinitions()['applicationUrl'];
     this.availableMemberCategories = definitionsService.getDefinitions()['memberCategory'];
     this.boardForm = this.fb.group({
@@ -67,30 +68,38 @@ export class BoardNewComponent implements OnInit {
     if (this.boardForm.invalid) {
       return;
     }
-    const board: BoardDTO = _.pick(this.boardForm.value, ['name', 'summary', 'postCategories', 'documentLogo']);
-    let department = this.boardForm.get('department').value;
-    if (typeof department === 'object') {
-      department = _.pick(department, ['id', 'name']);
-    } else {
-      department = {name: department};
-    }
-    board.department = department;
-    board.department.memberCategories = CheckboxUtils
-      .fromFormFormat(this.availableMemberCategories, this.boardForm.get('memberCategories').value);
-    board.department.documentLogo = board.documentLogo;
 
-    this.resourceService.postBoard(board)
-      .flatMap(savedBoard => {
-        return this.userService.loadUser().then(() => savedBoard);
-      })
-      .subscribe(saved => {
-        this.router.navigate([saved.department.handle, saved.handle]);
-      }, (error: Response) => {
-        if (error.status === 409) {
-          if (error.json().exceptionCode === 'DUPLICATE_BOARD') {
-            this.boardForm.get('name').setErrors({duplicateBoard: true});
-          }
+    this.authGuard.ensureAuthenticated({modalType: 'register'}).first() // open dialog if not authenticated
+      .subscribe(authenticated => {
+        if (!authenticated) {
+          return;
         }
+
+        const board: BoardDTO = _.pick(this.boardForm.value, ['name', 'summary', 'postCategories', 'documentLogo']);
+        let department = this.boardForm.get('department').value;
+        if (typeof department === 'object') {
+          department = _.pick(department, ['id', 'name']);
+        } else {
+          department = {name: department};
+        }
+        board.department = department;
+        board.department.memberCategories = CheckboxUtils
+          .fromFormFormat(this.availableMemberCategories, this.boardForm.get('memberCategories').value);
+        board.department.documentLogo = board.documentLogo;
+
+        this.resourceService.postBoard(board)
+          .flatMap(savedBoard => {
+            return this.userService.loadUser().then(() => savedBoard);
+          })
+          .subscribe(saved => {
+            this.router.navigate([saved.department.handle, saved.handle]);
+          }, (error: Response) => {
+            if (error.status === 409) {
+              if (error.json().exceptionCode === 'DUPLICATE_BOARD') {
+                this.boardForm.get('name').setErrors({duplicateBoard: true});
+              }
+            }
+          });
       });
   }
 

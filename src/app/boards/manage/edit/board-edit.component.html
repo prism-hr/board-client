@@ -38,9 +38,9 @@
   <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
     <div class="grid grid--half-gutters">
       <div class="grid__item one-whole">
-        <button pButton [routerLink]="['/', board.department.handle, board.handle]"
-                class="ui-button-secondary" label="Cancel"></button>
-        <button pButton type="submit" class="ui-button-success" label="Submit"></button>
+        <a pButton [routerLink]="['/', board.department.handle, board.handle]"
+                class="ui-button-secondary" label="Cancel"></a>
+        <button pButton class="ui-button-success" label="Submit"></button>
       </div>
     </div>
   </md-card-actions>

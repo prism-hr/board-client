@@ -76,10 +76,10 @@
         </div>
 
       </md-card-content>
-      <md-card-actions *ngIf="user" fxLayout="row" fxLayoutAlign="space-between center">
-        <a *ngIf="user.scopes.indexOf('BOARD') > -1" pButton routerLink="/boards" class="ui-button-secondary"
+      <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+        <a *ngIf="user && user.scopes.indexOf('BOARD') > -1" pButton routerLink="/boards" class="ui-button-secondary"
            label="Cancel"></a>
-        <a *ngIf="user.scopes.indexOf('BOARD') === -1" pButton routerLink="/" class="ui-button-secondary"
+        <a *ngIf="!user || user.scopes.indexOf('BOARD') === -1" pButton routerLink="/" class="ui-button-secondary"
            label="Cancel"></a>
         <button pButton class="ui-button-success" label="Submit"></button>
       </md-card-actions>
