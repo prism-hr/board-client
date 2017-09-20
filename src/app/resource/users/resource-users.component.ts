@@ -130,7 +130,7 @@ export class ResourceUsersComponent implements OnInit {
   }
 
   membersFilterApplied(filter) {
-    this.departmentService.getUsers(this.resource, filter.searchTerm)
+    this.resourceService.searchUsers(this.resource, filter.searchTerm)
       .subscribe(users => {
         this.users = users;
       });

@@ -21,6 +21,7 @@ import UserRepresentation = b.UserRepresentation;
 import UserRoleDTO = b.UserRoleDTO;
 import UserRoleRepresentation = b.UserRoleRepresentation;
 import UserRolesRepresentation = b.UserRolesRepresentation;
+import {resource} from 'selenium-webdriver/http';
 
 @Injectable()
 export class ResourceService {
@@ -171,6 +172,13 @@ export class ResourceService {
 
   lookupOrganizations(query: string) {
     return this.http.get('/api/posts/organizations?query=' + query).map(res => res.json());
+  }
+
+  searchUsers(resource: ResourceRepresentation<any>, searchTerm: string): Observable<UserRoleRepresentation[]> {
+    const resourceCol = (<any>resource.scope).toLowerCase() + 's';
+    const params = new URLSearchParams();
+    params.set('searchTerm', searchTerm);
+    return this.http.get('/api/' + resourceCol + '/' + resource.id + '/users', {search: params}).map(res => res.json());
   }
 
   canEdit(resource: ResourceRepresentation<any>) {
