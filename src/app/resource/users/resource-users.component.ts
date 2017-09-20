@@ -76,10 +76,12 @@ export class ResourceUsersComponent implements OnInit {
         this.loading = false;
         this.userForm['submitted'] = false;
         this.userForm.reset();
-        if (user.role !== 'MEMBER') { // only staff members collection should be updated
+        if (user.role === 'MEMBER') { // only staff members collection should be updated
+          this.users.members.push(user);
+        } else {
           this.users.users.push(user);
-          this.calculateAdminsCount();
         }
+        this.calculateAdminsCount();
       });
   }
 
