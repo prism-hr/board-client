@@ -23,10 +23,16 @@ export class HomeComponent implements OnInit {
       this.user = user;
       this.posts = null;
       if (user) {
-        this.resourceService.getPosts().subscribe(posts => {
+        this.resourceService.getResources('POST').subscribe(posts => {
           this.posts = posts;
         });
       }
+    });
+  }
+
+  filterApplied(filter) {
+    this.resourceService.getResources('POST',  filter.searchTerm).subscribe(posts => {
+      this.posts = posts;
     });
   }
 }

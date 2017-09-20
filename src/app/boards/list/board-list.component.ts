@@ -14,13 +14,13 @@ export class BoardListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.resourceService.getBoards().subscribe(boards => {
+    this.resourceService.getResources('BOARD').subscribe(boards => {
       this.boards = boards;
     });
   }
 
   filterApplied(filter) {
-    this.resourceService.getBoards(filter.searchTerm).subscribe(boards => {
+    this.resourceService.getResources('BOARD', filter.searchTerm).subscribe(boards => {
       this.boards = boards;
     });
   }

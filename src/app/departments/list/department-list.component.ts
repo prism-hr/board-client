@@ -14,13 +14,13 @@ export class DepartmentListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.resourceService.getDepartments().subscribe(departments => {
+    this.resourceService.getResources('DEPARTMENT').subscribe(departments => {
       this.departments = departments;
     });
   }
 
   filterApplied(filter) {
-    this.resourceService.getDepartments(filter.searchTerm).subscribe(departments => {
+    this.resourceService.getResources('DEPARTMENT', filter.searchTerm).subscribe(departments => {
       this.departments = departments;
     });
   }

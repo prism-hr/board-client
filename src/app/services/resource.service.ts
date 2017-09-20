@@ -70,28 +70,17 @@ export class ResourceService {
     this.resourceSubjects[resource.scope][resource.id].next(resource);
   }
 
-  getPosts(): Observable<PostRepresentation[]> {
-    return this.http.get('/api/posts').map(res => res.json());
+  getResources(scope: Scope, searchTerm?: string): Observable<ResourceRepresentation<any>[]> {
+    const resourceCol = scope.toLowerCase() + 's';
+    const params = new URLSearchParams();
+    if (searchTerm) {
+      params.set('searchTerm', searchTerm);
+    }
+    return this.http.get('/api/' + resourceCol, {search: params}).map(res => res.json());
   }
 
   getPublicBoards(): Observable<BoardRepresentation[]> {
     return this.http.get('/api/boards?includePublicBoards=true').map(res => res.json());
-  }
-
-  getBoards(searchTerm?: string): Observable<BoardRepresentation[]> {
-    const params = new URLSearchParams();
-    if (searchTerm) {
-      params.set('searchTerm', searchTerm);
-    }
-    return this.http.get('/api/boards', {search: params}).map(res => res.json());
-  }
-
-  getDepartments(searchTerm?: string): Observable<DepartmentRepresentation[]> {
-    const params = new URLSearchParams();
-    if (searchTerm) {
-      params.set('searchTerm', searchTerm);
-    }
-    return this.http.get('/api/departments', {search: params}).map(res => res.json());
   }
 
   getBoard(departmentHandle: string, boardHandle: string): Observable<BoardRepresentation[]> {
