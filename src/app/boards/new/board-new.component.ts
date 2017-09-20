@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Response} from '@angular/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
+import {CheckboxUtils} from '../../services/checkbox.utils';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
 import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import MemberCategory = b.MemberCategory;
-import {CheckboxUtils} from '../../services/checkbox.utils';
 
 @Component({
   templateUrl: 'board-new.component.html',
@@ -30,7 +30,7 @@ export class BoardNewComponent implements OnInit {
       department: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       summary: ['', [Validators.required, Validators.maxLength(1000)]],
-      postCategories: [['Category 1', 'Category 2'], this.fakeCategoryValidator],
+      postCategories: [[]],
       memberCategories: this.fb.array(this.availableMemberCategories.map(c => [false])),
       documentLogo: []
     });
@@ -100,13 +100,4 @@ export class BoardNewComponent implements OnInit {
     }
 
   }
-
-
-  private fakeCategoryValidator(control: FormControl) {
-    const value: string[] = control.value;
-    if (value && (value.includes('Category 1') || value.includes('Category 2'))) {
-      return {fakeCategory: true};
-    }
-  }
-
 }

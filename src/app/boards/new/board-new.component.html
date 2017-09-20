@@ -46,7 +46,8 @@
 
         <div>
           <label for="postCategories">Post categories</label>
-          <p-chips formControlName="postCategories" inputId="postCategories" [allowDuplicate]="false"></p-chips>
+          <p-chips formControlName="postCategories" inputId="postCategories" [allowDuplicate]="false"
+                   placeholder="Add a category, then click enter"></p-chips>
           <control-messages [control]="boardForm.get('postCategories')"></control-messages>
         </div>
 
@@ -62,7 +63,7 @@
                <span *ngFor="let category of memberCategories.controls; let i=index">
                   <p-checkbox name="memberCategoriesMap" [value]="availableMemberCategories[i]"
                               [label]="'definitions.memberCategory.' + availableMemberCategories[i] | translate"
-                              [formControlName]="i" binary="true  "></p-checkbox>
+                              [formControlName]="i" binary="true"></p-checkbox>
                 </span>
                 <control-messages [control]="boardForm.get('memberCategories')"></control-messages>
               </div>
