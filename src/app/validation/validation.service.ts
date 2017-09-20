@@ -12,7 +12,7 @@ export class ValidationService {
       .subscribe(codeTranslations => {
         const code = response.json && response.json().exceptionCode;
         if (code) {
-          applyError(codeTranslations[code] || code);
+          applyError(codeTranslations[code] || 'Something went wrong');
         }
       });
   }
