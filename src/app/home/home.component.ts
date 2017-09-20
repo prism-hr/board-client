@@ -1,8 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {MdDialog, MdDialogConfig} from '@angular/material';
-import {ActivatedRoute} from '@angular/router';
-import {AuthGuard} from '../authentication/auth-guard.service';
-import {ResetPasswordDialogComponent} from '../authentication/reset-password.dialog';
 import {ResourceService} from '../services/resource.service';
 import {UserService} from '../services/user.service';
 import BoardRepresentation = b.BoardRepresentation;
@@ -15,12 +11,11 @@ import UserRepresentation = b.UserRepresentation;
 })
 export class HomeComponent implements OnInit {
 
-  user: UserRepresentation | boolean;
+  user: UserRepresentation;
   posts: PostRepresentation[];
   boards: BoardRepresentation[];
 
-  constructor(private route: ActivatedRoute, private dialog: MdDialog, private authGuard: AuthGuard,
-              private resourceService: ResourceService, private userService: UserService) {
+  constructor(private resourceService: ResourceService, private userService: UserService) {
   }
 
   ngOnInit(): void {

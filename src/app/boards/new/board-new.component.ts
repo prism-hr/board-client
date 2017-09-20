@@ -1,14 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Response} from '@angular/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
 import {CheckboxUtils} from '../../services/checkbox.utils';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
+import {UserService} from '../../services/user.service';
 import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import MemberCategory = b.MemberCategory;
+import UserRepresentation = b.UserRepresentation;
 
 @Component({
   templateUrl: 'board-new.component.html',
@@ -21,9 +23,10 @@ export class BoardNewComponent implements OnInit {
   departmentSuggestions: DepartmentRepresentation[];
   availableMemberCategories: MemberCategory[];
   selectedDepartment: DepartmentRepresentation;
+  user: UserRepresentation;
 
   constructor(private router: Router, private route: ActivatedRoute, private resourceService: ResourceService, private fb: FormBuilder,
-              private definitionsService: DefinitionsService) {
+              private definitionsService: DefinitionsService, private userService: UserService) {
     this.applicationUrl = this.definitionsService.getDefinitions()['applicationUrl'];
     this.availableMemberCategories = definitionsService.getDefinitions()['memberCategory'];
     this.boardForm = this.fb.group({
@@ -41,19 +44,22 @@ export class BoardNewComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.route.queryParams
-      .subscribe(params => {
-        if (params['prepopulate']) {
-          const prepopulateDetails = JSON.parse(localStorage.getItem('newBoardPrepopulate'));
-          if (prepopulateDetails) {
-            this.boardForm.patchValue({
-              name: prepopulateDetails.name,
-              department: {name: prepopulateDetails.departmentName}
-            });
-            this.departmentChosen();
-          }
+    this.route.queryParams.subscribe(params => {
+      if (params['prepopulate']) {
+        const prepopulateDetails = JSON.parse(localStorage.getItem('newBoardPrepopulate'));
+        if (prepopulateDetails) {
+          this.boardForm.patchValue({
+            name: prepopulateDetails.name,
+            department: {name: prepopulateDetails.departmentName}
+          });
+          this.departmentChosen();
         }
-      });
+      }
+    });
+
+    this.userService.user$.subscribe(user => {
+      this.user = user;
+    })
   }
 
   submit() {
@@ -74,6 +80,9 @@ export class BoardNewComponent implements OnInit {
     board.department.documentLogo = board.documentLogo;
 
     this.resourceService.postBoard(board)
+      .flatMap(savedBoard => {
+        return this.userService.loadUser().then(() => savedBoard);
+      })
       .subscribe(saved => {
         this.router.navigate([saved.department.handle, saved.handle]);
       }, (error: Response) => {
