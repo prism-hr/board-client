@@ -20,7 +20,7 @@ export class BoardListComponent implements OnInit {
   }
 
   filterApplied(filter) {
-    this.resourceService.getResources('BOARD', filter.searchTerm).subscribe(boards => {
+    this.resourceService.getResources('BOARD', filter).subscribe(boards => {
       this.boards = boards;
     });
   }

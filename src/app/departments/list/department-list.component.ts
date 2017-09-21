@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ResourceService} from '../../services/resource.service';
 import DepartmentRepresentation = b.DepartmentRepresentation;
+import {EntityFilter} from '../../general/filter/filter.component';
 
 @Component({
   templateUrl: 'department-list.component.html',
@@ -19,8 +20,8 @@ export class DepartmentListComponent implements OnInit {
     });
   }
 
-  filterApplied(filter) {
-    this.resourceService.getResources('DEPARTMENT', filter.searchTerm).subscribe(departments => {
+  filterApplied(filter: EntityFilter) {
+    this.resourceService.getResources('DEPARTMENT', filter).subscribe(departments => {
       this.departments = departments;
     });
   }

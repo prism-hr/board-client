@@ -15,8 +15,9 @@ import State = b.State;
           <button pButton icon="fa-magnifier" class="ui-button-success"></button>
           <button pButton icon="fa-close" type="button" *ngIf="searchTerm" (click)="clear()" class="ui-button-warning"></button>
         </div>
-        <div *ngIf="resourceScope">
-          <p-selectButton styleClass="ui-button-info" [options]="states" [(ngModel)]="state" name="selected"></p-selectButton>
+        <div *ngIf="states">
+          <p-selectButton styleClass="ui-button-info" [options]="states" [(ngModel)]="state" name="selected"
+                          (onChange)="search()"></p-selectButton>
         </div>
       </form>
     </div>
@@ -26,12 +27,12 @@ import State = b.State;
 export class FilterComponent implements OnInit {
 
   @Input() resourceScope: Scope & string;
-  @Output() applied: EventEmitter<{ searchTerm: string }> = new EventEmitter();
+  @Output() applied: EventEmitter<EntityFilter> = new EventEmitter();
   searchTerm: string;
 
   definitions: { [key: string]: any };
 
-  state: State = 'ACCEPTED';
+  state: State;
   states: SelectItem[];
 
   constructor(private translate: TranslateService, private definitionsService: DefinitionsService) {
@@ -47,6 +48,7 @@ export class FilterComponent implements OnInit {
     this.translate.get('definitions.state').subscribe(stateTranslations => {
       if (states[this.resourceScope]) {
         this.states = states[this.resourceScope].map(state => ({value: state, label: stateTranslations[state]}));
+        this.state = 'ACCEPTED';
       }
     });
   }
@@ -57,6 +59,11 @@ export class FilterComponent implements OnInit {
   }
 
   search() {
-    this.applied.emit({searchTerm: this.searchTerm});
+    this.applied.emit({searchTerm: this.searchTerm, state: this.state});
   }
+}
+
+export interface EntityFilter {
+  searchTerm: string;
+  state?: State;
 }

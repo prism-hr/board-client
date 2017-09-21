@@ -22,6 +22,7 @@ import UserRoleDTO = b.UserRoleDTO;
 import UserRoleRepresentation = b.UserRoleRepresentation;
 import UserRolesRepresentation = b.UserRolesRepresentation;
 import {resource} from 'selenium-webdriver/http';
+import {EntityFilter} from '../general/filter/filter.component';
 
 @Injectable()
 export class ResourceService {
@@ -70,11 +71,14 @@ export class ResourceService {
     this.resourceSubjects[resource.scope][resource.id].next(resource);
   }
 
-  getResources(scope: Scope, searchTerm?: string): Observable<ResourceRepresentation<any>[]> {
+  getResources(scope: Scope, filter?: EntityFilter): Observable<ResourceRepresentation<any>[]> {
     const resourceCol = scope.toLowerCase() + 's';
     const params = new URLSearchParams();
-    if (searchTerm) {
-      params.set('searchTerm', searchTerm);
+    if (filter && filter.searchTerm) {
+      params.set('searchTerm', filter.searchTerm);
+    }
+    if (filter && filter.state) {
+      params.set('state', filter.state);
     }
     return this.http.get('/api/' + resourceCol, {search: params}).map(res => res.json());
   }

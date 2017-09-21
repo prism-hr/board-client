@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
   }
 
   filterApplied(filter) {
-    this.resourceService.getResources('POST',  filter.searchTerm).subscribe(posts => {
+    this.resourceService.getResources('POST', filter).subscribe(posts => {
       this.posts = posts;
     });
   }
