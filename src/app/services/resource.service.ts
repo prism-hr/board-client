@@ -80,6 +80,9 @@ export class ResourceService {
     if (filter && filter.state) {
       params.set('state', filter.state);
     }
+    if (filter && filter.quarter) {
+      params.set('quarter', filter.quarter);
+    }
     return this.http.get('/api/' + resourceCol, {search: params}).map(res => res.json());
   }
 
@@ -172,6 +175,11 @@ export class ResourceService {
     const params = new URLSearchParams();
     params.set('searchTerm', searchTerm);
     return this.http.get('/api/' + resourceCol + '/' + resource.id + '/users', {search: params}).map(res => res.json());
+  }
+
+  getArchiveQuarters(scope: Scope): Observable<string[]> {
+    const resourceCol = scope.toLowerCase() + 's';
+    return this.http.get('/api/' + resourceCol + '/archiveQuarters').map(res => res.json());
   }
 
   canEdit(resource: ResourceRepresentation<any>) {

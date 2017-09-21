@@ -1,7 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {SelectItem} from 'primeng/primeng';
+import {Observable} from 'rxjs/Observable';
 import {DefinitionsService} from '../../services/definitions.service';
+import {ResourceService} from '../../services/resource.service';
 import Scope = b.Scope;
 import State = b.State;
 
@@ -15,9 +17,25 @@ import State = b.State;
           <button pButton icon="fa-magnifier" class="ui-button-success"></button>
           <button pButton icon="fa-close" type="button" *ngIf="searchTerm" (click)="clear()" class="ui-button-warning"></button>
         </div>
-        <div *ngIf="states">
-          <p-selectButton styleClass="ui-button-info" [options]="states" [(ngModel)]="state" name="selected"
-                          (onChange)="search()"></p-selectButton>
+
+        <div *ngIf="!showArchive">
+          <button *ngIf="resourceScope" pButton type="button" label="Search archives"
+                  (click)="setShowArchive(true)" class="ui-button-warning"></button>
+
+          <div *ngIf="states">
+            <p-selectButton styleClass="ui-button-info" [options]="states" [(ngModel)]="selectedState" name="state"
+                            (onChange)="search()"></p-selectButton>
+          </div>
+        </div>
+
+        <div *ngIf="showArchive">
+          <button pButton type="button" label="Back" (click)="setShowArchive(false)" class="ui-button-warning"></button>
+
+          <p-dropdown *ngIf="archiveQuarters.length > 0" [options]="archiveQuarters" [(ngModel)]="selectedQuarter"
+                      (onChange)="search()" name="quarter"></p-dropdown>
+          <div *ngIf="archiveQuarters.length === 0">
+            There is no archives amongst the items you can see.
+          </div>
         </div>
       </form>
     </div>
@@ -32,10 +50,13 @@ export class FilterComponent implements OnInit {
 
   definitions: { [key: string]: any };
 
-  state: State;
   states: SelectItem[];
+  selectedState: State;
+  showArchive: boolean;
+  archiveQuarters: SelectItem[];
+  selectedQuarter: string;
 
-  constructor(private translate: TranslateService, private definitionsService: DefinitionsService) {
+  constructor(private translate: TranslateService, private definitionsService: DefinitionsService, private resourceService: ResourceService) {
     this.definitions = definitionsService.getDefinitions();
   }
 
@@ -48,7 +69,7 @@ export class FilterComponent implements OnInit {
     this.translate.get('definitions.state').subscribe(stateTranslations => {
       if (states[this.resourceScope]) {
         this.states = states[this.resourceScope].map(state => ({value: state, label: stateTranslations[state]}));
-        this.state = 'ACCEPTED';
+        this.selectedState = 'ACCEPTED';
       }
     });
   }
@@ -59,11 +80,35 @@ export class FilterComponent implements OnInit {
   }
 
   search() {
-    this.applied.emit({searchTerm: this.searchTerm, state: this.state});
+    this.applied.emit({searchTerm: this.searchTerm, state: this.selectedState, quarter: this.selectedQuarter});
+  }
+
+  setShowArchive(show) {
+    let quarters$;
+    if (!this.archiveQuarters) {
+      quarters$ = this.resourceService.getArchiveQuarters(this.resourceScope)
+        .do(quarters => {
+          this.archiveQuarters = quarters.map(quarter => {
+            const year = quarter.slice(0, 4);
+            const quarterDigit = quarter[4];
+            return {value: quarter, label: year + '/' + quarterDigit}
+          });
+        });
+    } else {
+      quarters$ = Observable.of(this.archiveQuarters);
+    }
+    quarters$.subscribe(() => {
+      this.showArchive = show;
+      if (!show) {
+        this.selectedQuarter = null;
+        this.search();
+      }
+    });
   }
 }
 
 export interface EntityFilter {
   searchTerm: string;
   state?: State;
+  quarter?: string;
 }
