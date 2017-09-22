@@ -48,7 +48,7 @@
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
-    "@angular/cli": "1.4.1",
+    "@angular/cli": "1.4.3",
     "@angular/compiler-cli": "^4.2.4",
     "@angular/language-service": "^4.2.4",
     "@types/googlemaps": "^3.26.15",
