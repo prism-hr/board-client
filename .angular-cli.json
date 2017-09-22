@@ -24,10 +24,10 @@
         "../node_modules/quill/dist/quill.snow.css"
       ],
       "scripts": [
-        "../node_modules/lodash/lodash.js",
-        "../node_modules/moment/moment.js",
-        "../node_modules/moment-timezone/moment-timezone.js",
-        "../node_modules/quill/dist/quill.js",
+        "../node_modules/lodash/lodash.min.js",
+        "../node_modules/moment/min/moment.min.js",
+        "../node_modules/moment-timezone/builds/moment-timezone.min.js",
+        "../node_modules/quill/dist/quill.min.js",
         "../src/assets/widgets.js"
       ],
       "environmentSource": "environments/environment.ts",
