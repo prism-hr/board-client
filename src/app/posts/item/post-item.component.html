@@ -8,7 +8,7 @@
     </div>
     <md-card-title>
       <h3>
-        <a [routerLink]="['/', post.board.department.handle, post.board.handle, post.id]">{{post.name}}</a>
+        <a [routerLink]="['/', post.board.department.university.handle, post.board.department.handle, post.board.handle, post.id]">{{post.name}}</a>
       </h3>
     </md-card-title>
     <md-card-subtitle><h6>{{post.board.department.name}} > {{post.board.name}}</h6></md-card-subtitle>
@@ -50,7 +50,7 @@
     </div>
   </md-card-content>
   <md-card-actions>
-    <a pButton [routerLink]="['/', post.board.department.handle, post.board.handle, post.id]"
+    <a pButton [routerLink]="['/', post.board.department.university.handle, post.board.department.handle, post.board.handle, post.id]"
        class="ui-button-secondary "
        label="Go to post"></a>
   </md-card-actions>

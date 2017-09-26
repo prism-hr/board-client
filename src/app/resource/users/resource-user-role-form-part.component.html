@@ -22,6 +22,8 @@
         [control]="roleGroup.get('expiryDate')"></control-messages>
     </div>
 
+    {{userRole | json}}
+
     <div class="members dropdown-select">
       <label for="category">Specify member category</label>
       <p-dropdown id="category" formControlName="category" [options]="memberCategoryOptions"

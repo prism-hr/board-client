@@ -92,7 +92,7 @@ export class BoardNewComponent implements OnInit {
             return this.userService.loadUser().then(() => savedBoard);
           })
           .subscribe(saved => {
-            this.router.navigate([saved.department.handle, saved.handle]);
+            this.router.navigate([saved.department.university.handle, saved.department.handle, saved.handle]);
           }, (error: Response) => {
             if (error.status === 409) {
               if (error.json().exceptionCode === 'DUPLICATE_BOARD') {

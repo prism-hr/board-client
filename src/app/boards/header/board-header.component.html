@@ -2,7 +2,7 @@
   <div class="grid__item small-one-whole">
     <div class="resource-header" fxLayout="row" fxLayoutAlign="space-between center">
       <div>
-        <h1>{{board.name}} <small>from</small> <a routerLink="/{{board.department.handle}}">{{board.department.name}}</a>
+        <h1>{{board.name}} <small>from</small> <a [routerLink]="['/', board.department.university.handle, board.department.handle]">{{board.department.name}}</a>
         </h1>
       </div>
       <div fxLayout="column" fxLayoutAlign="space-between flex-end" class="admin-actions">

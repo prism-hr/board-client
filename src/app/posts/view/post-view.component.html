@@ -27,7 +27,15 @@
                 <b-image [publicId]="post.board.department.documentLogo?.cloudinaryId"
                          gravity="north_west" height="150" width="200" crop="mfit"></b-image>
               </div>
-              <h3><a [routerLink]="['/', post.board.department.handle, post.board.handle]">{{post.board.name}}</a> <small>from</small> <a [routerLink]="['/', post.board.department.handle]">{{post.board.department.name}}</a></h3>
+              <h3>
+                <a [routerLink]="['/', post.board.department.university.handle, post.board.department.handle, post.board.handle]">
+                  {{post.board.name}}
+                </a>
+                <small>from</small>
+                <a [routerLink]="['/', post.board.department.university.handle, post.board.department.handle]">
+                  {{post.board.department.name}}
+                </a>
+              </h3>
             </div>
           </div>
         </md-card-content>

@@ -1,10 +1,14 @@
-// Generated using typescript-generator version 1.23.311 on 2017-09-10 14:59:57.
+// Generated using typescript-generator version 1.23.311 on 2017-09-26 11:09:47.
 
 declare namespace b {
 
   interface ActionDTO {
     action?: Action;
     nextState?: State;
+  }
+
+  interface AuthenticateDTO<T> {
+    uuid?: string;
   }
 
   interface BoardDTO extends ResourceDTO<BoardDTO> {
@@ -38,15 +42,9 @@ declare namespace b {
   interface LocationDTO extends LocationDefinition {
   }
 
-  interface LoginDTO {
+  interface LoginDTO extends AuthenticateDTO<LoginDTO> {
     email?: string;
     password?: string;
-  }
-
-  interface OauthDTO {
-    clientId?: string;
-    code?: string;
-    redirectUri?: string;
   }
 
   interface PostDTO extends ResourceDTO<PostDTO> {
@@ -79,7 +77,7 @@ declare namespace b {
     deadTimestamp?: LocalDateTime;
   }
 
-  interface RegisterDTO {
+  interface RegisterDTO extends AuthenticateDTO<RegisterDTO> {
     givenName?: string;
     surname?: string;
     email?: string;
@@ -106,6 +104,12 @@ declare namespace b {
     name?: string;
     summary?: string;
     comment?: string;
+  }
+
+  interface SigninDTO extends AuthenticateDTO<SigninDTO> {
+    clientId?: string;
+    code?: string;
+    redirectUri?: string;
   }
 
   interface UserDTO {
@@ -167,6 +171,7 @@ declare namespace b {
   }
 
   interface DepartmentRepresentation extends ResourceRepresentation<DepartmentRepresentation> {
+    university?: UniversityRepresentation;
     documentLogo?: DocumentRepresentation;
     handle?: string;
     memberCategories?: MemberCategory[];
@@ -215,7 +220,9 @@ declare namespace b {
     websiteResume?: string;
     coveringNote?: string;
     createdTimestamp?: LocalDateTime;
+    match?: ResourceEventMatch;
     viewed?: boolean;
+    history?: ResourceEventRepresentation[];
   }
 
   interface ResourceOperationRepresentation {
@@ -235,6 +242,10 @@ declare namespace b {
     createdTimestamp?: LocalDateTime;
     updatedTimestamp?: LocalDateTime;
     actions?: ActionRepresentation[];
+  }
+
+  interface UniversityRepresentation extends ResourceRepresentation<UniversityRepresentation> {
+    handle?: string;
   }
 
   interface UserNotificationSuppressionRepresentation {
@@ -267,20 +278,21 @@ declare namespace b {
     users?: UserRoleRepresentation[];
     members?: UserRoleRepresentation[];
     memberRequests?: UserRoleRepresentation[];
+    memberToBeUploadedCount?: number;
   }
 
   interface DocumentDefinition {
     fileName?: string;
-    cloudinaryUrl?: string;
     cloudinaryId?: string;
+    cloudinaryUrl?: string;
   }
 
   interface LocationDefinition {
     name?: string;
-    domicile?: string;
-    latitude?: number;
-    googleId?: string;
     longitude?: number;
+    domicile?: string;
+    googleId?: string;
+    latitude?: number;
   }
 
   interface LocalDateTime extends Temporal, TemporalAdjuster, ChronoLocalDateTime<LocalDate>, Serializable {
@@ -292,8 +304,8 @@ declare namespace b {
     year?: number;
     hour?: number;
     minute?: number;
-    nano?: number;
     second?: number;
+    nano?: number;
   }
 
   interface LocalDate extends Temporal, TemporalAdjuster, ChronoLocalDate, Serializable {
@@ -362,11 +374,13 @@ declare namespace b {
 
   type BadgeListType = 'STATIC' | 'SLIDER';
 
-  type Scope = 'DEPARTMENT' | 'BOARD' | 'POST';
+  type Scope = 'UNIVERSITY' | 'DEPARTMENT' | 'BOARD' | 'POST';
 
   type Activity = 'ACCEPT_BOARD_ACTIVITY' | 'ACCEPT_POST_ACTIVITY' | 'CORRECT_POST_ACTIVITY' | 'JOIN_BOARD_ACTIVITY' | 'JOIN_DEPARTMENT_ACTIVITY' | 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' | 'NEW_BOARD_PARENT_ACTIVITY' | 'NEW_POST_PARENT_ACTIVITY' | 'PUBLISH_POST_ACTIVITY' | 'PUBLISH_POST_MEMBER_ACTIVITY' | 'REJECT_BOARD_ACTIVITY' | 'REJECT_POST_ACTIVITY' | 'RESTORE_BOARD_ACTIVITY' | 'RESTORE_POST_ACTIVITY' | 'RETIRE_POST_ACTIVITY' | 'SUSPEND_POST_ACTIVITY' | 'RESPOND_POST_ACTIVITY';
 
   type ResourceEvent = 'VIEW' | 'REFERRAL' | 'RESPONSE';
+
+  type ResourceEventMatch = 'DEFINITE' | 'PROBABLE';
 
   type DayOfWeek = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
 

@@ -5,6 +5,7 @@ import {JwtHttp} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {Subject} from 'rxjs/Subject';
+import {EntityFilter} from '../general/filter/filter.component';
 import Action = b.Action;
 import BoardDTO = b.BoardDTO;
 import BoardPatchDTO = b.BoardPatchDTO;
@@ -21,8 +22,6 @@ import UserRepresentation = b.UserRepresentation;
 import UserRoleDTO = b.UserRoleDTO;
 import UserRoleRepresentation = b.UserRoleRepresentation;
 import UserRolesRepresentation = b.UserRolesRepresentation;
-import {resource} from 'selenium-webdriver/http';
-import {EntityFilter} from '../general/filter/filter.component';
 
 @Injectable()
 export class ResourceService {
@@ -30,7 +29,7 @@ export class ResourceService {
   private resourceSubjects: { [index: string]: { [index: number]: Subject<PostRepresentation> } } = {};
 
   constructor(private http: JwtHttp) {
-    const scopes: Scope[] = ['DEPARTMENT', 'DEPARTMENT', 'POST'];
+    const scopes: Scope[] = ['DEPARTMENT', 'BOARD', 'POST'];
     for (let scope of scopes) {
       this.resourceSubjects[scope] = {};
     }
@@ -211,13 +210,14 @@ export class ResourceService {
 
   routerLink(resource: ResourceRepresentation<any>): any[] {
     if (resource.scope === 'DEPARTMENT') {
-      return ['/', (<DepartmentRepresentation>resource).handle];
+      const department: DepartmentRepresentation = resource;
+      return ['/', department.university.handle, department.handle];
     } else if (resource.scope === 'BOARD') {
       const board: BoardRepresentation = resource;
-      return ['/', board.department.handle, board.handle];
+      return ['/', board.department.university.handle, board.department.handle, board.handle];
     } else if (resource.scope === 'POST') {
       const post: PostRepresentation = resource;
-      return ['/', post.board.department.handle, post.board.handle, post.id];
+      return ['/', post.board.department.university.handle, post.board.department.handle, post.board.handle, post.id];
     }
   }
 

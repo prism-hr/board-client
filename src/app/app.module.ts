@@ -210,102 +210,107 @@ import {ValidationService} from './validation/validation.service';
             }
           },
           {
-            path: ':departmentHandle',
+            path: ':universityHandle',
             children: [
               {
-                path: '',
-                data: {
-                  resourceScope: 'department'
-                },
-                resolve: {
-                  department: DepartmentResolver,
-                },
+                path: ':departmentHandle',
                 children: [
                   {
                     path: '',
-                    component: DepartmentTabsComponent,
+                    data: {
+                      resourceScope: 'department'
+                    },
+                    resolve: {
+                      department: DepartmentResolver,
+                    },
                     children: [
                       {
                         path: '',
-                        component: DepartmentViewComponent,
-                      },
-                      {
-                        path: 'edit',
-                        component: DepartmentEditComponent,
-                        canActivate: [AuthGuard]
-                      },
-                      {
-                        path: 'users',
-                        component: ResourceUsersComponent,
-                        canActivate: [AuthGuard],
-                        resolve: {
-                          users: ResourceUsersResolver
-                        }
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                path: ':boardHandle',
-                data: {
-                  resourceScope: 'board'
-                },
-                resolve: {
-                  board: BoardResolver
-                },
-                children: [
-                  {
-                    path: '',
-                    component: BoardTabsComponent,
-                    children: [
-                      {
-                        path: '',
-                        component: BoardViewComponent
-                      },
-                      {
-                        path: 'edit',
-                        component: BoardEditComponent,
-                        canActivate: [AuthGuard]
-                      },
-                      {
-                        path: 'users',
-                        component: ResourceUsersComponent,
-                        canActivate: [AuthGuard],
-                        resolve: {
-                          users: ResourceUsersResolver
-                        }
-                      },
-                      {
-                        path: 'badge',
-                        component: ResourceBadgeComponent,
-                        canActivate: [AuthGuard]
+                        component: DepartmentTabsComponent,
+                        children: [
+                          {
+                            path: '',
+                            component: DepartmentViewComponent,
+                          },
+                          {
+                            path: 'edit',
+                            component: DepartmentEditComponent,
+                            canActivate: [AuthGuard]
+                          },
+                          {
+                            path: 'users',
+                            component: ResourceUsersComponent,
+                            canActivate: [AuthGuard],
+                            resolve: {
+                              users: ResourceUsersResolver
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
                   {
-                    path: ':postId',
-                    resolve: {
-                      post: PostResolver,
+                    path: ':boardHandle',
+                    data: {
+                      resourceScope: 'board'
                     },
-                    component: PostTabsComponent,
+                    resolve: {
+                      board: BoardResolver
+                    },
                     children: [
                       {
                         path: '',
-                        component: PostViewComponent,
+                        component: BoardTabsComponent,
+                        children: [
+                          {
+                            path: '',
+                            component: BoardViewComponent
+                          },
+                          {
+                            path: 'edit',
+                            component: BoardEditComponent,
+                            canActivate: [AuthGuard]
+                          },
+                          {
+                            path: 'users',
+                            component: ResourceUsersComponent,
+                            canActivate: [AuthGuard],
+                            resolve: {
+                              users: ResourceUsersResolver
+                            }
+                          },
+                          {
+                            path: 'badge',
+                            component: ResourceBadgeComponent,
+                            canActivate: [AuthGuard]
+                          }
+                        ]
                       },
                       {
-                        path: 'edit',
-                        component: PostEditComponent,
-                        canActivate: [AuthGuard]
-                      },
-                      {
-                        path: 'responses',
-                        component: PostResponsesComponent,
+                        path: ':postId',
                         resolve: {
-                          responses: PostResponsesResolver
+                          post: PostResolver,
                         },
-                        canActivate: [AuthGuard]
+                        component: PostTabsComponent,
+                        children: [
+                          {
+                            path: '',
+                            component: PostViewComponent,
+                          },
+                          {
+                            path: 'edit',
+                            component: PostEditComponent,
+                            canActivate: [AuthGuard]
+                          },
+                          {
+                            path: 'responses',
+                            component: PostResponsesComponent,
+                            resolve: {
+                              responses: PostResponsesResolver
+                            },
+                            canActivate: [AuthGuard]
+                          }
+                        ]
                       }
                     ]
                   }
