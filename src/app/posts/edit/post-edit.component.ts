@@ -238,7 +238,7 @@ export class PostEditComponent implements OnInit {
     if (hideDeadTimestamp) {
       this.postForm.patchValue({deadTimestamp: null});
     }
-    const isTouched = this.postForm.get('hideDeadTimestamp').touched;
+    const isTouched = this.postForm.get('deadTimestamp').touched;
     if (!isTouched || !this.postForm.get('deadTimestamp').value) { // set default value only if not touched or not specified
       const liveTimestampString = this.postForm.get('liveTimestamp').value;
       const liveTimestamp = liveTimestampString ? moment(liveTimestampString) : moment();
