@@ -10,72 +10,93 @@ import ResourceRepresentation = b.ResourceRepresentation;
   selector: 'b-header-activity',
   template: `
     <div [ngSwitch]="activity.activity">
-      <div *ngSwitchCase="'JOIN_DEPARTMENT_REQUEST_ACTIVITY'" class="activity-item">
-        <a [routerLink]="resourceLink.concat('users')" fragment="memberRequests" (click)="activityClicked(activity)">
-          {{activity.userRole.user.givenName}} {{activity.userRole.user.surname}} has requested membership of {{resource.name}}
+      <div *ngSwitchCase="'JOIN_DEPARTMENT_REQUEST_ACTIVITY'" class="activity-inner">
+        <a [routerLink]="resourceLink.concat('users')" fragment="memberRequests"
+           (click)="activityClicked(activity)" class="activity-w-icon">
+          <b-image [publicId]="activity.userRole.user.documentImage?.cloudinaryId"
+                   gravity="face" width="50" height="50" radius="max" crop="thumb"></b-image>
+          <div class="activity-copy">
+            <b>{{activity.userRole.user.givenName}} {{activity.userRole.user.surname}}</b>
+            <span>has requested membership of <b>{{resource.name}}</b></span>
+            <p>{{activity.createdTimestamp | date: 'short' }}</p>
+          </div>
         </a>
       </div>
-      <div *ngSwitchCase="'RESPOND_POST_ACTIVITY'" class="activity-item">
-        <a [routerLink]="resourceLink.concat('responses')" (click)="activityClicked(activity)">
-          {{activity.resourceEvent.user.givenName}} {{activity.resourceEvent.user.surname}} has responded to {{resource.name}}
+      <div *ngSwitchCase="'RESPOND_POST_ACTIVITY'" class="activity-inner">
+        <a [routerLink]="resourceLink.concat('responses')"
+           (click)="activityClicked(activity)" class="activity-w-icon">
+          <b-image [publicId]="activity.resourceEvent.user.documentImage?.cloudinaryId"
+                   gravity="face" width="50" height="50" radius="max" crop="thumb"></b-image>
+          <div class="activity-copy">
+            <b>{{activity.resourceEvent.user.givenName}} {{activity.resourceEvent.user.surname}}</b>
+            <span>has responded to <b>{{resource.name}}</b></span>
+            <p>{{activity.createdTimestamp | date: 'short' }}</p>
+          </div>
         </a>
       </div>
 
       <!-- ELSE -->
-      <div class="activity-item">
+      <div class="activity-inner">
         <a [routerLink]="routerLink(resource)" (click)="activityClicked(activity)">
-          <span *ngSwitchCase="'NEW_BOARD_PARENT_ACTIVITY'">
-            New board created in {{parentResource.name}}
-          </span>
-          <span *ngSwitchCase="'NEW_BOARD_PARENT_ACTIVITY'">
-            New board created in {{parentResource.name}}
-          </span>
-          <span *ngSwitchCase="'NEW_POST_PARENT_ACTIVITY'">
-            New post '{{resource.name}}' in {{grandParentResource.name}} {{parentResource.name}}
-          </span>
-          <span *ngSwitchCase="'SUSPEND_POST_ACTIVITY'">
-            New change request for post {{resource.name}}
-          </span>
-          <span *ngSwitchCase="'CORRECT_POST_ACTIVITY'">
-            Post {{resource.name}} has been corrected
-          </span>
-          <span *ngSwitchCase="'JOIN_DEPARTMENT_ACTIVITY'">
-            You have been added as a member of {{resource.name}}
-          </span>
-          <span *ngSwitchCase="'JOIN_BOARD_ACTIVITY'">
-            You have been added as a member of {{parentResource.name}} {{resource.name}}
-          </span>
-          <span *ngSwitchCase="'ACCEPT_BOARD_ACTIVITY'">
-            Your board {{parentResource.name}} {{resource.name}} has been accepted
-          </span>
-          <span *ngSwitchCase="'ACCEPT_POST_ACTIVITY'">
-            Your post {{resource.name}} has been accepted
-          </span>
-          <span *ngSwitchCase="'PUBLISH_POST_ACTIVITY'">
-            Your post {{resource.name}} has been published
-          </span>
-          <span *ngSwitchCase="'RETIRE_POST_ACTIVITY'">
-            Your post {{resource.name}} has expired
-          </span>
-          <span *ngSwitchCase="'PUBLISH_POST_MEMBER_ACTIVITY'">
-            New post '{{resource.name}}' in {{grandParentResource.name}} {{parentResource.name}}
-          </span>
-          <span *ngSwitchCase="'REJECT_BOARD_ACTIVITY'">
-            Your board {{parentResource.name}} {{resource.name}} has been rejected
-          </span>
-          <span *ngSwitchCase="'RESTORE_BOARD_ACTIVITY'">
-            Your board {{parentResource.name}} {{resource.name}} has been restored
-          </span>
-          <span *ngSwitchCase="'REJECT_POST_ACTIVITY'">
-            Your post {{resource.name}} has been rejected
-          </span>
-          <span *ngSwitchCase="'RESTORE_POST_ACTIVITY'">
-            Your post {{resource.name}} has been restored
-          </span>
+          <div class="activity-w-icon"
+               *ngIf="activity.activity != 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' && activity.activity != 'RESPOND_POST_ACTIVITY'">
+            <b-image [publicId]="resource.department.documentLogo?.cloudinaryId"
+                     gravity="face" width="50" height="50" crop="thumb"></b-image>
+            <div class="activity-copy">
+              <span *ngSwitchCase="'NEW_BOARD_PARENT_ACTIVITY'">
+                New board created in <b>{{parentResource.name}}</b>
+              </span>
+              <span *ngSwitchCase="'NEW_POST_PARENT_ACTIVITY'">
+                New post <b>'{{resource.name}}'</b> in {{grandParentResource.name}} {{parentResource.name}}
+              </span>
+              <span *ngSwitchCase="'SUSPEND_POST_ACTIVITY'">
+                New change request for post <b>{{resource.name}}</b>
+              </span>
+              <span *ngSwitchCase="'CORRECT_POST_ACTIVITY'">
+                Post <b>{{resource.name}}</b> has been corrected
+              </span>
+              <span *ngSwitchCase="'JOIN_DEPARTMENT_ACTIVITY'">
+                You have been added as a member of <b>{{resource.name}}</b>
+              </span>
+              <span *ngSwitchCase="'JOIN_BOARD_ACTIVITY'">
+                You have been added as a member of <b>{{parentResource.name}} {{resource.name}}</b>
+              </span>
+              <span *ngSwitchCase="'ACCEPT_BOARD_ACTIVITY'">
+                Your board <b>{{resource.name}}</b> in <b>{{parentResource.name}}</b> has been accepted
+              </span>
+              <span *ngSwitchCase="'ACCEPT_POST_ACTIVITY'">
+                Your post <b>{{resource.name}}</b> has been accepted
+              </span>
+              <span *ngSwitchCase="'PUBLISH_POST_ACTIVITY'">
+                Your post <b>{{resource.name}}</b> has been published
+              </span>
+              <span *ngSwitchCase="'RETIRE_POST_ACTIVITY'">
+                Your post <b>{{resource.name}}</b> has expired
+              </span>
+              <span *ngSwitchCase="'PUBLISH_POST_MEMBER_ACTIVITY'">
+                New post <b>'{{resource.name}}'</b> in <b>{{grandParentResource.name}} {{parentResource.name}}</b>
+              </span>
+              <span *ngSwitchCase="'REJECT_BOARD_ACTIVITY'">
+                Your board <b>{{parentResource.name}}</b> in <b>{{resource.name}}</b> has been rejected
+              </span>
+              <span *ngSwitchCase="'RESTORE_BOARD_ACTIVITY'">
+                Your board <b>{{resource.name}}</b> in <b>{{parentResource.name}} </b> has been restored
+              </span>
+              <span *ngSwitchCase="'REJECT_POST_ACTIVITY'">
+                Your post <b>{{resource.name}}</b> has been rejected
+              </span>
+              <span *ngSwitchCase="'RESTORE_POST_ACTIVITY'">
+                Your post <b>{{resource.name}}</b> has been restored
+              </span>
+              <p *ngIf="activity.activity != 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' && activity.activity != 'RESPOND_POST_ACTIVITY'">
+                {{activity.createdTimestamp | date: 'short' }}
+              </p>
+            </div>
+          </div>
         </a>
       </div>
 
-      <div *ngSwitchDefault class="activity-item">
+      <div *ngSwitchDefault class="activity">
         Unhandled activity: {{activity.activity}}
       </div>
     </div>`,
