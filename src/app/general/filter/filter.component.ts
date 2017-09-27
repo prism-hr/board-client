@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {SelectItem} from 'primeng/primeng';
-import {Observable} from 'rxjs/Observable';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
 import Scope = b.Scope;
@@ -19,7 +18,7 @@ import State = b.State;
         </div>
 
         <div *ngIf="!showArchive">
-          <button *ngIf="resourceScope" pButton type="button" label="Search archives"
+          <button *ngIf="archiveQuarters && archiveQuarters.length > 0" pButton type="button" label="Search archives"
                   (click)="setShowArchive(true)" class="ui-button-warning"></button>
 
           <div *ngIf="states">
@@ -31,11 +30,8 @@ import State = b.State;
         <div *ngIf="showArchive">
           <button pButton type="button" label="Back" (click)="setShowArchive(false)" class="ui-button-warning"></button>
 
-          <p-dropdown *ngIf="archiveQuarters.length > 0" [options]="archiveQuarters" [(ngModel)]="selectedQuarter"
+          <p-dropdown [options]="archiveQuarters" [(ngModel)]="selectedQuarter"
                       (onChange)="search()" name="quarter"></p-dropdown>
-          <div *ngIf="archiveQuarters.length === 0">
-            There is no archives amongst the items you can see.
-          </div>
         </div>
       </form>
     </div>
@@ -72,6 +68,15 @@ export class FilterComponent implements OnInit {
         this.selectedState = 'ACCEPTED';
       }
     });
+
+    this.resourceService.getArchiveQuarters(this.resourceScope)
+      .subscribe(quarters => {
+        this.archiveQuarters = quarters.map(quarter => {
+          const year = quarter.slice(0, 4);
+          const quarterDigit = quarter[4];
+          return {value: quarter, label: year + '/' + quarterDigit}
+        });
+      })
   }
 
   clear() {
@@ -84,26 +89,11 @@ export class FilterComponent implements OnInit {
   }
 
   setShowArchive(show) {
-    let quarters$;
-    if (!this.archiveQuarters) {
-      quarters$ = this.resourceService.getArchiveQuarters(this.resourceScope)
-        .do(quarters => {
-          this.archiveQuarters = quarters.map(quarter => {
-            const year = quarter.slice(0, 4);
-            const quarterDigit = quarter[4];
-            return {value: quarter, label: year + '/' + quarterDigit}
-          });
-        });
-    } else {
-      quarters$ = Observable.of(this.archiveQuarters);
+    this.showArchive = show;
+    if (!show) {
+      this.selectedQuarter = null;
+      this.search();
     }
-    quarters$.subscribe(() => {
-      this.showArchive = show;
-      if (!show) {
-        this.selectedQuarter = null;
-        this.search();
-      }
-    });
   }
 }
 
