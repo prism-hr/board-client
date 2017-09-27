@@ -15,7 +15,7 @@ export class DepartmentListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.resourceService.getResources('DEPARTMENT').subscribe(departments => {
+    this.resourceService.getResources('DEPARTMENT', {state: 'ACCEPTED'}).subscribe(departments => {
       this.departments = departments;
     });
   }

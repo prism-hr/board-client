@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
       this.user = user;
       this.posts = null;
       if (user) {
-        this.resourceService.getResources('POST').subscribe(posts => {
+        this.resourceService.getResources('POST', {state: 'ACCEPTED'}).subscribe(posts => {
           this.posts = posts;
         });
       }
