@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Response} from '@angular/http';
 import {MdSnackBar} from '@angular/material';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Data, ParamMap, Router} from '@angular/router';
 import * as _ from 'lodash';
+import {combineLatest} from 'rxjs/observable/combineLatest';
 import {CheckboxUtils} from '../../services/checkbox.utils';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
@@ -22,6 +23,8 @@ export class DepartmentEditComponent implements OnInit {
   urlPrefix: string;
   actionView: string;
   formProperties = ['name', 'summary', 'memberCategories', 'documentLogo'];
+  source: string;
+  sourceLink: any[];
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router,
               private snackBar: MdSnackBar, private resourceService: ResourceService, private definitionsService: DefinitionsService) {
@@ -40,16 +43,20 @@ export class DepartmentEditComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.route.parent.data.subscribe(data => {
-      this.department = data['department'];
-      this.departmentForm.reset(_.pick(this.department, [...this.formProperties, 'handle']));
-      const formFormat = CheckboxUtils.toFormFormat(this.availableMemberCategories, this.department && this.department.memberCategories);
-      (<FormArray>this.departmentForm.get('memberCategories'))
-        .setValue(formFormat);
-      this.departmentForm.get('handle').setValidators(this.department && [Validators.required, Validators.maxLength(25)]);
-      this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/';
-      this.actionView = this.department ? 'EDIT' : 'CREATE';
-    });
+    combineLatest(this.route.parent.data, this.route.paramMap)
+      .subscribe(([parentData, paramMap]: [Data, ParamMap]) => {
+        this.department = parentData['department'];
+        this.departmentForm.reset(_.pick(this.department, [...this.formProperties, 'handle']));
+        const formFormat = CheckboxUtils.toFormFormat(this.availableMemberCategories, this.department && this.department.memberCategories);
+        (<FormArray>this.departmentForm.get('memberCategories'))
+          .setValue(formFormat);
+        this.departmentForm.get('handle').setValidators(this.department && [Validators.required, Validators.maxLength(25)]);
+        this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/';
+        this.actionView = this.department ? 'EDIT' : 'CREATE';
+
+        this.source = paramMap.get('source');
+        this.sourceLink = this.createSourceLink(this.department);
+      });
   }
 
   update() {
@@ -60,7 +67,7 @@ export class DepartmentEditComponent implements OnInit {
     this.resourceService.patchDepartment(this.department.id, this.generateDepartmentRequestBody())
       .subscribe(department => {
         Object.assign(this.department, department);
-        this.router.navigate([department.university.handle, department.handle])
+        this.router.navigate(this.createSourceLink(department))
           .then(() => {
             this.snackBar.open('Department Saved!', null, {duration: 3000});
           });
@@ -74,7 +81,7 @@ export class DepartmentEditComponent implements OnInit {
     }
     this.resourceService.postDepartment(this.generateDepartmentRequestBody())
       .subscribe(department => {
-        this.router.navigate([department.university.handle, department.handle])
+        this.router.navigate(this.resourceService.routerLink(department))
           .then(() => {
             this.snackBar.open('Department Created!', null, {duration: 3000});
           });
@@ -98,6 +105,12 @@ export class DepartmentEditComponent implements OnInit {
         this.departmentForm.controls['name'].setErrors({duplicateDepartment: true});
       }
     }
+  }
 
+  private createSourceLink(department: DepartmentRepresentation) {
+    if (!this.department || this.source === 'list') {
+      return ['/departments'];
+    }
+      return this.resourceService.routerLink(this.department)
   }
 }

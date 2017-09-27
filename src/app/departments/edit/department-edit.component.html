@@ -42,7 +42,7 @@
     <md-card-actions>
       <div class="grid grid--half-gutters">
         <div class="grid__item one-whole" fxLayout="row" fxLayoutAlign="space-between center">
-          <a *ngIf="department" pButton [routerLink]="['/', department.university.handle, department.handle]"
+          <a *ngIf="department" pButton [routerLink]="sourceLink"
              class="ui-button-secondary" label="Cancel"></a>
           <a *ngIf="!department" pButton [routerLink]="['/', 'departments']"
              class="ui-button-secondary" label="Cancel"></a>
