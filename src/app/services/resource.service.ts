@@ -21,6 +21,7 @@ import Scope = b.Scope;
 import UserRepresentation = b.UserRepresentation;
 import UserRoleDTO = b.UserRoleDTO;
 import UserRoleRepresentation = b.UserRoleRepresentation;
+import UserRolesRepresentation = b.UserRolesRepresentation;
 
 @Injectable()
 export class ResourceService {
@@ -100,7 +101,7 @@ export class ResourceService {
     return this.http.get('/api/departments', {search: params}).map(res => res.json());
   }
 
-  getResourceUsers(resource: ResourceRepresentation<any>, filter?: EntityFilter): Observable<UserRoleRepresentation[]> {
+  getResourceUsers(resource: ResourceRepresentation<any>, filter?: EntityFilter): Observable<UserRolesRepresentation> {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
     const params = new URLSearchParams();
     if (filter) {

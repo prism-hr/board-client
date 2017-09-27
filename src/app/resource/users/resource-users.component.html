@@ -59,6 +59,9 @@
     </div>
   </p-tabPanel>
   <p-tabPanel *ngIf="resource.scope === 'DEPARTMENT'" header="Members">
+    <p-messages *ngIf="users.memberToBeUploadedCount"
+      [value]="[{severity:'info', detail:'Users provided in bulk are still being processed. Remaining users to process: ' + users.memberToBeUploadedCount}]"
+      [closable]="false"></p-messages>
     <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
       <div *ngFor="let userRole of users.members" class="grid__item small--one-whole medium-up--one-third">
         <md-card class="no-content users">

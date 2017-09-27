@@ -69,14 +69,16 @@ export class FilterComponent implements OnInit {
       }
     });
 
-    this.resourceService.getArchiveQuarters(this.resourceScope)
-      .subscribe(quarters => {
-        this.archiveQuarters = quarters.map(quarter => {
-          const year = quarter.slice(0, 4);
-          const quarterDigit = quarter[4];
-          return {value: quarter, label: year + '/' + quarterDigit}
-        });
-      })
+    if (this.resourceScope) {
+      this.resourceService.getArchiveQuarters(this.resourceScope)
+        .subscribe(quarters => {
+          this.archiveQuarters = quarters.map(quarter => {
+            const year = quarter.slice(0, 4);
+            const quarterDigit = quarter[4];
+            return {value: quarter, label: year + '/' + quarterDigit}
+          });
+        })
+    }
   }
 
   clear() {
