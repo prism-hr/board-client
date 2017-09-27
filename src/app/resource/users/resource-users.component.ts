@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdDialog} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
+import {Observable} from 'rxjs/Observable';
 import {interval} from 'rxjs/observable/interval';
 import {Subscription} from 'rxjs/Subscription';
 import {DepartmentService} from '../../departments/department.service';
@@ -14,7 +15,6 @@ import ResourceRepresentation = b.ResourceRepresentation;
 import UserRoleDTO = b.UserRoleDTO;
 import UserRoleRepresentation = b.UserRoleRepresentation;
 import UserRolesRepresentation = b.UserRolesRepresentation;
-import {Observable} from 'rxjs/Observable';
 
 @Component({
   templateUrl: 'resource-users.component.html',
@@ -117,6 +117,7 @@ export class ResourceUsersComponent implements OnInit {
 
   closeBulkMode($event) {
     if ($event === 'refresh') {
+      this.usersTabChanged({index: 1});
       this.loadUsers();
     }
     this.bulkMode = false;
@@ -151,7 +152,7 @@ export class ResourceUsersComponent implements OnInit {
       this.loadUsersSubscription.unsubscribe();
     }
     let observable: Observable<UserRolesRepresentation>;
-    if(delay) {
+    if (delay) {
       observable = interval(delay || 0)
         .take(1)
         .flatMap(() => this.resourceService.getResourceUsers(this.resource, this.filter));
@@ -160,13 +161,13 @@ export class ResourceUsersComponent implements OnInit {
     }
 
     this.loadUsersSubscription = observable
-        .subscribe(users => {
-          this.users = users;
-          this.calculateAdminsCount();
+      .subscribe(users => {
+        this.users = users;
+        this.calculateAdminsCount();
 
-          if (users.memberToBeUploadedCount) {
-            this.loadUsers(5000);
-          }
-        });
+        if (users.memberToBeUploadedCount) {
+          this.loadUsers(5000);
+        }
+      });
   }
 }
