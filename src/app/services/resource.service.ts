@@ -21,7 +21,6 @@ import Scope = b.Scope;
 import UserRepresentation = b.UserRepresentation;
 import UserRoleDTO = b.UserRoleDTO;
 import UserRoleRepresentation = b.UserRoleRepresentation;
-import UserRolesRepresentation = b.UserRolesRepresentation;
 
 @Injectable()
 export class ResourceService {
@@ -101,8 +100,13 @@ export class ResourceService {
     return this.http.get('/api/departments', {search: params}).map(res => res.json());
   }
 
-  getResourceUsers(scope: string, id: number): Observable<UserRolesRepresentation> {
-    return this.http.get('/api/' + scope + 's' + '/' + id + '/users').map(res => res.json());
+  getResourceUsers(resource: ResourceRepresentation<any>, filter?: EntityFilter): Observable<UserRoleRepresentation[]> {
+    const resourceCol = (<any>resource.scope).toLowerCase() + 's';
+    const params = new URLSearchParams();
+    if (filter) {
+      params.set('searchTerm', filter.searchTerm);
+    }
+    return this.http.get('/api/' + resourceCol + '/' + resource.id + '/users', {search: params}).map(res => res.json());
   }
 
   getBoardPosts(boardId: number, includePublicPosts: boolean): Observable<PostRepresentation[]> {
@@ -167,13 +171,6 @@ export class ResourceService {
 
   lookupOrganizations(query: string) {
     return this.http.get('/api/posts/organizations?query=' + query).map(res => res.json());
-  }
-
-  searchUsers(resource: ResourceRepresentation<any>, searchTerm: string): Observable<UserRoleRepresentation[]> {
-    const resourceCol = (<any>resource.scope).toLowerCase() + 's';
-    const params = new URLSearchParams();
-    params.set('searchTerm', searchTerm);
-    return this.http.get('/api/' + resourceCol + '/' + resource.id + '/users', {search: params}).map(res => res.json());
   }
 
   getArchiveQuarters(scope: Scope): Observable<string[]> {

@@ -25,8 +25,7 @@
   <b-filter (applied)="membersFilterApplied($event)"></b-filter>
 </div>
 
-
-<p-tabView [activeIndex]="usersTabIndex" (onChange)="usersTabChanged($event)">
+<p-tabView *ngIf="users" [activeIndex]="usersTabIndex" (onChange)="usersTabChanged($event)">
   <p-tabPanel header="Staff">
     <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
 

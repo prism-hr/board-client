@@ -97,7 +97,6 @@ import {PostViewComponent} from './posts/view/post-view.component';
 import {ResourceActionsBoxComponent} from './resource/actions-box/resource-actions-box.component';
 import {ResourceBadgeComponent} from './resource/resource-badge.component';
 import {ResourceCommentDialogComponent} from './resource/resource-comment.dialog';
-import {ResourceUsersResolver} from './resource/resource-users-resolver.service';
 import {ResourceTimelineComponent} from './resource/timeline/resource-timeline.component';
 import {ResourceUserEditDialogComponent} from './resource/users/resource-user-edit-dialog.component';
 import {ResourceUserRoleFormPartComponent} from './resource/users/resource-user-role-form-part.component';
@@ -240,10 +239,7 @@ import {ValidationService} from './validation/validation.service';
                           {
                             path: 'users',
                             component: ResourceUsersComponent,
-                            canActivate: [AuthGuard],
-                            resolve: {
-                              users: ResourceUsersResolver
-                            }
+                            canActivate: [AuthGuard]
                           }
                         ]
                       }
@@ -274,10 +270,7 @@ import {ValidationService} from './validation/validation.service';
                           {
                             path: 'users',
                             component: ResourceUsersComponent,
-                            canActivate: [AuthGuard],
-                            resolve: {
-                              users: ResourceUsersResolver
-                            }
+                            canActivate: [AuthGuard]
                           },
                           {
                             path: 'badge',
@@ -382,7 +375,7 @@ import {ValidationService} from './validation/validation.service';
       multi: true
     },
     AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostResponsesResolver, BoardsResolver,
-    ResourceUsersResolver, AccountSuppressionsResolver, PostService, DepartmentService, UserService, ValidationService
+    AccountSuppressionsResolver, PostService, DepartmentService, UserService, ValidationService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, UnsubscribeDialogComponent, ResourceCommentDialogComponent,
     UserImageDialogComponent, ResourceUserEditDialogComponent],

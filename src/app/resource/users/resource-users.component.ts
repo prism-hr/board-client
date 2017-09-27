@@ -11,6 +11,7 @@ import ResourceRepresentation = b.ResourceRepresentation;
 import UserRoleDTO = b.UserRoleDTO;
 import UserRoleRepresentation = b.UserRoleRepresentation;
 import UserRolesRepresentation = b.UserRolesRepresentation;
+import {EntityFilter} from '../../general/filter/filter.component';
 
 @Component({
   templateUrl: 'resource-users.component.html',
@@ -25,6 +26,7 @@ export class ResourceUsersComponent implements OnInit {
   lastAdminRole: boolean;
   bulkMode: boolean;
   usersTabIndex = 0;
+  filter: EntityFilter;
   tabCollections = ['users', 'members', 'memberRequests'];
 
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private dialog: MdDialog,
@@ -43,10 +45,7 @@ export class ResourceUsersComponent implements OnInit {
     this.route.parent.data.subscribe(data => {
       const resourceScope = data['resourceScope'];
       this.resource = data[resourceScope];
-    });
-    this.route.data.subscribe(data => {
-      this.users = data['users'];
-      this.calculateAdminsCount();
+      this.reloadUsers();
     });
     this.route.fragment.subscribe(fragment => {
       const usersCategory = fragment || 'users';
@@ -114,14 +113,9 @@ export class ResourceUsersComponent implements OnInit {
 
   closeBulkMode($event) {
     if ($event === 'refresh') {
-      this.resourceService.getResourceUsers(this.resource.scope.toLowerCase(), this.resource.id)
-        .subscribe(users => {
-          this.users = users;
-          this.bulkMode = false;
-        });
-    } else {
-      this.bulkMode = false;
+      this.reloadUsers();
     }
+    this.bulkMode = false;
   }
 
   usersTabChanged(event) {
@@ -129,11 +123,17 @@ export class ResourceUsersComponent implements OnInit {
     this.usersTabIndex = event.index;
   }
 
-  membersFilterApplied(filter) {
-    this.resourceService.searchUsers(this.resource, filter.searchTerm)
+  reloadUsers() {
+    this.resourceService.getResourceUsers(this.resource, this.filter)
       .subscribe(users => {
         this.users = users;
+        this.calculateAdminsCount();
       });
+  }
+
+  membersFilterApplied(filter) {
+    this.filter = filter;
+    this.reloadUsers();
   }
 
   respondToMemberRequest(userRole: UserRoleRepresentation, state: string) {
