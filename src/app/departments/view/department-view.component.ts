@@ -4,6 +4,7 @@ import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
+import {Title} from '@angular/platform-browser';
 
 @Component({
   templateUrl: 'department-view.component.html',
@@ -14,13 +15,14 @@ export class DepartmentViewComponent implements OnInit {
   canEdit: boolean;
   boards: BoardRepresentation[];
 
-  constructor(private route: ActivatedRoute, private resourceService: ResourceService,
+  constructor(private route: ActivatedRoute, private title: Title, private resourceService: ResourceService,
               private userService: UserService) {
   }
 
   ngOnInit() {
     this.route.parent.data.subscribe(data => {
       this.department = data['department'];
+      this.title.setTitle(this.department.name);
       this.canEdit = this.resourceService.canEdit(this.department);
     });
 

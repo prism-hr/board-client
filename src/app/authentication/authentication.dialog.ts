@@ -4,7 +4,6 @@ import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
 import {UserService} from '../services/user.service';
 import {ValidationService} from '../validation/validation.service';
 import {ValidationUtils} from '../validation/validation.utils';
-import UserRepresentation = b.UserRepresentation;
 
 @Component({
   templateUrl: './authentication.dialog.html',

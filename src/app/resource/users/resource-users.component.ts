@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdDialog} from '@angular/material';
+import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
 import {Observable} from 'rxjs/Observable';
@@ -33,7 +34,7 @@ export class ResourceUsersComponent implements OnInit {
   tabCollections = ['users', 'members', 'memberRequests'];
   loadUsersSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private dialog: MdDialog,
+  constructor(private route: ActivatedRoute, private router: Router, private title: Title, private fb: FormBuilder, private dialog: MdDialog,
               private resourceService: ResourceService, private departmentService: DepartmentService) {
     this.userForm = this.fb.group({
       user: this.fb.group({
@@ -49,6 +50,7 @@ export class ResourceUsersComponent implements OnInit {
     this.route.parent.data.subscribe(data => {
       const resourceScope = data['resourceScope'];
       this.resource = data[resourceScope];
+      this.title.setTitle(this.resource.name + ' - Users');
       this.loadUsers();
     });
     this.route.fragment.subscribe(fragment => {

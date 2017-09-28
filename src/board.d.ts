@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-09-26 11:09:47.
+// Generated using typescript-generator version 1.23.311 on 2017-09-28 10:57:32.
 
 declare namespace b {
 
@@ -159,6 +159,7 @@ declare namespace b {
     userRole?: UserRoleRepresentation;
     resourceEvent?: ResourceEventRepresentation;
     activity?: Activity;
+    createdTimestamp?: LocalDateTime;
   }
 
   interface BoardRepresentation extends ResourceRepresentation<BoardRepresentation> {
@@ -289,10 +290,10 @@ declare namespace b {
 
   interface LocationDefinition {
     name?: string;
-    longitude?: number;
     domicile?: string;
     googleId?: string;
     latitude?: number;
+    longitude?: number;
   }
 
   interface LocalDateTime extends Temporal, TemporalAdjuster, ChronoLocalDateTime<LocalDate>, Serializable {
@@ -304,8 +305,8 @@ declare namespace b {
     year?: number;
     hour?: number;
     minute?: number;
-    second?: number;
     nano?: number;
+    second?: number;
   }
 
   interface LocalDate extends Temporal, TemporalAdjuster, ChronoLocalDate, Serializable {
