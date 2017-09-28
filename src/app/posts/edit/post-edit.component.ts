@@ -1,6 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdDialog} from '@angular/material';
+import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Data, ParamMap, Router} from '@angular/router';
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -39,8 +40,8 @@ export class PostEditComponent implements OnInit {
     'liveTimestamp', 'deadTimestamp', 'applyWebsite', 'applyDocument', 'applyEmail'];
 
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private cdf: ChangeDetectorRef,
-              private dialog: MdDialog, private definitionsService: DefinitionsService, private postService: PostService,
-              private resourceService: ResourceService) {
+              private title: Title, private dialog: MdDialog, private definitionsService: DefinitionsService,
+              private postService: PostService, private resourceService: ResourceService) {
     this.definitions = definitionsService.getDefinitions();
   }
 
@@ -90,6 +91,11 @@ export class PostEditComponent implements OnInit {
 
         postObservable.subscribe(post => {
           this.post = post;
+          if(post) {
+            this.title.setTitle(this.post.name + ' - Edit');
+          } else {
+            this.title.setTitle('New post');
+          }
 
           this.postForm.get('board').setValue(this.board);
 

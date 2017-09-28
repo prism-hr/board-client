@@ -11,6 +11,7 @@ import {ResourceService} from '../../services/resource.service';
 import DepartmentPatchDTO = b.DepartmentPatchDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import MemberCategory = b.MemberCategory;
+import {Title} from '@angular/platform-browser';
 
 @Component({
   templateUrl: 'department-edit.component.html',
@@ -26,7 +27,7 @@ export class DepartmentEditComponent implements OnInit {
   source: string;
   sourceLink: any[];
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router,
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private title: Title,
               private snackBar: MdSnackBar, private resourceService: ResourceService, private definitionsService: DefinitionsService) {
     this.availableMemberCategories = definitionsService.getDefinitions()['memberCategory'];
     this.departmentForm = this.fb.group({
@@ -46,6 +47,7 @@ export class DepartmentEditComponent implements OnInit {
     combineLatest(this.route.parent.data, this.route.paramMap)
       .subscribe(([parentData, paramMap]: [Data, ParamMap]) => {
         this.department = parentData['department'];
+        this.title.setTitle(this.department ? this.department.name + ' - Edit' : 'New department');
         this.departmentForm.reset(_.pick(this.department, [...this.formProperties, 'handle']));
         const formFormat = CheckboxUtils.toFormFormat(this.availableMemberCategories, this.department && this.department.memberCategories);
         (<FormArray>this.departmentForm.get('memberCategories'))

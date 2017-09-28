@@ -15,7 +15,7 @@ import UserRepresentation = b.UserRepresentation;
       </div>
       <div class="post-apply-content">
         <div *ngIf="!user">
-          <button pButton type="button" (click)="authenticate()" label="Log in to apply" class="ui-button-success">
+          <button pButton type="button" (click)="authenticate()" label="Apply" class="ui-button-success">
           </button>
         </div>
         <div *ngIf="user">
