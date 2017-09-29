@@ -41,8 +41,7 @@ export class FileUploadComponent implements ControlValueAccessor, OnInit {
         type: 'uploadAll',
         url: 'https://api.cloudinary.com/v1_1/' + cloudName + '/upload',
         method: 'POST',
-        data: {upload_preset: 'unsigned', folder: this.definitionsService.getDefinitions()['cloudinaryFolder']},
-        concurrency: 0
+        data: {upload_preset: 'unsigned', folder: this.definitionsService.getDefinitions()['cloudinaryFolder']}
       };
       this.uploadInput.emit(event);
     } else if (output.type === 'addedToQueue') {

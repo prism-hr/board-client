@@ -24,10 +24,7 @@
           </md-card-title>
         </md-card-header>
         <md-card-content>
-          <b-file-upload *ngIf="canEdit" [(ngModel)]="department.documentLogo" (ngModelChange)="logoChanged()"
-                         type="logo"></b-file-upload>
-          <b-image *ngIf="!canEdit" [publicId]="department.documentLogo?.cloudinaryId"
-                   height="150" width="200" crop="mfit"></b-image>
+          <b-image [publicId]="department.documentLogo?.cloudinaryId" height="150" width="200" crop="mfit"></b-image>
         </md-card-content>
       </md-card>
 
