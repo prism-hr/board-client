@@ -2,101 +2,105 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ResourceService} from '../services/resource.service';
 import {UserService} from '../services/user.service';
 import ActivityRepresentation = b.ActivityRepresentation;
+import BoardRepresentation = b.BoardRepresentation;
+import DepartmentRepresentation = b.DepartmentRepresentation;
+import PostRepresentation = b.PostRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
 
 @Component({
   selector: 'b-header-activity',
   template: `
-<div [ngSwitch]="activity.activity">
-      <div *ngSwitchCase="'NEW_BOARD_PARENT_ACTIVITY'">
-        <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
-          New board created in {{(activity.resource as BoardRepresentation).department.name}}
+    <div [ngSwitch]="activity.activity">
+      <div *ngSwitchCase="'JOIN_DEPARTMENT_REQUEST_ACTIVITY'" class="activity-inner">
+        <a [routerLink]="resourceLink.concat('users')" fragment="memberRequests"
+           (click)="activityClicked(activity)" class="activity-w-icon">
+          <b-image [publicId]="activity.userRole.user.documentImage?.cloudinaryId"
+                   gravity="face" width="50" height="50" radius="max" crop="thumb"></b-image>
+          <div class="activity-copy">
+            <b>{{activity.userRole.user.givenName}} {{activity.userRole.user.surname}}</b>
+            <span>has requested membership of <b>{{resource.name}}</b></span>
+            <p>{{activity.createdTimestamp | date: 'short' }}</p>
+          </div>
         </a>
       </div>
-      <div *ngSwitchCase="'NEW_POST_PARENT_ACTIVITY'">
-        <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
-          New post '{{activity.resource.name}}' in {{(activity.resource as PostRepresentation).board.department.name}} {{(activity.resource as PostRepresentation).board.name}}
-        </a>
-       </div>
-      <div *ngSwitchCase="'RESTORE_BOARD_ACTIVITY'" class="activity-item">
-        <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
-         Your board {{(activity.resource as BoardRepresentation).department.name}} {{activity.resource.name}} has been restored
-        </a>
-      </div>
-      <div *ngSwitchCase="'REJECT_POST_ACTIVITY'" class="activity-item">
-        <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
-         Your post {{activity.resource.name}} has been rejected
+      <div *ngSwitchCase="'RESPOND_POST_ACTIVITY'" class="activity-inner">
+        <a [routerLink]="resourceLink.concat('responses')"
+           (click)="activityClicked(activity)" class="activity-w-icon">
+          <b-image [publicId]="activity.resourceEvent.user.documentImage?.cloudinaryId"
+                   gravity="face" width="50" height="50" radius="max" crop="thumb"></b-image>
+          <div class="activity-copy">
+            <b>{{activity.resourceEvent.user.givenName}} {{activity.resourceEvent.user.surname}}</b>
+            <span>has responded to <b>{{resource.name}}</b></span>
+            <p>{{activity.createdTimestamp | date: 'short' }}</p>
+          </div>
         </a>
       </div>
-      <div *ngSwitchCase="'REJECT_POST_ACTIVITY'" class="activity-item">
-        <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
-         Your post {{activity.resource.name}} has been restored
+
+      <!-- ELSE -->
+      <div class="activity-inner">
+        <a [routerLink]="routerLink(resource)" (click)="activityClicked(activity)">
+          <div class="activity-w-icon"
+               *ngIf="activity.activity != 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' && activity.activity != 'RESPOND_POST_ACTIVITY'">
+            <b-image [publicId]="documentLogo?.cloudinaryId"
+                     gravity="face" width="50" height="50" crop="thumb"></b-image>
+            <div class="activity-copy">
+              <span *ngSwitchCase="'NEW_BOARD_PARENT_ACTIVITY'">
+                New board created in <b>{{department.name}}</b>
+              </span>
+              <span *ngSwitchCase="'NEW_POST_PARENT_ACTIVITY'">
+                New post <b>'{{post.name}}'</b> in {{department.name}} {{board.name}}
+              </span>
+              <span *ngSwitchCase="'SUSPEND_POST_ACTIVITY'">
+                New change request for post <b>{{post.name}}</b>
+              </span>
+              <span *ngSwitchCase="'CORRECT_POST_ACTIVITY'">
+                Post <b>{{post.name}}</b> has been corrected
+              </span>
+              <span *ngSwitchCase="'JOIN_DEPARTMENT_ACTIVITY'">
+                You have been added as a member of <b>{{board.name}}</b>
+              </span>
+              <span *ngSwitchCase="'JOIN_BOARD_ACTIVITY'">
+                You have been added as a member of <b>{{department.name}} {{board.name}}</b>
+              </span>
+              <span *ngSwitchCase="'ACCEPT_BOARD_ACTIVITY'">
+                Your board <b>{{board.name}}</b> in <b>{{department.name}}</b> has been accepted
+              </span>
+              <span *ngSwitchCase="'ACCEPT_POST_ACTIVITY'">
+                Your post <b>{{post.name}}</b> has been accepted
+              </span>
+              <span *ngSwitchCase="'PUBLISH_POST_ACTIVITY'">
+                Your post <b>{{post.name}}</b> has been published
+              </span>
+              <span *ngSwitchCase="'RETIRE_POST_ACTIVITY'">
+                Your post <b>{{post.name}}</b> has expired
+              </span>
+              <span *ngSwitchCase="'PUBLISH_POST_MEMBER_ACTIVITY'">
+                New post <b>'{{post.name}}'</b> in <b>{{department.name}} {{board.name}}</b>
+              </span>
+              <span *ngSwitchCase="'REJECT_BOARD_ACTIVITY'">
+                Your board <b>{{board.name}}</b> in <b>{{department.name}}</b> has been rejected
+              </span>
+              <span *ngSwitchCase="'RESTORE_BOARD_ACTIVITY'">
+                Your board <b>{{board.name}}</b> in <b>{{department.name}} </b> has been restored
+              </span>
+              <span *ngSwitchCase="'REJECT_POST_ACTIVITY'">
+                Your post <b>{{post.name}}</b> has been rejected
+              </span>
+              <span *ngSwitchCase="'RESTORE_POST_ACTIVITY'">
+                Your post <b>{{post.name}}</b> has been restored
+              </span>
+              <p *ngIf="activity.activity != 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' && activity.activity != 'RESPOND_POST_ACTIVITY'">
+                {{activity.createdTimestamp | date: 'short' }}
+              </p>
+            </div>
+          </div>
         </a>
       </div>
-      <div *ngSwitchCase="'RESPOND_POST_ACTIVITY'" class="activity-item">
-        <a [routerLink]="resourceLink.concat('responses')" (click)="activityClicked(activity)">
-          {{activity.resourceEvent.user.givenName}} {{activity.resourceEvent.user.surname}} has responded to {{activity.resource.name}}
-        </a>
-      </div>
-      <div *ngSwitchCase="'SUSPEND_POST_ACTIVITY'">
-        <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
-          New change request for post {{activity.resource.name}}
-        </a>
-      </div>
-      <div *ngSwitchCase="'CORRECT_POST_ACTIVITY'" class="activity-item">
-        <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
-          Post {{activity.resource.name}} has been corrected
-        </a>
-      </div>
-      <div *ngSwitchCase="'JOIN_DEPARTMENT_ACTIVITY'" class="activity-item">
-        <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
-          You have been added as a member of {{activity.resource.name}}
-        </a>
-      </div>
-      <div *ngSwitchCase="'JOIN_BOARD_ACTIVITY'" class="activity-item">
-        <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
-          You have been added as a member of {{(activity.resource as BoardRepresentation).department.name}} {{activity.resource.name}}
-        </a>
-      </div>
-      <div *ngSwitchCase="'ACCEPT_POST_ACTIVITY'" class="activity-item">
-        <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
-          Your post {{activity.resource.name}} has been accepted
-        </a>
-      </div>
-      <div *ngSwitchCase="'PUBLISH_POST_ACTIVITY'" class="activity-item">
-        <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
-          Your post {{activity.resource.name}} has been published
-        </a>
-      </div>
-      <div *ngSwitchCase="'ACCEPT_BOARD_ACTIVITY'" class="activity-item">
-        <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
-          Your board {{(activity.resource as BoardRepresentation).department.name}} {{activity.resource.name}} has been accepted
-        </a>
-      </div>
-      <div *ngSwitchCase="'JOIN_DEPARTMENT_REQUEST_ACTIVITY'" class="activity-item">
-        <a [routerLink]="resourceLink.concat('users')" fragment="memberRequests" (click)="activityClicked(activity)">
-          {{activity.userRole.user.givenName}} {{activity.userRole.user.surname}} has requested membership of {{activity.resource.name}}
-        </a>
-      </div>
-      <div *ngSwitchCase="'REJECT_BOARD_ACTIVITY'" class="activity-item">
-        <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
-          Your board {{(activity.resource as BoardRepresentation).department.name}} {{activity.resource.name}} has been rejected
-        </a>
-      </div>
-      <div *ngSwitchCase="'RETIRE_POST_ACTIVITY'" class="activity-item">
-        <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
-          Your post {{activity.resource.name}} has expired
-        </a>
-      </div>
-      <div *ngSwitchCase="'PUBLISH_POST_MEMBER_ACTIVITY'" class="activity-item">
-        <a [routerLink]="routerLink(activity.resource)" (click)="activityClicked(activity)">
-          New post '{{activity.resource.name}}' in {{(activity.resource as PostRepresentation).board.department.name}} {{(activity.resource as PostRepresentation).board.name}}
-        </a>
-      </div>
-      <div *ngSwitchDefault class="activity-item">
+
+      <div *ngSwitchDefault class="activity">
         Unhandled activity: {{activity.activity}}
-      </div> 
-      </div>`,
+      </div>
+    </div>`,
   styleUrls: ['./header.component.scss']
 })
 export class HeaderActivityComponent implements OnInit {
@@ -106,6 +110,42 @@ export class HeaderActivityComponent implements OnInit {
   resourceLink: any[];
 
   constructor(private userService: UserService, private resourceService: ResourceService) {
+  }
+
+  get resource() {
+    return this.activity.resource;
+  }
+
+  get post(): PostRepresentation {
+    if (this.resource.scope === 'POST') {
+      return this.resource;
+    }
+  }
+
+  get board(): BoardRepresentation {
+    if (this.resource.scope === 'BOARD') {
+      return this.resource;
+    } else if (this.resource.scope === 'POST') {
+      return (<PostRepresentation>this.resource).board;
+    }
+  }
+
+  get department(): DepartmentRepresentation {
+    if (this.resource.scope === 'DEPARTMENT') {
+      return this.resource;
+    } else if (this.resource.scope === 'BOARD') {
+      return (<BoardRepresentation>this.resource).department;
+    } else {
+      return (<PostRepresentation>this.resource).board.department;
+    }
+  }
+
+  get documentLogo() {
+    if (this.board) {
+      return this.board.documentLogo;
+    } else {
+      return this.department.documentLogo;
+    }
   }
 
   ngOnInit(): void {

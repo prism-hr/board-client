@@ -7,6 +7,7 @@ import {ResourceService} from '../../../services/resource.service';
 import {UserService} from '../../../services/user.service';
 import BoardRepresentation = b.BoardRepresentation;
 import PostRepresentation = b.PostRepresentation;
+import {Title} from '@angular/platform-browser';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class BoardViewComponent implements OnInit {
   canEdit: boolean;
   posts: PostRepresentation[];
 
-  constructor(private route: ActivatedRoute, private dialog: MdDialog, private resourceService: ResourceService,
+  constructor(private route: ActivatedRoute, private title: Title, private dialog: MdDialog, private resourceService: ResourceService,
               private userService: UserService) {
   }
 
@@ -26,6 +27,7 @@ export class BoardViewComponent implements OnInit {
     combineLatest(this.route.parent.data, this.route.queryParamMap)
       .subscribe(([parentData, queryParamMap]: [Data, ParamMap]) => {
         this.board = parentData['board'];
+        this.title.setTitle(this.board.name);
         this.canEdit = this.resourceService.canEdit(this.board);
 
         const modalType = queryParamMap.get('modal');

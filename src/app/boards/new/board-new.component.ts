@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Response} from '@angular/http';
+import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
 import {AuthGuard} from '../../authentication/auth-guard.service';
@@ -26,8 +27,9 @@ export class BoardNewComponent implements OnInit {
   selectedDepartment: DepartmentRepresentation;
   user: UserRepresentation;
 
-  constructor(private router: Router, private route: ActivatedRoute, private resourceService: ResourceService, private fb: FormBuilder,
-              private definitionsService: DefinitionsService, private userService: UserService, private authGuard: AuthGuard) {
+  constructor(private router: Router, private route: ActivatedRoute, private title: Title, private resourceService: ResourceService,
+              private fb: FormBuilder, private definitionsService: DefinitionsService, private userService: UserService,
+              private authGuard: AuthGuard) {
     this.applicationUrl = this.definitionsService.getDefinitions()['applicationUrl'];
     this.availableMemberCategories = definitionsService.getDefinitions()['memberCategory'];
     this.boardForm = this.fb.group({
@@ -45,6 +47,7 @@ export class BoardNewComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.title.setTitle("New board");
     this.route.queryParams.subscribe(params => {
       if (params['prepopulate']) {
         const prepopulateDetails = JSON.parse(localStorage.getItem('newBoardPrepopulate'));
@@ -92,7 +95,7 @@ export class BoardNewComponent implements OnInit {
             return this.userService.loadUser().then(() => savedBoard);
           })
           .subscribe(saved => {
-            this.router.navigate([saved.department.handle, saved.handle]);
+            this.router.navigate([saved.department.university.handle, saved.department.handle, saved.handle]);
           }, (error: Response) => {
             if (error.status === 409) {
               if (error.json().exceptionCode === 'DUPLICATE_BOARD') {

@@ -7,6 +7,7 @@ import {ValidationService} from '../validation/validation.service';
 import {ValidationUtils} from '../validation/validation.utils';
 import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
 import UserRepresentation = b.UserRepresentation;
+import {Title} from '@angular/platform-browser';
 
 @Component({
   templateUrl: './account.component.html',
@@ -19,8 +20,8 @@ export class AccountComponent implements OnInit {
   suppressions: UserNotificationSuppressionRepresentation[];
   changePasswordRequested: boolean;
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private snackBar: MdSnackBar, private userService: UserService,
-              private validationService: ValidationService) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private title: Title, private snackBar: MdSnackBar,
+              private userService: UserService, private validationService: ValidationService) {
     this.accountForm = this.fb.group({
       givenName: ['', [Validators.required, Validators.maxLength(30)]],
       surname: ['', [Validators.required, Validators.maxLength(40)]],
@@ -30,6 +31,7 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.title.setTitle('Account');
     this.userService.user$
       .subscribe((user: UserRepresentation) => {
         if (user) {

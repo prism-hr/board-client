@@ -24,10 +24,10 @@
         "../node_modules/quill/dist/quill.snow.css"
       ],
       "scripts": [
-        "../node_modules/lodash/lodash.js",
-        "../node_modules/moment/moment.js",
-        "../node_modules/moment-timezone/moment-timezone.js",
-        "../node_modules/quill/dist/quill.js",
+        "../node_modules/lodash/lodash.min.js",
+        "../node_modules/moment/min/moment.min.js",
+        "../node_modules/moment-timezone/builds/moment-timezone.min.js",
+        "../node_modules/quill/dist/quill.min.js",
         "../src/assets/widgets.js"
       ],
       "environmentSource": "environments/environment.ts",
@@ -44,13 +44,16 @@
   },
   "lint": [
     {
-      "project": "src/tsconfig.app.json"
+      "project": "src/tsconfig.app.json",
+      "exclude": "**/node_modules/**"
     },
     {
-      "project": "src/tsconfig.spec.json"
+      "project": "src/tsconfig.spec.json",
+      "exclude": "**/node_modules/**"
     },
     {
-      "project": "e2e/tsconfig.e2e.json"
+      "project": "e2e/tsconfig.e2e.json",
+      "exclude": "**/node_modules/**"
     }
   ],
   "test": {

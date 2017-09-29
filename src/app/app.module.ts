@@ -97,7 +97,6 @@ import {PostViewComponent} from './posts/view/post-view.component';
 import {ResourceActionsBoxComponent} from './resource/actions-box/resource-actions-box.component';
 import {ResourceBadgeComponent} from './resource/resource-badge.component';
 import {ResourceCommentDialogComponent} from './resource/resource-comment.dialog';
-import {ResourceUsersResolver} from './resource/resource-users-resolver.service';
 import {ResourceTimelineComponent} from './resource/timeline/resource-timeline.component';
 import {ResourceUserEditDialogComponent} from './resource/users/resource-user-edit-dialog.component';
 import {ResourceUserRoleFormPartComponent} from './resource/users/resource-user-role-form-part.component';
@@ -210,102 +209,101 @@ import {ValidationService} from './validation/validation.service';
             }
           },
           {
-            path: ':departmentHandle',
+            path: ':universityHandle',
             children: [
               {
-                path: '',
-                data: {
-                  resourceScope: 'department'
-                },
-                resolve: {
-                  department: DepartmentResolver,
-                },
+                path: ':departmentHandle',
                 children: [
                   {
                     path: '',
-                    component: DepartmentTabsComponent,
+                    data: {
+                      resourceScope: 'department'
+                    },
+                    resolve: {
+                      department: DepartmentResolver,
+                    },
                     children: [
                       {
                         path: '',
-                        component: DepartmentViewComponent,
-                      },
-                      {
-                        path: 'edit',
-                        component: DepartmentEditComponent,
-                        canActivate: [AuthGuard]
-                      },
-                      {
-                        path: 'users',
-                        component: ResourceUsersComponent,
-                        canActivate: [AuthGuard],
-                        resolve: {
-                          users: ResourceUsersResolver
-                        }
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                path: ':boardHandle',
-                data: {
-                  resourceScope: 'board'
-                },
-                resolve: {
-                  board: BoardResolver
-                },
-                children: [
-                  {
-                    path: '',
-                    component: BoardTabsComponent,
-                    children: [
-                      {
-                        path: '',
-                        component: BoardViewComponent
-                      },
-                      {
-                        path: 'edit',
-                        component: BoardEditComponent,
-                        canActivate: [AuthGuard]
-                      },
-                      {
-                        path: 'users',
-                        component: ResourceUsersComponent,
-                        canActivate: [AuthGuard],
-                        resolve: {
-                          users: ResourceUsersResolver
-                        }
-                      },
-                      {
-                        path: 'badge',
-                        component: ResourceBadgeComponent,
-                        canActivate: [AuthGuard]
+                        component: DepartmentTabsComponent,
+                        children: [
+                          {
+                            path: '',
+                            component: DepartmentViewComponent,
+                          },
+                          {
+                            path: 'edit',
+                            component: DepartmentEditComponent,
+                            canActivate: [AuthGuard]
+                          },
+                          {
+                            path: 'users',
+                            component: ResourceUsersComponent,
+                            canActivate: [AuthGuard]
+                          }
+                        ]
                       }
                     ]
                   },
                   {
-                    path: ':postId',
-                    resolve: {
-                      post: PostResolver,
+                    path: ':boardHandle',
+                    data: {
+                      resourceScope: 'board'
                     },
-                    component: PostTabsComponent,
+                    resolve: {
+                      board: BoardResolver
+                    },
                     children: [
                       {
                         path: '',
-                        component: PostViewComponent,
+                        component: BoardTabsComponent,
+                        children: [
+                          {
+                            path: '',
+                            component: BoardViewComponent
+                          },
+                          {
+                            path: 'edit',
+                            component: BoardEditComponent,
+                            canActivate: [AuthGuard]
+                          },
+                          {
+                            path: 'users',
+                            component: ResourceUsersComponent,
+                            canActivate: [AuthGuard]
+                          },
+                          {
+                            path: 'badge',
+                            component: ResourceBadgeComponent,
+                            canActivate: [AuthGuard]
+                          }
+                        ]
                       },
                       {
-                        path: 'edit',
-                        component: PostEditComponent,
-                        canActivate: [AuthGuard]
-                      },
-                      {
-                        path: 'responses',
-                        component: PostResponsesComponent,
+                        path: ':postId',
                         resolve: {
-                          responses: PostResponsesResolver
+                          post: PostResolver,
                         },
-                        canActivate: [AuthGuard]
+                        component: PostTabsComponent,
+                        children: [
+                          {
+                            path: '',
+                            component: PostViewComponent,
+                          },
+                          {
+                            path: 'edit',
+                            component: PostEditComponent,
+                            canActivate: [AuthGuard]
+                          },
+                          {
+                            path: 'responses',
+                            component: PostResponsesComponent,
+                            resolve: {
+                              responses: PostResponsesResolver
+                            },
+                            canActivate: [AuthGuard]
+                          }
+                        ]
                       }
                     ]
                   }
@@ -377,7 +375,7 @@ import {ValidationService} from './validation/validation.service';
       multi: true
     },
     AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostResponsesResolver, BoardsResolver,
-    ResourceUsersResolver, AccountSuppressionsResolver, PostService, DepartmentService, UserService, ValidationService
+    AccountSuppressionsResolver, PostService, DepartmentService, UserService, ValidationService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, UnsubscribeDialogComponent, ResourceCommentDialogComponent,
     UserImageDialogComponent, ResourceUserEditDialogComponent],

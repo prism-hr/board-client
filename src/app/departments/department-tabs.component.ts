@@ -26,7 +26,7 @@ export class DepartmentTabsComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.department = data['department'];
       this.canEdit = this.resourceService.canEdit(this.department);
-      const departmentPath = ['/', this.department.handle];
+      const departmentPath = ['/', this.department.university.handle, this.department.handle];
       this.items = [
         {label: 'View', routerLink: departmentPath, routerLinkActiveOptions: {exact: true}},
         {label: 'Edit', routerLink: [...departmentPath, 'edit'], routerLinkActiveOptions: {exact: true}},

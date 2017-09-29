@@ -3,7 +3,7 @@ import {AbstractControl, FormArray, ValidatorFn} from '@angular/forms';
 export class ValidationUtils {
 
   static EMAIL_REGEX = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-  static URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+  static URL_REGEX = /(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
   static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
     const config = {
@@ -19,10 +19,16 @@ export class ValidationUtils {
       lastAdminRole: 'Cannot remove last admin role.',
       resume: 'You need to upload a document or specify a website containing your CV.',
       checkboxArrayMin: 'You have to select a value.',
-      fakeCategory: 'You cannot leave example categories.'
+      fakeCategory: 'You cannot leave example categories.',
+      url: 'Incorrect URL format.'
     };
 
-    return config[validatorName] || 'Form validation error';
+    if (config[validatorName]) {
+      return config[validatorName];
+    } else {
+      console.log('Missing validation text for: ' + validatorName);
+      return 'Form validation error';
+    }
   }
 
   static emailValidator(control: AbstractControl) {
@@ -69,7 +75,7 @@ export class ValidationUtils {
   static checkboxArrayMin(min: number): ValidatorFn {
     return (control: FormArray) => {
       const array: boolean[] = control.value;
-      if(array.filter(v => v).length < min) {
+      if (array.filter(v => v).length < min) {
         return {checkboxArrayMin: true}
       }
     };

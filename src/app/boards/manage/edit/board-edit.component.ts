@@ -7,6 +7,7 @@ import {DefinitionsService} from '../../../services/definitions.service';
 import {ResourceService} from '../../../services/resource.service';
 import BoardRepresentation = b.BoardRepresentation;
 import BoardPatchDTO = b.BoardPatchDTO;
+import {Title} from '@angular/platform-browser';
 
 @Component({
   templateUrl: 'board-edit.component.html',
@@ -20,7 +21,7 @@ export class BoardEditComponent implements OnInit {
 
   boardProperties = ['name', 'summary', 'postCategories', 'handle', 'documentLogo'];
 
-  constructor(private route: ActivatedRoute, private cdf: ChangeDetectorRef, private fb: FormBuilder, private router: Router,
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private title: Title,
               private resourceService: ResourceService, private definitionsService: DefinitionsService) {
     this.availablePostVisibilities = definitionsService.getDefinitions()['postVisibility'];
     this.boardForm = this.fb.group({
@@ -35,10 +36,11 @@ export class BoardEditComponent implements OnInit {
   ngOnInit() {
     this.route.parent.data.subscribe(data => {
       this.board = data['board'];
+      this.title.setTitle(this.board.name + ' - Edit');
       const value: any = _.pick(this.board, this.boardProperties);
       this.boardForm.setValue(value);
-      this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/' + this.board.department.handle + '/';
-      this.cdf.detectChanges();
+      this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/' + this.board.department.university.handle + '/'
+        + this.board.department.handle + '/';
     });
   }
 
@@ -47,11 +49,11 @@ export class BoardEditComponent implements OnInit {
     if (this.boardForm.invalid) {
       return;
     }
-    const board: BoardPatchDTO = _.pick(this.boardForm.value, this.boardProperties);
-    this.resourceService.patchBoard(this.board.id, board)
-      .subscribe(() => {
-        Object.assign(this.board, board);
-        this.router.navigate([this.board.department.handle, board.handle]);
+    const boardPatch: BoardPatchDTO = _.pick(this.boardForm.value, this.boardProperties);
+    this.resourceService.patchBoard(this.board.id, boardPatch)
+      .subscribe(board => {
+        Object.assign(this.board, boardPatch);
+        this.router.navigate([this.board.department.university.handle, this.board.department.handle, board.handle]);
       }, (error: Response | any) => {
         if (error.status === 422) {
           if (error.json().exceptionCode === 'DUPLICATE_BOARD_HANDLE') {

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Title} from '@angular/platform-browser';
 import {ResourceService} from '../services/resource.service';
 import {UserService} from '../services/user.service';
 import BoardRepresentation = b.BoardRepresentation;
@@ -15,15 +16,16 @@ export class HomeComponent implements OnInit {
   posts: PostRepresentation[];
   boards: BoardRepresentation[];
 
-  constructor(private resourceService: ResourceService, private userService: UserService) {
+  constructor(private title: Title, private resourceService: ResourceService, private userService: UserService) {
   }
 
   ngOnInit(): void {
     this.userService.user$.subscribe(user => {
       this.user = user;
+      this.title.setTitle(user ? 'Posts' : 'Board - Home');
       this.posts = null;
       if (user) {
-        this.resourceService.getResources('POST').subscribe(posts => {
+        this.resourceService.getResources('POST', {state: 'ACCEPTED'}).subscribe(posts => {
           this.posts = posts;
         });
       }

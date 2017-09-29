@@ -33,7 +33,8 @@ export class PostTabsComponent implements OnInit {
       .subscribe(post => {
         this.post = post;
         this.canEdit = this.resourceService.canEdit(this.post);
-        const postPath = ['/', this.post.board.department.handle, this.post.board.handle, this.post.id];
+        const postPath = ['/', this.post.board.department.university.handle, this.post.board.department.handle, this.post.board.handle,
+          this.post.id];
         this.items = [
           {
             label: 'View',

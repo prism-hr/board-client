@@ -7,7 +7,9 @@
     </div>
     <md-card-title>
       <h3>
-        <a [routerLink]="['/', board.department.handle, board.handle]">{{board.name}}</a>
+        <a [routerLink]="['/', board.department.university.handle, board.department.handle, board.handle]">
+          {{board.name}}
+        </a>
         <!--<span class="ui-chips-token ui-corner-all visibility-chip">-->
         <!--{{'definitions.postVisibility.' + board.defaultPostVisibility | translate}}-->
         <!--</span>-->
@@ -46,7 +48,7 @@
     </div>
   </md-card-content>
   <md-card-actions>
-    <a pButton routerLink="/{{board.department.handle}}/{{board.handle}}" class="ui-button-secondary "
-       label="Go to board"></a>
+    <a pButton [routerLink]="['/', board.department.university.handle, board.department.handle, board.handle]"
+       class="ui-button-secondary " label="Go to board"></a>
   </md-card-actions>
 </md-card>

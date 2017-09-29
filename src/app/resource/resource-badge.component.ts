@@ -5,6 +5,7 @@ import BadgeListType = b.BadgeListType;
 import BadgeType = b.BadgeType;
 import ResourceRepresentation = b.ResourceRepresentation;
 import WidgetOptionsDTO = b.WidgetOptionsDTO;
+import {Title} from '@angular/platform-browser';
 
 @Component({
   templateUrl: 'resource-badge.component.html',
@@ -21,13 +22,14 @@ export class ResourceBadgeComponent implements OnInit {
   widgetOptionsStringified: string;
   resourceStringified: string;
 
-  constructor(private route: ActivatedRoute, private definitionsService: DefinitionsService) {
+  constructor(private route: ActivatedRoute, private title: Title, private definitionsService: DefinitionsService) {
   }
 
   ngOnInit() {
     this.route.parent.data.subscribe(data => {
       const resourceScope = data['resourceScope'];
       this.resource = data[resourceScope];
+      this.title.setTitle(this.resource.name + ' - Badge');
       this.refreshSnippet();
     });
   }

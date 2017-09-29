@@ -1,9 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdDialog} from '@angular/material';
+import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
+import {Observable} from 'rxjs/Observable';
+import {interval} from 'rxjs/observable/interval';
+import {Subscription} from 'rxjs/Subscription';
 import {DepartmentService} from '../../departments/department.service';
+import {EntityFilter} from '../../general/filter/filter.component';
 import {ResourceService} from '../../services/resource.service';
 import {ValidationUtils} from '../../validation/validation.utils';
 import {ResourceUserEditDialogComponent} from './resource-user-edit-dialog.component';
@@ -25,9 +30,11 @@ export class ResourceUsersComponent implements OnInit {
   lastAdminRole: boolean;
   bulkMode: boolean;
   usersTabIndex = 0;
+  filter: EntityFilter;
   tabCollections = ['users', 'members', 'memberRequests'];
+  loadUsersSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private dialog: MdDialog,
+  constructor(private route: ActivatedRoute, private router: Router, private title: Title, private fb: FormBuilder, private dialog: MdDialog,
               private resourceService: ResourceService, private departmentService: DepartmentService) {
     this.userForm = this.fb.group({
       user: this.fb.group({
@@ -43,10 +50,8 @@ export class ResourceUsersComponent implements OnInit {
     this.route.parent.data.subscribe(data => {
       const resourceScope = data['resourceScope'];
       this.resource = data[resourceScope];
-    });
-    this.route.data.subscribe(data => {
-      this.users = data['users'];
-      this.calculateAdminsCount();
+      this.title.setTitle(this.resource.name + ' - Users');
+      this.loadUsers();
     });
     this.route.fragment.subscribe(fragment => {
       const usersCategory = fragment || 'users';
@@ -114,14 +119,10 @@ export class ResourceUsersComponent implements OnInit {
 
   closeBulkMode($event) {
     if ($event === 'refresh') {
-      this.resourceService.getResourceUsers(this.resource.scope.toLowerCase(), this.resource.id)
-        .subscribe(users => {
-          this.users = users;
-          this.bulkMode = false;
-        });
-    } else {
-      this.bulkMode = false;
+      this.usersTabChanged({index: 1});
+      this.loadUsers();
     }
+    this.bulkMode = false;
   }
 
   usersTabChanged(event) {
@@ -130,10 +131,8 @@ export class ResourceUsersComponent implements OnInit {
   }
 
   membersFilterApplied(filter) {
-    this.resourceService.searchUsers(this.resource, filter.searchTerm)
-      .subscribe(users => {
-        this.users = users;
-      });
+    this.filter = filter;
+    this.loadUsers();
   }
 
   respondToMemberRequest(userRole: UserRoleRepresentation, state: string) {
@@ -144,9 +143,33 @@ export class ResourceUsersComponent implements OnInit {
       });
   }
 
-  calculateAdminsCount() {
+  private calculateAdminsCount() {
     const adminsCount = this.users.users
       .filter(u => u.role === 'ADMINISTRATOR').length;
     this.lastAdminRole = adminsCount === 1;
+  }
+
+  private loadUsers(delay?: number) {
+    if (this.loadUsersSubscription) {
+      this.loadUsersSubscription.unsubscribe();
+    }
+    let observable: Observable<UserRolesRepresentation>;
+    if (delay) {
+      observable = interval(delay || 0)
+        .take(1)
+        .flatMap(() => this.resourceService.getResourceUsers(this.resource, this.filter));
+    } else {
+      observable = this.resourceService.getResourceUsers(this.resource, this.filter);
+    }
+
+    this.loadUsersSubscription = observable
+      .subscribe(users => {
+        this.users = users;
+        this.calculateAdminsCount();
+
+        if (users.memberToBeUploadedCount) {
+          this.loadUsers(5000);
+        }
+      });
   }
 }

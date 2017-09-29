@@ -669,7 +669,7 @@ button.ui-button::-moz-focus-inner {
 /* Datepicker */
 
 .ui-datepicker {
-  width: 14em;
+  width: 16em;
   padding: .2em;
   display: none;
   &.ui-widget-content {
@@ -3012,7 +3012,11 @@ button.ui-button::-moz-focus-inner {
 .ui-overlaypanel-content {
   padding: 0.5em 1em;
 }
-
+b-header {
+  .ui-overlaypanel-content {
+    padding: 8px;
+  }
+}
 .ui-overlaypanel-close {
   position: absolute;
   top: -.5em;
@@ -4811,12 +4815,32 @@ b-image > img {
   color: white;
 }
 .activity-content {
+  overflow-y: scroll;
+  max-height: 400px;
+  max-width: 300px;
   font-size:0.8rem;
   .activity-item {
+    margin-bottom: 6px;
     border-bottom: 1px solid $inactiveGrey;
-    line-height: 40px;
     &:last-child {
       border-bottom: none;
+    }
+    .activity-w-icon {
+      display: flex;
+      min-height: 56px;
+    }
+    b {
+      font-weight:500;
+      color: $uclblue;
+    }
+    p {
+      font-weight:500;
+      margin: 4px 0;
+      color: $uclfooter;
+    }
+    b-image {
+      display: inline-block;
+      flex: 0 0 60px;
     }
   }
 }

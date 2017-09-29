@@ -27,7 +27,7 @@ form, .form {
   .actions-holder {
     margin-top:15px;
   }
-  label {
+  label:not(.ui-dropdown-label) {
     font-size:110%;
     margin-bottom:6px;
     display: inline-block;

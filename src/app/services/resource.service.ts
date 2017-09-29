@@ -5,6 +5,7 @@ import {JwtHttp} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {Subject} from 'rxjs/Subject';
+import {EntityFilter} from '../general/filter/filter.component';
 import Action = b.Action;
 import BoardDTO = b.BoardDTO;
 import BoardPatchDTO = b.BoardPatchDTO;
@@ -21,8 +22,6 @@ import UserRepresentation = b.UserRepresentation;
 import UserRoleDTO = b.UserRoleDTO;
 import UserRoleRepresentation = b.UserRoleRepresentation;
 import UserRolesRepresentation = b.UserRolesRepresentation;
-import {resource} from 'selenium-webdriver/http';
-import {EntityFilter} from '../general/filter/filter.component';
 
 @Injectable()
 export class ResourceService {
@@ -30,7 +29,7 @@ export class ResourceService {
   private resourceSubjects: { [index: string]: { [index: number]: Subject<PostRepresentation> } } = {};
 
   constructor(private http: JwtHttp) {
-    const scopes: Scope[] = ['DEPARTMENT', 'DEPARTMENT', 'POST'];
+    const scopes: Scope[] = ['DEPARTMENT', 'BOARD', 'POST'];
     for (let scope of scopes) {
       this.resourceSubjects[scope] = {};
     }
@@ -102,8 +101,13 @@ export class ResourceService {
     return this.http.get('/api/departments', {search: params}).map(res => res.json());
   }
 
-  getResourceUsers(scope: string, id: number): Observable<UserRolesRepresentation> {
-    return this.http.get('/api/' + scope + 's' + '/' + id + '/users').map(res => res.json());
+  getResourceUsers(resource: ResourceRepresentation<any>, filter?: EntityFilter): Observable<UserRolesRepresentation> {
+    const resourceCol = (<any>resource.scope).toLowerCase() + 's';
+    const params = new URLSearchParams();
+    if (filter) {
+      params.set('searchTerm', filter.searchTerm);
+    }
+    return this.http.get('/api/' + resourceCol + '/' + resource.id + '/users', {search: params}).map(res => res.json());
   }
 
   getBoardPosts(boardId: number, includePublicPosts: boolean): Observable<PostRepresentation[]> {
@@ -170,13 +174,6 @@ export class ResourceService {
     return this.http.get('/api/posts/organizations?query=' + query).map(res => res.json());
   }
 
-  searchUsers(resource: ResourceRepresentation<any>, searchTerm: string): Observable<UserRoleRepresentation[]> {
-    const resourceCol = (<any>resource.scope).toLowerCase() + 's';
-    const params = new URLSearchParams();
-    params.set('searchTerm', searchTerm);
-    return this.http.get('/api/' + resourceCol + '/' + resource.id + '/users', {search: params}).map(res => res.json());
-  }
-
   getArchiveQuarters(scope: Scope): Observable<string[]> {
     const resourceCol = scope.toLowerCase() + 's';
     return this.http.get('/api/' + resourceCol + '/archiveQuarters').map(res => res.json());
@@ -211,13 +208,14 @@ export class ResourceService {
 
   routerLink(resource: ResourceRepresentation<any>): any[] {
     if (resource.scope === 'DEPARTMENT') {
-      return ['/', (<DepartmentRepresentation>resource).handle];
+      const department: DepartmentRepresentation = resource;
+      return ['/', department.university.handle, department.handle];
     } else if (resource.scope === 'BOARD') {
       const board: BoardRepresentation = resource;
-      return ['/', board.department.handle, board.handle];
+      return ['/', board.department.university.handle, board.department.handle, board.handle];
     } else if (resource.scope === 'POST') {
       const post: PostRepresentation = resource;
-      return ['/', post.board.department.handle, post.board.handle, post.id];
+      return ['/', post.board.department.university.handle, post.board.department.handle, post.board.handle, post.id];
     }
   }
 

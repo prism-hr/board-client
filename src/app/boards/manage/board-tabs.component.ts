@@ -26,7 +26,7 @@ export class BoardTabsComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.board = data['board'];
       this.canEdit = this.resourceService.canEdit(this.board);
-      const boardPath = ['/', this.board.department.handle, this.board.handle];
+      const boardPath = ['/', this.board.department.university.handle, this.board.department.handle, this.board.handle];
       this.items = [
         {
           label: 'View',

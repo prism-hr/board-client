@@ -4,13 +4,13 @@
 
 .drop-area {
   margin-top: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &.logo {
     border: 3px dashed $inactiveGrey;
     width: 206px;
     height: 131px;
-    display: block;
-    margin: auto;
-    text-align: center;
   }
   &.background {
     border: 1px dashed $inactiveGrey;

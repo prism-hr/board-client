@@ -1,7 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {UserService} from '../services/user.service';
-import UserRepresentation = b.UserRepresentation;
-import UserPatchDTO = b.UserPatchDTO;
 import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
 
 @Component({

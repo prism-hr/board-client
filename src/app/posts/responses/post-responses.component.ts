@@ -1,21 +1,6 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MdDialog} from '@angular/material';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import * as _ from 'lodash';
-import * as moment from 'moment';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
-import {ResourceCommentDialogComponent} from '../../resource/resource-comment.dialog';
-import {CheckboxUtils} from '../../services/checkbox.utils';
-import {DefinitionsService} from '../../services/definitions.service';
-import {ResourceActionView, ResourceService} from '../../services/resource.service';
-import {ValidationUtils} from '../../validation/validation.utils';
-import {PostService} from '../post.service';
-import Action = b.Action;
-import BoardRepresentation = b.BoardRepresentation;
-import MemberCategory = b.MemberCategory;
-import PostPatchDTO = b.PostPatchDTO;
+import {Component, OnInit} from '@angular/core';
+import {Title} from '@angular/platform-browser';
+import {ActivatedRoute} from '@angular/router';
 import PostRepresentation = b.PostRepresentation;
 import ResourceEventRepresentation = b.ResourceEventRepresentation;
 
@@ -28,9 +13,7 @@ export class PostResponsesComponent implements OnInit {
   post: PostRepresentation;
   responses: ResourceEventRepresentation[];
 
-  constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private cdf: ChangeDetectorRef,
-              private dialog: MdDialog, private definitionsService: DefinitionsService, private postService: PostService,
-              private resourceService: ResourceService) {
+  constructor(private route: ActivatedRoute, private title: Title) {
   }
 
   ngOnInit() {
@@ -45,6 +28,7 @@ export class PostResponsesComponent implements OnInit {
       })
       .subscribe(([post, responses]) => {
         this.post = post;
+        this.title.setTitle(this.post.name + ' - Responses');
         this.responses = responses;
       });
   }
