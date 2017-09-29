@@ -63,7 +63,7 @@ export class FilterComponent implements OnInit {
   ngOnInit(): void {
     const states = {
       BOARD: ['DRAFT', 'ACCEPTED', 'REJECTED'],
-      POST: ['DRAFT', 'SUSPENDED', 'PENDING', 'ACCEPTED', 'REJECTED']
+      POST: ['DRAFT', 'SUSPENDED', 'PENDING', 'ACCEPTED', 'EXPIRED', 'REJECTED', 'WITHDRAWN']
     };
 
     this.translate.get('definitions.state').subscribe(stateTranslations => {
