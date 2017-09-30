@@ -270,12 +270,17 @@
       line-height:30px;
     }
     .ui-autocomplete-list-item {
-      b-image {
+      b-image, .avatar {
         float: left;
         border-radius: 50%;
         overflow: hidden;
         max-width: 30px;
         margin-right: 10px;
+      }
+      .avatar {
+        text-align: center;
+        width: 60px;
+        background: white;
       }
     }
   }

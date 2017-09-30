@@ -82,8 +82,7 @@ md-card.mat-card {
     overflow: hidden;
     margin-right: 15px;
     border-radius: 3px;
-    &.no-background {
-      width: auto;
+    &.logo-holder-small {
       img {
         max-height: 45px;
         line-height:0;
@@ -304,4 +303,15 @@ b-image {
   md-dialog-content, .mat-dialog-container {
     overflow: visible !important;
   }
+}
+.logo-holder.default-logo {
+  width: 100% !important;;
+  height: 120px !important;
+  background-size: 29%;
+}
+.default-logo {
+  background: url("/assets/prism-logo.svg") $uclblue no-repeat center center;
+  background-size: 60%;
+  height: 45px !important;
+  width: 45px !important;
 }

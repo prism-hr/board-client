@@ -17,8 +17,11 @@
                 <ng-template let-board pTemplate="item">
                   <div fxLayout="row" fxLayoutAlign="space-between center">
                     <span>{{board.label}}</span>
-                    <b-image [publicId]="board.value.documentLogo?.cloudinaryId"
-                             width="35" height="35"></b-image>
+                    <div class="logo-holder-small"
+                         [ngClass]="{'default-logo': !board.value.documentLogo}">
+                      <b-image [publicId]="board.value.documentLogo?.cloudinaryId"
+                              height="45" ></b-image>
+                    </div>
                   </div>
                 </ng-template>
               </p-dropdown>

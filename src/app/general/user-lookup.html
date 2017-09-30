@@ -8,6 +8,9 @@
       <p-autoComplete id="userLookup" formControlName="userLookup" [suggestions]="userSuggestions"
                       (completeMethod)="searchUsers($event)" (onSelect)="userSelected()" placeholder="Lookup user">
         <ng-template let-user pTemplate="item">
+          <div class="avatar" *ngIf="!user.documentImage">
+            <i class="fa-user"></i>
+          </div>
           <b-image [publicId]="user.documentImage?.cloudinaryId"
                    gravity="face" width="150" height="150" radius="max" crop="thumb"></b-image>
           {{user.givenName}} {{user.surname}} ({{user.email}})

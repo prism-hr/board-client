@@ -16,7 +16,9 @@
           </md-card-title>
         </md-card-header>
         <md-card-content>
-          <b-image [publicId]="board.documentLogo?.cloudinaryId" height="150" width="200" crop="mfit"></b-image>
+          <div class="logo-holder" [ngClass]="{'default-logo': !board.documentLogo}">
+            <b-image [publicId]="board.documentLogo?.cloudinaryId" height="150" width="200" crop="mfit"></b-image>
+          </div>
         </md-card-content>
       </md-card>
     </div>

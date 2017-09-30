@@ -6,21 +6,6 @@
   font-weight:400;
 }
 
-.default-logo {
-  background: url("/assets/prism-logo.svg") $uclblue2 no-repeat center center;
-  background-size: 50%;
-  img {
-    max-height: 100%;
-  }
-  &.no-background {
-    background: white;
-  }
-}
-
-.logo-holder-small {
-  border-radius: 3px;
-}
-
 .boards {
   display: inline-block;
   margin-right: 4px;
