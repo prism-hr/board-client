@@ -16,22 +16,22 @@ import State = b.State;
           <button pButton icon="fa-magnifier" class="ui-button-success"></button>
           <button pButton icon="fa-close" type="button" *ngIf="searchTerm" (click)="clear()" class="ui-button-warning"></button>
         </div>
-
         <div *ngIf="!showArchive">
-          <button *ngIf="archiveQuarters && archiveQuarters.length > 0" pButton type="button" label="Search archives"
-                  (click)="setShowArchive(true)" class="ui-button-warning"></button>
-
           <div *ngIf="states">
             <p-selectButton styleClass="ui-button-info" [options]="states" [(ngModel)]="selectedState" name="state"
                             (onChange)="search()"></p-selectButton>
           </div>
         </div>
-
-        <div *ngIf="showArchive">
+        <div *ngIf="!showArchive">
+          <button *ngIf="archiveQuarters && archiveQuarters.length > 0" pButton type="button" label="Search archives"
+                  (click)="setShowArchive(true)" class="ui-button-warning"></button>
+        </div>
+        <div *ngIf="showArchive" class="archives" fxLayout="row"  fxLayoutAlign="space-between center">
           <button pButton type="button" label="Back" (click)="setShowArchive(false)" class="ui-button-warning"></button>
-
-          <p-dropdown [options]="archiveQuarters" [(ngModel)]="selectedQuarter"
-                      (onChange)="search()" name="quarter"></p-dropdown>
+          <div class="dropdown-select">
+            <p-dropdown [options]="archiveQuarters" [(ngModel)]="selectedQuarter"
+                        (onChange)="search()" name="quarter"></p-dropdown>
+          </div>
         </div>
       </form>
     </div>

@@ -4859,3 +4859,15 @@ p-tabview {
     padding-top:25px;
   }
 }
+.archives {
+  p-dropdown {
+    width: 150px;
+  }
+  .ui-inputtext {
+    padding: 0.35rem 2rem 0.35rem 0.4rem;
+  }
+  .dropdown-select p-dropdown .ui-dropdown .ui-dropdown-trigger .fa {
+    margin-top: 0.7em;
+    margin-left: -0.3em;
+  }
+}
