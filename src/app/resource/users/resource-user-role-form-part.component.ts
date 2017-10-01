@@ -55,8 +55,8 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
       role: [role, this.lastAdminRole && role === 'ADMINISTRATOR' && this.lastAdminValidator],
       noExpiryDate: [!this.userRole || !this.userRole.expiryDate],
       expiryDate: [this.userRole && this.userRole.expiryDate],
-      category: [this.userRole && this.userRole.categories && this.userRole.categories[0],
-        this.memberCategoryOptions.length > 0 && Validators.required]
+      category: [this.userRole && this.userRole.categories && this.userRole.categories[0], // API allows collection of categories, pick one
+        this.roleType === 'MEMBER' && this.memberCategoryOptions.length > 0 && Validators.required]
     }));
 
     this.parentForm.get('roleGroup').get('role').valueChanges.subscribe((role: Role) => {
