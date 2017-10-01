@@ -16,7 +16,7 @@ export class BoardListComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.setTitle('Boards');
-    this.resourceService.getResources('BOARD', {state: 'ACCEPTED'}).subscribe(boards => {
+    this.resourceService.getResources('BOARD').subscribe(boards => {
       this.boards = boards;
     });
   }
