@@ -48,6 +48,7 @@ export class FilterComponent implements OnInit {
 
   states: SelectItem[];
   selectedState: State;
+  previousSelectedState: State;
   showArchive: boolean;
   archiveQuarters: SelectItem[];
   selectedQuarter: string;
@@ -86,6 +87,11 @@ export class FilterComponent implements OnInit {
   }
 
   search() {
+    if (this.previousSelectedState === this.selectedState) {
+      this.selectedState = undefined;
+    }
+
+    this.previousSelectedState = this.selectedState;
     this.applied.emit({searchTerm: this.searchTerm, state: this.selectedState, quarter: this.selectedQuarter});
   }
 
