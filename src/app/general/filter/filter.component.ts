@@ -65,7 +65,6 @@ export class FilterComponent implements OnInit {
     this.translate.get('definitions.state').subscribe(stateTranslations => {
       if (states[this.resourceScope]) {
         this.states = states[this.resourceScope].map(state => ({value: state, label: stateTranslations[state]}));
-        this.selectedState = 'ACCEPTED';
       }
     });
 
