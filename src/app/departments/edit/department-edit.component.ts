@@ -53,7 +53,7 @@ export class DepartmentEditComponent implements OnInit {
         (<FormArray>this.departmentForm.get('memberCategories'))
           .setValue(formFormat);
         this.departmentForm.get('handle').setValidators(this.department && [Validators.required, Validators.maxLength(25)]);
-        this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/';
+        this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/' + this.department.university.handle + '/';
         this.actionView = this.department ? 'EDIT' : 'CREATE';
 
         this.source = paramMap.get('source');
