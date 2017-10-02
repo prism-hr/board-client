@@ -4,7 +4,6 @@ import {Router} from '@angular/router';
 import {OverlayPanel} from 'primeng/primeng';
 import {AuthGuard} from '../authentication/auth-guard.service';
 import {UserImageDialogComponent} from '../authentication/user-image.dialog';
-import {ResourceService} from '../services/resource.service';
 import {UserService} from '../services/user.service';
 import ActivityRepresentation = b.ActivityRepresentation;
 import UserRepresentation = b.UserRepresentation;
@@ -20,8 +19,7 @@ export class HeaderComponent implements OnInit {
   activities: ActivityRepresentation[];
   @ViewChild('activitiesPanel') activitiesPanel: OverlayPanel;
 
-  constructor(private router: Router, private dialog: MdDialog, private userService: UserService, private resourceService: ResourceService,
-              private authGuard: AuthGuard) {
+  constructor(private router: Router, private dialog: MdDialog, private userService: UserService, private authGuard: AuthGuard) {
   }
 
   ngOnInit(): void {
@@ -34,6 +32,9 @@ export class HeaderComponent implements OnInit {
   activityDismissed(activity: ActivityRepresentation) {
     const idx = this.activities.indexOf(activity);
     this.activities.splice(idx, 1);
+  }
+
+  activityViewed(activity: ActivityRepresentation) {
     this.activitiesPanel.hide();
   }
 

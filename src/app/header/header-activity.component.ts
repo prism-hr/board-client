@@ -10,7 +10,7 @@ import ResourceRepresentation = b.ResourceRepresentation;
 @Component({
   selector: 'b-header-activity',
   template: `
-    <div [ngSwitch]="activity.activity">
+    <div [ngSwitch]="activity.activity" [ngClass]="{viewed: activity.viewed}">
       <div *ngSwitchCase="'JOIN_DEPARTMENT_REQUEST_ACTIVITY'" class="activity-inner">
         <a [routerLink]="resourceLink.concat('users')" fragment="memberRequests"
            (click)="activityClicked(activity)" class="activity-w-icon">
@@ -37,10 +37,10 @@ import ResourceRepresentation = b.ResourceRepresentation;
       </div>
 
       <!-- ELSE -->
-      <div class="activity-inner">
+      <div *ngIf="activity.activity != 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' && activity.activity != 'RESPOND_POST_ACTIVITY'"
+           class="activity-inner">
         <a [routerLink]="routerLink(resource)" (click)="activityClicked(activity)">
-          <div class="activity-w-icon"
-               *ngIf="activity.activity != 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' && activity.activity != 'RESPOND_POST_ACTIVITY'">
+          <div class="activity-w-icon">
             <b-image [publicId]="documentLogo?.cloudinaryId"
                      gravity="face" width="50" height="50" crop="thumb"></b-image>
             <div class="activity-copy">
@@ -57,7 +57,7 @@ import ResourceRepresentation = b.ResourceRepresentation;
                 Post <b>{{post.name}}</b> has been corrected
               </span>
               <span *ngSwitchCase="'JOIN_DEPARTMENT_ACTIVITY'">
-                You have been added as a member of <b>{{board.name}}</b>
+                You have been added as a member of <b>{{department.name}}</b>
               </span>
               <span *ngSwitchCase="'JOIN_BOARD_ACTIVITY'">
                 You have been added as a member of <b>{{department.name}} {{board.name}}</b>
@@ -107,6 +107,7 @@ export class HeaderActivityComponent implements OnInit {
 
   @Input() activity: ActivityRepresentation & {};
   @Output() dismissed: EventEmitter<ActivityRepresentation> = new EventEmitter();
+  @Output() viewed: EventEmitter<ActivityRepresentation> = new EventEmitter();
   resourceLink: any[];
 
   constructor(private userService: UserService, private resourceService: ResourceService) {
@@ -154,6 +155,12 @@ export class HeaderActivityComponent implements OnInit {
   }
 
   activityClicked(activity: ActivityRepresentation) {
+    this.userService.viewActivity(activity).subscribe(() => {
+      this.viewed.emit(activity);
+    });
+  }
+
+  activityDismissed(activity: ActivityRepresentation) {
     this.userService.dismissActivity(activity).subscribe(() => {
       this.dismissed.emit(activity);
     });

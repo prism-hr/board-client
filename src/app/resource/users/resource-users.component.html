@@ -17,6 +17,7 @@
     </md-card-actions>
   </form>
 </md-card>
+
 <b-resource-users-bulk *ngIf="bulkMode" [resource]="resource" (close)="closeBulkMode($event)">
 </b-resource-users-bulk>
 
@@ -25,9 +26,9 @@
   <b-filter (applied)="membersFilterApplied($event)"></b-filter>
 </div>
 
-<p-tabView *ngIf="users" [activeIndex]="usersTabIndex" (onChange)="usersTabChanged($event)">
+<p-tabView [activeIndex]="usersTabIndex" (onChange)="usersTabChanged($event)">
   <p-tabPanel header="Staff">
-    <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
+    <div *ngIf="users" class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
 
       <div *ngFor="let userRole of users.users" class="grid__item small--one-whole medium-up--one-third"
            [ngClass]="{'last-admin': lastAdminRole && userRole.role === 'ADMINISTRATOR'}">
@@ -59,46 +60,48 @@
     </div>
   </p-tabPanel>
   <p-tabPanel *ngIf="resource.scope === 'DEPARTMENT'" header="Members">
-    <p-messages *ngIf="users.memberToBeUploadedCount"
-      [value]="[{severity:'info', detail:'Users provided in bulk are still being processed. Remaining users to process: ' + users.memberToBeUploadedCount}]"
-      [closable]="false"></p-messages>
-    <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
-      <div *ngFor="let userRole of users.members" class="grid__item small--one-whole medium-up--one-third">
-        <md-card class="no-content users">
-          <md-card-header fxLayout="row" fxLayoutAlign="flex-start center"
-                          (click)="openUserSettings(userRole, 'MEMBER')">
-            <div md-card-avatar class="avatar"
-                 [ngClass]="{'no-background': userRole.user.documentImage}">
-              <b-image [publicId]="userRole.user.documentImage?.cloudinaryId"
-                       gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec"
-                       *ngIf="userRole.user.documentImage"></b-image>
-              <i *ngIf="!userRole.user.documentImage" class="fa-user"></i>
-            </div>
-            <md-card-title>
-              <div>
-                <h3>
-                  {{userRole.user.givenName}} {{userRole.user.surname}}
-                </h3>
-                <div class="role-item-container">
-                  <div class="role-indicator {{ userRole.role | lowercase}}"
-                       [ngClass]="{'expire' : userRole.expiryDate}">
+    <div *ngIf="users">
+      <p-messages *ngIf="users.memberToBeUploadedCount"
+                  [value]="[{severity:'info', detail:'Users provided in bulk are still being processed. Remaining users to process: ' + users.memberToBeUploadedCount}]"
+                  [closable]="false"></p-messages>
+      <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
+        <div *ngFor="let userRole of users.members" class="grid__item small--one-whole medium-up--one-third">
+          <md-card class="no-content users">
+            <md-card-header fxLayout="row" fxLayoutAlign="flex-start center"
+                            (click)="openUserSettings(userRole, 'MEMBER')">
+              <div md-card-avatar class="avatar"
+                   [ngClass]="{'no-background': userRole.user.documentImage}">
+                <b-image [publicId]="userRole.user.documentImage?.cloudinaryId"
+                         gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec"
+                         *ngIf="userRole.user.documentImage"></b-image>
+                <i *ngIf="!userRole.user.documentImage" class="fa-user"></i>
+              </div>
+              <md-card-title>
+                <div>
+                  <h3>
+                    {{userRole.user.givenName}} {{userRole.user.surname}}
+                  </h3>
+                  <div class="role-item-container">
+                    <div class="role-indicator {{ userRole.role | lowercase}}"
+                         [ngClass]="{'expire' : userRole.expiryDate}">
                     <span class="role-item"
                           pTooltip="{{'definitions.role.' + userRole.role | translate}} - {{'definitions.memberCategory.' + userRole.categories[0] | translate}}"
                           tooltipPosition="top"></span>
-                    <span class="role-expire" *ngIf="userRole.expiryDate"
-                          pTooltip="Expiry date: {{userRole.expiryDate | date : 'shortDate'}}"
-                          tooltipPosition="bottom"></span>
+                      <span class="role-expire" *ngIf="userRole.expiryDate"
+                            pTooltip="Expiry date: {{userRole.expiryDate | date : 'shortDate'}}"
+                            tooltipPosition="bottom"></span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </md-card-title>
-          </md-card-header>
-        </md-card>
+              </md-card-title>
+            </md-card-header>
+          </md-card>
+        </div>
       </div>
     </div>
   </p-tabPanel>
-  <p-tabPanel *ngIf="users.memberRequests.length > 0" header="Membership Requests">
-    <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
+  <p-tabPanel *ngIf="!users || users.memberRequests.length > 0" header="Membership Requests">
+    <div *ngIf="users" class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
       <div *ngFor="let userRole of users.memberRequests" class="grid__item small--one-whole medium-up--one-third">
         <md-card class="no-content users no-popup">
           <md-card-header fxLayout="row" fxLayoutAlign="flex-start center">

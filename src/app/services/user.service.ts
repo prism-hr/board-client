@@ -124,6 +124,10 @@ export class UserService implements OnInit {
     return this.http.delete('/api/user/suppressions');
   }
 
+  viewActivity(activity: ActivityRepresentation) {
+    return this.http.get('/api/user/activities/' + activity.id).map(res => res.json());
+  }
+
   dismissActivity(activity: ActivityRepresentation) {
     return this.http.delete('/api/user/activities/' + activity.id);
   }

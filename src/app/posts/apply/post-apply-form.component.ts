@@ -1,9 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PostService} from '../../posts/post.service';
 import {UserService} from '../../services/user.service';
 import {ValidationUtils} from '../../validation/validation.utils';
 import PostRepresentation = b.PostRepresentation;
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'b-post-apply-form',
@@ -51,16 +52,17 @@ import PostRepresentation = b.PostRepresentation;
   styles: [`
   `]
 })
-export class PostApplyFormComponent implements OnInit {
+export class PostApplyFormComponent implements OnInit, OnDestroy {
   @Input() post: PostRepresentation & {};
   @Output() applied: EventEmitter<boolean> = new EventEmitter();
   eventForm: FormGroup;
+  private userSubscription: Subscription;
 
   constructor(private fb: FormBuilder, private postService: PostService, private userService: UserService) {
   }
 
   ngOnInit() {
-    this.userService.user$.subscribe(user => {
+    this.userSubscription = this.userService.user$.subscribe(user => {
       const coveringNoteValidators = [Validators.maxLength(1000)];
       if (this.post.applyEmail) {
         coveringNoteValidators.push(Validators.required);
@@ -72,6 +74,10 @@ export class PostApplyFormComponent implements OnInit {
         coveringNote: [null, coveringNoteValidators]
       });
     });
+  }
+
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe();
   }
 
   submit() {

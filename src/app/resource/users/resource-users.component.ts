@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdDialog} from '@angular/material';
 import {Title} from '@angular/platform-browser';
@@ -34,8 +34,9 @@ export class ResourceUsersComponent implements OnInit {
   tabCollections = ['users', 'members', 'memberRequests'];
   loadUsersSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private router: Router, private title: Title, private fb: FormBuilder, private dialog: MdDialog,
-              private resourceService: ResourceService, private departmentService: DepartmentService) {
+  constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private title: Title,
+              private fb: FormBuilder, private dialog: MdDialog, private resourceService: ResourceService,
+              private departmentService: DepartmentService) {
     this.userForm = this.fb.group({
       user: this.fb.group({
         id: [],
@@ -55,9 +56,8 @@ export class ResourceUsersComponent implements OnInit {
     });
     this.route.fragment.subscribe(fragment => {
       const usersCategory = fragment || 'users';
-      setTimeout(() => {
-        this.usersTabIndex = this.tabCollections.indexOf(usersCategory);
-      });
+      this.usersTabIndex = this.tabCollections.indexOf(usersCategory);
+      this.cdr.detectChanges();
     })
   }
 
