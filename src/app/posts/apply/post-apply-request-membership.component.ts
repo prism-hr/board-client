@@ -9,24 +9,23 @@ import * as moment from 'moment';
 @Component({
   selector: 'b-post-apply-request-membership',
   template: `
-    <h2>Request membership for {{department.name}}</h2>
+    <h2 style="margin-bottom: 20px;">Request membership for {{department.name}}</h2>
     <form [formGroup]="membershipForm" novalidate>
-      <div>
-        <label for="category">Which category describes you best?</label>
-        <p-dropdown id="category" formControlName="category" [options]="memberCategoryOptions"
-                    placeholder="Select a category" (onChange)="categoryChanged($event)"></p-dropdown>
-        <control-messages [control]="membershipForm.get('category')"></control-messages>
-      </div>
-
-      <div *ngIf="membershipForm.get('category').value">
-        <div class="input-holder">
-          <label>{{expiryLabel | translate}}</label>
+      <div class="grid">
+        <div class="grid__item small--one-whole medium-up--one-half input-holder dropdown-select">
+          <label for="category">Which category describes you best?</label>
+          <p-dropdown id="category" formControlName="category" [options]="memberCategoryOptions"
+                      placeholder="Select a category" (onChange)="categoryChanged($event)"></p-dropdown>
+          <control-messages [control]="membershipForm.get('category')"></control-messages>
+        </div>
+        <div class="grid__item small--one-whole medium-up--one-half input-holder" *ngIf="membershipForm.get('category').value">
+          <label style="display: block">{{expiryLabel | translate}}</label>
           <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string" [minDate]="tomorrow"></p-calendar>
           <control-messages [control]="membershipForm.get('expiryDate')"></control-messages>
         </div>
       </div>
+      <button pButton (click)="submit()" class="ui-button-success" label="Submit"></button>
     </form>
-    <button pButton (click)="submit()" class="ui-button-success" label="Submit"></button>
   `,
   styles: [`
   `]

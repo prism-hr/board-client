@@ -1,5 +1,5 @@
 <div [formGroup]="parentForm">
-  <div formGroupName="roleGroup" class="grid__item small--one-whole medium-up--one-half">
+  <div formGroupName="roleGroup" class="grid__item one-whole">
     <div *ngIf="availableRoles.length > 1" class="ui-radiobutton-inline">
       <p-radioButton *ngFor="let role of availableRoles"
                      [value]="role" [label]="'definitions.role.' + role | translate" name="role"
@@ -8,7 +8,7 @@
     </div>
   </div>
   <div *ngIf="roleGroup.get('role').value === 'MEMBER'" formGroupName="roleGroup"
-       class="grid__item small--one-whole medium-up--one-half">
+       class="grid__item one-whole">
     <div class="ui-checkbox-inline">
       <p-checkbox label="No expiry date" formControlName="noExpiryDate" binary="true"
                   (onChange)="noExpiryDateChanged()"></p-checkbox>
