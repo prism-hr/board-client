@@ -33,7 +33,7 @@
     },
     "action": {
       "ACCEPT": "Accept",
-      "SUSPEND": "Suspend",
+      "SUSPEND": "Request Revision",
       "CORRECT": "Correct",
       "REJECT": "Reject",
       "WITHDRAW": "Withdraw",
@@ -46,7 +46,7 @@
     "state": {
       "DRAFT": "Draft",
       "PENDING": "Pending",
-      "SUSPENDED": "Suspended",
+      "SUSPENDED": "Revision Requested",
       "ACCEPTED": "Accepted",
       "EXPIRED": "Expired",
       "REJECTED": "Rejected",
