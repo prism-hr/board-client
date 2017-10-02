@@ -7,7 +7,7 @@ import UserRoleRepresentation = b.UserRoleRepresentation;
 
 @Component({
   template: `
-    <h2 md-dialog-title>{{userRole.user.givenName}} {{userRole.user.surname}}</h2>
+    <h2 md-dialog-title style="margin-bottom: 10px;">{{userRole.user.givenName}} {{userRole.user.surname}}</h2>
 
     <form [formGroup]="userForm" (ngSubmit)="save()" autocomplete="off" novalidate>
       <md-dialog-content>
@@ -17,7 +17,7 @@ import UserRoleRepresentation = b.UserRoleRepresentation;
         </div>
       </md-dialog-content>
 
-      <md-dialog-actions fxLayout="row" fxLayoutAlign="space-between">
+      <md-dialog-actions fxLayout="row" fxLayoutAlign="space-between" style="margin-top: 20px;">
         <div>
           <button pButton type="button" class="ui-button-secondary" label="Cancel" md-dialog-close></button>
           <button pButton type="button" (click)="removeUser(userRole)" class="ui-button-secondary remove-user" label="Remove"

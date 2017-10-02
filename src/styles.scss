@@ -260,6 +260,11 @@ control-messages {
   p {
     margin: 0 !important;
     line-height: 1.3rem;
+    display: inline-block;
+  }
+  ol, ul {
+    margin-top: 0;
+    margin-bottom:0;
   }
 }
 
