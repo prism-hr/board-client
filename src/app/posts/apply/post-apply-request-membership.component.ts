@@ -56,9 +56,9 @@ export class PostApplyRequestMembershipComponent implements OnInit {
 
   categoryChanged(event) {
     if (event.value === 'RESEARCH_STAFF') {
-      this.expiryLabel = 'When does your contract finish?';
+      this.expiryLabel = 'When will your contract come to an end?';
     } else {
-      this.expiryLabel = 'When do you graduate?';
+      this.expiryLabel = 'When will you graduate?';
     }
   }
 
