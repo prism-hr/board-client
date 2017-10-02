@@ -46,7 +46,7 @@
     "state": {
       "DRAFT": "Draft",
       "PENDING": "Pending",
-      "SUSPENDED": "Revision Requested",
+      "SUSPENDED": "Revision",
       "ACCEPTED": "Accepted",
       "EXPIRED": "Expired",
       "REJECTED": "Rejected",
