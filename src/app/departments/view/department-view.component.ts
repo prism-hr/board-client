@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
+import {Title} from '@angular/platform-browser';
 import {ActivatedRoute} from '@angular/router';
+import {EntityFilter} from '../../general/filter/filter.component';
 import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
-import {Title} from '@angular/platform-browser';
+import UserRepresentation = b.UserRepresentation;
 
 @Component({
   templateUrl: 'department-view.component.html',
@@ -14,6 +16,8 @@ export class DepartmentViewComponent implements OnInit {
   department: DepartmentRepresentation;
   canEdit: boolean;
   boards: BoardRepresentation[];
+  user: UserRepresentation;
+  filter: EntityFilter;
 
   constructor(private route: ActivatedRoute, private title: Title, private resourceService: ResourceService,
               private userService: UserService) {
@@ -27,10 +31,20 @@ export class DepartmentViewComponent implements OnInit {
     });
 
     this.userService.user$.subscribe(user => {
-      this.resourceService.getDepartmentBoards(this.department.id, !user).subscribe(boards => {
-        this.boards = boards;
-      });
+      this.user = user;
+      this.loadBoards();
     });
   }
 
+  filterApplied(filter: EntityFilter) {
+    this.loadBoards(filter);
+  }
+
+  loadBoards(filter?: EntityFilter) {
+    this.filter = filter || this.filter || {};
+    this.filter.includePublic = !this.user;
+    this.resourceService.getDepartmentBoards(this.department.id, this.filter).subscribe(boards => {
+      this.boards = boards;
+    });
+  }
 }

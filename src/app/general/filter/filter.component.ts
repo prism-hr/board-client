@@ -3,8 +3,10 @@ import {TranslateService} from '@ngx-translate/core';
 import {SelectItem} from 'primeng/primeng';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
+import {UserService} from '../../services/user.service';
 import Scope = b.Scope;
 import State = b.State;
+import UserRepresentation = b.UserRepresentation;
 
 @Component({
   selector: 'b-filter',
@@ -16,21 +18,21 @@ import State = b.State;
           <button pButton icon="fa-magnifier" class="ui-button-success"></button>
           <button pButton icon="fa-close" type="button" *ngIf="searchTerm" (click)="clear()" class="ui-button-warning"></button>
         </div>
-        <div *ngIf="!showArchive">
-          <div *ngIf="states">
-            <p-selectButton styleClass="ui-button-info" [options]="states" [(ngModel)]="selectedState" name="state"
-                            (onChange)="search()"></p-selectButton>
+        <div *ngIf="user">
+          <div *ngIf="!showArchive">
+            <div *ngIf="states">
+              <p-selectButton styleClass="ui-button-info" [options]="states" [(ngModel)]="selectedState" name="state"
+                              (onChange)="search()"></p-selectButton>
+            </div>
+            <button *ngIf="archiveQuarters && archiveQuarters.length > 0" pButton type="button" label="Search archives"
+                    (click)="setShowArchive(true)" class="ui-button-warning"></button>
           </div>
-        </div>
-        <div *ngIf="!showArchive">
-          <button *ngIf="archiveQuarters && archiveQuarters.length > 0" pButton type="button" label="Search archives"
-                  (click)="setShowArchive(true)" class="ui-button-warning"></button>
-        </div>
-        <div *ngIf="showArchive" class="archives" fxLayout="row"  fxLayoutAlign="space-between center">
-          <button pButton type="button" label="Back" (click)="setShowArchive(false)" class="ui-button-warning"></button>
-          <div class="dropdown-select">
-            <p-dropdown [options]="archiveQuarters" [(ngModel)]="selectedQuarter"
-                        (onChange)="search()" name="quarter"></p-dropdown>
+          <div *ngIf="showArchive" class="archives" fxLayout="row" fxLayoutAlign="space-between center">
+            <button pButton type="button" label="Back" (click)="setShowArchive(false)" class="ui-button-warning"></button>
+            <div class="dropdown-select">
+              <p-dropdown [options]="archiveQuarters" [(ngModel)]="selectedQuarter"
+                          (onChange)="search()" name="quarter"></p-dropdown>
+            </div>
           </div>
         </div>
       </form>
@@ -52,8 +54,10 @@ export class FilterComponent implements OnInit {
   showArchive: boolean;
   archiveQuarters: SelectItem[];
   selectedQuarter: string;
+  user: UserRepresentation;
 
-  constructor(private translate: TranslateService, private definitionsService: DefinitionsService, private resourceService: ResourceService) {
+  constructor(private translate: TranslateService, private definitionsService: DefinitionsService,
+              private resourceService: ResourceService, private userService: UserService) {
     this.definitions = definitionsService.getDefinitions();
   }
 
@@ -69,16 +73,20 @@ export class FilterComponent implements OnInit {
       }
     });
 
-    if (this.resourceScope) {
-      this.resourceService.getArchiveQuarters(this.resourceScope)
-        .subscribe(quarters => {
-          this.archiveQuarters = quarters.map(quarter => {
-            const year = quarter.slice(0, 4);
-            const quarterDigit = quarter[4];
-            return {value: quarter, label: year + '/' + quarterDigit}
-          });
-        })
-    }
+    this.userService.user$.subscribe(user => {
+      this.user = user;
+      if (this.user && this.resourceScope) {
+        this.resourceService.getArchiveQuarters(this.resourceScope)
+          .subscribe(quarters => {
+            this.archiveQuarters = quarters.map(quarter => {
+              const year = quarter.slice(0, 4);
+              const quarterDigit = quarter[4];
+              return {value: quarter, label: year + '/' + quarterDigit}
+            });
+          })
+      }
+    });
+
   }
 
   clear() {
@@ -108,4 +116,5 @@ export interface EntityFilter {
   searchTerm?: string;
   state?: State;
   quarter?: string;
+  includePublic?: boolean;
 }

@@ -70,21 +70,6 @@ export class ResourceService {
     this.resourceSubjects[resource.scope][resource.id].next(resource);
   }
 
-  getResources(scope: Scope, filter?: EntityFilter): Observable<ResourceRepresentation<any>[]> {
-    const resourceCol = scope.toLowerCase() + 's';
-    const params = new URLSearchParams();
-    if (filter && filter.searchTerm) {
-      params.set('searchTerm', filter.searchTerm);
-    }
-    if (filter && filter.state) {
-      params.set('state', filter.state);
-    }
-    if (filter && filter.quarter) {
-      params.set('quarter', filter.quarter);
-    }
-    return this.http.get('/api/' + resourceCol, {search: params}).map(res => res.json());
-  }
-
   getBoard(departmentHandle: string, boardHandle: string): Observable<BoardRepresentation[]> {
     const params = new URLSearchParams();
     params.set('handle', departmentHandle + '/' + boardHandle);
@@ -97,21 +82,26 @@ export class ResourceService {
     return this.http.get('/api/departments', {search: params}).map(res => res.json());
   }
 
+  getResources(scope: Scope, filter?: EntityFilter): Observable<ResourceRepresentation<any>[]> {
+    const resourceCol = scope.toLowerCase() + 's';
+    return this.http.get('/api/' + resourceCol, {search: this.generateFilterParams(filter)}).map(res => res.json());
+  }
+
+  getBoardPosts(boardId: number, filter?: EntityFilter): Observable<PostRepresentation[]> {
+    return this.http.get('/api/boards/' + boardId + '/posts', {search: this.generateFilterParams(filter)})
+      .map(res => res.json());
+  }
+
+  getDepartmentBoards(departmentId: number, filter?: EntityFilter): Observable<BoardRepresentation[]> {
+    return this.http.get('/api/departments/' + departmentId + '/boards', {search: this.generateFilterParams(filter)})
+      .map(res => res.json());
+  }
+
   getResourceUsers(resource: ResourceRepresentation<any>, filter?: EntityFilter): Observable<UserRolesRepresentation> {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
-    const params = new URLSearchParams();
-    if (filter) {
-      params.set('searchTerm', filter.searchTerm);
-    }
-    return this.http.get('/api/' + resourceCol + '/' + resource.id + '/users', {search: params}).map(res => res.json());
-  }
-
-  getBoardPosts(boardId: number, includePublicPosts: boolean): Observable<PostRepresentation[]> {
-    return this.http.get('/api/boards/' + boardId + '/posts?includePublicPosts=' + includePublicPosts).map(res => res.json());
-  }
-
-  getDepartmentBoards(departmentId: number, includePublicBoards: boolean): Observable<BoardRepresentation[]> {
-    return this.http.get('/api/departments/' + departmentId + '/boards/?includePublicBoards=' + includePublicBoards).map(res => res.json());
+    return this.http.get('/api/' + resourceCol + '/' + resource.id + '/users',
+      {search: this.generateFilterParams(filter)})
+      .map(res => res.json());
   }
 
   postBoard(board: BoardDTO) {
@@ -215,6 +205,22 @@ export class ResourceService {
     }
   }
 
+  private generateFilterParams(filter: EntityFilter) {
+    const params = new URLSearchParams();
+    if (filter && filter.searchTerm) {
+      params.set('searchTerm', filter.searchTerm);
+    }
+    if (filter && filter.state) {
+      params.set('state', filter.state);
+    }
+    if (filter && filter.quarter) {
+      params.set('quarter', filter.quarter);
+    }
+    if (filter && filter.includePublic) {
+      params.set('includePublic', filter.includePublic.toString());
+    }
+    return params;
+  }
 }
 
 export type ResourceActionView = 'VIEW' | 'EDIT' | 'REVISE' | 'CORRECT' | 'CREATE';

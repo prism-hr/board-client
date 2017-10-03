@@ -35,6 +35,7 @@
   <div class="section-header">
     <h2>Boards</h2>
   </div>
+  <b-filter resourceScope="BOARD" (applied)="filterApplied($event)"></b-filter>
   <div class="list-container">
     <b-board-item [board]="board" *ngFor="let board of boards" class="list-container__item"></b-board-item>
   </div>
