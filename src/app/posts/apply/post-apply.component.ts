@@ -11,7 +11,7 @@ import UserRepresentation = b.UserRepresentation;
   template: `
     <div class="post-apply">
       <div class="post-apply-title">
-        <h4>Apply</h4>
+        <h4>Apply Now</h4>
       </div>
       <div class="post-apply-content">
         <div *ngIf="!user">
@@ -30,7 +30,7 @@ import UserRepresentation = b.UserRepresentation;
                 <b-post-apply-form [post]="post" (applied)="postApplied()"></b-post-apply-form>
               </div>
               <div *ngIf="post.response">
-                You already responded to this post.
+                You have already applied.
               </div>
             </div>
             <div *ngIf="!post.applyEmail">

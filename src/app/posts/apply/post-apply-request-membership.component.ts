@@ -9,7 +9,7 @@ import * as moment from 'moment';
 @Component({
   selector: 'b-post-apply-request-membership',
   template: `
-    <h2>Request membership for {{department.name}}</h2>
+    <h2>Joining {{department.name}}</h2>
     <form [formGroup]="membershipForm" novalidate>
       <div>
         <label for="category">Which category describes you best?</label>
