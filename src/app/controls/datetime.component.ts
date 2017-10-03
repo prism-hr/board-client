@@ -6,7 +6,7 @@ import 'moment-timezone';
 @Component({
   selector: 'b-datetime',
   template: `
-    <label>Specify Day / time
+    <label>Specify date / time
       <span *ngIf="currentTz !== mainTz">/ time zone</span>
     </label>
     <p-calendar class="calendar-item" [(ngModel)]="date" (ngModelChange)="dateTimeChanged()" dateFormat="yy-mm-dd"
