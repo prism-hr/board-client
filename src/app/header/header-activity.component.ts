@@ -22,6 +22,7 @@ import ResourceRepresentation = b.ResourceRepresentation;
             <p>{{activity.createdTimestamp | date: 'short' }}</p>
           </div>
         </a>
+        <button pButton type="button" (click)="activityDismissed(activity)" icon="fa-close"></button>
       </div>
       <div *ngSwitchCase="'RESPOND_POST_ACTIVITY'" class="activity-inner">
         <a [routerLink]="resourceLink.concat('responses')"
@@ -34,6 +35,7 @@ import ResourceRepresentation = b.ResourceRepresentation;
             <p>{{activity.createdTimestamp | date: 'short' }}</p>
           </div>
         </a>
+        <button pButton type="button" (click)="activityDismissed(activity)" icon="fa-close"></button>
       </div>
 
       <!-- ELSE -->
@@ -95,6 +97,7 @@ import ResourceRepresentation = b.ResourceRepresentation;
             </div>
           </div>
         </a>
+        <button pButton type="button" (click)="activityDismissed(activity)" icon="fa-close"></button>
       </div>
 
       <div *ngSwitchDefault class="activity">
