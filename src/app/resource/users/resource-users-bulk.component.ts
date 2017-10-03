@@ -2,6 +2,7 @@ import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} f
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {PapaParseService} from 'ngx-papaparse';
 import {UploadInput, UploadOutput} from 'ngx-uploader';
+import {MessageService} from 'primeng/components/common/messageservice';
 import {ResourceService} from '../../services/resource.service';
 import {ValidationUtils} from '../../validation/validation.utils';
 import UserDTO = b.UserDTO;
@@ -10,7 +11,8 @@ import UserRoleDTO = b.UserRoleDTO;
 @Component({
   selector: 'b-resource-users-bulk',
   templateUrl: 'resource-users-bulk.component.html',
-  styleUrls: ['resource-users-bulk.component.scss']
+  styleUrls: ['resource-users-bulk.component.scss'],
+  providers: [MessageService]
 })
 export class ResourceUsersBulkComponent implements OnInit {
 
@@ -24,7 +26,8 @@ export class ResourceUsersBulkComponent implements OnInit {
   @Output() close: EventEmitter<any> = new EventEmitter();
   @ViewChild('csvUploaderInput') uploadElRef: ElementRef;
 
-  constructor(private fb: FormBuilder, private papa: PapaParseService, private resourceService: ResourceService) {
+  constructor(private fb: FormBuilder, private papa: PapaParseService, private messageService: MessageService,
+              private resourceService: ResourceService) {
     this.usersForm = this.fb.group({
       firstLineHeader: [true]
     });
@@ -74,7 +77,7 @@ export class ResourceUsersBulkComponent implements OnInit {
       }
       const row = rows[idx];
       const line = +idx + 1 + (this.usersForm.value.firstLineHeader ? 1 : 0);
-      if (row.length === 0) {
+      if (row.length === 1 && row[0] === '') {
         continue; // empty line, skip
       }
       if (row.length !== 3) {
@@ -116,6 +119,10 @@ export class ResourceUsersBulkComponent implements OnInit {
 
     this.resourceService.addUsersInBulk(this.resource, userRoles)
       .subscribe(() => {
+        this.messageService.add({
+          severity: 'info', summary: 'Users uploaded',
+          detail: 'It might take some time until all the users you uploaded will be processed.'
+        });
         this.close.emit('refresh');
       });
   }
