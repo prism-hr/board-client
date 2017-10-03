@@ -85,10 +85,6 @@ export class ResourceService {
     return this.http.get('/api/' + resourceCol, {search: params}).map(res => res.json());
   }
 
-  getUserBoards(): Observable<BoardRepresentation[]> {
-    return this.http.get('/api/boards').map(res => res.json());
-  }
-
   getBoard(departmentHandle: string, boardHandle: string): Observable<BoardRepresentation[]> {
     const params = new URLSearchParams();
     params.set('handle', departmentHandle + '/' + boardHandle);
