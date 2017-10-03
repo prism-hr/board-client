@@ -17,6 +17,9 @@ label.drop-area {
   height: 100px;
   text-align: center;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &.dragover {
     border: 3px dashed $uclblue;
   }

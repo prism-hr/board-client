@@ -167,6 +167,7 @@ $simple-line-icon-prefix: "fa-" !default;
   &share-alt,
   &share,
   &rocket,
+  &publish,
   &question,
   &pie-chart,
   &pencil,&draft,
@@ -708,7 +709,7 @@ $simple-line-icon-prefix: "fa-" !default;
   content: "\e05b";
 }
 
-.#{$simple-line-icon-prefix}rocket:before {
+.#{$simple-line-icon-prefix}rocket:before, .#{$simple-line-icon-prefix}publish:before {
   content: "\e05c";
 }
 

@@ -578,7 +578,7 @@ button.ui-button::-moz-focus-inner {
       background-color: #e6e6e6;
     }
   }
-  &.ui-button-success, &.accept {
+  &.ui-button-success, &.accept, &.restore {
     &.ui-state-default {
       background-color: $uclgreen;
       border-color: $uclgreen;
@@ -2753,10 +2753,12 @@ button.ui-button::-moz-focus-inner {
 .ui-messages-icon {
   display: inline-block;
   padding: 0;
+  margin: 0 5px;
   vertical-align: middle;
 }
 
 .ui-messages-summary {
+  margin-left: .25em;
   font-weight: bold;
 }
 
