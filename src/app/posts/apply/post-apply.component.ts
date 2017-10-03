@@ -11,11 +11,11 @@ import UserRepresentation = b.UserRepresentation;
   template: `
     <div class="post-apply">
       <div class="post-apply-title">
-        <h4>Apply Now</h4>
+        <h4>Apply</h4>
       </div>
       <div class="post-apply-content">
         <div *ngIf="!user">
-          <button pButton type="button" (click)="authenticate()" label="Apply" class="ui-button-success">
+          <button pButton type="button" (click)="authenticate()" label="Apply Now" class="ui-button-success">
           </button>
         </div>
         <div *ngIf="user">
