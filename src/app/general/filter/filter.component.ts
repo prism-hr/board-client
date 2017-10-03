@@ -18,7 +18,7 @@ import UserRepresentation = b.UserRepresentation;
           <button pButton icon="fa-magnifier" class="ui-button-success"></button>
           <button pButton icon="fa-close" type="button" *ngIf="searchTerm" (click)="clear()" class="ui-button-warning"></button>
         </div>
-        <div *ngIf="user">
+        <div *ngIf="isStaffMember">
           <div *ngIf="!showArchive">
             <div *ngIf="states">
               <p-selectButton styleClass="ui-button-info" [options]="states" [(ngModel)]="selectedState" name="state"
@@ -54,7 +54,7 @@ export class FilterComponent implements OnInit {
   showArchive: boolean;
   archiveQuarters: SelectItem[];
   selectedQuarter: string;
-  user: UserRepresentation;
+  isStaffMember: boolean;
 
   constructor(private translate: TranslateService, private definitionsService: DefinitionsService,
               private resourceService: ResourceService, private userService: UserService) {
@@ -74,8 +74,8 @@ export class FilterComponent implements OnInit {
     });
 
     this.userService.user$.subscribe(user => {
-      this.user = user;
-      if (this.user && this.resourceScope) {
+      this.isStaffMember = user && (user.scopes.includes('BOARD') || user.scopes.includes('DEPARTMENT'));
+      if (this.isStaffMember && this.resourceScope) {
         this.resourceService.getArchiveQuarters(this.resourceScope)
           .subscribe(quarters => {
             this.archiveQuarters = quarters.map(quarter => {
