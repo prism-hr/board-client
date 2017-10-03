@@ -13,9 +13,13 @@ import ResourceRepresentation = b.ResourceRepresentation;
     <div [ngSwitch]="activity.activity" [ngClass]="{viewed: activity.viewed}">
       <div *ngSwitchCase="'JOIN_DEPARTMENT_REQUEST_ACTIVITY'" class="activity-inner">
         <a [routerLink]="resourceLink.concat('users')" fragment="memberRequests"
-           (click)="activityClicked(activity)" class="activity-w-icon">
+           (click)="activityClicked(activity)" class="activity-w-icon user">
           <b-image [publicId]="activity.userRole.user.documentImage?.cloudinaryId"
-                   gravity="face" width="50" height="50" radius="max" crop="thumb"></b-image>
+                   gravity="face" width="50" height="50" radius="max" crop="thumb"
+                   *ngIf="activity.userRole.user.documentImage"></b-image>
+          <div class="avatar" *ngIf="!activity.userRole.user.documentImage">
+            <span><i class="fa-user"></i></span>
+          </div>
           <div class="activity-copy">
             <b>{{activity.userRole.user.givenName}} {{activity.userRole.user.surname}}</b>
             <span>has requested membership of <b>{{resource.name}}</b></span>
@@ -26,9 +30,13 @@ import ResourceRepresentation = b.ResourceRepresentation;
       </div>
       <div *ngSwitchCase="'RESPOND_POST_ACTIVITY'" class="activity-inner">
         <a [routerLink]="resourceLink.concat('responses')"
-           (click)="activityClicked(activity)" class="activity-w-icon">
+           (click)="activityClicked(activity)" class="activity-w-icon user">
           <b-image [publicId]="activity.resourceEvent.user.documentImage?.cloudinaryId"
-                   gravity="face" width="50" height="50" radius="max" crop="thumb"></b-image>
+                   gravity="face" width="50" height="50" radius="max" crop="thumb"
+                   *ngIf="activity.resourceEvent.user.documentImage"></b-image>
+          <div class="avatar" *ngIf="!activity.resourceEvent.user.documentImage">
+            <span><i class="fa-user"></i></span>
+          </div>
           <div class="activity-copy">
             <b>{{activity.resourceEvent.user.givenName}} {{activity.resourceEvent.user.surname}}</b>
             <span>has responded to <b>{{resource.name}}</b></span>
@@ -43,8 +51,10 @@ import ResourceRepresentation = b.ResourceRepresentation;
            class="activity-inner">
         <a [routerLink]="routerLink(resource)" (click)="activityClicked(activity)">
           <div class="activity-w-icon">
-            <b-image [publicId]="documentLogo?.cloudinaryId"
-                     gravity="face" width="50" height="50" crop="thumb"></b-image>
+            <div class="logo-holder-activity" [ngClass]="{'default-logo': !documentLogo}">
+              <b-image [publicId]="documentLogo?.cloudinaryId"
+                       gravity="face" width="50" height="50" crop="thumb"></b-image>
+            </div>
             <div class="activity-copy">
               <span *ngSwitchCase="'NEW_BOARD_PARENT_ACTIVITY'">
                 New board created in <b>{{department.name}}</b>

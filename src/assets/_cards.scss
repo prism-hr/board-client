@@ -94,6 +94,15 @@ md-card.mat-card {
     }
   }
 }
+.logo-holder-activity {
+  flex: 1 0 60px
+}
+.logo-holder-activity.default-logo {
+  width: 50px !important;
+  margin-right: 10px;
+  height: 50px !important;
+  flex: 1 0 50px
+}
 b-image {
   display: block;
   line-height:0;

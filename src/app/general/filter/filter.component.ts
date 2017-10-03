@@ -24,15 +24,19 @@ import UserRepresentation = b.UserRepresentation;
               <p-selectButton styleClass="ui-button-info" [options]="states" [(ngModel)]="selectedState" name="state"
                               (onChange)="search()"></p-selectButton>
             </div>
-            <button *ngIf="archiveQuarters && archiveQuarters.length > 0" pButton type="button" label="Search archives"
-                    (click)="setShowArchive(true)" class="ui-button-warning"></button>
           </div>
+        </div>
+        <div *ngIf="isStaffMember">
           <div *ngIf="showArchive" class="archives" fxLayout="row" fxLayoutAlign="space-between center">
             <button pButton type="button" label="Back" (click)="setShowArchive(false)" class="ui-button-warning"></button>
             <div class="dropdown-select">
               <p-dropdown [options]="archiveQuarters" [(ngModel)]="selectedQuarter"
                           (onChange)="search()" name="quarter"></p-dropdown>
             </div>
+          </div>
+          <div *ngIf="!showArchive">
+            <button *ngIf="archiveQuarters && archiveQuarters.length > 0" pButton type="button" label="Search archives"
+                    (click)="setShowArchive(true)" class="ui-button-warning"></button>
           </div>
         </div>
       </form>

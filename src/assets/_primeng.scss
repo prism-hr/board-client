@@ -3020,7 +3020,7 @@ button.ui-button::-moz-focus-inner {
 }
 b-header {
   .ui-overlaypanel-content {
-    padding: 8px;
+    padding: 0px;
   }
 }
 .ui-overlaypanel-close {
@@ -4824,11 +4824,22 @@ b-image > img {
 }
 .activity-content {
   overflow-y: scroll;
+  overflow-x: hidden;
   max-height: 400px;
   max-width: 300px;
   font-size:0.8rem;
+  .unviewed {
+    background: $greyBackground;
+  }
+  b-header-activity > div {
+    background: #d9edf5;
+    &.viewed {
+      background: white;
+    }
+  }
+
   .activity-item {
-    margin-bottom: 6px;
+    margin-bottom:0;
     border-bottom: 1px solid $inactiveGrey;
     &:last-child {
       border-bottom: none;
@@ -4836,6 +4847,14 @@ b-image > img {
     .activity-w-icon {
       display: flex;
       min-height: 56px;
+      flex: 1 0;
+      &.user {
+        img {
+          -webkit-border-radius: 50%;
+          -moz-border-radius: 50%;
+          border-radius: 50%;
+        }
+      }
     }
     b {
       font-weight:500;
@@ -4846,9 +4865,35 @@ b-image > img {
       margin: 4px 0;
       color: $uclfooter;
     }
-    b-image {
+    b-image, .avatar {
       display: inline-block;
       flex: 0 0 60px;
+    }
+    .avatar {
+      span {
+        display: block;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: $panel-grey;
+        text-align: center;
+        line-height:58px;
+        i {
+          color: $uclred;
+          font-size:25px;
+        }
+      }
+    }
+  }
+  .activity-inner {
+    padding:6px 0px 2px 6px;
+    display: flex;
+    align-items: flex-start;
+    button.ui-state-default {
+      background-color: transparent;
+      &:hover {
+        color: $uclblue;
+      }
     }
   }
 }
