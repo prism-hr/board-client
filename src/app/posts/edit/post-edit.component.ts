@@ -109,7 +109,7 @@ export class PostEditComponent implements OnInit {
           } else {
             this.postForm.patchValue({
               hideLiveTimestamp: true,
-              deadTimestamp: moment().add(20, 'day').hours(17).minutes(0).toISOString()
+              deadTimestamp: moment().add(28, 'day').hours(17).minutes(0).toISOString()
             });
           }
 
@@ -248,7 +248,7 @@ export class PostEditComponent implements OnInit {
     if (!isTouched || !this.postForm.get('deadTimestamp').value) { // set default value only if not touched or not specified
       const liveTimestampString = this.postForm.get('liveTimestamp').value;
       const liveTimestamp = liveTimestampString ? moment(liveTimestampString) : moment();
-      const patchValue = liveTimestamp.add(20, 'day').hours(17).minutes(0).toISOString();
+      const patchValue = liveTimestamp.add(28, 'day').hours(17).minutes(0).toISOString();
       this.postForm.patchValue({deadTimestamp: patchValue});
     }
   }
