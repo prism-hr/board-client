@@ -2762,6 +2762,7 @@ button.ui-button::-moz-focus-inner {
 
 .ui-messages-detail {
   margin-left: .25em;
+  display: inline-block;
 }
 
 .ui-messages-success {
@@ -3338,6 +3339,7 @@ b-header {
   .ui-chkbox-label{
     margin-right:15px;
     padding-left:4px;
+    margin-bottom:0;
   }
   span{
     display: inline-block;
@@ -3379,6 +3381,7 @@ p-radiobutton {
     .ui-radiobutton-label{
       margin-right:15px;
       padding-left:4px;
+      margin-bottom:0;
     }
 
   }

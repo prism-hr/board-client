@@ -125,12 +125,17 @@ b-file-upload[type=avatar].avatar {
     background: white;
     overflow: hidden;
     span {
+      text-align: center;
       display: block;
-      padding-top: 47px;
     }
     .logo-flex {
      width: 125px;
     }
+  }
+}
+.mat-dialog-content, .block-avatar {
+  .drop-area {
+    margin: auto;
   }
 }
 .sb-template .fa {
