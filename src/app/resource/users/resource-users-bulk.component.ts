@@ -1,5 +1,6 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {MdSnackBar} from '@angular/material';
 import {PapaParseService} from 'ngx-papaparse';
 import {UploadInput, UploadOutput} from 'ngx-uploader';
 import {MessageService} from 'primeng/components/common/messageservice';
@@ -26,7 +27,7 @@ export class ResourceUsersBulkComponent implements OnInit {
   @Output() close: EventEmitter<any> = new EventEmitter();
   @ViewChild('csvUploaderInput') uploadElRef: ElementRef;
 
-  constructor(private fb: FormBuilder, private papa: PapaParseService, private messageService: MessageService,
+  constructor(private fb: FormBuilder, private papa: PapaParseService, private snackBar: MdSnackBar,
               private resourceService: ResourceService) {
     this.usersForm = this.fb.group({
       firstLineHeader: [true]
@@ -119,10 +120,8 @@ export class ResourceUsersBulkComponent implements OnInit {
 
     this.resourceService.addUsersInBulk(this.resource, userRoles)
       .subscribe(() => {
-        this.messageService.add({
-          severity: 'info', summary: 'Users uploaded',
-          detail: 'It might take some time until all the users you uploaded will be processed.'
-        });
+        this.snackBar.open('You have successfully uploaded users. It might take some time until they will be processed.',
+          null, {duration: 10000});
         this.close.emit('refresh');
       });
   }

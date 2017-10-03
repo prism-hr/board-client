@@ -25,7 +25,6 @@ import {
   DialogModule,
   DropdownModule,
   EditorModule,
-  GrowlModule,
   InputMaskModule,
   InputTextModule,
   MessagesModule,
@@ -335,7 +334,6 @@ import {ValidationService} from './validation/validation.service';
     AutoCompleteModule,
     DialogModule,
     OverlayPanelModule,
-    GrowlModule,
     // Material modules
     ToggleButtonModule,
     MdDialogModule,
