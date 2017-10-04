@@ -8,6 +8,7 @@ import {ResourceService} from '../../../services/resource.service';
 import BoardRepresentation = b.BoardRepresentation;
 import BoardPatchDTO = b.BoardPatchDTO;
 import {Title} from '@angular/platform-browser';
+import {ValidationUtils} from '../../../validation/validation.utils';
 
 @Component({
   templateUrl: 'board-edit.component.html',
@@ -28,7 +29,7 @@ export class BoardEditComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       summary: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
       postCategories: [[]],
-      handle: ['', [Validators.required, Validators.maxLength(25)]],
+      handle: ['', [Validators.required, ValidationUtils.handleValidator, Validators.maxLength(25)]],
       documentLogo: [],
     });
   }

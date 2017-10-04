@@ -4,6 +4,7 @@ export class ValidationUtils {
 
   static EMAIL_REGEX = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
   static URL_REGEX = /(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+  static HANDLE_REGEX = /^[a-z0-9-]+$/;
 
   static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
     const config = {
@@ -20,7 +21,8 @@ export class ValidationUtils {
       resume: 'You need to upload a document or specify a website containing your CV.',
       checkboxArrayMin: 'You have to select a value.',
       fakeCategory: 'You cannot leave example categories.',
-      url: 'Incorrect URL format.'
+      url: 'Incorrect URL format.',
+      handle: 'You can only use letters, digits and \'-\' character.'
     };
 
     if (config[validatorName]) {
@@ -48,6 +50,15 @@ export class ValidationUtils {
       return null;
     } else {
       return {url: true};
+    }
+  }
+
+  static handleValidator(control: AbstractControl) {
+    const isSpecified = control.value && control.value !== '';
+    if (!isSpecified || control.value.match(ValidationUtils.HANDLE_REGEX)) {
+      return null;
+    } else {
+      return {handle: true};
     }
   }
 

@@ -36,6 +36,7 @@
         <div *ngIf="department" class="grid__item one-whole input-holder">
           <label>Department URL</label>
           <b-resource-handle formControlName="handle" [urlPrefix]="urlPrefix"></b-resource-handle>
+          <control-messages [control]="departmentForm.get('handle')"></control-messages>
         </div>
       </div>
     </md-card-content>

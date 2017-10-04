@@ -9,7 +9,7 @@ import {MdSnackBar} from '@angular/material';
       <div class="grid__item one-whole host-url">
         <span>{{urlPrefix}}</span>
         <span class="host-url__input">
-          <input pInputText [(ngModel)]="handle" (change)="handleChanged()" required>
+          <input pInputText [(ngModel)]="handle" (ngModelChange)="handleChanged()" (blur)="touched()" required>
         </span>
         <span class="host-url__button">
           <button pButton type="button" ngxClipboard [cbContent]="fullUrl" class="ui-button-success" icon="fa-docs"
@@ -27,6 +27,7 @@ export class ResourceHandleComponent implements ControlValueAccessor {
   @Input() urlPrefix: string;
 
   propagateChange: any;
+  propagateTouch: any;
   handle: string;
   fullUrl: string;
 
@@ -36,6 +37,10 @@ export class ResourceHandleComponent implements ControlValueAccessor {
   handleChanged() {
     this.propagateChange(this.handle);
     this.fullUrl = this.urlPrefix + this.handle;
+  }
+
+  touched() {
+    this.propagateTouch();
   }
 
   copySuccess() {
@@ -52,5 +57,6 @@ export class ResourceHandleComponent implements ControlValueAccessor {
   }
 
   registerOnTouched(fn: any): void {
+    this.propagateTouch = fn;
   }
 }

@@ -26,6 +26,7 @@
           <div class="grid__item one-whole input-holder">
             <label>Board URL</label>
             <b-resource-handle formControlName="handle" [urlPrefix]="urlPrefix"></b-resource-handle>
+            <control-messages [control]="boardForm.get('handle')"></control-messages>
           </div>
         </div>
       </div>

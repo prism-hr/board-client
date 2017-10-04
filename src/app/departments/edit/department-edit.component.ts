@@ -12,6 +12,7 @@ import DepartmentPatchDTO = b.DepartmentPatchDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import MemberCategory = b.MemberCategory;
 import {Title} from '@angular/platform-browser';
+import {ValidationUtils} from '../../validation/validation.utils';
 
 @Component({
   templateUrl: 'department-edit.component.html',
@@ -52,7 +53,8 @@ export class DepartmentEditComponent implements OnInit {
         const formFormat = CheckboxUtils.toFormFormat(this.availableMemberCategories, this.department && this.department.memberCategories);
         (<FormArray>this.departmentForm.get('memberCategories'))
           .setValue(formFormat);
-        this.departmentForm.get('handle').setValidators(this.department && [Validators.required, Validators.maxLength(25)]);
+        this.departmentForm.get('handle').setValidators(this.department
+          && [Validators.required, ValidationUtils.handleValidator, Validators.maxLength(25)]);
         this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/' + this.department.university.handle + '/';
         this.actionView = this.department ? 'EDIT' : 'CREATE';
 
