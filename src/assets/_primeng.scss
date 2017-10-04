@@ -4891,6 +4891,7 @@ b-image > img {
     padding:6px 0px 2px 6px;
     display: flex;
     align-items: flex-start;
+    justify-content: space-between;
     button.ui-state-default {
       background-color: transparent;
       &:hover {
