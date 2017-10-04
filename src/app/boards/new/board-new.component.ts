@@ -13,6 +13,7 @@ import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import MemberCategory = b.MemberCategory;
 import UserRepresentation = b.UserRepresentation;
+import {ValidationUtils} from '../../validation/validation.utils';
 
 @Component({
   templateUrl: 'board-new.component.html',
@@ -37,7 +38,7 @@ export class BoardNewComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       summary: ['', [Validators.required, Validators.maxLength(1000)]],
       postCategories: [[]],
-      memberCategories: this.fb.array(this.availableMemberCategories.map(c => [false])),
+      memberCategories: this.fb.array(this.availableMemberCategories.map(c => [false]), ValidationUtils.checkboxArrayMin(1)),
       documentLogo: []
     });
   }

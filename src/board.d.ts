@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-10-02 19:57:33.
+// Generated using typescript-generator version 1.23.311 on 2017-10-04 13:28:23.
 
 declare namespace b {
 
@@ -117,6 +117,9 @@ declare namespace b {
     givenName?: string;
     surname?: string;
     email?: string;
+    gender?: Gender;
+    ageRange?: AgeRange;
+    locationNationality?: LocationDTO;
   }
 
   interface UserPasswordDTO {
@@ -130,6 +133,9 @@ declare namespace b {
     email?: string;
     documentImage?: DocumentDTO;
     documentImageRequestState?: DocumentRequestState;
+    gender?: Gender;
+    ageRange?: AgeRange;
+    locationNationality?: LocationDTO;
     documentResume?: DocumentDTO;
     websiteResume?: string;
   }
@@ -137,8 +143,17 @@ declare namespace b {
   interface UserRoleDTO {
     user?: UserDTO;
     role?: Role;
+    memberCategory?: MemberCategory;
+    memberProgram?: string;
+    memberYear?: number;
     expiryDate?: LocalDate;
-    categories?: MemberCategory[];
+  }
+
+  interface UserRolePatchDTO {
+    user?: UserDTO;
+    memberCategory?: MemberCategory;
+    memberProgram?: string;
+    memberYear?: number;
   }
 
   interface WidgetOptionsDTO extends ResourceDTO<any> {
@@ -262,6 +277,9 @@ declare namespace b {
     email?: string;
     documentImage?: DocumentRepresentation;
     documentImageRequestState?: DocumentRequestState;
+    gender?: Gender;
+    ageRange?: AgeRange;
+    locationNationality?: LocationRepresentation;
     documentResume?: DocumentRepresentation;
     websiteResume?: string;
     scopes?: Scope[];
@@ -271,9 +289,11 @@ declare namespace b {
     user?: UserRepresentation;
     email?: string;
     role?: Role;
+    memberCategory?: MemberCategory;
+    memberProgram?: string;
+    memberYear?: number;
     state?: State;
     expiryDate?: LocalDate;
-    categories?: MemberCategory[];
     viewed?: boolean;
   }
 
@@ -292,10 +312,10 @@ declare namespace b {
 
   interface LocationDefinition {
     name?: string;
+    domicile?: string;
+    longitude?: number;
     googleId?: string;
     latitude?: number;
-    longitude?: number;
-    domicile?: string;
   }
 
   interface LocalDateTime extends Temporal, TemporalAdjuster, ChronoLocalDateTime<LocalDate>, Serializable {
@@ -368,6 +388,10 @@ declare namespace b {
   type MemberCategory = 'UNDERGRADUATE_STUDENT' | 'MASTER_STUDENT' | 'RESEARCH_STUDENT' | 'RESEARCH_STAFF';
 
   type ExistingRelation = 'STAFF' | 'STUDENT' | 'COLLABORATOR' | 'EMPLOYER' | 'OTHER';
+
+  type Gender = 'FEMALE' | 'MALE' | 'UNDEFINED';
+
+  type AgeRange = 'ZERO_EIGHTEEN' | 'NINETEEN_TWENTYFOUR' | 'TWENTYFIVE_TWENTYNINE' | 'THIRTY_THIRTYNINE' | 'FORTY_FORTYNINE' | 'FIFTY_SIXTYFOUR' | 'SIXTYFOUR_PLUS';
 
   type DocumentRequestState = 'DISPLAY_FIRST' | 'DISPLAY_AGAIN' | 'DISPLAY_NEVER';
 

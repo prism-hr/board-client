@@ -72,7 +72,7 @@ export class ResourceUsersComponent implements OnInit {
     const userDTO: UserRoleDTO = {
       role: roleDef.role,
       expiryDate: roleDef.expiryDate,
-      categories: [roleDef.category],
+      memberCategory: roleDef.category,
       user: _.pick(userValue, ['id', 'givenName', 'surname', 'email'])
     };
 

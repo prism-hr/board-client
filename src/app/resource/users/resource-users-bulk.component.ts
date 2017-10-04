@@ -110,12 +110,13 @@ export class ResourceUsersBulkComponent implements OnInit {
     }
     const roleDef = this.usersForm.get('roleGroup').value;
     const userRoles: UserRoleDTO[] = this.users.map(user => {
-      return {
+      const role: UserRoleDTO = {
         role: roleDef.role,
         expiryDate: roleDef.expiryDate,
-        categories: [roleDef.category],
+        memberCategory: roleDef.category,
         user: user
-      }
+      };
+      return role;
     });
 
     this.resourceService.addUsersInBulk(this.resource, userRoles)

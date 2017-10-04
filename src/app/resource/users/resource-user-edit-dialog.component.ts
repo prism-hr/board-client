@@ -4,6 +4,7 @@ import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
 import {ResourceService} from '../../services/resource.service';
 import ResourceRepresentation = b.ResourceRepresentation;
 import UserRoleRepresentation = b.UserRoleRepresentation;
+import UserRoleDTO = b.UserRoleDTO;
 
 @Component({
   template: `
@@ -57,10 +58,10 @@ export class ResourceUserEditDialogComponent implements OnInit {
     }
     this.progress = true;
     const roleDef = this.userForm.get('roleGroup').value;
-    const role = {
+    const role: UserRoleDTO = {
       role: roleDef.role,
       expiryDate: roleDef.expiryDate,
-      categories: [roleDef.category]
+      memberCategory: roleDef.category
     };
     this.resourceService.updateResourceUser(this.resource, this.userRole.user, role)
       .subscribe(userRole => {

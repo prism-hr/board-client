@@ -34,7 +34,7 @@ export class DepartmentEditComponent implements OnInit {
     this.departmentForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       summary: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
-      memberCategories: this.fb.array(this.availableMemberCategories.map(c => [false])),
+      memberCategories: this.fb.array(this.availableMemberCategories.map(c => [false]), ValidationUtils.checkboxArrayMin(1)),
       handle: [],
       documentLogo: []
     });

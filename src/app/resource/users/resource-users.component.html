@@ -82,7 +82,7 @@
                     <div class="role-indicator {{ userRole.role | lowercase}}"
                          [ngClass]="{'expire' : userRole.expiryDate}">
                     <span class="role-item"
-                          pTooltip="{{'definitions.role.' + userRole.role | translate}} - {{'definitions.memberCategory.' + userRole.categories[0] | translate}}"
+                          pTooltip="{{'definitions.role.' + userRole.role | translate}} - {{'definitions.memberCategory.' + userRole.memberCategory | translate}}"
                           tooltipPosition="top"></span>
                       <span class="role-expire" *ngIf="userRole.expiryDate"
                             pTooltip="Expiry date: {{userRole.expiryDate | date : 'shortDate'}}"

@@ -67,7 +67,7 @@ export class PostApplyRequestMembershipComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    const userRoleDTO: UserRoleDTO = {expiryDate: form.get('expiryDate').value, categories: [form.get('category').value]};
+    const userRoleDTO: UserRoleDTO = {expiryDate: form.get('expiryDate').value, memberCategory: form.get('category').value};
     this.postService.requestDepartmentMembership(this.department, userRoleDTO).subscribe(() => {
       this.requested.emit(true);
     });
