@@ -49,15 +49,4 @@ export class AuthGuard implements CanActivate {
       });
   }
 
-  showInitialModalIfNecessary(paramMap: ParamMap): void {
-    const modalType = paramMap.get('modal');
-    if (modalType === 'register' || modalType === 'login') {
-      this.ensureAuthenticated({modalType}).subscribe();
-    } else if (modalType === 'resetPassword') {
-      const config = new MdDialogConfig();
-      config.data = {uuid: paramMap.get('uuid')};
-      this.dialog.open(ResetPasswordDialogComponent, config);
-    }
-  }
-
 }

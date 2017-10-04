@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MD_DIALOG_DATA} from '@angular/material';
+import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
 import {UserService} from '../services/user.service';
 import {ValidationService} from '../validation/validation.service';
 import {ValidationUtils} from '../validation/validation.utils';
@@ -37,8 +37,7 @@ import UserPasswordDTO = b.UserPasswordDTO;
 
       <div *ngIf="showPasswordChangedMessage">
         <p-messages
-          [value]="[{severity:'info', summary:'Password changed',
-       detail:'Your password has been changed.'}]"
+          [value]="[{severity:'info', summary:'Password changed', detail:'Your password has been changed.'}]"
           [closable]="false"></p-messages>
       </div>
     </div>
@@ -53,8 +52,8 @@ export class ResetPasswordDialogComponent implements OnInit {
   dialogData: any;
   showPasswordChangedMessage: boolean;
 
-  constructor(private fb: FormBuilder, @Inject(MD_DIALOG_DATA) data: any, private userService: UserService,
-              private validationService: ValidationService) {
+  constructor(private fb: FormBuilder, private dialogRef: MdDialogRef<ResetPasswordDialogComponent>, @Inject(MD_DIALOG_DATA) data: any,
+              private userService: UserService, private validationService: ValidationService) {
     this.passwordForm = this.fb.group({
       password: ['', [Validators.required, Validators.max(100)]],
       repeatPassword: ['']
@@ -76,7 +75,7 @@ export class ResetPasswordDialogComponent implements OnInit {
     const userPasswordDTO: UserPasswordDTO = {password: this.passwordForm.get('password').value, uuid: this.dialogData.uuid};
     this.userService.patchPassword(userPasswordDTO)
       .subscribe(() => {
-          this.showPasswordChangedMessage = true;
+          this.dialogRef.close(true);
         },
         (response: any) => {
           this.validationService.extractResponseError(response, error => this.error = error);
