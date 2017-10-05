@@ -2,7 +2,7 @@
   <md-card>
     <md-card-content>
       <div *ngIf="responses.length > 0" class="grid">
-        <div *ngFor="let response of responses" class="grid__item small--one-whole medium-up--one-third" >
+        <div *ngFor="let response of responses" class="grid__item small--one-whole medium-up--one-third">
           <div class="user-header">
             <div class="avatar"
                  [ngClass]="{'no-background': response.user.documentImage}">
@@ -23,12 +23,24 @@
           <div class="rte">
             {{response.coveringNote}}
           </div>
-          Gender: {{'definitions.gender.' + response.gender | translate}}
-          Age Range: {{'definitions.ageRange.' + response.ageRange | translate}}
-          Location: {{response.locationNationality.name}}
-          Category: {{'definitions.memberCategory.' +  response.memberCategory | translate}}
-          Program: {{response.memberProgram}}
-          Year: {{response.memberYear}}
+          <div *ngIf="response.gender">
+            Gender: {{'definitions.gender.' + response.gender | translate}}
+          </div>
+          <div *ngIf="response.ageRange">
+            Age Range: {{'definitions.ageRange.' + response.ageRange | translate}}
+          </div>
+          <div *ngIf="response.locationNationality">
+            Location: {{response.locationNationality.name}}
+          </div>
+          <div *ngIf="response.memberCategory">
+            Category: {{'definitions.memberCategory.' +  response.memberCategory | translate}}
+          </div>
+          <div *ngIf="response.memberProgram">
+            Program: {{response.memberProgram}}
+          </div>
+          <div *ngIf="response.memberYear">
+            Year: {{response.memberYear}}
+          </div>
         </div>
       </div>
       <div *ngIf="responses.length === 0" class="grid">
