@@ -59,6 +59,20 @@
       "MEMBER": "Member",
       "PUBLIC": "Public"
     },
+    "gender": {
+      "FEMALE": "Female",
+      "MALE": "Male",
+      "UNDEFINED": "Undefined"
+    },
+    "ageRange": {
+      "ZERO_EIGHTEEN": "0 - 18",
+      "NINETEEN_TWENTYFOUR": "19 - 24",
+      "TWENTYFIVE_TWENTYNINE": "25 - 29",
+      "THIRTY_THIRTYNINE": "30 - 39",
+      "FORTY_FORTYNINE": "40 - 49",
+      "FIFTY_SIXTYFOUR": "50 - 64",
+      "SIXTYFIVE_PLUS": "65+"
+    },
     "exceptionCode": {
       "UNREGISTERED_USER": "The user is not registered.",
       "DUPLICATE_USER": "This email is already taken.",

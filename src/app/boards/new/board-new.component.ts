@@ -38,7 +38,7 @@ export class BoardNewComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       summary: ['', [Validators.required, Validators.maxLength(1000)]],
       postCategories: [[]],
-      memberCategories: this.fb.array(this.availableMemberCategories.map(c => [false]), ValidationUtils.checkboxArrayMin(1)),
+      memberCategories: this.fb.array(this.availableMemberCategories.map(c => [false])),
       documentLogo: []
     });
   }

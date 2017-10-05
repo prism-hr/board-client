@@ -33,8 +33,12 @@ export class PostService {
     return this.http.post('/api/posts/' + post.id + '/respond', eventDTO).map(res => res.json());
   }
 
-  requestDepartmentMembership(department: DepartmentRepresentation, userRoleDTO: UserRoleDTO): Observable<Response> {
-    return this.http.post('/api/departments/' + department.id + '/memberRequests', userRoleDTO);
+  requestDepartmentMembership(department: DepartmentRepresentation, userRoleDTO: UserRoleDTO, canPursue: boolean): Observable<Response> {
+    if(canPursue) {
+      return this.http.put('/api/departments/' + department.id + '/memberRequests', userRoleDTO);
+    } else {
+      return this.http.post('/api/departments/' + department.id + '/memberRequests', userRoleDTO);
+    }
   }
 
   getResponses(post: PostRepresentation): Observable<ResourceEventRepresentation[]> {

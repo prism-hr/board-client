@@ -19,25 +19,39 @@ import UserRepresentation = b.UserRepresentation;
           </button>
         </div>
         <div *ngIf="user">
-          <div *ngIf="!canPursue">
-            <b-post-apply-request-membership
-              [department]="post.board.department" (requested)="membershipRequested()">
-            </b-post-apply-request-membership>
+          <div *ngIf="post.response">
+            You have already applied.
           </div>
-          <div *ngIf="canPursue">
-            <div *ngIf="post.applyEmail">
-              <div *ngIf="!post.response">
-                <b-post-apply-form [post]="post" (applied)="postApplied()"></b-post-apply-form>
+          <div *ngIf="!post.response">
+            <div *ngIf="canPursue">
+              <div *ngIf="responseReady">
+                
+                <div *ngIf="post.applyEmail">
+                  <b-post-apply-form [post]="post" (applied)="postApplied()"></b-post-apply-form>
+                </div>
+                
+                <div *ngIf="!post.applyEmail">
+                  <a pButton type="button" href="{{'api/posts/referrals/' + post.referral.referral}}" target="_blank"
+                     class="ui-button-success small" (click)="referralCodeUsed()" label="How to Apply"></a>
+                </div>
+                
               </div>
-              <div *ngIf="post.response">
-                You have already applied.
+              
+              <div *ngIf="!responseReady">
+                <b-post-apply-request-membership
+                  [post]="post" (requested)="membershipRequested()">
+                </b-post-apply-request-membership>
               </div>
+              
             </div>
-            <div *ngIf="!post.applyEmail">
-              <a pButton type="button" href="{{'api/posts/referrals/' + post.referral.referral}}" target="_blank"
-                 class="ui-button-success small" (click)="referralCodeUsed()" label="How to Apply"></a>
+            
+            <div *ngIf="!canPursue && post.responseReadiness">
+              <b-post-apply-request-membership
+                [post]="post" (requested)="membershipRequested()">
+              </b-post-apply-request-membership>
             </div>
           </div>
+          
         </div>
       </div>
     </div>
@@ -84,6 +98,11 @@ export class PostApplyComponent implements OnInit, OnChanges {
 
   referralCodeUsed() {
     this.reloadPost().subscribe();
+  }
+
+  get responseReady() {
+    const readiness = this.post.responseReadiness;
+    return !readiness.requireUserDemographicData && !readiness.requireUserRoleDemographicData;
   }
 
   private reloadPost() {
