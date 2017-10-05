@@ -20,21 +20,24 @@ import UserRoleDTO = b.UserRoleDTO;
     <form [formGroup]="membershipForm" novalidate>
       <div class="grid">
         <div *ngIf="requireUserDemographicData">
-          <div class="ui-radiobutton-inline">
-            <p-radioButton *ngFor="let gender of availableGenders"
-                           [value]="gender" [label]="'definitions.gender.' + gender | translate" name="gender"
-                           formControlName="gender" class="{{gender | lowercase}}"></p-radioButton>
+          <div class="grid__item small--one-whole medium-up--one-whole input-holder">
+            <div class="ui-radiobutton-inline">
+              <p-radioButton *ngFor="let gender of availableGenders"
+                             [value]="gender" [label]="'definitions.gender.' + gender | translate" name="gender"
+                             formControlName="gender" class="{{gender | lowercase}}"></p-radioButton>
+            </div>
             <control-messages [control]="membershipForm.get('gender')"></control-messages>
           </div>
-
-          <div class="ui-radiobutton-inline">
-            <p-radioButton *ngFor="let ageRange of availableAgeRanges"
-                           [value]="ageRange" [label]="'definitions.ageRange.' + ageRange | translate" name="ageRange"
-                           formControlName="ageRange" class="{{ageRange | lowercase}}"></p-radioButton>
+          <div class="grid__item small--one-whole medium-up--one-whole input-holder">
+            <div class="ui-radiobutton-inline">
+              <p-radioButton *ngFor="let ageRange of availableAgeRanges"
+                             [value]="ageRange" [label]="'definitions.ageRange.' + ageRange | translate" name="ageRange"
+                             formControlName="ageRange" class="{{ageRange | lowercase}}"></p-radioButton>
+            </div>
             <control-messages [control]="membershipForm.get('ageRange')"></control-messages>
           </div>
 
-          <div class="grid__item small--one-whole medium-up--one-half input-holder">
+          <div class="grid__item small--one-whole medium-up--one-half input-holder clearfix">
             <label>Location</label>
             <b-places-autocomplete formControlName="locationNationality"></b-places-autocomplete>
             <control-messages [control]="membershipForm.get('locationNationality')"></control-messages>
@@ -49,7 +52,6 @@ import UserRoleDTO = b.UserRoleDTO;
                         placeholder="Select a category" (onChange)="categoryChanged($event)"></p-dropdown>
             <control-messages [control]="membershipForm.get('memberCategory')"></control-messages>
           </div>
-
           <div class="grid__item small--one-whole medium-up--one-half input-holder dropdown-select">
             <label for="memberProgram">Program Name</label>
             <input pInputText placeholder="Program" formControlName="memberProgram">
@@ -58,11 +60,13 @@ import UserRoleDTO = b.UserRoleDTO;
 
           <div class="grid__item small--one-whole medium-up--one-half input-holder dropdown-select">
             <label for="memberYear">Year of study</label>
-            <p-selectButton [options]="availableYears" formControlName="memberYear"></p-selectButton>
+            <div style="margin-top: 6px;">
+              <p-selectButton [options]="availableYears" formControlName="memberYear" styleClass="ui-button-info"></p-selectButton>
+            </div>
             <control-messages [control]="membershipForm.get('memberYear')"></control-messages>
           </div>
 
-          <div class="grid__item small--one-whole medium-up--one-half input-holder">
+          <div class="grid__item small--one-whole medium-up--one-whole input-holder">
             <label style="display: block">{{expiryLabel | translate}}</label>
             <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string" [minDate]="tomorrow"></p-calendar>
             <control-messages [control]="membershipForm.get('expiryDate')"></control-messages>

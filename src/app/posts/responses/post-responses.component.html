@@ -1,45 +1,49 @@
 <section class="section" [ngClass]="{'edit-post':post}">
   <md-card>
     <md-card-content>
+        <h2 class="title">Responses <span class="ui-chips-token ui-corner-all">{{responses.length}}</span></h2>
       <div *ngIf="responses.length > 0" class="grid">
-        <div *ngFor="let response of responses" class="grid__item small--one-whole medium-up--one-third">
-          <div class="user-header">
-            <div class="avatar"
-                 [ngClass]="{'no-background': response.user.documentImage}">
-              <b-image [publicId]="response.user.documentImage?.cloudinaryId"
-                       gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec"
-                       *ngIf="response.user.documentImage"></b-image>
-              <i *ngIf="!response.user.documentImage" class="fa-user"></i>
+        <div *ngFor="let response of responses" class="grid__item small--one-whole medium-up--one-third application-item">
+          <div class="application-item__inner">
+            <div fxLayout="row" class="header-content">
+              <div class="avatar">
+                <span *ngIf="response.gender === 'MALE'"><i class="fa-user"></i></span>
+                <span *ngIf="response.gender === 'FEMALE'"><i class="fa-user-female"></i></span>
+              </div>
+              <div class="someone-applied">
+                <h5>Someone applied:</h5>
+                <span class="time-data">{{response.createdTimestamp | amCalendar}}</span>
+              </div>
             </div>
-          </div>
-          <h3>{{response.user.givenName}} {{response.user.surname}}</h3>
-          <span>{{response.createdTimestamp | amCalendar}}</span>
-          <div *ngIf="response.documentResume">
-            <a href="{{response.documentResume.cloudinaryUrl}}">Download Resume</a>
-          </div>
-          <div *ngIf="response.websiteResume">
-            <a href="{{response.websiteResume}}">Website</a>
-          </div>
-          <div class="rte">
-            {{response.coveringNote}}
-          </div>
-          <div *ngIf="response.gender">
-            Gender: {{'definitions.gender.' + response.gender | translate}}
-          </div>
-          <div *ngIf="response.ageRange">
-            Age Range: {{'definitions.ageRange.' + response.ageRange | translate}}
-          </div>
-          <div *ngIf="response.locationNationality">
-            Location: {{response.locationNationality.name}}
-          </div>
-          <div *ngIf="response.memberCategory">
-            Category: {{'definitions.memberCategory.' +  response.memberCategory | translate}}
-          </div>
-          <div *ngIf="response.memberProgram">
-            Program: {{response.memberProgram}}
-          </div>
-          <div *ngIf="response.memberYear">
-            Year: {{response.memberYear}}
+            <div class="response-data">
+              <div *ngIf="response.documentResume">
+                <a href="{{response.documentResume.cloudinaryUrl}}">Download Resume</a>
+              </div>
+              <div *ngIf="response.websiteResume">
+                <a href="{{response.websiteResume}}">Website</a>
+              </div>
+              <div class="rte">
+                {{response.coveringNote}}
+              </div>
+              <div *ngIf="response.gender">
+                Gender: <b>{{'definitions.gender.' + response.gender | translate}}</b>
+              </div>
+              <div *ngIf="response.ageRange">
+                Age Range: <b>{{'definitions.ageRange.' + response.ageRange | translate}}</b>
+              </div>
+              <div *ngIf="response.locationNationality">
+                Location: <b>{{response.locationNationality.name}}</b>
+              </div>
+              <div *ngIf="response.memberCategory">
+                Category: <b>{{'definitions.memberCategory.' +  response.memberCategory | translate}}</b>
+              </div>
+              <div *ngIf="response.memberProgram">
+                Program: <b>{{response.memberProgram}}</b>
+              </div>
+              <div *ngIf="response.memberYear">
+                Year: <b>{{response.memberYear}}</b>
+              </div>
+            </div>
           </div>
         </div>
       </div>

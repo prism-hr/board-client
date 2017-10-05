@@ -2760,6 +2760,7 @@ button.ui-button::-moz-focus-inner {
 .ui-messages-summary {
   margin-left: .25em;
   font-weight: bold;
+  display: inherit;
 }
 
 .ui-messages-detail {
@@ -4926,4 +4927,7 @@ p-tabview {
     margin-top: 0.7em;
     margin-left: -0.3em;
   }
+}
+.ui-placeholder {
+  color: rgb(117, 117, 117);
 }

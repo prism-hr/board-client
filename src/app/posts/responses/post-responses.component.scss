@@ -1,0 +1,50 @@
+@import '../../../assets/variables';
+
+.application-item {
+  margin-bottom: $gutter-site-mobile;
+}
+.title {
+  margin-bottom:12px;
+  span {
+    font-size:1rem;
+  }
+}
+.avatar {
+  margin-right: 15px;
+  span {
+    display: block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: $panel-grey;
+    text-align: center;
+    line-height:58px;
+    i {
+      color: $uclred;
+      font-size:25px;
+    }
+  }
+}
+.someone-applied {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  h5 {
+    margin-bottom: 2px;
+  }
+}
+.header-content {
+  border-bottom:1px solid $uclblue2;
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+}
+.response-data {
+  b {
+    color: $uclblue;
+  }
+  line-height: 1.6rem;
+}
+.application-item__inner {
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  padding: 10px 15px;
+}
