@@ -23,6 +23,12 @@
           <div class="rte">
             {{response.coveringNote}}
           </div>
+          Gender: {{'definitions.gender.' + response.gender | translate}}
+          Age Range: {{'definitions.ageRange.' + response.ageRange | translate}}
+          Location: {{response.locationNationality.name}}
+          Category: {{'definitions.memberCategory.' +  response.memberCategory | translate}}
+          Program: {{response.memberProgram}}
+          Year: {{response.memberYear}}
         </div>
       </div>
       <div *ngIf="responses.length === 0" class="grid">

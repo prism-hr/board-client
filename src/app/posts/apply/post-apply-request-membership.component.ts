@@ -62,8 +62,6 @@ import UserRoleDTO = b.UserRoleDTO;
             <control-messages [control]="membershipForm.get('memberYear')"></control-messages>
           </div>
 
-          {{membershipForm.get('memberYear').value}}
-
           <div class="grid__item small--one-whole medium-up--one-half input-holder">
             <label style="display: block">{{expiryLabel | translate}}</label>
             <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string" [minDate]="tomorrow"></p-calendar>

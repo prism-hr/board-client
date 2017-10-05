@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdDialog} from '@angular/material';
 import {Title} from '@angular/platform-browser';
@@ -140,6 +140,10 @@ export class ResourceUsersComponent implements OnInit {
       .subscribe(() => {
         const idx = this.users.memberRequests.indexOf(userRole);
         this.users.memberRequests.splice(idx, 1);
+        if (this.users.memberRequests.length === 0) {
+          this.usersTabChanged({index: 1});
+        }
+        this.loadUsers();
       });
   }
 
