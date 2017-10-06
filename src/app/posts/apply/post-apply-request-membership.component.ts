@@ -4,6 +4,7 @@ import {TranslateService} from '@ngx-translate/core';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import {SelectItem} from 'primeng/primeng';
+import {DepartmentService} from '../../departments/department.service';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
 import {PostService} from '../post.service';
@@ -52,10 +53,11 @@ import UserRoleDTO = b.UserRoleDTO;
                         placeholder="Select a category"></p-dropdown>
             <control-messages [control]="membershipForm.get('memberCategory')"></control-messages>
           </div>
-          
+
           <div class="grid__item small--one-whole medium-up--one-half input-holder dropdown-select">
             <label for="memberProgram">Program Name</label>
-            <input pInputText placeholder="e.g. Research Degree: Computer Science" formControlName="memberProgram">
+            <p-autoComplete formControlName="memberProgram" [suggestions]="programSuggestions" (completeMethod)="searchPrograms($event)"
+                            placeholder="Start typing to see program suggestions"></p-autoComplete>
             <control-messages [control]="membershipForm.get('memberProgram')"></control-messages>
           </div>
 
@@ -91,9 +93,11 @@ export class PostApplyRequestMembershipComponent implements OnInit {
   availableYears: SelectItem[];
   availableGenders: Gender[];
   availableAgeRanges: AgeRange[];
+  programSuggestions: string[];
 
   constructor(private fb: FormBuilder, private translate: TranslateService, private postService: PostService,
-              private resourceService: ResourceService, private definitionsService: DefinitionsService) {
+              private resourceService: ResourceService, private departmentService: DepartmentService,
+              private definitionsService: DefinitionsService) {
     this.availableYears = Array.from({length: 9}, (_, k) => k).map((_, i) => i + 1)
       .map(i => ({label: '' + i, value: i}));
     this.availableGenders = definitionsService.getDefinitions()['gender'];
@@ -131,10 +135,16 @@ export class PostApplyRequestMembershipComponent implements OnInit {
   }
 
   get expiryLabel() {
-    if(this.membershipForm.get('memberCategory').value === 'RESEARCH_STAFF') {
+    if (this.membershipForm.get('memberCategory').value === 'RESEARCH_STAFF') {
       return 'When will your contract come to an end?';
     }
     return 'When will you graduate?';
+  }
+
+  searchPrograms(event) {
+    this.departmentService.searchPrograms(this.department, {searchTerm: event.query}).subscribe(programs => {
+      this.programSuggestions = programs;
+    });
   }
 
   submit() {
