@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Response} from '@angular/http';
-import {MdSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 import {ActivatedRoute, Data, ParamMap, Router} from '@angular/router';
 import * as _ from 'lodash';
 import {combineLatest} from 'rxjs/observable/combineLatest';
@@ -29,7 +29,7 @@ export class DepartmentEditComponent implements OnInit {
   sourceLink: any[];
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private title: Title,
-              private snackBar: MdSnackBar, private resourceService: ResourceService, private definitionsService: DefinitionsService) {
+              private snackBar: MatSnackBar, private resourceService: ResourceService, private definitionsService: DefinitionsService) {
     this.availableMemberCategories = definitionsService.getDefinitions()['memberCategory'];
     this.departmentForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],

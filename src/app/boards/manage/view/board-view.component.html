@@ -9,18 +9,18 @@
       </div>
     </div>
     <div class="grid__item medium-up--one-quarter small-one-whole resource-logo-holder">
-      <md-card>
-        <md-card-header class="header-full" *ngIf="canEdit">
-          <md-card-title>
+      <mat-card>
+        <mat-card-header class="header-full" *ngIf="canEdit">
+          <mat-card-title>
             <h3>Board Logo</h3>
-          </md-card-title>
-        </md-card-header>
-        <md-card-content>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
           <div class="logo-holder" [ngClass]="{'default-logo': !board.documentLogo}">
             <b-image [publicId]="board.documentLogo?.cloudinaryId" height="150" width="200" crop="mfit"></b-image>
           </div>
-        </md-card-content>
-      </md-card>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </section>

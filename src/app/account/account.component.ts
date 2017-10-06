@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MdSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../services/user.service';
 import {ValidationService} from '../validation/validation.service';
@@ -25,7 +25,7 @@ export class AccountComponent implements OnInit {
   availableGenders: Gender[];
   availableAgeRanges: AgeRange[];
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private title: Title, private snackBar: MdSnackBar,
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private title: Title, private snackBar: MatSnackBar,
               private userService: UserService, private validationService: ValidationService,
               private definitionsService: DefinitionsService) {
     this.availableGenders = definitionsService.getDefinitions()['gender'];

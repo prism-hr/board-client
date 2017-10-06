@@ -1,6 +1,6 @@
 <section class="section" [ngClass]="{'edit-post':post}">
-  <md-card>
-    <md-card-content>
+  <mat-card>
+    <mat-card-content>
         <h2 class="title">Responses <span class="ui-chips-token ui-corner-all">{{responses.length}}</span></h2>
       <div *ngIf="responses.length > 0" class="grid">
         <div *ngFor="let response of responses" class="grid__item small--one-whole medium-up--one-third application-item">
@@ -55,6 +55,6 @@
           </p-messages>
         </div>
       </div>
-    </md-card-content>
-  </md-card>
+    </mat-card-content>
+  </mat-card>
 </section>

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MdDialog, MdDialogConfig} from '@angular/material';
+import {MatDialog, MatDialogConfig} from '@angular/material';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Data, ParamMap} from '@angular/router';
 import {combineLatest} from 'rxjs/observable/combineLatest';
@@ -23,7 +23,7 @@ export class BoardViewComponent implements OnInit {
   user: UserRepresentation;
   filter: EntityFilter;
 
-  constructor(private route: ActivatedRoute, private title: Title, private dialog: MdDialog, private resourceService: ResourceService,
+  constructor(private route: ActivatedRoute, private title: Title, private dialog: MatDialog, private resourceService: ResourceService,
               private userService: UserService) {
   }
 
@@ -38,7 +38,7 @@ export class BoardViewComponent implements OnInit {
         const uuid = queryParamMap.get('uuid');
 
         if (modalType === 'unsubscribe') {
-          const config = new MdDialogConfig();
+          const config = new MatDialogConfig();
           config.data = {uuid, resource: this.board};
           setTimeout(() => {
             this.dialog.open(UnsubscribeDialogComponent, config);

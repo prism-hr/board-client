@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {MdDialog, MdSnackBar} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ResourceService} from '../../services/resource.service';
 import {ResourceCommentDialogComponent} from '../resource-comment.dialog';
@@ -25,7 +25,7 @@ export class ResourceActionsBoxComponent implements OnChanges {
   actionView: string;
   actions: Action[];
 
-  constructor(private router: Router, private route: ActivatedRoute, private snackBar: MdSnackBar, private dialog: MdDialog,
+  constructor(private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar, private dialog: MatDialog,
               private resourceService: ResourceService) {
   }
 

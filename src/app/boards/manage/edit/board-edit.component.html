@@ -1,6 +1,6 @@
-<md-card>
+<mat-card>
 <form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
-  <md-card-content>
+  <mat-card-content>
     <div class="grid">
       <div class="grid__item small--one-whole medium-up--two-thirds">
         <div class="grid">
@@ -35,8 +35,8 @@
         <b-file-upload formControlName="documentLogo" type="logo"></b-file-upload>
       </div>
     </div>
-  </md-card-content>
-  <md-card-actions>
+  </mat-card-content>
+  <mat-card-actions>
     <div class="grid grid--half-gutters">
       <div class="grid__item one-whole" fxLayout="row" fxLayoutAlign="space-between center">
         <a pButton [routerLink]="['/', board.department.university.handle, board.department.handle, board.handle]"
@@ -44,6 +44,6 @@
         <button pButton class="ui-button-success" label="Submit"></button>
       </div>
     </div>
-  </md-card-actions>
+  </mat-card-actions>
 </form>
-</md-card>
+</mat-card>

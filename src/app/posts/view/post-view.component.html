@@ -19,11 +19,11 @@
 
     </div>
     <div class="grid__item medium-up--one-quarter small-one-whole publisher">
-      <md-card>
-        <md-card-content>
+      <mat-card>
+        <mat-card-content>
           <div class="grid">
             <div class="grid__item one-whole">
-              <div *ngIf="post.board.documentLogo" md-card-avatar>
+              <div *ngIf="post.board.documentLogo" mat-card-avatar>
                 <b-image [publicId]="post.board.documentLogo?.cloudinaryId"
                          gravity="north_west" height="150" width="200" crop="mfit"></b-image>
               </div>
@@ -38,8 +38,8 @@
               </h3>
             </div>
           </div>
-        </md-card-content>
-      </md-card>
+        </mat-card-content>
+      </mat-card>
       <div class="category-list">
         <span class="ui-chips-token ui-corner-all" *ngFor="let category of post.postCategories">{{category}}</span>
       </div>

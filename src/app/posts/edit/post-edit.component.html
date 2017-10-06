@@ -2,9 +2,9 @@
   <div *ngIf="!post" class="section-header">
     <h2>Create a new post</h2>
   </div>
-  <md-card>
+  <mat-card>
     <form [formGroup]="postForm" novalidate>
-      <md-card-content>
+      <mat-card-content>
         <div class="grid">
           <div *ngIf="board" class="grid__item one-whole input-holder">
             <h3>{{board.department.name}} - {{board.name}}</h3>
@@ -179,8 +179,8 @@
             </div>
           </div>
         </div>
-      </md-card-content>
-      <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="space-between center">
         <a pButton [routerLink]="cancelLink()" class="ui-button-secondary" label="Cancel"></a>
         <span *ngIf="actionView === 'REVISE'">
           <button pButton [disabled]="postForm.invalid" label="Accept"
@@ -201,7 +201,7 @@
         <span *ngIf="actionView === 'CREATE'">
           <button pButton class="ui-button-success" label="Submit" (click)="create()"></button>
         </span>
-      </md-card-actions>
+      </mat-card-actions>
     </form>
-  </md-card>
+  </mat-card>
 </section>

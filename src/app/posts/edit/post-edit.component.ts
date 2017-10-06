@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MdDialog} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Data, ParamMap, Router} from '@angular/router';
 import * as _ from 'lodash';
@@ -40,7 +40,7 @@ export class PostEditComponent implements OnInit {
     'liveTimestamp', 'deadTimestamp', 'applyWebsite', 'applyDocument', 'applyEmail'];
 
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private cdf: ChangeDetectorRef,
-              private title: Title, private dialog: MdDialog, private definitionsService: DefinitionsService,
+              private title: Title, private dialog: MatDialog, private definitionsService: DefinitionsService,
               private postService: PostService, private resourceService: ResourceService) {
     this.definitions = definitionsService.getDefinitions();
   }

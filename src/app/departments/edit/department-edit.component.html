@@ -1,6 +1,6 @@
-<md-card>
+<mat-card>
   <form [formGroup]="departmentForm">
-    <md-card-content>
+    <mat-card-content>
       <div class="grid" fxLayout="row">
         <div class="grid__item small--one-whole medium-up--two-thirds">
           <div class="grid">
@@ -39,8 +39,8 @@
           <control-messages [control]="departmentForm.get('handle')"></control-messages>
         </div>
       </div>
-    </md-card-content>
-    <md-card-actions>
+    </mat-card-content>
+    <mat-card-actions>
       <div class="grid grid--half-gutters">
         <div class="grid__item one-whole" fxLayout="row" fxLayoutAlign="space-between center">
           <a *ngIf="department" pButton [routerLink]="sourceLink"
@@ -53,9 +53,9 @@
                   class="ui-button-success" label="Submit"></button>
         </div>
       </div>
-    </md-card-actions>
+    </mat-card-actions>
   </form>
-</md-card>
+</mat-card>
 
 
 

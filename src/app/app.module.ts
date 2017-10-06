@@ -3,7 +3,6 @@ import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
-import {MdCardModule, MdDialogModule, MdSnackBarModule} from '@angular/material';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
@@ -109,6 +108,7 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
+import {MatCardModule, MatDialogModule, MatSnackBarModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -336,9 +336,9 @@ import {ValidationService} from './validation/validation.service';
     OverlayPanelModule,
     // Material modules
     ToggleButtonModule,
-    MdDialogModule,
-    MdSnackBarModule,
-    MdCardModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatCardModule,
     FlexLayoutModule,
     BrowserModule,
     BrowserAnimationsModule,

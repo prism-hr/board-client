@@ -1,6 +1,6 @@
-<md-card>
+<mat-card>
   <form class="form" [formGroup]="usersForm" (submit)="submit()">
-    <md-card-content>
+    <mat-card-content>
       <h4>Bulk Users</h4>
       <div class="grid">
         <div class="grid__item one-whole">
@@ -47,14 +47,14 @@
         </div>
 
       </div>
-    </md-card-content>
-    <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+    </mat-card-content>
+    <mat-card-actions fxLayout="row" fxLayoutAlign="space-between center">
       <button pButton class="ui-button-success" label="Submit" fxFlexOrder="1"
               [disabled]="!users || users.length === 0"></button>
       <button pButton type="button" class="ui-button-secondary" (click)="closeBulkMode()"
               label="Add users individually"></button>
-    </md-card-actions>
+    </mat-card-actions>
   </form>
-</md-card>
+</mat-card>
 
 

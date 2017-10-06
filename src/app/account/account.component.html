@@ -2,13 +2,13 @@
   <div class="grid" fxLayout="row" fxLayoutAlign="center">
     <div class="grid__item small--one-whole medium-up--three-eighths">
       <form [formGroup]="accountForm" (ngSubmit)="submit()" autocomplete="off">
-        <md-card>
-          <md-card-header>
-            <md-card-title>
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>
               <h2>Account</h2>
-            </md-card-title>
-          </md-card-header>
-          <md-card-content>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
             <div *ngIf="accountFormError">
               <p-messages [value]="[{severity:'error', detail:accountFormError}]"></p-messages>
             </div>
@@ -60,20 +60,20 @@
               </div>
             </div>
 
-          </md-card-content>
-          <md-card-actions>
+          </mat-card-content>
+          <mat-card-actions>
             <button pButton class="ui-button-warning" label="Submit"></button>
-          </md-card-actions>
-        </md-card>
+          </mat-card-actions>
+        </mat-card>
       </form>
 
-      <md-card>
-        <md-card-header>
-          <md-card-title>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
             <h2>Password</h2>
-          </md-card-title>
-        </md-card-header>
-        <md-card-content>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
           <div *ngIf="!changePasswordRequested">
             <button pButton (click)="requestPasswordChange()" class="ui-button-warning"
                     label="Change Password"></button>
@@ -81,20 +81,20 @@
           <div *ngIf="changePasswordRequested">
             An email has been sent to you. Follow the instructions inside the email to reset your password.
           </div>
-        </md-card-content>
-      </md-card>
+        </mat-card-content>
+      </mat-card>
     </div>
     <div class="grid__item small--one-whole medium-up--three-eighths">
-      <md-card>
-        <md-card-header>
-          <md-card-title>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
             <h2>Notifications</h2>
-          </md-card-title>
-        </md-card-header>
-        <md-card-content>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
           <b-account-notifications [suppressions]="suppressions"></b-account-notifications>
-        </md-card-content>
-      </md-card>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </section>

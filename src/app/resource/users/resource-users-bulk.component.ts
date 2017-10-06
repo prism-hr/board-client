@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {MdSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 import * as _ from 'lodash';
 import {PapaParseService} from 'ngx-papaparse';
 import {UploadInput, UploadOutput} from 'ngx-uploader';
@@ -28,7 +28,7 @@ export class ResourceUsersBulkComponent implements OnInit {
   @Output() close: EventEmitter<any> = new EventEmitter();
   @ViewChild('csvUploaderInput') uploadElRef: ElementRef;
 
-  constructor(private fb: FormBuilder, private papa: PapaParseService, private snackBar: MdSnackBar,
+  constructor(private fb: FormBuilder, private papa: PapaParseService, private snackBar: MatSnackBar,
               private resourceService: ResourceService) {
     this.usersForm = this.fb.group({
       firstLineHeader: [true]

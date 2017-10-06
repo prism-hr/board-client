@@ -1,7 +1,7 @@
 import {DebugElement} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MdSnackBarModule} from '@angular/material';
+import {MatSnackBarModule} from '@angular/material';
 import {By} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -50,7 +50,7 @@ describe('DepartmentView', () => {
       declarations: [
         DepartmentEditComponent, ControlMessagesComponent, ResourceHandleComponent, FileUploadComponent
       ],
-      imports: [ReactiveFormsModule, RouterTestingModule, MdSnackBarModule, ButtonModule, ChipsModule, FileUploadModule],
+      imports: [ReactiveFormsModule, RouterTestingModule, MatSnackBarModule, ButtonModule, ChipsModule, FileUploadModule],
       providers: [{
         provide: ActivatedRoute,
         useValue: activatedRoute

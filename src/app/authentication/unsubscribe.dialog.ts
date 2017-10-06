@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {UserService} from '../services/user.service';
 import ResourceRepresentation = b.ResourceRepresentation;
 
@@ -32,7 +32,7 @@ export class UnsubscribeDialogComponent implements OnInit {
   resource: ResourceRepresentation<any>;
   uuid: string
 
-  constructor(private dialogRef: MdDialogRef<UnsubscribeDialogComponent>, @Inject(MD_DIALOG_DATA) data: any, private userService: UserService) {
+  constructor(private dialogRef: MatDialogRef<UnsubscribeDialogComponent>, @Inject(MAT_DIALOG_DATA) data: any, private userService: UserService) {
     this.resource = data.resource;
     this.uuid = data.uuid;
   }

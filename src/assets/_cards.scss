@@ -5,7 +5,7 @@
   width: 100%;
 }
 
-md-card {
+mat-card {
   .ui-tabmenu {
     margin: 0px -24px 0px -24px ;
   }
@@ -13,14 +13,14 @@ md-card {
     font-family:'Roboto';
   }
 }
-md-card.mat-card>:first-child {
+mat-card.mat-card>:first-child {
   margin-top: -24px;
 }
 .mat-card-content {
   padding-top: $section-spacing-small;
   padding-bottom: $section-spacing-small / 2;
 }
-md-card.mat-card {
+mat-card.mat-card {
   margin-bottom:15px;
   .mat-input-placeholder, .mat-input-placeholder-wrapper {
     padding-top:0.6em;
@@ -39,7 +39,7 @@ md-card.mat-card {
     height: auto;
     padding: 15px 0;
     margin: 0 22px;
-    md-card-title {
+    mat-card-title {
       margin-bottom:0;
     }
   }
@@ -263,8 +263,8 @@ b-file-upload[type=avatar].avatar {
     }
   }
 }
-md-card.users.mat-card {
-  md-card-header {
+mat-card.users.mat-card {
+  mat-card-header {
     min-height: 48px;
   }
   .mat-card-header-text {
@@ -274,7 +274,7 @@ md-card.users.mat-card {
     font-size:14px;
     width: stretch;
   }
-  md-card-title {
+  mat-card-title {
     width: 100%;
     line-height: 25px;
   }
@@ -299,7 +299,7 @@ md-card.users.mat-card {
 }
 
 div.last-admin {
-  md-card.users.mat-card .mat-card-header{
+  mat-card.users.mat-card .mat-card-header{
     cursor: default !important;
     &:hover {
       background: #ececec;
@@ -314,7 +314,7 @@ b-image {
 
 .user-settings {
   overflow: visible !important;
-  md-dialog-content, .mat-dialog-container {
+  mat-dialog-content, .mat-dialog-container {
     overflow: visible !important;
   }
 }

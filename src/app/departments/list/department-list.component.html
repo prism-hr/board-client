@@ -7,18 +7,18 @@
   <b-filter resourceScope="DEPARTMENT" (applied)="filterApplied($event)"></b-filter>
   <div class="grid list-container">
     <div *ngFor="let department of departments" class="list-container__item">
-      <md-card>
-        <md-card-header fxLayout="row" fxLayoutAlign="space-between center">
-          <md-card-title>
+      <mat-card>
+        <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
+          <mat-card-title>
             <h3><a [routerLink]="['/', department.university.handle, department.handle]">{{department.name}}</a></h3>
-          </md-card-title>
-          <div md-card-avatar class="logo-holder-small"
+          </mat-card-title>
+          <div mat-card-avatar class="logo-holder-small"
                [ngClass]="{'default-logo': !department.documentLogo}">
             <b-image [publicId]="department.documentLogo?.cloudinaryId"
                      gravity="north_west" height="150" width="200" crop="mfit"></b-image>
           </div>
-        </md-card-header>
-        <md-card-content>
+        </mat-card-header>
+        <mat-card-content>
           <div class="general-card-summary">
             {{department.summary}}
             <div *ngIf="!department.summary">
@@ -46,12 +46,12 @@
               </div>
             </div>
           </div>
-        </md-card-content>
-        <md-card-actions>
+        </mat-card-content>
+        <mat-card-actions>
           <a pButton [routerLink]="['/', department.university.handle, department.handle]" class="ui-button-secondary"
              label="Go to department"></a>
-        </md-card-actions>
-      </md-card>
+        </mat-card-actions>
+      </mat-card>
     </div>
   </div>
 </section>

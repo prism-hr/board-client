@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {MdDialog, MdDialogConfig} from '@angular/material';
+import {MatDialog, MatDialogConfig} from '@angular/material';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {UserService} from '../services/user.service';
@@ -10,7 +10,7 @@ import {ResetPasswordDialogComponent} from './reset-password.dialog';
 export class InitializeGuard implements CanActivate {
 
 
-  constructor(private dialog: MdDialog, private authGuard: AuthGuard, private userService: UserService) {
+  constructor(private dialog: MatDialog, private authGuard: AuthGuard, private userService: UserService) {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
@@ -26,7 +26,7 @@ export class InitializeGuard implements CanActivate {
     }
 
     if (modalType === 'resetPassword') {
-      const config = new MdDialogConfig();
+      const config = new MatDialogConfig();
       config.data = {uuid};
       const dialogRef = this.dialog.open(ResetPasswordDialogComponent, config);
       observable = dialogRef.afterClosed()

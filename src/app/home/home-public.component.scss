@@ -117,7 +117,7 @@ welcome {
   }
   .prices-box {
     padding: 20px 40px 40px;
-    md-card md-card-title + md-card-content {
+    mat-card mat-card-title + mat-card-content {
       padding-top:16px;
       p {
         margin-top:0;
@@ -131,7 +131,7 @@ welcome {
       background: #fafafa;
       text-align: center;
       margin: 20px;
-      md-card-title {
+      mat-card-title {
         padding-top:16px !important;
         border-bottom:3px solid $uclred;
         border-top:3px solid $uclred;
@@ -145,7 +145,7 @@ welcome {
         hr {
           background-image: linear-gradient(to right, rgba($uclgreen, 0), rgba($uclgreen, 1), rgba($uclgreen, 0));
         }
-        md-card-title {
+        mat-card-title {
           border-bottom:3px solid $uclgreen;
           border-top:3px solid $uclgreen;
         }
@@ -159,12 +159,12 @@ welcome {
         h2 {
           color: $uclblue;
         }
-        md-card-title {
+        mat-card-title {
           border-bottom:3px solid $uclblue;
           border-top:3px solid $uclblue;
         }
       }
-      md-card-actions {
+      mat-card-actions {
         margin-bottom:8px;
       }
       h3, h4 {

@@ -1,5 +1,5 @@
 import {AuthenticationDialogComponent} from './authentication.dialog';
-import {MaterialModule, MdDialog} from '@angular/material';
+import {MaterialModule, MatDialog} from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import {async, TestBed} from '@angular/core/testing';
 import {NgModule} from '@angular/core';
@@ -17,7 +17,7 @@ class TestModule {
 
 describe('AuthenticationDialogComponent', () => {
   let component: AuthenticationDialogComponent;
-  let dialog: MdDialog;
+  let dialog: MatDialog;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -27,7 +27,7 @@ describe('AuthenticationDialogComponent', () => {
   }));
 
   beforeEach(() => {
-    dialog = TestBed.get(MdDialog);
+    dialog = TestBed.get(MatDialog);
     const dialogRef = dialog.open(AuthenticationDialogComponent);
     component = dialogRef.componentInstance;
   });

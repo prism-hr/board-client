@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {UserService} from '../services/user.service';
 import {ValidationService} from '../validation/validation.service';
 import {ValidationUtils} from '../validation/validation.utils';
@@ -20,8 +20,8 @@ export class AuthenticationDialogComponent implements OnInit {
   forgottenSent: boolean;
   dialogData: AuthenticationDialogData;
 
-  constructor(private dialogRef: MdDialogRef<AuthenticationDialogComponent>, private fb: FormBuilder,
-              @Inject(MD_DIALOG_DATA) data: AuthenticationDialogData, private userService: UserService, private validationService: ValidationService) {
+  constructor(private dialogRef: MatDialogRef<AuthenticationDialogComponent>, private fb: FormBuilder,
+              @Inject(MAT_DIALOG_DATA) data: AuthenticationDialogData, private userService: UserService, private validationService: ValidationService) {
     this.dialogData = data;
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, ValidationUtils.emailValidator]],

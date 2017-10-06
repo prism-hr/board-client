@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {MdDialog, MdDialogConfig} from '@angular/material';
+import {MatDialog, MatDialogConfig} from '@angular/material';
 import {ActivatedRouteSnapshot, CanActivate, ParamMap, Router} from '@angular/router';
 import {AuthService} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
@@ -11,7 +11,7 @@ import {ResetPasswordDialogComponent} from './reset-password.dialog';
 export class AuthGuard implements CanActivate {
 
 
-  constructor(private router: Router, private dialog: MdDialog, private authService: AuthService, private userService: UserService) {
+  constructor(private router: Router, private dialog: MatDialog, private authService: AuthService, private userService: UserService) {
   }
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
       return Observable.of(true);
     } else {
       this.userService.logout();
-      const config = new MdDialogConfig();
+      const config = new MatDialogConfig();
       const dialogData: AuthenticationDialogData = {showRegister: options.modalType === 'register', uuid: options.uuid};
       config.data = dialogData;
       const dialogRef = this.dialog.open(AuthenticationDialogComponent, config);

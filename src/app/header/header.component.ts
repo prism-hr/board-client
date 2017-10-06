@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MdDialog} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import {Router} from '@angular/router';
 import {OverlayPanel} from 'primeng/primeng';
 import {AuthGuard} from '../authentication/auth-guard.service';
@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   activities: ActivityRepresentation[];
   @ViewChild('activitiesPanel') activitiesPanel: OverlayPanel;
 
-  constructor(private router: Router, private dialog: MdDialog, private userService: UserService, private authGuard: AuthGuard) {
+  constructor(private router: Router, private dialog: MatDialog, private userService: UserService, private authGuard: AuthGuard) {
   }
 
   ngOnInit(): void {

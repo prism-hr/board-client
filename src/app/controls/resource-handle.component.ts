@@ -1,6 +1,6 @@
 import {Component, forwardRef, Input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {MdSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'b-resource-handle',
@@ -31,7 +31,7 @@ export class ResourceHandleComponent implements ControlValueAccessor {
   handle: string;
   fullUrl: string;
 
-  constructor(private snackBar: MdSnackBar) {
+  constructor(private snackBar: MatSnackBar) {
   }
 
   handleChanged() {

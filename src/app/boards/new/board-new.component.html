@@ -2,9 +2,9 @@
   <div class="section-header">
     <h2>Create a new Board</h2>
   </div>
-  <md-card>
+  <mat-card>
     <form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
-      <md-card-content>
+      <mat-card-content>
         <div class="grid" fxLayout="row">
           <div class="grid__item small--one-whole medium-up--two-thirds">
             <div class="grid">
@@ -75,14 +75,14 @@
             [closable]="false"></p-messages>
         </div>
 
-      </md-card-content>
-      <md-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="space-between center">
         <a *ngIf="user && user.scopes.indexOf('BOARD') > -1" pButton routerLink="/boards" class="ui-button-secondary"
            label="Cancel"></a>
         <a *ngIf="!user || user.scopes.indexOf('BOARD') === -1" pButton routerLink="/" class="ui-button-secondary"
            label="Cancel"></a>
         <button pButton class="ui-button-success" label="Submit"></button>
-      </md-card-actions>
+      </mat-card-actions>
     </form>
-  </md-card>
+  </mat-card>
 </section>

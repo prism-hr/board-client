@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MdDialog} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
@@ -35,7 +35,7 @@ export class ResourceUsersComponent implements OnInit {
   loadUsersSubscription: Subscription;
 
   constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private title: Title,
-              private fb: FormBuilder, private dialog: MdDialog, private resourceService: ResourceService,
+              private fb: FormBuilder, private dialog: MatDialog, private resourceService: ResourceService,
               private departmentService: DepartmentService) {
     this.userForm = this.fb.group({
       user: this.fb.group({
