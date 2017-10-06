@@ -49,13 +49,13 @@ import UserRoleDTO = b.UserRoleDTO;
           <div class="grid__item small--one-whole medium-up--one-half input-holder dropdown-select">
             <label for="category">Which category describes you best?</label>
             <p-dropdown id="category" formControlName="memberCategory" [options]="memberCategoryOptions"
-                        placeholder="Select a category" (onChange)="categoryChanged($event)"></p-dropdown>
+                        placeholder="Select a category"></p-dropdown>
             <control-messages [control]="membershipForm.get('memberCategory')"></control-messages>
           </div>
           
           <div class="grid__item small--one-whole medium-up--one-half input-holder dropdown-select">
             <label for="memberProgram">Program Name</label>
-            <input pInputText placeholder="Program" formControlName="memberProgram">
+            <input pInputText placeholder="e.g. Research Degree: Computer Science" formControlName="memberProgram">
             <control-messages [control]="membershipForm.get('memberProgram')"></control-messages>
           </div>
 
@@ -67,8 +67,8 @@ import UserRoleDTO = b.UserRoleDTO;
             <control-messages [control]="membershipForm.get('memberYear')"></control-messages>
           </div>
 
-          <div class="grid__item small--one-whole medium-up--one-whole input-holder">
-            <label style="display: block">{{expiryLabel | translate}}</label>
+          <div *ngIf="membershipForm.get('memberCategory').value" class="grid__item small--one-whole medium-up--one-whole input-holder">
+            <label style="display: block">{{expiryLabel}}</label>
             <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string" [minDate]="tomorrow"></p-calendar>
             <control-messages [control]="membershipForm.get('expiryDate')"></control-messages>
           </div>
@@ -87,7 +87,6 @@ export class PostApplyRequestMembershipComponent implements OnInit {
   @Output() requested: EventEmitter<boolean> = new EventEmitter();
   membershipForm: FormGroup;
   memberCategoryOptions: { label: string, value: any }[];
-  expiryLabel: string;
   tomorrow: Date;
   availableYears: SelectItem[];
   availableGenders: Gender[];
@@ -107,14 +106,15 @@ export class PostApplyRequestMembershipComponent implements OnInit {
       this.memberCategoryOptions = this.department.memberCategories.map(c => ({label: categoryTranslations[c], value: c}));
     });
 
+    const oldUserRole = this.post.responseReadiness.userRole;
     this.membershipForm = this.fb.group({
-      gender: [null, this.requireUserRoleDemographicData && Validators.required],
-      ageRange: [null, this.requireUserRoleDemographicData && Validators.required],
-      locationNationality: [null, this.requireUserRoleDemographicData && Validators.required],
-      memberCategory: [null, this.requireUserRoleDemographicData && Validators.required],
-      memberProgram: [null, this.requireUserRoleDemographicData && Validators.required],
-      memberYear: [null, this.requireUserRoleDemographicData && Validators.required],
-      expiryDate: [null, this.requireUserRoleDemographicData && Validators.required]
+      gender: [null, this.requireUserDemographicData && Validators.required],
+      ageRange: [null, this.requireUserDemographicData && Validators.required],
+      locationNationality: [null, this.requireUserDemographicData && Validators.required],
+      memberCategory: [oldUserRole && oldUserRole.memberCategory, this.requireUserRoleDemographicData && Validators.required],
+      memberProgram: [oldUserRole && oldUserRole.memberProgram, this.requireUserRoleDemographicData && Validators.required],
+      memberYear: [oldUserRole && oldUserRole.memberYear, this.requireUserRoleDemographicData && Validators.required],
+      expiryDate: [oldUserRole && oldUserRole.expiryDate, this.requireUserRoleDemographicData && Validators.required]
     });
   }
 
@@ -130,12 +130,11 @@ export class PostApplyRequestMembershipComponent implements OnInit {
     return this.post.responseReadiness.requireUserDemographicData;
   }
 
-  categoryChanged(event) {
-    if (event.value === 'RESEARCH_STAFF') {
-      this.expiryLabel = 'When will your contract come to an end?';
-    } else {
-      this.expiryLabel = 'When will you graduate?';
+  get expiryLabel() {
+    if(this.membershipForm.get('memberCategory').value === 'RESEARCH_STAFF') {
+      return 'When will your contract come to an end?';
     }
+    return 'When will you graduate?';
   }
 
   submit() {
