@@ -33,6 +33,33 @@
                 <control-messages [control]="accountForm.get('email')"></control-messages>
               </div>
             </div>
+
+            <div class="grid">
+              <div class="grid__item small--one-whole medium-up--one-whole input-holder">
+                <div class="ui-radiobutton-inline">
+                  <p-radioButton *ngFor="let gender of availableGenders"
+                                 [value]="gender" [label]="'definitions.gender.' + gender | translate" name="gender"
+                                 formControlName="gender" class="{{gender | lowercase}}"></p-radioButton>
+                </div>
+                <control-messages [control]="accountForm.get('gender')"></control-messages>
+              </div>
+              <div class="grid__item small--one-whole medium-up--one-whole input-holder">
+                <div class="ui-radiobutton-inline">
+                  <p-radioButton *ngFor="let ageRange of availableAgeRanges"
+                                 [value]="ageRange" [label]="'definitions.ageRange.' + ageRange | translate"
+                                 name="ageRange"
+                                 formControlName="ageRange" class="{{ageRange | lowercase}}"></p-radioButton>
+                </div>
+                <control-messages [control]="accountForm.get('ageRange')"></control-messages>
+              </div>
+
+              <div class="grid__item small--one-whole medium-up--one-half input-holder clearfix">
+                <label>Location</label>
+                <b-places-autocomplete formControlName="locationNationality"></b-places-autocomplete>
+                <control-messages [control]="accountForm.get('locationNationality')"></control-messages>
+              </div>
+            </div>
+
           </md-card-content>
           <md-card-actions>
             <button pButton class="ui-button-warning" label="Submit"></button>

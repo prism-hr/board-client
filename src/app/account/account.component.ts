@@ -8,6 +8,9 @@ import {ValidationUtils} from '../validation/validation.utils';
 import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
 import UserRepresentation = b.UserRepresentation;
 import {Title} from '@angular/platform-browser';
+import {DefinitionsService} from '../services/definitions.service';
+import AgeRange = b.AgeRange;
+import Gender = b.Gender;
 
 @Component({
   templateUrl: './account.component.html',
@@ -19,14 +22,22 @@ export class AccountComponent implements OnInit {
   accountFormError: string;
   suppressions: UserNotificationSuppressionRepresentation[];
   changePasswordRequested: boolean;
+  availableGenders: Gender[];
+  availableAgeRanges: AgeRange[];
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private title: Title, private snackBar: MdSnackBar,
-              private userService: UserService, private validationService: ValidationService) {
+              private userService: UserService, private validationService: ValidationService,
+              private definitionsService: DefinitionsService) {
+    this.availableGenders = definitionsService.getDefinitions()['gender'];
+    this.availableAgeRanges = definitionsService.getDefinitions()['ageRange'];
     this.accountForm = this.fb.group({
       givenName: ['', [Validators.required, Validators.maxLength(30)]],
       surname: ['', [Validators.required, Validators.maxLength(40)]],
       email: ['', [Validators.required, ValidationUtils.emailValidator]],
-      documentImage: []
+      documentImage: [],
+      gender: [null, Validators.required],
+      ageRange: [null, Validators.required],
+      locationNationality: [null, Validators.required],
     });
   }
 
