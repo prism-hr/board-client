@@ -1,6 +1,7 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MdSnackBar} from '@angular/material';
+import * as _ from 'lodash';
 import {PapaParseService} from 'ngx-papaparse';
 import {UploadInput, UploadOutput} from 'ngx-uploader';
 import {MessageService} from 'primeng/components/common/messageservice';
@@ -110,13 +111,9 @@ export class ResourceUsersBulkComponent implements OnInit {
     }
     const roleDef = this.usersForm.get('roleGroup').value;
     const userRoles: UserRoleDTO[] = this.users.map(user => {
-      const role: UserRoleDTO = {
-        role: roleDef.role,
-        expiryDate: roleDef.expiryDate,
-        memberCategory: roleDef.category,
-        user: user
-      };
-      return role;
+      const userRoleDTO: UserRoleDTO = _.pick(roleDef, ['role', 'expiryDate', 'memberCategory', 'memberProgram', 'memberYear']);
+      userRoleDTO.user = user;
+      return userRoleDTO;
     });
 
     this.resourceService.addUsersInBulk(this.resource, userRoles)

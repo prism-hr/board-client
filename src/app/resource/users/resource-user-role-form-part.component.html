@@ -13,21 +13,35 @@
       <p-checkbox label="No expiry date" formControlName="noExpiryDate" binary="true"
                   (onChange)="noExpiryDateChanged()"></p-checkbox>
     </div>
+
     <div *ngIf="!roleGroup.get('noExpiryDate').value" class="input-holder">
       <label style="display: block">
         {{'definitions.role.' + roleGroup.get('role').value | translate}} expiration date:
       </label>
       <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string"></p-calendar>
-      <control-messages
-        [control]="roleGroup.get('expiryDate')"></control-messages>
+      <control-messages [control]="roleGroup.get('expiryDate')"></control-messages>
     </div>
 
     <div class="members dropdown-select">
-      <label for="category">Specify member category</label>
-      <p-dropdown id="category" formControlName="category" [options]="memberCategoryOptions"
+      <label for="memberCategory">Specify member category</label>
+      <p-dropdown id="memberCategory" formControlName="memberCategory" [options]="memberCategoryOptions"
                   placeholder="Select a category"></p-dropdown>
-      <control-messages
-        [control]="roleGroup.get('category')"></control-messages>
+      <control-messages [control]="roleGroup.get('memberCategory')"></control-messages>
+    </div>
+
+    <div class="grid__item small--one-whole medium-up—one-whole input-holder dropdown-select">
+      <label for="memberProgram">Program Name</label>
+      <input pInputText placeholder="Program" formControlName="memberProgram">
+      <control-messages [control]="roleGroup.get('memberProgram')"></control-messages>
+    </div>
+
+    <div class="grid__item small--one-whole medium-up--one-half input-holder dropdown-select">
+      <label for="memberYear">Year of study</label>
+      <div style="margin-top: 6px;">
+        <p-selectButton [options]="availableYears" formControlName="memberYear"
+                        styleClass="ui-button-info"></p-selectButton>
+      </div>
+      <control-messages [control]="roleGroup.get('memberYear')"></control-messages>
     </div>
 
   </div>

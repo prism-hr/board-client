@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import * as _ from 'lodash';
+import {SelectItem} from 'primeng/primeng';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
@@ -22,9 +23,12 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
   @Input() roleType: 'STAFF' | 'MEMBER';
 
   availableRoles: Role[];
-  memberCategoryOptions: { label: string, value: any }[];
+  memberCategoryOptions: SelectItem[];
+  availableYears: SelectItem[];
 
   constructor(private fb: FormBuilder, private translate: TranslateService) {
+    this.availableYears = Array.from({length: 9}, (_, k) => k).map((_, i) => i + 1)
+      .map(i => ({label: '' + i, value: i}));
   }
 
   get roleGroup(): FormArray {
@@ -55,8 +59,9 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
       role: [role, this.lastAdminRole && role === 'ADMINISTRATOR' && this.lastAdminValidator],
       noExpiryDate: [!this.userRole || !this.userRole.expiryDate],
       expiryDate: [this.userRole && this.userRole.expiryDate],
-      category: [this.userRole && this.userRole.memberCategory, // API allows collection of categories, pick one
-        this.roleType === 'MEMBER' && Validators.required]
+      memberCategory: [this.userRole && this.userRole.memberCategory, this.roleType === 'MEMBER' && Validators.required],
+      memberProgram: [this.userRole && this.userRole.memberProgram, this.roleType === 'MEMBER' && Validators.required],
+      memberYear: [this.userRole && this.userRole.memberYear, this.roleType === 'MEMBER' && Validators.required]
     }));
 
     this.parentForm.get('roleGroup').get('role').valueChanges.subscribe(() => {
@@ -84,7 +89,12 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
     const expiryDateControl = roleGroup.get('expiryDate');
     expiryDateControl.setValidators(!noExpiryDate && Validators.required);
     expiryDateControl.updateValueAndValidity();
-    roleGroup.get('category').setValidators(role === 'MEMBER' && Validators.required);
+    roleGroup.get('memberCategory').setValidators(role === 'MEMBER' && Validators.required);
+    roleGroup.get('memberProgram').setValidators(role === 'MEMBER' && Validators.required);
+    roleGroup.get('memberYear').setValidators(role === 'MEMBER' && Validators.required);
+    roleGroup.get('memberCategory').updateValueAndValidity();
+    roleGroup.get('memberProgram').updateValueAndValidity();
+    roleGroup.get('memberYear').updateValueAndValidity();
   }
 
 }

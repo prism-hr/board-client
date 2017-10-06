@@ -64,19 +64,16 @@ export class ResourceUsersComponent implements OnInit {
   createNewUser() {
     this.userForm['submitted'] = true;
     if (this.userForm.invalid) {
+      console.log(this.userForm.get('roleGroup').get('memberProgram').valid)
       return;
     }
     this.loading = true;
     const userValue = this.userForm.get('user').value;
     const roleDef = this.userForm.get('roleGroup').value;
-    const userDTO: UserRoleDTO = {
-      role: roleDef.role,
-      expiryDate: roleDef.expiryDate,
-      memberCategory: roleDef.category,
-      user: _.pick(userValue, ['id', 'givenName', 'surname', 'email'])
-    };
+    const userRoleDTO: UserRoleDTO = _.pick(roleDef, ['role', 'expiryDate', 'memberCategory', 'memberProgram', 'memberYear']);
+    userRoleDTO.user = _.pick(userValue, ['id', 'givenName', 'surname', 'email'])
 
-    this.resourceService.addUser(this.resource, userDTO)
+    this.resourceService.addUser(this.resource, userRoleDTO)
       .subscribe(user => {
         this.loading = false;
         this.userForm['submitted'] = false;
@@ -103,15 +100,17 @@ export class ResourceUsersComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const {action, userRole}: { action: string, userRole: UserRoleRepresentation } = result;
-        const usersCollection = this.users[this.tabCollections[this.usersTabIndex]];
+        const usersCollection: UserRoleRepresentation[] = this.users[this.tabCollections[this.usersTabIndex]];
         if (action === 'edited') {
           const idx = usersCollection.findIndex(ru => ru.user.id === userRole.user.id);
           usersCollection.splice(idx, 1, userRole);
           this.calculateAdminsCount();
         } else if (action === 'deleted') {
           const idx = usersCollection.findIndex(ru => ru.user.id === userRole.user.id);
-          usersCollection.splice(idx, 1);
-          this.calculateAdminsCount();
+          if(idx > -1) { // Safe measure (sometimes when you click quickly somewhere after closing dialog, this function is called again)
+            usersCollection.splice(idx, 1);
+            this.calculateAdminsCount();
+          }
         }
       }
     });

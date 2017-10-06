@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-10-05 10:56:18.
+// Generated using typescript-generator version 1.23.311 on 2017-10-06 10:14:45.
 
 declare namespace b {
 
@@ -229,9 +229,9 @@ declare namespace b {
   }
 
   interface PostResponseReadinessRepresentation {
-    requireMembership?: boolean;
     requireUserDemographicData?: boolean;
     requireUserRoleDemographicData?: boolean;
+    userRole?: UserRoleRepresentation;
     ready?: boolean;
   }
 
@@ -326,10 +326,10 @@ declare namespace b {
 
   interface LocationDefinition {
     name?: string;
-    domicile?: string;
     googleId?: string;
     latitude?: number;
     longitude?: number;
+    domicile?: string;
   }
 
   interface LocalDateTime extends Temporal, TemporalAdjuster, ChronoLocalDateTime<LocalDate>, Serializable {
@@ -405,7 +405,7 @@ declare namespace b {
 
   type Gender = 'FEMALE' | 'MALE' | 'UNDEFINED';
 
-  type AgeRange = 'ZERO_EIGHTEEN' | 'NINETEEN_TWENTYFOUR' | 'TWENTYFIVE_TWENTYNINE' | 'THIRTY_THIRTYNINE' | 'FORTY_FORTYNINE' | 'FIFTY_SIXTYFOUR' | 'SIXTYFOUR_PLUS';
+  type AgeRange = 'ZERO_EIGHTEEN' | 'NINETEEN_TWENTYFOUR' | 'TWENTYFIVE_TWENTYNINE' | 'THIRTY_THIRTYNINE' | 'FORTY_FORTYNINE' | 'FIFTY_SIXTYFOUR' | 'SIXTYFIVE_PLUS';
 
   type DocumentRequestState = 'DISPLAY_FIRST' | 'DISPLAY_AGAIN' | 'DISPLAY_NEVER';
 

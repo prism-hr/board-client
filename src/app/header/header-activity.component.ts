@@ -31,14 +31,15 @@ import ResourceRepresentation = b.ResourceRepresentation;
       <div *ngSwitchCase="'RESPOND_POST_ACTIVITY'" class="activity-inner">
         <a [routerLink]="resourceLink.concat('responses')"
            (click)="activityClicked(activity)" class="activity-w-icon user">
-          <b-image [publicId]="activity.resourceEvent.user.documentImage?.cloudinaryId"
-                   gravity="face" width="50" height="50" radius="max" crop="thumb"
-                   *ngIf="activity.resourceEvent.user.documentImage"></b-image>
-          <div class="avatar" *ngIf="!activity.resourceEvent.user.documentImage">
+          <div class="avatar">
             <span><i class="fa-user"></i></span>
           </div>
           <div class="activity-copy">
-            <b>{{activity.resourceEvent.user.givenName}} {{activity.resourceEvent.user.surname}}</b>
+            Someone
+            (<b>{{'definitions.gender.' + activity.resourceEvent.gender | translate}}</b>)
+            <span *ngIf="activity.resourceEvent.locationNationality">
+              from <b>{{activity.resourceEvent.locationNationality.name}}</b>
+            </span>
             <span>has responded to <b>{{resource.name}}</b></span>
             <p>{{activity.createdTimestamp | date: 'short' }}</p>
           </div>

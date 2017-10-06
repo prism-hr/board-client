@@ -52,6 +52,7 @@ import UserRoleDTO = b.UserRoleDTO;
                         placeholder="Select a category" (onChange)="categoryChanged($event)"></p-dropdown>
             <control-messages [control]="membershipForm.get('memberCategory')"></control-messages>
           </div>
+          
           <div class="grid__item small--one-whole medium-up--one-half input-holder dropdown-select">
             <label for="memberProgram">Program Name</label>
             <input pInputText placeholder="Program" formControlName="memberProgram">

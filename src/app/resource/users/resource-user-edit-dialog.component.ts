@@ -5,6 +5,7 @@ import {ResourceService} from '../../services/resource.service';
 import ResourceRepresentation = b.ResourceRepresentation;
 import UserRoleRepresentation = b.UserRoleRepresentation;
 import UserRoleDTO = b.UserRoleDTO;
+import * as _ from 'lodash';
 
 @Component({
   template: `
@@ -58,12 +59,8 @@ export class ResourceUserEditDialogComponent implements OnInit {
     }
     this.progress = true;
     const roleDef = this.userForm.get('roleGroup').value;
-    const role: UserRoleDTO = {
-      role: roleDef.role,
-      expiryDate: roleDef.expiryDate,
-      memberCategory: roleDef.category
-    };
-    this.resourceService.updateResourceUser(this.resource, this.userRole.user, role)
+    const userRoleDTO: UserRoleDTO = _.pick(roleDef, ['role', 'expiryDate', 'memberCategory', 'memberProgram', 'memberYear']);
+    this.resourceService.updateResourceUser(this.resource, this.userRole.user, userRoleDTO)
       .subscribe(userRole => {
         this.progress = false;
         this.dialogRef.close({action: 'edited', userRole});
