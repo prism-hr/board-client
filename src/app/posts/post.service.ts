@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Response} from '@angular/http';
+import {Response, URLSearchParams} from '@angular/http';
 import {JwtHttp} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
+import {EntityFilter} from '../general/filter/filter.component';
 import {ResourceService} from '../services/resource.service';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
@@ -34,15 +35,19 @@ export class PostService {
   }
 
   requestDepartmentMembership(department: DepartmentRepresentation, userRoleDTO: UserRoleDTO, canPursue: boolean): Observable<Response> {
-    if(canPursue) {
+    if (canPursue) {
       return this.http.put('/api/departments/' + department.id + '/memberRequests', userRoleDTO);
     } else {
       return this.http.post('/api/departments/' + department.id + '/memberRequests', userRoleDTO);
     }
   }
 
-  getResponses(post: PostRepresentation): Observable<ResourceEventRepresentation[]> {
-    return this.http.get('/api/posts/' + post.id + '/responses').map(res => res.json());
+  getResponses(post: PostRepresentation, filter?: EntityFilter): Observable<ResourceEventRepresentation[]> {
+    const params = new URLSearchParams();
+    if (filter && filter.searchTerm) {
+      params.set('searchTerm', filter.searchTerm);
+    }
+    return this.http.get('/api/posts/' + post.id + '/responses', {search: params}).map(res => res.json());
   }
 
 }

@@ -3,6 +3,7 @@ import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
+import {MatCardModule, MatDialogModule, MatSnackBarModule} from '@angular/material';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
@@ -90,7 +91,6 @@ import {PostItemComponent} from './posts/item/post-item.component';
 import {PostResolver} from './posts/post-resolver.service';
 import {PostTabsComponent} from './posts/post-tabs.component';
 import {PostService} from './posts/post.service';
-import {PostResponsesResolver} from './posts/responses/post-responses-resolver.service';
 import {PostResponsesComponent} from './posts/responses/post-responses.component';
 import {PostViewComponent} from './posts/view/post-view.component';
 import {ResourceActionsBoxComponent} from './resource/actions-box/resource-actions-box.component';
@@ -108,7 +108,6 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
-import {MatCardModule, MatDialogModule, MatSnackBarModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -298,9 +297,6 @@ import {MatCardModule, MatDialogModule, MatSnackBarModule} from '@angular/materi
                           {
                             path: 'responses',
                             component: PostResponsesComponent,
-                            resolve: {
-                              responses: PostResponsesResolver
-                            },
                             canActivate: [AuthGuard]
                           }
                         ]
@@ -374,7 +370,7 @@ import {MatCardModule, MatDialogModule, MatSnackBarModule} from '@angular/materi
       deps: [DefinitionsService],
       multi: true
     },
-    AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostResponsesResolver, BoardsResolver,
+    AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, BoardsResolver,
     AccountSuppressionsResolver, PostService, DepartmentService, UserService, ValidationService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, UnsubscribeDialogComponent, ResourceCommentDialogComponent,
