@@ -182,7 +182,7 @@
       </mat-card-content>
       <mat-card-actions fxLayout="row" fxLayoutAlign="space-between center">
         <a pButton [routerLink]="cancelLink()" class="ui-button-secondary" label="Cancel"></a>
-        <span *ngIf="actionView === 'REVISE'">
+        <span *ngIf="actionView === 'REVIEW'">
           <button pButton class="ui-button-warning" [disabled]="postForm.invalid" label="Request Revision"
                   (click)="executeAction('SUSPEND', true)"></button>
           <button pButton class="ui-button-warning" [disabled]="postForm.invalid" label="Accept"
@@ -190,7 +190,7 @@
           <button pButton class="ui-button-secondary" label="Reject" (click)="executeAction('REJECT')"></button>
         </span>
 
-        <span *ngIf="actionView === 'CORRECT'">
+        <span *ngIf="actionView === 'REVISE'">
           <button pButton label="Correct" class="ui-button-warning" (click)="executeAction('CORRECT', true)"></button>
         </span>
 

@@ -176,7 +176,7 @@ export class ResourceService {
   getActionView(resource: ResourceRepresentation<any>): ResourceActionView {
     const actionNames = resource.actions.map(a => a.action);
     if (_.difference(['ACCEPT', 'SUSPEND', 'REJECT'], actionNames).length === 0) {
-      return 'REVISE';
+      return 'REVIEW';
     }
     if (_.difference(['CORRECT'], actionNames).length === 0) {
       return 'CORRECT';
@@ -191,11 +191,11 @@ export class ResourceService {
     let actions: Action[];
     switch (resource.state) {
       case 'DRAFT': {
-       actions = ['SUSPEND', 'ACCEPT', 'REJECT', 'WITHDRAW'];
+       actions = ['WITHDRAW'];
         break;
       }
       case 'SUSPENDED': {
-        actions = ['CORRECT', 'ACCEPT', 'REJECT', 'WITHDRAW'];
+        actions = ['WITHDRAW'];
         break;
       }
       case 'PENDING': {
@@ -254,4 +254,4 @@ export class ResourceService {
   }
 }
 
-export type ResourceActionView = 'VIEW' | 'EDIT' | 'REVISE' | 'CORRECT' | 'CREATE';
+export type ResourceActionView = 'VIEW' | 'EDIT' | 'REVIEW' | 'REVISE' | 'CREATE';
