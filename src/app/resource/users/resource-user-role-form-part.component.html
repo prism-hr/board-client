@@ -22,22 +22,22 @@
       <control-messages [control]="roleGroup.get('expiryDate')"></control-messages>
     </div>
 
-    <div class="members dropdown-select">
+    <div class="members input-holder dropdown-select">
       <label for="memberCategory">Specify member category</label>
       <p-dropdown id="memberCategory" formControlName="memberCategory" [options]="memberCategoryOptions"
                   placeholder="Select a category"></p-dropdown>
       <control-messages [control]="roleGroup.get('memberCategory')"></control-messages>
     </div>
 
-    <div class="grid__item small--one-whole medium-up—one-whole input-holder dropdown-select">
+    <div class="dropdown-select input-holder">
       <label for="memberProgram">Program Name</label>
       <input pInputText placeholder="Research Degree: Computer Science" formControlName="memberProgram">
       <control-messages [control]="roleGroup.get('memberProgram')"></control-messages>
     </div>
 
-    <div class="grid__item small--one-whole medium-up--one-half input-holder dropdown-select">
+    <div class="input-holder">
       <label for="memberYear">Year of study</label>
-      <div style="margin-top: 6px;">
+      <div style="margin-top: 6px; font-size: 0.9rem">
         <p-selectButton [options]="availableYears" formControlName="memberYear"
                         styleClass="ui-button-info"></p-selectButton>
       </div>

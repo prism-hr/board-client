@@ -1,429 +1,333 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto);
-.clearfix {
-  *zoom: 1;
-}
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-  line-height: 0;
-}
-.clearfix:after {
-  clear: both;
-}
+.clearfix, .advert-content, .prism-connect .prism-summary .companies-list ul {
+  *zoom: 1; }
+  .clearfix:before, .advert-content:before, .prism-connect .prism-summary .companies-list ul:before, .clearfix:after, .advert-content:after, .prism-connect .prism-summary .companies-list ul:after {
+    display: table;
+    content: "";
+    line-height: 0; }
+  .clearfix:after, .advert-content:after, .prism-connect .prism-summary .companies-list ul:after {
+    clear: both; }
+
+.material-icons.md-18 {
+  font-size: 18px; }
+
+.material-icons.md-24 {
+  font-size: 24px; }
+
+.material-icons.md-36 {
+  font-size: 36px; }
+
+.material-icons.md-48 {
+  font-size: 48px; }
+
 .opportunities.small .prism-connect .sub-header {
-  display: none;
-}
+  display: none; }
 .opportunities.small .prism-connect .btn {
   padding: 2px 5px;
-  font-size: 11px;
-}
+  font-size: 11px; }
 .opportunities.small .prism-connect .prism-header {
-  height: 35px;
-}
-.opportunities.small .prism-connect .prism-header .logo {
-  margin-top: 2px;
-  height: auto;
-}
-.opportunities.small .prism-connect .prism-header .logo .navbar-brand {
-  line-height: 15px;
-  height: 15px;
-}
+  height: 35px; }
+  .opportunities.small .prism-connect .prism-header .logo {
+    margin-top: 2px;
+    height: auto; }
+    .opportunities.small .prism-connect .prism-header .logo .navbar-brand {
+      line-height: 15px;
+      height: 15px; }
 .opportunities.medium .prism-connect.opportunity.list .sub-header {
-  display: none;
-}
+  display: none; }
 .opportunities.medium .prism-connect.opportunity.list .prism-main h1 {
-  font-size: 18px;
-}
+  font-size: 18px; }
 .opportunities.medium .prism-connect.opportunity.list .prism-main .summary {
-  font-size: 13px;
-}
+  font-size: 13px; }
 .opportunities.medium .prism-connect.opportunity.list .prism-main .label {
-  font-size: 11px;
-}
+  font-size: 11px; }
+
 .prism-connect {
-  font-family: 'Roboto';
-}
-.prism-connect a {
-  text-decoration: none;
-  color: #ea6651;
-}
-.prism-connect.opportunity .prism-main {
-  padding: 5px 13px;
-  border-bottom: none;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-.prism-connect.opportunity.list {
-  border: 1px solid #57acd5;
-  border-radius: 2px;
-}
-.prism-connect.opportunity.list .prism-main {
-  border: none;
-}
-.prism-connect.opportunity.list .prism-apply-holder {
-  border: none;
-  padding-right: 0;
-}
-.prism-connect.opportunity.list .prism-main > ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  min-height: 34px;
-}
-.prism-connect.opportunity.list .prism-main > ul > li {
-  margin: 0;
-  padding: 0;
-}
-.prism-connect.opportunity.list .prism-main.static-list > ul > li {
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #57acd5;
-}
-.prism-connect.opportunity.list .prism-main.static-list > ul > li:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-}
-.prism-connect.opportunity.list .prism-main.static-list .prism-apply-holder {
-  padding-top: 10px;
-  padding-bottom: 0;
-}
-.prism-connect.opportunity.list .prism-main.slider {
-  padding: 5px 0 0;
-  margin: 0 13px;
-  overflow: hidden;
-}
-.prism-connect.opportunity.list .prism-main.slider > ul {
-  position: relative;
-  list-style: none;
-}
-.prism-connect.opportunity.list .prism-main.slider > ul > li {
-  position: relative;
-  display: block;
-  float: left;
-}
-.prism-connect.opportunity.list .prism-main.slider > ul  > li .prism-apply-holder {
-  padding-top: 0;
-  padding-bottom: 10px;
-}
-.prism-connect .prism-header {
-  display: block;
-  background: #57ACD5;
-  height: 40px;
-}
-.prism-connect .prism-header .logo {
-  width: 100px;
-  float: left;
-  margin-top: 3px;
-  margin-bottom: 4px;
-}
-.prism-connect .prism-header .logo .navbar-brand {
-  float: left;
-  padding: 7px 15px;
-  font-size: 18px;
-  line-height: 20px;
-  height: 20px;
-}
-.prism-connect .prism-header .logo .navbar-brand img {
-  width: 100%;
-}
-.prism-connect .prism-header .sub-header {
-  float: left;
-  color: white;
-  font-size: 16px;
-  margin-top: 8px;
-}
-.prism-connect .prism-header .sub-header small {
-  font-size: 65%;
-}
-.prism-connect .prism-footer {
-  border-top: 1px solid #57ACD5;
-  padding: 7px 14px 7px;
-  background: #dbebf3;
-}
-.prism-connect .prism-footer .btn-primary {
-  float: right;
-}
-.prism-connect .prism-main {
-  overflow: auto;
-  zoom: 1;
-  border: 1px solid #57ACD5;
-  border-top: none;
-  padding: 5px;
-}
-.prism-connect .prism-main::before,
-.prism-connect .prism-main::after {
-  display: table;
-  content: "";
-  line-height: 0;
-}
-.prism-connect .prism-main .btn-primary {
-  float: right;
-}
-.prism-connect .prism-main h1 {
-  font-size: 22px;
-  margin-top: 2px;
-  margin-bottom: 5px;
-  font-family: 'Roboto';
-}
-.prism-connect .prism-main h1 a {
-  font-weight: 400;
-}
-.prism-connect .prism-main h2 {
-  font-size: 13px;
-  font-weight: 300;
-}
-.prism-connect .prism-main h2 span {
-  font-style: italic;
-  color: #57ACD5;
-}
-.prism-connect .prism-main .label {
-  font-family: 'Roboto';
-  float: right;
-  font-size: 12px;
-  font-weight: 300;
-  background-color: #ea6651;
-  display: inline;
-  padding: .3em .6em;
-  line-height: 1;
-  color: #ffffff;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  border-radius: .25em;
-  text-transform: capitalize;
-  margin-top: 3px;
-}
-.prism-connect .prism-main .summary {
-  margin: 0;
-  font-size: 14px;
-}
-.prism-connect .prism-main .image-container {
-  width: 130px;
-  float: right;
-  margin-left: 10px;
-  margin-bottom: 5px;
-}
-.prism-connect .prism-main .image-container .image-flex {
-  background: #ffffff;
-  display: flex;
-  border-radius: 1px;
-  height: 92px;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-  text-align: center;
-  border: 1px solid #57ACD5;
-}
-.prism-connect .prism-main .image-container .image-flex .image-logo {
-  display: flex;
-  justify-content: center;
-  /* align horizontal */
-  align-items: center;
-}
-.prism-connect .prism-main .image-container .image-flex .image-logo img {
-  max-height: 106px;
-  max-width: 106px;
-  position: relative;
-  vertical-align: middle;
-}
-.prism-connect .prism-apply-holder {
-  border: 1px solid #57ACD5;
-  border-top: none;
-  padding: 5px;
-  text-align: right;
-  clear: both;
-}
-.prism-connect .short-description-holder {
-  border-top: 1px solid #dde4e2;
-  border-bottom: 1px solid #dde4e2;
-  background: #fbfbfb;
-  padding: 4px 2px 6px 2px;
-  position: relative;
-  display: block;
-  margin-bottom: 10px;
-}
-.prism-connect .btn.enquire {
-  float: left;
-  margin-left: 7px;
-}
-.prism-connect .short-description-details {
-  color: #9797a5;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  min-height: 34px;
-}
-.prism-connect .short-description-details > li {
-  width: 50%;
-  float: left;
-  font-size: 13px;
-  font-weight: normal;
-}
-.prism-connect .short-description-details > li:before {
-  content: "\2022";
-  margin-right: 3px;
-  font-size: 14px;
-}
-.prism-connect .short-description-details > li:first-child {
-  width: 60%;
-}
-.prism-connect .short-description-details > li:nth-child(2) {
-  width: 40%;
-}
-.prism-connect .short-description-details > li .title {
-  color: #333 !important;
-}
-.prism-connect .short-description-details > li.locations {
-  width: 100%;
-}
-.prism-connect .short-description-details > li.locations ul {
-  padding-left: 12px;
-}
-.prism-connect .control {
-  float: right;
-  margin-top: 6px;
-  margin-right: 6px;
-  color: white;
-}
-.prism-connect .btn {
-  display: inline-block;
-  margin-bottom: 0;
-  font-weight: normal;
-  text-align: center;
-  vertical-align: middle;
-  touch-action: manipulation;
-  cursor: pointer;
-  background-image: none;
-  border: 1px solid transparent;
-  white-space: nowrap;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857143;
-  border-radius: 2px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-.prism-connect .btn-success {
-  color: #ffffff;
-  background-color: #35c2a3;
-  border-color: #30ae92;
-}
-.prism-connect .btn-success:hover {
-  color: #ffffff;
-  background-color: #2a9a81;
-  border-color: #227e6a;
-}
-.prism-connect .btn-primary,
-.prism-connect .control_prev,
-.prism-connect .control_next {
-  color: #ffffff;
-  background-color: #ea6651;
-  border-color: #e7523a;
-}
-.prism-connect .btn-primary:hover,
-.prism-connect .control_prev:hover,
-.prism-connect .control_next:hover {
-  color: #ffffff;
-  background-color: #e53e23;
-  border-color: #cc3119;
-}
-.prism-connect .control_prev,
-.prism-connect .control_next {
-  font-size: 17px;
-  padding: 0px 6px;
-}
-.prism-connect .btn-default {
-  color: #333333;
-  background-color: #ffffff;
-  border-color: #cccccc;
-}
-.prism-connect .btn-default:hover {
-  color: #333333;
-  background-color: #e6e6e6;
-  border-color: #adadad;
-}
-.prism-connect .prism-summary {
-  font-family: 'Roboto';
-}
-.prism-connect .prism-summary .projects {
-  width: 25%;
-  float: left;
-}
-.prism-connect .prism-summary .projects .content {
-  border: 1px solid #57acd5;
-  color: #57acd5;
-  border-radius: 2px;
-  padding-top: 0px;
-  padding-bottom: 4px;
-}
-.prism-connect .prism-summary .projects .content .title {
-  text-align: center;
-  font-size: 22px;
-  font-weight: 300;
-  margin-bottom: 2px;
-}
-.prism-connect .prism-summary .projects .content .title span {
-  font-size: 28px;
-  line-height: 3rem;
-  display: block;
-}
-.prism-connect .prism-summary .companies-list {
-  color: #666666;
-  float: left;
-  width: 73%;
-  margin-left: 2%;
-}
-.prism-connect .prism-summary .companies-list p {
-  clear: left;
-  margin-bottom: 0;
-  padding-top: 6px;
-}
-.prism-connect .prism-summary .companies-list .btn {
-  padding: 4px 5px;
-  margin-top: -2px;
-  font-size: 12px;
-}
-.prism-connect .prism-summary .companies-list h2 {
-  margin-top: 0;
-  color: #57acd5 !important;
-  font-weight: 300;
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-.prism-connect .prism-summary .companies-list ul {
-  margin: 0 0 16px 0;
-  padding-left: 15px;
-  display: block;
-  *zoom: 1;
-}
-.prism-connect .prism-summary .companies-list ul li {
-  font-size: 14px;
-  float: left;
-  width: 50%;
-}
-.prism-connect .prism-summary .companies-list ul li strong {
-  color: #57acd5;
-}
+  font-family: 'Roboto'; }
+  .prism-connect a {
+    text-decoration: none;
+    color: #e75223; }
+  .prism-connect.opportunity .prism-main {
+    padding: 5px 13px;
+    border-bottom: none;
+    font-family: 'Roboto'; }
+  .prism-connect.opportunity.list {
+    border: 1px solid #2a7d9a;
+    border-radius: 2px; }
+    .prism-connect.opportunity.list .prism-main {
+      border: none; }
+    .prism-connect.opportunity.list .prism-apply-holder {
+      border: none;
+      padding-right: 0; }
+    .prism-connect.opportunity.list .prism-main > ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      min-height: 34px; }
+      .prism-connect.opportunity.list .prism-main > ul > li {
+        margin: 0;
+        padding: 0; }
+    .prism-connect.opportunity.list .prism-main.static > ul > li {
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #767884; }
+      .prism-connect.opportunity.list .prism-main.static > ul > li:last-child {
+        border-bottom: none;
+        margin-bottom: 0; }
+    .prism-connect.opportunity.list .prism-main.static .prism-apply-holder {
+      padding-top: 10px;
+      padding-bottom: 0; }
+    .prism-connect.opportunity.list .prism-main.slider {
+      padding: 5px 0 0;
+      margin: 0 13px;
+      overflow: hidden; }
+      .prism-connect.opportunity.list .prism-main.slider > ul {
+        position: relative;
+        list-style: none; }
+        .prism-connect.opportunity.list .prism-main.slider > ul > li {
+          position: relative;
+          display: block;
+          float: left; }
+          .prism-connect.opportunity.list .prism-main.slider > ul > li .prism-apply-holder {
+            padding-top: 0;
+            padding-bottom: 10px; }
+  .prism-connect .prism-header {
+    display: block;
+    background: #2a7d9a;
+    height: 40px; }
+    .prism-connect .prism-header .logo {
+      width: 95px;
+      float: left;
+      margin: 8px 10px 4px 16px; }
+      .prism-connect .prism-header .logo .navbar-brand img {
+        max-width: 100%; }
+    .prism-connect .prism-header .sub-header {
+      float: left;
+      color: white;
+      font-size: 16px;
+      margin-top: 8px; }
+      .prism-connect .prism-header .sub-header small {
+        font-size: 65%; }
+  .prism-connect .prism-footer {
+    border-top: 1px solid #2a7d9a;
+    padding: 7px 14px 7px;
+    background: #ececec; }
+    .prism-connect .prism-footer .btn-primary {
+      float: right; }
+  .prism-connect .prism-main {
+    zoom: 1;
+    border: 1px solid #2a7d9a;
+    border-top: none;
+    padding: 5px; }
+    .prism-connect .prism-main::before, .prism-connect .prism-main::after {
+      display: table;
+      content: "";
+      line-height: 0; }
+    .prism-connect .prism-main .btn-primary {
+      float: right; }
+    .prism-connect .prism-main h1 {
+      font-size: 22px;
+      margin-top: 2px;
+      margin-bottom: 5px;
+      font-family: 'Roboto'; }
+      .prism-connect .prism-main h1 a {
+        font-weight: 500; }
+    .prism-connect .prism-main h2 {
+      color: #393736;
+      padding: 0 0 6px;
+      border-bottom: 1px solid #dde4e2;
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 300; }
+      .prism-connect .prism-main h2 em {
+        color: #999; }
+      .prism-connect .prism-main h2 .location {
+        padding-left: 15px;
+        font-weight: 400;
+        font-size: 14px;
+        display: inline-block; }
+        .prism-connect .prism-main h2 .location i {
+          color: #ffbf00; }
+    .prism-connect .prism-main .closing-date {
+      font-size: 12px;
+      color: #999; }
+    .prism-connect .prism-main .label {
+      font-family: 'Roboto';
+      float: right;
+      font-size: 12px;
+      font-weight: 300;
+      background-color: #e75223;
+      display: inline;
+      padding: .3em .6em;
+      line-height: 1;
+      color: #ffffff;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: baseline;
+      border-radius: 2px;
+      text-transform: capitalize;
+      margin-top: 3px; }
+    .prism-connect .prism-main .summary {
+      font-size: 14px;
+      margin: 10px 15px 0 0; }
+    .prism-connect .prism-main .image-container {
+      width: 130px;
+      float: right;
+      margin-left: 10px;
+      margin-bottom: 5px; }
+      .prism-connect .prism-main .image-container .image-flex {
+        background: #ffffff;
+        display: flex;
+        border-radius: 0px;
+        height: 92px;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+        text-align: center;
+        border: 1px solid #2a7d9a; }
+        .prism-connect .prism-main .image-container .image-flex .image-logo {
+          display: flex;
+          justify-content: center;
+          /* align horizontal */
+          align-items: center; }
+          .prism-connect .prism-main .image-container .image-flex .image-logo img {
+            max-height: 106px;
+            max-width: 106px;
+            position: relative;
+            vertical-align: middle; }
+  .prism-connect .prism-apply-holder {
+    border: 1px solid #2a7d9a; }
+  .prism-connect .short-description-holder {
+    border-top: 1px solid #dde4e2;
+    border-bottom: 1px solid #dde4e2;
+    background: #fbfbfb;
+    padding: 4px 2px 6px 2px;
+    position: relative;
+    display: block;
+    margin-bottom: 10px; }
+  .prism-connect .btn.enquire {
+    float: left;
+    margin-left: 7px; }
+  .prism-connect .control {
+    float: right;
+    margin-top: 6px;
+    margin-right: 6px;
+    color: white; }
+  .prism-connect .btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 2px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
+  .prism-connect .btn-success {
+    color: #ffffff;
+    background-color: #569745;
+    border-color: #569745; }
+    .prism-connect .btn-success:hover {
+      color: #ffffff;
+      background-color: #4a823b;
+      border-color: #4a823b; }
+  .prism-connect .btn-classic {
+    color: #2a7d9a;
+    text-decoration: underline;
+    padding: 6px 0; }
+    .prism-connect .btn-classic:hover {
+      text-decoration: none; }
+  .prism-connect .btn-primary, .prism-connect .control_prev, .prism-connect .control_next {
+    color: #ffffff;
+    background-color: #e75223;
+    border-color: #e75223; }
+    .prism-connect .btn-primary:hover, .prism-connect .control_prev:hover, .prism-connect .control_next:hover {
+      color: #ffffff;
+      background-color: #e53e23;
+      border-color: #cc3119; }
+  .prism-connect .control_prev, .prism-connect .control_next {
+    font-size: 17px;
+    padding: 0px 6px; }
+  .prism-connect .btn-default {
+    color: #333333;
+    background-color: #ffffff;
+    border-color: #cccccc; }
+    .prism-connect .btn-default:hover {
+      color: #333333;
+      background-color: #e6e6e6;
+      border-color: #adadad; }
+  .prism-connect .prism-summary {
+    font-family: 'Roboto'; }
+    .prism-connect .prism-summary .projects {
+      width: 25%;
+      float: left; }
+      .prism-connect .prism-summary .projects .content {
+        border: 1px solid #57acd5;
+        color: #57acd5;
+        border-radius: 2px;
+        padding-top: 0px;
+        padding-bottom: 4px; }
+        .prism-connect .prism-summary .projects .content .title {
+          text-align: center;
+          font-size: 22px;
+          font-weight: 300;
+          margin-bottom: 2px; }
+          .prism-connect .prism-summary .projects .content .title span {
+            font-size: 28px;
+            line-height: 3rem;
+            display: block; }
+    .prism-connect .prism-summary .companies-list {
+      color: #666666;
+      float: left;
+      width: 73%;
+      margin-left: 2%; }
+      .prism-connect .prism-summary .companies-list p {
+        clear: left;
+        margin-bottom: 0;
+        padding-top: 6px; }
+      .prism-connect .prism-summary .companies-list .btn {
+        padding: 4px 5px;
+        margin-top: -2px;
+        font-size: 12px; }
+      .prism-connect .prism-summary .companies-list h2 {
+        margin-top: 0;
+        color: #57acd5 !important;
+        font-weight: 300;
+        font-size: 20px;
+        margin-bottom: 10px; }
+      .prism-connect .prism-summary .companies-list ul {
+        margin: 0 0 16px 0;
+        padding-left: 15px;
+        display: block; }
+        .prism-connect .prism-summary .companies-list ul li {
+          font-size: 14px;
+          float: left;
+          width: 50%; }
+          .prism-connect .prism-summary .companies-list ul li strong {
+            color: #57acd5; }
+
 @media (max-width: 740px) {
   .prism-connect .short-description-details {
-    min-height: 34px;
-  }
-  .prism-connect .short-description-details > li {
-    width: 100%;
-    float: none;
-  }
-  .prism-connect .short-description-details > li:first-child {
-    width: 100%;
-  }
-  .prism-connect .short-description-details > li:nth-child(2) {
-    width: 100%;
-  }
-  .prism-connect .short-description-details > li.locations {
-    width: 100%;
-  }
-  .prism-connect .short-description-details > li.locations ul {
-    padding-left: 12px;
-  }
-}
+    min-height: 34px; }
+    .prism-connect .short-description-details > li {
+      width: 100%;
+      float: none; }
+      .prism-connect .short-description-details > li:first-child {
+        width: 100%; }
+      .prism-connect .short-description-details > li:nth-child(2) {
+        width: 100%; }
+      .prism-connect .short-description-details > li.locations {
+        width: 100%; }
+        .prism-connect .short-description-details > li.locations ul {
+          padding-left: 12px; } }
+
+/*# sourceMappingURL=widgets.css.map */
