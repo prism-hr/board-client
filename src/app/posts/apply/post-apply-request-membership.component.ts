@@ -17,6 +17,9 @@ import UserRoleDTO = b.UserRoleDTO;
 @Component({
   selector: 'b-post-apply-request-membership',
   template: `
+    <p-messages
+      [value]="[{severity:'info', detail:'Message to the applicant about why this questions'}]"
+      [closable]="false"></p-messages>
     <h2 style="margin-bottom: 20px;">Joining {{department.name}}</h2>
     <form [formGroup]="membershipForm" novalidate>
       <div class="grid">
