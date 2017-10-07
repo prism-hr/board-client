@@ -1,0 +1,64 @@
+@import '../../../assets/variables';
+
+.contact-section {
+  padding-bottom:40px;
+  text-align: center;
+  h1 {
+    font-size:2rem;
+    color: $uclblue;
+    font-weight:400;
+    font-family:'Roboto';
+    margin-bottom:20px;
+  }
+  h2 {
+    font-size:2rem;
+    color: $uclblue;
+    font-weight:400;
+    font-family:'Roboto';
+    margin-bottom:20px;
+    margin-top:40px;
+  }
+  hr {
+    margin-top:60px;
+    margin-bottom:60px;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(87, 172, 213, 0), rgba(87, 172, 213, 1), rgba(87, 172, 213, 0));
+  }
+
+}
+.contact-section {
+  .thanks-message{
+    text-align: center ;
+  }
+  .section {
+    text-align: left;
+  }
+  .title {
+    text-align: center;
+  }
+  .team-picture {
+    width: 56%;
+    height: auto;
+    margin: auto;
+    img {
+      border-radius: 50%;
+      width: 100%;
+      height: auto;
+    }
+  }
+  h4 {
+    font-size: 1.4rem;
+    color: $uclblue;
+    margin-bottom:0;
+  }
+  h5 {
+    margin-top: 4px;
+    font-size: 1.2rem;
+    color: $uclgreen;
+  }
+  hr {
+    margin-top:14px;
+    margin-bottom:12px;
+  }
+}

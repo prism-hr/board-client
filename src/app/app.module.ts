@@ -108,6 +108,9 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
+import { AboutUsComponent } from './pages/about/about-us.component';
+import { PrivacyComponent } from './pages/privacy/privacy.component';
+import { TermsComponent } from './pages/terms/terms.component';
 
 @NgModule({
   declarations: [
@@ -163,7 +166,10 @@ import {ValidationService} from './validation/validation.service';
     PostItemComponent,
     ResourceActionsBoxComponent,
     ResourceCommentDialogComponent,
-    UserImageDialogComponent
+    UserImageDialogComponent,
+    AboutUsComponent,
+    PrivacyComponent,
+    TermsComponent
   ],
   imports: [
     RouterModule.forRoot([
@@ -189,6 +195,18 @@ import {ValidationService} from './validation/validation.service';
           {
             path: 'newBoard',
             component: BoardNewComponent
+          },
+          {
+            path: 'about',
+            component: AboutUsComponent
+          },
+          {
+            path: 'privacyPolicy',
+            component: PrivacyComponent
+          },
+          {
+            path: 'termsConditions',
+            component: TermsComponent
           },
           {
             path: 'newPost',
