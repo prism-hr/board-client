@@ -179,7 +179,7 @@ export class ResourceService {
       return 'REVIEW';
     }
     if (_.difference(['CORRECT'], actionNames).length === 0) {
-      return 'CORRECT';
+      return 'REVISE';
     }
     if (_.difference(['EDIT'], actionNames).length === 0) {
       return 'EDIT';
