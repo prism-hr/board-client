@@ -12,7 +12,6 @@ import {Title} from '@angular/platform-browser';
 export class PostViewComponent implements OnInit {
   post: PostRepresentation;
   canEdit: boolean;
-  operations: ResourceOperationRepresentation[];
   publishedTimestamp: string;
   today: Date;
   showOperationDetails: boolean;
