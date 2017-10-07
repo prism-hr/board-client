@@ -59,6 +59,6 @@ export class ResourceActionsBoxComponent implements OnChanges {
   private postActionHandler(post) {
     Object.assign(this.resource, post);
     this.generateActionItems();
-    this.snackBar.open('Your action was executed successfully.', null, {duration: 3000});
+    this.snackBar.open('Action performed successfully.', null, {duration: 3000});
   }
 }
