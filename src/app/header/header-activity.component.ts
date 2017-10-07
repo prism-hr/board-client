@@ -64,10 +64,10 @@ import ResourceRepresentation = b.ResourceRepresentation;
                 New post <b>'{{post.name}}'</b> in {{department.name}} {{board.name}}
               </span>
               <span *ngSwitchCase="'SUSPEND_POST_ACTIVITY'">
-                New change request for post <b>{{post.name}}</b>
+                New revision request for post <b>{{post.name}}</b>
               </span>
               <span *ngSwitchCase="'CORRECT_POST_ACTIVITY'">
-                Post <b>{{post.name}}</b> has been corrected
+                Post <b>{{post.name}}</b> has been revised
               </span>
               <span *ngSwitchCase="'JOIN_DEPARTMENT_ACTIVITY'">
                 You have been added as a member of <b>{{department.name}}</b>

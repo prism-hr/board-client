@@ -191,11 +191,11 @@ export class ResourceService {
     let actions: Action[];
     switch (resource.state) {
       case 'DRAFT': {
-       actions = ['WITHDRAW'];
+       actions = ['REJECT', 'WITHDRAW'];
         break;
       }
       case 'SUSPENDED': {
-        actions = ['WITHDRAW'];
+        actions = ['REJECT', 'WITHDRAW'];
         break;
       }
       case 'PENDING': {
