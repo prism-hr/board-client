@@ -188,7 +188,38 @@ export class ResourceService {
   }
 
   getActions(resource: ResourceRepresentation<any>): Action[] {
-    const actions: Action[] = ['SUSPEND', 'REJECT', 'WITHDRAW', 'RESTORE', 'ACCEPT'];
+    let actions: Action[];
+    switch (resource.state) {
+      case 'DRAFT': {
+       actions = ['SUSPEND', 'ACCEPT', 'REJECT', 'WITHDRAW'];
+        break;
+      }
+      case 'SUSPENDED': {
+        actions = ['CORRECT', 'WITHDRAW'];
+        break;
+      }
+      case 'PENDING': {
+        actions = ['REJECT', 'WITHDRAW'];
+        break;
+      }
+      case 'ACCEPTED': {
+        actions = ['REJECT', 'WITHDRAW'];
+        break;
+      }
+      case 'EXPIRED': {
+        actions = ['REJECT', 'WITHDRAW'];
+        break;
+      }
+      case 'REJECTED': {
+        actions = ['RESTORE'];
+        break;
+      }
+      case 'WITHDRAWN': {
+        actions = ['RESTORE'];
+        break;
+      }
+    }
+
     return actions.filter(a => resource.actions.find(actionDef => actionDef.action === a));
   }
 
