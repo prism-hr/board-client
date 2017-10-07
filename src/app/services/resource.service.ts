@@ -195,7 +195,7 @@ export class ResourceService {
         break;
       }
       case 'SUSPENDED': {
-        actions = ['CORRECT', 'WITHDRAW'];
+        actions = ['CORRECT', 'ACCEPT', 'REJECT', 'WITHDRAW'];
         break;
       }
       case 'PENDING': {
