@@ -108,6 +108,6 @@
   },
   "actionView": {
     "REVIEW": "Review",
-    "CORRECT": "Revise"
+    "REVISE": "Revise"
   }
 }

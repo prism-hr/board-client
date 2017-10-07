@@ -8,10 +8,10 @@ import Action = b.Action;
 @Component({
   selector: 'b-resource-actions-box',
   template: `
-    <span *ngIf="actionView !== 'VIEW' && actionView !== 'EDIT'">
-      <a pButton class="small" routerLink="edit" [label]="'actionView.' + actionView | translate"></a>
-    </span>
-    <div *ngIf="actions.length > 0">
+    <div *ngIf="actions.length > 0 || actionView !== 'VIEW' && actionView !== 'EDIT'">
+      <span *ngIf="actionView !== 'VIEW' && actionView !== 'EDIT'">
+        <a pButton class="ui-button-info small" routerLink="edit" [label]="'actionView.' + actionView | translate"></a>
+      </span>
       <span *ngFor="let action of actions">
         <button pButton class="small {{action | lowercase}}" (click)="openActionDialog(action)"
               [label]="'definitions.action.' + action | translate"></button>
