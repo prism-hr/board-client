@@ -53,7 +53,7 @@ export class ImageComponent implements OnInit, OnChanges {
     if(transformation.length > 0) {
       transformation += '/';
     }
-    this.url = this.publicId && ('http://res.cloudinary.com/bitfoot/image/upload/' + transformation + this.publicId);
+    this.url = this.publicId && ('http://res.cloudinary.com/board-prism-hr/image/upload/' + transformation + this.publicId);
   }
 
 }

@@ -54,7 +54,7 @@ import {BoardItemComponent} from './boards/item/board-item.component';
 import {BoardListComponent} from './boards/list/board-list.component';
 import {BoardResolver} from './boards/manage/board-resolver.service';
 import {BoardTabsComponent} from './boards/manage/board-tabs.component';
-import {BoardsResolver} from './boards/manage/boards-resolver.service';
+import {BoardsResolver} from './posts/edit/boards-resolver.service';
 import {BoardEditComponent} from './boards/manage/edit/board-edit.component';
 import {BoardViewComponent} from './boards/manage/view/board-view.component';
 import {BoardNewComponent} from './boards/new/board-new.component';

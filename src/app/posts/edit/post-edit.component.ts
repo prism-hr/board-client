@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material';
 import {Title} from '@angular/platform-browser';
-import {ActivatedRoute, Data, ParamMap, Router} from '@angular/router';
+import {ActivatedRoute, Data, Router} from '@angular/router';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import {Observable} from 'rxjs/Observable';
@@ -11,6 +11,7 @@ import {ResourceCommentDialogComponent} from '../../resource/resource-comment.di
 import {CheckboxUtils} from '../../services/checkbox.utils';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceActionView, ResourceService} from '../../services/resource.service';
+import {UserService} from '../../services/user.service';
 import {ValidationUtils} from '../../validation/validation.utils';
 import {PostService} from '../post.service';
 import Action = b.Action;
@@ -18,6 +19,7 @@ import BoardRepresentation = b.BoardRepresentation;
 import MemberCategory = b.MemberCategory;
 import PostPatchDTO = b.PostPatchDTO;
 import PostRepresentation = b.PostRepresentation;
+import UserRepresentation = b.UserRepresentation;
 
 @Component({
   templateUrl: 'post-edit.component.html',
@@ -41,7 +43,7 @@ export class PostEditComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private cdf: ChangeDetectorRef,
               private title: Title, private dialog: MatDialog, private definitionsService: DefinitionsService,
-              private postService: PostService, private resourceService: ResourceService) {
+              private postService: PostService, private resourceService: ResourceService, private userService: UserService) {
     this.definitions = definitionsService.getDefinitions();
   }
 
@@ -75,12 +77,15 @@ export class PostEditComponent implements OnInit {
       deadTimestamp: []
     });
 
-    combineLatest(this.route.parent.data, this.route.data, this.route.paramMap)
-      .subscribe(([parentData, data, params]: [Data, Data, ParamMap]) => {
+    combineLatest(this.route.parent.data, this.route.data, this.userService.user$)
+      .subscribe(([parentData, data, user]: [Data, Data, UserRepresentation]) => {
         this.board = parentData['board'];
-        this.boardOptions = data['boards'] && data['boards'].map(b => ({label: b.name, value: b}));
-        if (!this.board && params.get('boardId')) {
-          this.board = this.boardOptions.find(o => o.value.id === +params.get('boardId')).value;
+        if (data['boards']) {
+          if (data['boards'] instanceof Array) {
+            this.boardOptions = data['boards'].map(b => ({label: b.name, value: b}));
+          } else {
+            this.board = data['boards']
+          }
         }
 
         let postObservable = Observable.of<PostRepresentation>(null);
@@ -91,7 +96,7 @@ export class PostEditComponent implements OnInit {
 
         postObservable.subscribe(post => {
           this.post = post;
-          if(post) {
+          if (post) {
             this.title.setTitle(this.post.name + ' - Edit');
           } else {
             this.title.setTitle('New post');
@@ -109,7 +114,9 @@ export class PostEditComponent implements OnInit {
           } else {
             this.postForm.patchValue({
               hideLiveTimestamp: true,
-              deadTimestamp: moment().add(28, 'day').hours(17).minutes(0).toISOString()
+              deadTimestamp: moment().add(28, 'day').hours(17).minutes(0).toISOString(),
+              organizationName: user.defaultOrganizationName,
+              location: user.defaultLocation
             });
           }
 

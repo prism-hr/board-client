@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-10-06 10:14:45.
+// Generated using typescript-generator version 1.23.311 on 2017-10-07 21:28:02.
 
 declare namespace b {
 
@@ -297,6 +297,8 @@ declare namespace b {
     documentResume?: DocumentRepresentation;
     websiteResume?: string;
     scopes?: Scope[];
+    defaultOrganizationName?: string;
+    defaultLocation?: LocationRepresentation;
   }
 
   interface UserRoleRepresentation {
@@ -326,9 +328,9 @@ declare namespace b {
 
   interface LocationDefinition {
     name?: string;
-    googleId?: string;
     latitude?: number;
     longitude?: number;
+    googleId?: string;
     domicile?: string;
   }
 

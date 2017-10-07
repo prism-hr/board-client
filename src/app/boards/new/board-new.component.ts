@@ -13,7 +13,6 @@ import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import MemberCategory = b.MemberCategory;
 import UserRepresentation = b.UserRepresentation;
-import {ValidationUtils} from '../../validation/validation.utils';
 
 @Component({
   templateUrl: 'board-new.component.html',
@@ -48,7 +47,7 @@ export class BoardNewComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.title.setTitle("New board");
+    this.title.setTitle('New board');
     this.route.queryParams.subscribe(params => {
       if (params['prepopulate']) {
         const prepopulateDetails = JSON.parse(localStorage.getItem('newBoardPrepopulate'));

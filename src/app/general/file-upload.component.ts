@@ -35,7 +35,7 @@ export class FileUploadComponent implements ControlValueAccessor, OnInit {
   }
 
   onUploadOutput(output: UploadOutput) {
-    const cloudName = 'bitfoot';
+    const cloudName = 'board-prism-hr';
     if (output.type === 'allAddedToQueue') { // when all files added in queue
       const event: UploadInput = {
         type: 'uploadAll',
