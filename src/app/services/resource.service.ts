@@ -195,7 +195,7 @@ export class ResourceService {
         break;
       }
       case 'SUSPENDED': {
-        actions = ['REJECT', 'WITHDRAW'];
+        actions = ['ACCEPT', 'REJECT', 'WITHDRAW'];
         break;
       }
       case 'PENDING': {
@@ -211,7 +211,7 @@ export class ResourceService {
         break;
       }
       case 'REJECTED': {
-        actions = ['RESTORE'];
+        actions = ['RESTORE', 'WITHDRAW'];
         break;
       }
       case 'WITHDRAWN': {
