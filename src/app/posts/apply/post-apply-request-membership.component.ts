@@ -17,19 +17,19 @@ import UserRoleDTO = b.UserRoleDTO;
 @Component({
   selector: 'b-post-apply-request-membership',
   template: `
+    <h2 style="margin-bottom: 20px;">{{department.name}} - Membership</h2>
     <div *ngIf="!canPursue">
       <p-messages
-        [value]="[{severity:'info', detail:'Please update your personal information. We collect this so we can ' +
+        [value]="[{severity:'info', detail:'Please provide your personal information. We collect this so we can ' +
          'monitor trends and improve the relevance of posts. We never share it with advertisers.'}]"
         [closable]="false"></p-messages> 
     </div>
     <div *ngIf="canPursue">
       <p-messages
-        [value]="[{severity:'info', detail:'Please provide your personal information. We collect this so we can ' +
+        [value]="[{severity:'info', detail:'Please update your personal information. We maintain this so we can ' +
          'monitor trends and improve the relevance of posts. We never share it with advertisers.'}]"
         [closable]="false"></p-messages>    
     </div>
-    <h2 style="margin-bottom: 20px;">Joining {{department.name}}</h2>
     <form [formGroup]="membershipForm" novalidate>
       <div class="grid">
         <div *ngIf="requireUserDemographicData">
@@ -69,7 +69,7 @@ import UserRoleDTO = b.UserRoleDTO;
           <div class="grid__item small--one-whole medium-up--one-half input-holder dropdown-select">
             <label for="memberProgram">Program Name</label>
             <p-autoComplete formControlName="memberProgram" [suggestions]="programSuggestions" (completeMethod)="searchPrograms($event)"
-                            placeholder="Start typing to see program suggestions"></p-autoComplete>
+                            placeholder="Start typing to see suggestions"></p-autoComplete>
             <control-messages [control]="membershipForm.get('memberProgram')"></control-messages>
           </div>
 
