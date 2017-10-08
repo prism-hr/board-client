@@ -10,7 +10,7 @@ import Action = b.Action;
   template: `
     <div *ngIf="actions.length > 0 || actionView !== 'VIEW' && actionView !== 'EDIT'">
       <span *ngIf="actionView !== 'VIEW' && actionView !== 'EDIT'">
-        <a pButton class="ui-button-info button small" routerLink="edit" [label]="'actionView.' + actionView | translate"></a>
+        <button pButton class="ui-button-info button small" routerLink="edit" [label]="'actionView.' + actionView | translate"></button>
       </span>
       <span *ngFor="let action of actions">
         <button pButton class="small {{action | lowercase}}" (click)="openActionDialog(action)"
