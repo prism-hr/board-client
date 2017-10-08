@@ -115,7 +115,6 @@ export class PostApplyRequestMembershipComponent implements OnInit {
       .map(i => ({label: '' + i, value: i}));
     this.availableGenders = definitionsService.getDefinitions()['gender'];
     this.availableAgeRanges = definitionsService.getDefinitions()['ageRange'];
-    this.canPursue = this.resourceService.canPursue(this.post);
   }
 
   ngOnInit() {
@@ -124,6 +123,7 @@ export class PostApplyRequestMembershipComponent implements OnInit {
       this.memberCategoryOptions = this.department.memberCategories.map(c => ({label: categoryTranslations[c], value: c}));
     });
 
+    this.canPursue = this.resourceService.canPursue(this.post);
     const oldUserRole = this.post.responseReadiness.userRole;
     this.membershipForm = this.fb.group({
       gender: [null, this.requireUserDemographicData && Validators.required],
