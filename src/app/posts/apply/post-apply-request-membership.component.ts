@@ -17,9 +17,18 @@ import UserRoleDTO = b.UserRoleDTO;
 @Component({
   selector: 'b-post-apply-request-membership',
   template: `
-    <p-messages
-      [value]="[{severity:'info', detail:'Message to the applicant about why this questions'}]"
-      [closable]="false"></p-messages>
+    <div *ngIf="!canPursue">
+      <p-messages
+        [value]="[{severity:'info', detail:'Please update your personal information. We collect this so we can ' +
+         'monitor trends and improve the relevance of posts. We never share it with advertisers.'}]"
+        [closable]="false"></p-messages> 
+    </div>
+    <div *ngIf="canPursue">
+      <p-messages
+        [value]="[{severity:'info', detail:'Please provide your personal information. We collect this so we can ' +
+         'monitor trends and improve the relevance of posts. We never share it with advertisers.'}]"
+        [closable]="false"></p-messages>    
+    </div>
     <h2 style="margin-bottom: 20px;">Joining {{department.name}}</h2>
     <form [formGroup]="membershipForm" novalidate>
       <div class="grid">
@@ -97,6 +106,7 @@ export class PostApplyRequestMembershipComponent implements OnInit {
   availableGenders: Gender[];
   availableAgeRanges: AgeRange[];
   programSuggestions: string[];
+  canPursue: boolean;
 
   constructor(private fb: FormBuilder, private translate: TranslateService, private postService: PostService,
               private resourceService: ResourceService, private departmentService: DepartmentService,
@@ -105,6 +115,7 @@ export class PostApplyRequestMembershipComponent implements OnInit {
       .map(i => ({label: '' + i, value: i}));
     this.availableGenders = definitionsService.getDefinitions()['gender'];
     this.availableAgeRanges = definitionsService.getDefinitions()['ageRange'];
+    this.canPursue = this.resourceService.canPursue(this.post);
   }
 
   ngOnInit() {
@@ -156,13 +167,13 @@ export class PostApplyRequestMembershipComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    const canPursue = this.resourceService.canPursue(this.post);
+
     const userDTO: UserDTO = _.pick(form.value, ['gender', 'ageRange', 'locationNationality']);
     const userRoleDTO: UserRoleDTO = {
       user: userDTO,
       ..._.pick(form.value, ['memberCategory', 'memberProgram', 'memberYear', 'expiryDate'])
     };
-    this.postService.requestDepartmentMembership(this.department, userRoleDTO, canPursue).subscribe(() => {
+    this.postService.requestDepartmentMembership(this.department, userRoleDTO, this.canPursue).subscribe(() => {
       this.requested.emit(true);
     });
   }
