@@ -36,7 +36,8 @@ import ResourceRepresentation = b.ResourceRepresentation;
           </div>
           <div class="activity-copy">
             Someone
-            (<b>{{'definitions.gender.' + activity.resourceEvent.gender | translate}}</b>)
+            (<b>{{'definitions.gender.' + activity.resourceEvent.gender | translate}}, 
+                {{'definitions.ageRange.' + activity.resourceEvent.ageRange | translate}}</b>)
             <span *ngIf="activity.resourceEvent.locationNationality">
               from <b>{{activity.resourceEvent.locationNationality.name}}</b>
             </span>
