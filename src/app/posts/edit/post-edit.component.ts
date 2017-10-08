@@ -196,7 +196,8 @@ export class PostEditComponent implements OnInit {
         const requestBody = sendForm ? this.generatePostRequestBody() : {};
         requestBody.comment = result.comment;
         this.resourceService.executeAction(this.post, action, requestBody)
-          .subscribe(() => {
+          .subscribe((post) => {
+            this.post = post;
             return this.router.navigate(this.resourceService.routerLink(this.post));
           });
       }
