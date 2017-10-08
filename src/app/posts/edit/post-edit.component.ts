@@ -196,8 +196,7 @@ export class PostEditComponent implements OnInit {
         const requestBody = sendForm ? this.generatePostRequestBody() : {};
         requestBody.comment = result.comment;
         this.resourceService.executeAction(this.post, action, requestBody)
-          .subscribe(post => {
-            this.post = post;
+          .subscribe(() => {
             return this.router.navigate(this.resourceService.routerLink(this.post));
           });
       }
@@ -229,7 +228,7 @@ export class PostEditComponent implements OnInit {
     this.showExistingRelation = creatingNewPostAsUntrustedPerson || !!_.get(this.post, 'existingRelation');
     this.postForm.get('existingRelation').setValue(this.post && this.post.existingRelation);
     this.postForm.get('existingRelationExplanation').setValue(
-      this.post && this.post.existingRelationExplanation && this.post.existingRelationExplanation.text);
+      this.post && this.post.existingRelationExplanation && this.post.existingRelationExplanation.text.text);
     this.postForm.get('existingRelation').setValidators(this.showExistingRelation && Validators.required);
   }
 
