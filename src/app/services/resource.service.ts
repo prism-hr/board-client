@@ -218,6 +218,10 @@ export class ResourceService {
         actions = ['RESTORE'];
         break;
       }
+      case 'ARCHIVED': {
+        actions = ['RESTORE'];
+        break;
+      }
     }
 
     return actions.filter(a => resource.actions.find(actionDef => actionDef.action === a));
