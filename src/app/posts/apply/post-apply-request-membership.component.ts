@@ -17,7 +17,6 @@ import UserRoleDTO = b.UserRoleDTO;
 @Component({
   selector: 'b-post-apply-request-membership',
   template: `
-    <h2 style="margin-bottom: 20px;">{{department.name}} - Membership</h2>
     <div *ngIf="!canPursue">
       <p-messages
         [value]="[{severity:'info', detail:'Please provide your personal information. We collect this so we can ' +
