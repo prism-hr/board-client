@@ -50,7 +50,7 @@ import UserRoleDTO = b.UserRoleDTO;
           </div>
 
           <div class="grid__item small--one-whole medium-up--one-half input-holder clearfix">
-            <label>Location</label>
+            <label>Home Town</label>
             <b-places-autocomplete formControlName="locationNationality"></b-places-autocomplete>
             <control-messages [control]="membershipForm.get('locationNationality')"></control-messages>
           </div>
