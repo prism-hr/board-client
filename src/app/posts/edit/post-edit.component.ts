@@ -77,7 +77,7 @@ export class PostEditComponent implements OnInit {
       deadTimestamp: []
     });
 
-    combineLatest(this.route.parent.data, this.route.data, this.userService.user$)
+    combineLatest(this.route.parent.data, this.route.data, this.userService.user$.first())
       .subscribe(([parentData, data, user]: [Data, Data, UserRepresentation]) => {
         this.board = parentData['board'];
         if (data['boards']) {

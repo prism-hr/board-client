@@ -1,0 +1,100 @@
+@import '../assets/variables';
+
+// Freshdesk
+
+.freshwidget-container, .widget-ovelay {
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 90002;
+}
+
+.freshwidget-container {
+  position: absolute;
+}
+
+.freshwidget-theme {
+  background-color: $uclfooter;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: normal;
+  outline: 0 none;
+  padding: 6px 16px 8px;
+  text-decoration: none;
+
+}
+
+.freshwidget-theme:hover {
+  color: #F3F3F3;
+  text-decoration: none;
+}
+
+.freshwidget-customimage {
+  overflow: visible;
+}
+
+.right .freshwidget-customimage {
+  right: 0;
+}
+
+.freshwidget-button {
+  display: block !important;
+  height: 0;
+  margin: 0;
+  outline: 0 none;
+  position: absolute;
+  width: 0;
+  z-index: 90000;
+  top: 320px;
+  &.right {
+    right: -2px;
+  }
+  &.right:hover {
+    right: 0;
+  }
+}
+
+.freshwidget-button a {
+  outline: 0 none;
+  position: fixed;
+  white-space: nowrap;
+  &:hover, &:active, &:focus {
+    text-decoration: none;
+  }
+}
+
+.right a.freshwidget-theme {
+  transform: rotate(-90deg);
+  transform-origin: left bottom 0;
+  -webkit-transform: rotate(-90deg);
+  -webkit-transform-origin: bottom left;
+  -ms-transform: rotate(-90deg);
+  -ms-transform-origin: bottom left;
+}
+
+.freshwidget-dialog {
+  left: 50%;
+  margin-left: -260px;
+  padding: 8px 0;
+  position: absolute;
+  top: 100px;
+  z-index: 900010;
+}
+
+.freshwidget-dialog iframe {
+  height: 900px;
+  width: 612px;
+}
+
+.freshwidget-dialog .widget-close {
+  cursor: pointer;
+  height: 28px;
+  position: absolute;
+  right: 5px;
+  top: 6px;
+  width: 28px;
+}

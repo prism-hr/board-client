@@ -123,7 +123,10 @@ export class ResourceService {
   executeAction(resource: ResourceRepresentation<any>, action: Action,
                 resourcePatch: ResourcePatchDTO<any>): Observable<ResourceRepresentation<any>> {
     return this.http.post('/api/' + resource.scope.toLowerCase() + 's/' + resource.id + '/actions/' + action.toLowerCase(), resourcePatch)
-      .map(res => res.json());
+      .map(res => res.json())
+      .do(resource => {
+        this.resourceUpdated(resource);
+      });
   }
 
   updateResourceUser(resource: ResourceRepresentation<any>, user: UserRepresentation, userRoleDTO: UserRoleDTO): Observable<UserRoleRepresentation> {
@@ -191,7 +194,7 @@ export class ResourceService {
     let actions: Action[];
     switch (resource.state) {
       case 'DRAFT': {
-       actions = ['REJECT', 'WITHDRAW'];
+        actions = ['REJECT', 'WITHDRAW'];
         break;
       }
       case 'SUSPENDED': {

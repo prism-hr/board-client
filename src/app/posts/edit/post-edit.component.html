@@ -90,11 +90,13 @@
           <div *ngIf="showExistingRelation">
             <div class="grid__item one-whole input-holder">
               <label>What is your relationship with our department?</label>
-              <p-radioButton *ngFor="let relation of definitions['existingRelation']"
-                             [value]="relation" name="existingRelation"
-                             formControlName="existingRelation"
-                             [label]="'definitions.existingRelation.' + relation + '.name'| translate">
-              </p-radioButton>
+              <div class="ui-radiobutton-inline">
+                <p-radioButton *ngFor="let relation of definitions['existingRelation']"
+                               [value]="relation" name="existingRelation"
+                               formControlName="existingRelation"
+                               [label]="'definitions.existingRelation.' + relation + '.name'| translate">
+                </p-radioButton>
+              </div>
               <control-messages [control]="postForm.get('existingRelation')"></control-messages>
             </div>
 
