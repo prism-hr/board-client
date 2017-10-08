@@ -74,13 +74,13 @@ import UserRoleDTO = b.UserRoleDTO;
 
           <div class="grid__item small--one-whole medium-up--one-half input-holder dropdown-select">
             <label for="memberYear">Year of study</label>
-            <div style="margin-top: 6px;">
+            <div style="margin-top: 6px; margin-bottom: 10px;">
               <p-selectButton [options]="availableYears" formControlName="memberYear" styleClass="ui-button-info"></p-selectButton>
             </div>
             <control-messages [control]="membershipForm.get('memberYear')"></control-messages>
           </div>
 
-          <div *ngIf="membershipForm.get('memberCategory').value" class="grid__item small--one-whole medium-up--one-whole input-holder">
+          <div *ngIf="membershipForm.get('memberCategory').value" class="grid__item small--one-whole medium-up--one-half input-holder">
             <label style="display: block">{{expiryLabel}}</label>
             <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string" [minDate]="tomorrow"></p-calendar>
             <control-messages [control]="membershipForm.get('expiryDate')"></control-messages>
