@@ -81,12 +81,13 @@ a {
     text-decoration: none;
   }
 }
-button {
+button, a {
   cursor: pointer;
   &.mat-raised-button {
     font-weight:700 !important;
   }
   &.small {
+    display: inline-block;
     min-height: 28px;
     line-height:28px;
     font-size:12px;
