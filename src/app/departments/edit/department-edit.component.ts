@@ -5,7 +5,7 @@ import {MatSnackBar} from '@angular/material';
 import {ActivatedRoute, Data, ParamMap, Router} from '@angular/router';
 import * as _ from 'lodash';
 import {combineLatest} from 'rxjs/observable/combineLatest';
-import {CheckboxUtils} from '../../services/checkbox.utils';
+import {Utils} from '../../services/utils';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
 import DepartmentPatchDTO = b.DepartmentPatchDTO;
@@ -50,7 +50,7 @@ export class DepartmentEditComponent implements OnInit {
         this.department = parentData['department'];
         this.title.setTitle(this.department ? this.department.name + ' - Edit' : 'New department');
         this.departmentForm.reset(_.pick(this.department, [...this.formProperties, 'handle']));
-        const formFormat = CheckboxUtils.toFormFormat(this.availableMemberCategories, this.department && this.department.memberCategories);
+        const formFormat = Utils.checkboxToFormFormat(this.availableMemberCategories, this.department && this.department.memberCategories);
         (<FormArray>this.departmentForm.get('memberCategories'))
           .setValue(formFormat);
         this.departmentForm.get('handle').setValidators(this.department
@@ -94,8 +94,8 @@ export class DepartmentEditComponent implements OnInit {
 
   private generateDepartmentRequestBody(): DepartmentPatchDTO {
     const departmentDTO: DepartmentPatchDTO = _.pick(this.departmentForm.value, this.formProperties);
-    departmentDTO.memberCategories = CheckboxUtils
-      .fromFormFormat(this.availableMemberCategories, this.departmentForm.get('memberCategories').value);
+    departmentDTO.memberCategories = Utils
+      .checkboxFromFormFormat(this.availableMemberCategories, this.departmentForm.get('memberCategories').value);
     if (this.departmentForm.get('handle').value) {
       departmentDTO.handle = this.departmentForm.get('handle').value;
     }

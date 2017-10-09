@@ -13,6 +13,7 @@ import Gender = b.Gender;
 import PostRepresentation = b.PostRepresentation;
 import UserDTO = b.UserDTO;
 import UserRoleDTO = b.UserRoleDTO;
+import {Utils} from '../../services/utils';
 
 @Component({
   selector: 'b-post-apply-request-membership',
@@ -83,7 +84,7 @@ import UserRoleDTO = b.UserRoleDTO;
           <div *ngIf="membershipForm.get('memberCategory').value" class="grid__item small--one-whole medium-up--one-half input-holder">
             <label style="display: block">{{expiryLabel}}</label>
             <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string" [minDate]="tomorrow"
-                        [yearNavigator]="true" [monthNavigator]="true"></p-calendar>
+                        [yearNavigator]="true" [monthNavigator]="true" [yearRange]="yearRange"></p-calendar>
             <control-messages [control]="membershipForm.get('expiryDate')"></control-messages>
           </div>
 
@@ -107,6 +108,7 @@ export class PostApplyRequestMembershipComponent implements OnInit {
   availableAgeRanges: AgeRange[];
   programSuggestions: string[];
   canPursue: boolean;
+  yearRange = Utils.getYearRange();
 
   constructor(private fb: FormBuilder, private translate: TranslateService, private postService: PostService,
               private resourceService: ResourceService, private departmentService: DepartmentService,

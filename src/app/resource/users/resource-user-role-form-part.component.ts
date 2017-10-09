@@ -8,6 +8,7 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
 import Role = b.Role;
 import UserRoleRepresentation = b.UserRoleRepresentation;
+import {Utils} from '../../services/utils';
 
 @Component({
   selector: 'b-resource-user-role-form-part',
@@ -25,6 +26,7 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
   availableRoles: Role[];
   memberCategoryOptions: SelectItem[];
   availableYears: SelectItem[];
+  yearRange = Utils.getYearRange();
 
   constructor(private fb: FormBuilder, private translate: TranslateService) {
     this.availableYears = Array.from({length: 9}, (_, k) => k).map((_, i) => i + 1)
