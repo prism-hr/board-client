@@ -11,7 +11,7 @@ export class ValidationUtils {
       required: 'This field is required',
       email: 'Invalid email address',
       password: 'Invalid password. Password must be at least 8 characters long and contain a number.',
-      repeatPassword: 'You have to re-type your new password again.',
+      repeatPassword: 'Passwords did not match, please retype.',
       minlength: `Minimum length ${validatorValue.requiredLength}`,
       maxlength: `Maximum length ${validatorValue.requiredLength}`,
       duplicateHandle: 'The alias is already taken.',

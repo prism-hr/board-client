@@ -19,17 +19,16 @@ import UserRoleDTO = b.UserRoleDTO;
   template: `
     <div *ngIf="!canPursue">
       <p-messages
-        [value]="[{severity:'info', detail:'Please update your personal information. We collect this so we can ' +
+        [value]="[{severity:'info', detail:'Please provide your personal information. We collect this so we can ' +
          'monitor trends and improve the relevance of posts. We never share it with advertisers.'}]"
         [closable]="false"></p-messages> 
     </div>
     <div *ngIf="canPursue">
       <p-messages
-        [value]="[{severity:'info', detail:'Please provide your personal information. We collect this so we can ' +
+        [value]="[{severity:'info', detail:'Please update your personal information. We maintain this so we can ' +
          'monitor trends and improve the relevance of posts. We never share it with advertisers.'}]"
         [closable]="false"></p-messages>    
     </div>
-    <h2 style="margin-bottom: 20px;">Joining {{department.name}}</h2>
     <form [formGroup]="membershipForm" novalidate>
       <div class="grid">
         <div *ngIf="requireUserDemographicData">
@@ -51,7 +50,7 @@ import UserRoleDTO = b.UserRoleDTO;
           </div>
 
           <div class="grid__item small--one-whole medium-up--one-half input-holder clearfix">
-            <label>Location</label>
+            <label>Home Town</label>
             <b-places-autocomplete formControlName="locationNationality"></b-places-autocomplete>
             <control-messages [control]="membershipForm.get('locationNationality')"></control-messages>
           </div>
@@ -69,19 +68,19 @@ import UserRoleDTO = b.UserRoleDTO;
           <div class="grid__item small--one-whole medium-up--one-half input-holder dropdown-select">
             <label for="memberProgram">Program Name</label>
             <p-autoComplete formControlName="memberProgram" [suggestions]="programSuggestions" (completeMethod)="searchPrograms($event)"
-                            placeholder="Start typing to see program suggestions"></p-autoComplete>
+                            placeholder="Start typing to see suggestions"></p-autoComplete>
             <control-messages [control]="membershipForm.get('memberProgram')"></control-messages>
           </div>
 
           <div class="grid__item small--one-whole medium-up--one-half input-holder dropdown-select">
             <label for="memberYear">Year of study</label>
-            <div style="margin-top: 6px;">
+            <div style="margin-top: 6px; margin-bottom: 10px;">
               <p-selectButton [options]="availableYears" formControlName="memberYear" styleClass="ui-button-info"></p-selectButton>
             </div>
             <control-messages [control]="membershipForm.get('memberYear')"></control-messages>
           </div>
 
-          <div *ngIf="membershipForm.get('memberCategory').value" class="grid__item small--one-whole medium-up--one-whole input-holder">
+          <div *ngIf="membershipForm.get('memberCategory').value" class="grid__item small--one-whole medium-up--one-half input-holder">
             <label style="display: block">{{expiryLabel}}</label>
             <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string" [minDate]="tomorrow"
                         [yearNavigator]="true" [monthNavigator]="true"></p-calendar>
