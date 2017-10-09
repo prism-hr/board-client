@@ -83,7 +83,8 @@ import UserRoleDTO = b.UserRoleDTO;
 
           <div *ngIf="membershipForm.get('memberCategory').value" class="grid__item small--one-whole medium-up--one-whole input-holder">
             <label style="display: block">{{expiryLabel}}</label>
-            <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string" [minDate]="tomorrow"></p-calendar>
+            <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string" [minDate]="tomorrow"
+                        [yearNavigator]="true" [monthNavigator]="true"></p-calendar>
             <control-messages [control]="membershipForm.get('expiryDate')"></control-messages>
           </div>
 
