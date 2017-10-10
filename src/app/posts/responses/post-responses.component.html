@@ -48,14 +48,6 @@
           </div>
         </div>
       </div>
-      <div *ngIf="responses.length === 0" class="grid">
-        <div class="grid__item one-whole">
-          <p-messages
-            [value]="[{severity:'info', summary:'No Responses', detail:'No user has responded to your post yet'}]"
-            [closable]="false">
-          </p-messages>
-        </div>
-      </div>
     </mat-card-content>
   </mat-card>
 </section>

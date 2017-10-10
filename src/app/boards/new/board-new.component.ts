@@ -5,7 +5,7 @@ import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
 import {AuthGuard} from '../../authentication/auth-guard.service';
-import {CheckboxUtils} from '../../services/checkbox.utils';
+import {Utils} from '../../services/utils';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
@@ -86,8 +86,8 @@ export class BoardNewComponent implements OnInit {
           department = {name: department};
         }
         board.department = department;
-        board.department.memberCategories = CheckboxUtils
-          .fromFormFormat(this.availableMemberCategories, this.boardForm.get('memberCategories').value);
+        board.department.memberCategories = Utils
+          .checkboxFromFormFormat(this.availableMemberCategories, this.boardForm.get('memberCategories').value);
         board.department.documentLogo = board.documentLogo;
 
         this.resourceService.postBoard(board)

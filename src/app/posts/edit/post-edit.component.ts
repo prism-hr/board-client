@@ -8,10 +8,10 @@ import * as moment from 'moment';
 import {Observable} from 'rxjs/Observable';
 import {combineLatest} from 'rxjs/observable/combineLatest';
 import {ResourceCommentDialogComponent} from '../../resource/resource-comment.dialog';
-import {CheckboxUtils} from '../../services/checkbox.utils';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceActionView, ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
+import {Utils} from '../../services/utils';
 import {ValidationUtils} from '../../validation/validation.utils';
 import {PostService} from '../post.service';
 import Action = b.Action;
@@ -77,12 +77,13 @@ export class PostEditComponent implements OnInit {
       deadTimestamp: []
     });
 
-    combineLatest(this.route.parent.data, this.route.data, this.userService.user$)
+    combineLatest(this.route.parent.data, this.route.data, this.userService.user$.first())
       .subscribe(([parentData, data, user]: [Data, Data, UserRepresentation]) => {
         this.board = parentData['board'];
         if (data['boards']) {
           if (data['boards'] instanceof Array) {
-            this.boardOptions = data['boards'].map(b => ({label: b.name, value: b}));
+            this.boardOptions = (<BoardRepresentation[]>data['boards'])
+              .map(b => ({label: b.department.name + ' - ' + b.name, value: b}));
           } else {
             this.board = data['boards']
           }
@@ -263,10 +264,10 @@ export class PostEditComponent implements OnInit {
 
   private generatePostRequestBody(): PostPatchDTO {
     const post: PostPatchDTO = _.pick(this.postForm.value, this.formProperties);
-    post.postCategories = CheckboxUtils
-      .fromFormFormat(this.availablePostCategories, this.postForm.get('postCategories').value);
-    post.memberCategories = CheckboxUtils
-      .fromFormFormat(this.availableMemberCategories, this.postForm.get('memberCategories').value);
+    post.postCategories = Utils
+      .checkboxFromFormFormat(this.availablePostCategories, this.postForm.get('postCategories').value);
+    post.memberCategories = Utils
+      .checkboxFromFormFormat(this.availableMemberCategories, this.postForm.get('memberCategories').value);
     post.applyWebsite = this.postForm.value.applyType === 'website' ? this.postForm.value.applyWebsite : null;
     post.applyDocument = this.postForm.value.applyType === 'document' ? this.postForm.value.applyDocument : null;
     post.applyEmail = this.postForm.value.applyType === 'email' ? this.postForm.value.applyEmail : null;

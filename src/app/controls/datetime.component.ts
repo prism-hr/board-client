@@ -2,6 +2,7 @@ import {Component, ElementRef, forwardRef, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import * as moment from 'moment';
 import 'moment-timezone';
+import {Utils} from '../services/utils';
 
 @Component({
   selector: 'b-datetime',
@@ -10,7 +11,8 @@ import 'moment-timezone';
       <span *ngIf="currentTz !== mainTz">/ time zone</span>
     </label>
     <p-calendar class="calendar-item" [(ngModel)]="date" (ngModelChange)="dateTimeChanged()" dateFormat="yy-mm-dd"
-                dataType="string" (onBlur)="touched()" [disabled]="isDisabled"></p-calendar>
+                dataType="string" [yearNavigator]="true" [monthNavigator]="true" [yearRange]="yearRange" 
+                (onBlur)="touched()" [disabled]="isDisabled"></p-calendar>
     <p-inputMask class="time-item" [(ngModel)]="time" (ngModelChange)="dateTimeChanged()"
                  (onBlur)="touched()" [disabled]="isDisabled" mask="99:99"></p-inputMask>
     <div *ngIf="currentTz !== mainTz" class="ui-radiobutton-inline time-zome-selector">
@@ -56,6 +58,7 @@ export class DateTimeComponent implements ControlValueAccessor, OnInit {
   selectedTz: string;
   mainTz = 'Europe/London';
   isDisabled: boolean;
+  yearRange = Utils.getYearRange();
 
   constructor(public elementRef: ElementRef) {
     const nameAttr = elementRef.nativeElement.getAttribute('name');

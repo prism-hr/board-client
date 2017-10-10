@@ -9,9 +9,14 @@ import {TranslateService} from '@ngx-translate/core';
     <div class="page-width flex-grow">
       <router-outlet></router-outlet>
     </div>
+    <div id="freshwidget-button" class="freshwidget-button right">
+      <a href="https://prismhr.freshdesk.com/" class="freshwidget-theme" target="_blank" translate>
+        Support
+      </a>
+    </div>
     <footer-component></footer-component>
   `,
-  styleUrls: []
+  styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
 

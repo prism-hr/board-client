@@ -18,7 +18,8 @@
       <label style="display: block">
         {{'definitions.role.' + roleGroup.get('role').value | translate}} expiration date:
       </label>
-      <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string"></p-calendar>
+      <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" dataType="string"
+                  [yearNavigator]="true" [monthNavigator]="true" [yearRange]="yearRange"></p-calendar>
       <control-messages [control]="roleGroup.get('expiryDate')"></control-messages>
     </div>
 
