@@ -80,8 +80,10 @@ export class ResourceUsersComponent implements OnInit {
         this.userForm.reset();
         if (user.role === 'MEMBER') { // only staff members collection should be updated
           this.users.members.push(user);
+          this.usersTabChanged({index: 1});
         } else {
           this.users.users.push(user);
+          this.usersTabChanged({index: 0});
         }
         this.calculateAdminsCount();
       });

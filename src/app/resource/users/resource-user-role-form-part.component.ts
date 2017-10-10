@@ -58,7 +58,7 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
     }
 
     this.parentForm.setControl('roleGroup', this.fb.group({
-      role: [role, this.lastAdminRole && role === 'ADMINISTRATOR' && this.lastAdminValidator],
+      role: [role, Validators.required],
       noExpiryDate: [!this.userRole || !this.userRole.expiryDate],
       expiryDate: [this.userRole && this.userRole.expiryDate],
       memberCategory: [this.userRole && this.userRole.memberCategory, this.roleType === 'MEMBER' && Validators.required],
@@ -76,12 +76,6 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
   noExpiryDateChanged() {
     this.parentForm.get('roleGroup').get('expiryDate').setValue(null);
     this.refreshValidators();
-  }
-
-  private lastAdminValidator(control: AbstractControl) {
-    if (control.value !== 'ADMINISTRATOR') {
-      return {lastAdminRole: true};
-    }
   }
 
   private refreshValidators() {
