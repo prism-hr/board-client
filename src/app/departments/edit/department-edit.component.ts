@@ -55,10 +55,11 @@ export class DepartmentEditComponent implements OnInit {
           .setValue(formFormat);
         this.departmentForm.get('handle').setValidators(this.department
           && [Validators.required, ValidationUtils.handleValidator, Validators.maxLength(25)]);
-        this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/' +
-          this.department ? this.department.university.handle : 'ucl' + '/';
-        this.actionView = this.department ? 'EDIT' : 'CREATE';
 
+        const urlSuffix = this.department ? this.department.university.handle : 'ucl';
+        this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/' + urlSuffix + '/';
+
+        this.actionView = this.department ? 'EDIT' : 'CREATE';
         this.source = paramMap.get('source');
         this.sourceLink = this.createSourceLink(this.department);
       });
