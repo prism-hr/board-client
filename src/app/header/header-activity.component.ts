@@ -171,6 +171,7 @@ export class HeaderActivityComponent implements OnInit {
 
   activityClicked(activity: ActivityRepresentation) {
     this.userService.viewActivity(activity).subscribe(() => {
+      activity.viewed = true;
       this.viewed.emit(activity);
     });
   }

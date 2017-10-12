@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.23.311 on 2017-10-07 21:28:02.
+// Generated using typescript-generator version 1.28.343 on 2017-10-10 23:42:11.
 
 declare namespace b {
 
@@ -58,8 +58,8 @@ declare namespace b {
     applyWebsite?: string;
     applyDocument?: DocumentDTO;
     applyEmail?: string;
-    liveTimestamp?: LocalDateTime;
-    deadTimestamp?: LocalDateTime;
+    liveTimestamp?: Date;
+    deadTimestamp?: Date;
   }
 
   interface PostPatchDTO extends ResourcePatchDTO<PostPatchDTO> {
@@ -73,8 +73,8 @@ declare namespace b {
     applyWebsite?: string;
     applyDocument?: DocumentDTO;
     applyEmail?: string;
-    liveTimestamp?: LocalDateTime;
-    deadTimestamp?: LocalDateTime;
+    liveTimestamp?: Date;
+    deadTimestamp?: Date;
   }
 
   interface RegisterDTO extends AuthenticateDTO<RegisterDTO> {
@@ -146,7 +146,7 @@ declare namespace b {
     memberCategory?: MemberCategory;
     memberProgram?: string;
     memberYear?: number;
-    expiryDate?: LocalDate;
+    expiryDate?: Date;
   }
 
   interface UserRolePatchDTO {
@@ -175,7 +175,7 @@ declare namespace b {
     resourceEvent?: ResourceEventRepresentation;
     activity?: Activity;
     viewed?: boolean;
-    createdTimestamp?: LocalDateTime;
+    createdTimestamp?: Date;
   }
 
   interface BoardRepresentation extends ResourceRepresentation<BoardRepresentation> {
@@ -215,14 +215,14 @@ declare namespace b {
     applyDocument?: DocumentRepresentation;
     applyEmail?: string;
     board?: BoardRepresentation;
-    liveTimestamp?: LocalDateTime;
-    deadTimestamp?: LocalDateTime;
+    liveTimestamp?: Date;
+    deadTimestamp?: Date;
     viewCount?: number;
     referralCount?: number;
     responseCount?: number;
-    lastViewTimestamp?: LocalDateTime;
-    lastReferralTimestamp?: LocalDateTime;
-    lastResponseTimestamp?: LocalDateTime;
+    lastViewTimestamp?: Date;
+    lastReferralTimestamp?: Date;
+    lastResponseTimestamp?: Date;
     responseReadiness?: PostResponseReadinessRepresentation;
     referral?: ResourceEventRepresentation;
     response?: ResourceEventRepresentation;
@@ -250,7 +250,7 @@ declare namespace b {
     documentResume?: DocumentRepresentation;
     websiteResume?: string;
     coveringNote?: string;
-    createdTimestamp?: LocalDateTime;
+    createdTimestamp?: Date;
     match?: ResourceEventMatch;
     viewed?: boolean;
     history?: ResourceEventRepresentation[];
@@ -261,7 +261,7 @@ declare namespace b {
     user?: UserRepresentation;
     changeList?: any[];
     comment?: string;
-    createdTimestamp?: LocalDateTime;
+    createdTimestamp?: Date;
   }
 
   interface ResourceRepresentation<T> {
@@ -270,8 +270,8 @@ declare namespace b {
     name?: string;
     summary?: string;
     state?: State;
-    createdTimestamp?: LocalDateTime;
-    updatedTimestamp?: LocalDateTime;
+    createdTimestamp?: Date;
+    updatedTimestamp?: Date;
     actions?: ActionRepresentation[];
   }
 
@@ -309,7 +309,7 @@ declare namespace b {
     memberProgram?: string;
     memberYear?: number;
     state?: State;
-    expiryDate?: LocalDate;
+    expiryDate?: Date;
     viewed?: boolean;
   }
 
@@ -328,73 +328,13 @@ declare namespace b {
 
   interface LocationDefinition {
     name?: string;
+    domicile?: string;
+    googleId?: string;
     latitude?: number;
     longitude?: number;
-    googleId?: string;
-    domicile?: string;
-  }
-
-  interface LocalDateTime extends Temporal, TemporalAdjuster, ChronoLocalDateTime<LocalDate>, Serializable {
-    dayOfMonth?: number;
-    dayOfWeek?: DayOfWeek;
-    dayOfYear?: number;
-    month?: Month;
-    monthValue?: number;
-    year?: number;
-    hour?: number;
-    minute?: number;
-    second?: number;
-    nano?: number;
-  }
-
-  interface LocalDate extends Temporal, TemporalAdjuster, ChronoLocalDate, Serializable {
-    year?: number;
-    month?: Month;
-    dayOfMonth?: number;
-    dayOfWeek?: DayOfWeek;
-    dayOfYear?: number;
-    monthValue?: number;
-    chronology?: IsoChronology;
-  }
-
-  interface Chronology extends Comparable<Chronology> {
-    id?: string;
-    calendarType?: string;
-  }
-
-  interface Temporal extends TemporalAccessor {
-  }
-
-  interface TemporalAdjuster {
-  }
-
-  interface Serializable {
-  }
-
-  interface Era extends TemporalAccessor, TemporalAdjuster {
-    value?: number;
-  }
-
-  interface IsoChronology extends AbstractChronology, Serializable {
-  }
-
-  interface ChronoLocalDate extends Temporal, TemporalAdjuster, Comparable<ChronoLocalDate> {
-    era?: Era;
-    leapYear?: boolean;
-    chronology?: Chronology;
   }
 
   interface Comparable<T> {
-  }
-
-  interface TemporalAccessor {
-  }
-
-  interface ChronoLocalDateTime<D> extends Temporal, TemporalAdjuster, Comparable<ChronoLocalDateTime<any>> {
-    chronology?: Chronology;
-  }
-
-  interface AbstractChronology extends Chronology {
   }
 
   type Action = 'VIEW' | 'PURSUE' | 'EDIT' | 'EXTEND' | 'ACCEPT' | 'SUSPEND' | 'CORRECT' | 'REJECT' | 'PUBLISH' | 'RETIRE' | 'RESTORE' | 'WITHDRAW' | 'ARCHIVE';
@@ -424,9 +364,5 @@ declare namespace b {
   type ResourceEvent = 'VIEW' | 'REFERRAL' | 'RESPONSE';
 
   type ResourceEventMatch = 'DEFINITE' | 'PROBABLE';
-
-  type DayOfWeek = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
-
-  type Month = 'JANUARY' | 'FEBRUARY' | 'MARCH' | 'APRIL' | 'MAY' | 'JUNE' | 'JULY' | 'AUGUST' | 'SEPTEMBER' | 'OCTOBER' | 'NOVEMBER' | 'DECEMBER';
 
 }
