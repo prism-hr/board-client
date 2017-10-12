@@ -3,6 +3,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Data, Router} from '@angular/router';
+import {RollbarService} from 'angular-rollbar';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import {Observable} from 'rxjs/Observable';
@@ -40,10 +41,9 @@ export class PostEditComponent implements OnInit {
   availableMemberCategories: MemberCategory[];
   formProperties = ['name', 'summary', 'description', 'organizationName', 'location', 'existingRelation',
     'liveTimestamp', 'deadTimestamp', 'applyWebsite', 'applyDocument', 'applyEmail'];
-  errors: string;
 
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private cdf: ChangeDetectorRef,
-              private title: Title, private dialog: MatDialog, private definitionsService: DefinitionsService,
+              private rollbar: RollbarService, private title: Title, private dialog: MatDialog, private definitionsService: DefinitionsService,
               private postService: PostService, private resourceService: ResourceService, private userService: UserService) {
     this.definitions = definitionsService.getDefinitions();
   }
@@ -167,10 +167,8 @@ export class PostEditComponent implements OnInit {
 
   update() {
     this.postForm['submitted'] = true;
-    this.errors = null;
     if (this.postForm.invalid) {
-      this.errors = Utils.getFormErrors(this.postForm);
-      console.log('Post error: ' + this.errors);
+      this.rollbar.warn('Post update validation error: ' + Utils.getFormErrors(this.postForm));
       return;
     }
     this.postService.update(this.post, this.generatePostRequestBody())
@@ -181,10 +179,8 @@ export class PostEditComponent implements OnInit {
 
   create() {
     this.postForm['submitted'] = true;
-    this.errors = null;
     if (this.postForm.invalid) {
-      this.errors = Utils.getFormErrors(this.postForm);
-      console.log('Post error: ' + this.errors);
+      this.rollbar.warn('Post create validation error: ' + Utils.getFormErrors(this.postForm));
       return;
     }
     this.postService.create(this.postForm.get('board').value, this.generatePostRequestBody())
@@ -196,6 +192,7 @@ export class PostEditComponent implements OnInit {
   executeAction(action: Action, sendForm?: boolean) {
     this.postForm['submitted'] = true;
     if (this.postForm.invalid) {
+      this.rollbar.warn('Post action validation error: ' + Utils.getFormErrors(this.postForm));
       return;
     }
     const dialogRef = this.dialog.open(ResourceCommentDialogComponent, {data: {action, resource: this.post}});
