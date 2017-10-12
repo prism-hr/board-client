@@ -40,6 +40,7 @@ export class PostEditComponent implements OnInit {
   availableMemberCategories: MemberCategory[];
   formProperties = ['name', 'summary', 'description', 'organizationName', 'location', 'existingRelation',
     'liveTimestamp', 'deadTimestamp', 'applyWebsite', 'applyDocument', 'applyEmail'];
+  errors: string;
 
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private cdf: ChangeDetectorRef,
               private title: Title, private dialog: MatDialog, private definitionsService: DefinitionsService,
@@ -166,7 +167,10 @@ export class PostEditComponent implements OnInit {
 
   update() {
     this.postForm['submitted'] = true;
+    this.errors = null;
     if (this.postForm.invalid) {
+      this.errors = Utils.getFormErrors(this.postForm);
+      console.log('Post error: ' + this.errors);
       return;
     }
     this.postService.update(this.post, this.generatePostRequestBody())
@@ -177,7 +181,10 @@ export class PostEditComponent implements OnInit {
 
   create() {
     this.postForm['submitted'] = true;
+    this.errors = null;
     if (this.postForm.invalid) {
+      this.errors = Utils.getFormErrors(this.postForm);
+      console.log('Post error: ' + this.errors);
       return;
     }
     this.postService.create(this.postForm.get('board').value, this.generatePostRequestBody())
