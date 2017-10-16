@@ -1,5 +1,5 @@
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
@@ -8,6 +8,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {RollbarModule, RollbarService} from 'angular-rollbar';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {MomentModule} from 'angular2-moment';
 import {RlTagInputModule} from 'angular2-tag-input/dist';
@@ -54,7 +55,6 @@ import {BoardItemComponent} from './boards/item/board-item.component';
 import {BoardListComponent} from './boards/list/board-list.component';
 import {BoardResolver} from './boards/manage/board-resolver.service';
 import {BoardTabsComponent} from './boards/manage/board-tabs.component';
-import {BoardsResolver} from './posts/edit/boards-resolver.service';
 import {BoardEditComponent} from './boards/manage/edit/board-edit.component';
 import {BoardViewComponent} from './boards/manage/view/board-view.component';
 import {BoardNewComponent} from './boards/new/board-new.component';
@@ -82,9 +82,13 @@ import {HomeComponent} from './home/home.component';
 import {StudentLogoComponent} from './home/student-logo.component';
 import {UniLogoComponent} from './home/uni-logo.component';
 import {NotFoundComponent} from './not-found.component';
+import {AboutUsComponent} from './pages/about/about-us.component';
+import {PrivacyComponent} from './pages/privacy/privacy.component';
+import {TermsComponent} from './pages/terms/terms.component';
 import {PostApplyFormComponent} from './posts/apply/post-apply-form.component';
 import {PostApplyRequestMembershipComponent} from './posts/apply/post-apply-request-membership.component';
 import {PostApplyComponent} from './posts/apply/post-apply.component';
+import {BoardsResolver} from './posts/edit/boards-resolver.service';
 import {PostEditComponent} from './posts/edit/post-edit.component';
 import {PostHeaderComponent} from './posts/header/post-header.component';
 import {PostItemComponent} from './posts/item/post-item.component';
@@ -108,9 +112,6 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
-import { AboutUsComponent } from './pages/about/about-us.component';
-import { PrivacyComponent } from './pages/privacy/privacy.component';
-import { TermsComponent } from './pages/terms/terms.component';
 
 @NgModule({
   declarations: [
@@ -378,7 +379,10 @@ import { TermsComponent } from './pages/terms/terms.component';
     MomentModule,
     ShareButtonsModule.forRoot(),
     ClipboardModule,
-    PapaParseModule
+    PapaParseModule,
+    RollbarModule.forRoot({
+      accessToken: 'da4d675c8c5340819eac1c080f5b1e76'
+    })
   ],
   providers: [
     DefinitionsService,
@@ -388,6 +392,7 @@ import { TermsComponent } from './pages/terms/terms.component';
       deps: [DefinitionsService],
       multi: true
     },
+    {provide: ErrorHandler, useClass: RollbarService},
     AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, BoardsResolver,
     AccountSuppressionsResolver, PostService, DepartmentService, UserService, ValidationService
   ],

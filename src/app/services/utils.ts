@@ -1,3 +1,5 @@
+import {AbstractControl, FormGroup} from '@angular/forms';
+
 export class Utils {
 
   static checkboxToFormFormat<T>(availableValues: T[], currentValues: T[]) {
@@ -16,4 +18,20 @@ export class Utils {
     return '' + startYear + ':' + (startYear + 10);
   }
 
+  static getFormErrors(formControl: AbstractControl, controlName?: string) {
+    let errors = '';
+    for (let error in formControl.errors) {
+      const errorString = (controlName || 'Global') + ': ' + error;
+      errors += errorString + ', ';
+    }
+
+    if (formControl instanceof FormGroup) {
+      const group = formControl;
+      for (let control in group.controls) {
+        errors += Utils.getFormErrors(group.controls[control], control);
+      }
+    }
+
+    return errors;
+  }
 }
