@@ -112,6 +112,7 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
+import {SidebarModule} from 'primeng/components/sidebar/sidebar';
 
 @NgModule({
   declarations: [
@@ -343,6 +344,7 @@ import {ValidationService} from './validation/validation.service';
     CalendarModule,
     InputMaskModule,
     SplitButtonModule,
+    SidebarModule,
     EditorModule,
     DataTableModule,
     SelectButtonModule,

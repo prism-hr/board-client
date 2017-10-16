@@ -711,19 +711,22 @@ $grid-breakpoints: (
 }
 .list-container{
   display: block;
-  grid-template-columns:50% 50%;
-  grid-gap:$gutter-site / 2;
-  grid-template-rows:auto;
-  width: calc(100% - 20px) ;
   align-items: stretch;
   justify-items: stretch;
   @include media-query($medium-up) {
+    grid-template-columns:50% 50%;
+    grid-gap:$gutter-site / 2;
+    grid-template-rows:auto;
+    width: calc(100% - 20px) ;
     display: grid;
   }
 }
 .list-container__item {
   display: flex;
-  margin-bottom: 0px;
+  margin-bottom: $gutter-site-mobile;
+  @include media-query($medium-up) {
+    margin-bottom: 0px;
+  }
   width: 100%;
   b-post-item, b-board-item {
     width: 100%;
@@ -751,5 +754,4 @@ $grid-breakpoints: (
       }
     }
   }
-
 }

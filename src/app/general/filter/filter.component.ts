@@ -12,7 +12,7 @@ import UserRepresentation = b.UserRepresentation;
   selector: 'b-filter',
   template: `
     <div class="search-filter">
-      <form fxLayout="row" fxLayoutAlign="space-between center" (submit)="search()">
+      <form fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center" (submit)="search()">
         <div class="input-holder" fxLayout="row" fxLayoutAlign="flex-start center">
           <input name="text-filter" [(ngModel)]="searchTerm" placeholder="Search" class="ui-inputtext">
           <button pButton icon="fa-magnifier" class="ui-button-success"></button>

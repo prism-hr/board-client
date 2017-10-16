@@ -58,7 +58,6 @@ button.ui-state-default {
     padding: 0;
     .input-holder  {
       width: auto;
-
     }
   }
 }
@@ -66,8 +65,12 @@ button.ui-state-default {
   background: $greyBackground;
   padding:5px 10px;
   .input-holder  {
-    margin-bottom:0;
-    width: 25%;
+    margin-bottom:10px;
+    width: 100%;
+    @include media-query($medium-up) {
+      width: 25%;
+      margin-bottom: 0;
+    }
     input {
       margin-right:6px;
     }

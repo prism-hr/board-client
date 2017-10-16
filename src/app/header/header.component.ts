@@ -7,6 +7,8 @@ import {UserImageDialogComponent} from '../authentication/user-image.dialog';
 import {UserService} from '../services/user.service';
 import ActivityRepresentation = b.ActivityRepresentation;
 import UserRepresentation = b.UserRepresentation;
+import {SidebarModule} from 'primeng/components/sidebar/sidebar';
+import {TabViewModule} from 'primeng/primeng';
 
 @Component({
   selector: 'b-header',
@@ -15,6 +17,7 @@ import UserRepresentation = b.UserRepresentation;
 })
 export class HeaderComponent implements OnInit {
 
+  mobileMenu: false;
   user: UserRepresentation;
   activities: ActivityRepresentation[];
   @ViewChild('activitiesPanel') activitiesPanel: OverlayPanel;

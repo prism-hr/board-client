@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'grid';
 
 // Card styling
 .mat-input-container{
@@ -31,7 +32,10 @@ mat-card.mat-card {
     }
   }
   .mat-card-header {
-    margin: -24px -24px 0 -24px ;
+    margin: -24px -16px 0 -16px;
+    @include media-query($medium-up){
+      margin: -24px -24px 0 -24px ;
+    }
     background: $fadeGrey;
     height: auto;
   }
@@ -51,7 +55,10 @@ mat-card.mat-card {
   .mat-card-actions {
     background: $greyBackground;
     text-align: right;
-    margin: 0 -24px -24px -24px ;
+    margin: 0 -16px -24px -16px ;
+    @include media-query($medium-up){
+      margin: 0 -24px -24px -24px ;
+    }
     padding: 12px 15px;
     &:last-child {
       margin-bottom:-24px;
@@ -82,6 +89,10 @@ mat-card.mat-card {
     overflow: hidden;
     margin-right: 15px;
     border-radius: 3px;
+    max-width: 70px;
+    @include media-query($medium-up){
+     max-width: none;
+    }
     &.logo-holder-small {
       img {
         max-height: 45px;
@@ -165,6 +176,10 @@ b-file-upload[type=avatar].avatar {
     text-align: center;
     border-radius: 2px;
     overflow: hidden;
+    margin-bottom: 10px;
+    @include media-query($medium-up) {
+      margin-bottom: 0;
+    }
     .number {
       display: inline-block;
       line-height: 1.9em;

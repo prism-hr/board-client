@@ -1,7 +1,11 @@
 @import '../../assets/variables';
+@import '../../assets/grid';
 
 .mat-card-content .block-avatar {
- margin: -24px -24px 0 -24px;
+ margin: -24px -16px 0 -16px;
+  @include media-query($medium-up) {
+    margin: -24px -24px 0 -24px;
+  }
  background: $greyBackground;
   > div {
     padding: 24px;
@@ -19,4 +23,13 @@ h3 {
 p-radiobutton {
   display: inline-block;
   margin-bottom:6px;
+  min-width: 95px;
+}
+section {
+  > .grid {
+    @include media-query($medium-up) {
+      display: flex;
+      justify-content: center;
+    }
+  }
 }
