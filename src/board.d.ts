@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.28.343 on 2017-10-10 23:42:11.
+// Generated using typescript-generator version 1.28.343 on 2017-10-17 20:34:32.
 
 declare namespace b {
 
@@ -142,6 +142,7 @@ declare namespace b {
 
   interface UserRoleDTO {
     user?: UserDTO;
+    email?: string;
     role?: Role;
     memberCategory?: MemberCategory;
     memberProgram?: string;

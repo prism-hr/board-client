@@ -1,19 +1,35 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {ResourceService} from '../../services/resource.service';
-import ResourceRepresentation = b.ResourceRepresentation;
-import UserRoleRepresentation = b.UserRoleRepresentation;
-import UserRoleDTO = b.UserRoleDTO;
 import * as _ from 'lodash';
+import {ResourceService} from '../../services/resource.service';
+import {ValidationUtils} from '../../validation/validation.utils';
+import ResourceRepresentation = b.ResourceRepresentation;
+import UserRoleDTO = b.UserRoleDTO;
+import UserRoleRepresentation = b.UserRoleRepresentation;
 
 @Component({
   template: `
     <h2 mat-dialog-title style="margin-bottom: 10px;">{{userRole.user.givenName}} {{userRole.user.surname}}</h2>
+    <div mat-card-avatar class="avatar"
+         [ngClass]="{'no-background': userRole.user.documentImage}">
+      <b-image [publicId]="userRole.user.documentImage?.cloudinaryId"
+               gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec"
+               *ngIf="userRole.user.documentImage"></b-image>
+      <i *ngIf="!userRole.user.documentImage" class="fa-user"></i>
+    </div>
 
     <form [formGroup]="userForm" (ngSubmit)="save()" autocomplete="off" novalidate>
       <mat-dialog-content>
         <div class="grid">
+          <div class="grid__item one-whole">
+            <div class="input-holder">
+              <label for="email">Email</label>
+              <input pInputText type="email" formControlName="email">
+              <control-messages [control]="userForm.get('email')"></control-messages>
+            </div>
+          </div>
+
           <b-resource-user-role-form-part [resource]="resource" [parentForm]="userForm" [roleType]="roleType"
                                           [userRole]="userRole" [lastAdminRole]="lastAdminRole"></b-resource-user-role-form-part>
         </div>
@@ -46,7 +62,9 @@ export class ResourceUserEditDialogComponent implements OnInit {
     this.userRole = data.userRole;
     this.lastAdminRole = data.lastAdminRole;
     this.roleType = data.roleType;
-    this.userForm = this.fb.group({});
+    this.userForm = this.fb.group({
+      email: [data.userRole.email, [ValidationUtils.emailValidator]],
+    });
   }
 
   ngOnInit(): void {
@@ -59,7 +77,9 @@ export class ResourceUserEditDialogComponent implements OnInit {
     }
     this.progress = true;
     const roleDef = this.userForm.get('roleGroup').value;
-    const userRoleDTO: UserRoleDTO = _.pick(roleDef, ['role', 'expiryDate', 'memberCategory', 'memberProgram', 'memberYear']);
+    const userRoleDTO: UserRoleDTO = _.pick(roleDef,
+      ['role', 'expiryDate', 'memberCategory', 'memberProgram', 'memberYear']);
+    userRoleDTO.email = this.userForm.get('email').value;
     this.resourceService.updateResourceUser(this.resource, this.userRole.user, userRoleDTO)
       .subscribe(userRole => {
         this.progress = false;
