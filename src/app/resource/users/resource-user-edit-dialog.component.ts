@@ -10,13 +10,15 @@ import UserRoleRepresentation = b.UserRoleRepresentation;
 
 @Component({
   template: `
-    <h2 mat-dialog-title style="margin-bottom: 10px;">{{userRole.user.givenName}} {{userRole.user.surname}}</h2>
-    <div mat-card-avatar class="avatar"
-         [ngClass]="{'no-background': userRole.user.documentImage}">
-      <b-image [publicId]="userRole.user.documentImage?.cloudinaryId"
-               gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec"
-               *ngIf="userRole.user.documentImage"></b-image>
-      <i *ngIf="!userRole.user.documentImage" class="fa-user"></i>
+    <div fxLayout="row" class="user-avatar-dialog">
+      <div mat-card-avatar class="avatar"
+           [ngClass]="{'no-background': userRole.user.documentImage}">
+        <b-image [publicId]="userRole.user.documentImage?.cloudinaryId"
+                 gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec"
+                 *ngIf="userRole.user.documentImage"></b-image>
+        <i *ngIf="!userRole.user.documentImage" class="fa-user"></i>
+      </div>
+      <h2 mat-dialog-title style="margin-bottom:10px; margin-left: 10px;">{{userRole.user.givenName}} {{userRole.user.surname}}</h2>
     </div>
 
     <form [formGroup]="userForm" (ngSubmit)="save()" autocomplete="off" novalidate>

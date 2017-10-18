@@ -30,9 +30,9 @@
             <input pInputText type="password" placeholder="Password" formControlName="password">
             <control-messages [control]="loginForm.get('password')"></control-messages>
           </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">
-            <button pButton class="ui-button-success" label="Submit" fxFlexOrder="1"></button>
-            <div>
+          <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center" class="actions-holder">
+            <button pButton class="ui-button-success" label="Submit" fxFlexOrder.gt-xs="1"></button>
+            <div fxLayout.xs="row" fxLayoutAlign.xs="space-between center">
               <button pButton type="button" class="ui-button-secondary" label="Forgot password?"
                       (click)="setView('FORGOT')"></button>
               <button pButton type="button" class="ui-button-secondary" label="Register"

@@ -1,4 +1,5 @@
 @import "variables";
+@import "grid";
 
 .ui-widget * {
   box-sizing: border-box;
@@ -285,7 +286,21 @@
     }
   }
 }
+.user-avatar-dialog {
+  .avatar {
+    border-radius: 50%;
+    overflow: hidden;
+    background: #eee;
+    height: 32px;
+    width: 32px;
+    text-align: center;
+    line-height: 30px;
 
+    img {
+      border-radius: 50%;
+    }
+  }
+}
 .ui-autocomplete .ui-button-icon-only {
   border-left: 0 none;
 }
@@ -462,7 +477,10 @@ header {
 }
 
 .ui-button-text-only .ui-button-text {
-  padding: 0.3em 1em;
+  padding: 0.3em 0.5em;
+  @include media-query($medium-up) {
+    padding: 0.3em 1em;
+  }
 }
 
 .ui-button-icon-only .ui-button-text {
@@ -2794,6 +2812,10 @@ button.ui-button::-moz-focus-inner {
 }
 
 .ui-messages {
+  font-size:0.9em !important;
+  @include media-query($medium-up) {
+    font-size:inherit !important;
+  }
   ul {
     width: 87%;
     margin: 0;
@@ -3356,6 +3378,9 @@ b-header {
   }
 }
 p-radiobutton {
+  display: inline-block;
+  margin-bottom:6px;
+  min-width: 95px;
   &.administrator, &.author, &.member {
     label:after{
       content: '';
@@ -5013,5 +5038,12 @@ p-tabview {
   .ui-sidebar-right.ui-sidebar-lg,
   .ui-sidebar-right.ui-sidebar-md {
     width: 20em;
+  }
+}
+div.ui-overlaypanel.ui-widget.ui-widget-content.ui-corner-all.ui-shadow {
+
+  @include media-query($small) {
+    left: 15px !important;
+    top: 52px !important;
   }
 }

@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'grid';
 form, .form {
   .ui-inputtext {
     padding: 0.6em;
@@ -26,6 +27,19 @@ form, .form {
   }
   .actions-holder {
     margin-top:15px;
+    .ui-button-secondary, .ui-button-warning {
+      margin-bottom:15px;
+      @include media-query($medium-up) {
+        margin-right: 15px;
+        margin-bottom:0;
+      }
+    }
+    .ui-button-success {
+      margin-bottom:15px;
+      @include media-query($medium-up) {
+        margin-bottom:0;
+      }
+    }
   }
   label:not(.ui-dropdown-label) {
     font-size:110%;

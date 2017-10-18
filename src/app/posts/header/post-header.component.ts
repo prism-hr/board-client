@@ -4,7 +4,7 @@ import PostRepresentation = b.PostRepresentation;
 @Component({
   selector: 'b-post-header',
   template: `
-    <div *ngIf="post" class="post-title" fxLayout="row" fxLayoutAlign="space-between flex-end">
+    <div *ngIf="post" class="post-title" fxLayout.xs="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between flex-end">
       <div>
         <div *ngIf="publishedTimestamp" class="date">
           <div *ngIf="(publishedTimestamp | amDifference: today) >= 0">

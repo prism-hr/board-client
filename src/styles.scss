@@ -259,13 +259,13 @@ control-messages {
 }
 .ql-editor-view {
   p {
-    margin: 0 !important;
+    margin: 0 0 10px !important;
     line-height: 1.3rem;
     display: inline-block;
   }
   ol, ul {
     margin-top: 0;
-    margin-bottom:0;
+    margin-bottom:10px;
   }
 }
 

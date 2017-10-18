@@ -1,4 +1,5 @@
 @import '../../assets/variables';
+@import '../../assets/grid';
 
 .authenticate {
   max-width: 450px;
@@ -33,7 +34,9 @@
   }
 }
 .register-container, .login-container, .forgot-container {
-  width: 450px;
+  @include media-query($medium-up) {
+    width: 450px;
+  }
 }
 .social-login button {
   &.facebook {

@@ -8,7 +8,7 @@
   <div class="grid list-container">
     <div *ngFor="let department of departments" class="list-container__item">
       <mat-card>
-        <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-card-header fxLayout.xs="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
           <mat-card-title>
             <h3><a [routerLink]="['/', department.university.handle, department.handle]">{{department.name}}</a></h3>
           </mat-card-title>
