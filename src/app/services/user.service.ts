@@ -1,12 +1,10 @@
 import {Injectable, OnInit} from '@angular/core';
 import {RequestOptionsArgs, Response} from '@angular/http';
-import {RollbarService} from 'angular-rollbar';
 import {AuthService, JwtHttp} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {Subscription} from 'rxjs/Subscription';
 import {CustomJwtHttp} from '../authentication/jwt-http.service';
-import {DefinitionsService} from './definitions.service';
 import ActivityRepresentation = b.ActivityRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
 import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
@@ -21,8 +19,7 @@ export class UserService implements OnInit {
   activities$: ReplaySubject<ActivityRepresentation[]>;
   activitiesSubscription: Subscription;
 
-  constructor(private http: JwtHttp, private rollbar: RollbarService, private auth: AuthService,
-              private definitionsService: DefinitionsService) {
+  constructor(private http: JwtHttp, private auth: AuthService) {
     this.userSource = new ReplaySubject<UserRepresentation>(1);
     this.user$ = this.userSource.asObservable();
     this.activities$ = new ReplaySubject<UserRepresentation>(1);
@@ -85,15 +82,6 @@ export class UserService implements OnInit {
           .map(user => user.json())
           .subscribe((user: UserRepresentation) => {
             this.userSource.next(user);
-            this.definitionsService.loadDefinitions()
-              .then(definitions => {
-                this.rollbar.configure({
-                  payload: {
-                    environment: definitions.profile,
-                    person: {id: '' + user.id, email: user.email}
-                  }
-                });
-              });
             resolve(user);
           });
       } else {
