@@ -1,5 +1,5 @@
 <mat-card>
-  <mat-card-header fxLayout.xs="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+  <mat-card-header fxLayout.xs="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between flex-top">
     <div mat-card-avatar class="logo-holder-small"
          [ngClass]="{'default-logo': !post.board.department.documentLogo}">
       <b-image [publicId]="post.board.department.documentLogo?.cloudinaryId"
