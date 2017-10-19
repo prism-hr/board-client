@@ -8,7 +8,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {RollbarModule, RollbarService} from 'angular-rollbar';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {MomentModule} from 'angular2-moment';
 import {RlTagInputModule} from 'angular2-tag-input/dist';
@@ -114,6 +113,9 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
+import {RollbarService} from './rollbar/rollbar.service';
+import {RollbarConfig} from './rollbar/rollbar.config';
+import {RollbarHandler} from './rollbar/rollbar-handler.service';
 
 @NgModule({
   declarations: [
@@ -382,13 +384,7 @@ import {ValidationService} from './validation/validation.service';
     MomentModule,
     ShareButtonsModule.forRoot(),
     ClipboardModule,
-    PapaParseModule,
-    RollbarModule.forRoot({
-      accessToken: 'da4d675c8c5340819eac1c080f5b1e76',
-      payload: {
-        environment: environment.id
-      }
-    })
+    PapaParseModule
   ],
   providers: [
     DefinitionsService,
@@ -398,7 +394,15 @@ import {ValidationService} from './validation/validation.service';
       deps: [DefinitionsService],
       multi: true
     },
-    {provide: ErrorHandler, useClass: RollbarService},
+    {provide: RollbarConfig, useValue: {
+      verbose: true,
+      accessToken: 'da4d675c8c5340819eac1c080f5b1e76',
+      payload: {
+        environment: environment.id
+      }
+    }},
+    RollbarService,
+    {provide: ErrorHandler, useClass: RollbarHandler},
     AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, BoardsResolver,
     AccountSuppressionsResolver, PostService, DepartmentService, UserService, ValidationService
   ],

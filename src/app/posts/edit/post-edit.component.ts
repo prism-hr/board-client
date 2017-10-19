@@ -3,7 +3,6 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Data, Router} from '@angular/router';
-import {RollbarService} from 'angular-rollbar';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import {Observable} from 'rxjs/Observable';
@@ -21,6 +20,7 @@ import MemberCategory = b.MemberCategory;
 import PostPatchDTO = b.PostPatchDTO;
 import PostRepresentation = b.PostRepresentation;
 import UserRepresentation = b.UserRepresentation;
+import {RollbarService} from '../../rollbar/rollbar.service';
 
 @Component({
   templateUrl: 'post-edit.component.html',
