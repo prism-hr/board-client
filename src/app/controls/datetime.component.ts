@@ -75,7 +75,7 @@ export class DateTimeComponent implements ControlValueAccessor, OnInit {
 
   dateTimeChanged() {
     const iso = (moment as any).tz(this.date + ' ' + this.time, this.selectedTz).tz(this.currentTz);
-    this.propagateChange(iso.isValid() ? iso.format().slice(0, -6) : null);
+    this.propagateChange(iso.isValid() ? iso.format().split('+')[0] : null);
   }
 
   touched() {
