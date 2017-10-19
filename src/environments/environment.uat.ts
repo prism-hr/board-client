@@ -1,4 +1,4 @@
 export const environment = {
-  id: 'prod',
+  id: 'uat',
   production: true
 };

@@ -16,6 +16,7 @@ import {ClipboardModule} from 'ngx-clipboard/dist';
 import {PapaParseModule} from 'ngx-papaparse';
 import {ShareButtonsModule} from 'ngx-sharebuttons';
 import {NgUploaderModule} from 'ngx-uploader';
+import {SidebarModule} from 'primeng/components/sidebar/sidebar';
 import {
   AutoCompleteModule,
   ButtonModule,
@@ -38,6 +39,7 @@ import {
   ToggleButtonModule,
   TooltipModule
 } from 'primeng/primeng';
+import {environment} from '../environments/environment';
 import {AccountNotificationsComponent} from './account/account-notifications.component';
 import {AccountSuppressionsResolver} from './account/account-suppressions-resolver';
 import {AccountComponent} from './account/account.component';
@@ -112,7 +114,6 @@ import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
-import {SidebarModule} from 'primeng/components/sidebar/sidebar';
 
 @NgModule({
   declarations: [
@@ -383,7 +384,10 @@ import {SidebarModule} from 'primeng/components/sidebar/sidebar';
     ClipboardModule,
     PapaParseModule,
     RollbarModule.forRoot({
-      accessToken: 'da4d675c8c5340819eac1c080f5b1e76'
+      accessToken: 'da4d675c8c5340819eac1c080f5b1e76',
+      payload: {
+        environment: environment.id
+      }
     })
   ],
   providers: [
