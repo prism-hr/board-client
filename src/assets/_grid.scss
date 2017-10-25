@@ -727,6 +727,11 @@ $grid-breakpoints: (
   @include media-query($medium-up) {
     margin-bottom: 0px;
   }
+  @include media-query($small) {
+    .mat-card-avatar {
+      margin-top:16px;
+    }
+  }
   width: 100%;
   b-post-item, b-board-item {
     width: 100%;
@@ -753,5 +758,10 @@ $grid-breakpoints: (
         flex:1 0 auto;
       }
     }
+  }
+}
+b-post-item {
+  .mat-card-avatar {
+    margin-top:16px;
   }
 }

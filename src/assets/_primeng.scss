@@ -4265,7 +4265,9 @@ p-checkbox:hover {
 .ui-widget {
   font-family: $fontFamily;
   font-size: $fontSize;
-
+  @include media-query($small) {
+    font-size:1rem;
+  }
   input, select, textarea, button {
     font-family: $fontFamily;
     font-size: $fontSize;
@@ -4835,6 +4837,9 @@ b-image > img {
 }
 .remove-user {
   margin-left:25px;
+  @include media-query($small) {
+    margin-left: 0;
+  }
 }
 .ui-button.ui-button-info.ui-state-default.ui-togglebutton {
   &:not(.ui-state-active) {

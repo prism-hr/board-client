@@ -37,7 +37,7 @@ import UserRoleRepresentation = b.UserRoleRepresentation;
         </div>
       </mat-dialog-content>
 
-      <mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between" style="margin-top: 20px;">
+      <mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between">
         <div>
           <button pButton type="button" class="ui-button-secondary" label="Cancel" mat-dialog-close></button>
           <button pButton type="button" (click)="removeUser(userRole)" class="ui-button-secondary remove-user" label="Remove"

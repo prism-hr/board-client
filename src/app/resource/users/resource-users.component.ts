@@ -95,7 +95,6 @@ export class ResourceUsersComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(ResourceUserEditDialogComponent,
       {
-        width: '420px',
         panelClass: 'user-settings',
         data: {resource: this.resource, lastAdminRole: this.lastAdminRole && userRole.role === 'ADMINISTRATOR', userRole, roleType}
       });

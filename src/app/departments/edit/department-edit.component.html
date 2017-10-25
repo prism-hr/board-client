@@ -1,7 +1,7 @@
 <mat-card>
   <form [formGroup]="departmentForm">
     <mat-card-content>
-      <div class="grid" fxLayout="row">
+      <div class="grid" fxLayout="column" fxLayout.gt-sm="row">
         <div class="grid__item small--one-whole medium-up--two-thirds">
           <div class="grid">
             <div class="grid__item one-whole input-holder">
@@ -11,7 +11,7 @@
             </div>
             <div class="grid__item one-whole input-holder">
               <label for="summary">Department Summary</label>
-              <textarea id="summary" pInputTextarea formControlName="summary" required
+              <textarea id="summary" pInputTextarea formControlName="summary" rows="6" required
                         class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
               <control-messages [control]="departmentForm.get('summary')"></control-messages>
             </div>
