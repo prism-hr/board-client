@@ -7,3 +7,4 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/combineLatest';
+import 'rxjs/add/operator/retryWhen';

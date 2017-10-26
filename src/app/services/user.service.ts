@@ -149,6 +149,13 @@ export class UserService implements OnInit {
                 .interval(50000)
                 .startWith(0)
                 .switchMap(() => this.http.get('/api/user/activities/refresh'))
+                .retryWhen(res => {
+                  return res.map(err => {
+                    if(err.status !== 304) {
+                      throw err;
+                    }
+                  });
+                })
                 .subscribe(activities => this.activities$.next(activities.json()));
             });
         }
