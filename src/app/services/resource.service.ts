@@ -39,12 +39,20 @@ export class ResourceService {
     const params = new URLSearchParams();
     params.set('handle', handle);
     return this.http.get('/api/' + scope.toLowerCase() + 's/', {search: params}).map(res => res.json())
-      .do(resource => {
-        const subjects = this.resourceSubjects[scope];
-        if (!subjects[resource.id]) {
-          subjects[resource.id] = new ReplaySubject(1);
+      .catch((error: Response) => {
+        if (error.status === 403 || error.status === 404) {
+          return Observable.of(null);
         }
-        subjects[resource.id].next(resource);
+        throw error;
+      })
+      .do(resource => {
+        if (resource) {
+          const subjects = this.resourceSubjects[scope];
+          if (!subjects[resource.id]) {
+            subjects[resource.id] = new ReplaySubject(1);
+          }
+          subjects[resource.id].next(resource);
+        }
       });
   }
 

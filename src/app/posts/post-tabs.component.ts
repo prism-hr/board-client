@@ -15,7 +15,7 @@ import PostRepresentation = b.PostRepresentation;
         <router-outlet></router-outlet>
       </div>
       <div *ngIf="!post">
-        The post is unavailable
+        The post is unavailable.
       </div>
     </section>
   `,
