@@ -56,6 +56,12 @@ export class ResourceService {
     let directObservable;
     if (options.reload) {
       directObservable = this.http.get('/api/' + scope.toLowerCase() + 's/' + id).map(res => res.json())
+        .catch((error: Response) => {
+          if (error.status === 403 || error.status === 404) {
+            return Observable.of(null);
+          }
+          throw error;
+        })
         .do(post => {
           subjects[id].next(post);
         });

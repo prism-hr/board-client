@@ -9,9 +9,14 @@ import PostRepresentation = b.PostRepresentation;
 @Component({
   template: `
     <section class="section">
-      <b-post-header [post]="post"></b-post-header>
-      <p-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></p-tabMenu>
-      <router-outlet></router-outlet>
+      <div *ngIf="post">
+        <b-post-header [post]="post"></b-post-header>
+        <p-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></p-tabMenu>
+        <router-outlet></router-outlet>
+      </div>
+      <div *ngIf="!post">
+        The post is unavailable
+      </div>
     </section>
   `,
   styles: []
@@ -32,25 +37,27 @@ export class PostTabsComponent implements OnInit {
       })
       .subscribe(post => {
         this.post = post;
-        this.canEdit = this.resourceService.canEdit(this.post);
-        const postPath = ['/', this.post.board.department.university.handle, this.post.board.department.handle, this.post.board.handle,
-          this.post.id];
-        this.items = [
-          {
-            label: 'View',
-            routerLink: postPath,
-            routerLinkActiveOptions: {exact: true}
-          },
-          {
-            label: 'Edit',
-            routerLink: [...postPath, 'edit'],
-            routerLinkActiveOptions: {exact: true}
-          },
-          {
-            label: 'Responses',
-            routerLink: [...postPath, 'responses'],
-            routerLinkActiveOptions: {exact: true}
-          }];
+        if (this.post) {
+          this.canEdit = this.resourceService.canEdit(this.post);
+          const postPath = ['/', this.post.board.department.university.handle, this.post.board.department.handle, this.post.board.handle,
+            this.post.id];
+          this.items = [
+            {
+              label: 'View',
+              routerLink: postPath,
+              routerLinkActiveOptions: {exact: true}
+            },
+            {
+              label: 'Edit',
+              routerLink: [...postPath, 'edit'],
+              routerLinkActiveOptions: {exact: true}
+            },
+            {
+              label: 'Responses',
+              routerLink: [...postPath, 'responses'],
+              routerLinkActiveOptions: {exact: true}
+            }];
+        }
       });
   }
 }
