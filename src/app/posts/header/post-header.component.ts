@@ -14,6 +14,9 @@ import PostRepresentation = b.PostRepresentation;
             Published: {{publishedTimestamp | amCalendar}}
           </div>
         </div>
+        <div *ngIf="post.deadTimestamp" class="date">
+          Deadline: {{post.deadTimestamp | amCalendar}}
+        </div>
         <h1>{{post.name}}</h1>
         <h2><em>at</em> {{post.organizationName}} <span class="location"><i class="fa fa-location-pin"></i> {{post.location.name}}</span>
         </h2>
@@ -27,7 +30,7 @@ import PostRepresentation = b.PostRepresentation;
 })
 export class PostHeaderComponent implements OnInit {
   @Input() post: PostRepresentation & {};
-  publishedTimestamp: string;
+  publishedTimestamp: Date;
   today: Date;
 
   constructor() {
@@ -35,6 +38,6 @@ export class PostHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.today = new Date();
-    this.publishedTimestamp = <any>this.post.liveTimestamp;
+    this.publishedTimestamp = this.post.liveTimestamp;
   }
 }
