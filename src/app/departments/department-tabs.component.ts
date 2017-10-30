@@ -6,10 +6,17 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
 
 @Component({
   template: `
-    <section class="section">
-      <b-department-header [department]="department"></b-department-header>
-      <p-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></p-tabMenu>
-      <router-outlet></router-outlet>
+    <section *ngIf="department" class="section">
+      <div *ngIf="!errorStatus">
+        <b-department-header [department]="department"></b-department-header>
+        <p-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></p-tabMenu>
+        <router-outlet></router-outlet>
+      </div>
+      <div *ngIf="errorStatus">
+        <div *ngIf="errorStatus === 404">
+          The department you were looking for does not exist.
+        </div>
+      </div>
     </section>
   `,
   styles: []
@@ -20,6 +27,10 @@ export class DepartmentTabsComponent implements OnInit {
   canEdit: boolean;
 
   constructor(private route: ActivatedRoute, private resourceService: ResourceService) {
+  }
+
+  get errorStatus(): number {
+    return this.department && (<any>this.department).errorStatus;
   }
 
   ngOnInit() {

@@ -41,7 +41,7 @@ export class ResourceService {
     return this.http.get('/api/' + scope.toLowerCase() + 's/', {search: params}).map(res => res.json())
       .catch((error: Response) => {
         if (error.status === 403 || error.status === 404) {
-          return Observable.of(null);
+          return Observable.of({errorStatus: error.status});
         }
         throw error;
       })
@@ -66,7 +66,7 @@ export class ResourceService {
       directObservable = this.http.get('/api/' + scope.toLowerCase() + 's/' + id).map(res => res.json())
         .catch((error: Response) => {
           if (error.status === 403 || error.status === 404) {
-            return Observable.of(null);
+            return Observable.of({errorStatus: error.status});
           }
           throw error;
         })
