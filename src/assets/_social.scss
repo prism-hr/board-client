@@ -1,0 +1,48 @@
+@import '~ngx-sharebuttons/styles/variables';
+
+$sb-buttons: (
+  facebook: #4267b2,
+  twitter: #00acee,
+  google: #f53d3d,
+  stumble: #f4f4f4,
+  linkedin: $sb-linkedin,
+  pinterest: $sb-pinterest,
+  reddit: $sb-reddit,
+  tumblr: $sb-tumblr,
+  whatsapp: $sb-whatsapp,
+  telegram: $sb-telegram,
+  email: $sb-email,
+  vk: $sb-vk,
+  more: $sb-more,
+  copy: $sb-copy,
+  print: $sb-print
+);
+
+@import '~ngx-sharebuttons/styles/share-buttons';
+
+.sb-group {
+  margin: 1em 0 1em 6px;
+}
+.sb-show-icon {
+  border-radius: 2px;
+  .sb-icon {
+    color: white;
+  }
+  &:hover {
+    .sb-inner {
+      background: rgba(0,0,0,0.2);
+    }
+  }
+}
+.sb-facebook {
+  background: #4267b2;
+}
+.sb-twitter {
+  background: #00acee;
+}
+.sb-google {
+  background: #db4437;
+}
+.sb-linkedin {
+  background: #006fa6;
+}
