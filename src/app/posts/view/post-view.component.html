@@ -8,7 +8,37 @@
         <div *ngIf="post.description" class="post-content--description ql-editor-view" [innerHtml]="post.description">
         </div>
       </div>
-
+      <div class="boxes-list post-view" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="boxes-list__item views">
+          <div class="title"><i class="fa-eye"></i> Views</div>
+          <span class="number" *ngIf="post.viewCount">{{post.viewCount}}</span>
+          <span class="number" *ngIf="!post.viewCount">0</span>
+        </div>
+        <div class="boxes-list__item responses" *ngIf="post.applyEmail">
+          <div class="title"><i class="fa-share-alt"></i> Responses</div>
+          <span class="number" *ngIf="post.responseCount">{{post.responseCount}}</span>
+          <span class="number" *ngIf="!post.responseCount">0</span>
+        </div>
+        <div class="boxes-list__item referral" *ngIf="!post.applyEmail">
+          <div class="title"><i class="fa-share-alt"></i> Referrals</div>
+          <span class="number" *ngIf="post.referralCount">{{post.referralCount}}</span>
+          <span class="number" *ngIf="!post.referralCount">0</span>
+        </div>
+        <div class="boxes-list__item {{ post.state | lowercase }}" *ngIf="canEdit">
+          <div class="title">
+            <i class="fa-{{ post.state | lowercase }}"></i> {{'definitions.state.' + post.state | translate}}
+          </div>
+        </div>
+        <div class="boxes-list__item" *ngIf="!canEdit" [ngClass]="{'applied': post.response, 'no-applied' : !post.response }">
+          <div class="title" *ngIf="post.response">
+            <i class="fa-accepted"></i> Applied
+          </div>
+          <div class="title" *ngIf="!post.response">
+            <i class="fa-edit"></i> Not Applied
+          </div>
+          <span class="number" *ngIf="post.response">{{post.response.createdTimestamp | date : 'shortDate'}}</span>
+        </div>
+      </div>
       <div *ngIf="post.state === 'ACCEPTED'">
         <b-post-apply [post]="post"></b-post-apply>
 
