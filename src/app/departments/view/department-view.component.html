@@ -27,9 +27,12 @@
           <b-image [publicId]="department.documentLogo?.cloudinaryId" height="150" width="200" crop="mfit"></b-image>
         </mat-card-content>
       </mat-card>
-
     </div>
   </div>
+
+  <share-buttons [title]="department.name" [description]="department.summary"
+                 [include]="['facebook','twitter','linkedin','google']"
+                 [image]="department.documentLogo?.cloudinaryUrl" [showCount]="true"></share-buttons>
 </section>
 <section>
   <div class="section-header">
