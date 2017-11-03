@@ -1,3 +1,4 @@
+import * as moment from 'moment';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -411,6 +412,9 @@ import {RollbarHandler} from './rollbar/rollbar-handler.service';
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor() {
+    moment.locale('en-gb');
+  }
 }
 
 
