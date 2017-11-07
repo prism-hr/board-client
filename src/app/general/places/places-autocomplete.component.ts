@@ -41,7 +41,7 @@ export class LocationAutocompleteComponent implements ControlValueAccessor, OnIn
         }
         return this.googlePlacesProvider.getPlacesServices()
           .switchMap(services => {
-            const autocompleteService: google.maps.places.AutocompleteService = services[0];
+            const autocompleteService: google.maps.places.AutocompleteService = services.autocomplete;
             const subject = new Subject<AutocompletePrediction[]>();
             autocompleteService.getPlacePredictions({input, types: ['(cities)']}, places => {
               this.zone.run(() => {
@@ -67,7 +67,7 @@ export class LocationAutocompleteComponent implements ControlValueAccessor, OnIn
   locationSelected() {
     this.googlePlacesProvider.getPlacesServices()
       .subscribe(services => {
-        const placesService: google.maps.places.PlacesService = services[1];
+        const placesService: google.maps.places.PlacesService = services.places;
         placesService.getDetails({placeId: (this.model as AutocompletePrediction).place_id}, placeDetails => {
           this.onChange(this.placeResultToLocation(placeDetails));
         });

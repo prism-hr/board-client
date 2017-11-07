@@ -1,13 +1,10 @@
-import {Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {UploadFile, UploadInput, UploadOutput} from 'ngx-uploader';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DefinitionsService} from '../services/definitions.service';
-import DocumentDTO = b.DocumentDTO;
 
 @Component({
   selector: 'b-image',
   template: `
-    <img *ngIf="url" src="{{url}}" />
+    <img *ngIf="url" src="{{url}}"/>
   `,
   styles: []
 })
@@ -31,26 +28,26 @@ export class ImageComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     const transformations = [];
-    if(this.height) {
+    if (this.height) {
       transformations.push('h_' + this.height);
     }
-    if(this.width) {
+    if (this.width) {
       transformations.push('w_' + this.width);
     }
-    if(this.gravity) {
+    if (this.gravity) {
       transformations.push('g_' + this.gravity);
     }
-    if(this.crop) {
+    if (this.crop) {
       transformations.push('c_' + this.crop);
     }
-    if(this.radius) {
+    if (this.radius) {
       transformations.push('r_' + this.radius);
     }
-    if(this.background) {
+    if (this.background) {
       transformations.push('b_rgb:' + this.background);
     }
     let transformation = transformations.join(',');
-    if(transformation.length > 0) {
+    if (transformation.length > 0) {
       transformation += '/';
     }
     this.url = this.publicId && ('https://res.cloudinary.com/board-prism-hr/image/upload/' + transformation + this.publicId);

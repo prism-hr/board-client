@@ -9,7 +9,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {AgmCoreModule} from 'angular2-google-maps/core';
 import {MomentModule} from 'angular2-moment';
 import {RlTagInputModule} from 'angular2-tag-input/dist';
 import {ClipboardModule} from 'ngx-clipboard/dist';
@@ -117,6 +116,7 @@ import {ValidationService} from './validation/validation.service';
 import {RollbarService} from './rollbar/rollbar.service';
 import {RollbarConfig} from './rollbar/rollbar.config';
 import {RollbarHandler} from './rollbar/rollbar-handler.service';
+import {AgmCoreModule} from '@agm/core';
 
 @NgModule({
   declarations: [

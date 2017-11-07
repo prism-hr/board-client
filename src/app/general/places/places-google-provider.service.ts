@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {MapsAPILoader} from 'angular2-google-maps/core';
+import {MapsAPILoader} from '@agm/core';
 
 @Injectable()
 export class GooglePlacesProvider {
 
-  placesService$: Observable<[google.maps.places.AutocompleteService, google.maps.places.PlacesService]>;
+  placesService$: Observable<{autocomplete: google.maps.places.AutocompleteService, places: google.maps.places.PlacesService}>;
 
   constructor(private mapsAPILoader: MapsAPILoader) {
   }
@@ -15,7 +15,7 @@ export class GooglePlacesProvider {
       this.placesService$ = Observable.fromPromise(this.mapsAPILoader.load()
         .then(() => {
           const map = new google.maps.Map(document.createElement('div'));
-          return [new google.maps.places.AutocompleteService(), new google.maps.places.PlacesService(map)];
+          return {autocomplete: new google.maps.places.AutocompleteService(), places: new google.maps.places.PlacesService(map)};
         }))
         .share();
     }

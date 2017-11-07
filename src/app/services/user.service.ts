@@ -23,7 +23,7 @@ export class UserService implements OnInit {
   constructor(private http: JwtHttp, private rollbar: RollbarService, private auth: AuthService) {
     this.userSource = new ReplaySubject<UserRepresentation>(1);
     this.user$ = this.userSource.asObservable();
-    this.activities$ = new ReplaySubject<UserRepresentation>(1);
+    this.activities$ = new ReplaySubject<ActivityRepresentation[]>(1);
     (<CustomJwtHttp><any>this.http).getSessionsExpiredSubject()
       .subscribe(() => {
         this.logout();
