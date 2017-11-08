@@ -30,7 +30,7 @@ export class HomePublicComponent implements OnInit {
   }
 
   searchDepartments(event) {
-    this.resourceService.getResources('DEPARTMENT', event.query).subscribe((departments: DepartmentRepresentation[]) => {
+    this.resourceService.lookupResources('DEPARTMENT', event.query).subscribe((departments: DepartmentRepresentation[]) => {
       this.departmentSuggestions = departments;
     })
   }

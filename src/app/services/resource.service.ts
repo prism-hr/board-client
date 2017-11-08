@@ -101,6 +101,13 @@ export class ResourceService {
     return this.http.get('/api/' + resourceCol, {search: this.generateFilterParams(filter)}).map(res => res.json());
   }
 
+  lookupResources(scope: Scope, query: string): Observable<ResourceRepresentation<any>[]> {
+    const params = new URLSearchParams();
+    params.set('query', query);
+    const resourceCol = scope.toLowerCase() + 's';
+    return this.http.get('/api/' + resourceCol, {search: params}).map(res => res.json());
+  }
+
   getBoardPosts(boardId: number, filter?: EntityFilter): Observable<PostRepresentation[]> {
     return this.http.get('/api/boards/' + boardId + '/posts', {search: this.generateFilterParams(filter)})
       .map(res => res.json());
