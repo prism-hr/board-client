@@ -1,27 +1,32 @@
 import {NgModule} from '@angular/core';
-import {LocationAutocompleteComponent} from './places-autocomplete.component';
 import {FormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
-import {GooglePlacesProvider} from './places-google-provider.service';
 import {AutoCompleteModule} from 'primeng/primeng';
+import {SharedModule} from '../shared.module';
+import {PlacesAutocompleteComponent} from './places-autocomplete.component';
+import {GooglePlacesProvider} from './places-google-provider.service';
+import {AgmCoreModule} from '@agm/core';
 
 @NgModule({
   declarations: [
-    LocationAutocompleteComponent,
+    PlacesAutocompleteComponent,
   ],
   exports: [
-    LocationAutocompleteComponent,
+    PlacesAutocompleteComponent,
   ],
   imports: [
+    SharedModule,
     FormsModule,
-    CommonModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDmaVzQjUgftYVHNfTfoSszjaUe8hie8e8',
+      libraries: ['places']
+    }),
   ],
   providers: [
     GooglePlacesProvider
   ]
 })
-export class PlacesModule {
+export class PlacesAutocompleteModule {
 }
 
 

@@ -1,4 +1,3 @@
-import {AgmCoreModule} from '@agm/core';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -17,25 +16,15 @@ import {SidebarModule} from 'primeng/components/sidebar/sidebar';
 import {
   AutoCompleteModule,
   CalendarModule,
-  CheckboxModule,
   ChipsModule,
-  DialogModule,
   DropdownModule,
   EditorModule,
-  InputMaskModule,
-  InputTextModule,
-  MessagesModule,
   OverlayPanelModule,
   RadioButtonModule,
-  SelectButtonModule,
   SplitButtonModule,
-  TabMenuModule,
-  ToggleButtonModule
+  TabMenuModule
 } from 'primeng/primeng';
 import {environment} from '../environments/environment';
-import {AccountNotificationsComponent} from './account/account-notifications.component';
-import {AccountSuppressionsResolver} from './account/account-suppressions-resolver';
-import {AccountComponent} from './account/account.component';
 import {AppComponent} from './app.component';
 import {MyAuthConfig} from './auth.config';
 import {AuthGuard} from './authentication/auth-guard.service';
@@ -53,7 +42,7 @@ import {BoardTabsComponent} from './boards/manage/board-tabs.component';
 import {BoardEditComponent} from './boards/manage/edit/board-edit.component';
 import {BoardViewComponent} from './boards/manage/view/board-view.component';
 import {BoardNewComponent} from './boards/new/board-new.component';
-import {DateTimeComponent} from './controls/datetime.component';
+import {DateTimeModule} from './controls/datetime.component';
 import {ResourceHandleComponent} from './controls/resource-handle.component';
 import {DepartmentNewComponent} from './departments/department-new.component';
 import {DepartmentResolver} from './departments/department-resolver.service';
@@ -64,10 +53,10 @@ import {DepartmentHeaderComponent} from './departments/header/department-header.
 import {DepartmentListComponent} from './departments/list/department-list.component';
 import {DepartmentViewComponent} from './departments/view/department-view.component';
 import {FooterComponent} from './footer/footer.component';
-import {FileUploadComponent} from './general/file-upload.component';
+import {FileUploadModule} from './general/file-upload/file-upload.module';
 import {FilterModule} from './general/filter/filter.module';
 import {ImageModule} from './general/image/image.module';
-import {PlacesModule} from './general/places/places.module';
+import {PlacesAutocompleteModule} from './general/places/places.module';
 import {SharedModule} from './general/shared.module';
 import {HeaderActivityComponent} from './header/header-activity.component';
 import {HeaderComponent} from './header/header.component';
@@ -80,22 +69,17 @@ import {NotFoundComponent} from './not-found.component';
 import {AboutUsComponent} from './pages/about/about-us.component';
 import {PrivacyComponent} from './pages/privacy/privacy.component';
 import {TermsComponent} from './pages/terms/terms.component';
-import {PostApplyFormComponent} from './posts/apply/post-apply-form.component';
-import {PostApplyRequestMembershipComponent} from './posts/apply/post-apply-request-membership.component';
-import {PostApplyComponent} from './posts/apply/post-apply.component';
 import {BoardsResolver} from './posts/edit/boards-resolver.service';
-import {PostEditComponent} from './posts/edit/post-edit.component';
 import {PostHeaderComponent} from './posts/header/post-header.component';
 import {PostItemComponent} from './posts/item/post-item.component';
 import {PostResolver} from './posts/post-resolver.service';
 import {PostTabsComponent} from './posts/post-tabs.component';
 import {PostService} from './posts/post.service';
 import {PostResponsesComponent} from './posts/responses/post-responses.component';
-import {PostViewComponent} from './posts/view/post-view.component';
 import {ResourceActionsBoxComponent} from './resource/actions-box/resource-actions-box.component';
 import {ResourceBadgeComponent} from './resource/resource-badge.component';
 import {ResourceCommentDialogComponent} from './resource/resource-comment.dialog';
-import {ResourceTimelineComponent} from './resource/timeline/resource-timeline.component';
+import {ResourceTimelineModule} from './resource/timeline/resource-timeline.module';
 import {RollbarHandler} from './rollbar/rollbar-handler.service';
 import {RollbarConfig} from './rollbar/rollbar.config';
 import {RollbarService} from './rollbar/rollbar.service';
@@ -114,8 +98,6 @@ import {ValidationService} from './validation/validation.service';
     HeaderComponent,
     HeaderActivityComponent,
     FooterComponent,
-    AccountComponent,
-    AccountNotificationsComponent,
     AuthenticationDialogComponent,
     ResetPasswordDialogComponent,
     UnsubscribeDialogComponent,
@@ -125,8 +107,6 @@ import {ValidationService} from './validation/validation.service';
     UniLogoComponent,
     EmployerLogoComponent,
     StudentLogoComponent,
-    FileUploadComponent,
-    DateTimeComponent,
     BoardListComponent,
     ResourceHandleComponent,
     BoardHeaderComponent,
@@ -142,14 +122,8 @@ import {ValidationService} from './validation/validation.service';
     DepartmentNewComponent,
     DepartmentHeaderComponent,
     ResourceBadgeComponent,
-    ResourceTimelineComponent,
     PostHeaderComponent,
     PostTabsComponent,
-    PostEditComponent,
-    PostViewComponent,
-    PostApplyComponent,
-    PostApplyRequestMembershipComponent,
-    PostApplyFormComponent,
     PostResponsesComponent,
     PostItemComponent,
     ResourceActionsBoxComponent,
@@ -200,20 +174,17 @@ import {ValidationService} from './validation/validation.service';
           },
           {
             path: 'newPost',
-            component: PostEditComponent,
-            canActivate: [AuthGuard],
+            loadChildren: 'app/posts/edit/post-edit.module#PostEditModule',
             data: {modalType: 'register'},
             resolve: {
               boards: BoardsResolver
             },
+            canActivate: [AuthGuard]
           },
           {
             path: 'account',
-            component: AccountComponent,
-            canActivate: [AuthGuard],
-            resolve: {
-              suppressions: AccountSuppressionsResolver
-            }
+            loadChildren: 'app/account/account.module#AccountModule',
+            canActivate: [AuthGuard]
           },
           {
             path: ':universityHandle',
@@ -295,11 +266,11 @@ import {ValidationService} from './validation/validation.service';
                         children: [
                           {
                             path: '',
-                            component: PostViewComponent,
+                            loadChildren: 'app/posts/view/post-view.module#PostViewModule'
                           },
                           {
                             path: 'edit',
-                            component: PostEditComponent,
+                            loadChildren: 'app/posts/edit/post-edit.module#PostEditModule',
                             canActivate: [AuthGuard]
                           },
                           {
@@ -318,27 +289,25 @@ import {ValidationService} from './validation/validation.service';
           {path: '**', component: NotFoundComponent}]
       }
     ]),
+    // Board modules
     SharedModule,
     FilterModule,
     ImageModule,
+    FileUploadModule,
+    ResourceTimelineModule,
+    DateTimeModule,
     // PrimeNG modules
-    MessagesModule,
     ChipsModule,
     RadioButtonModule,
     TabMenuModule,
-    CheckboxModule,
     DropdownModule,
     CalendarModule,
-    InputMaskModule,
     SplitButtonModule,
     SidebarModule,
     EditorModule,
-    SelectButtonModule,
     AutoCompleteModule,
-    DialogModule,
     OverlayPanelModule,
     // Material modules
-    ToggleButtonModule,
     MatDialogModule,
     MatSnackBarModule,
     MatCardModule,
@@ -357,12 +326,7 @@ import {ValidationService} from './validation/validation.service';
         deps: [HttpClient]
       }
     }),
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDmaVzQjUgftYVHNfTfoSszjaUe8hie8e8',
-      libraries: ['places']
-    }),
     Ng2UiAuthModule.forRoot(MyAuthConfig),
-    PlacesModule,
     ShareButtonsModule.forRoot(),
     ClipboardModule,
     PapaParseModule
@@ -386,8 +350,8 @@ import {ValidationService} from './validation/validation.service';
     },
     RollbarService,
     {provide: ErrorHandler, useClass: RollbarHandler},
-    AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, BoardsResolver,
-    AccountSuppressionsResolver, PostService, DepartmentService, UserService, ValidationService
+    AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService, BoardsResolver,
+    DepartmentService, UserService, ValidationService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, UnsubscribeDialogComponent, ResourceCommentDialogComponent,
     UserImageDialogComponent],

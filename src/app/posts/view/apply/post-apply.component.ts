@@ -1,8 +1,8 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {AuthGuard} from '../../authentication/auth-guard.service';
-import {ResourceService} from '../../services/resource.service';
-import {UserService} from '../../services/user.service';
+import {AuthGuard} from '../../../authentication/auth-guard.service';
+import {ResourceService} from '../../../services/resource.service';
+import {UserService} from '../../../services/user.service';
 import PostRepresentation = b.PostRepresentation;
 import UserRepresentation = b.UserRepresentation;
 

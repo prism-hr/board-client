@@ -16,12 +16,12 @@ import AutocompletePrediction = google.maps.places.AutocompletePrediction;
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => LocationAutocompleteComponent),
+      useExisting: forwardRef(() => PlacesAutocompleteComponent),
       multi: true
     }
   ]
 })
-export class LocationAutocompleteComponent implements ControlValueAccessor, OnInit {
+export class PlacesAutocompleteComponent implements ControlValueAccessor, OnInit {
 
   onChange: any;
   onTouch: () => any;

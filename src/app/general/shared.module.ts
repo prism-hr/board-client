@@ -1,8 +1,9 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {ButtonModule, InputTextModule, TooltipModule} from 'primeng/primeng';
+import {ButtonModule, CheckboxModule, InputTextModule, MessagesModule, RadioButtonModule, TooltipModule} from 'primeng/primeng';
 import {ControlMessagesComponent} from '../validation/control-messages.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {MatCardModule} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -10,7 +11,11 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     TooltipModule,
     ButtonModule,
     InputTextModule,
-    FlexLayoutModule
+    RadioButtonModule,
+    CheckboxModule,
+    FlexLayoutModule,
+    MatCardModule,
+    MessagesModule
   ],
   declarations: [
     ControlMessagesComponent
@@ -20,7 +25,11 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     TooltipModule,
     ButtonModule,
     InputTextModule,
+    RadioButtonModule,
+    CheckboxModule,
     FlexLayoutModule,
+    MatCardModule,
+    MessagesModule,
     ControlMessagesComponent
   ]
 })

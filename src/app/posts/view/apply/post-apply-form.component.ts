@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs/Subscription';
-import {PostService} from '../../posts/post.service';
-import {UserService} from '../../services/user.service';
-import {ValidationUtils} from '../../validation/validation.utils';
+import {PostService} from '../../post.service';
+import {UserService} from '../../../services/user.service';
+import {ValidationUtils} from '../../../validation/validation.utils';
 import PostRepresentation = b.PostRepresentation;
 
 @Component({

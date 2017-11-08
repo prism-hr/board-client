@@ -44,15 +44,15 @@
   </ul>
 </section>
 
-<p-dialog [(visible)]="showOperationDetails" *ngIf="selectedOperation">
-  <p-header>
-    Changes:
-  </p-header>
-  <div *ngFor="let change of selectedOperation.changeList" class="boards">
-    <strong>{{'resourceProperty.' + change.property | translate}} :</strong>
-    changed from
-    <code>{{change.oldValue | json}}</code>
-    to
-    <code>{{change.newValue | json}}</code>
-  </div>
-</p-dialog>
+<!--<p-dialog [(visible)]="showOperationDetails" *ngIf="selectedOperation">-->
+  <!--<p-header>-->
+    <!--Changes:-->
+  <!--</p-header>-->
+  <!--<div *ngFor="let change of selectedOperation.changeList" class="boards">-->
+    <!--<strong>{{'resourceProperty.' + change.property | translate}} :</strong>-->
+    <!--changed from-->
+    <!--<code>{{change.oldValue | json}}</code>-->
+    <!--to-->
+    <!--<code>{{change.newValue | json}}</code>-->
+  <!--</div>-->
+<!--</p-dialog>-->

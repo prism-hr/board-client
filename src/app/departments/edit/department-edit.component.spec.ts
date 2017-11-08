@@ -7,7 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ButtonModule, ChipsModule, FileUploadModule} from 'primeng/primeng';
 import {ResourceHandleComponent} from '../../controls/resource-handle.component';
-import {FileUploadComponent} from '../../general/file-upload.component';
+import {FileUploadComponent} from '../../general/file-upload/file-upload.component';
 import '../../rxjs-extensions';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';

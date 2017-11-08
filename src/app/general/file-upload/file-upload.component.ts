@@ -1,7 +1,7 @@
 import {Component, EventEmitter, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {UploadFile, UploadInput, UploadOutput} from 'ngx-uploader';
-import {DefinitionsService} from '../services/definitions.service';
+import {DefinitionsService} from '../../services/definitions.service';
 import DocumentDTO = b.DocumentDTO;
 
 @Component({

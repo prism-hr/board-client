@@ -1,7 +1,5 @@
-import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MatCardModule} from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
 import {NgUploaderModule} from 'ngx-uploader';
@@ -11,18 +9,19 @@ import {
   CheckboxModule,
   DataTableModule,
   DropdownModule,
-  RadioButtonModule, SelectButtonModule,
-  TabViewModule,
-  TooltipModule
+  RadioButtonModule,
+  SelectButtonModule,
+  TabViewModule
 } from 'primeng/primeng';
 import {FilterModule} from '../../general/filter/filter.module';
 import {ImageModule} from '../../general/image/image.module';
+import {SharedModule} from '../../general/shared.module';
 import {UserLookupComponent} from '../../general/user-lookup';
 import {ResourceUserEditDialogComponent} from './resource-user-edit-dialog.component';
 import {ResourceUserRoleFormPartComponent} from './resource-user-role-form-part.component';
 import {ResourceUsersBulkComponent} from './resource-users-bulk.component';
 import {ResourceUsersComponent} from './resource-users.component';
-import {SharedModule} from '../../general/shared.module';
+import {MatDialogModule} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -30,12 +29,12 @@ import {SharedModule} from '../../general/shared.module';
     NgUploaderModule,
     CheckboxModule,
     DataTableModule,
-    MatCardModule,
     TabViewModule,
     RadioButtonModule,
+    SelectButtonModule,
     CalendarModule,
     DropdownModule,
-    SelectButtonModule,
+    MatDialogModule,
     AutoCompleteModule,
     SharedModule,
     FilterModule,
@@ -52,7 +51,9 @@ import {SharedModule} from '../../general/shared.module';
     ResourceUserEditDialogComponent,
     UserLookupComponent
   ],
-  entryComponents: [ResourceUserEditDialogComponent],
+  entryComponents: [
+    ResourceUserEditDialogComponent
+  ]
 })
 export class ResourceUsersModule {
 }

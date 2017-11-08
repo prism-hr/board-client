@@ -1,5 +1,7 @@
-import {Component, forwardRef, OnInit} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {Component, forwardRef, NgModule, OnInit} from '@angular/core';
+import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {CalendarModule, InputMaskModule} from 'primeng/primeng';
+import {SharedModule} from '../general/shared.module';
 import {Utils} from '../services/utils';
 
 @Component({
@@ -81,4 +83,21 @@ export class DateTimeComponent implements ControlValueAccessor, OnInit {
     this.isDisabled = isDisabled;
   }
 
+}
+
+@NgModule({
+  imports: [
+    SharedModule,
+    FormsModule,
+    CalendarModule,
+    InputMaskModule
+  ],
+  declarations: [
+    DateTimeComponent
+  ],
+  exports: [
+    DateTimeComponent
+  ]
+})
+export class DateTimeModule {
 }
