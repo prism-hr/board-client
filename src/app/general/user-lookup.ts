@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ResourceService} from '../services/resource.service';
-import DocumentDTO = b.DocumentDTO;
 import UserRepresentation = b.UserRepresentation;
 
 @Component({

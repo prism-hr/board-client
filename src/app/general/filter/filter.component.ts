@@ -6,7 +6,6 @@ import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
 import Scope = b.Scope;
 import State = b.State;
-import UserRepresentation = b.UserRepresentation;
 
 @Component({
   selector: 'b-filter',

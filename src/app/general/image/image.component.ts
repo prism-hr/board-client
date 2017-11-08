@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {DefinitionsService} from '../services/definitions.service';
+import {DefinitionsService} from '../../services/definitions.service';
 
 @Component({
   selector: 'b-image',

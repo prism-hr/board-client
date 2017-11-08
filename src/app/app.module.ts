@@ -1,6 +1,6 @@
+import {AgmCoreModule} from '@agm/core';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
-import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {MatCardModule, MatDialogModule, MatSnackBarModule} from '@angular/material';
@@ -16,11 +16,9 @@ import {NgUploaderModule} from 'ngx-uploader';
 import {SidebarModule} from 'primeng/components/sidebar/sidebar';
 import {
   AutoCompleteModule,
-  ButtonModule,
   CalendarModule,
   CheckboxModule,
   ChipsModule,
-  DataTableModule,
   DialogModule,
   DropdownModule,
   EditorModule,
@@ -32,9 +30,7 @@ import {
   SelectButtonModule,
   SplitButtonModule,
   TabMenuModule,
-  TabViewModule,
-  ToggleButtonModule,
-  TooltipModule
+  ToggleButtonModule
 } from 'primeng/primeng';
 import {environment} from '../environments/environment';
 import {AccountNotificationsComponent} from './account/account-notifications.component';
@@ -69,10 +65,10 @@ import {DepartmentListComponent} from './departments/list/department-list.compon
 import {DepartmentViewComponent} from './departments/view/department-view.component';
 import {FooterComponent} from './footer/footer.component';
 import {FileUploadComponent} from './general/file-upload.component';
-import {FilterComponent} from './general/filter/filter.component';
-import {ImageComponent} from './general/image.component';
+import {FilterModule} from './general/filter/filter.module';
+import {ImageModule} from './general/image/image.module';
 import {PlacesModule} from './general/places/places.module';
-import {UserLookupComponent} from './general/user-lookup';
+import {SharedModule} from './general/shared.module';
 import {HeaderActivityComponent} from './header/header-activity.component';
 import {HeaderComponent} from './header/header.component';
 import {EmployerLogoComponent} from './home/employer-logo.component';
@@ -100,30 +96,21 @@ import {ResourceActionsBoxComponent} from './resource/actions-box/resource-actio
 import {ResourceBadgeComponent} from './resource/resource-badge.component';
 import {ResourceCommentDialogComponent} from './resource/resource-comment.dialog';
 import {ResourceTimelineComponent} from './resource/timeline/resource-timeline.component';
-import {ResourceUserEditDialogComponent} from './resource/users/resource-user-edit-dialog.component';
-import {ResourceUserRoleFormPartComponent} from './resource/users/resource-user-role-form-part.component';
-import {ResourceUsersBulkComponent} from './resource/users/resource-users-bulk.component';
-import {ResourceUsersComponent} from './resource/users/resource-users.component';
+import {RollbarHandler} from './rollbar/rollbar-handler.service';
+import {RollbarConfig} from './rollbar/rollbar.config';
+import {RollbarService} from './rollbar/rollbar.service';
 import './rxjs-extensions';
 import {DefinitionsLoader, DefinitionsService} from './services/definitions.service';
+import {DisplayDatePipe} from './services/display-date.pipe';
 import {ResourceService} from './services/resource.service';
+import {TimeDifferencePipe} from './services/time-difference.pipe';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
-import {ControlMessagesComponent} from './validation/control-messages.component';
 import {ValidationService} from './validation/validation.service';
-import {RollbarService} from './rollbar/rollbar.service';
-import {RollbarConfig} from './rollbar/rollbar.config';
-import {RollbarHandler} from './rollbar/rollbar-handler.service';
-import {AgmCoreModule} from '@agm/core';
-import {TimeDifferencePipe} from './services/time-difference.pipe';
-import {DisplayDatePipe} from './services/display-date.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ControlMessagesComponent,
-    ImageComponent,
-    FilterComponent,
     HeaderComponent,
     HeaderActivityComponent,
     FooterComponent,
@@ -140,7 +127,6 @@ import {DisplayDatePipe} from './services/display-date.pipe';
     StudentLogoComponent,
     FileUploadComponent,
     DateTimeComponent,
-    UserLookupComponent,
     BoardListComponent,
     ResourceHandleComponent,
     BoardHeaderComponent,
@@ -155,10 +141,6 @@ import {DisplayDatePipe} from './services/display-date.pipe';
     DepartmentEditComponent,
     DepartmentNewComponent,
     DepartmentHeaderComponent,
-    ResourceUsersComponent,
-    ResourceUserRoleFormPartComponent,
-    ResourceUserEditDialogComponent,
-    ResourceUsersBulkComponent,
     ResourceBadgeComponent,
     ResourceTimelineComponent,
     PostHeaderComponent,
@@ -263,7 +245,7 @@ import {DisplayDatePipe} from './services/display-date.pipe';
                           },
                           {
                             path: 'users',
-                            component: ResourceUsersComponent,
+                            loadChildren: 'app/resource/users/resource-users.module#ResourceUsersModule',
                             canActivate: [AuthGuard]
                           }
                         ]
@@ -294,7 +276,7 @@ import {DisplayDatePipe} from './services/display-date.pipe';
                           },
                           {
                             path: 'users',
-                            component: ResourceUsersComponent,
+                            loadChildren: 'app/resource/users/resource-users.module#ResourceUsersModule',
                             canActivate: [AuthGuard]
                           },
                           {
@@ -336,15 +318,14 @@ import {DisplayDatePipe} from './services/display-date.pipe';
           {path: '**', component: NotFoundComponent}]
       }
     ]),
+    SharedModule,
+    FilterModule,
+    ImageModule,
     // PrimeNG modules
-    InputTextModule,
-    TooltipModule,
-    ButtonModule,
     MessagesModule,
     ChipsModule,
     RadioButtonModule,
     TabMenuModule,
-    TabViewModule,
     CheckboxModule,
     DropdownModule,
     CalendarModule,
@@ -352,7 +333,6 @@ import {DisplayDatePipe} from './services/display-date.pipe';
     SplitButtonModule,
     SidebarModule,
     EditorModule,
-    DataTableModule,
     SelectButtonModule,
     AutoCompleteModule,
     DialogModule,
@@ -362,7 +342,6 @@ import {DisplayDatePipe} from './services/display-date.pipe';
     MatDialogModule,
     MatSnackBarModule,
     MatCardModule,
-    FlexLayoutModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -396,20 +375,22 @@ import {DisplayDatePipe} from './services/display-date.pipe';
       deps: [DefinitionsService],
       multi: true
     },
-    {provide: RollbarConfig, useValue: {
+    {
+      provide: RollbarConfig, useValue: {
       verbose: true,
       accessToken: 'da4d675c8c5340819eac1c080f5b1e76',
       payload: {
         environment: environment.id
       }
-    }},
+    }
+    },
     RollbarService,
     {provide: ErrorHandler, useClass: RollbarHandler},
     AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, BoardsResolver,
     AccountSuppressionsResolver, PostService, DepartmentService, UserService, ValidationService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, UnsubscribeDialogComponent, ResourceCommentDialogComponent,
-    UserImageDialogComponent, ResourceUserEditDialogComponent],
+    UserImageDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {
