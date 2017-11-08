@@ -2,18 +2,17 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import * as _ from 'lodash';
-import * as moment from 'moment';
 import {SelectItem} from 'primeng/primeng';
 import {DepartmentService} from '../../departments/department.service';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
+import {Utils} from '../../services/utils';
 import {PostService} from '../post.service';
 import AgeRange = b.AgeRange;
 import Gender = b.Gender;
 import PostRepresentation = b.PostRepresentation;
 import UserDTO = b.UserDTO;
 import UserRoleDTO = b.UserRoleDTO;
-import {Utils} from '../../services/utils';
 
 @Component({
   selector: 'b-post-apply-request-membership',
@@ -22,13 +21,13 @@ import {Utils} from '../../services/utils';
       <p-messages
         [value]="[{severity:'info', detail:'Please provide your personal information. We collect this so we can ' +
          'monitor trends and improve the relevance of posts. We never share it with advertisers.'}]"
-        [closable]="false"></p-messages> 
+        [closable]="false"></p-messages>
     </div>
     <div *ngIf="canPursue">
       <p-messages
         [value]="[{severity:'info', detail:'Please update your personal information. We maintain this so we can ' +
          'monitor trends and improve the relevance of posts. We never share it with advertisers.'}]"
-        [closable]="false"></p-messages>    
+        [closable]="false"></p-messages>
     </div>
     <form [formGroup]="membershipForm" novalidate>
       <div class="grid">
@@ -120,7 +119,8 @@ export class PostApplyRequestMembershipComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tomorrow = moment().add(1, 'day').toDate();
+    this.tomorrow = new Date();
+    this.tomorrow.setDate(this.tomorrow.getDate() + 1);
     this.translate.get('definitions.memberCategory').subscribe(categoryTranslations => {
       this.memberCategoryOptions = this.department.memberCategories.map(c => ({label: categoryTranslations[c], value: c}));
     });

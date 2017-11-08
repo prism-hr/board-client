@@ -4,10 +4,10 @@ import {MatDialog} from '@angular/material';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Data, Router} from '@angular/router';
 import * as _ from 'lodash';
-import * as moment from 'moment';
 import {Observable} from 'rxjs/Observable';
 import {combineLatest} from 'rxjs/observable/combineLatest';
 import {ResourceCommentDialogComponent} from '../../resource/resource-comment.dialog';
+import {RollbarService} from '../../rollbar/rollbar.service';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceActionView, ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
@@ -20,7 +20,6 @@ import MemberCategory = b.MemberCategory;
 import PostPatchDTO = b.PostPatchDTO;
 import PostRepresentation = b.PostRepresentation;
 import UserRepresentation = b.UserRepresentation;
-import {RollbarService} from '../../rollbar/rollbar.service';
 
 @Component({
   templateUrl: 'post-edit.component.html',
@@ -114,9 +113,13 @@ export class PostEditComponent implements OnInit {
             formValue.hideDeadTimestamp = !formValue.deadTimestamp;
             this.postForm.patchValue(formValue);
           } else {
+            const deadTimestamp = new Date();
+            deadTimestamp.setHours(17);
+            deadTimestamp.setMinutes(0 - deadTimestamp.getTimezoneOffset());
+            deadTimestamp.setDate(deadTimestamp.getDate() + 28);
             this.postForm.patchValue({
               hideLiveTimestamp: true,
-              deadTimestamp: moment().add(28, 'day').hours(17).minutes(0).toISOString(),
+              deadTimestamp: deadTimestamp.toISOString(),
               organizationName: user.defaultOrganizationName,
               location: user.defaultLocation
             });
@@ -144,7 +147,11 @@ export class PostEditComponent implements OnInit {
           });
 
           this.postForm.get('hideLiveTimestamp').valueChanges.subscribe(hide => {
-            const patchValue = hide ? null : moment().hours(9).minutes(0).toISOString();
+            const liveTimestamp = new Date();
+            liveTimestamp.setHours(9);
+            liveTimestamp.setMinutes(0 - liveTimestamp.getTimezoneOffset());
+            liveTimestamp.setDate(liveTimestamp.getDate() + 1);
+            const patchValue = hide ? null : liveTimestamp.toISOString();
             this.postForm.patchValue({liveTimestamp: patchValue});
             this.configureTimestampControl('liveTimestamp');
           });
@@ -260,8 +267,11 @@ export class PostEditComponent implements OnInit {
     const isTouched = this.postForm.get('deadTimestamp').touched;
     if (!isTouched || !this.postForm.get('deadTimestamp').value) { // set default value only if not touched or not specified
       const liveTimestampString = this.postForm.get('liveTimestamp').value;
-      const liveTimestamp = liveTimestampString ? moment(liveTimestampString) : moment();
-      const patchValue = liveTimestamp.add(28, 'day').hours(17).minutes(0).toISOString();
+      const liveTimestamp = liveTimestampString ? new Date(liveTimestampString) : new Date();
+      liveTimestamp.setHours(17);
+      liveTimestamp.setMinutes(0 - liveTimestamp.getTimezoneOffset());
+      liveTimestamp.setDate(liveTimestamp.getDate() + 28);
+      const patchValue = liveTimestamp.toISOString();
       this.postForm.patchValue({deadTimestamp: patchValue});
     }
   }

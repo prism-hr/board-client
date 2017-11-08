@@ -6,16 +6,16 @@ import PostRepresentation = b.PostRepresentation;
   template: `
     <div *ngIf="post" class="post-title" fxLayout.xs="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between flex-end">
       <div>
-        <div *ngIf="publishedTimestamp" class="date">
-          <div *ngIf="(publishedTimestamp | amDifference: today) >= 0">
-            Going live: {{publishedTimestamp | amCalendar}}
+        <div *ngIf="post.liveTimestamp" class="date">
+          <div *ngIf="(post.liveTimestamp | timeDifference) >= 0">
+            Going live: {{post.liveTimestamp | displayDate}}
           </div>
-          <div *ngIf="(publishedTimestamp | amDifference: today) < 0">
-            Published: {{publishedTimestamp | amCalendar}}
+          <div *ngIf="(post.liveTimestamp | timeDifference) < 0">
+            Published: {{post.liveTimestamp | displayDate}}
           </div>
         </div>
         <div *ngIf="post.deadTimestamp" class="date">
-          Deadline: {{post.deadTimestamp | amCalendar}}
+          Deadline: {{post.deadTimestamp | displayDate}}
         </div>
         <h1>{{post.name}}</h1>
         <h2><em>at</em> {{post.organizationName}} <span class="location"><i class="fa fa-location-pin"></i> {{post.location.name}}</span>
@@ -30,7 +30,6 @@ import PostRepresentation = b.PostRepresentation;
 })
 export class PostHeaderComponent implements OnInit {
   @Input() post: PostRepresentation & {};
-  publishedTimestamp: Date;
   today: Date;
 
   constructor() {
@@ -38,6 +37,5 @@ export class PostHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.today = new Date();
-    this.publishedTimestamp = this.post.liveTimestamp;
   }
 }

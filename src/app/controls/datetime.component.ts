@@ -1,6 +1,5 @@
-import {Component, ElementRef, forwardRef, OnInit} from '@angular/core';
+import {Component, forwardRef, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import * as moment from 'moment';
 import {Utils} from '../services/utils';
 
 @Component({
@@ -45,15 +44,16 @@ export class DateTimeComponent implements ControlValueAccessor, OnInit {
   isDisabled: boolean;
   yearRange = Utils.getYearRange();
 
-  constructor(public elementRef: ElementRef) {
+  constructor() {
   }
 
   ngOnInit(): void {
   }
 
   dateTimeChanged() {
-    const iso = moment(this.date + ' ' + this.time);
-    this.propagateChange(iso.isValid() ? iso.format().split('+')[0] : null);
+    const dateString = this.date + 'T' + this.time;
+    const date = new Date(dateString);
+    this.propagateChange(isNaN(date.getTime()) ? null : dateString);
   }
 
   touched() {
@@ -62,9 +62,7 @@ export class DateTimeComponent implements ControlValueAccessor, OnInit {
 
   writeValue(dateTime: string): void {
     if (dateTime) {
-      const localDatetime = moment(dateTime);
-      const selectedDateTime = localDatetime.format();
-      [this.date, this.time] = selectedDateTime.split('T');
+      [this.date, this.time] = dateTime.split('T');
       this.time = this.time.substr(0, 5);
     } else {
       [this.date, this.time] = [null, null];

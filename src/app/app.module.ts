@@ -1,4 +1,3 @@
-import * as moment from 'moment';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -9,7 +8,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {MomentModule} from 'angular2-moment';
 import {RlTagInputModule} from 'angular2-tag-input/dist';
 import {ClipboardModule} from 'ngx-clipboard/dist';
 import {PapaParseModule} from 'ngx-papaparse';
@@ -117,6 +115,8 @@ import {RollbarService} from './rollbar/rollbar.service';
 import {RollbarConfig} from './rollbar/rollbar.config';
 import {RollbarHandler} from './rollbar/rollbar-handler.service';
 import {AgmCoreModule} from '@agm/core';
+import {TimeDifferencePipe} from './services/time-difference.pipe';
+import {DisplayDatePipe} from './services/display-date.pipe';
 
 @NgModule({
   declarations: [
@@ -175,7 +175,9 @@ import {AgmCoreModule} from '@agm/core';
     UserImageDialogComponent,
     AboutUsComponent,
     PrivacyComponent,
-    TermsComponent
+    TermsComponent,
+    DisplayDatePipe,
+    TimeDifferencePipe
   ],
   imports: [
     RouterModule.forRoot([
@@ -382,7 +384,6 @@ import {AgmCoreModule} from '@agm/core';
     }),
     Ng2UiAuthModule.forRoot(MyAuthConfig),
     PlacesModule,
-    MomentModule,
     ShareButtonsModule.forRoot(),
     ClipboardModule,
     PapaParseModule
@@ -412,9 +413,6 @@ import {AgmCoreModule} from '@agm/core';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor() {
-    moment.locale('en-gb');
-  }
 }
 
 

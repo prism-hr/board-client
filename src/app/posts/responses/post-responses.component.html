@@ -14,7 +14,7 @@
               <div class="someone-applied">
                 <h5 *ngIf="response.event === 'REFERRAL'">Somebody was interested</h5>
                 <h5 *ngIf="response.event === 'RESPONSE'">Somebody responded</h5>
-                <span class="time-data">{{response.createdTimestamp | amCalendar}}</span>
+                <span class="time-data">{{response.createdTimestamp | displayDate}}</span>
               </div>
             </div>
             <div class="response-data">
