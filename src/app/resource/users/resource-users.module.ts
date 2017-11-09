@@ -1,7 +1,9 @@
 import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
+import {MatDialogModule} from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
+import {PapaParseModule} from 'ngx-papaparse';
 import {NgUploaderModule} from 'ngx-uploader';
 import {
   AutoCompleteModule,
@@ -21,7 +23,6 @@ import {ResourceUserEditDialogComponent} from './resource-user-edit-dialog.compo
 import {ResourceUserRoleFormPartComponent} from './resource-user-role-form-part.component';
 import {ResourceUsersBulkComponent} from './resource-users-bulk.component';
 import {ResourceUsersComponent} from './resource-users.component';
-import {MatDialogModule} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import {MatDialogModule} from '@angular/material';
     CalendarModule,
     DropdownModule,
     MatDialogModule,
+    PapaParseModule,
     AutoCompleteModule,
     SharedModule,
     FilterModule,

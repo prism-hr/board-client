@@ -1,14 +1,15 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import * as _ from 'lodash';
 import {SelectItem} from 'primeng/primeng';
+import {DepartmentService} from '../../departments/department.service';
+import {Utils} from '../../services/utils';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
 import Role = b.Role;
 import UserRoleRepresentation = b.UserRoleRepresentation;
-import {Utils} from '../../services/utils';
 
 @Component({
   selector: 'b-resource-user-role-form-part',
@@ -23,12 +24,14 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
   @Input() lastAdminRole: boolean;
   @Input() roleType: 'STAFF' | 'MEMBER';
 
+  department: DepartmentRepresentation;
   availableRoles: Role[];
   memberCategoryOptions: SelectItem[];
+  programSuggestions: string[];
   availableYears: SelectItem[];
   yearRange = Utils.getYearRange();
 
-  constructor(private fb: FormBuilder, private translate: TranslateService) {
+  constructor(private fb: FormBuilder, private translate: TranslateService, private departmentService: DepartmentService) {
     this.availableYears = Array.from({length: 9}, (_, k) => k).map((_, i) => i + 1)
       .map(i => ({label: '' + i, value: i}));
   }
@@ -38,10 +41,10 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.department = this.resource.scope === 'DEPARTMENT'
+      ? (this.resource as DepartmentRepresentation) : (this.resource as BoardRepresentation).department;
     this.translate.get('definitions.memberCategory').subscribe(categoryTranslations => {
-      const availableMemberCategories = this.resource.scope === 'DEPARTMENT'
-        ? (this.resource as DepartmentRepresentation).memberCategories
-        : (this.resource as BoardRepresentation).department.memberCategories;
+      const availableMemberCategories = this.department.memberCategories;
       this.memberCategoryOptions = availableMemberCategories.map(c => ({label: categoryTranslations[c], value: c}));
     });
 
@@ -76,6 +79,12 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
   noExpiryDateChanged() {
     this.parentForm.get('roleGroup').get('expiryDate').setValue(null);
     this.refreshValidators();
+  }
+
+  searchPrograms(event) {
+    this.departmentService.searchPrograms(this.department, {searchTerm: event.query}).subscribe(programs => {
+      this.programSuggestions = programs;
+    });
   }
 
   private refreshValidators() {

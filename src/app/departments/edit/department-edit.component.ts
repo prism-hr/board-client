@@ -45,7 +45,7 @@ export class DepartmentEditComponent implements OnInit {
   };
 
   ngOnInit() {
-    combineLatest(this.route.parent.data, this.route.paramMap)
+    combineLatest(this.route.parent.parent.data, this.route.paramMap)
       .subscribe(([parentData, paramMap]: [Data, ParamMap]) => {
         this.department = parentData['department'];
         this.title.setTitle(this.department ? this.department.name + ' - Edit' : 'New department');

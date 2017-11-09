@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import {ResourceService} from '../../services/resource.service';
+import {ResourceService} from '../services/resource.service';
 import BoardRepresentation = b.BoardRepresentation;
 
 @Injectable()

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MenuItem} from 'primeng/primeng';
-import {ResourceService} from '../../services/resource.service';
+import {ResourceService} from '../services/resource.service';
 import BoardRepresentation = b.BoardRepresentation;
 
 @Component({

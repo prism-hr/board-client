@@ -3,12 +3,12 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Response} from '@angular/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
-import {DefinitionsService} from '../../../services/definitions.service';
-import {ResourceService} from '../../../services/resource.service';
+import {DefinitionsService} from '../../services/definitions.service';
+import {ResourceService} from '../../services/resource.service';
 import BoardRepresentation = b.BoardRepresentation;
 import BoardPatchDTO = b.BoardPatchDTO;
 import {Title} from '@angular/platform-browser';
-import {ValidationUtils} from '../../../validation/validation.utils';
+import {ValidationUtils} from '../../validation/validation.utils';
 
 @Component({
   templateUrl: 'board-edit.component.html',
@@ -35,7 +35,7 @@ export class BoardEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.parent.data.subscribe(data => {
+    this.route.parent.parent.data.subscribe(data => {
       this.board = data['board'];
       this.title.setTitle(this.board.name + ' - Edit');
       const value: any = _.pick(this.board, this.boardProperties);

@@ -11,7 +11,7 @@
           <div class="grid__item small--one-whole medium-up--one-half">
             <p-autoComplete formControlName="departmentName" [suggestions]="departmentSuggestions"
                             (completeMethod)="searchDepartments($event)" placeholder="Department Name"
-                            field="name" (onSelect)="departmentSelected($event)">
+                            field="name">
               <ng-template let-department pTemplate="item">
                 <b-image [publicId]="department.documentLogo?.cloudinaryId"
                          height="150" width="200" crop="mfit"></b-image>

@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {DefinitionsService} from '../services/definitions.service';
+import {DefinitionsService} from '../../services/definitions.service';
 import BadgeListType = b.BadgeListType;
 import BadgeType = b.BadgeType;
 import ResourceRepresentation = b.ResourceRepresentation;
@@ -26,7 +26,7 @@ export class ResourceBadgeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.parent.data.subscribe(data => {
+    this.route.parent.parent.data.subscribe(data => {
       const resourceScope = data['resourceScope'];
       this.resource = data[resourceScope];
       this.title.setTitle(this.resource.name + ' - Badge');

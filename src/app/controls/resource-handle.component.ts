@@ -1,6 +1,9 @@
-import {Component, forwardRef, Input} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {Component, forwardRef, Input, NgModule} from '@angular/core';
+import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
+import {SharedModule} from '../general/shared.module';
+import {ClipboardModule} from 'ngx-clipboard/dist';
+import {ButtonModule} from 'primeng/primeng';
 
 @Component({
   selector: 'b-resource-handle',
@@ -59,4 +62,21 @@ export class ResourceHandleComponent implements ControlValueAccessor {
   registerOnTouched(fn: any): void {
     this.propagateTouch = fn;
   }
+}
+
+@NgModule({
+  imports: [
+    SharedModule,
+    FormsModule,
+    ClipboardModule,
+    ButtonModule
+  ],
+  declarations: [
+    ResourceHandleComponent
+  ],
+  exports: [
+    ResourceHandleComponent
+  ]
+})
+export class ResourceHandleModule {
 }

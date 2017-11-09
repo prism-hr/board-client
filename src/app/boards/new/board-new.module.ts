@@ -2,39 +2,34 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
-import {AutoCompleteModule, CalendarModule, DropdownModule, EditorModule} from 'primeng/primeng';
+import {AutoCompleteModule, ChipsModule} from 'primeng/primeng';
 import {FileUploadModule} from '../../general/file-upload/file-upload.module';
-import {PlacesAutocompleteModule} from '../../general/places/places.module';
-import {SharedModule} from '../../general/shared.module';
-import {PostEditComponent} from './post-edit.component';
 import {ImageModule} from '../../general/image/image.module';
-import {DateTimeModule} from '../../controls/datetime.component';
+import {SharedModule} from '../../general/shared.module';
+import {BoardNewComponent} from './board-new.component';
 
 @NgModule({
   imports: [
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    EditorModule,
-    DropdownModule,
     AutoCompleteModule,
-    ImageModule,
-    DateTimeModule,
-    PlacesAutocompleteModule,
     FileUploadModule,
+    ImageModule,
+    ChipsModule,
     TranslateModule.forChild({}),
     RouterModule.forChild([
       {
         path: '',
-        component: PostEditComponent
+        component: BoardNewComponent
       }
     ])
   ],
   declarations: [
-    PostEditComponent
+    BoardNewComponent
   ],
   providers: [],
   entryComponents: []
 })
-export class PostEditModule {
+export class BoardNewModule {
 }

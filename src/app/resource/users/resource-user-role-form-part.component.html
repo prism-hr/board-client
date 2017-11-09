@@ -32,7 +32,9 @@
 
     <div class="dropdown-select input-holder">
       <label for="memberProgram">Program Name</label>
-      <input pInputText placeholder="Research Degree: Computer Science" formControlName="memberProgram">
+      <p-autoComplete formControlName="memberProgram" [suggestions]="programSuggestions"
+                      (completeMethod)="searchPrograms($event)" inputId="memberProgram"
+                      placeholder="Start typing to see suggestions"></p-autoComplete>
       <control-messages [control]="roleGroup.get('memberProgram')"></control-messages>
     </div>
 

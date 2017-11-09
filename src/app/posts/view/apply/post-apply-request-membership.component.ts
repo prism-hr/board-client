@@ -61,14 +61,14 @@ import UserRoleDTO = b.UserRoleDTO;
           <div class="grid__item small--one-whole medium-up--one-half input-holder dropdown-select">
             <label for="category">Which category describes you best?</label>
             <p-dropdown id="category" formControlName="memberCategory" [options]="memberCategoryOptions"
-                        placeholder="Select a category"></p-dropdown>
+                        placeholder="Select a category" inputId="category"></p-dropdown>
             <control-messages [control]="membershipForm.get('memberCategory')"></control-messages>
           </div>
 
           <div class="grid__item small--one-whole medium-up--one-half input-holder dropdown-select">
             <label for="memberProgram">Program Name</label>
             <p-autoComplete formControlName="memberProgram" [suggestions]="programSuggestions" (completeMethod)="searchPrograms($event)"
-                            placeholder="Start typing to see suggestions"></p-autoComplete>
+                            inputId="memberProgram" placeholder="Start typing to see suggestions"></p-autoComplete>
             <control-messages [control]="membershipForm.get('memberProgram')"></control-messages>
           </div>
 

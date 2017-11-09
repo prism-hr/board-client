@@ -25,7 +25,10 @@ export class HomePublicComponent implements OnInit {
   }
 
   submit() {
-    localStorage.setItem('newBoardPrepopulate', JSON.stringify(this.boardForm.value));
+    const department = this.boardForm.get('departmentName').value;
+    const departmentName: string = typeof department === 'object' ? department['name']: department;
+    const name: string = this.boardForm.get('name').value;
+    localStorage.setItem('newBoardPrepopulate', JSON.stringify({name, departmentName}));
     this.router.navigate(['newBoard'], {queryParams: {prepopulate: true}});
   }
 
@@ -33,10 +36,6 @@ export class HomePublicComponent implements OnInit {
     this.resourceService.lookupResources('DEPARTMENT', event.query).subscribe((departments: DepartmentRepresentation[]) => {
       this.departmentSuggestions = departments;
     })
-  }
-
-  departmentSelected(event) {
-    this.boardForm.get('departmentName').setValue(event.name);
   }
 
 }
