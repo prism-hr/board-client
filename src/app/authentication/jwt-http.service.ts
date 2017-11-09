@@ -24,7 +24,7 @@ export class CustomJwtHttp {
     // if the token is expired the "getExpirationDate" function returns null
     const exp = this._shared.getExpirationDate();
     if (this._shared.getToken() &&
-      (!exp || exp.getTime() - this._config.refreshBeforeExpiration < Date.now()) &&
+      (exp && exp.getTime() - this._config.refreshBeforeExpiration < Date.now()) &&
       (options.autoRefreshToken ||
         typeof options.autoRefreshToken === 'undefined' && this._config.autoRefreshToken)) {
       return this.refreshToken()
