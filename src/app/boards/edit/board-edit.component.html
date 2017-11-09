@@ -1,49 +1,59 @@
 <mat-card>
-<form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
-  <mat-card-content>
-    <div class="grid">
-      <div class="grid__item small--one-whole medium-up--two-thirds">
-        <div class="grid">
-          <div class="grid__item one-whole input-holder">
-            <label for="name">Board Name</label>
-            <input id="name" pInputText formControlName="name" required>
-            <control-messages [control]="boardForm.get('name')"></control-messages>
+  <form [formGroup]="boardForm" (ngSubmit)="update()" autocomplete="off" novalidate>
+    <mat-card-content>
+      <div class="grid">
+        <div class="grid__item small--one-whole medium-up--two-thirds">
+          <div class="grid">
+            <div class="grid__item one-whole input-holder">
+              <label for="name">Board Name</label>
+              <input id="name" pInputText formControlName="name" required>
+              <control-messages [control]="boardForm.get('name')"></control-messages>
+            </div>
+
+            <div class="grid__item one-whole input-holder">
+              <label for="summary">Board Purpose</label>
+              <textarea id="summary" pInputTextarea formControlName="summary" required
+                        class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
+              <control-messages [control]="boardForm.get('summary')"></control-messages>
+            </div>
+
+            <div class="grid__item one-whole input-holder">
+              <label for="postCategories">Post categories</label>
+              <p-chips formControlName="postCategories" placeholder="Add a category, then click enter"
+                       inputId="postCategories" [allowDuplicate]="false"></p-chips>
+            </div>
+
+            <div class="grid__item one-whole input-holder">
+              <label>Board URL</label>
+              <b-resource-handle formControlName="handle" [urlPrefix]="urlPrefix"></b-resource-handle>
+              <control-messages [control]="boardForm.get('handle')"></control-messages>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid__item small--one-whole medium-up--one-third">
+          <b-file-upload formControlName="documentLogo" type="logo"></b-file-upload>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="grid grid--half-gutters">
+        <div class="grid__item one-whole" fxLayout="row" fxLayoutAlign="space-between center">
+          <a pButton [routerLink]="['/', board.department.university.handle, board.department.handle, board.handle]"
+             class="ui-button-secondary" label="Cancel"></a>
+
+          <div *ngIf="actionView === 'REVIEW'">
+            <button pButton type="button" class="ui-button-warning" [disabled]="boardForm.invalid" label="Accept"
+                    (click)="executeAction('ACCEPT', true)"></button>
+            <button pButton type="button" class="ui-button-secondary" label="Reject"
+                    (click)="executeAction('REJECT')"></button>
           </div>
 
-          <div class="grid__item one-whole input-holder">
-            <label for="summary">Board Purpose</label>
-            <textarea id="summary" pInputTextarea formControlName="summary" required
-                      class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
-            <control-messages [control]="boardForm.get('summary')"></control-messages>
-          </div>
-
-          <div class="grid__item one-whole input-holder">
-            <label for="postCategories">Post categories</label>
-            <p-chips formControlName="postCategories" placeholder="Add a category, then click enter"
-                     inputId="postCategories" [allowDuplicate]="false"></p-chips>
-          </div>
-
-          <div class="grid__item one-whole input-holder">
-            <label>Board URL</label>
-            <b-resource-handle formControlName="handle" [urlPrefix]="urlPrefix"></b-resource-handle>
-            <control-messages [control]="boardForm.get('handle')"></control-messages>
+          <div *ngIf="actionView === 'EDIT'">
+            <button pButton class="ui-button-success" label="Save"></button>
           </div>
         </div>
       </div>
-
-      <div class="grid__item small--one-whole medium-up--one-third">
-        <b-file-upload formControlName="documentLogo" type="logo"></b-file-upload>
-      </div>
-    </div>
-  </mat-card-content>
-  <mat-card-actions>
-    <div class="grid grid--half-gutters">
-      <div class="grid__item one-whole" fxLayout="row" fxLayoutAlign="space-between center">
-        <a pButton [routerLink]="['/', board.department.university.handle, board.department.handle, board.handle]"
-                class="ui-button-secondary" label="Cancel"></a>
-        <button pButton class="ui-button-success" label="Submit"></button>
-      </div>
-    </div>
-  </mat-card-actions>
-</form>
+    </mat-card-actions>
+  </form>
 </mat-card>

@@ -1,12 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Response} from '@angular/http';
+import {MatDialog} from '@angular/material';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {pick} from 'lodash';
+import {ResourceCommentDialogComponent} from '../../resource/resource-comment.dialog';
+import {RollbarService} from '../../rollbar/rollbar.service';
 import {DefinitionsService} from '../../services/definitions.service';
-import {ResourceService} from '../../services/resource.service';
+import {ResourceActionView, ResourceService} from '../../services/resource.service';
+import {Utils} from '../../services/utils';
 import {ValidationUtils} from '../../validation/validation.utils';
+import Action = b.Action;
 import BoardPatchDTO = b.BoardPatchDTO;
 import BoardRepresentation = b.BoardRepresentation;
 
@@ -19,11 +24,14 @@ export class BoardEditComponent implements OnInit {
   board: BoardRepresentation;
   boardForm: FormGroup;
   urlPrefix: string;
+  actionView: ResourceActionView;
+  availableActions: Action[];
 
   boardProperties = ['name', 'summary', 'postCategories', 'handle', 'documentLogo'];
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private title: Title,
-              private resourceService: ResourceService, private definitionsService: DefinitionsService) {
+              private dialog: MatDialog, private rollbar: RollbarService, private resourceService: ResourceService,
+              private definitionsService: DefinitionsService) {
     this.availablePostVisibilities = definitionsService.getDefinitions()['postVisibility'];
     this.boardForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
@@ -40,14 +48,19 @@ export class BoardEditComponent implements OnInit {
       this.title.setTitle(this.board.name + ' - Edit');
       const value: any = pick(this.board, this.boardProperties);
       this.boardForm.setValue(value);
+
+      this.actionView = this.resourceService.getActionView(this.board);
+      this.availableActions = this.board.actions.map(a => a.action);
+
       this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/' + this.board.department.university.handle + '/'
         + this.board.department.handle + '/';
     });
   }
 
-  submit() {
+  update() {
     this.boardForm['submitted'] = true;
     if (this.boardForm.invalid) {
+      this.rollbar.warn('Board action validation error: ' + Utils.getFormErrors(this.boardForm));
       return;
     }
     const boardPatch: BoardPatchDTO = pick(this.boardForm.value, this.boardProperties);
@@ -64,4 +77,22 @@ export class BoardEditComponent implements OnInit {
       });
   }
 
+  executeAction(action: Action, sendForm?: boolean) {
+    this.boardForm['submitted'] = true;
+    if (this.boardForm.invalid) {
+      this.rollbar.warn('Board action validation error: ' + Utils.getFormErrors(this.boardForm));
+      return;
+    }
+    const dialogRef = this.dialog.open(ResourceCommentDialogComponent, {data: {action, resource: this.board}});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const requestBody: BoardPatchDTO = sendForm ? pick(this.boardForm.value, this.boardProperties) : {};
+        requestBody.comment = result.comment;
+        this.resourceService.executeAction(this.board, action, requestBody)
+          .subscribe(() => {
+            return this.router.navigate(this.resourceService.routerLink(this.board));
+          });
+      }
+    });
+  }
 }

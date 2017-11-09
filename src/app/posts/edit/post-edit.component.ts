@@ -3,7 +3,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Data, Router} from '@angular/router';
-import {pick, get, upperFirst} from 'lodash';
+import {get, pick, upperFirst} from 'lodash';
 import {Observable} from 'rxjs/Observable';
 import {combineLatest} from 'rxjs/observable/combineLatest';
 import {ResourceCommentDialogComponent} from '../../resource/resource-comment.dialog';
@@ -42,8 +42,9 @@ export class PostEditComponent implements OnInit {
     'liveTimestamp', 'deadTimestamp', 'applyWebsite', 'applyDocument', 'applyEmail'];
 
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private cdf: ChangeDetectorRef,
-              private rollbar: RollbarService, private title: Title, private dialog: MatDialog, private definitionsService: DefinitionsService,
-              private postService: PostService, private resourceService: ResourceService, private userService: UserService) {
+              private rollbar: RollbarService, private title: Title, private dialog: MatDialog,
+              private definitionsService: DefinitionsService, private postService: PostService, private resourceService: ResourceService,
+              private userService: UserService) {
     this.definitions = definitionsService.getDefinitions();
   }
 
