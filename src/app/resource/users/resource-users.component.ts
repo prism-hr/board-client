@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
-import * as _ from 'lodash';
+import {pick} from 'lodash';
 import {Observable} from 'rxjs/Observable';
 import {interval} from 'rxjs/observable/interval';
 import {Subscription} from 'rxjs/Subscription';
@@ -70,8 +70,8 @@ export class ResourceUsersComponent implements OnInit {
     this.loading = true;
     const userValue = this.userForm.get('user').value;
     const roleDef = this.userForm.get('roleGroup').value;
-    const userRoleDTO: UserRoleDTO = _.pick(roleDef, ['role', 'expiryDate', 'memberCategory', 'memberProgram', 'memberYear']);
-    userRoleDTO.user = _.pick(userValue, ['id', 'givenName', 'surname', 'email'])
+    const userRoleDTO: UserRoleDTO = pick(roleDef, ['role', 'expiryDate', 'memberCategory', 'memberProgram', 'memberYear']);
+    userRoleDTO.user = pick(userValue, ['id', 'givenName', 'surname', 'email']);
 
     this.resourceService.addUser(this.resource, userRoleDTO)
       .subscribe(user => {
@@ -108,7 +108,7 @@ export class ResourceUsersComponent implements OnInit {
           this.calculateAdminsCount();
         } else if (action === 'deleted') {
           const idx = usersCollection.findIndex(ru => ru.user.id === userRole.user.id);
-          if(idx > -1) { // Safe measure (sometimes when you click quickly somewhere after closing dialog, this function is called again)
+          if (idx > -1) { // Safe measure (sometimes when you click quickly somewhere after closing dialog, this function is called again)
             usersCollection.splice(idx, 1);
             this.calculateAdminsCount();
           }

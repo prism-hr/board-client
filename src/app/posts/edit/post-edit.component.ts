@@ -3,7 +3,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Data, Router} from '@angular/router';
-import * as _ from 'lodash';
+import {pick, get, upperFirst} from 'lodash';
 import {Observable} from 'rxjs/Observable';
 import {combineLatest} from 'rxjs/observable/combineLatest';
 import {ResourceCommentDialogComponent} from '../../resource/resource-comment.dialog';
@@ -106,7 +106,7 @@ export class PostEditComponent implements OnInit {
           this.postForm.get('board').setValue(this.board);
 
           if (this.post) {
-            const formValue: any = _.pick(this.post, this.formProperties);
+            const formValue: any = pick(this.post, this.formProperties);
             formValue.applyType = formValue.applyWebsite ? 'website' :
               (formValue.applyDocument ? 'document' : (formValue.applyEmail ? 'email' : null));
             formValue.hideLiveTimestamp = !formValue.liveTimestamp;
@@ -237,7 +237,7 @@ export class PostEditComponent implements OnInit {
     const extendAction = board && board.actions
       .find(a => (a.action as any as string) === 'EXTEND' && a.scope === 'POST');
     const creatingNewPostAsUntrustedPerson = !this.post && extendAction && extendAction.state === 'DRAFT';
-    this.showExistingRelation = creatingNewPostAsUntrustedPerson || !!_.get(this.post, 'existingRelation');
+    this.showExistingRelation = creatingNewPostAsUntrustedPerson || !!get(this.post, 'existingRelation');
     this.postForm.get('existingRelation').setValue(this.post && this.post.existingRelation);
     this.postForm.get('existingRelationExplanation').setValue(
       this.post && this.post.existingRelationExplanation && this.post.existingRelationExplanation.text);
@@ -277,7 +277,7 @@ export class PostEditComponent implements OnInit {
   }
 
   private generatePostRequestBody(): PostPatchDTO {
-    const post: PostPatchDTO = _.pick(this.postForm.value, this.formProperties);
+    const post: PostPatchDTO = pick(this.postForm.value, this.formProperties);
     post.postCategories = Utils
       .checkboxFromFormFormat(this.availablePostCategories, this.postForm.get('postCategories').value);
     post.memberCategories = Utils
@@ -295,7 +295,7 @@ export class PostEditComponent implements OnInit {
 
   private configureTimestampControl(controlName: string) {
     const control = this.postForm.get(controlName);
-    const hide = this.postForm.get('hide' + _.upperFirst(controlName)).value;
+    const hide = this.postForm.get('hide' + upperFirst(controlName)).value;
     control.setValidators(!hide && [Validators.required]);
     if (hide) {
       control.disable();

@@ -1,14 +1,14 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Response} from '@angular/http';
+import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
-import * as _ from 'lodash';
+import {pick} from 'lodash';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
-import BoardRepresentation = b.BoardRepresentation;
-import BoardPatchDTO = b.BoardPatchDTO;
-import {Title} from '@angular/platform-browser';
 import {ValidationUtils} from '../../validation/validation.utils';
+import BoardPatchDTO = b.BoardPatchDTO;
+import BoardRepresentation = b.BoardRepresentation;
 
 @Component({
   templateUrl: 'board-edit.component.html',
@@ -38,7 +38,7 @@ export class BoardEditComponent implements OnInit {
     this.route.parent.parent.data.subscribe(data => {
       this.board = data['board'];
       this.title.setTitle(this.board.name + ' - Edit');
-      const value: any = _.pick(this.board, this.boardProperties);
+      const value: any = pick(this.board, this.boardProperties);
       this.boardForm.setValue(value);
       this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/' + this.board.department.university.handle + '/'
         + this.board.department.handle + '/';
@@ -50,7 +50,7 @@ export class BoardEditComponent implements OnInit {
     if (this.boardForm.invalid) {
       return;
     }
-    const boardPatch: BoardPatchDTO = _.pick(this.boardForm.value, this.boardProperties);
+    const boardPatch: BoardPatchDTO = pick(this.boardForm.value, this.boardProperties);
     this.resourceService.patchBoard(this.board.id, boardPatch)
       .subscribe(board => {
         Object.assign(this.board, boardPatch);

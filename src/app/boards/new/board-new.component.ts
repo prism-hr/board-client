@@ -3,12 +3,12 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Response} from '@angular/http';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
-import * as _ from 'lodash';
+import {pick} from 'lodash';
 import {AuthGuard} from '../../authentication/auth-guard.service';
-import {Utils} from '../../services/utils';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
+import {Utils} from '../../services/utils';
 import BoardDTO = b.BoardDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import MemberCategory = b.MemberCategory;
@@ -78,10 +78,10 @@ export class BoardNewComponent implements OnInit {
           return;
         }
 
-        const board: BoardDTO = _.pick(this.boardForm.value, ['name', 'summary', 'postCategories', 'documentLogo']);
+        const board: BoardDTO = pick(this.boardForm.value, ['name', 'summary', 'postCategories', 'documentLogo']);
         let department = this.boardForm.get('department').value;
         if (typeof department === 'object') {
-          department = _.pick(department, ['id', 'name']);
+          department = pick(department, ['id', 'name']);
         } else {
           department = {name: department};
         }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {URLSearchParams} from '@angular/http';
-import * as _ from 'lodash';
+import {difference} from 'lodash';
 import {JwtHttp} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
@@ -199,13 +199,13 @@ export class ResourceService {
 
   getActionView(resource: ResourceRepresentation<any>): ResourceActionView {
     const actionNames = resource.actions.map(a => a.action);
-    if (_.difference(['ACCEPT', 'SUSPEND', 'REJECT'], actionNames).length === 0) {
+    if (difference(['ACCEPT', 'REJECT'], actionNames).length === 0) {
       return 'REVIEW';
     }
-    if (_.difference(['CORRECT'], actionNames).length === 0) {
+    if (difference(['CORRECT'], actionNames).length === 0) {
       return 'REVISE';
     }
-    if (_.difference(['EDIT'], actionNames).length === 0) {
+    if (difference(['EDIT'], actionNames).length === 0) {
       return 'EDIT';
     }
     return 'VIEW';

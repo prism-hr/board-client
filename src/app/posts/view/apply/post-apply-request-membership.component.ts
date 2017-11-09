@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
-import * as _ from 'lodash';
+import {pick} from 'lodash';
 import {SelectItem} from 'primeng/primeng';
 import {DepartmentService} from '../../../departments/department.service';
 import {DefinitionsService} from '../../../services/definitions.service';
@@ -170,10 +170,10 @@ export class PostApplyRequestMembershipComponent implements OnInit {
       return;
     }
 
-    const userDTO: UserDTO = _.pick(form.value, ['gender', 'ageRange', 'locationNationality']);
+    const userDTO: UserDTO = pick(form.value, ['gender', 'ageRange', 'locationNationality']);
     const userRoleDTO: UserRoleDTO = {
       user: userDTO,
-      ..._.pick(form.value, ['memberCategory', 'memberProgram', 'memberYear', 'expiryDate'])
+      ...pick(form.value, ['memberCategory', 'memberProgram', 'memberYear', 'expiryDate'])
     };
     this.postService.requestDepartmentMembership(this.department, userRoleDTO, this.canPursue).subscribe(() => {
       this.requested.emit(true);

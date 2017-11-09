@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import * as _ from 'lodash';
+import {pick} from 'lodash';
 import {ResourceService} from '../../services/resource.service';
 import {ValidationUtils} from '../../validation/validation.utils';
 import ResourceRepresentation = b.ResourceRepresentation;
@@ -79,7 +79,7 @@ export class ResourceUserEditDialogComponent implements OnInit {
     }
     this.progress = true;
     const roleDef = this.userForm.get('roleGroup').value;
-    const userRoleDTO: UserRoleDTO = _.pick(roleDef,
+    const userRoleDTO: UserRoleDTO = pick(roleDef,
       ['role', 'expiryDate', 'memberCategory', 'memberProgram', 'memberYear']);
     userRoleDTO.email = this.userForm.get('email').value;
     this.resourceService.updateResourceUser(this.resource, this.userRole.user, userRoleDTO)

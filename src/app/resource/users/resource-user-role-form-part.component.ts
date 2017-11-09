@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
-import * as _ from 'lodash';
+import {without} from 'lodash';
 import {SelectItem} from 'primeng/primeng';
 import {DepartmentService} from '../../departments/department.service';
 import {Utils} from '../../services/utils';
@@ -50,7 +50,7 @@ export class ResourceUserRoleFormPartComponent implements OnInit {
 
     this.availableRoles = this.resource.scope === 'DEPARTMENT' ? ['ADMINISTRATOR', 'MEMBER'] : ['ADMINISTRATOR', 'AUTHOR'];
     if (this.roleType === 'STAFF') {
-      this.availableRoles = _.without(this.availableRoles, 'MEMBER');
+      this.availableRoles = without(this.availableRoles, 'MEMBER');
     } else if (this.roleType === 'MEMBER') {
       this.availableRoles = ['MEMBER'];
     }
