@@ -21,12 +21,6 @@
         <mat-card-content>
           <div class="general-card-summary">
             {{department.summary}}
-            <div *ngIf="!department.summary">
-              No summary provided.
-              <button pButton
-                      [routerLink]="['/', department.university.handle, department.handle, 'edit', {source: 'list'}]"
-                      class="ui-button-info small-xs" label="Add Summary"></button>
-            </div>
           </div>
           <div class="boxes-list" fxLayout="row" fxLayoutAlign="space-between center">
             <div class="boxes-list__item boards">

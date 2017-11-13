@@ -35,8 +35,10 @@
                  [image]="department.documentLogo?.cloudinaryUrl" [showCount]="true"></share-buttons>
 </section>
 <section>
-  <div class="section-header">
+  <div fxLayout="row" fxLayoutAlign="space-between top" class="section-header">
     <h2>Boards</h2>
+    <a pButton [routerLink]="['/newBoard', {departmentId: department.id}]" class="ui-button-success" icon="fa-plus"
+       label="New Board"></a>
   </div>
   <b-filter resourceScope="BOARD" (applied)="filterApplied($event)"></b-filter>
   <div class="list-container">

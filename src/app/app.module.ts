@@ -7,7 +7,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {ShareButtonsModule} from 'ngx-sharebuttons';
 import {SidebarModule} from 'primeng/components/sidebar/sidebar';
 import {OverlayPanelModule, TabMenuModule} from 'primeng/primeng';
 import {environment} from '../environments/environment';
@@ -23,7 +22,7 @@ import {UserImageDialogComponent} from './authentication/user-image.dialog';
 import {BoardResolver} from './boards/board-resolver.service';
 import {BoardTabsComponent} from './boards/board-tabs.component';
 import {BoardHeaderComponent} from './boards/header/board-header.component';
-import {DepartmentNewComponent} from './departments/department-new.component';
+import {DepartmentsResolver} from './boards/new/departments-resolver.service';
 import {DepartmentResolver} from './departments/department-resolver.service';
 import {DepartmentTabsComponent} from './departments/department-tabs.component';
 import {DepartmentService} from './departments/department.service';
@@ -74,7 +73,6 @@ import {ValidationService} from './validation/validation.service';
     BoardTabsComponent,
     DepartmentListComponent,
     DepartmentTabsComponent,
-    DepartmentNewComponent,
     DepartmentHeaderComponent,
     PostHeaderComponent,
     PostTabsComponent,
@@ -104,18 +102,15 @@ import {ValidationService} from './validation/validation.service';
           {path: 'departments', component: DepartmentListComponent, canActivate: [AuthGuard]},
           {
             path: 'newDepartment',
-            component: DepartmentNewComponent,
-            canActivate: [AuthGuard],
-            children: [
-              {
-                path: '',
-                loadChildren: 'app/departments/edit/department-edit.module#DepartmentEditModule'
-              }
-            ]
+            loadChildren: 'app/departments/new/department-new.module#DepartmentNewModule'
           },
           {
             path: 'newBoard',
-            loadChildren: 'app/boards/new/board-new.module#BoardNewModule'
+            loadChildren: 'app/boards/new/board-new.module#BoardNewModule',
+            resolve: {
+              departments: DepartmentsResolver
+            },
+            canActivate: [AuthGuard]
           },
           {
             path: 'about',
@@ -293,7 +288,7 @@ import {ValidationService} from './validation/validation.service';
     RollbarService,
     {provide: ErrorHandler, useClass: RollbarHandler},
     AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService, BoardsResolver,
-    DepartmentService, UserService, ValidationService
+    DepartmentsResolver, DepartmentService, UserService, ValidationService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, UnsubscribeDialogComponent, ResourceCommentDialogComponent,
     UserImageDialogComponent],

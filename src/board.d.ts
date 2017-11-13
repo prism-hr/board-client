@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.28.343 on 2017-10-17 20:34:32.
+// Generated using typescript-generator version 1.29.366 on 2017-11-13 12:11:31.
 
 declare namespace b {
 
@@ -12,9 +12,9 @@ declare namespace b {
   }
 
   interface BoardDTO extends ResourceDTO<BoardDTO> {
+    type?: BoardType;
     documentLogo?: DocumentDTO;
     postCategories?: string[];
-    department?: DepartmentDTO;
   }
 
   interface BoardPatchDTO extends ResourcePatchDTO<BoardPatchDTO> {
@@ -49,6 +49,7 @@ declare namespace b {
 
   interface PostDTO extends ResourceDTO<PostDTO> {
     description?: string;
+    internal?: boolean;
     organizationName?: string;
     location?: LocationDTO;
     existingRelation?: ExistingRelation;
@@ -64,6 +65,7 @@ declare namespace b {
 
   interface PostPatchDTO extends ResourcePatchDTO<PostPatchDTO> {
     description?: string;
+    internal?: boolean;
     organizationName?: string;
     location?: LocationDTO;
     existingRelation?: ExistingRelation;
@@ -180,6 +182,7 @@ declare namespace b {
   }
 
   interface BoardRepresentation extends ResourceRepresentation<BoardRepresentation> {
+    type?: BoardType;
     documentLogo?: DocumentRepresentation;
     handle?: string;
     department?: DepartmentRepresentation;
@@ -192,9 +195,10 @@ declare namespace b {
     university?: UniversityRepresentation;
     documentLogo?: DocumentRepresentation;
     handle?: string;
-    memberCategories?: MemberCategory[];
     boardCount?: number;
     memberCount?: number;
+    memberCategories?: MemberCategory[];
+    tasks?: ResourceTask[];
   }
 
   interface DocumentRepresentation extends DocumentDefinition {
@@ -206,6 +210,7 @@ declare namespace b {
 
   interface PostRepresentation extends ResourceRepresentation<PostRepresentation> {
     description?: string;
+    internal?: boolean;
     organizationName?: string;
     location?: LocationRepresentation;
     existingRelation?: ExistingRelation;
@@ -277,6 +282,7 @@ declare namespace b {
   }
 
   interface UniversityRepresentation extends ResourceRepresentation<UniversityRepresentation> {
+    documentLogo?: DocumentRepresentation;
     handle?: string;
   }
 
@@ -323,8 +329,8 @@ declare namespace b {
 
   interface DocumentDefinition {
     fileName?: string;
-    cloudinaryId?: string;
     cloudinaryUrl?: string;
+    cloudinaryId?: string;
   }
 
   interface LocationDefinition {
@@ -341,6 +347,8 @@ declare namespace b {
   type Action = 'VIEW' | 'PURSUE' | 'EDIT' | 'EXTEND' | 'ACCEPT' | 'SUSPEND' | 'CORRECT' | 'REJECT' | 'PUBLISH' | 'RETIRE' | 'RESTORE' | 'WITHDRAW' | 'ARCHIVE';
 
   type State = 'DRAFT' | 'SUSPENDED' | 'PENDING' | 'ACCEPTED' | 'EXPIRED' | 'REJECTED' | 'WITHDRAWN' | 'ARCHIVED' | 'PREVIOUS';
+
+  type BoardType = 'RESEARCH' | 'CAREER' | 'CUSTOM';
 
   type MemberCategory = 'UNDERGRADUATE_STUDENT' | 'MASTER_STUDENT' | 'RESEARCH_STUDENT' | 'RESEARCH_STAFF';
 
@@ -360,7 +368,9 @@ declare namespace b {
 
   type Scope = 'UNIVERSITY' | 'DEPARTMENT' | 'BOARD' | 'POST';
 
-  type Activity = 'ACCEPT_BOARD_ACTIVITY' | 'ACCEPT_POST_ACTIVITY' | 'CORRECT_POST_ACTIVITY' | 'JOIN_BOARD_ACTIVITY' | 'JOIN_DEPARTMENT_ACTIVITY' | 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' | 'NEW_BOARD_PARENT_ACTIVITY' | 'NEW_POST_PARENT_ACTIVITY' | 'PUBLISH_POST_ACTIVITY' | 'PUBLISH_POST_MEMBER_ACTIVITY' | 'REJECT_BOARD_ACTIVITY' | 'REJECT_POST_ACTIVITY' | 'RESTORE_BOARD_ACTIVITY' | 'RESTORE_POST_ACTIVITY' | 'RETIRE_POST_ACTIVITY' | 'SUSPEND_POST_ACTIVITY' | 'RESPOND_POST_ACTIVITY';
+  type Activity = 'ACCEPT_BOARD_ACTIVITY' | 'ACCEPT_POST_ACTIVITY' | 'CORRECT_POST_ACTIVITY' | 'JOIN_BOARD_ACTIVITY' | 'JOIN_DEPARTMENT_ACTIVITY' | 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' | 'NEW_BOARD_PARENT_ACTIVITY' | 'NEW_POST_PARENT_ACTIVITY' | 'PUBLISH_POST_ACTIVITY' | 'PUBLISH_POST_MEMBER_ACTIVITY' | 'REJECT_BOARD_ACTIVITY' | 'REJECT_POST_ACTIVITY' | 'RESTORE_BOARD_ACTIVITY' | 'RESTORE_POST_ACTIVITY' | 'RETIRE_POST_ACTIVITY' | 'SUSPEND_POST_ACTIVITY' | 'RESPOND_POST_ACTIVITY' | 'TASK_CREATE_ACTIVITY' | 'TASK_UPDATE_ACTIVITY';
+
+  type ResourceTask = 'CREATE_MEMBER' | 'UPDATE_MEMBER' | 'CREATE_INTERNAL_POST' | 'UPDATE_INTERNAL_POST' | 'DEPLOY_BADGE';
 
   type ResourceEvent = 'VIEW' | 'REFERRAL' | 'RESPONSE';
 

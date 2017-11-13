@@ -8,20 +8,27 @@
         <div class="grid" fxLayout="row">
           <div class="grid__item small--one-whole medium-up--two-thirds">
             <div class="grid">
-              <div class="grid__item one-whole input-holder">
-                <label for="departmentName">Department Name</label>
-                <p-autoComplete id="departmentName" formControlName="department"
-                                [suggestions]="departmentSuggestions" (completeMethod)="searchDepartments($event)"
-                                field="name" (onBlur)="departmentChosen()">
-                  <ng-template let-department pTemplate="item">
-                    <div fxLayout="row" fxLayoutAlign="space-between center">
-                      <span>{{department.name}}</span>
-                      <b-image [publicId]="department.documentLogo?.cloudinaryId"
-                               width="35" height="35" crop="mfit"></b-image>
-                    </div>
+              <div *ngIf="department" class="grid__item one-whole input-holder">
+                <h3>{{department.university.name}} - {{department.name}}</h3>
+              </div>
 
-                  </ng-template>
-                </p-autoComplete>
+              <div *ngIf="!department" class="grid__item one-whole input-holder">
+                <label for="department">Department Name</label>
+                <div class="ui-corner-all ui-state-default ui-widget dropdown-select">
+                  <p-dropdown id="department" formControlName="department" [options]="departmentOptions"
+                              placeholder="Select a department">
+                    <ng-template let-department pTemplate="item">
+                      <div fxLayout="row" fxLayoutAlign="space-between center">
+                        <span>{{department.label}}</span>
+                        <div class="logo-holder-small"
+                             [ngClass]="{'default-logo': !department.value.documentLogo}">
+                          <b-image [publicId]="department.value.documentLogo?.cloudinaryId"
+                                   height="45"></b-image>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+                </div>
                 <control-messages [control]="boardForm.get('department')"></control-messages>
               </div>
 
@@ -54,26 +61,6 @@
         <p-messages
           [value]="[{severity:'info', detail:'Define the categories for posts in your board, e.g. employment, internship'}]"
           [closable]="false"></p-messages>
-
-        <div *ngIf="!selectedDepartment">
-          <div class="grid">
-            <div class="grid__item one-whole input-holder">
-              <label>Member Categories</label>
-              <div formArrayName="memberCategories" class="ui-checkbox-inline">
-               <span *ngFor="let category of memberCategories.controls; let i=index">
-                  <p-checkbox name="memberCategoriesMap" [value]="availableMemberCategories[i]"
-                              [label]="'definitions.memberCategory.' + availableMemberCategories[i] | translate"
-                              [formControlName]="i" binary="true"></p-checkbox>
-                </span>
-                <control-messages [control]="boardForm.get('memberCategories')"></control-messages>
-              </div>
-            </div>
-          </div>
-
-          <p-messages
-            [value]="[{severity:'info', detail:'Define the groups of staff and students that you have in your department'}]"
-            [closable]="false"></p-messages>
-        </div>
 
       </mat-card-content>
       <mat-card-actions fxLayout="row" fxLayoutAlign="space-between center">

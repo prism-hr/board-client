@@ -2,17 +2,17 @@ import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Response} from '@angular/http';
 import {MatSnackBar} from '@angular/material';
+import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Data, ParamMap, Router} from '@angular/router';
 import {pick} from 'lodash';
 import {combineLatest} from 'rxjs/observable/combineLatest';
-import {Utils} from '../../services/utils';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
+import {Utils} from '../../services/utils';
+import {ValidationUtils} from '../../validation/validation.utils';
 import DepartmentPatchDTO = b.DepartmentPatchDTO;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import MemberCategory = b.MemberCategory;
-import {Title} from '@angular/platform-browser';
-import {ValidationUtils} from '../../validation/validation.utils';
 
 @Component({
   templateUrl: 'department-edit.component.html',
@@ -23,10 +23,8 @@ export class DepartmentEditComponent implements OnInit {
   department: DepartmentRepresentation;
   departmentForm: FormGroup;
   urlPrefix: string;
-  actionView: string;
   formProperties = ['name', 'summary', 'memberCategories', 'documentLogo'];
-  source: string;
-  sourceLink: any[];
+  viewLink: any[];
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private title: Title,
               private snackBar: MatSnackBar, private resourceService: ResourceService, private definitionsService: DefinitionsService) {
@@ -45,23 +43,21 @@ export class DepartmentEditComponent implements OnInit {
   };
 
   ngOnInit() {
-    combineLatest(this.route.parent.parent.data, this.route.paramMap)
-      .subscribe(([parentData, paramMap]: [Data, ParamMap]) => {
+    this.route.parent.parent.data
+      .subscribe((parentData: Data) => {
         this.department = parentData['department'];
-        this.title.setTitle(this.department ? this.department.name + ' - Edit' : 'New department');
+        this.title.setTitle(this.department.name + ' - Edit');
         this.departmentForm.reset(pick(this.department, [...this.formProperties, 'handle']));
-        const formFormat = Utils.checkboxToFormFormat(this.availableMemberCategories, this.department && this.department.memberCategories);
+        const formFormat = Utils.checkboxToFormFormat(this.availableMemberCategories, this.department.memberCategories);
         (<FormArray>this.departmentForm.get('memberCategories'))
           .setValue(formFormat);
         this.departmentForm.get('handle').setValidators(this.department
           && [Validators.required, ValidationUtils.handleValidator, Validators.maxLength(25)]);
 
-        const urlSuffix = this.department ? this.department.university.handle : 'ucl';
+        const urlSuffix = this.department.university.handle;
         this.urlPrefix = this.definitionsService.getDefinitions()['applicationUrl'] + '/' + urlSuffix + '/';
 
-        this.actionView = this.department ? 'EDIT' : 'CREATE';
-        this.source = paramMap.get('source');
-        this.sourceLink = this.createSourceLink(this.department);
+        this.viewLink = this.createDepartmentViewLink();
       });
   }
 
@@ -73,23 +69,9 @@ export class DepartmentEditComponent implements OnInit {
     this.resourceService.patchDepartment(this.department.id, this.generateDepartmentRequestBody())
       .subscribe(department => {
         Object.assign(this.department, department);
-        this.router.navigate(this.createSourceLink(department))
+        this.router.navigate(this.createDepartmentViewLink())
           .then(() => {
             this.snackBar.open('Department Saved!', null, {duration: 3000});
-          });
-      }, this.handleErrors);
-  }
-
-  create() {
-    this.departmentForm['submitted'] = true;
-    if (this.departmentForm.invalid) {
-      return;
-    }
-    this.resourceService.postDepartment(this.generateDepartmentRequestBody())
-      .subscribe(department => {
-        this.router.navigate(this.resourceService.routerLink(department))
-          .then(() => {
-            this.snackBar.open('Department Created!', null, {duration: 3000});
           });
       }, this.handleErrors);
   }
@@ -113,10 +95,7 @@ export class DepartmentEditComponent implements OnInit {
     }
   }
 
-  private createSourceLink(department: DepartmentRepresentation) {
-    if (!this.department || this.source === 'list') {
-      return ['/departments'];
-    }
-      return this.resourceService.routerLink(this.department)
+  private createDepartmentViewLink() {
+    return this.resourceService.routerLink(this.department)
   }
 }

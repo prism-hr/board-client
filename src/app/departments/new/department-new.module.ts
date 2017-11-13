@@ -2,34 +2,33 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
-import {ChipsModule, DropdownModule} from 'primeng/primeng';
+import {AutoCompleteModule} from 'primeng/primeng';
 import {FileUploadModule} from '../../general/file-upload/file-upload.module';
 import {ImageModule} from '../../general/image/image.module';
 import {SharedModule} from '../../general/shared.module';
-import {BoardNewComponent} from './board-new.component';
+import {DepartmentNewComponent} from './department-new.component';
 
 @NgModule({
   imports: [
-    SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    DropdownModule,
-    FileUploadModule,
+    AutoCompleteModule,
+    SharedModule,
     ImageModule,
-    ChipsModule,
+    FileUploadModule,
     TranslateModule.forChild({}),
     RouterModule.forChild([
       {
         path: '',
-        component: BoardNewComponent
+        component: DepartmentNewComponent
       }
     ])
   ],
   declarations: [
-    BoardNewComponent
+    DepartmentNewComponent
   ],
   providers: [],
   entryComponents: []
 })
-export class BoardNewModule {
+export class DepartmentNewModule {
 }

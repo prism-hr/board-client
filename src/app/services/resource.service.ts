@@ -22,6 +22,7 @@ import UserRepresentation = b.UserRepresentation;
 import UserRoleDTO = b.UserRoleDTO;
 import UserRoleRepresentation = b.UserRoleRepresentation;
 import UserRolesRepresentation = b.UserRolesRepresentation;
+import UniversityRepresentation = b.UniversityRepresentation;
 
 @Injectable()
 export class ResourceService {
@@ -125,16 +126,16 @@ export class ResourceService {
       .map(res => res.json());
   }
 
-  postBoard(board: BoardDTO) {
-    return this.http.post('/api/boards', board).map(res => res.json());
+  postBoard(department: DepartmentRepresentation, board: BoardDTO) {
+    return this.http.post('/api/departments/' + department.id + '/boards', board).map(res => res.json());
   }
 
   patchBoard(id: number, board: BoardPatchDTO): Observable<BoardRepresentation> {
     return this.http.patch('/api/boards/' + id, board).map(res => res.json());
   }
 
-  postDepartment(department: DepartmentDTO) {
-    return this.http.post('/api/departments', department).map(res => res.json());
+  postDepartment(university: UniversityRepresentation, department: DepartmentDTO) {
+    return this.http.post('/api/universities/' + university.id + '/departments/', department).map(res => res.json());
   }
 
   patchDepartment(id: number, department: DepartmentPatchDTO): Observable<DepartmentRepresentation> {

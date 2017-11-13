@@ -27,7 +27,7 @@ import UserRepresentation = b.UserRepresentation;
 })
 export class PostEditComponent implements OnInit {
 
-  boardOptions: any[];
+  boardOptions: BoardRepresentation[];
   post: PostRepresentation;
   board: BoardRepresentation;
   postForm: FormGroup;
@@ -82,7 +82,7 @@ export class PostEditComponent implements OnInit {
       .subscribe(([parentData, data, user]: [Data, Data, UserRepresentation]) => {
         this.board = parentData['board'];
         if (data['boards']) {
-          if (data['boards'] instanceof Array) {
+          if (data['boards'] instanceof Array) { // either array or one board can be resolved
             this.boardOptions = (<BoardRepresentation[]>data['boards'])
               .map(b => ({label: b.department.name + ' - ' + b.name, value: b}));
           } else {

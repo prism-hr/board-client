@@ -1,5 +1,5 @@
 <section>
-  <form [formGroup]="boardForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
+  <form [formGroup]="departmentForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
     <mat-card>
       <mat-card-header>
         <mat-card-title>
@@ -8,29 +8,31 @@
       </mat-card-header>
       <mat-card-content>
         <div class="grid">
+
           <div class="grid__item small--one-whole medium-up--one-half">
-            <p-autoComplete formControlName="departmentName" [suggestions]="departmentSuggestions"
-                            (completeMethod)="searchDepartments($event)" placeholder="Department Name"
-                            field="name">
-              <ng-template let-department pTemplate="item">
-                <b-image [publicId]="department.documentLogo?.cloudinaryId"
+            <p-autoComplete formControlName="university" [suggestions]="universitySuggestions"
+                            (completeMethod)="searchUniversities($event)" placeholder="University Name"
+                            field="name" (onBlur)="universityOnBlur()">
+              <ng-template let-university pTemplate="item">
+                <b-image [publicId]="university.documentLogo?.cloudinaryId"
                          height="150" width="200" crop="mfit"></b-image>
-                {{department.name}}
+                {{university.name}}
               </ng-template>
             </p-autoComplete>
-            <control-messages [control]="boardForm.get('departmentName')"></control-messages>
+            <control-messages [control]="departmentForm.get('university')"></control-messages>
           </div>
 
           <div class="grid__item small--one-whole medium-up--one-half">
-            <input pInputText formControlName="name" placeholder="Board Name">
-            <control-messages [control]="boardForm.get('name')"></control-messages>
+            <input pInputText formControlName="departmentName" placeholder="Department Name"/>
+            <control-messages [control]="departmentForm.get('departmentName')"></control-messages>
           </div>
+
         </div>
       </mat-card-content>
       <mat-card-actions>
         <div class="grid grid--half-gutters">
           <div class="grid__item one-whole">
-            <button pButton class="ui-button-warning" type="submit" [disabled]="boardForm.invalid"
+            <button pButton class="ui-button-warning" type="submit" [disabled]="departmentForm.invalid"
                     label="Submit"></button>
           </div>
         </div>

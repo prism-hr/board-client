@@ -39,18 +39,16 @@
           <control-messages [control]="departmentForm.get('handle')"></control-messages>
         </div>
       </div>
+
+      <p-messages
+        [value]="[{severity:'info', detail:'Define the groups of staff and students that you have in your department'}]"
+        [closable]="false"></p-messages>
     </mat-card-content>
     <mat-card-actions>
       <div class="grid grid--half-gutters">
         <div class="grid__item one-whole" fxLayout="row" fxLayoutAlign="space-between center">
-          <a *ngIf="department" pButton [routerLink]="sourceLink"
-             class="ui-button-secondary" label="Cancel"></a>
-          <a *ngIf="!department" pButton [routerLink]="['/', 'departments']"
-             class="ui-button-secondary" label="Cancel"></a>
-          <button *ngIf="actionView === 'EDIT'" pButton (click)="update()"
-                  class="ui-button-warning" label="Save"></button>
-          <button *ngIf="actionView === 'CREATE'" pButton (click)="create()"
-                  class="ui-button-success" label="Submit"></button>
+          <a *ngIf="department" pButton [routerLink]="viewLink" class="ui-button-secondary" label="Cancel"></a>
+          <button pButton (click)="update()" class="ui-button-warning" label="Save"></button>
         </div>
       </div>
     </mat-card-actions>

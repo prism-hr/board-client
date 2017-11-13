@@ -1,0 +1,55 @@
+<mat-card>
+  <form [formGroup]="departmentForm" (ngSubmit)="submit()">
+    <mat-card-content>
+      <div class="grid" fxLayout="column" fxLayout.gt-sm="row">
+        <div class="grid__item small--one-whole medium-up--two-thirds">
+          <div class="grid">
+
+            <div class="grid__item one-whole input-holder">
+              <label for="university">University</label>
+              <p-autoComplete formControlName="university" [suggestions]="universitySuggestions"
+                              (completeMethod)="searchUniversities($event)" placeholder="University Name"
+                              field="name" (onBlur)="universityOnBlur()">
+                <ng-template let-university pTemplate="item">
+                  <b-image [publicId]="university.documentLogo?.cloudinaryId"
+                           height="150" width="200" crop="mfit"></b-image>
+                  {{university.name}}
+                </ng-template>
+              </p-autoComplete>
+              <control-messages [control]="departmentForm.get('university')"></control-messages>
+            </div>
+
+            <div class="grid__item one-whole input-holder">
+              <label for="name">Department Name</label>
+              <input id="name" pInputText formControlName="name" required>
+              <control-messages [control]="departmentForm.get('name')"></control-messages>
+            </div>
+            <div class="grid__item one-whole input-holder">
+              <label for="summary">Department Summary</label>
+              <textarea id="summary" pInputTextarea formControlName="summary" rows="6" required
+                        class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
+              <control-messages [control]="departmentForm.get('summary')"></control-messages>
+            </div>
+          </div>
+        </div>
+        <div class="grid__item small--one-whole medium-up--one-third" style="display: flex">
+          <b-file-upload formControlName="documentLogo" type="logo"></b-file-upload>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="grid grid--half-gutters">
+        <div class="grid__item one-whole" fxLayout="row" fxLayoutAlign="space-between center">
+          <a *ngIf="user && user.scopes.indexOf('DEPARTMENT') > -1" pButton [routerLink]="['/', 'departments']"
+             class="ui-button-secondary" label="Cancel"></a>
+          <a *ngIf="!user || user.scopes.indexOf('DEPARTMENT') === -1" pButton routerLink="/" class="ui-button-secondary"
+             label="Cancel"></a>
+          <button pButton class="ui-button-success" label="Submit"></button>
+        </div>
+      </div>
+    </mat-card-actions>
+  </form>
+</mat-card>
+
+
+
