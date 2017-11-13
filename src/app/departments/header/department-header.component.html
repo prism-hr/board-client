@@ -1,4 +1,8 @@
 <div class="resource-header">
+  Tasks:
+  <div *ngFor="let task of department.tasks">
+          {{'definitions.task.' + task | translate}}
+  </div>
   <h1>
     {{department.name}}
   </h1>
