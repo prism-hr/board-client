@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
-import {MatDialog, MatDialogConfig} from '@angular/material';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {ActivatedRouteSnapshot, CanActivate, ParamMap, Router} from '@angular/router';
 import {AuthService} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
 import {UserService} from '../services/user.service';
 import {AuthenticationDialogComponent, AuthenticationDialogData} from './authentication.dialog';
-import {ResetPasswordDialogComponent} from './reset-password.dialog';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

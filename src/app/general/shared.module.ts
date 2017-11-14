@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {ButtonModule, CheckboxModule, InputTextModule, MessagesModule, RadioButtonModule, TooltipModule} from 'primeng/primeng';
 import {ControlMessagesComponent} from '../validation/control-messages.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MatCardModule} from '@angular/material';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   imports: [

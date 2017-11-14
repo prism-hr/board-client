@@ -1,7 +1,7 @@
 import {DebugElement} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MatSnackBarModule} from '@angular/material';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {By} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Response} from '@angular/http';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, Data, ParamMap, Router} from '@angular/router';
 import {pick} from 'lodash';
 import {combineLatest} from 'rxjs/observable/combineLatest';
