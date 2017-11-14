@@ -23,6 +23,7 @@ import UserRoleDTO = b.UserRoleDTO;
 import UserRoleRepresentation = b.UserRoleRepresentation;
 import UserRolesRepresentation = b.UserRolesRepresentation;
 import UniversityRepresentation = b.UniversityRepresentation;
+import {Utils} from './utils';
 
 @Injectable()
 export class ResourceService {
@@ -105,7 +106,7 @@ export class ResourceService {
   lookupResources(scope: Scope, query: string): Observable<ResourceRepresentation<any>[]> {
     const params = new URLSearchParams();
     params.set('query', query);
-    const resourceCol = scope.toLowerCase() + 's';
+    const resourceCol = Utils.pluralize(scope.toLowerCase());
     return this.http.get('/api/' + resourceCol, {search: params}).map(res => res.json());
   }
 

@@ -6,7 +6,6 @@ import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {pick} from 'lodash';
 import {AuthGuard} from '../../authentication/auth-guard.service';
-import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
 import DepartmentRepresentation = b.DepartmentRepresentation;
@@ -25,7 +24,7 @@ export class DepartmentNewComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private title: Title,
               private snackBar: MatSnackBar, private resourceService: ResourceService, private userService: UserService,
-              private definitionsService: DefinitionsService, private authGuard: AuthGuard) {
+              private authGuard: AuthGuard) {
     this.departmentForm = this.fb.group({
       university: [null, Validators.required],
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
@@ -93,8 +92,9 @@ export class DepartmentNewComponent implements OnInit {
   }
 
   searchUniversities(event) {
-    const universities: UniversityRepresentation[] = this.definitionsService.getDefinitions()['universities'];
-    this.universitySuggestions = universities.filter(u => u.name.toLowerCase().indexOf(event.query) > -1);
+    this.resourceService.lookupResources('UNIVERSITY', event.query).subscribe((universities: UniversityRepresentation[]) => {
+      this.universitySuggestions = universities;
+    });
   }
 
   universityOnBlur() {

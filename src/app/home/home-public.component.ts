@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {DefinitionsService} from '../services/definitions.service';
+import {ResourceService} from '../services/resource.service';
 import UniversityRepresentation = b.UniversityRepresentation;
 
 @Component({
@@ -14,7 +14,7 @@ export class HomePublicComponent {
   departmentForm: FormGroup;
   universitySuggestions: UniversityRepresentation[];
 
-  constructor(private router: Router, private fb: FormBuilder, private definitionsService: DefinitionsService) {
+  constructor(private router: Router, private fb: FormBuilder, private resourceService: ResourceService) {
     this.departmentForm = this.fb.group({
       university: [null, Validators.required],
       departmentName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]]
@@ -33,13 +33,14 @@ export class HomePublicComponent {
   }
 
   searchUniversities(event) {
-    const universities: UniversityRepresentation[] = this.definitionsService.getDefinitions()['universities'];
-    this.universitySuggestions = universities.filter(u => u.name.toLowerCase().indexOf(event.query) > -1);
+    this.resourceService.lookupResources('UNIVERSITY', event.query).subscribe((universities: UniversityRepresentation[]) => {
+      this.universitySuggestions = universities;
+    });
   }
 
   universityOnBlur() {
     const universityField = this.departmentForm.get('university');
-    if(typeof universityField.value === 'string') {
+    if (typeof universityField.value === 'string') {
       universityField.setValue(null);
     }
   }
