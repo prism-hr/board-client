@@ -1,5 +1,5 @@
 import {AuthenticationDialogComponent} from './authentication.dialog';
-import {MatDialog} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
 import {FormsModule} from '@angular/forms';
 import {async, TestBed} from '@angular/core/testing';
 import {NgModule} from '@angular/core';

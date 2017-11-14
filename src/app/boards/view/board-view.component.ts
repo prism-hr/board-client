@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MatDialog, MatDialogConfig} from '@angular/material';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Data, ParamMap} from '@angular/router';
 import {combineLatest} from 'rxjs/observable/combineLatest';

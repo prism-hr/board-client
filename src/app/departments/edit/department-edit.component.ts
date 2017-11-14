@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Response} from '@angular/http';
-import {MatSnackBar} from '@angular/material';
 import {Title} from '@angular/platform-browser';
-import {ActivatedRoute, Data, ParamMap, Router} from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ActivatedRoute, Data, Router} from '@angular/router';
 import {pick} from 'lodash';
-import {combineLatest} from 'rxjs/observable/combineLatest';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
 import {Utils} from '../../services/utils';

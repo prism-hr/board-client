@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {Title} from '@angular/platform-browser';
 import {ActivatedRoute} from '@angular/router';
+import {DefinitionsService} from '../services/definitions.service';
 import {UserService} from '../services/user.service';
 import {ValidationService} from '../validation/validation.service';
 import {ValidationUtils} from '../validation/validation.utils';
-import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
-import UserRepresentation = b.UserRepresentation;
-import {Title} from '@angular/platform-browser';
-import {DefinitionsService} from '../services/definitions.service';
 import AgeRange = b.AgeRange;
 import Gender = b.Gender;
+import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
+import UserRepresentation = b.UserRepresentation;
 
 @Component({
   templateUrl: './account.component.html',

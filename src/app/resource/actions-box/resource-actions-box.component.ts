@@ -1,5 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {MatDialog, MatSnackBar} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ResourceService} from '../../services/resource.service';
 import {ResourceCommentDialogComponent} from '../resource-comment.dialog';
@@ -14,7 +15,7 @@ import Action = b.Action;
       </span>
       <span *ngFor="let action of actions">
         <button pButton class="small {{action | lowercase}}" (click)="openActionDialog(action)"
-              [label]="'definitions.action.' + action | translate"></button>
+                [label]="'definitions.action.' + action | translate"></button>
       </span>
     </div>
   `,
