@@ -59,7 +59,8 @@ export class BoardViewComponent implements OnInit {
   loadPosts(filter?: EntityFilter) {
     this.filter = filter || this.filter || {};
     this.filter.includePublic = !this.user;
-    this.resourceService.getBoardPosts(this.board.id, this.filter).subscribe(posts => {
+    this.filter.parentId = this.board.id;
+    this.resourceService.getPosts(this.filter).subscribe(posts => {
       this.posts = posts;
     });
   }

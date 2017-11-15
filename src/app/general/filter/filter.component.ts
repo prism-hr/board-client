@@ -120,4 +120,5 @@ export interface EntityFilter {
   state?: State;
   quarter?: string;
   includePublic?: boolean;
+  parentId?: number;
 }

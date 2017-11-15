@@ -43,7 +43,8 @@ export class DepartmentViewComponent implements OnInit {
   loadBoards(filter?: EntityFilter) {
     this.filter = filter || this.filter || {};
     this.filter.includePublic = !this.user;
-    this.resourceService.getDepartmentBoards(this.department.id, this.filter).subscribe(boards => {
+    this.filter.parentId = this.department.id;
+    this.resourceService.getBoards(this.filter).subscribe(boards => {
       this.boards = boards;
     });
   }
