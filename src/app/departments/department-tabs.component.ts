@@ -41,7 +41,8 @@ export class DepartmentTabsComponent implements OnInit {
       this.items = [
         {label: 'View', routerLink: departmentPath, routerLinkActiveOptions: {exact: true}},
         {label: 'Edit', routerLink: [...departmentPath, 'edit'], routerLinkActiveOptions: {exact: true}},
-        {label: 'Users', routerLink: [...departmentPath, 'users'], routerLinkActiveOptions: {exact: true}}];
+        {label: 'Users', routerLink: [...departmentPath, 'users'], routerLinkActiveOptions: {exact: true}},
+        {label: 'Subscription', routerLink: [...departmentPath, 'subscription'], routerLinkActiveOptions: {exact: true}}];
     });
   }
 

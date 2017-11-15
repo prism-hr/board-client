@@ -24,5 +24,10 @@ export class DepartmentService {
     return this.http.get('/api/departments/' + department.id + '/programs', {search: params}).map(res => res.json());
   }
 
+  putCustomer(department: DepartmentRepresentation, source: string) {
+    const params = new URLSearchParams();
+    params.set('source', source);
+    return this.http.put('/api/departments/' + department.id + '/customer?source=' + source, {}).map(res => res.json());
+  }
 
 }

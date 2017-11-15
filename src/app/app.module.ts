@@ -171,6 +171,11 @@ import {ValidationService} from './validation/validation.service';
                             path: 'users',
                             loadChildren: 'app/resource/users/resource-users.module#ResourceUsersModule',
                             canActivate: [AuthGuard]
+                          },
+                          {
+                            path: 'subscription',
+                            loadChildren: 'app/departments/subscription/department-subscription.module#DepartmentSubscriptionModule',
+                            canActivate: [AuthGuard]
                           }
                         ]
                       }
