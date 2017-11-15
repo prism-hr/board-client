@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {SelectItem} from 'primeng/primeng';
+import {SelectItem} from 'primeng/components/common/selectitem';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';

@@ -5,7 +5,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {By} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
-import {ButtonModule, ChipsModule, FileUploadModule} from 'primeng/primeng';
+import {ButtonModule} from 'primeng/components/button/button';
+import {ChipsModule} from 'primeng/components/chips/chips';
 import {ResourceHandleComponent} from '../../controls/resource-handle.component';
 import {FileUploadComponent} from '../../general/file-upload/file-upload.component';
 import '../../rxjs-extensions';
@@ -50,7 +51,7 @@ describe('DepartmentView', () => {
       declarations: [
         DepartmentEditComponent, ControlMessagesComponent, ResourceHandleComponent, FileUploadComponent
       ],
-      imports: [ReactiveFormsModule, RouterTestingModule, MatSnackBarModule, ButtonModule, ChipsModule, FileUploadModule],
+      imports: [ReactiveFormsModule, RouterTestingModule, MatSnackBarModule, ButtonModule, ChipsModule],
       providers: [{
         provide: ActivatedRoute,
         useValue: activatedRoute

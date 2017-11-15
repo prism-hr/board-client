@@ -5,16 +5,14 @@ import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
 import {PapaParseModule} from 'ngx-papaparse';
 import {NgUploaderModule} from 'ngx-uploader';
-import {
-  AutoCompleteModule,
-  CalendarModule,
-  CheckboxModule,
-  DataTableModule,
-  DropdownModule,
-  RadioButtonModule,
-  SelectButtonModule,
-  TabViewModule
-} from 'primeng/primeng';
+import {AutoCompleteModule} from 'primeng/components/autocomplete/autocomplete';
+import {CalendarModule} from 'primeng/components/calendar/calendar';
+import {CheckboxModule} from 'primeng/components/checkbox/checkbox';
+import {DataTableModule} from 'primeng/components/datatable/datatable';
+import {DropdownModule} from 'primeng/components/dropdown/dropdown';
+import {RadioButtonModule} from 'primeng/components/radiobutton/radiobutton';
+import {SelectButtonModule} from 'primeng/components/selectbutton/selectbutton';
+import {TabViewModule} from 'primeng/components/tabview/tabview';
 import {FilterModule} from '../../general/filter/filter.module';
 import {ImageModule} from '../../general/image/image.module';
 import {SharedModule} from '../../general/shared.module';

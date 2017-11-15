@@ -1,6 +1,7 @@
 import {Component, forwardRef, NgModule, OnInit} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {CalendarModule, InputMaskModule} from 'primeng/primeng';
+import {CalendarModule} from 'primeng/components/calendar/calendar';
+import {InputMaskModule} from 'primeng/components/inputmask/inputmask';
 import {SharedModule} from '../general/shared.module';
 import {Utils} from '../services/utils';
 

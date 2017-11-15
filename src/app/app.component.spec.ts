@@ -3,7 +3,7 @@ import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {FooterComponent} from './footer/footer.component';
-import {ButtonModule} from 'primeng/primeng';
+import {ButtonModule} from 'primeng/components/button/button';
 import {TranslateModule} from '@ngx-translate/core';
 
 describe('AppComponent', () => {

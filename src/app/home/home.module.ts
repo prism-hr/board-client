@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
-import {AutoCompleteModule} from 'primeng/primeng';
+import {AutoCompleteModule} from 'primeng/components/autocomplete/autocomplete';
 import {FilterModule} from '../general/filter/filter.module';
 import {ImageModule} from '../general/image/image.module';
 import {SharedModule} from '../general/shared.module';
