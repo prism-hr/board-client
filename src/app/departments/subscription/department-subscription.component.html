@@ -1,6 +1,20 @@
-<section>
-  <form novalidate >
-    <div id="card-element" class="field" #card></div>
-    <button pButton type="button" class="ui-button-success" label="Submit" (click)="submitCard()"></button>
-  </form>
-</section>
+<div *ngIf="customer">
+  <section>
+    <form novalidate>
+      <ngx-stripe-card [options]="elementOptions"></ngx-stripe-card>
+      <button pButton type="button" class="ui-button-success" label="Submit" (click)="submitCard()"></button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Subscriptions</h2>
+    <div *ngFor="let source of customer.sources.data">
+      Type: {{source.brand}}, Account: ***{{source.last4}},
+      Expiry: {{source.expMonth | number:'2.0-0'}}-{{source.expYear}}
+      <span *ngIf="source.id === customer.defaultSource">Default</span>
+      <button *ngIf="source.id !== customer.defaultSource" pButton label="Set as Default"
+              (click)="setSourceAsDefault(source)"></button>
+      <button pButton label="Delete" (click)="deleteSource(source)"></button>
+    </div>
+  </section>
+</div>
