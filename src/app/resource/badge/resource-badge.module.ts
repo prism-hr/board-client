@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
-import {RadioButtonModule} from 'primeng/primeng';
+import {RadioButtonModule} from 'primeng/components/radiobutton/radiobutton';
 import {SharedModule} from '../../general/shared.module';
 import {ResourceBadgeComponent} from './resource-badge.component';
 

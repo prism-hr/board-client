@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import {pick} from 'lodash';
-import {SelectItem} from 'primeng/primeng';
+import {SelectItem} from 'primeng/components/common/selectitem';
 import {DepartmentService} from '../../../departments/department.service';
 import {DefinitionsService} from '../../../services/definitions.service';
 import {ResourceService} from '../../../services/resource.service';

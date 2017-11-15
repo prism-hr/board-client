@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {async, TestBed} from '@angular/core/testing';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MessagesModule} from 'primeng/primeng';
+import {MessagesModule} from 'primeng/components/messages/messages';
 
 @NgModule({
   imports: [FormsModule, CommonModule, MessagesModule],

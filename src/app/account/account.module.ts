@@ -9,7 +9,7 @@ import {AccountSuppressionsResolver} from './account-suppressions-resolver';
 import {AccountComponent} from './account.component';
 import {FileUploadModule} from '../general/file-upload/file-upload.module';
 import {PlacesAutocompleteModule} from '../general/places/places.module';
-import {ToggleButtonModule} from 'primeng/primeng';
+import {ToggleButtonModule} from 'primeng/components/togglebutton/togglebutton';
 
 @NgModule({
   imports: [

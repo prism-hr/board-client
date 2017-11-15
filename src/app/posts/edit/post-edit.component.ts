@@ -4,6 +4,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Data, Router} from '@angular/router';
 import {get, pick, upperFirst} from 'lodash';
+import {SelectItem} from 'primeng/components/common/selectitem';
 import {Observable} from 'rxjs/Observable';
 import {combineLatest} from 'rxjs/observable/combineLatest';
 import {ResourceCommentDialogComponent} from '../../resource/resource-comment.dialog';
@@ -27,7 +28,7 @@ import UserRepresentation = b.UserRepresentation;
 })
 export class PostEditComponent implements OnInit {
 
-  boardOptions: BoardRepresentation[];
+  boardOptions: SelectItem[];
   post: PostRepresentation;
   board: BoardRepresentation;
   postForm: FormGroup;

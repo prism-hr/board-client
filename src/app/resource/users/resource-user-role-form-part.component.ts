@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import {without} from 'lodash';
-import {SelectItem} from 'primeng/primeng';
+import {SelectItem} from 'primeng/components/common/selectitem';
 import {DepartmentService} from '../../departments/department.service';
 import {Utils} from '../../services/utils';
 import BoardRepresentation = b.BoardRepresentation;

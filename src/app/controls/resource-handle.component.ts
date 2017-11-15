@@ -3,7 +3,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {SharedModule} from '../general/shared.module';
 import {ClipboardModule} from 'ngx-clipboard/dist';
-import {ButtonModule} from 'primeng/primeng';
+import {ButtonModule} from 'primeng/components/button/button';
 
 @Component({
   selector: 'b-resource-handle',

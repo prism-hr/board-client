@@ -1,6 +1,11 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {ButtonModule, CheckboxModule, InputTextModule, MessagesModule, RadioButtonModule, TooltipModule} from 'primeng/primeng';
+import {ButtonModule} from 'primeng/components/button/button';
+import {CheckboxModule} from 'primeng/components/checkbox/checkbox';
+import {InputTextModule} from 'primeng/components/inputtext/inputtext';
+import {MessagesModule} from 'primeng/components/messages/messages';
+import {RadioButtonModule} from 'primeng/components/radiobutton/radiobutton';
+import {TooltipModule} from 'primeng/components/tooltip/tooltip';
 import {ControlMessagesComponent} from '../validation/control-messages.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatCardModule} from '@angular/material/card';

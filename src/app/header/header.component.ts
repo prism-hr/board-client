@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
-import {OverlayPanel} from 'primeng/primeng';
+import {OverlayPanel} from 'primeng/components/overlaypanel/overlaypanel';
 import {AuthGuard} from '../authentication/auth-guard.service';
 import {UserImageDialogComponent} from '../authentication/user-image.dialog';
 import {UserService} from '../services/user.service';

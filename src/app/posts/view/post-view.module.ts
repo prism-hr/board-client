@@ -12,7 +12,11 @@ import {PostViewComponent} from './post-view.component';
 import {ShareButtonsModule} from 'ngx-sharebuttons';
 import {ResourceTimelineModule} from '../../resource/timeline/resource-timeline.module';
 import {FileUploadModule} from '../../general/file-upload/file-upload.module';
-import {AutoCompleteModule, CalendarModule, DropdownModule, EditorModule, SelectButtonModule} from 'primeng/primeng';
+import {EditorModule} from 'primeng/components/editor/editor';
+import {DropdownModule} from 'primeng/components/dropdown/dropdown';
+import {AutoCompleteModule} from 'primeng/components/autocomplete/autocomplete';
+import {SelectButtonModule} from 'primeng/components/selectbutton/selectbutton';
+import {CalendarModule} from 'primeng/components/calendar/calendar';
 
 @NgModule({
   imports: [

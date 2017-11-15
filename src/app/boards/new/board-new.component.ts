@@ -4,6 +4,7 @@ import {Response} from '@angular/http';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {pick} from 'lodash';
+import {SelectItem} from 'primeng/components/common/selectitem';
 import {AuthGuard} from '../../authentication/auth-guard.service';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
@@ -20,7 +21,7 @@ export class BoardNewComponent implements OnInit {
   applicationUrl: string;
   board: BoardDTO;
   boardForm: FormGroup;
-  departmentOptions: DepartmentRepresentation[];
+  departmentOptions: SelectItem[];
   department: DepartmentRepresentation;
   user: UserRepresentation;
 
