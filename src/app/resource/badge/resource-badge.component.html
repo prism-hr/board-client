@@ -11,20 +11,22 @@
                            (ngModelChange)="refreshSnippet()"></p-radioButton>
           </div>
         </div>
-        <div class="input-holder">
-          <div *ngIf="badgeType === 'LIST'" class="ui-radiobutton-inline">
-            <p-radioButton name="badgeListType" value="STATIC" label="Static" [(ngModel)]="badgeListType"
-                           (ngModelChange)="refreshSnippet()"></p-radioButton>
-            <p-radioButton name="badgeListType" value="SLIDER" label="Slider" [(ngModel)]="badgeListType"
-                           (ngModelChange)="refreshSnippet()"></p-radioButton>
+        <div *ngIf="badgeType === 'LIST'">
+          <div class="input-holder">
+            <div class="ui-radiobutton-inline">
+              <p-radioButton name="badgeListType" value="STATIC" label="Static" [(ngModel)]="badgeListType"
+                             (ngModelChange)="refreshSnippet()"></p-radioButton>
+              <p-radioButton name="badgeListType" value="SLIDER" label="Slider" [(ngModel)]="badgeListType"
+                             (ngModelChange)="refreshSnippet()"></p-radioButton>
+            </div>
           </div>
-        </div>
-        <div class="input-holder">
-          <div class="ui-radiobutton-inline">
-            <p-radioButton name="postCount" [value]="1" [(ngModel)]="postCount" label="Show 1 post"
-                           (ngModelChange)="refreshSnippet()"></p-radioButton>
-            <p-radioButton name="postCount" [value]="2" [(ngModel)]="postCount" label="Show 2 posts"
-                           (ngModelChange)="refreshSnippet()"></p-radioButton>
+          <div class="input-holder">
+            <div class="ui-radiobutton-inline">
+              <p-radioButton name="postCount" [value]="1" [(ngModel)]="postCount" label="Show 1 post"
+                             (ngModelChange)="refreshSnippet()"></p-radioButton>
+              <p-radioButton name="postCount" [value]="2" [(ngModel)]="postCount" label="Show 2 posts"
+                             (ngModelChange)="refreshSnippet()"></p-radioButton>
+            </div>
           </div>
         </div>
       </div>
