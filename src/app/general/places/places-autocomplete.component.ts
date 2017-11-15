@@ -1,6 +1,5 @@
 import {Component, forwardRef, NgZone, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {find, includes} from 'lodash';
 import {Subject} from 'rxjs/Subject';
 import {GooglePlacesProvider} from './places-google-provider.service';
 import LocationDTO = b.LocationDTO;
@@ -88,7 +87,7 @@ export class PlacesAutocompleteComponent implements ControlValueAccessor, OnInit
 
   placeResultToLocation(placeDetails: google.maps.places.PlaceResult): LocationDTO {
     function getAddressPart(componentType: any, type: string) {
-      const component: any = find(placeDetails.address_components, comp => includes(comp.types, componentType));
+      const component: any = placeDetails.address_components.find(comp => comp.types.includes(componentType));
       if (type === 'long') {
         return component ? component.long_name : undefined;
       }
