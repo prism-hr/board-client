@@ -34,7 +34,8 @@
                  [include]="['facebook','twitter','linkedin','google']"
                  [image]="department.documentLogo?.cloudinaryUrl" [showCount]="true"></share-buttons>
 </section>
-<section>
+
+<section *ngIf="canEdit">
   <div fxLayout="row" fxLayoutAlign="space-between top" class="section-header">
     <h2>Boards</h2>
     <a pButton [routerLink]="['/newBoard', {departmentId: department.id}]" class="ui-button-success" icon="fa-plus"
@@ -44,6 +45,10 @@
   <div class="list-container">
     <b-board-item [board]="board" *ngFor="let board of boards" class="list-container__item"></b-board-item>
   </div>
+</section>
+
+<section>
+  <b-post-list-embedded [resource]="department"></b-post-list-embedded>
 </section>
 
 <b-resource-timeline *ngIf="department" [resource]="department"></b-resource-timeline>

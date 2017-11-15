@@ -1,11 +1,11 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Title} from '@angular/platform-browser';
 import {ActivatedRoute} from '@angular/router';
 import {DefinitionsService} from '../../services/definitions.service';
 import BadgeListType = b.BadgeListType;
 import BadgeType = b.BadgeType;
 import ResourceRepresentation = b.ResourceRepresentation;
 import WidgetOptionsDTO = b.WidgetOptionsDTO;
-import {Title} from '@angular/platform-browser';
 
 @Component({
   templateUrl: 'resource-badge.component.html',
@@ -36,7 +36,11 @@ export class ResourceBadgeComponent implements OnInit {
 
   refreshSnippet() {
     const widgetsUrlPrefix = this.definitionsService.getDefinitions()['applicationUrl'];
-    const widgetOptions: WidgetOptionsDTO = {badgeType: this.badgeType, badgeListType: this.badgeListType, postCount: this.postCount};
+    const widgetOptions: WidgetOptionsDTO = {badgeType: this.badgeType};
+    if (this.badgeType === 'LIST') {
+      widgetOptions.badgeListType = this.badgeListType;
+      widgetOptions.postCount = this.postCount;
+    }
     this.widgetOptionsStringified = JSON.stringify(widgetOptions);
     const resourceStringified = this.resource.scope.toLowerCase() + '#' + this.resource.id;
     this.resourceStringified = resourceStringified;

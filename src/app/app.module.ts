@@ -175,6 +175,11 @@ import {ValidationService} from './validation/validation.service';
                             canActivate: [AuthGuard]
                           },
                           {
+                            path: 'badge',
+                            loadChildren: 'app/resource/badge/resource-badge.module#ResourceBadgeModule',
+                            canActivate: [AuthGuard]
+                          },
+                          {
                             path: 'subscription',
                             loadChildren: 'app/departments/subscription/department-subscription.module#DepartmentSubscriptionModule',
                             canActivate: [AuthGuard]

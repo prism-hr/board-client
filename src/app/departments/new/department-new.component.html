@@ -9,7 +9,7 @@
               <label for="university">University</label>
               <p-autoComplete formControlName="university" [suggestions]="universitySuggestions"
                               (completeMethod)="searchUniversities($event)" placeholder="University Name"
-                              field="name" (onBlur)="universityOnBlur()">
+                              field="name" (onSelect)="universitySelected($event)" (onBlur)="universityOnBlur()">
                 <ng-template let-university pTemplate="item">
                   <b-image [publicId]="university.documentLogo?.cloudinaryId"
                            height="150" width="200" crop="mfit"></b-image>
@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="grid__item small--one-whole medium-up--one-third" style="display: flex">
-          <b-file-upload formControlName="documentLogo" type="logo"></b-file-upload>
+          <b-file-upload formControlName="documentLogo" (change)="logoUploaded()" type="logo"></b-file-upload>
         </div>
       </div>
     </mat-card-content>

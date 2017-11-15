@@ -86,18 +86,6 @@ export class ResourceService {
     this.resourceSubjects[resource.scope][resource.id].next(resource);
   }
 
-  getBoard(departmentHandle: string, boardHandle: string): Observable<BoardRepresentation[]> {
-    const params = new URLSearchParams();
-    params.set('handle', departmentHandle + '/' + boardHandle);
-    return this.http.get('/api/boards', {search: params}).map(res => res.json());
-  }
-
-  getDepartment(handle: string): Observable<DepartmentRepresentation[]> {
-    const params = new URLSearchParams();
-    params.set('handle', handle);
-    return this.http.get('/api/departments', {search: params}).map(res => res.json());
-  }
-
   getResources(scope: Scope, filter?: EntityFilter): Observable<ResourceRepresentation<any>[]> {
     const resourceCol = scope.toLowerCase() + 's';
     return this.http.get('/api/' + resourceCol, {search: this.generateFilterParams(filter)}).map(res => res.json());
@@ -110,13 +98,13 @@ export class ResourceService {
     return this.http.get('/api/' + resourceCol, {search: params}).map(res => res.json());
   }
 
-  getBoardPosts(boardId: number, filter?: EntityFilter): Observable<PostRepresentation[]> {
-    return this.http.get('/api/boards/' + boardId + '/posts', {search: this.generateFilterParams(filter)})
+  getPosts(filter?: EntityFilter): Observable<PostRepresentation[]> {
+    return this.http.get('/api/posts', {search: this.generateFilterParams(filter)})
       .map(res => res.json());
   }
 
-  getDepartmentBoards(departmentId: number, filter?: EntityFilter): Observable<BoardRepresentation[]> {
-    return this.http.get('/api/departments/' + departmentId + '/boards', {search: this.generateFilterParams(filter)})
+  getBoards(filter?: EntityFilter): Observable<BoardRepresentation[]> {
+    return this.http.get('/api/boards', {search: this.generateFilterParams(filter)})
       .map(res => res.json());
   }
 
@@ -279,6 +267,9 @@ export class ResourceService {
     }
     if (filter && filter.includePublic) {
       params.set('includePublic', filter.includePublic.toString());
+    }
+    if (filter && filter.parentId) {
+      params.set('parentId', filter.parentId.toString());
     }
     return params;
   }

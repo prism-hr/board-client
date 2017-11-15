@@ -21,6 +21,7 @@ export class DepartmentNewComponent implements OnInit {
   departmentForm: FormGroup;
   universitySuggestions: UniversityRepresentation[];
   user: UserRepresentation;
+  customLogoUploaded: boolean;
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private title: Title,
               private snackBar: MatSnackBar, private resourceService: ResourceService, private userService: UserService,
@@ -45,7 +46,8 @@ export class DepartmentNewComponent implements OnInit {
         if (prepopulateDetails) {
           this.departmentForm.patchValue({
             university: prepopulateDetails.university,
-            name: prepopulateDetails.departmentName
+            name: prepopulateDetails.departmentName,
+            documentLogo: prepopulateDetails.university.documentLogo
           });
         }
       }
@@ -97,10 +99,21 @@ export class DepartmentNewComponent implements OnInit {
     });
   }
 
+  universitySelected(value: UniversityRepresentation) {
+    if(!this.customLogoUploaded) {
+      this.departmentForm.get('documentLogo').setValue(value.documentLogo);
+    }
+  }
+
+  logoUploaded() {
+    this.customLogoUploaded = true;
+  }
+
   universityOnBlur() {
     const universityField = this.departmentForm.get('university');
     if (typeof universityField.value === 'string') {
       universityField.setValue(null);
     }
   }
+
 }

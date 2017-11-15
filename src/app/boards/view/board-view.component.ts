@@ -4,12 +4,8 @@ import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Data, ParamMap} from '@angular/router';
 import {combineLatest} from 'rxjs/observable/combineLatest';
 import {UnsubscribeDialogComponent} from '../../authentication/unsubscribe.dialog';
-import {EntityFilter} from '../../general/filter/filter.component';
 import {ResourceService} from '../../services/resource.service';
-import {UserService} from '../../services/user.service';
 import BoardRepresentation = b.BoardRepresentation;
-import PostRepresentation = b.PostRepresentation;
-import UserRepresentation = b.UserRepresentation;
 
 
 @Component({
@@ -19,12 +15,8 @@ import UserRepresentation = b.UserRepresentation;
 export class BoardViewComponent implements OnInit {
   board: BoardRepresentation;
   canEdit: boolean;
-  posts: PostRepresentation[];
-  user: UserRepresentation;
-  filter: EntityFilter;
 
-  constructor(private route: ActivatedRoute, private title: Title, private dialog: MatDialog, private resourceService: ResourceService,
-              private userService: UserService) {
+  constructor(private route: ActivatedRoute, private title: Title, private dialog: MatDialog, private resourceService: ResourceService) {
   }
 
   ngOnInit() {
@@ -45,23 +37,6 @@ export class BoardViewComponent implements OnInit {
           });
         }
       });
-
-    this.userService.user$.subscribe(user => {
-      this.user = user;
-      this.loadPosts();
-    });
-  }
-
-  filterApplied(filter: EntityFilter) {
-    this.loadPosts(filter);
-  }
-
-  loadPosts(filter?: EntityFilter) {
-    this.filter = filter || this.filter || {};
-    this.filter.includePublic = !this.user;
-    this.resourceService.getBoardPosts(this.board.id, this.filter).subscribe(posts => {
-      this.posts = posts;
-    });
   }
 
 }
