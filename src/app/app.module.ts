@@ -173,6 +173,11 @@ import {ValidationService} from './validation/validation.service';
                             path: 'users',
                             loadChildren: 'app/resource/users/resource-users.module#ResourceUsersModule',
                             canActivate: [AuthGuard]
+                          },
+                          {
+                            path: 'badge',
+                            loadChildren: 'app/resource/badge/resource-badge.module#ResourceBadgeModule',
+                            canActivate: [AuthGuard]
                           }
                         ]
                       }
