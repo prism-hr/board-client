@@ -42,4 +42,12 @@ export class DepartmentService {
     return this.http.post('/api/departments/' + department.id + '/paymentSources/' + source + '/setDefault', {}).map(res => res.json());
   }
 
+  cancelSubscription(department: DepartmentRepresentation) {
+    return this.http.delete('/api/departments/' + department.id + '/subscription').map(res => res.json());
+  }
+
+  restoreSubscription(department: DepartmentRepresentation) {
+    return this.http.put('/api/departments/' + department.id + '/subscription', {}).map(res => res.json());
+  }
+
 }

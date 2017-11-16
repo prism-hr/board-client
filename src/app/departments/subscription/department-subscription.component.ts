@@ -1,11 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Data} from '@angular/router';
 import {ElementOptions, StripeCardComponent, StripeService} from 'ngx-stripe';
-import * as Stripe from 'stripe';
-import {ICard} from 'stripe';
 import {DepartmentService} from '../department.service';
 import DepartmentRepresentation = b.DepartmentRepresentation;
-import ICustomer = Stripe.customers.ICustomer;
 
 @Component({
   templateUrl: 'department-subscription.component.html',
@@ -13,7 +10,8 @@ import ICustomer = Stripe.customers.ICustomer;
 })
 export class DepartmentSubscriptionComponent implements OnInit {
   department: DepartmentRepresentation;
-  customer: ICustomer;
+  customer: any;
+  subscription: any;
   elementOptions: ElementOptions;
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
@@ -25,9 +23,7 @@ export class DepartmentSubscriptionComponent implements OnInit {
       .subscribe((parentData: Data) => {
         this.department = parentData['department'];
         this.departmentService.getPaymentSources(this.department)
-          .subscribe(customer => {
-            this.customer = customer;
-          });
+          .subscribe(customer => this.applyCustomer(customer));
       });
 
     this.elementOptions = {
@@ -54,9 +50,7 @@ export class DepartmentSubscriptionComponent implements OnInit {
         this.card.getCard().clear();
         if (result.token) {
           this.departmentService.postPaymentSource(this.department, result.token.id)
-            .subscribe(customer => {
-              this.customer = customer;
-            });
+            .subscribe(customer => this.applyCustomer(customer));
         } else if (result.error) {
           // Error creating the token
           console.log(result.error.message);
@@ -64,18 +58,28 @@ export class DepartmentSubscriptionComponent implements OnInit {
       });
   }
 
-  deleteSource(source: ICard) {
+  deleteSource(source: any) {
     this.departmentService.deletePaymentSource(this.department, source.id)
-      .subscribe(customer => {
-        this.customer = customer;
-      });
+      .subscribe(customer => this.applyCustomer(customer));
   }
 
-  setSourceAsDefault(source: ICard) {
+  setSourceAsDefault(source: any) {
     this.departmentService.setPaymentSourceAsDefault(this.department, source.id)
-      .subscribe(customer => {
-        this.customer = customer;
-      });
+      .subscribe(customer => this.applyCustomer(customer));
   }
 
+  cancelSubscription() {
+    this.departmentService.cancelSubscription(this.department)
+      .subscribe(customer => this.applyCustomer(customer));
+  }
+
+  restoreSubscription() {
+    this.departmentService.restoreSubscription(this.department)
+      .subscribe(customer => this.applyCustomer(customer));
+  }
+
+  private applyCustomer(customer: any) {
+    this.customer = customer;
+    this.subscription = customer.subscriptions.data[0];
+  }
 }

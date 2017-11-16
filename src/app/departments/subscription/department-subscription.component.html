@@ -1,20 +1,30 @@
-<div *ngIf="customer">
-  <section>
-    <form novalidate>
-      <ngx-stripe-card [options]="elementOptions"></ngx-stripe-card>
-      <button pButton type="button" class="ui-button-success" label="Submit" (click)="submitCard()"></button>
-    </form>
-  </section>
+<section *ngIf="customer || customer === null">
+  <h2>Add payment method</h2>
+  <form novalidate>
+    <ngx-stripe-card [options]="elementOptions"></ngx-stripe-card>
+    <button pButton type="button" class="ui-button-success" label="Submit" (click)="submitCard()"></button>
+  </form>
+</section>
 
-  <section>
-    <h2>Subscriptions</h2>
-    <div *ngFor="let source of customer.sources.data">
-      Type: {{source.brand}}, Account: ***{{source.last4}},
-      Expiry: {{source.expMonth | number:'2.0-0'}}-{{source.expYear}}
-      <span *ngIf="source.id === customer.defaultSource">Default</span>
-      <button *ngIf="source.id !== customer.defaultSource" pButton label="Set as Default"
-              (click)="setSourceAsDefault(source)"></button>
-      <button pButton label="Delete" (click)="deleteSource(source)"></button>
+<section *ngIf="customer">
+  <h2>Payment methods</h2>
+  <div *ngFor="let source of customer.sources.data">
+    Type: {{source.brand}}, Account: ***{{source.last4}},
+    Expiry: {{source.expMonth | number:'2.0-0'}}-{{source.expYear}}
+    <span *ngIf="source.id === customer.defaultSource">Default</span>
+    <button *ngIf="source.id !== customer.defaultSource" pButton label="Set as Default"
+            (click)="setSourceAsDefault(source)"></button>
+    <button pButton label="Delete" (click)="deleteSource(source)"></button>
+  </div>
+
+  <div *ngIf="subscription">
+
+    <div *ngIf="!subscription.cancelAtPeriodEnd">
+      <button pButton label="Cancel subscription" (click)="cancelSubscription()"></button>
     </div>
-  </section>
-</div>
+    <div *ngIf="subscription.cancelAtPeriodEnd">
+      <button pButton label="Restore subscription" (click)="restoreSubscription()"></button>
+    </div>
+
+  </div>
+</section>
