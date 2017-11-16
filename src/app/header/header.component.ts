@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit {
   }
 
   showLogin() {
-    this.authGuard.ensureAuthenticated({modalType: 'login'}).first() // open dialog if not authenticated
+    this.authGuard.ensureAuthenticated({modalType: 'Login'}).first() // open dialog if not authenticated
       .subscribe(authenticated => {
         if (authenticated) {
           return this.router.navigate(['/']).then(() => {

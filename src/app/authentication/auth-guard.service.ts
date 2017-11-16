@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-    return this.ensureAuthenticated({modalType: route.data.modalType || 'login'}).first();
+    return this.ensureAuthenticated({modalType: route.data.modalType || 'Login'}).first();
   }
 
   ensureAuthenticated(options: { modalType: string, uuid?: string }): Observable<boolean> {
@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
     } else {
       this.userService.logout();
       const config = new MatDialogConfig();
-      const dialogData: AuthenticationDialogData = {showRegister: options.modalType === 'register', uuid: options.uuid};
+      const dialogData: AuthenticationDialogData = {showRegister: options.modalType === 'Register', uuid: options.uuid};
       config.data = dialogData;
       const dialogRef = this.dialog.open(AuthenticationDialogComponent, config);
       return dialogRef.afterClosed();
