@@ -130,7 +130,7 @@ import {ValidationService} from './validation/validation.service';
           {
             path: 'newPost',
             loadChildren: 'app/posts/edit/post-edit.module#PostEditModule',
-            data: {modalType: 'register'},
+            data: {modalType: 'Register'},
             resolve: {
               boards: BoardsResolver
             },
