@@ -3,14 +3,14 @@ import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {MatDialogModule} from '@angular/material/dialog';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {SidebarModule} from 'primeng/components/sidebar/sidebar';
 import {OverlayPanelModule} from 'primeng/components/overlaypanel/overlaypanel';
+import {SidebarModule} from 'primeng/components/sidebar/sidebar';
 import {TabMenuModule} from 'primeng/components/tabmenu/tabmenu';
 import {environment} from '../environments/environment';
 import {AppComponent} from './app.component';
@@ -287,6 +287,7 @@ import {ValidationService} from './validation/validation.service';
     },
     {
       provide: RollbarConfig, useValue: {
+      enabled: environment.production,
       verbose: true,
       accessToken: 'da4d675c8c5340819eac1c080f5b1e76',
       payload: {

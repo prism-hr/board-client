@@ -12,7 +12,7 @@
           <div class="grid__item small--one-whole medium-up--one-half">
             <p-autoComplete formControlName="university" [suggestions]="universitySuggestions"
                             (completeMethod)="searchUniversities($event)" placeholder="University Name"
-                            field="name" (onBlur)="universityOnBlur()">
+                            field="name" (onBlur)="universityOnBlur()" inputId="university">
               <ng-template let-university pTemplate="item">
                 <b-image [publicId]="university.documentLogo?.cloudinaryId"
                          height="150" width="200" crop="mfit"></b-image>
@@ -23,7 +23,7 @@
           </div>
 
           <div class="grid__item small--one-whole medium-up--one-half">
-            <input pInputText formControlName="departmentName" placeholder="Department Name"/>
+            <input pInputText formControlName="departmentName" placeholder="Department Name" id="departmentName"/>
             <control-messages [control]="departmentForm.get('departmentName')"></control-messages>
           </div>
 

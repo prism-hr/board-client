@@ -25,15 +25,15 @@
               class="ui-button ui-button-warning"></button>
     </div>
     <div class="grid__item small--one-whole medium-up--one-third input-holder">
-      <input pInputText formControlName="givenName" placeholder="First Name" required>
+      <input pInputText formControlName="givenName" placeholder="First Name" id="givenName" required>
       <control-messages [control]="parentForm.get('givenName')"></control-messages>
     </div>
     <div class="grid__item small--one-whole medium-up--one-third input-holder">
-      <input pInputText formControlName="surname" placeholder="Last Name" required>
+      <input pInputText formControlName="surname" placeholder="Last Name" id="surname" required>
       <control-messages [control]="parentForm.get('surname')"></control-messages>
     </div>
     <div class="grid__item small--one-whole medium-up--one-third input-holder">
-      <input pInputText formControlName="email" placeholder="Email" required>
+      <input pInputText formControlName="email" placeholder="Email" id="email" required>
       <control-messages [control]="parentForm.get('email')"></control-messages>
     </div>
   </div>

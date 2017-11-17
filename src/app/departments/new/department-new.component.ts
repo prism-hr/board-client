@@ -64,7 +64,7 @@ export class DepartmentNewComponent implements OnInit {
       return;
     }
 
-    this.authGuard.ensureAuthenticated({modalType: 'register'}).first() // open dialog if not authenticated
+    this.authGuard.ensureAuthenticated({modalType: 'Register'}).first() // open dialog if not authenticated
       .subscribe(authenticated => {
         if (!authenticated) {
           return;

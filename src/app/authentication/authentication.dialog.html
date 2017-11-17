@@ -62,19 +62,19 @@
         <form [formGroup]="registrationForm" (ngSubmit)="register()" autocomplete="off">
           <div class="grid">
             <div class="grid__item small--one-whole medium-up--one-half input-holder">
-              <input pInputText placeholder="First Name" formControlName="givenName">
+              <input pInputText placeholder="First Name" formControlName="givenName" id="givenName">
               <control-messages [control]="registrationForm.get('givenName')"></control-messages>
             </div>
             <div class="grid__item small--one-whole medium-up--one-half input-holder">
-              <input pInputText placeholder="Last Name" formControlName="surname">
+              <input pInputText placeholder="Last Name" formControlName="surname" id="surname">
               <control-messages [control]="registrationForm.get('surname')"></control-messages>
             </div>
             <div class="grid__item one-whole input-holder">
-              <input pInputText type="email" placeholder="Email" formControlName="email">
+              <input pInputText type="email" placeholder="Email" formControlName="email" id="email">
               <control-messages [control]="registrationForm.get('email')"></control-messages>
             </div>
             <div class="grid__item one-whole input-holder">
-              <input pInputText type="password" placeholder="Password" formControlName="password">
+              <input pInputText type="password" placeholder="Password" formControlName="password" id="password">
               <control-messages [control]="registrationForm.get('password')"></control-messages>
             </div>
           </div>
