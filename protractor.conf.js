@@ -3,10 +3,19 @@
 
 const { SpecReporter } = require('jasmine-spec-reporter');
 
+function randomString(length) {
+  let text = '';
+  const possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  for (let i = 0; i < length; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+}
+
 exports.config = {
   allScriptsTimeout: 11000,
   specs: [
-    './e2e/**/*.e2e-spec.ts'
+    './e2e/setup-department.e2e-spec.ts'
   ],
   capabilities: {
     'browserName': 'chrome'
@@ -18,6 +27,9 @@ exports.config = {
     showColors: true,
     defaultTimeoutInterval: 30000,
     print: function() {}
+  },
+  params: {
+    randomString: randomString(4)
   },
   onPrepare() {
     require('ts-node').register({

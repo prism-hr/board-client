@@ -1,4 +1,4 @@
-import {browser, by, element} from 'protractor';
+import {browser, by, element, protractor} from 'protractor';
 
 export class HomePage {
   navigateTo() {
@@ -18,6 +18,10 @@ export class HomePage {
   }
 
   getUniversityAutocompleteItems() {
+    return element(by.css('ul.ui-autocomplete-items'));
+  }
+
+  getUniversityAutocompleteItemsList() {
     return element.all(by.css('.ui-autocomplete-list-item'));
   }
 
@@ -106,8 +110,28 @@ export class AuthenticationDialog {
     return element(by.id('email'));
   }
 
+  performRegistration(email: string, givenName: string, surname: string, password: string) {
+    this.getEmailInput().click();
+    this.getEmailInput().sendKeys(email);
+    this.getGivenNameInput().click();
+    this.getGivenNameInput().sendKeys(givenName);
+    this.getSurnameInput().click();
+    this.getSurnameInput().sendKeys(surname);
+    this.getPasswordInput().click();
+    this.getPasswordInput().sendKeys(password);
+    this.getPasswordInput().sendKeys(protractor.Key.ENTER);
+  }
+
   getPasswordInput() {
     return element(by.id('password'));
+  }
+
+}
+
+export class GenericPage {
+
+  getLogoutButton() {
+    return element(by.id('logoutButton'));
   }
 
 }

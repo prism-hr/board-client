@@ -1,16 +1,22 @@
 import {browser, protractor} from 'protractor';
 import {resolve} from 'url';
-import {AuthenticationDialog, DepartmentViewPage, HomePage, NewDepartmentPage, ResourceUsersPage} from './app.po';
+import {AuthenticationDialog, DepartmentViewPage, GenericPage, HomePage, NewDepartmentPage, ResourceUsersPage} from './app.po';
 import {TestUtils} from './test.utils';
 
-var EC = browser.ExpectedConditions;
+const EC = browser.ExpectedConditions;
 
 describe('board-frontend App', () => {
+  const randomString = browser.params.randomString;
   let homePage: HomePage;
   let newDepartmentPage: NewDepartmentPage;
   let authenticationDialog: AuthenticationDialog;
   let departmentViewPage: DepartmentViewPage;
   let resourceUsersPage: ResourceUsersPage;
+  let genericPage: GenericPage;
+
+  beforeAll(() => {
+    browser.waitForAngularEnabled(false);
+  });
 
   beforeEach(() => {
     homePage = new HomePage();
@@ -18,26 +24,21 @@ describe('board-frontend App', () => {
     authenticationDialog = new AuthenticationDialog();
     departmentViewPage = new DepartmentViewPage();
     resourceUsersPage = new ResourceUsersPage();
+    genericPage = new GenericPage();
   });
 
-  // it('should see homepage', () => {
-  //   homePage.navigateTo();
-  //   expect(homePage.getParagraphText()).toContain('Create a new Department');
-  //   expect(homePage.getUniversityInput()).toBeDefined();
-  //   expect(homePage.getDepartmentNameInput()).toBeDefined();
-  // });
-
   it('should create new department', () => {
-    const randomString = TestUtils.randomString(4);
     homePage.navigateTo();
     homePage.getUniversityInput().sendKeys('Bisho');
-    expect(homePage.getUniversityAutocompleteItems().count()).toEqual(2);
-    homePage.getUniversityAutocompleteItems().get(0).click();
+    browser.wait(EC.presenceOf(homePage.getUniversityAutocompleteItems()));
+    expect(homePage.getUniversityAutocompleteItemsList().count()).toEqual(2);
+    homePage.getUniversityAutocompleteItemsList().get(0).click();
     expect(homePage.getUniversityInput().getAttribute('value')).toEqual('Bishop Burton College');
 
     homePage.getDepartmentNameInput().sendKeys('Bishop department' + randomString);
     homePage.getDepartmentNameInput().sendKeys(protractor.Key.ENTER);
 
+    browser.wait(EC.urlContains('newDepartment'));
     expect(browser.getCurrentUrl()).toEqual(resolve(browser.baseUrl, 'newDepartment?prepopulate=true'));
 
     expect(newDepartmentPage.getUniversityInput().getAttribute('value')).toEqual('Bishop Burton College');
@@ -45,17 +46,14 @@ describe('board-frontend App', () => {
     newDepartmentPage.getSummaryTextarea().sendKeys('Bishop summary');
     newDepartmentPage.getNameInput().sendKeys(protractor.Key.ENTER);
 
-    authenticationDialog.getEmailInput().sendKeys('admin_' + randomString + '@test.prism.hr');
-    authenticationDialog.getGivenNameInput().sendKeys('Admin');
-    authenticationDialog.getSurnameInput().sendKeys('Bishop');
-    authenticationDialog.getPasswordInput().sendKeys('password1');
-    authenticationDialog.getPasswordInput().sendKeys(protractor.Key.ENTER);
+    authenticationDialog.performRegistration(
+      'admin_' + randomString + '@test.prism.hr', 'Admin','Bishop','1secret1');
 
-    browser.waitForAngularEnabled(false);
     browser.wait(EC.urlContains('bishop-burton-college'));
-
     expect(browser.getCurrentUrl()).toEqual(resolve(browser.baseUrl, 'bishop-burton-college/bishop-department' + randomString));
+  });
 
+  it('should add new administrator to a department', () => {
     departmentViewPage.getTabItem(3).click();
     browser.wait(EC.urlContains('users'));
 
@@ -88,11 +86,11 @@ describe('board-frontend App', () => {
       browser.get(urls[0]);
       browser.wait(EC.textToBePresentInElement(authenticationDialog.getParagraphText(), 'Register'));
 
-      authenticationDialog.getEmailInput().sendKeys('m_new_admin_' + randomString + '@test.prism.hr');
-      authenticationDialog.getGivenNameInput().sendKeys('m_new');
-      authenticationDialog.getSurnameInput().sendKeys('m_admin');
-      authenticationDialog.getPasswordInput().sendKeys('password1');
-      authenticationDialog.getPasswordInput().sendKeys(protractor.Key.ENTER);
+      authenticationDialog.performRegistration(
+        'admin2' + randomString + '@test.prism.hr', 'Admin2','Bishop','1secret1');
+
+      browser.wait(EC.presenceOf(genericPage.getLogoutButton()));
+      genericPage.getLogoutButton().click();
     });
 
   });
