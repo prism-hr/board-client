@@ -76,6 +76,7 @@
     "exceptionCode": {
       "UNREGISTERED_USER": "The user is not registered.",
       "DUPLICATE_USER": "This email is already taken.",
+      "DUPLICATE_REGISTRATION": "You are already registered. Please login.",
       "FORBIDDEN_PASSWORD_RESET": "The link has expired. Try again with a new link.",
       "UNAUTHENTICATED_USER": "Make sure the email and password you provided are correct.",
       "UNKNOWN_USER": "The email you specified was not found.",

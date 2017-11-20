@@ -41,7 +41,7 @@
       </div>
       <nav class="text-right">
         <div *ngIf="!user">
-          <button pButton (click)="showLogin()" class="ui-button-warning" label="Log in"></button>
+          <button pButton (click)="showLogin()" id="loginButton" class="ui-button-warning" label="Log in"></button>
         </div>
         <div *ngIf="user" class="user-header-profile" fxLayout="row">
           <div *ngIf="activities?.length > 0" class="activity">

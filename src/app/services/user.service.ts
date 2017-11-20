@@ -12,12 +12,14 @@ import UserNotificationSuppressionRepresentation = b.UserNotificationSuppression
 import UserPasswordDTO = b.UserPasswordDTO;
 import UserPatchDTO = b.UserPatchDTO;
 import UserRepresentation = b.UserRepresentation;
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class UserService implements OnInit {
   user$: Observable<UserRepresentation>;
   userSource: ReplaySubject<UserRepresentation>;
   activities$: ReplaySubject<ActivityRepresentation[]>;
+  activitiesRefresh$: Subject<void>;
   activitiesSubscription: Subscription;
 
   constructor(private http: JwtHttp, private rollbar: RollbarService, private auth: AuthService) {
@@ -142,24 +144,19 @@ export class UserService implements OnInit {
     return this.loadUser()
       .then(user => {
         if (user) {
-          this.http.get('/api/user/activities')
-            .subscribe(activities => {
-              this.activities$.next(activities.json())
-              this.activitiesSubscription = Observable
-                .interval(50000)
-                .startWith(0)
-                .switchMap(() => this.http.get('/api/user/activities/refresh'))
-                .retryWhen(res => {
-                  return res.map(err => {
-                    if(err.status !== 304) {
-                      throw err;
-                    }
-                  });
-                })
-                .subscribe(activities => this.activities$.next(activities.json()));
-            });
+          this.activitiesRefresh$ = new Subject<void>();
+          // this.activitiesRefresh$
+          //   .switchMap(outer => Observable.timer(0, 60 * 1000 /* 1 minute */))
+          //   .switchMap(() => this.http.get('/api/user/activities'))
+          //   .subscribe(activities => {
+          //     this.activities$.next(activities.json());
+          //   });
         }
         return user;
       });
+  }
+
+  refreshActivities() {
+    this.activitiesRefresh$.next();
   }
 }

@@ -13,14 +13,6 @@ export class HomePage {
     return element(by.id('university'));
   }
 
-  getUniversityAutocomplete(valid: boolean) {
-    return element(by.css('p-autocomplete' + (valid ? '.ng-valid' : '.ng-invalid')));
-  }
-
-  getUniversityAutocompleteItems() {
-    return element(by.css('ul.ui-autocomplete-items'));
-  }
-
   getUniversityAutocompleteItemsList() {
     return element.all(by.css('.ui-autocomplete-list-item'));
   }
@@ -48,18 +40,60 @@ export class NewDepartmentPage {
   }
 }
 
-export class DepartmentViewPage {
-
-  getTitle() {
-    return element(by.tagName('h1')).getText();
-  }
+export class GenericResourcePage {
 
   getActiveTabItem() {
-    return element(by.css('p-tabMenu li.ui-state-active a'));
+    return element(by.css('p-tabMenu li.ui-state-active a span'));
   }
 
-  getTabItem(nth: number) {
+  getNthTabItem(nth: number) {
     return element(by.css('p-tabMenu li:nth-child(' + nth + ') a'));
+  }
+
+  assertTabItems(...items: string[]) {
+    expect(element.all(by.css('p-tabMenu li a span')).getText()).toEqual(items);
+  }
+
+}
+
+export class DepartmentViewPage {
+
+  navigateTo(handle: string) {
+    return browser.get('/' + handle);
+  }
+
+  assertDepartmentView(name: string, summary: string, categories: string[]) {
+    expect(element(by.css('p-tabMenu li.ui-state-active a span')).getText()).toEqual('View');
+    expect(element(by.tagName('h1')).getText()).toEqual(name);
+    expect(element(by.css('div.summary-holder')).getText()).toEqual(summary);
+    expect(element.all(by.css('div.category-list span.ui-chips-token')).getText()).toEqual(categories);
+  }
+
+}
+
+export class DepartmentEditPage {
+
+  getUniversityInput() {
+    return element(by.id('university'));
+  }
+
+  getNameInput() {
+    return element(by.id('name'));
+  }
+
+  getSummaryTextarea() {
+    return element(by.id('summary'));
+  }
+}
+
+export class DepartmentsPage {
+
+  getDepartmentCard(handle: string) {
+    return element(by.css('mat-card#department_' + handle));
+  }
+
+  getDepartmentTitleUrl(handle: string) {
+    return this.getDepartmentCard(handle).element(by.css('mat-card-header a'));
   }
 
 }
@@ -95,7 +129,7 @@ export class ResourceUsersPage {
 export class AuthenticationDialog {
 
   getParagraphText() {
-    return element(by.tagName('h2'));
+    return element(by.tagName('mat-dialog-container h2')).getText();
   }
 
   getGivenNameInput() {
@@ -111,14 +145,24 @@ export class AuthenticationDialog {
   }
 
   performRegistration(email: string, givenName: string, surname: string, password: string) {
+    expect(this.getParagraphText()).toEqual('Register');
     this.getEmailInput().click();
-    this.getEmailInput().sendKeys(email);
+    email.split('').forEach(letter => this.getEmailInput().sendKeys(letter));
     this.getGivenNameInput().click();
-    this.getGivenNameInput().sendKeys(givenName);
+    givenName.split('').forEach(letter => this.getGivenNameInput().sendKeys(letter));
     this.getSurnameInput().click();
-    this.getSurnameInput().sendKeys(surname);
+    surname.split('').forEach(letter => this.getSurnameInput().sendKeys(letter));
     this.getPasswordInput().click();
-    this.getPasswordInput().sendKeys(password);
+    password.split('').forEach(letter => this.getPasswordInput().sendKeys(letter));
+    this.getPasswordInput().sendKeys(protractor.Key.ENTER);
+  }
+
+  performLogin(email: string, password: string) {
+    expect(this.getParagraphText()).toEqual('Login');
+    this.getEmailInput().click();
+    email.split('').forEach(letter => this.getEmailInput().sendKeys(letter));
+    this.getPasswordInput().click();
+    password.split('').forEach(letter => this.getPasswordInput().sendKeys(letter));
     this.getPasswordInput().sendKeys(protractor.Key.ENTER);
   }
 
@@ -134,4 +178,31 @@ export class GenericPage {
     return element(by.id('logoutButton'));
   }
 
+  getLoginButton() {
+    return element(by.id('loginButton'));
+  }
+
+  getPostsButton() {
+    return element(by.css('b-header header a[label="Posts"]'));
+  }
+
+  getBoardsButton() {
+    return element(by.css('b-header header a[label="Boards"]'));
+  }
+
+  getDepartmentsButton() {
+    return element(by.css('b-header header a[label="Departments"]'));
+  }
+
+  getDialog() {
+    return element(by.tagName('mat-dialog-container'));
+  }
+
+  getDoNotShowAgainButton() {
+    return element(by.css('button[label="Do not show it again"]'));
+  }
+
+  getDoItAgainButton() {
+    return element(by.css('button[label="I\'ll do it later"]'));
+  }
 }

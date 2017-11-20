@@ -2,13 +2,7 @@
   <div class="grid">
     <div class="grid__item medium-up--three-quarters small-one-whole board">
       <div class="summary-holder">
-        <div *ngIf="department.summary">
-          {{department.summary}}
-        </div>
-        <div *ngIf="!department.summary">
-          No summary provided.
-          <button pButton routerLink="edit" class="ui-button-info small-xs" label="Add Summary"></button>
-        </div>
+        {{department.summary}}
       </div>
       <div class="category-list">
       <span class="ui-chips-token ui-corner-all" *ngFor="let category of department.memberCategories">

@@ -7,7 +7,7 @@
   <b-filter resourceScope="DEPARTMENT" (applied)="filterApplied($event)"></b-filter>
   <div class="grid list-container">
     <div *ngFor="let department of departments" class="list-container__item">
-      <mat-card>
+      <mat-card id="department_{{department.university.handle}}_{{department.handle}}">
         <mat-card-header fxLayout.xs="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
           <mat-card-title>
             <h3><a [routerLink]="['/', department.university.handle, department.handle]">{{department.name}}</a></h3>

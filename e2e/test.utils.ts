@@ -1,6 +1,7 @@
-import {browser} from 'protractor';
+import {browser, ElementFinder} from 'protractor';
 import * as request from 'request';
-import {resolve} from 'url';
+import {resolve as urlResolve} from 'url';
+import {resolve as pathResolve} from 'path';
 
 export class TestUtils {
 
@@ -14,7 +15,7 @@ export class TestUtils {
   }
 
   static getTestEmails(email, defer) {
-    setTimeout(() => request(resolve(browser.baseUrl, 'api/test/emails?email=' + email), {json: true}, (err, resp, body) => {
+    setTimeout(() => request(urlResolve(browser.baseUrl, 'api/test/emails?email=' + email), {json: true}, (err, resp, body) => {
       if (err) {
         console.log('Error requesting test email ' + err);
         defer.reject(err);
@@ -24,6 +25,15 @@ export class TestUtils {
         TestUtils.getTestEmails(email, defer);
       }
     }), 500);
+  }
+
+  static assertCurrentUrlEquals(relativeUrl: string) {
+    expect(browser.getCurrentUrl()).toEqual(urlResolve(browser.baseUrl, relativeUrl));
+  }
+
+  static uploadFile(element: ElementFinder, relativeFilePath: string){
+    const absolutePath = pathResolve(__dirname, relativeFilePath);
+    element.sendKeys(absolutePath);
   }
 
 }

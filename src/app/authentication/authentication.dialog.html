@@ -23,11 +23,11 @@
       <div class="grid__item one-whole">
         <form [formGroup]="loginForm" (ngSubmit)="login()">
           <div class="input-holder">
-            <input pInputText type="email" placeholder="Email" formControlName="email">
+            <input pInputText type="email" placeholder="Email" formControlName="email" id="email">
             <control-messages [control]="loginForm.get('email')"></control-messages>
           </div>
           <div class="input-holder">
-            <input pInputText type="password" placeholder="Password" formControlName="password">
+            <input pInputText type="password" placeholder="Password" formControlName="password" id="password">
             <control-messages [control]="loginForm.get('password')"></control-messages>
           </div>
           <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center" class="actions-holder">
@@ -93,7 +93,7 @@
   <div *ngIf="view === 'FORGOT'" class="forgot-container">
     <form *ngIf="!forgottenSent" [formGroup]="forgotPasswordForm" (ngSubmit)="sendForgotten()" autocomplete="off">
       <div class="index-padding input-holder">
-        <input pInputText type="email" placeholder="Email" formControlName="email">
+        <input pInputText type="email" placeholder="Email" formControlName="email" id="email">
         <control-messages [control]="forgotPasswordForm.get('email')"></control-messages>
       </div>
 

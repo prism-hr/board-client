@@ -1,16 +1,20 @@
+import {Location} from '@angular/common';
 import {Injectable} from '@angular/core';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {UserService} from '../services/user.service';
+import {Utils} from '../services/utils';
 import {AuthGuard} from './auth-guard.service';
 import {ResetPasswordDialogComponent} from './reset-password.dialog';
+import {MatDialogConfig} from '@angular/material';
 
 @Injectable()
 export class InitializeGuard implements CanActivate {
 
 
-  constructor(private dialog: MatDialog, private authGuard: AuthGuard, private userService: UserService) {
+  constructor(private location: Location, private router: Router, private dialog: MatDialog, private authGuard: AuthGuard,
+              private userService: UserService) {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
@@ -18,6 +22,16 @@ export class InitializeGuard implements CanActivate {
     const modalType = params.get('modal');
     const uuid = params.get('uuid');
     let observable: Observable<boolean>;
+
+    if (modalType || uuid) {
+      // removing UUID from URL
+      let path: string = Utils.removeURLParameter(this.location.path(), 'modal');
+      path = Utils.removeURLParameter(path, 'uuid');
+      // we have to replace current state as well as redirect (redirection will happen after current method is finished)
+      this.location.replaceState(path);
+      state.url = path;
+      this.router.navigate([path.slice(1)]);
+    }
 
     if (modalType) {
       this.userService.logout();
