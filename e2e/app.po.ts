@@ -46,8 +46,9 @@ export class GenericResourcePage {
     return element(by.css('p-tabMenu li.ui-state-active a span'));
   }
 
-  getNthTabItem(nth: number) {
-    return element(by.css('p-tabMenu li:nth-child(' + nth + ') a'));
+  getTabItem(label: string) {
+    return element.all(by.css('p-tabMenu li a'))
+      .filter(finder => finder.element(by.css('span')).getText().then(text => text === label));
   }
 
   assertTabItems(...items: string[]) {
@@ -73,16 +74,20 @@ export class DepartmentViewPage {
 
 export class DepartmentEditPage {
 
-  getUniversityInput() {
-    return element(by.id('university'));
-  }
-
   getNameInput() {
     return element(by.id('name'));
   }
 
   getSummaryTextarea() {
     return element(by.id('summary'));
+  }
+
+  getCheckboxLabel(label: String) {
+    return element(by.css('p-checkbox[ng-reflect-label="' + label + '"] label'));
+  }
+
+  getHandleInput() {
+    return element(by.id('resourceHandle'));
   }
 }
 

@@ -1,6 +1,6 @@
 import {browser, protractor} from 'protractor';
 import {
-  AuthenticationDialog, DepartmentsPage,
+  AuthenticationDialog, DepartmentEditPage, DepartmentsPage,
   DepartmentViewPage,
   GenericPage,
   GenericResourcePage,
@@ -22,8 +22,10 @@ describe('board-frontend App', () => {
   let genericPage: GenericPage;
   let genericResourcePage: GenericResourcePage;
   let departmentsPage: DepartmentsPage;
+  let departmentEditPage: DepartmentEditPage;
 
   beforeAll(() => {
+    console.log('Random string: ' + randomString);
   });
 
   beforeEach(() => {
@@ -35,10 +37,10 @@ describe('board-frontend App', () => {
     genericPage = new GenericPage();
     genericResourcePage = new GenericResourcePage();
     departmentsPage = new DepartmentsPage();
+    departmentEditPage = new DepartmentEditPage();
   });
 
   it('should create new department', () => {
-    console.log('Random string: ' + randomString);
     homePage.navigateTo();
     expect(homePage.getParagraphText()).toEqual('Create a new Department');
     homePage.getUniversityInput().sendKeys('Bisho');
@@ -71,7 +73,7 @@ describe('board-frontend App', () => {
 
   it('should add new administrator to a department', () => {
     console.log('Random string: ' + randomString);
-    genericResourcePage.getNthTabItem(3).click();
+    genericResourcePage.getTabItem('Users').click();
     browser.wait(EC.urlContains('users'));
 
     TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop-department' + randomString + '/users');
@@ -102,16 +104,13 @@ describe('board-frontend App', () => {
 
       browser.get(urls[0]);
 
-      console.log('Registering as user: ' + 'admin2' + randomString + '@test.prism.hr');
       authenticationDialog.performRegistration(
         'admin2' + randomString + '@test.prism.hr', 'Admin2', 'Bishop', '1secret1');
       browser.wait(EC.presenceOf(genericResourcePage.getActiveTabItem()));
       departmentViewPage.assertDepartmentView('Bishop department' + randomString, 'Bishop summary',
         ['Undergraduate Student', 'Master Student', 'Research Student', 'Research Staff']);
       genericResourcePage.assertTabItems('View', 'Edit', 'Users', 'Badge');
-
-      // FIXME remove modal and uuid from URL
-      // TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop-department' + randomString);
+      TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop-department' + randomString);
 
       genericPage.getLogoutButton().click();
     });
@@ -122,7 +121,6 @@ describe('board-frontend App', () => {
     departmentViewPage.navigateTo('bishop-burton-college/bishop-department' + randomString);
     genericPage.getLoginButton().click();
 
-    console.log('Logging in as user: ' + 'admin2' + randomString + '@test.prism.hr');
     authenticationDialog.performLogin('admin2' + randomString + '@test.prism.hr', '1secret1');
 
     browser.wait(EC.presenceOf(genericPage.getDoItAgainButton()));
@@ -133,8 +131,22 @@ describe('board-frontend App', () => {
 
     departmentsPage.getDepartmentTitleUrl('bishop-burton-college_bishop-department' + randomString).click();
 
-    genericResourcePage.getNthTabItem(2).click();
+    genericResourcePage.getTabItem('Edit').click();
 
+    departmentEditPage.getNameInput().clear();
+    departmentEditPage.getNameInput().sendKeys('Bishop2 dep' + randomString);
+    departmentEditPage.getSummaryTextarea().clear();
+    departmentEditPage.getSummaryTextarea().sendKeys('Bishop2 summary');
+    departmentEditPage.getCheckboxLabel('Undergraduate Student').click();
+    departmentEditPage.getCheckboxLabel('Research Staff').click();
+    departmentEditPage.getHandleInput().clear();
+    departmentEditPage.getHandleInput().sendKeys('bishop2-' + randomString);
+    departmentEditPage.getHandleInput().sendKeys(protractor.Key.ENTER);
+
+    TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop2-' + randomString);
+
+    departmentViewPage.assertDepartmentView('Bishop2 dep' + randomString, 'Bishop2 summary',
+      ['Master Student', 'Research Student']);
   });
 });
 
