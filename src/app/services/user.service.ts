@@ -1,28 +1,28 @@
 import {Injectable, OnInit} from '@angular/core';
 import {RequestOptionsArgs, Response} from '@angular/http';
+import {StompRService} from '@stomp/ng2-stompjs';
+import {Message} from '@stomp/stompjs';
 import {AuthService, JwtHttp} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {Subscription} from 'rxjs/Subscription';
 import {CustomJwtHttp} from '../authentication/jwt-http.service';
 import {RollbarService} from '../rollbar/rollbar.service';
+import {stompConfig} from './stomp.config';
 import ActivityRepresentation = b.ActivityRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
 import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
 import UserPasswordDTO = b.UserPasswordDTO;
 import UserPatchDTO = b.UserPatchDTO;
 import UserRepresentation = b.UserRepresentation;
-import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class UserService implements OnInit {
   user$: Observable<UserRepresentation>;
   userSource: ReplaySubject<UserRepresentation>;
   activities$: ReplaySubject<ActivityRepresentation[]>;
-  activitiesRefresh$: Subject<void>;
-  activitiesSubscription: Subscription;
 
-  constructor(private http: JwtHttp, private rollbar: RollbarService, private auth: AuthService) {
+  constructor(private http: JwtHttp, private stompRService: StompRService,
+              private rollbar: RollbarService, private auth: AuthService) {
     this.userSource = new ReplaySubject<UserRepresentation>(1);
     this.user$ = this.userSource.asObservable();
     this.activities$ = new ReplaySubject<ActivityRepresentation[]>(1);
@@ -64,9 +64,7 @@ export class UserService implements OnInit {
   }
 
   logout() {
-    if (this.activitiesSubscription) {
-      this.activitiesSubscription.unsubscribe();
-    }
+    this.stompRService.disconnect();
     this.auth.logout().toPromise()
       .then(() => {
         return this.loadUser();
@@ -144,19 +142,20 @@ export class UserService implements OnInit {
     return this.loadUser()
       .then(user => {
         if (user) {
-          this.activitiesRefresh$ = new Subject<void>();
-          // this.activitiesRefresh$
-          //   .switchMap(outer => Observable.timer(0, 60 * 1000 /* 1 minute */))
-          //   .switchMap(() => this.http.get('/api/user/activities'))
-          //   .subscribe(activities => {
-          //     this.activities$.next(activities.json());
-          //   });
+          const config = {...stompConfig};
+          config.headers = {
+            Authorization: 'Bearer ' + this.auth.getToken()
+          };
+          this.stompRService.config = config;
+          this.stompRService.initAndConnect();
+          let stomp_subscription = this.stompRService.subscribe('/api/user/activities');
+
+          stomp_subscription.subscribe((message: Message) => {
+            this.activities$.next(JSON.parse(message.body));
+          });
         }
         return user;
       });
   }
 
-  refreshActivities() {
-    this.activitiesRefresh$.next();
-  }
 }

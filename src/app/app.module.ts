@@ -1,3 +1,4 @@
+import {StompConfig, StompService, StompRService} from '@stomp/ng2-stompjs';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -61,6 +62,7 @@ import {TimeDifferencePipe} from './services/time-difference.pipe';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ValidationService} from './validation/validation.service';
+import {stompConfig} from './services/stomp.config';
 
 @NgModule({
   declarations: [
@@ -297,6 +299,7 @@ import {ValidationService} from './validation/validation.service';
     },
     RollbarService,
     {provide: ErrorHandler, useClass: RollbarHandler},
+    StompRService,
     AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService, BoardsResolver,
     DepartmentsResolver, DepartmentService, UserService, ValidationService
   ],
