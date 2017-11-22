@@ -1,4 +1,6 @@
-import {browser, by, element, protractor} from 'protractor';
+import {browser, by, element, ElementFinder, protractor} from 'protractor';
+
+const EC = browser.ExpectedConditions;
 
 export class HomePage {
   navigateTo() {
@@ -91,6 +93,19 @@ export class DepartmentEditPage {
   }
 }
 
+export class BoardViewPage {
+
+  assertBoardView(name: string, summary: string, categories: string[], canEdit: boolean) {
+    if(canEdit) {
+      expect(element(by.css('p-tabMenu li.ui-state-active a span')).getText()).toEqual('View');
+    }
+    expect(element(by.tagName('h1')).getText()).toEqual(name);
+    expect(element(by.css('div.summary-holder')).getText()).toEqual(summary);
+    expect(element.all(by.css('div.category-list span.ui-chips-token')).getText()).toEqual(categories);
+  }
+
+}
+
 export class DepartmentsPage {
 
   getDepartmentCard(handle: string) {
@@ -151,28 +166,32 @@ export class AuthenticationDialog {
 
   performRegistration(email: string, givenName: string, surname: string, password: string) {
     expect(this.getParagraphText()).toEqual('Register');
-    this.getEmailInput().click();
-    email.split('').forEach(letter => this.getEmailInput().sendKeys(letter));
-    this.getGivenNameInput().click();
-    givenName.split('').forEach(letter => this.getGivenNameInput().sendKeys(letter));
-    this.getSurnameInput().click();
-    surname.split('').forEach(letter => this.getSurnameInput().sendKeys(letter));
-    this.getPasswordInput().click();
-    password.split('').forEach(letter => this.getPasswordInput().sendKeys(letter));
+    this.sendKeysWithRetry(this.getEmailInput(), email);
+    this.sendKeysWithRetry(this.getGivenNameInput(), givenName);
+    this.sendKeysWithRetry(this.getSurnameInput(), surname);
+    this.sendKeysWithRetry(this.getPasswordInput(), password);
     this.getPasswordInput().sendKeys(protractor.Key.ENTER);
   }
 
   performLogin(email: string, password: string) {
     expect(this.getParagraphText()).toEqual('Login');
-    this.getEmailInput().click();
-    email.split('').forEach(letter => this.getEmailInput().sendKeys(letter));
-    this.getPasswordInput().click();
-    password.split('').forEach(letter => this.getPasswordInput().sendKeys(letter));
+    this.sendKeysWithRetry(this.getEmailInput(), email);
+    this.sendKeysWithRetry(this.getPasswordInput(), password);
     this.getPasswordInput().sendKeys(protractor.Key.ENTER);
   }
 
   getPasswordInput() {
     return element(by.id('password'));
+  }
+
+  private sendKeysWithRetry(input: ElementFinder, value: string) {
+    input.clear();
+    input.sendKeys(value);
+    input.getAttribute('value').then(existingValue => {
+      if(existingValue !== value) {
+        this.sendKeysWithRetry(input, value);
+      }
+    })
   }
 
 }

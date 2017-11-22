@@ -143,10 +143,13 @@ describe('board-frontend App', () => {
     departmentEditPage.getHandleInput().sendKeys('bishop2-' + randomString);
     departmentEditPage.getHandleInput().sendKeys(protractor.Key.ENTER);
 
+    browser.wait(EC.not(EC.urlContains('/edit')));
     TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop2-' + randomString);
 
     departmentViewPage.assertDepartmentView('Bishop2 dep' + randomString, 'Bishop2 summary',
       ['Master Student', 'Research Student']);
+
+    genericPage.getLogoutButton().click();
   });
 });
 
