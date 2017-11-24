@@ -1,6 +1,6 @@
 <section class="section" [ngClass]="{'edit-post':post}">
   <div *ngIf="!post" class="section-header">
-    <h2>Create a new post</h2>
+    <h2>Create a new Post</h2>
   </div>
   <mat-card>
     <form [formGroup]="postForm" novalidate>
@@ -74,7 +74,7 @@
 
           <div class="grid__item small--one-whole medium-up--one-half input-holder">
             <label for="organizationName">Your organization</label>
-            <p-autoComplete id="organizationName" formControlName="organizationName"
+            <p-autoComplete inputId="organizationName" formControlName="organizationName"
                             [suggestions]="organizationSuggestions"
                             (completeMethod)="searchOrganizations($event)" placeholder="Organization Name">
             </p-autoComplete>
@@ -102,12 +102,12 @@
 
             <div *ngIf="['COLLABORATOR', 'EMPLOYER', 'OTHER'].indexOf(postForm.value.existingRelation) > -1"
                  class="grid__item one-whole input-holder">
-              <label>
+              <label for="existingRelationExplanation">
                 {{'definitions.existingRelation.' + postForm.value.existingRelation
                 + ".explanationPrompt" | translate}}
               </label>
-              <textarea pInputTextarea formControlName="existingRelationExplanation" required
-                        class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
+              <textarea pInputTextarea id="existingRelationExplanation" formControlName="existingRelationExplanation"
+                        required class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
               <control-messages [control]="postForm.get('existingRelationExplanation')"></control-messages>
             </div>
           </div>
@@ -138,8 +138,8 @@
             <control-messages [control]="postForm.get('applyType')"></control-messages>
           </div>
           <div *ngIf="postForm.get('applyType').value === 'website'" class="grid__item one-whole input-holder">
-            <label>Your website address</label>
-            <input pInputText type="url" formControlName="applyWebsite" required>
+            <label for="applyWebsite">Your website address</label>
+            <input pInputText id="applyWebsite" type="url" formControlName="applyWebsite" required>
             <control-messages [control]="postForm.get('applyWebsite')"></control-messages>
           </div>
 
@@ -148,8 +148,9 @@
             <control-messages [control]="postForm.get('applyDocument')"></control-messages>
           </div>
           <div *ngIf="postForm.get('applyType').value === 'email'" class="grid__item one-whole input-holder">
-            <label>Email address</label>
-            <input pInputText type="email" formControlName="applyEmail" placeholder="e.g. apply@example.com" required>
+            <label for="applyWebsite">Email address</label>
+            <input pInputText id="applyEmail" type="email" formControlName="applyEmail"
+                   placeholder="e.g. apply@example.com" required>
             <control-messages [control]="postForm.get('applyEmail')"></control-messages>
           </div>
 

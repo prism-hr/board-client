@@ -1,115 +1,190 @@
-import {browser, by, element, ElementFinder, protractor} from 'protractor';
-
-const EC = browser.ExpectedConditions;
+import {browser, by, ElementFinder, ProtractorBrowser} from 'protractor';
 
 export class HomePage {
+  constructor(private browser: ProtractorBrowser) {
+  }
+
   navigateTo() {
     return browser.get('/');
   }
 
   getParagraphText() {
-    return element(by.tagName('h2')).getText();
+    return this.browser.element(by.tagName('h2')).getText();
   }
 
   getUniversityInput() {
-    return element(by.id('university'));
+    return this.browser.element(by.id('university'));
   }
 
   getUniversityAutocompleteItemsList() {
-    return element.all(by.css('.ui-autocomplete-list-item'));
+    return this.browser.element.all(by.css('.ui-autocomplete-list-item'));
   }
 
   getDepartmentNameInput() {
-    return element(by.id('departmentName'));
+    return this.browser.element(by.id('departmentName'));
   }
 }
 
-export class NewDepartmentPage {
+export class DepartmentNewPage {
+  constructor(private browser: ProtractorBrowser) {
+  }
+
   getParagraphText() {
-    return element(by.tagName('h2')).getText();
+    return this.browser.element(by.tagName('h2')).getText();
   }
 
   getUniversityInput() {
-    return element(by.id('university'));
+    return this.browser.element(by.id('university'));
   }
 
   getNameInput() {
-    return element(by.id('name'));
+    return this.browser.element(by.id('name'));
   }
 
   getSummaryTextarea() {
-    return element(by.id('summary'));
+    return this.browser.element(by.id('summary'));
   }
 }
 
+export class PostNewPage {
+  constructor(private browser: ProtractorBrowser) {
+  }
+
+  getParagraphText() {
+    return this.browser.element(by.tagName('h2')).getText();
+  }
+
+  getNameInput() {
+    return this.browser.element(by.id('name'));
+  }
+
+  getSummaryTextarea() {
+    return this.browser.element(by.id('summary'));
+  }
+
+  getDescriptionEditor() {
+    return this.browser.element(by.css('div.ui-editor-content div.ql-editor'));
+  }
+
+  getCheckboxLabel(label: String) {
+    return this.browser.element(by.css('p-checkbox[ng-reflect-label="' + label + '"] div.ui-chkbox-box'));
+  }
+
+  getOrganizationNameInput() {
+    return this.browser.element(by.id('organizationName'));
+  }
+
+  getLocationInput() {
+    return this.browser.element(by.css('input[placeholder="e.g. London"]'));
+  }
+
+  getLocationAutocomplete(klass?: string) {
+    return this.browser.element(by.css('b-places-autocomplete' + (klass ? '.' + klass : '')));
+  }
+
+  getLocationAutocompleteItemsList() {
+    return this.browser.element.all(by.css('li.ui-autocomplete-list-item'));
+  }
+
+  getRadioButton(roleName) {
+    return this.browser.element(by.css('p-radiobutton[ng-reflect-label="' + roleName + '"] label'));
+  }
+
+  getApplyWebsiteInput() {
+    return this.browser.element(by.id('applyWebsite'));
+  }
+
+  getApplyEmailInput() {
+    return this.browser.element(by.id('applyEmail'));
+  }
+
+  getExplanationTextarea() {
+    return this.browser.element(by.id('existingRelationExplanation'));
+  }
+
+}
+
 export class GenericResourcePage {
+  constructor(private browser: ProtractorBrowser) {
+  }
 
   getActiveTabItem() {
-    return element(by.css('p-tabMenu li.ui-state-active a span'));
+    return this.browser.element(by.css('p-tabMenu li.ui-state-active a span'));
   }
 
   getTabItem(label: string) {
-    return element.all(by.css('p-tabMenu li a'))
+    return this.browser.element.all(by.css('p-tabMenu li a'))
       .filter(finder => finder.element(by.css('span')).getText().then(text => text === label));
   }
 
   assertTabItems(...items: string[]) {
-    expect(element.all(by.css('p-tabMenu li a span')).getText()).toEqual(items);
+    expect(this.browser.element.all(by.css('p-tabMenu li a span')).getText()).toEqual(items);
   }
 
 }
 
 export class DepartmentViewPage {
+  constructor(private browser: ProtractorBrowser) {
+  }
 
   navigateTo(handle: string) {
     return browser.get('/' + handle);
   }
 
   assertDepartmentView(name: string, summary: string, categories: string[]) {
-    expect(element(by.css('p-tabMenu li.ui-state-active a span')).getText()).toEqual('View');
-    expect(element(by.tagName('h1')).getText()).toEqual(name);
-    expect(element(by.css('div.summary-holder')).getText()).toEqual(summary);
-    expect(element.all(by.css('div.category-list span.ui-chips-token')).getText()).toEqual(categories);
+    expect(this.browser.element(by.css('p-tabMenu li.ui-state-active a span')).getText()).toEqual('View');
+    expect(this.browser.element(by.tagName('h1')).getText()).toEqual(name);
+    expect(this.browser.element(by.css('div.summary-holder')).getText()).toEqual(summary);
+    expect(this.browser.element.all(by.css('div.category-list span.ui-chips-token')).getText()).toEqual(categories);
   }
 
 }
 
 export class DepartmentEditPage {
+  constructor(private browser: ProtractorBrowser) {
+  }
 
   getNameInput() {
-    return element(by.id('name'));
+    return this.browser.element(by.id('name'));
   }
 
   getSummaryTextarea() {
-    return element(by.id('summary'));
+    return this.browser.element(by.id('summary'));
   }
 
   getCheckboxLabel(label: String) {
-    return element(by.css('p-checkbox[ng-reflect-label="' + label + '"] label'));
+    return this.browser.element(by.css('p-checkbox[ng-reflect-label="' + label + '"] label'));
   }
 
   getHandleInput() {
-    return element(by.id('resourceHandle'));
+    return this.browser.element(by.id('resourceHandle'));
   }
 }
 
 export class BoardViewPage {
-
-  assertBoardView(name: string, summary: string, categories: string[], canEdit: boolean) {
-    if(canEdit) {
-      expect(element(by.css('p-tabMenu li.ui-state-active a span')).getText()).toEqual('View');
-    }
-    expect(element(by.tagName('h1')).getText()).toEqual(name);
-    expect(element(by.css('div.summary-holder')).getText()).toEqual(summary);
-    expect(element.all(by.css('div.category-list span.ui-chips-token')).getText()).toEqual(categories);
+  constructor(private browser: ProtractorBrowser) {
   }
 
+  assertBoardView(name: string, summary: string, categories: string[], canEdit: boolean) {
+    if (canEdit) {
+      expect(this.browser.element(by.css('p-tabMenu li.ui-state-active a span')).getText()).toEqual('View');
+    }
+    expect(this.browser.element(by.tagName('h1')).getText()).toEqual(name);
+    expect(this.browser.element(by.css('div.summary-holder')).getText()).toEqual(summary);
+    expect(this.browser.element.all(by.css('div.category-list span.ui-chips-token')).getText()).toEqual(categories);
+  }
+
+  getNewPostButton() {
+    return this.browser.element(by.css('a[label="New Post"] span.ui-button-text.ui-clickable'));
+  }
 }
 
 export class DepartmentsPage {
+  constructor(private browser: ProtractorBrowser) {
+  }
 
   getDepartmentCard(handle: string) {
-    return element(by.css('mat-card#department_' + handle));
+    return this.browser.element(by.css('mat-card#department_' + handle));
   }
 
   getDepartmentTitleUrl(handle: string) {
@@ -119,49 +194,62 @@ export class DepartmentsPage {
 }
 
 export class ResourceUsersPage {
+  constructor(private browser: ProtractorBrowser) {
+  }
 
   getCannotFindUserButton() {
-    return element(by.css('button[label="Cannot find user?"]'));
+    return this.browser.element(by.css('button[label="Cannot find user?"]'));
   }
 
   getGivenNameInput() {
-    return element(by.id('givenName'));
+    return this.browser.element(by.id('givenName'));
   }
 
   getSurnameInput() {
-    return element(by.id('surname'));
+    return this.browser.element(by.id('surname'));
   }
 
   getEmailInput() {
-    return element(by.id('email'));
+    return this.browser.element(by.id('email'));
   }
 
   getRoleRadioButton(roleName) {
-    return element(by.css('p-radiobutton[name="role"].' + roleName + ' label'));
+    return this.browser.element(by.css('p-radiobutton[name="role"].' + roleName + ' label'));
   }
 
   getAddUserButton() {
-    return element(by.css('button[label="Add user"]'));
+    return this.browser.element(by.css('button[label="Add user"]'));
   }
 
 }
 
 export class AuthenticationDialog {
 
+  constructor(private browser: ProtractorBrowser) {
+  }
+
   getParagraphText() {
-    return element(by.tagName('mat-dialog-container h2')).getText();
+    return this.browser.element(by.tagName('mat-dialog-container h2')).getText();
   }
 
   getGivenNameInput() {
-    return element(by.id('givenName'));
+    return this.browser.element(by.css('input[ng-reflect-name="givenName"'));
   }
 
   getSurnameInput() {
-    return element(by.id('surname'));
+    return this.browser.element(by.css('input[ng-reflect-name="surname"'));
   }
 
   getEmailInput() {
-    return element(by.id('email'));
+    return this.browser.element(by.css('input[ng-reflect-name="email"'));
+  }
+
+  getPasswordInput() {
+    return this.browser.element(by.css('input[ng-reflect-name="password"'));
+  }
+
+  getSubmitButton() {
+    return this.browser.element(by.css('mat-dialog-container button[label="Submit"]'));
   }
 
   performRegistration(email: string, givenName: string, surname: string, password: string) {
@@ -170,25 +258,22 @@ export class AuthenticationDialog {
     this.sendKeysWithRetry(this.getGivenNameInput(), givenName);
     this.sendKeysWithRetry(this.getSurnameInput(), surname);
     this.sendKeysWithRetry(this.getPasswordInput(), password);
-    this.getPasswordInput().sendKeys(protractor.Key.ENTER);
+    this.getSubmitButton().click();
   }
 
   performLogin(email: string, password: string) {
     expect(this.getParagraphText()).toEqual('Login');
     this.sendKeysWithRetry(this.getEmailInput(), email);
     this.sendKeysWithRetry(this.getPasswordInput(), password);
-    this.getPasswordInput().sendKeys(protractor.Key.ENTER);
+    this.getSubmitButton().click();
   }
 
-  getPasswordInput() {
-    return element(by.id('password'));
-  }
 
   private sendKeysWithRetry(input: ElementFinder, value: string) {
     input.clear();
     input.sendKeys(value);
     input.getAttribute('value').then(existingValue => {
-      if(existingValue !== value) {
+      if (existingValue !== value) {
         this.sendKeysWithRetry(input, value);
       }
     })
@@ -197,36 +282,38 @@ export class AuthenticationDialog {
 }
 
 export class GenericPage {
+  constructor(private browser: ProtractorBrowser) {
+  }
 
   getLogoutButton() {
-    return element(by.id('logoutButton'));
+    return this.browser.element(by.id('logoutButton'));
   }
 
   getLoginButton() {
-    return element(by.id('loginButton'));
+    return this.browser.element(by.id('loginButton'));
   }
 
   getPostsButton() {
-    return element(by.css('b-header header a[label="Posts"]'));
+    return this.browser.element(by.css('b-header header a[label="Posts"]'));
   }
 
   getBoardsButton() {
-    return element(by.css('b-header header a[label="Boards"]'));
+    return this.browser.element(by.css('b-header header a[label="Boards"]'));
   }
 
   getDepartmentsButton() {
-    return element(by.css('b-header header a[label="Departments"]'));
+    return this.browser.element(by.css('b-header header a[label="Departments"]'));
   }
 
   getDialog() {
-    return element(by.tagName('mat-dialog-container'));
+    return this.browser.element(by.tagName('mat-dialog-container'));
   }
 
   getDoNotShowAgainButton() {
-    return element(by.css('button[label="Do not show it again"]'));
+    return this.browser.element(by.css('button[label="Do not show it again"]'));
   }
 
   getDoItAgainButton() {
-    return element(by.css('button[label="I\'ll do it later"]'));
+    return this.browser.element(by.css('button[label="I\'ll do it later"]'));
   }
 }

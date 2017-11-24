@@ -9,10 +9,10 @@
 
   <div *ngIf="view === 'LOGIN'" class="login-container">
     <div class="social-login" fxLayout="row" fxLayoutAlign="space-between center">
-      <button pButton (click)="authenticate('linkedin')" class="linkedin" fxFlex="44%" label="linkedin">
+      <button pButton type="button" (click)="authenticate('linkedin')" class="linkedin" fxFlex="44%" label="linkedin">
         <i class="fa-social-linkedin"></i>
       </button>
-      <button pButton (click)="authenticate('facebook')" class="facebook" fxFlex="44%" label="facebook">
+      <button pButton type="button" (click)="authenticate('facebook')" class="facebook" fxFlex="44%" label="facebook">
         <i class="fa-social-facebook"></i>
       </button>
     </div>
@@ -23,14 +23,15 @@
       <div class="grid__item one-whole">
         <form [formGroup]="loginForm" (ngSubmit)="login()">
           <div class="input-holder">
-            <input pInputText type="email" placeholder="Email" formControlName="email" id="email">
+            <input pInputText type="email" placeholder="Email" formControlName="email">
             <control-messages [control]="loginForm.get('email')"></control-messages>
           </div>
           <div class="input-holder">
-            <input pInputText type="password" placeholder="Password" formControlName="password" id="password">
+            <input pInputText type="password" placeholder="Password" formControlName="password">
             <control-messages [control]="loginForm.get('password')"></control-messages>
           </div>
-          <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center" class="actions-holder">
+          <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center"
+               class="actions-holder">
             <button pButton class="ui-button-success" label="Submit" fxFlexOrder.gt-xs="1"></button>
             <div fxLayout.xs="row" fxLayoutAlign.xs="space-between center">
               <button pButton type="button" class="ui-button-secondary" label="Forgot password?"
@@ -46,11 +47,11 @@
 
   <div *ngIf="view === 'REGISTER'" class="register-container">
     <div class="social-login" fxLayout="row" fxLayoutAlign="space-between center">
-      <button pButton (click)="authenticate('linkedin')" class="linkedin" fxFlex="44%" label="linkedin">
+      <button pButton type="button" (click)="authenticate('linkedin')" class="linkedin" fxFlex="44%" label="linkedin">
         <i class="fa-social-linkedin"></i>
       </button>
 
-      <button pButton (click)="authenticate('facebook')" class="facebook" fxFlex="44%" label="facebook">
+      <button pButton type="button" (click)="authenticate('facebook')" class="facebook" fxFlex="44%" label="facebook">
         <i class="fa-social-facebook"></i>
       </button>
     </div>
@@ -62,19 +63,19 @@
         <form [formGroup]="registrationForm" (ngSubmit)="register()" autocomplete="off">
           <div class="grid">
             <div class="grid__item small--one-whole medium-up--one-half input-holder">
-              <input pInputText placeholder="First Name" formControlName="givenName" id="givenName">
+              <input pInputText placeholder="First Name" formControlName="givenName">
               <control-messages [control]="registrationForm.get('givenName')"></control-messages>
             </div>
             <div class="grid__item small--one-whole medium-up--one-half input-holder">
-              <input pInputText placeholder="Last Name" formControlName="surname" id="surname">
+              <input pInputText placeholder="Last Name" formControlName="surname">
               <control-messages [control]="registrationForm.get('surname')"></control-messages>
             </div>
             <div class="grid__item one-whole input-holder">
-              <input pInputText type="email" placeholder="Email" formControlName="email" id="email">
+              <input pInputText type="email" placeholder="Email" formControlName="email">
               <control-messages [control]="registrationForm.get('email')"></control-messages>
             </div>
             <div class="grid__item one-whole input-holder">
-              <input pInputText type="password" placeholder="Password" formControlName="password" id="password">
+              <input pInputText type="password" placeholder="Password" formControlName="password">
               <control-messages [control]="registrationForm.get('password')"></control-messages>
             </div>
           </div>
@@ -83,7 +84,8 @@
             [closable]="false"></p-messages>
           <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">
             <button pButton class="ui-button-success" label="Submit" fxFlexOrder="1"></button>
-            <button pButton class="ui-button-secondary" label="Already Registered?" (click)="setView('LOGIN')"></button>
+            <button pButton type="button" class="ui-button-secondary" label="Already Registered?"
+                    (click)="setView('LOGIN')"></button>
           </div>
         </form>
       </div>
@@ -93,14 +95,13 @@
   <div *ngIf="view === 'FORGOT'" class="forgot-container">
     <form *ngIf="!forgottenSent" [formGroup]="forgotPasswordForm" (ngSubmit)="sendForgotten()" autocomplete="off">
       <div class="index-padding input-holder">
-        <input pInputText type="email" placeholder="Email" formControlName="email" id="email">
+        <input pInputText type="email" placeholder="Email" formControlName="email">
         <control-messages [control]="forgotPasswordForm.get('email')"></control-messages>
       </div>
 
       <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">
-        <button pButton type="submit" class="ui-button-warning full-width" label="Reset Password" fxFlexOrder="1"></button>
-        <button pButton class="ui-button-secondary" label="Back"
-                (click)="setView('LOGIN')"></button>
+        <button pButton class="ui-button-warning full-width" label="Reset Password" fxFlexOrder="1"></button>
+        <button pButton type="button" class="ui-button-secondary" label="Back" (click)="setView('LOGIN')"></button>
       </div>
     </form>
     <div *ngIf="forgottenSent">

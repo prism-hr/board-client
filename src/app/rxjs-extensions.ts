@@ -1,4 +1,5 @@
 import 'rxjs/add/observable/fromPromise';
+import 'rxjs/add/observable/bindCallback';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/catch';

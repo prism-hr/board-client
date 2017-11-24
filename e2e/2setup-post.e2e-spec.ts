@@ -1,18 +1,32 @@
-import {browser} from 'protractor';
-import {BoardViewPage, HomePage} from './app.po';
+import {browser, by, protractor} from 'protractor';
+import {AuthenticationDialog, BoardViewPage, GenericPage, HomePage, PostNewPage} from './app.po';
+
+function randomStringFun(length) {
+  let text = '';
+  const possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  for (let i = 0; i < length; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+}
 
 describe('board-frontend App', () => {
-  const randomString = 'mo4h'; // browser.params.randomString;
+  const randomString = 'vv8q'; // browser.params.randomString;
   let homePage: HomePage;
   let boardViewPage: BoardViewPage;
+  let genericPage: GenericPage;
+  let authenticationDialog: AuthenticationDialog;
 
   beforeAll(() => {
     console.log('Random string: ' + randomString);
   });
 
   beforeEach(() => {
-    homePage = new HomePage();
-    boardViewPage = new BoardViewPage();
+    homePage = new HomePage(browser);
+    boardViewPage = new BoardViewPage(browser);
+    genericPage = new GenericPage(browser);
+    authenticationDialog = new AuthenticationDialog(browser);
+
   });
 
   it('should create new post', () => {
@@ -21,8 +35,41 @@ describe('board-frontend App', () => {
       'Forum for partner organizations and staff to share career opportunities.',
       ['Employment', 'Internship', 'Volunteering'], false);
 
-    // browser.forkNewDriverInstance()
+    const browser2 = browser.forkNewDriverInstance(true);
+    const browser2EC = browser2.ExpectedConditions;
+    const browser2BoardViewPage = new BoardViewPage(browser2);
+    const browser2AuthenticationDialog = new AuthenticationDialog(browser2);
+    const browser2PostNewPage = new PostNewPage(browser2);
 
+    browser2BoardViewPage.getNewPostButton().click();
+    browser2AuthenticationDialog.performRegistration('post-admin-' + randomStringFun(10) + '@test.prism.hr', 'Post Admin', 'Bishop',
+      '1secret1');
+
+    browser2.wait(browser2EC.urlContains('/newPost'));
+
+    expect(browser2PostNewPage.getParagraphText()).toEqual('Create a new Post');
+    browser2PostNewPage.getNameInput().sendKeys('Bishop Post');
+    browser2PostNewPage.getSummaryTextarea().sendKeys('Bishop summary');
+    browser2PostNewPage.getDescriptionEditor().sendKeys('Bishop description');
+    browser2PostNewPage.getCheckboxLabel('Employment').click();
+    browser2PostNewPage.getCheckboxLabel('Volunteering').click();
+    browser2PostNewPage.getOrganizationNameInput().clear();
+    browser2PostNewPage.getOrganizationNameInput().sendKeys('Bielmar');
+    browser2PostNewPage.getLocationInput().clear();
+    browser2PostNewPage.getLocationInput().sendKeys('Bielsko');
+    browser2.wait(browser2EC.presenceOf(browser2PostNewPage.getLocationAutocomplete().element(by.tagName('ul'))));
+    browser2PostNewPage.getLocationAutocomplete().all(by.tagName('li')).get(0).click();
+    browser2.wait(browser2EC.presenceOf(browser2PostNewPage.getLocationAutocomplete('ng-valid')));
+    browser2PostNewPage.getRadioButton('Employer').click();
+    browser2PostNewPage.getExplanationTextarea().sendKeys('Recently hired');
+    browser2PostNewPage.getCheckboxLabel('Master Student').click();
+    browser2PostNewPage.getCheckboxLabel('Research Student').click();
+    browser2PostNewPage.getRadioButton('By visiting a web page').click();
+    browser2PostNewPage.getApplyWebsiteInput().sendKeys('http://wyborcza.pl');
+    browser2PostNewPage.getCheckboxLabel('No Closing Date').click();
+    browser2PostNewPage.getApplyWebsiteInput().sendKeys(protractor.Key.ENTER);
+
+    browser2.wait(browser2EC.urlContains('/newPosgfdt'));
   });
 });
 

@@ -5,7 +5,7 @@ import {
   GenericPage,
   GenericResourcePage,
   HomePage,
-  NewDepartmentPage,
+  DepartmentNewPage,
   ResourceUsersPage
 } from './app.po';
 import {TestUtils} from './test.utils';
@@ -15,7 +15,7 @@ const EC = browser.ExpectedConditions;
 describe('board-frontend App', () => {
   const randomString = browser.params.randomString;
   let homePage: HomePage;
-  let newDepartmentPage: NewDepartmentPage;
+  let departmentNewPage: DepartmentNewPage;
   let authenticationDialog: AuthenticationDialog;
   let departmentViewPage: DepartmentViewPage;
   let resourceUsersPage: ResourceUsersPage;
@@ -29,15 +29,15 @@ describe('board-frontend App', () => {
   });
 
   beforeEach(() => {
-    homePage = new HomePage();
-    newDepartmentPage = new NewDepartmentPage();
-    authenticationDialog = new AuthenticationDialog();
-    departmentViewPage = new DepartmentViewPage();
-    resourceUsersPage = new ResourceUsersPage();
-    genericPage = new GenericPage();
-    genericResourcePage = new GenericResourcePage();
-    departmentsPage = new DepartmentsPage();
-    departmentEditPage = new DepartmentEditPage();
+    homePage = new HomePage(browser);
+    departmentNewPage = new DepartmentNewPage(browser);
+    authenticationDialog = new AuthenticationDialog(browser);
+    departmentViewPage = new DepartmentViewPage(browser);
+    resourceUsersPage = new ResourceUsersPage(browser);
+    genericPage = new GenericPage(browser);
+    genericResourcePage = new GenericResourcePage(browser);
+    departmentsPage = new DepartmentsPage(browser);
+    departmentEditPage = new DepartmentEditPage(browser);
   });
 
   it('should create new department', () => {
@@ -53,15 +53,15 @@ describe('board-frontend App', () => {
     homePage.getDepartmentNameInput().sendKeys(protractor.Key.ENTER);
 
     TestUtils.assertCurrentUrlEquals('newDepartment?prepopulate=true');
-    expect(newDepartmentPage.getParagraphText()).toEqual('Create a new Department');
+    expect(departmentNewPage.getParagraphText()).toEqual('Create a new Department');
 
-    expect(newDepartmentPage.getUniversityInput().getAttribute('value')).toEqual('Bishop Burton College');
-    expect(newDepartmentPage.getNameInput().getAttribute('value')).toEqual('Bishop department' + randomString);
-    newDepartmentPage.getSummaryTextarea().sendKeys('Bishop summary');
-    newDepartmentPage.getNameInput().sendKeys(protractor.Key.ENTER);
+    expect(departmentNewPage.getUniversityInput().getAttribute('value')).toEqual('Bishop Burton College');
+    expect(departmentNewPage.getNameInput().getAttribute('value')).toEqual('Bishop department' + randomString);
+    departmentNewPage.getSummaryTextarea().sendKeys('Bishop summary');
+    departmentNewPage.getNameInput().sendKeys(protractor.Key.ENTER);
 
     authenticationDialog.performRegistration(
-      'admin_' + randomString + '@test.prism.hr', 'Admin', 'Bishop', '1secret1');
+      'admin-' + randomString + '@test.prism.hr', 'Admin', 'Bishop', '1secret1');
 
     browser.wait(EC.urlContains('bishop-burton-college'));
 
@@ -81,7 +81,7 @@ describe('board-frontend App', () => {
     resourceUsersPage.getCannotFindUserButton().click();
     resourceUsersPage.getGivenNameInput().sendKeys('New');
     resourceUsersPage.getSurnameInput().sendKeys('Admin');
-    resourceUsersPage.getEmailInput().sendKeys('new_admin_' + randomString + '@test.prism.hr');
+    resourceUsersPage.getEmailInput().sendKeys('new-admin-' + randomString + '@test.prism.hr');
     resourceUsersPage.getRoleRadioButton('administrator').click();
 
     resourceUsersPage.getAddUserButton().click();
@@ -89,7 +89,7 @@ describe('board-frontend App', () => {
     const flow = protractor.promise.controlFlow();
     flow.execute(function () {
       const defer = protractor.promise.defer();
-      TestUtils.getTestEmails('new_admin_' + randomString + '@test.prism.hr', defer);
+      TestUtils.getTestEmails('new-admin-' + randomString + '@test.prism.hr', defer);
 
       return defer.promise;
     }).then(function (data: any[]) {
@@ -105,7 +105,7 @@ describe('board-frontend App', () => {
       browser.get(urls[0]);
 
       authenticationDialog.performRegistration(
-        'admin2' + randomString + '@test.prism.hr', 'Admin2', 'Bishop', '1secret1');
+        'admin2-' + randomString + '@test.prism.hr', 'Admin2', 'Bishop', '1secret1');
       browser.wait(EC.presenceOf(genericResourcePage.getActiveTabItem()));
       departmentViewPage.assertDepartmentView('Bishop department' + randomString, 'Bishop summary',
         ['Undergraduate Student', 'Master Student', 'Research Student', 'Research Staff']);
@@ -121,7 +121,7 @@ describe('board-frontend App', () => {
     departmentViewPage.navigateTo('bishop-burton-college/bishop-department' + randomString);
     genericPage.getLoginButton().click();
 
-    authenticationDialog.performLogin('admin2' + randomString + '@test.prism.hr', '1secret1');
+    authenticationDialog.performLogin('admin2-' + randomString + '@test.prism.hr', '1secret1');
 
     browser.wait(EC.presenceOf(genericPage.getDoItAgainButton()));
     genericPage.getDoItAgainButton().click();
