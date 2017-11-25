@@ -1,7 +1,7 @@
+import {resolve as pathResolve} from 'path';
 import {browser, ElementFinder} from 'protractor';
 import * as request from 'request';
 import {resolve as urlResolve} from 'url';
-import {resolve as pathResolve} from 'path';
 
 export class TestUtils {
 
@@ -12,6 +12,17 @@ export class TestUtils {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return text;
+  }
+
+  static removeTestData(defer) {
+    request(urlResolve(browser.baseUrl, 'api/user/test'), {json: true, method: 'DELETE'}, (err, resp, body) => {
+      if (err) {
+        console.log('Error deleting test data ' + err);
+        defer.reject(err);
+      } else {
+        defer.fulfill(body);
+      }
+    });
   }
 
   static getTestEmails(email, defer) {
@@ -31,7 +42,7 @@ export class TestUtils {
     expect(browser.getCurrentUrl()).toEqual(urlResolve(browser.baseUrl, relativeUrl));
   }
 
-  static uploadFile(element: ElementFinder, relativeFilePath: string){
+  static uploadFile(element: ElementFinder, relativeFilePath: string) {
     const absolutePath = pathResolve(__dirname, relativeFilePath);
     element.sendKeys(absolutePath);
   }
