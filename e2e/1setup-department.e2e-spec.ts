@@ -1,15 +1,6 @@
 import {browser, protractor} from 'protractor';
-import {
-  AuthenticationDialog,
-  DepartmentEditPage,
-  DepartmentNewPage,
-  DepartmentsPage,
-  DepartmentViewPage,
-  GenericPage,
-  GenericResourcePage,
-  HomePage,
-  ResourceUsersPage
-} from './app.po';
+import {AuthenticationDialog, HomePage,} from './app.po';
+import {DepartmentEditPage, DepartmentNewPage, DepartmentsPage, DepartmentViewPage, ResourceUsersPage} from './resource.po';
 import {TestUtils} from './test.utils';
 
 const EC = browser.ExpectedConditions;
@@ -21,8 +12,6 @@ describe('board-frontend App', () => {
   let authenticationDialog: AuthenticationDialog;
   let departmentViewPage: DepartmentViewPage;
   let resourceUsersPage: ResourceUsersPage;
-  let genericPage: GenericPage;
-  let genericResourcePage: GenericResourcePage;
   let departmentsPage: DepartmentsPage;
   let departmentEditPage: DepartmentEditPage;
 
@@ -42,8 +31,6 @@ describe('board-frontend App', () => {
     authenticationDialog = new AuthenticationDialog(browser);
     departmentViewPage = new DepartmentViewPage(browser);
     resourceUsersPage = new ResourceUsersPage(browser);
-    genericPage = new GenericPage(browser);
-    genericResourcePage = new GenericResourcePage(browser);
     departmentsPage = new DepartmentsPage(browser);
     departmentEditPage = new DepartmentEditPage(browser);
   });
@@ -69,27 +56,26 @@ describe('board-frontend App', () => {
     departmentNewPage.getNameInput().sendKeys(protractor.Key.ENTER);
 
     authenticationDialog.performRegistration(
-      'admin' + '@test.prism.hr', 'Admin', 'Bishop', '1secret1');
+      'admin@test.prism.hr', 'Admin', 'Bishop', '1secret1');
 
     browser.wait(EC.urlContains('bishop-burton-college'));
 
     TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop-department');
     departmentViewPage.assertDepartmentView('Bishop department', 'Bishop summary',
       ['Undergraduate Student', 'Master Student', 'Research Student', 'Research Staff']);
-    genericResourcePage.assertTabItems('View', 'Edit', 'Users', 'Badge');
+    departmentViewPage.assertTabItems('View', 'Edit', 'Users', 'Badge');
   });
 
   it('should add new administrator to a department', () => {
-    console.log('Random string: ');
-    genericResourcePage.getTabItem('Users').click();
+    departmentViewPage.getTabItem('Users').click();
     browser.wait(EC.urlContains('users'));
 
-    TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop-department' + '/users');
+    TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop-department/users');
 
     resourceUsersPage.getCannotFindUserButton().click();
     resourceUsersPage.getGivenNameInput().sendKeys('New');
     resourceUsersPage.getSurnameInput().sendKeys('Admin');
-    resourceUsersPage.getEmailInput().sendKeys('new-admin' + '@test.prism.hr');
+    resourceUsersPage.getEmailInput().sendKeys('new-admin@test.prism.hr');
     resourceUsersPage.getRoleRadioButton('administrator').click();
 
     resourceUsersPage.getAddUserButton().click();
@@ -97,7 +83,7 @@ describe('board-frontend App', () => {
     const flow = protractor.promise.controlFlow();
     flow.execute(function () {
       const defer = protractor.promise.defer();
-      TestUtils.getTestEmails('new-admin' + '@test.prism.hr', defer);
+      TestUtils.getTestEmails('new-admin@test.prism.hr', defer);
 
       return defer.promise;
     }).then(function (data: any[]) {
@@ -113,33 +99,34 @@ describe('board-frontend App', () => {
       browser.get(urls[0]);
 
       authenticationDialog.performRegistration(
-        'admin2' + '@test.prism.hr', 'Admin2', 'Bishop', '1secret1');
-      browser.wait(EC.presenceOf(genericResourcePage.getActiveTabItem()));
+        'admin2@test.prism.hr', 'Admin2', 'Bishop', '1secret1');
+      browser.wait(EC.presenceOf(departmentViewPage.getActiveTabItem()));
       departmentViewPage.assertDepartmentView('Bishop department', 'Bishop summary',
         ['Undergraduate Student', 'Master Student', 'Research Student', 'Research Staff']);
-      genericResourcePage.assertTabItems('View', 'Edit', 'Users', 'Badge');
+      departmentViewPage.assertTabItems('View', 'Edit', 'Users', 'Badge');
       TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop-department');
 
-      genericPage.getLogoutButton().click();
-    });
+      departmentViewPage.openActivitiesPanel(1);
+      departmentViewPage.getActivityCloseButton(departmentViewPage.getActivityItems().first()).click();
+      expect(departmentViewPage.getActivitiesCountBadge().isPresent()).toBeFalsy();
 
+      departmentViewPage.getLogoutButton().click();
+    });
   });
 
   it('should edit a department', () => {
     departmentViewPage.navigateTo('bishop-burton-college/bishop-department');
-    genericPage.getLoginButton().click();
+    departmentViewPage.getLoginButton().click();
+    authenticationDialog.performLogin('admin2@test.prism.hr', '1secret1');
+    browser.wait(EC.presenceOf(departmentsPage.getDoItAgainButton()));
+    departmentsPage.getDoItAgainButton().click();
 
-    authenticationDialog.performLogin('admin2' + '@test.prism.hr', '1secret1');
-
-    browser.wait(EC.presenceOf(genericPage.getDoItAgainButton()));
-    genericPage.getDoItAgainButton().click();
-
-    browser.wait(EC.presenceOf(genericPage.getDepartmentsButton()));
-    genericPage.getDepartmentsButton().click();
-
+    browser.wait(EC.presenceOf(departmentsPage.getDepartmentsButton()));
+    departmentsPage.getDepartmentsButton().click();
+    departmentsPage.waitForLoaded();
     departmentsPage.getDepartmentTitleUrl('bishop-burton-college_bishop-department').click();
 
-    genericResourcePage.getTabItem('Edit').click();
+    departmentViewPage.getTabItem('Edit').click();
 
     departmentEditPage.getNameInput().clear();
     departmentEditPage.getNameInput().sendKeys('Bishop2 dep');
@@ -157,7 +144,7 @@ describe('board-frontend App', () => {
     departmentViewPage.assertDepartmentView('Bishop2 dep', 'Bishop2 summary',
       ['Master Student', 'Research Student']);
 
-    genericPage.getLogoutButton().click();
+    departmentViewPage.getLogoutButton().click();
   });
 });
 

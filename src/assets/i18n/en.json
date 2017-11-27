@@ -85,7 +85,7 @@
     "task": {
       "CREATE_MEMBER": "Create a member",
       "UPDATE_MEMBER": "Update the member list",
-      "CREATE_INTERNAL_POST": "Create a post",
+      "CREATE_POST": "Create a post",
       "UPDATE_INTERNAL_POST": "Update the post",
       "DEPLOY_BADGE": "Deploy a badge"
     }

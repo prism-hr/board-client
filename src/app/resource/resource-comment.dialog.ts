@@ -11,7 +11,7 @@ import ResourceRepresentation = b.ResourceRepresentation;
         <form>
           <div *ngIf="this.commentType !== 'no'" class="input-holder">
             <label style="display: block">Your comments <span *ngIf="commentType === 'optional'">(optional)</span></label>
-            <textarea name="comment" [(ngModel)]="comment" class="ui-inputtext"></textarea>
+            <textarea id="comment" name="comment" [(ngModel)]="comment" class="ui-inputtext"></textarea>
           </div>
         </form>
       </mat-dialog-content>

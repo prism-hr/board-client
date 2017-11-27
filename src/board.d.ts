@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.29.366 on 2017-11-13 12:11:31.
+// Generated using typescript-generator version 1.29.366 on 2017-11-27 16:00:47.
 
 declare namespace b {
 
@@ -163,6 +163,7 @@ declare namespace b {
     badgeType?: BadgeType;
     badgeListType?: BadgeListType;
     postCount?: number;
+    preview?: boolean;
   }
 
   interface ActionRepresentation extends Comparable<ActionRepresentation> {
@@ -281,6 +282,13 @@ declare namespace b {
     actions?: ActionRepresentation[];
   }
 
+  interface TestEmailMessageRepresentation {
+    recipient?: UserRepresentation;
+    subject?: string;
+    content?: string;
+    attachments?: string[];
+  }
+
   interface UniversityRepresentation extends ResourceRepresentation<UniversityRepresentation> {
     documentLogo?: DocumentRepresentation;
     handle?: string;
@@ -329,16 +337,16 @@ declare namespace b {
 
   interface DocumentDefinition {
     fileName?: string;
-    cloudinaryUrl?: string;
     cloudinaryId?: string;
+    cloudinaryUrl?: string;
   }
 
   interface LocationDefinition {
     name?: string;
+    longitude?: number;
     domicile?: string;
     googleId?: string;
     latitude?: number;
-    longitude?: number;
   }
 
   interface Comparable<T> {
@@ -368,9 +376,9 @@ declare namespace b {
 
   type Scope = 'UNIVERSITY' | 'DEPARTMENT' | 'BOARD' | 'POST';
 
-  type Activity = 'ACCEPT_BOARD_ACTIVITY' | 'ACCEPT_POST_ACTIVITY' | 'CORRECT_POST_ACTIVITY' | 'JOIN_BOARD_ACTIVITY' | 'JOIN_DEPARTMENT_ACTIVITY' | 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' | 'NEW_BOARD_PARENT_ACTIVITY' | 'NEW_POST_PARENT_ACTIVITY' | 'PUBLISH_POST_ACTIVITY' | 'PUBLISH_POST_MEMBER_ACTIVITY' | 'REJECT_BOARD_ACTIVITY' | 'REJECT_POST_ACTIVITY' | 'RESTORE_BOARD_ACTIVITY' | 'RESTORE_POST_ACTIVITY' | 'RETIRE_POST_ACTIVITY' | 'SUSPEND_POST_ACTIVITY' | 'RESPOND_POST_ACTIVITY' | 'TASK_CREATE_ACTIVITY' | 'TASK_UPDATE_ACTIVITY';
+  type Activity = 'ACCEPT_BOARD_ACTIVITY' | 'ACCEPT_POST_ACTIVITY' | 'CORRECT_POST_ACTIVITY' | 'JOIN_BOARD_ACTIVITY' | 'JOIN_DEPARTMENT_ACTIVITY' | 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' | 'NEW_BOARD_PARENT_ACTIVITY' | 'NEW_POST_PARENT_ACTIVITY' | 'PUBLISH_POST_ACTIVITY' | 'PUBLISH_POST_MEMBER_ACTIVITY' | 'REJECT_BOARD_ACTIVITY' | 'REJECT_POST_ACTIVITY' | 'RESTORE_BOARD_ACTIVITY' | 'RESTORE_POST_ACTIVITY' | 'RETIRE_POST_ACTIVITY' | 'SUSPEND_POST_ACTIVITY' | 'RESPOND_POST_ACTIVITY' | 'CREATE_TASK_ACTIVITY' | 'UPDATE_TASK_ACTIVITY';
 
-  type ResourceTask = 'CREATE_MEMBER' | 'UPDATE_MEMBER' | 'CREATE_INTERNAL_POST' | 'UPDATE_INTERNAL_POST' | 'DEPLOY_BADGE';
+  type ResourceTask = 'CREATE_MEMBER' | 'UPDATE_MEMBER' | 'CREATE_POST' | 'UPDATE_INTERNAL_POST' | 'DEPLOY_BADGE';
 
   type ResourceEvent = 'VIEW' | 'REFERRAL' | 'RESPONSE';
 

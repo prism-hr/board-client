@@ -48,7 +48,7 @@
             <a pButton label="Activities" (click)="activitiesPanel.toggle($event)"
                class="ui-button-info ui-button-icon-only"
                icon="fa-globe"></a>
-            <span class="activity-badge active">{{activities.length}}</span>
+            <span *ngIf="newActivitiesCount" class="activity-badge active">{{newActivitiesCount}}</span>
           </div>
           <a routerLink="/account" class="btn-user">
             <span>{{user.givenName}}</span>
@@ -66,7 +66,7 @@
   </div>
 </header>
 
-<p-overlayPanel #activitiesPanel>
+<p-overlayPanel #activitiesPanel id="activitiesPanel">
   <div *ngIf="activities" class="activity-content">
     <div *ngFor="let activity of activities" class="activity-item">
       <b-header-activity [activity]="activity" (dismissed)="activityDismissed(activity)"
