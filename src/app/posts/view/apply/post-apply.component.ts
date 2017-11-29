@@ -19,7 +19,7 @@ import UserRepresentation = b.UserRepresentation;
           </button>
         </div>
         <div *ngIf="user">
-          <div *ngIf="post.response">
+          <div *ngIf="post.response" id="alreadyAppliedDiv">
             You have already applied.
           </div>
           <div *ngIf="!post.response">

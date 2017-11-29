@@ -1,6 +1,7 @@
 import {resolve as pathResolve} from 'path';
 import {browser, ElementFinder} from 'protractor';
 import * as request from 'request';
+import * as dateFormat from 'dateFormat';
 import {resolve as urlResolve} from 'url';
 
 export class TestUtils {
@@ -45,6 +46,13 @@ export class TestUtils {
   static uploadFile(element: ElementFinder, relativeFilePath: string) {
     const absolutePath = pathResolve(__dirname, relativeFilePath);
     element.sendKeys(absolutePath);
+  }
+
+  static getFutureDate() {
+    const date = new Date();
+    date.setDate(date.getDate() + 7);
+    const dateFormat2 = dateFormat(date, 'yyyy-mm-dd');
+    return dateFormat2;
   }
 
 }

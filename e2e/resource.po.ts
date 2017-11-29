@@ -21,7 +21,7 @@ export class DepartmentNewPage extends GenericPage {
   }
 }
 
-export class PostNewPage extends GenericPage {
+export class PostNewEditPage extends GenericPage {
   getParagraphText() {
     return this.browser.element(by.tagName('h2')).getText();
   }
@@ -44,18 +44,6 @@ export class PostNewPage extends GenericPage {
 
   getOrganizationNameInput() {
     return this.browser.element(by.id('organizationName'));
-  }
-
-  getLocationInput() {
-    return this.browser.element(by.css('input[placeholder="e.g. London"]'));
-  }
-
-  getLocationAutocomplete(klass?: string) {
-    return this.browser.element(by.css('b-places-autocomplete' + (klass ? '.' + klass : '')));
-  }
-
-  getLocationAutocompleteItemsList() {
-    return this.browser.element.all(by.css('li.ui-autocomplete-list-item'));
   }
 
   getRadioButton(roleName) {
@@ -100,6 +88,25 @@ export abstract class GenericResourcePage extends GenericPage {
 
   getActionButton(label: string) {
     return this.browser.element(by.css('b-resource-actions-box button[ng-reflect-label="' + label + '"]'));
+  }
+
+  getProgramInput() {
+    return this.browser.element(by.id('memberProgram'));
+  }
+
+  getMemberYearSelectButton(year: number) {
+    return this.browser.element.all(by.css('p-selectButton[ng-reflect-name="memberYear"] span.ui-clickable'))
+      .filter(span => {
+        return span.getText().then(text => text === '' + year);
+      });
+  }
+
+  getExpiryDateInput() {
+    return this.browser.element(by.css('p-calendar[ng-reflect-name="expiryDate"] input'));
+  }
+
+  getHowToApplyLink() {
+    return this.browser.element(by.css('a[label="How to Apply"]'));
   }
 }
 
@@ -151,6 +158,8 @@ export class BoardViewPage extends GenericResourcePage {
   assertBoardView(name: string, summary: string, categories: string[], canEdit: boolean) {
     if (canEdit) {
       expect(this.browser.element(by.css('p-tabMenu li.ui-state-active a span')).getText()).toEqual('View');
+    } else {
+      expect(this.browser.element(by.css('p-tabMenu')).isPresent()).toBeFalsy();
     }
     expect(this.browser.element(by.tagName('h1')).getText()).toEqual(name);
     expect(this.browser.element(by.css('div.summary-holder')).getText()).toEqual(summary);
@@ -168,13 +177,41 @@ export class PostViewPage extends GenericResourcePage {
   }
 
   assertPostView(name: string, summary: string, description: string, categories: string[], canEdit: boolean) {
+    this.waitForLoaded();
     if (canEdit) {
+      expect(this.browser.element(by.css('p-tabMenu')).isPresent()).toBeTruthy();
       expect(this.browser.element(by.css('p-tabMenu li.ui-state-active a span')).getText()).toEqual('View');
+    } else {
+      expect(this.browser.element(by.css('p-tabMenu')).isPresent()).toBeFalsy();
     }
     expect(this.browser.element(by.tagName('h1')).getText()).toEqual(name);
     expect(this.browser.element(by.css('div.post-content--excerpt')).getText()).toEqual(summary);
     expect(this.browser.element(by.css('div.post-content--description p')).getText()).toEqual(description);
     expect(this.browser.element.all(by.css('div.category-list span.ui-chips-token')).getText()).toEqual(categories);
+  }
+
+  getRoleRadioButton(roleLabel) {
+    return this.browser.element(by.css('p-radiobutton[name="gender"][ng-reflect-label="' + roleLabel + '"]' + ' label'));
+  }
+
+  getAgeRangeRadioButton(roleLabel) {
+    return this.browser.element(by.css('p-radiobutton[name="ageRange"][ng-reflect-label="' + roleLabel + '"]' + ' label'));
+  }
+
+  getDocumentResumeInput() {
+    return this.browser.element(by.css('b-file-upload[ng-reflect-name="documentResume"] input'));
+  }
+
+  getCoveringNoteEditor() {
+    return this.browser.element(by.css('div.ui-editor-content div.ql-editor'));
+  }
+
+  getWebsiteResumeInput() {
+    return this.browser.element(by.id('websiteResume'));
+  }
+
+  getAlreadyAppliedDiv() {
+    return this.browser.element(by.id('alreadyAppliedDiv'));
   }
 
 }
@@ -184,8 +221,12 @@ export class DepartmentsPage extends GenericPage {
     this.browser.wait(EC.presenceOf(browser.element(by.tagName('mat-card'))));
   }
 
-  getDepartmentCard(handle: string) {
-    return this.browser.element(by.css('mat-card#department_' + handle));
+  getDepartmentCard(name: string) {
+    return this.browser.element.all(by.tagName('mat-card'))
+      .filter(card => {
+        return card.element(by.css('mat-card-header mat-card-title h3 a')).getText()
+          .then(title => title === name);
+      }).first();
   }
 
   getDepartmentTitleUrl(handle: string) {
@@ -199,10 +240,12 @@ export class PostsPage extends GenericPage {
   }
 
   getPostCard(name: string) {
-    return this.browser.element.all(by.tagName('mat-card'))
+    return this.browser.element.all(by.css('b-post-item mat-card'))
       .filter(card => {
         return card.element(by.css('mat-card-header mat-card-title h3 a')).getText()
-          .then(title => title === name);
+          .then(title => {
+            return title === name;
+          });
       }).first();
   }
 
@@ -235,4 +278,13 @@ export class ResourceUsersPage extends GenericResourcePage {
   getAddUserButton() {
     return this.browser.element(by.css('button[label="Add user"]'));
   }
+
+  getAddMembersInBulkButton() {
+    return this.browser.element(by.css('button[label="Add members in bulk"]'));
+  }
+
+  getCsvUploaderInput() {
+    return this.browser.element(by.id('csv-uploader-input'));
+  }
+
 }

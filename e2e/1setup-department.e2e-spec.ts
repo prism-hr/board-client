@@ -5,7 +5,7 @@ import {TestUtils} from './test.utils';
 
 const EC = browser.ExpectedConditions;
 
-describe('board-frontend App', () => {
+describe('Set up department', () => {
   const randomString = browser.params.randomString;
   let homePage: HomePage;
   let departmentNewPage: DepartmentNewPage;
@@ -124,7 +124,7 @@ describe('board-frontend App', () => {
     browser.wait(EC.presenceOf(departmentsPage.getDepartmentsButton()));
     departmentsPage.getDepartmentsButton().click();
     departmentsPage.waitForLoaded();
-    departmentsPage.getDepartmentTitleUrl('bishop-burton-college_bishop-department').click();
+    departmentsPage.getDepartmentTitleUrl('Bishop department').click();
 
     departmentViewPage.getTabItem('Edit').click();
 
@@ -145,6 +145,29 @@ describe('board-frontend App', () => {
       ['Master Student', 'Research Student']);
 
     departmentViewPage.getLogoutButton().click();
+  });
+
+  it('should add members to a department', () => {
+    homePage.navigateTo();
+    homePage.getLoginButton().click();
+    authenticationDialog.performLogin('admin2@test.prism.hr', '1secret1');
+    browser.wait(EC.presenceOf(homePage.getDoNotShowAgainButton()));
+    homePage.getDoNotShowAgainButton().click();
+    browser.wait(EC.presenceOf(homePage.getDepartmentsButton()));
+    homePage.getDepartmentsButton().click();
+
+    departmentsPage.getDepartmentTitleUrl('Bishop2 dep').click();
+
+    departmentEditPage.getTabItem('Users').click();
+
+    resourceUsersPage.getAddMembersInBulkButton().click();
+    TestUtils.uploadFile(resourceUsersPage.getCsvUploaderInput(), 'user-list.csv');
+    resourceUsersPage.selectDropdownOption('Select a category', 'Master Student')
+    resourceUsersPage.getProgramInput().sendKeys('Sample program');
+    resourceUsersPage.getMemberYearSelectButton(3).click();
+    resourceUsersPage.getSubmitButton().click();
+
+    resourceUsersPage.getLogoutButton().click();
   });
 });
 

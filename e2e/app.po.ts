@@ -42,9 +42,21 @@ export abstract class GenericPage {
     return this.browser.element(by.css('button[label="Submit"]'));
   }
 
+  getButtonByLabel(label: string) {
+    return this.browser.element(by.css('button[label="' + label + '"]'));
+  }
+
+  selectDropdownOption(dropdownPlaceholder: string, optionLabel: string) {
+    const dropdown = this.browser.element(by.css('p-dropdown[placeholder="' + dropdownPlaceholder + '"]'));
+    dropdown.click();
+    dropdown.all(by.css('li span'))
+      .filter(span => span.getText().then(text => text === optionLabel))
+      .first().click();
+  }
+
   openActivitiesPanel(expectedCount: number) {
     browser.wait(EC.presenceOf(this.getActivitiesButton()));
-    if(expectedCount) {
+    if (expectedCount) {
       expect(this.getActivitiesCountBadge().getText()).toEqual('' + expectedCount);
     } else {
       expect(this.getActivitiesCountBadge().isPresent()).toBeFalsy();
@@ -71,6 +83,15 @@ export abstract class GenericPage {
 
   getActivityCloseButton(activityItem: ElementFinder) {
     return activityItem.element(by.css('button[icon="fa-close"]'));
+  }
+
+  selectLocation(keyword: string) {
+    const autocomplete = this.browser.element(by.css('b-places-autocomplete'));
+    const input = autocomplete.element(by.tagName('input'));
+    input.clear();
+    input.sendKeys('żywiec');
+    browser.wait(EC.presenceOf(autocomplete.element(by.tagName('ul'))));
+    autocomplete.all(by.tagName('li')).first().click();
   }
 }
 
@@ -126,6 +147,7 @@ export class AuthenticationDialog {
   }
 
   performRegistration(email: string, givenName: string, surname: string, password: string) {
+    this.browser.wait(EC.presenceOf(this.browser.element(by.tagName('mat-dialog-container'))))
     expect(this.getParagraphText()).toEqual('Register');
     this.sendKeysWithRetry(this.getGivenNameInput(), givenName);
     this.sendKeysWithRetry(this.getSurnameInput(), surname);
@@ -135,6 +157,7 @@ export class AuthenticationDialog {
   }
 
   performLogin(email: string, password: string) {
+    this.browser.wait(EC.presenceOf(this.browser.element(by.tagName('mat-dialog-container'))))
     expect(this.getParagraphText()).toEqual('Login');
     this.sendKeysWithRetry(this.getEmailInput(), email);
     this.sendKeysWithRetry(this.getPasswordInput(), password);

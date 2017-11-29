@@ -1,16 +1,16 @@
 import {browser, by, protractor} from 'protractor';
 import {AuthenticationDialog, HomePage} from './app.po';
-import {BoardViewPage, PostEditPage, PostNewPage, PostsPage, PostViewPage} from './resource.po';
+import {BoardViewPage, PostEditPage, PostNewEditPage, PostsPage, PostViewPage} from './resource.po';
 
 const EC = browser.ExpectedConditions;
 
-describe('board-frontend App', () => {
+describe('Set up post', () => {
   let homePage: HomePage;
   let boardViewPage: BoardViewPage;
   let authenticationDialog: AuthenticationDialog;
   let postViewPage: PostViewPage;
   let postsPage: PostsPage;
-  let postNewPage: PostNewPage;
+  let postNewEditPage: PostNewEditPage;
   let postEditPage: PostEditPage;
 
   beforeAll(() => {
@@ -22,7 +22,7 @@ describe('board-frontend App', () => {
     authenticationDialog = new AuthenticationDialog(browser);
     postViewPage = new PostViewPage(browser);
     postsPage = new PostsPage(browser);
-    postNewPage = new PostNewPage(browser);
+    postNewEditPage = new PostNewEditPage(browser);
     postEditPage = new PostEditPage(browser);
   });
 
@@ -40,35 +40,28 @@ describe('board-frontend App', () => {
 
     browser2BoardViewPage.getLoginButton().click();
     browser2AuthenticationDialog.performLogin('admin2@test.prism.hr', '1secret1');
-    browser2.wait(EC.presenceOf(browser2BoardViewPage.getDoNotShowAgainButton()));
-    browser2BoardViewPage.getDoNotShowAgainButton().click();
 
     boardViewPage.getNewPostButton().click();
     authenticationDialog.performRegistration('post-admin@test.prism.hr', 'Post Admin', 'Bishop',
       '1secret1');
 
     browser.wait(EC.urlContains('/newPost'));
-    expect(postNewPage.getParagraphText()).toEqual('Create a new Post');
-    postNewPage.getNameInput().sendKeys('Bishop Post');
-    postNewPage.getSummaryTextarea().sendKeys('Bishop summary');
-    postNewPage.getDescriptionEditor().sendKeys('Bishop description');
-    postNewPage.getCheckboxLabel('Employment').click();
-    postNewPage.getCheckboxLabel('Volunteering').click();
-    postNewPage.getOrganizationNameInput().clear();
-    postNewPage.getOrganizationNameInput().sendKeys('Bielmar');
-    postNewPage.getLocationInput().clear();
-    postNewPage.getLocationInput().sendKeys('Bielsko');
-    browser.wait(EC.presenceOf(postNewPage.getLocationAutocomplete().element(by.tagName('ul'))));
-    postNewPage.getLocationAutocomplete().all(by.tagName('li')).get(0).click();
-    browser.wait(EC.presenceOf(postNewPage.getLocationAutocomplete('ng-valid')));
-    postNewPage.getRadioButton('Employer').click();
-    postNewPage.getExplanationTextarea().sendKeys('Recently hired');
-    postNewPage.getCheckboxLabel('Master Student').click();
-    postNewPage.getCheckboxLabel('Research Student').click();
-    postNewPage.getRadioButton('By visiting a web page').click();
-    postNewPage.getApplyWebsiteInput().sendKeys('http://wyborcza.pl');
-    postNewPage.getCheckboxLabel('No Closing Date').click();
-    postNewPage.getApplyWebsiteInput().sendKeys(protractor.Key.ENTER);
+    expect(postNewEditPage.getParagraphText()).toEqual('Create a new Post');
+    postNewEditPage.getNameInput().sendKeys('Bishop Post');
+    postNewEditPage.getSummaryTextarea().sendKeys('Bishop summary');
+    postNewEditPage.getDescriptionEditor().sendKeys('Bishop description');
+    postNewEditPage.getCheckboxLabel('Employment').click();
+    postNewEditPage.getCheckboxLabel('Volunteering').click();
+    postNewEditPage.getOrganizationNameInput().clear();
+    postNewEditPage.getOrganizationNameInput().sendKeys('Bielmar');
+    postNewEditPage.selectLocation('Bielsko');
+    postNewEditPage.getRadioButton('Employer').click();
+    postNewEditPage.getExplanationTextarea().sendKeys('Recently hired');
+    postNewEditPage.getCheckboxLabel('Research Student').click();
+    postNewEditPage.getRadioButton('By visiting a web page').click();
+    postNewEditPage.getApplyWebsiteInput().sendKeys('http://wyborcza.pl');
+    postNewEditPage.getCheckboxLabel('No Closing Date').click();
+    postNewEditPage.getApplyWebsiteInput().sendKeys(protractor.Key.ENTER);
 
     browser.wait(EC.presenceOf(postViewPage.getActiveTabItem()));
     postViewPage.assertPostView('Bishop Post',
@@ -93,56 +86,37 @@ describe('board-frontend App', () => {
     homePage.getActivitiesButton().click();
     homePage.getActivityItems().first().click();
 
+    postViewPage.waitForLoaded();
     expect(postViewPage.getActionButtonLabels()).toEqual(['Review', 'Reject']);
     postViewPage.getActionButton('Review').click();
 
     // TODO assert value
 
-    postNewPage.getNameInput().clear();
-    postNewPage.getNameInput().sendKeys('Bishop2 Post');
-    postNewPage.getSummaryTextarea().clear();
-    postNewPage.getSummaryTextarea().sendKeys('Bishop2 summary');
-    postNewPage.getDescriptionEditor().clear();
-    postNewPage.getDescriptionEditor().sendKeys('Bishop2 description');
-    postNewPage.getCheckboxLabel('Volunteering').click();
-    postNewPage.getCheckboxLabel('Internship').click();
-    postNewPage.getOrganizationNameInput().clear();
-    postNewPage.getOrganizationNameInput().sendKeys('Żywiec');
-    postNewPage.getLocationInput().clear();
-    postNewPage.getLocationInput().sendKeys('żywiec');
-    browser.wait(EC.presenceOf(postNewPage.getLocationAutocomplete().element(by.tagName('ul'))));
-    postNewPage.getLocationAutocomplete().all(by.tagName('li')).get(0).click();
-    // browser.wait(EC.presenceOf(postNewPage.getLocationAutocomplete('ng-valid')));
-    postNewPage.getRadioButton('Collaborator').click();
-    postNewPage.getExplanationTextarea().sendKeys('Recently collaborating');
-    postNewPage.getCheckboxLabel('Master Student').click();
-    postNewPage.getRadioButton('By submitting an application').click();
-    postNewPage.getApplyEmailInput().sendKeys('email@test.prism.hr');
+    postNewEditPage.getNameInput().clear();
+    postNewEditPage.getNameInput().sendKeys('Bishop2 Post');
+    postNewEditPage.getSummaryTextarea().clear();
+    postNewEditPage.getSummaryTextarea().sendKeys('Bishop2 summary');
+    postNewEditPage.getDescriptionEditor().clear();
+    postNewEditPage.getDescriptionEditor().sendKeys('Bishop2 description');
+    postNewEditPage.getCheckboxLabel('Volunteering').click();
+    postNewEditPage.getCheckboxLabel('Internship').click();
+    postNewEditPage.getOrganizationNameInput().clear();
+    postNewEditPage.getOrganizationNameInput().sendKeys('Żywiec');
+    postNewEditPage.selectLocation('żywiec');
+    postNewEditPage.getRadioButton('Collaborator').click();
+    postNewEditPage.getExplanationTextarea().sendKeys('Recently collaborating');
+    postNewEditPage.getCheckboxLabel('Master Student').click();
+    postNewEditPage.getRadioButton('By submitting an application').click();
+    postNewEditPage.getApplyEmailInput().sendKeys('email@test.prism.hr');
 
     expect(postEditPage.getActionButtonLabels()).toEqual(['Request Revision', 'Accept', 'Reject']);
     postEditPage.getActionButton('Accept').click();
     postEditPage.getSubmitButton().click();
 
-    postViewPage.waitForLoaded();
     postViewPage.assertPostView('Bishop2 Post',
       'Bishop2 summary', 'Bishop2 description', ['Employment', 'Internship'], true);
 
     postViewPage.getLogoutButton().click();
-  });
-
-  it('should edit a post', () => {
-    homePage.navigateTo();
-    homePage.getLoginButton().click();
-    authenticationDialog.performLogin('post-admin@test.prism.hr', '1secret1');
-
-    browser.wait(EC.presenceOf(postsPage.getDoItAgainButton()));
-    postsPage.getDoItAgainButton().click();
-    postsPage.getPostsButton().click();
-    postsPage.waitForLoaded();
-    postsPage.getPostTitleUrl('Bishop2 Post').click();
-
-    browser.wait(EC.presenceOf(postViewPage.getTabItem('Edit')));
-    postViewPage.getTabItem('Edit').click();
   });
 });
 

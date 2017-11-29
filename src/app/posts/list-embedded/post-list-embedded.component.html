@@ -4,6 +4,6 @@
      class="ui-button-success" icon="fa-plus" label="New Post"></a>
 </div>
 <b-filter resourceScope="POST" (applied)="filterApplied($event)"></b-filter>
-<div class="list-container">
+<div *ngIf="posts" class="list-container">
   <b-post-item [post]="post" *ngFor="let post of posts" class="list-container__item"></b-post-item>
 </div>
