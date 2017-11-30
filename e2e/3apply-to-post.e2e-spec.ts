@@ -1,4 +1,4 @@
-import {browser, protractor} from 'protractor';
+import {browser, by, protractor} from 'protractor';
 import {AuthenticationDialog, HomePage} from './app.po';
 import {
   BoardViewPage, DepartmentEditPage, DepartmentsPage, PostEditPage, PostNewEditPage, PostsPage, PostViewPage,
@@ -37,47 +37,47 @@ describe('Apply to post', () => {
     authenticationDialog = new AuthenticationDialog(browser);
   });
 
-  // it('apply to a post as a member', () => {
-  //   const flow = protractor.promise.controlFlow();
-  //   flow.execute(function () {
-  //     const defer = protractor.promise.defer();
-  //     TestUtils.getTestEmails('student1@test.prism.hr', defer);
-  //
-  //     return defer.promise;
-  //   }).then(function (data: any[]) {
-  //     if (data.length !== 1) {
-  //       fail('Expected only one email');
-  //     }
-  //     const message = data[0];
-  //     const urls: string[] = message.content.match(/\bhttps?:\/\/\S+/gi);
-  //     if (urls.length !== 2) {
-  //       fail('Expected exactly two urls');
-  //     }
-  //
-  //     browser.get(urls[0]);
-  //
-  //     authenticationDialog.performRegistration(
-  //       'student1@test.prism.hr', 'Student1', 'Bishop', '1secret1');
-  //
-  //     postViewPage.assertPostView('Bishop2 Post',
-  //       'Bishop2 summary', 'Bishop2 description', ['Employment', 'Internship'], false);
-  //     postViewPage.getRoleRadioButton('Male').click();
-  //     postViewPage.getAgeRangeRadioButton('30 - 39').click();
-  //     postViewPage.selectLocation('Jelesn');
-  //
-  //     postViewPage.getSubmitButton().click();
-  //     browser.wait(EC.presenceOf(postViewPage.getDocumentResumeInput()));
-  //
-  //     TestUtils.uploadFile(postViewPage.getDocumentResumeInput(), 'sample.pdf');
-  //     postViewPage.getCoveringNoteEditor().sendKeys('Covering note');
-  //     postViewPage.getWebsiteResumeInput().sendKeys('www.nie.com.pl');
-  //
-  //     postViewPage.getSubmitButton().click();
-  //
-  //     browser.wait(EC.presenceOf(postViewPage.getAlreadyAppliedDiv()));
-  //     postViewPage.getLogoutButton().click();
-  //   });
-  // });
+  it('apply to a post as a member', () => {
+    const flow = protractor.promise.controlFlow();
+    flow.execute(function () {
+      const defer = protractor.promise.defer();
+      TestUtils.getTestEmails('student1@test.prism.hr', defer);
+
+      return defer.promise;
+    }).then(function (data: any[]) {
+      if (data.length !== 1) {
+        fail('Expected only one email');
+      }
+      const message = data[0];
+      const urls: string[] = message.content.match(/\bhttps?:\/\/\S+/gi);
+      if (urls.length !== 2) {
+        fail('Expected exactly two urls');
+      }
+
+      browser.get(urls[0]);
+
+      authenticationDialog.performRegistration(
+        'student1@test.prism.hr', 'Student1', 'Bishop', '1secret1');
+
+      postViewPage.assertPostView('Bishop2 Post',
+        'Bishop2 summary', 'Bishop2 description', ['Employment', 'Internship'], false);
+      postViewPage.getRoleRadioButton('Male').click();
+      postViewPage.getAgeRangeRadioButton('30 - 39').click();
+      postViewPage.selectLocation('Jelesn');
+
+      postViewPage.getSubmitButton().click();
+      browser.wait(EC.presenceOf(postViewPage.getDocumentResumeInput()));
+
+      TestUtils.uploadFile(postViewPage.getDocumentResumeInput(), 'sample.pdf');
+      postViewPage.getCoveringNoteEditor().sendKeys('Covering note');
+      postViewPage.getWebsiteResumeInput().sendKeys('www.nie.com.pl');
+
+      postViewPage.getSubmitButton().click();
+
+      browser.wait(EC.presenceOf(postViewPage.getAlreadyAppliedDiv()));
+      postViewPage.getLogoutButton().click();
+    });
+  });
 
   it('apply to a post as a stranger', () => {
     homePage.navigateTo();
@@ -110,7 +110,7 @@ describe('Apply to post', () => {
     postViewPage.getButtonByLabel('Apply Now').click();
 
     authenticationDialog.performRegistration(
-      'independent-student' + '1' + '@test.prism.hr', 'Student1', 'Independent', '1secret1');
+      'independent-student' + '4' + '@test.prism.hr', 'Student1', 'Independent', '1secret1');
 
     browser.wait(EC.presenceOf(postViewPage.getRoleRadioButton('Male')));
     postViewPage.getRoleRadioButton('Male').click();
@@ -121,11 +121,11 @@ describe('Apply to post', () => {
     postViewPage.getMemberYearSelectButton(6).click();
     postViewPage.getExpiryDateInput().click();
     postViewPage.getExpiryDateInput().sendKeys(TestUtils.getFutureDate());
+    postViewPage.getRoleRadioButton('Male').click(); // click outside calendar popup
 
     postViewPage.getSubmitButton().click();
-    postViewPage.getSubmitButton().click();
 
-    expect(postViewPage.getHowToApplyLink().isPresent()).toBeTruthy();
+    browser.wait(EC.presenceOf(postViewPage.getHowToApplyLink()));
   });
 });
 
