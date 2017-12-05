@@ -108,6 +108,15 @@ export abstract class GenericResourcePage extends GenericPage {
   getHowToApplyLink() {
     return this.browser.element(by.css('a[label="How to Apply"]'));
   }
+
+  followWalkthroughPath() {
+    for (let i = 0; i < 2; i++) {
+      this.browser.wait(EC.presenceOf(this.browser.element(by.css('a.introjs-nextbutton'))));
+      this.browser.element(by.css('a.introjs-nextbutton')).click();
+    }
+    this.browser.wait(EC.presenceOf(this.browser.element(by.css('a.introjs-donebutton'))));
+    this.browser.element(by.css('a.introjs-donebutton')).click();
+  }
 }
 
 export class DepartmentEditPage extends GenericResourcePage {
@@ -173,7 +182,7 @@ export class BoardViewPage extends GenericResourcePage {
 
 export class PostViewPage extends GenericResourcePage {
   waitForLoaded() {
-    browser.wait(EC.presenceOf(this.browser.element(by.css('div.post-content'))));
+    this.browser.wait(EC.presenceOf(this.browser.element(by.css('div.post-content'))));
   }
 
   assertPostView(name: string, summary: string, description: string, categories: string[], canEdit: boolean) {

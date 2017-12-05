@@ -61,6 +61,9 @@ describe('Set up department', () => {
     browser.wait(EC.urlContains('bishop-burton-college'));
 
     TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop-department');
+
+    departmentViewPage.followWalkthroughPath();
+
     departmentViewPage.assertDepartmentView('Bishop department', 'Bishop summary',
       ['Undergraduate Student', 'Master Student', 'Research Student', 'Research Staff']);
     departmentViewPage.assertTabItems('View', 'Edit', 'Users', 'Badge');
@@ -101,7 +104,8 @@ describe('Set up department', () => {
       authenticationDialog.performRegistration(
         'admin2@test.prism.hr', 'Admin2', 'Bishop', '1secret1');
       browser.wait(EC.presenceOf(departmentViewPage.getActiveTabItem()));
-      departmentViewPage.assertDepartmentView('Bishop department', 'Bishop summary',
+      departmentViewPage.followWalkthroughPath();
+            departmentViewPage.assertDepartmentView('Bishop department', 'Bishop summary',
         ['Undergraduate Student', 'Master Student', 'Research Student', 'Research Staff']);
       departmentViewPage.assertTabItems('View', 'Edit', 'Users', 'Badge');
       TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop-department');
