@@ -53,11 +53,11 @@
   <div class="step-block">
     <ul class="list--inline">
       <li *ngFor="let task of department.tasks">
-        <a href="#" class="checked">
+        <a href="#" [ngClass]="{'checked': task.completed}">
         <span>
           <img src="assets/check.svg">
         </span>
-          <div class="step-title">{{'definitions.task.' + task | translate}}</div>
+          <div class="step-title">{{'definitions.task.' + task.task | translate}}</div>
         </a>
       </li>
     </ul>

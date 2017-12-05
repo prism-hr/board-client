@@ -31,17 +31,20 @@ export class DepartmentViewComponent implements OnInit, OnDestroy {
     combineLatest(this.route.parent.data, this.userService.user$.first())
       .subscribe(([data, user]: [Data, Data, UserRepresentation]) => {
         this.department = data['department'];
-        this.showTasksSidebar = false;
         this.title.setTitle(this.department.name);
         this.canEdit = this.resourceService.canEdit(this.department);
 
         this.user = user;
         this.loadBoards();
 
-        if (this.user && !this.user.seenWalkThrough) {
-          setTimeout(() => {
-            this.showWalkthrough();
-          });
+        if (this.canEdit) {
+          if (!this.user.seenWalkThrough) {
+            setTimeout(() => {
+              this.showWalkthrough();
+            });
+          } else {
+            this.showTasksSidebar = true;
+          }
         }
       });
   }
@@ -66,7 +69,9 @@ export class DepartmentViewComponent implements OnInit, OnDestroy {
   showWalkthrough() {
     introJs.introJs()
       .onexit(() => {
-        this.userService.patchUser({seenWalkThrough: true}).subscribe();
+        this.userService.patchUser({seenWalkThrough: true}).subscribe(() => {
+          this.showTasksSidebar = true;
+        });
       })
       .setOptions({
         disableInteraction: true,

@@ -36,7 +36,7 @@ export class ResourceBadgeComponent implements OnInit {
 
   refreshSnippet() {
     const widgetsUrlPrefix = this.definitionsService.getDefinitions()['applicationUrl'];
-    const widgetOptions: WidgetOptionsDTO = {badgeType: this.badgeType};
+    const widgetOptions: WidgetOptionsDTO = {badgeType: this.badgeType, preview: true};
     if (this.badgeType === 'LIST') {
       widgetOptions.badgeListType = this.badgeListType;
       widgetOptions.postCount = this.postCount;
