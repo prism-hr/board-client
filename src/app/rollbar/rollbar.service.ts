@@ -2,6 +2,7 @@ import {ErrorHandler, Injectable} from '@angular/core';
 import {Response} from '@angular/http';
 import * as Rollbar from 'rollbar';
 import {RollbarConfig} from './rollbar.config';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class RollbarService implements ErrorHandler {
@@ -16,10 +17,14 @@ export class RollbarService implements ErrorHandler {
   }
 
   public handleError(err: any): void {
-    if (err instanceof Response) {
-      this.rollbar.error({status: err.status, statusText: err.statusText, url: err.url});
+    if(environment.production) {
+      if (err instanceof Response) {
+        this.rollbar.error({status: err.status, statusText: err.statusText, url: err.url});
+      } else {
+        this.rollbar.error(err.originalError || err);
+      }
     } else {
-      this.rollbar.error(err.originalError || err);
+      console.error(err);
     }
   }
 

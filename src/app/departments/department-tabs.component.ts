@@ -39,10 +39,30 @@ export class DepartmentTabsComponent implements OnInit {
       this.canEdit = this.resourceService.canEdit(this.department);
       const departmentPath = ['/', this.department.university.handle, this.department.handle];
       this.items = [
-        {label: 'View', routerLink: departmentPath, routerLinkActiveOptions: {exact: true}},
-        {label: 'Edit', routerLink: [...departmentPath, 'edit'], routerLinkActiveOptions: {exact: true}},
-        {label: 'Users', routerLink: [...departmentPath, 'users'], routerLinkActiveOptions: {exact: true}},
-        {label: 'Badge', routerLink: [...departmentPath, 'badge'], routerLinkActiveOptions: {exact: true}}];
+        {
+          label: 'View',
+          title: 'View department',
+          routerLink: departmentPath,
+          routerLinkActiveOptions: {exact: true}
+        },
+        {
+          label: 'Edit',
+          title: 'Change department settings',
+          routerLink: [...departmentPath, 'edit'],
+          routerLinkActiveOptions: {exact: true}
+        },
+        {
+          label: 'Users',
+          title: 'Specify department users',
+          routerLink: [...departmentPath, 'users'],
+          routerLinkActiveOptions: {exact: true}
+        },
+        {
+          label: 'Badge',
+          title: 'Deploy department badge to your website',
+          routerLink: [...departmentPath, 'badge'],
+          routerLinkActiveOptions: {exact: true}
+        }];
     });
   }
 

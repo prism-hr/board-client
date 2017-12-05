@@ -62,7 +62,7 @@ export abstract class GenericPage {
       expect(this.getActivitiesCountBadge().isPresent()).toBeFalsy();
     }
     this.getActivitiesButton().click();
-    expect(this.getActivityItems().count()).toEqual(1);
+    expect(this.getActivityItems().count()).toEqual(expectedCount);
   }
 
   getActivitiesButton() {

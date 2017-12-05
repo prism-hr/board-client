@@ -9,6 +9,7 @@
         {{'definitions.memberCategory.' + category | translate}}
       </span>
       </div>
+      <button pButton (click)="showWalkthrough()" class="ui-button-success" label="Show walkthrough"></button>
     </div>
     <div class="grid__item medium-up--one-quarter small-one-whole resource-logo-holder">
       <mat-card>
@@ -32,12 +33,12 @@
 <section *ngIf="canEdit">
   <div fxLayout="row" fxLayoutAlign="space-between top" class="section-header">
     <h2>Boards</h2>
-    <a pButton [routerLink]="['/newBoard', {departmentId: department.id}]" class="ui-button-success" icon="fa-plus"
-       label="New Board"></a>
+    <a pButton [routerLink]="['/newBoard', {departmentId: department.id}]" class="ui-button-success"
+       id="walkthrough_new_board" icon="fa-plus" label="New Board"></a>
   </div>
   <b-filter resourceScope="BOARD" (applied)="filterApplied($event)"></b-filter>
   <div class="list-container">
-    <b-board-item [board]="board" *ngFor="let board of boards" class="list-container__item"></b-board-item>
+    <b-board-item *ngFor="let board of boards" [board]="board" class="list-container__item"></b-board-item>
   </div>
 </section>
 
@@ -46,3 +47,19 @@
 </section>
 
 <b-resource-timeline *ngIf="department" [resource]="department"></b-resource-timeline>
+
+<p-sidebar [(visible)]="showTasksSidebar" position="left">
+  <p class="step-block-header">To start with our app please do the following tasks</p>
+  <div class="step-block">
+    <ul class="list--inline">
+      <li *ngFor="let task of department.tasks">
+        <a href="#" class="checked">
+        <span>
+          <img src="assets/check.svg">
+        </span>
+          <div class="step-title">{{'definitions.task.' + task | translate}}</div>
+        </a>
+      </li>
+    </ul>
+  </div>
+</p-sidebar>

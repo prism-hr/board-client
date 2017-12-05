@@ -51,7 +51,6 @@ import {PostService} from './posts/post.service';
 import {PostResponsesComponent} from './posts/responses/post-responses.component';
 import {ResourceActionsBoxComponent} from './resource/actions-box/resource-actions-box.component';
 import {ResourceCommentDialogComponent} from './resource/resource-comment.dialog';
-import {RollbarHandler} from './rollbar/rollbar-handler.service';
 import {RollbarConfig} from './rollbar/rollbar.config';
 import {RollbarService} from './rollbar/rollbar.service';
 import './rxjs-extensions';
@@ -289,7 +288,7 @@ import {stompConfig} from './services/stomp.config';
     },
     {
       provide: RollbarConfig, useValue: {
-      enabled: environment.production,
+      enabled: true,
       verbose: true,
       accessToken: 'da4d675c8c5340819eac1c080f5b1e76',
       payload: {
@@ -298,7 +297,7 @@ import {stompConfig} from './services/stomp.config';
     }
     },
     RollbarService,
-    {provide: ErrorHandler, useClass: RollbarHandler},
+    {provide: ErrorHandler, useClass: RollbarService},
     StompRService,
     AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService, BoardsResolver,
     DepartmentsResolver, DepartmentService, UserService, ValidationService

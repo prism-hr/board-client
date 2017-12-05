@@ -2,13 +2,14 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
 import {ShareButtonsModule} from 'ngx-sharebuttons';
+import {SidebarModule} from 'primeng/components/sidebar/sidebar';
 import {BoardItemModule} from '../../boards/item/board-item.module';
 import {FilterModule} from '../../general/filter/filter.module';
 import {ImageModule} from '../../general/image/image.module';
 import {SharedModule} from '../../general/shared.module';
+import {PostListEmbeddedModule} from '../../posts/list-embedded/post-list-embedded.module';
 import {ResourceTimelineModule} from '../../resource/timeline/resource-timeline.module';
 import {DepartmentViewComponent} from './department-view.component';
-import {PostListEmbeddedModule} from '../../posts/list-embedded/post-list-embedded.module';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import {PostListEmbeddedModule} from '../../posts/list-embedded/post-list-embedd
     ResourceTimelineModule,
     BoardItemModule,
     PostListEmbeddedModule,
+    SidebarModule,
     TranslateModule.forChild({}),
     RouterModule.forChild([
       {
