@@ -38,16 +38,8 @@ export class PostNewEditPage extends GenericPage {
     return this.browser.element(by.css('div.ui-editor-content div.ql-editor'));
   }
 
-  getCheckboxLabel(label: String) {
-    return this.browser.element(by.css('p-checkbox[ng-reflect-label="' + label + '"] div.ui-chkbox-box'));
-  }
-
   getOrganizationNameInput() {
     return this.browser.element(by.id('organizationName'));
-  }
-
-  getRadioButton(roleName) {
-    return this.browser.element(by.css('p-radiobutton[ng-reflect-label="' + roleName + '"] label'));
   }
 
   getApplyWebsiteInput() {
@@ -87,7 +79,12 @@ export abstract class GenericResourcePage extends GenericPage {
   }
 
   getActionButton(label: string) {
-    return this.browser.element(by.css('b-resource-actions-box button[ng-reflect-label="' + label + '"]'));
+    return this.browser.element.all(by.css('b-resource-actions-box button'))
+      .filter(button => {
+        return button.element(by.css('span')).getText().then(text => {
+          return text === label;
+        });
+      }).first();
   }
 
   getProgramInput() {
@@ -95,14 +92,14 @@ export abstract class GenericResourcePage extends GenericPage {
   }
 
   getMemberYearSelectButton(year: number) {
-    return this.browser.element.all(by.css('p-selectButton[ng-reflect-name="memberYear"] span.ui-clickable'))
+    return this.browser.element.all(by.css('p-selectButton[formcontrolname="memberYear"] span.ui-clickable'))
       .filter(span => {
         return span.getText().then(text => text === '' + year);
       });
   }
 
   getExpiryDateInput() {
-    return this.browser.element(by.css('p-calendar[ng-reflect-name="expiryDate"] input'));
+    return this.browser.element(by.css('p-calendar[formcontrolname="expiryDate"] input'));
   }
 
   getHowToApplyLink() {
@@ -127,10 +124,6 @@ export class DepartmentEditPage extends GenericResourcePage {
 
   getSummaryTextarea() {
     return this.browser.element(by.id('summary'));
-  }
-
-  getCheckboxLabel(label: String) {
-    return this.browser.element(by.css('p-checkbox[ng-reflect-label="' + label + '"] label'));
   }
 
   getHandleInput() {
@@ -199,16 +192,8 @@ export class PostViewPage extends GenericResourcePage {
     expect(this.browser.element.all(by.css('div.category-list span.ui-chips-token')).getText()).toEqual(categories);
   }
 
-  getRoleRadioButton(roleLabel) {
-    return this.browser.element(by.css('p-radiobutton[name="gender"][ng-reflect-label="' + roleLabel + '"]' + ' label'));
-  }
-
-  getAgeRangeRadioButton(roleLabel) {
-    return this.browser.element(by.css('p-radiobutton[name="ageRange"][ng-reflect-label="' + roleLabel + '"]' + ' label'));
-  }
-
   getDocumentResumeInput() {
-    return this.browser.element(by.css('b-file-upload[ng-reflect-name="documentResume"] input'));
+    return this.browser.element(by.css('b-file-upload[formcontrolname="documentResume"] input'));
   }
 
   getCoveringNoteEditor() {

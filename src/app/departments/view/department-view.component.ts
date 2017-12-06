@@ -43,7 +43,7 @@ export class DepartmentViewComponent implements OnInit, OnDestroy {
               this.showWalkthrough();
             });
           } else {
-            this.showTasksSidebar = true;
+            // this.showTasksSidebar = true;
           }
         }
       });
@@ -70,7 +70,7 @@ export class DepartmentViewComponent implements OnInit, OnDestroy {
     introJs.introJs()
       .onexit(() => {
         this.userService.patchUser({seenWalkThrough: true}).subscribe(() => {
-          this.showTasksSidebar = true;
+          // this.showTasksSidebar = true;
         });
       })
       .setOptions({

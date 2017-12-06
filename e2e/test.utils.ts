@@ -40,7 +40,7 @@ export class TestUtils {
   }
 
   static assertCurrentUrlEquals(relativeUrl: string) {
-    expect(browser.getCurrentUrl()).toEqual(urlResolve(browser.baseUrl, relativeUrl));
+    expect(browser.getCurrentUrl()).toEqual(urlResolve(browser.baseUrl.replace(':80', ''), relativeUrl));
   }
 
   static uploadFile(element: ElementFinder, relativeFilePath: string) {

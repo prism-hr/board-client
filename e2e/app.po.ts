@@ -46,6 +46,20 @@ export abstract class GenericPage {
     return this.browser.element(by.css('button[label="' + label + '"]'));
   }
 
+  getCheckboxLabel(text: String) {
+    return this.browser.element.all(by.css('p-checkbox label'))
+      .filter(label => {
+        return label.getText().then(t => t === text);
+      }).first();
+  }
+
+  getRadioButton(radioName: string, text: string) {
+    return this.browser.element.all(by.css('p-radiobutton[name="' + radioName + '"] label'))
+      .filter(label => {
+        return label.getText().then(t => t === text);
+      }).first();
+  }
+
   selectDropdownOption(dropdownPlaceholder: string, optionLabel: string) {
     const dropdown = this.browser.element(by.css('p-dropdown[placeholder="' + dropdownPlaceholder + '"]'));
     dropdown.click();
@@ -89,7 +103,7 @@ export abstract class GenericPage {
     const autocomplete = this.browser.element(by.css('b-places-autocomplete'));
     const input = autocomplete.element(by.tagName('input'));
     input.clear();
-    input.sendKeys('żywiec');
+    input.sendKeys(keyword);
     browser.wait(EC.presenceOf(autocomplete.element(by.tagName('ul'))));
     autocomplete.all(by.tagName('li')).first().click();
   }
@@ -127,19 +141,19 @@ export class AuthenticationDialog {
   }
 
   getGivenNameInput() {
-    return this.browser.element(by.css('input[ng-reflect-name="givenName"'));
+    return this.browser.element(by.css('input[placeholder="First Name"'));
   }
 
   getSurnameInput() {
-    return this.browser.element(by.css('input[ng-reflect-name="surname"'));
+    return this.browser.element(by.css('input[placeholder="Last Name"'));
   }
 
   getEmailInput() {
-    return this.browser.element(by.css('input[ng-reflect-name="email"'));
+    return this.browser.element(by.css('input[placeholder="Email"'));
   }
 
   getPasswordInput() {
-    return this.browser.element(by.css('input[ng-reflect-name="password"'));
+    return this.browser.element(by.css('input[placeholder="Password"'));
   }
 
   getSubmitButton() {
@@ -165,7 +179,7 @@ export class AuthenticationDialog {
   }
 
   getAlreadyRegisteredButton() {
-    return this.browser.element(by.css('button[ng-reflect-label="Already Registered?"'));
+    return this.browser.element(by.css('button[label="Already Registered?"'));
   }
 
   private sendKeysWithRetry(input: ElementFinder, value: string) {

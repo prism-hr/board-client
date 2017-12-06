@@ -55,10 +55,10 @@ describe('Set up post', () => {
     postNewEditPage.getOrganizationNameInput().clear();
     postNewEditPage.getOrganizationNameInput().sendKeys('Bielmar');
     postNewEditPage.selectLocation('Bielsko');
-    postNewEditPage.getRadioButton('Employer').click();
+    postNewEditPage.getRadioButton('existingRelation','Employer').click();
     postNewEditPage.getExplanationTextarea().sendKeys('Recently hired');
     postNewEditPage.getCheckboxLabel('Research Student').click();
-    postNewEditPage.getRadioButton('By visiting a web page').click();
+    postNewEditPage.getRadioButton('applyType', 'By visiting a web page').click();
     postNewEditPage.getApplyWebsiteInput().sendKeys('http://wyborcza.pl');
     postNewEditPage.getCheckboxLabel('No Closing Date').click();
     postNewEditPage.getApplyWebsiteInput().sendKeys(protractor.Key.ENTER);
@@ -103,10 +103,10 @@ describe('Set up post', () => {
     postNewEditPage.getOrganizationNameInput().clear();
     postNewEditPage.getOrganizationNameInput().sendKeys('Żywiec');
     postNewEditPage.selectLocation('żywiec');
-    postNewEditPage.getRadioButton('Collaborator').click();
+    postNewEditPage.getRadioButton('existingRelation', 'Collaborator').click();
     postNewEditPage.getExplanationTextarea().sendKeys('Recently collaborating');
     postNewEditPage.getCheckboxLabel('Master Student').click();
-    postNewEditPage.getRadioButton('By submitting an application').click();
+    postNewEditPage.getRadioButton('applyType', 'By submitting an application').click();
     postNewEditPage.getApplyEmailInput().sendKeys('email@test.prism.hr');
 
     expect(postEditPage.getActionButtonLabels()).toEqual(['Request Revision', 'Accept', 'Reject']);

@@ -61,9 +61,9 @@ describe('Apply to post', () => {
 
       postViewPage.assertPostView('Bishop2 Post',
         'Bishop2 summary', 'Bishop2 description', ['Employment', 'Internship'], false);
-      postViewPage.getRoleRadioButton('Male').click();
-      postViewPage.getAgeRangeRadioButton('30 - 39').click();
+      postViewPage.getRadioButton('gender', 'Male').click();
       postViewPage.selectLocation('Jelesn');
+      postViewPage.getRadioButton('ageRange', '30 - 39').click();
 
       postViewPage.getSubmitButton().click();
       browser.wait(EC.presenceOf(postViewPage.getDocumentResumeInput()));
@@ -93,7 +93,7 @@ describe('Apply to post', () => {
 
     postViewPage.getTabItem('Edit').click();
 
-    postNewEditPage.getRadioButton('By visiting a web page').click();
+    postNewEditPage.getRadioButton('applyType','By visiting a web page').click();
     postNewEditPage.getApplyWebsiteInput().sendKeys('nie.com.pl');
     postEditPage.getButtonByLabel('Save').click();
     postViewPage.getLogoutButton().click();
@@ -112,16 +112,16 @@ describe('Apply to post', () => {
     authenticationDialog.performRegistration(
       'independent-student' + '4' + '@test.prism.hr', 'Student1', 'Independent', '1secret1');
 
-    browser.wait(EC.presenceOf(postViewPage.getRoleRadioButton('Male')));
-    postViewPage.getRoleRadioButton('Male').click();
-    postViewPage.getAgeRangeRadioButton('30 - 39').click();
+    browser.wait(EC.presenceOf(postViewPage.getRadioButton('gender', 'Male')));
+    postViewPage.getRadioButton('gender', 'Male').click();
+    postViewPage.getRadioButton('ageRange', '30 - 39').click();
     postViewPage.selectLocation('Jelesn');
     postViewPage.selectDropdownOption('Select a category', 'Research Student');
     postViewPage.getProgramInput().sendKeys('Another program');
     postViewPage.getMemberYearSelectButton(6).click();
     postViewPage.getExpiryDateInput().click();
     postViewPage.getExpiryDateInput().sendKeys(TestUtils.getFutureDate());
-    postViewPage.getRoleRadioButton('Male').click(); // click outside calendar popup
+    postViewPage.getRadioButton('gender', 'Male').click(); // click outside calendar popup
 
     postViewPage.getSubmitButton().click();
 
