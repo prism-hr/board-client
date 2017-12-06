@@ -161,7 +161,7 @@ export class AuthenticationDialog {
   }
 
   performRegistration(email: string, givenName: string, surname: string, password: string) {
-    this.browser.wait(EC.presenceOf(this.browser.element(by.tagName('mat-dialog-container'))))
+    this.browser.wait(EC.presenceOf(this.browser.element(by.tagName('mat-dialog-container'))));
     expect(this.getParagraphText()).toEqual('Register');
     this.sendKeysWithRetry(this.getGivenNameInput(), givenName);
     this.sendKeysWithRetry(this.getSurnameInput(), surname);
@@ -171,7 +171,7 @@ export class AuthenticationDialog {
   }
 
   performLogin(email: string, password: string) {
-    this.browser.wait(EC.presenceOf(this.browser.element(by.tagName('mat-dialog-container'))))
+    this.browser.wait(EC.presenceOf(this.browser.element(by.tagName('mat-dialog-container'))));
     expect(this.getParagraphText()).toEqual('Login');
     this.sendKeysWithRetry(this.getEmailInput(), email);
     this.sendKeysWithRetry(this.getPasswordInput(), password);

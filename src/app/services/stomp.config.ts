@@ -2,7 +2,7 @@ import {StompConfig} from '@stomp/ng2-stompjs';
 import * as SockJS from 'sockjs-client';
 
 export function socketProvider() {
-  return new SockJS('http://localhost:4200/api/web-socket');
+  return new SockJS(window.location.origin + '/api/web-socket');
 }
 
 export const stompConfig: StompConfig = {

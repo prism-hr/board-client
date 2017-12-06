@@ -16,18 +16,19 @@ export class TestUtils {
   }
 
   static removeTestData(defer) {
-    request(urlResolve(browser.baseUrl, 'api/user/test'), {json: true, method: 'DELETE'}, (err, resp, body) => {
-      if (err) {
-        console.log('Error deleting test data ' + err);
+    request(urlResolve(this.getBaseUrl(), 'api/user/test'), {json: true, method: 'DELETE'}, (err, resp, body) => {
+      if (err || resp.statusCode !== 200) {
+        console.log('Error deleting test data ' + (err || JSON.stringify(resp)));
         defer.reject(err);
       } else {
+        console.log('Deleted test data');
         defer.fulfill(body);
       }
     });
   }
 
   static getTestEmails(email, defer) {
-    setTimeout(() => request(urlResolve(browser.baseUrl, 'api/test/emails?email=' + email), {json: true}, (err, resp, body) => {
+    setTimeout(() => request(urlResolve(this.getBaseUrl(), 'api/test/emails?email=' + email), {json: true}, (err, resp, body) => {
       if (err) {
         console.log('Error requesting test email ' + err);
         defer.reject(err);
@@ -40,7 +41,7 @@ export class TestUtils {
   }
 
   static assertCurrentUrlEquals(relativeUrl: string) {
-    expect(browser.getCurrentUrl()).toEqual(urlResolve(browser.baseUrl.replace(':80', ''), relativeUrl));
+    expect(browser.getCurrentUrl()).toEqual(urlResolve(this.getBaseUrl(), relativeUrl));
   }
 
   static uploadFile(element: ElementFinder, relativeFilePath: string) {
@@ -53,6 +54,10 @@ export class TestUtils {
     date.setDate(date.getDate() + 7);
     const dateFormat2 = dateFormat(date, 'yyyy-mm-dd');
     return dateFormat2;
+  }
+
+  static getBaseUrl() {
+    return browser.baseUrl.replace(':80', '');
   }
 
 }
