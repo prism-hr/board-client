@@ -106,6 +106,7 @@ export abstract class GenericPage {
     input.sendKeys(keyword);
     browser.wait(EC.presenceOf(autocomplete.element(by.tagName('ul'))));
     autocomplete.all(by.tagName('li')).first().click();
+    browser.wait(EC.presenceOf(this.browser.element(by.css('b-places-autocomplete.ng-valid'))));
   }
 }
 

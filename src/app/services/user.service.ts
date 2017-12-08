@@ -138,6 +138,10 @@ export class UserService implements OnInit {
     return this.http.delete('/api/user/activities/' + activity.id);
   }
 
+  isUserInitializationPending() {
+    return this.stompRService.state.getValue() === 0; // StompState is CLOSED
+  }
+
   initializeUser() {
     return this.loadUser()
       .then(user => {

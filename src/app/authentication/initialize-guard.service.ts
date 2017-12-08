@@ -1,5 +1,6 @@
 import {Location} from '@angular/common';
 import {Injectable} from '@angular/core';
+import {MatDialogConfig} from '@angular/material';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
@@ -7,7 +8,6 @@ import {UserService} from '../services/user.service';
 import {Utils} from '../services/utils';
 import {AuthGuard} from './auth-guard.service';
 import {ResetPasswordDialogComponent} from './reset-password.dialog';
-import {MatDialogConfig} from '@angular/material';
 
 @Injectable()
 export class InitializeGuard implements CanActivate {
@@ -36,7 +36,9 @@ export class InitializeGuard implements CanActivate {
     if (modalType) {
       this.userService.logout();
     } else {
-      this.userService.initializeUser();
+      if (this.userService.isUserInitializationPending()) {
+        this.userService.initializeUser();
+      }
     }
 
     if (modalType === 'resetPassword') {

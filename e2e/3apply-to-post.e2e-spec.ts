@@ -62,8 +62,8 @@ describe('Apply to post', () => {
       postViewPage.assertPostView('Bishop2 Post',
         'Bishop2 summary', 'Bishop2 description', ['Employment', 'Internship'], false);
       postViewPage.getRadioButton('gender', 'Male').click();
-      postViewPage.selectLocation('Jelesn');
       postViewPage.getRadioButton('ageRange', '30 - 39').click();
+      postViewPage.selectLocation('Jelesn');
 
       postViewPage.getSubmitButton().click();
       browser.wait(EC.presenceOf(postViewPage.getDocumentResumeInput()));
