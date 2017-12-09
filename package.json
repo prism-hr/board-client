@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e-local": "ng e2e --proxy-config proxy.conf.json --port 4200",
-    "e2e-uat": "ng e2e --serve false --host board-uat.prism.hr --port 80",
+    "e2e-uat": "ng e2e --serve false --host board-uat.prism.hr --port 80 --config protractor-uat.conf.js",
     "analyze": "ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json"
   },
   "private": true,
