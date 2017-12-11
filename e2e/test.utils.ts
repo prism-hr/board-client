@@ -1,7 +1,7 @@
 import {resolve as pathResolve} from 'path';
 import {browser, ElementFinder} from 'protractor';
 import * as request from 'request';
-import * as dateFormat from 'dateFormat';
+import * as dateFormat from 'dateformat';
 import {resolve as urlResolve} from 'url';
 
 export class TestUtils {
