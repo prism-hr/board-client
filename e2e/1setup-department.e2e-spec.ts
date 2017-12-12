@@ -166,7 +166,7 @@ describe('Set up department', () => {
 
     resourceUsersPage.getAddMembersInBulkButton().click();
     TestUtils.uploadFile(resourceUsersPage.getCsvUploaderInput(), 'user-list.csv');
-    resourceUsersPage.selectDropdownOption('Select a category', 'Master Student')
+    resourceUsersPage.selectDropdownOption('Select a category', 'Master Student');
     resourceUsersPage.getProgramInput().sendKeys('Sample program');
     resourceUsersPage.getMemberYearSelectButton(3).click();
     resourceUsersPage.getSubmitButton().click();
