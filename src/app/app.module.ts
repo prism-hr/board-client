@@ -1,8 +1,6 @@
-import {StompConfig, StompService, StompRService} from '@stomp/ng2-stompjs';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
@@ -10,16 +8,17 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {StompRService} from '@stomp/ng2-stompjs';
 import {OverlayPanelModule} from 'primeng/components/overlaypanel/overlaypanel';
 import {SidebarModule} from 'primeng/components/sidebar/sidebar';
 import {TabMenuModule} from 'primeng/components/tabmenu/tabmenu';
 import {environment} from '../environments/environment';
 import {AppComponent} from './app.component';
-import {MyAuthConfig} from './auth.config';
+import {authConfig} from './auth.config';
 import {AuthGuard} from './authentication/auth-guard.service';
 import {AuthenticationDialogComponent} from './authentication/authentication.dialog';
 import {InitializeGuard} from './authentication/initialize-guard.service';
-import {Ng2UiAuthModule} from './authentication/ng2-ui-auth.module';
+import {CustomNg2UiAuthModule} from './authentication/ng2-ui-auth.module';
 import {ResetPasswordDialogComponent} from './authentication/reset-password.dialog';
 import {UnsubscribeDialogComponent} from './authentication/unsubscribe.dialog';
 import {UserImageDialogComponent} from './authentication/user-image.dialog';
@@ -61,7 +60,6 @@ import {TimeDifferencePipe} from './services/time-difference.pipe';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ValidationService} from './validation/validation.service';
-import {stompConfig} from './services/stomp.config';
 
 @NgModule({
   declarations: [
@@ -267,7 +265,6 @@ import {stompConfig} from './services/stomp.config';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -276,7 +273,7 @@ import {stompConfig} from './services/stomp.config';
         deps: [HttpClient]
       }
     }),
-    Ng2UiAuthModule.forRoot(MyAuthConfig)
+    CustomNg2UiAuthModule.forRoot(authConfig)
   ],
   providers: [
     DefinitionsService,
@@ -288,13 +285,13 @@ import {stompConfig} from './services/stomp.config';
     },
     {
       provide: RollbarConfig, useValue: {
-      enabled: true,
-      verbose: true,
-      accessToken: 'da4d675c8c5340819eac1c080f5b1e76',
-      payload: {
-        environment: environment.id
+        enabled: true,
+        verbose: true,
+        accessToken: 'da4d675c8c5340819eac1c080f5b1e76',
+        payload: {
+          environment: environment.id
+        }
       }
-    }
     },
     RollbarService,
     {provide: ErrorHandler, useClass: RollbarService},

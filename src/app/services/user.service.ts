@@ -1,11 +1,10 @@
+import {HttpClient} from '@angular/common/http';
 import {Injectable, OnInit} from '@angular/core';
-import {RequestOptionsArgs, Response} from '@angular/http';
 import {StompRService} from '@stomp/ng2-stompjs';
 import {Message} from '@stomp/stompjs';
-import {AuthService, JwtHttp} from 'ng2-ui-auth';
+import {AuthService} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {CustomJwtHttp} from '../authentication/jwt-http.service';
 import {RollbarService} from '../rollbar/rollbar.service';
 import {stompConfig} from './stomp.config';
 import ActivityRepresentation = b.ActivityRepresentation;
@@ -21,35 +20,35 @@ export class UserService implements OnInit {
   userSource: ReplaySubject<UserRepresentation>;
   activities$: ReplaySubject<ActivityRepresentation[]>;
 
-  constructor(private http: JwtHttp, private stompRService: StompRService,
+  constructor(private http: HttpClient, private stompRService: StompRService,
               private rollbar: RollbarService, private auth: AuthService) {
     this.userSource = new ReplaySubject<UserRepresentation>(1);
     this.user$ = this.userSource.asObservable();
     this.activities$ = new ReplaySubject<ActivityRepresentation[]>(1);
-    (<CustomJwtHttp><any>this.http).getSessionsExpiredSubject()
-      .subscribe(() => {
-        this.logout();
-      });
+    // TODO logout after token expired
+    // (<CustomJwtHttp><any>this.http).getSessionsExpiredSubject()
+    //   .subscribe(() => {
+    //     this.logout();
+    //   });
   }
 
   ngOnInit(): void {
 
   }
 
-  login(user: any, opts?: RequestOptionsArgs): Promise<UserRepresentation> {
-    return this.auth.login(user, opts)
+  login(user: any): Promise<UserRepresentation> {
+    return this.auth.login(user)
       .toPromise()
-      .then((response: Response) => {
-        this.auth.setToken(response.json().token);
+      .then(() => {
         return this.initializeUser();
       });
   }
 
-  signup(user: any, opts?: RequestOptionsArgs): Promise<UserRepresentation> {
-    return this.auth.signup(user, opts)
+  signup(user: any): Promise<UserRepresentation> {
+    return this.auth.signup(user)
       .toPromise()
-      .then((response: Response) => {
-        this.auth.setToken(response.json().token);
+      .then((data) => {
+        this.auth.setToken(data);
         return this.initializeUser();
       });
   }
@@ -57,8 +56,7 @@ export class UserService implements OnInit {
   authenticate(name: string, userData?: any): Promise<UserRepresentation> {
     return this.auth.authenticate(name, userData)
       .toPromise()
-      .then((response: Response) => {
-        this.auth.setToken(response.json().token);
+      .then(() => {
         return this.initializeUser();
       });
   }
@@ -71,7 +69,7 @@ export class UserService implements OnInit {
       });
   }
 
-  resetPassword(email: string): Observable<Response> {
+  resetPassword(email: string) {
     return this.http.post('/api/auth/resetPassword', {email});
   }
 
@@ -80,7 +78,6 @@ export class UserService implements OnInit {
       const token = this.auth.getToken();
       if (token) {
         this.http.get('/api/user')
-          .map(user => user.json())
           .subscribe((user: UserRepresentation) => {
             this.userSource.next(user);
             this.rollbar.configure({
@@ -100,22 +97,21 @@ export class UserService implements OnInit {
 
   patchUser(userPatch: UserPatchDTO): Observable<UserRepresentation> {
     return this.http.patch('/api/user', userPatch)
-      .map(res => res.json())
       .map(user => {
         this.loadUser();
         return user;
       });
   }
 
-  patchPassword(userPasswordDTO: UserPasswordDTO): Observable<Response> {
+  patchPassword(userPasswordDTO: UserPasswordDTO) {
     return this.http.patch('/api/user/password', userPasswordDTO);
   }
 
   getSuppressions(): Observable<UserNotificationSuppressionRepresentation[]> {
-    return this.http.get('/api/user/suppressions').map(res => res.json());
+    return this.http.get<UserNotificationSuppressionRepresentation[]>('/api/user/suppressions');
   }
 
-  setSuppression(resource: ResourceRepresentation<any>, suppressed: boolean, uuid?: string): Observable<Response> {
+  setSuppression(resource: ResourceRepresentation<any>, suppressed: boolean, uuid?: string) {
     const path = '/api/user/suppressions/' + resource.id + (uuid ? '?uuid=' + uuid : '');
     if (suppressed) {
       return this.http.post(path, {});
@@ -123,7 +119,7 @@ export class UserService implements OnInit {
     return this.http.delete(path);
   }
 
-  setAllSuppressions(suppressed: boolean): Observable<Response> {
+  setAllSuppressions(suppressed: boolean) {
     if (suppressed) {
       return this.http.post('/api/user/suppressions', {});
     }
@@ -131,7 +127,7 @@ export class UserService implements OnInit {
   }
 
   viewActivity(activity: ActivityRepresentation) {
-    return this.http.get('/api/user/activities/' + activity.id).map(res => res.json());
+    return this.http.get('/api/user/activities/' + activity.id);
   }
 
   dismissActivity(activity: ActivityRepresentation) {

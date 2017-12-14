@@ -108,6 +108,10 @@ export abstract class GenericPage {
     autocomplete.all(by.tagName('li')).first().click();
     browser.wait(EC.presenceOf(this.browser.element(by.css('b-places-autocomplete.ng-valid'))));
   }
+
+  clickOverlay() {
+    this.browser.element(by.css('div.ui-widget-overlay')).click();
+  }
 }
 
 export class HomePage extends GenericPage {

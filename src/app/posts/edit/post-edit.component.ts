@@ -82,7 +82,7 @@ export class PostEditComponent implements OnInit {
     combineLatest(this.route.parent.parent.data, this.route.parent.data, this.userService.user$.first())
       .subscribe(([parentData, data, user]: [Data, Data, UserRepresentation]) => {
         this.board = parentData['board'];
-        if (data['boards']) {
+        if (data['boards']) { // of "boards" defined, means new post is being created
           if (data['boards'] instanceof Array) { // either array or one board can be resolved
             this.boardOptions = (<BoardRepresentation[]>data['boards'])
               .map(b => ({label: b.department.name + ' - ' + b.name, value: b}));

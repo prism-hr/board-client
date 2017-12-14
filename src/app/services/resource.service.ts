@@ -1,11 +1,12 @@
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {URLSearchParams} from '@angular/http';
 import {difference} from 'lodash';
-import {JwtHttp} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
+import {tap} from 'rxjs/operators';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {Subject} from 'rxjs/Subject';
 import {EntityFilter} from '../general/filter/filter.component';
+import {Utils} from './utils';
 import Action = b.Action;
 import BoardDTO = b.BoardDTO;
 import BoardPatchDTO = b.BoardPatchDTO;
@@ -18,19 +19,18 @@ import ResourceOperationRepresentation = b.ResourceOperationRepresentation;
 import ResourcePatchDTO = b.ResourcePatchDTO;
 import ResourceRepresentation = b.ResourceRepresentation;
 import Scope = b.Scope;
+import UniversityRepresentation = b.UniversityRepresentation;
 import UserRepresentation = b.UserRepresentation;
 import UserRoleDTO = b.UserRoleDTO;
 import UserRoleRepresentation = b.UserRoleRepresentation;
 import UserRolesRepresentation = b.UserRolesRepresentation;
-import UniversityRepresentation = b.UniversityRepresentation;
-import {Utils} from './utils';
 
 @Injectable()
 export class ResourceService {
 
   private resourceSubjects: { [index: string]: { [index: number]: Subject<PostRepresentation> } } = {};
 
-  constructor(private http: JwtHttp) {
+  constructor(private http: HttpClient) {
     const scopes: Scope[] = ['DEPARTMENT', 'BOARD', 'POST'];
     for (let scope of scopes) {
       this.resourceSubjects[scope] = {};
@@ -38,16 +38,15 @@ export class ResourceService {
   }
 
   getResourceByHandle(scope: Scope, handle: string): Observable<ResourceRepresentation<any>> {
-    const params = new URLSearchParams();
-    params.set('handle', handle);
-    return this.http.get('/api/' + scope.toLowerCase() + 's/', {search: params}).map(res => res.json())
-      .catch((error: Response) => {
+    const params = new HttpParams().set('handle', handle);
+    return this.http.get<ResourceRepresentation<any>>('/api/' + scope.toLowerCase() + 's/', {params})
+      .catch((error: HttpErrorResponse) => {
         if (error.status === 403 || error.status === 404) {
-          return Observable.of({errorStatus: error.status});
+          return Observable.of(<ResourceRepresentation<any>>{errorStatus: error.status});
         }
         throw error;
       })
-      .do(resource => {
+      .pipe(tap(resource => {
         if (resource) {
           const subjects = this.resourceSubjects[scope];
           if (!subjects[resource.id]) {
@@ -55,7 +54,7 @@ export class ResourceService {
           }
           subjects[resource.id].next(resource);
         }
-      });
+      }));
   }
 
   getResource(scope: Scope, id: number, options: { reload?: boolean } = {}): Observable<ResourceRepresentation<any>> {
@@ -65,16 +64,16 @@ export class ResourceService {
     }
     let directObservable;
     if (options.reload) {
-      directObservable = this.http.get('/api/' + scope.toLowerCase() + 's/' + id).map(res => res.json())
+      directObservable = this.http.get<ResourceRepresentation<any>>('/api/' + scope.toLowerCase() + 's/' + id)
         .catch((error: Response) => {
           if (error.status === 403 || error.status === 404) {
-            return Observable.of({errorStatus: error.status});
+            return Observable.of(<ResourceRepresentation<any>>{errorStatus: error.status});
           }
           throw error;
         })
-        .do(post => {
-          subjects[id].next(post);
-        });
+        .pipe(tap(resource => {
+          subjects[id].next(resource);
+        }));
     } else {
       directObservable = subjects[id].asObservable();
     }
@@ -88,81 +87,76 @@ export class ResourceService {
 
   getResources(scope: Scope, filter?: EntityFilter): Observable<ResourceRepresentation<any>[]> {
     const resourceCol = scope.toLowerCase() + 's';
-    return this.http.get('/api/' + resourceCol, {search: this.generateFilterParams(filter)}).map(res => res.json());
+    return this.http.get<ResourceRepresentation<any>[]>('/api/' + resourceCol, {params: this.generateFilterParams(filter)});
   }
 
   lookupResources(scope: Scope, query: string): Observable<ResourceRepresentation<any>[]> {
-    const params = new URLSearchParams();
-    params.set('query', query);
+    const params = new HttpParams().set('query', query);
     const resourceCol = Utils.pluralize(scope.toLowerCase());
-    return this.http.get('/api/' + resourceCol, {search: params}).map(res => res.json());
+    return this.http.get<ResourceRepresentation<any>[]>('/api/' + resourceCol, {params});
   }
 
   getPosts(filter?: EntityFilter): Observable<PostRepresentation[]> {
-    return this.http.get('/api/posts', {search: this.generateFilterParams(filter)})
-      .map(res => res.json());
+    return this.http.get<PostRepresentation[]>('/api/posts', {params: this.generateFilterParams(filter)});
   }
 
   getBoards(filter?: EntityFilter): Observable<BoardRepresentation[]> {
-    return this.http.get('/api/boards', {search: this.generateFilterParams(filter)})
-      .map(res => res.json());
+    return this.http.get<BoardRepresentation[]>('/api/boards', {params: this.generateFilterParams(filter)});
   }
 
   getResourceUsers(resource: ResourceRepresentation<any>, filter?: EntityFilter): Observable<UserRolesRepresentation> {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
     return this.http.get('/api/' + resourceCol + '/' + resource.id + '/users',
-      {search: this.generateFilterParams(filter)})
-      .map(res => res.json());
+      {params: this.generateFilterParams(filter)});
   }
 
   postBoard(department: DepartmentRepresentation, board: BoardDTO) {
-    return this.http.post('/api/departments/' + department.id + '/boards', board).map(res => res.json());
+    return this.http.post<BoardRepresentation>('/api/departments/' + department.id + '/boards', board);
   }
 
   patchBoard(id: number, board: BoardPatchDTO): Observable<BoardRepresentation> {
-    return this.http.patch('/api/boards/' + id, board).map(res => res.json());
+    return this.http.patch('/api/boards/' + id, board);
   }
 
   postDepartment(university: UniversityRepresentation, department: DepartmentDTO) {
-    return this.http.post('/api/universities/' + university.id + '/departments/', department).map(res => res.json());
+    return this.http.post('/api/universities/' + university.id + '/departments/', department);
   }
 
   patchDepartment(id: number, department: DepartmentPatchDTO): Observable<DepartmentRepresentation> {
-    return this.http.patch('/api/departments/' + id, department).map(res => res.json());
+    return this.http.patch('/api/departments/' + id, department);
   }
 
   executeAction(resource: ResourceRepresentation<any>, action: Action,
                 resourcePatch: ResourcePatchDTO<any>): Observable<ResourceRepresentation<any>> {
     return this.http.post('/api/' + resource.scope.toLowerCase() + 's/' + resource.id + '/actions/' + action.toLowerCase(), resourcePatch)
-      .map(res => res.json())
-      .do(resource => {
+      .pipe(tap(resource => {
         this.resourceUpdated(resource);
-      });
+      }));
   }
 
   updateResourceUser(resource: ResourceRepresentation<any>, user: UserRepresentation, userRoleDTO: UserRoleDTO): Observable<UserRoleRepresentation> {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
-    return this.http.put('/api/' + resourceCol + '/' + resource.id + '/users/' + user.id, userRoleDTO).map(res => res.json());
+    return this.http.put('/api/' + resourceCol + '/' + resource.id + '/users/' + user.id, userRoleDTO);
   }
 
   addUser(resource: ResourceRepresentation<any>, user: UserRoleDTO): Observable<UserRoleRepresentation> {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
-    return this.http.post('/api/' + resourceCol + '/' + resource.id + '/users', user).map(res => res.json());
+    return this.http.post('/api/' + resourceCol + '/' + resource.id + '/users', user);
   }
 
   addUsersInBulk(resource: ResourceRepresentation<any>, users: UserRoleDTO[]): Observable<number> {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
-    return this.http.post('/api/' + resourceCol + '/' + resource.id + '/users/bulk', users).map(res => res.json());
+    return this.http.post<number>('/api/' + resourceCol + '/' + resource.id + '/users/bulk', users);
   }
 
   lookupUsers(resource: ResourceRepresentation<any>, query: string): Observable<UserRepresentation[]> {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
-    return this.http.get('/api/' + resourceCol + '/' + resource.id + '/lookupUsers?query=' + query).map(res => res.json());
+    return this.http.get<UserRepresentation[]>('/api/' + resourceCol + '/' + resource.id + '/lookupUsers?query=' + query);
   }
 
   loadOperations(resource: ResourceRepresentation<any>): Observable<ResourceOperationRepresentation[]> {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
-    return this.http.get('/api/' + resourceCol + '/' + resource.id + '/operations').map(res => res.json());
+    return this.http.get<ResourceOperationRepresentation[]>('/api/' + resourceCol + '/' + resource.id + '/operations');
   }
 
   removeUser(resource: ResourceRepresentation<any>, user: UserRepresentation) {
@@ -171,12 +165,12 @@ export class ResourceService {
   }
 
   lookupOrganizations(query: string) {
-    return this.http.get('/api/posts/organizations?query=' + query).map(res => res.json());
+    return this.http.get('/api/posts/organizations?query=' + query);
   }
 
   getArchiveQuarters(scope: Scope): Observable<string[]> {
     const resourceCol = scope.toLowerCase() + 's';
-    return this.http.get('/api/' + resourceCol + '/archiveQuarters').map(res => res.json());
+    return this.http.get<string[]>('/api/' + resourceCol + '/archiveQuarters');
   }
 
   canEdit(resource: ResourceRepresentation<any>) {
@@ -255,21 +249,21 @@ export class ResourceService {
   }
 
   private generateFilterParams(filter: EntityFilter) {
-    const params = new URLSearchParams();
+    let params = new HttpParams();
     if (filter && filter.searchTerm) {
-      params.set('searchTerm', filter.searchTerm);
+      params = params.set('searchTerm', filter.searchTerm);
     }
     if (filter && filter.state) {
-      params.set('state', filter.state);
+      params = params.set('state', filter.state);
     }
     if (filter && filter.quarter) {
-      params.set('quarter', filter.quarter);
+      params = params.set('quarter', filter.quarter);
     }
     if (filter && filter.includePublic) {
-      params.set('includePublic', filter.includePublic.toString());
+      params = params.set('includePublic', filter.includePublic.toString());
     }
     if (filter && filter.parentId) {
-      params.set('parentId', filter.parentId.toString());
+      params = params.set('parentId', filter.parentId.toString());
     }
     return params;
   }

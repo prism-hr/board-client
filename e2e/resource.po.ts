@@ -147,6 +147,10 @@ export class DepartmentViewPage extends GenericResourcePage {
     return browser.get('/' + handle);
   }
 
+  getHeaderName() {
+    return this.browser.element(by.tagName('h1'));
+  }
+
   assertDepartmentView(name: string, summary: string, categories: string[]) {
     expect(this.browser.element(by.css('p-tabMenu li.ui-state-active a span')).getText()).toEqual('View');
     expect(this.browser.element(by.tagName('h1')).getText()).toEqual(name);

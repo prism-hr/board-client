@@ -63,7 +63,7 @@ describe('Set up department', () => {
     TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop-department');
 
     departmentViewPage.followWalkthroughPath();
-
+    departmentViewPage.clickOverlay();
     departmentViewPage.assertDepartmentView('Bishop department', 'Bishop summary',
       ['Undergraduate Student', 'Master Student', 'Research Student', 'Research Staff']);
     departmentViewPage.assertTabItems('View', 'Edit', 'Users', 'Badge');
@@ -105,6 +105,7 @@ describe('Set up department', () => {
         'admin2@test.prism.hr', 'Admin2', 'Bishop', '1secret1');
       browser.wait(EC.presenceOf(departmentViewPage.getActiveTabItem()));
       departmentViewPage.followWalkthroughPath();
+      departmentViewPage.clickOverlay();
             departmentViewPage.assertDepartmentView('Bishop department', 'Bishop summary',
         ['Undergraduate Student', 'Master Student', 'Research Student', 'Research Staff']);
       departmentViewPage.assertTabItems('View', 'Edit', 'Users', 'Badge');
@@ -130,6 +131,7 @@ describe('Set up department', () => {
     departmentsPage.waitForLoaded();
     departmentsPage.getDepartmentTitleUrl('Bishop department').click();
 
+    departmentViewPage.clickOverlay();
     departmentViewPage.getTabItem('Edit').click();
 
     departmentEditPage.getNameInput().clear();
@@ -145,6 +147,7 @@ describe('Set up department', () => {
     browser.wait(EC.not(EC.urlContains('/edit')));
     TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop2');
 
+    departmentViewPage.clickOverlay();
     departmentViewPage.assertDepartmentView('Bishop2 dep', 'Bishop2 summary',
       ['Master Student', 'Research Student']);
 
@@ -162,7 +165,8 @@ describe('Set up department', () => {
 
     departmentsPage.getDepartmentTitleUrl('Bishop2 dep').click();
 
-    departmentEditPage.getTabItem('Users').click();
+    departmentViewPage.clickOverlay();
+    departmentViewPage.getTabItem('Users').click();
 
     resourceUsersPage.getAddMembersInBulkButton().click();
     TestUtils.uploadFile(resourceUsersPage.getCsvUploaderInput(), 'user-list.csv');

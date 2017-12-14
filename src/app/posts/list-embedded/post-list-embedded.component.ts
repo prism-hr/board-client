@@ -16,6 +16,7 @@ export class PostListEmbeddedComponent implements OnInit {
   posts: PostRepresentation[];
   user: UserRepresentation;
   filter: EntityFilter;
+  newPostLink: any[];
 
   constructor(private resourceService: ResourceService, private userService: UserService) {
   }
@@ -25,6 +26,7 @@ export class PostListEmbeddedComponent implements OnInit {
       this.user = user;
       this.loadPosts();
     });
+    this.newPostLink = ['/newPost', {[this.resource.scope.toLowerCase() + 'Id']: this.resource.id}]
   }
 
   filterApplied(filter: EntityFilter) {

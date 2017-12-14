@@ -1,21 +1,21 @@
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
 import {ConfigService} from 'ng2-ui-auth';
+import {IOauth2Options} from 'ng2-ui-auth/config.service';
 
 @Injectable()
 export class DefinitionsService {
 
   private definitions: { [key: string]: any };
 
-  constructor(private http: Http, private authConfig: ConfigService) {
+  constructor(private http: HttpClient, private authConfig: ConfigService) {
   }
 
   loadDefinitions(): Promise<any> {
     return this.http.get('/api/definitions')
       .toPromise()
       .then(definitions => {
-
-        this.definitions = definitions.json();
+        this.definitions = definitions;
         this.applyOauthProviderSettings();
         return this.definitions;
       });
@@ -27,8 +27,8 @@ export class DefinitionsService {
 
   private applyOauthProviderSettings() {
     for (const provider of this.definitions.oauthProvider) {
-      const providers = this.authConfig.providers;
-      const oauthSettings = providers[provider.id.toLowerCase()];
+      const providers = this.authConfig.options.providers;
+      const oauthSettings = <IOauth2Options>providers[provider.id.toLowerCase()];
       oauthSettings.clientId = provider.clientId;
     }
   }
