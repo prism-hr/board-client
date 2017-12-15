@@ -1,7 +1,7 @@
+import * as dateFormat from 'dateformat';
 import {resolve as pathResolve} from 'path';
 import {browser, ElementFinder} from 'protractor';
 import * as request from 'request';
-import * as dateFormat from 'dateformat';
 import {resolve as urlResolve} from 'url';
 
 export class TestUtils {
@@ -16,15 +16,18 @@ export class TestUtils {
   }
 
   static removeTestData(defer) {
-    request(urlResolve(this.getBaseUrl(), 'api/user/test'), {json: true, method: 'DELETE'}, (err, resp, body) => {
-      if (err || resp.statusCode !== 200) {
-        console.log('Error deleting test data ' + (err || JSON.stringify(resp)));
+    setTimeout(() => request(urlResolve(this.getBaseUrl(), 'api/user/test'), {json: true, method: 'DELETE'}, (err, resp, body) => {
+      if (err) {
+        console.log('Unexpected error when deleting test data ' + err);
         defer.reject(err);
-      } else {
+      } else if (resp.statusCode === 200) {
         console.log('Deleted test data');
         defer.fulfill(body);
+      } else {
+        console.log('Could not delete test data. Status code: ' + resp.statusCode);
+        TestUtils.removeTestData(defer);
       }
-    });
+    }), 500);
   }
 
   static getTestEmails(email, defer) {
