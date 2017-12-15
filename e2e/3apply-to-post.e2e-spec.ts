@@ -110,7 +110,7 @@ describe('Apply to post', () => {
     postViewPage.getButtonByLabel('Apply Now').click();
 
     authenticationDialog.performRegistration(
-      'independent-student' + '4' + '@test.prism.hr', 'Student1', 'Independent', '1secret1');
+      'independent-student4@test.prism.hr', 'Student1', 'Independent', '1secret1');
 
     browser.wait(EC.presenceOf(postViewPage.getRadioButton('gender', 'Male')));
     postViewPage.getRadioButton('gender', 'Male').click();
@@ -126,6 +126,7 @@ describe('Apply to post', () => {
     postViewPage.getSubmitButton().click();
 
     browser.wait(EC.presenceOf(postViewPage.getHowToApplyLink()));
+    postViewPage.getLogoutButton().click();
   });
 });
 

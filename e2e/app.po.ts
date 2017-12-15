@@ -136,11 +136,7 @@ export class HomePage extends GenericPage {
   }
 }
 
-
-export class AuthenticationDialog {
-  constructor(private browser: ProtractorBrowser) {
-  }
-
+export class AuthenticationDialog extends GenericPage {
   getParagraphText() {
     return this.browser.element(by.tagName('mat-dialog-container h2')).getText();
   }
@@ -159,6 +155,10 @@ export class AuthenticationDialog {
 
   getPasswordInput() {
     return this.browser.element(by.css('input[placeholder="Password"'));
+  }
+
+  getRepeatPasswordInput() {
+    return this.browser.element(by.css('input[placeholder="Repeat Password"'));
   }
 
   getSubmitButton() {
@@ -183,8 +183,27 @@ export class AuthenticationDialog {
     this.getSubmitButton().click();
   }
 
+  performForgotPassword(email: string) {
+    expect(this.getParagraphText()).toEqual('Forgot Password?');
+    this.sendKeysWithRetry(this.getEmailInput(), email);
+    this.getButtonByLabel('Reset Password').click();
+    expect(this.browser.element(by.css('mat-dialog-container span.ui-messages-summary')).getText()).toEqual('Email sent');
+  }
+
+  performResetPassword(password: string) {
+    this.browser.wait(EC.presenceOf(this.browser.element(by.tagName('mat-dialog-container'))));
+    expect(this.getParagraphText()).toEqual('Reset Password');
+    this.sendKeysWithRetry(this.getPasswordInput(), password);
+    this.sendKeysWithRetry(this.getRepeatPasswordInput(), password);
+    this.getSubmitButton().click();
+  }
+
   getAlreadyRegisteredButton() {
     return this.browser.element(by.css('button[label="Already Registered?"'));
+  }
+
+  getForgotPasswordButton() {
+    return this.browser.element(by.css('button[label="Forgot password?"'));
   }
 
   private sendKeysWithRetry(input: ElementFinder, value: string) {
