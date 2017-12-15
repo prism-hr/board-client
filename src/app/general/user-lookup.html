@@ -19,7 +19,7 @@
       <control-messages [control]="parentForm.get('userLookup')"></control-messages>
     </div>
   </div>
-  <div *ngIf="parentForm.get('showDetails').value">
+  <div *ngIf="parentForm.get('showDetails').value === 'edit'">
     <div class="input-beside-title">
       <button pButton type="button" (click)="returnToSearch()" label="Return to Search"
               class="ui-button ui-button-warning"></button>
@@ -36,5 +36,12 @@
       <input pInputText formControlName="email" placeholder="Email" id="email" required>
       <control-messages [control]="parentForm.get('email')"></control-messages>
     </div>
+  </div>
+  <div *ngIf="parentForm.get('showDetails').value === 'view'">
+    <div class="input-beside-title">
+      <button pButton type="button" (click)="returnToSearch()" label="Return to Search"
+              class="ui-button ui-button-warning"></button>
+    </div>
+    {{parentForm.get('givenName').value}} {{parentForm.get('surname').value}} ({{selectedEmail}})
   </div>
 </div>

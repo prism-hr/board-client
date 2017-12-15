@@ -14,6 +14,7 @@ export class UserLookupComponent implements OnInit {
   public parentForm: FormGroup;
 
   @Input() resource: any;
+  selectedEmail: string;
 
   userSuggestions: UserRepresentation[];
 
@@ -23,7 +24,7 @@ export class UserLookupComponent implements OnInit {
 
   ngOnInit(): void {
     this.parentForm.addControl('userLookup', new FormControl('', Validators.required));
-    this.parentForm.addControl('showDetails', new FormControl(false));
+    this.parentForm.addControl('showDetails', new FormControl(null));
   }
 
   searchUsers(event) {
@@ -33,22 +34,34 @@ export class UserLookupComponent implements OnInit {
   }
 
   userSelected() {
+    // apply user object to form
     const userLookupField = this.parentForm.get('userLookup');
-    this.parentForm.patchValue(userLookupField.value);
+    const userValue = Object.assign({}, userLookupField.value);
+    this.selectedEmail = userValue.email;
+    userValue.email = null; // removing email from form (because it's invalid)
+    this.parentForm.patchValue(userValue);
+
+    // clean up lookup field
     userLookupField.setValue(null);
     userLookupField.clearValidators();
     userLookupField.updateValueAndValidity();
-    this.parentForm.get('showDetails').setValue(true);
+
+    // remove validation constraint from email field
+    const emailField = this.parentForm.get('email');
+    emailField.clearValidators();
+    emailField.updateValueAndValidity();
+
+    this.parentForm.get('showDetails').setValue('view');
   }
 
   cannotFindUser() {
     const userLookupField = this.parentForm.get('userLookup');
-    this.parentForm.get('showDetails').setValue(true);
     userLookupField.clearValidators();
     userLookupField.updateValueAndValidity();
+    this.parentForm.get('showDetails').setValue('edit');
   }
 
   returnToSearch() {
-    this.parentForm.reset();
+    this.parentForm.get('showDetails').setValue(null);
   }
 }
