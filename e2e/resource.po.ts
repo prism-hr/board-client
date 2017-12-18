@@ -285,4 +285,12 @@ export class ResourceUsersPage extends GenericResourcePage {
     return this.browser.element(by.id('csv-uploader-input'));
   }
 
+  getUserTable() {
+    return this.browser.element(by.tagName('table'));
+  }
+
+  getUserTableRows() {
+    return this.getUserTable().element(by.tagName('tbody')).all(by.tagName('tr'));
+  }
+
 }

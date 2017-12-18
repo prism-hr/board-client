@@ -62,7 +62,7 @@ describe('Apply to post', () => {
       browser.get(urls[0]);
 
       authenticationDialog.performResetPassword('2secret2');
-      // authenticationDialog.performLogin('independent-student4@test.prism.hr', '2secret2');
+      authenticationDialog.performLogin('independent-student4@test.prism.hr', '2secret2');
     });
   });
 });

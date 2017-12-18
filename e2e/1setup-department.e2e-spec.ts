@@ -106,7 +106,7 @@ describe('Set up department', () => {
       browser.wait(EC.presenceOf(departmentViewPage.getActiveTabItem()));
       departmentViewPage.followWalkthroughPath();
       departmentViewPage.clickOverlay();
-            departmentViewPage.assertDepartmentView('Bishop department', 'Bishop summary',
+      departmentViewPage.assertDepartmentView('Bishop department', 'Bishop summary',
         ['Undergraduate Student', 'Master Student', 'Research Student', 'Research Staff']);
       departmentViewPage.assertTabItems('View', 'Edit', 'Users', 'Badge');
       TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop-department');
@@ -170,6 +170,8 @@ describe('Set up department', () => {
 
     resourceUsersPage.getAddMembersInBulkButton().click();
     TestUtils.uploadFile(resourceUsersPage.getCsvUploaderInput(), 'user-list.csv');
+    browser.wait(EC.presenceOf(resourceUsersPage.getUserTable()));
+    expect(resourceUsersPage.getUserTableRows().count()).toEqual(9);
     resourceUsersPage.selectDropdownOption('Select a category', 'Master Student');
     resourceUsersPage.getProgramInput().sendKeys('Sample program');
     resourceUsersPage.getMemberYearSelectButton(3).click();
