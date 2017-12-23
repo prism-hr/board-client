@@ -23,7 +23,7 @@
       <div class="grid__item one-whole">
         <form [formGroup]="loginForm" (ngSubmit)="login()">
           <div class="input-holder">
-            <input pInputText type="email" placeholder="Email" formControlName="email">
+            <input pInputText type="email" placeholder="Email" formControlName="email" [readonly]="dialogData.user">
             <control-messages [control]="loginForm.get('email')"></control-messages>
           </div>
           <div class="input-holder">
@@ -37,7 +37,7 @@
               <button pButton type="button" class="ui-button-secondary" label="Forgot password?"
                       (click)="setView('FORGOT')"></button>
               <button pButton type="button" class="ui-button-secondary" label="Register"
-                      (click)="setView('REGISTER')"></button>
+                      (click)="setView('REGISTER')" *ngIf="!dialogData.user"></button>
             </div>
           </div>
         </form>

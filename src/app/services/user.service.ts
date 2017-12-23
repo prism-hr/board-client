@@ -73,6 +73,10 @@ export class UserService implements OnInit {
     return this.http.post('/api/auth/resetPassword', {email});
   }
 
+  getInvitee(invitationUuid: string): Observable<UserRepresentation> {
+    return this.http.get<UserRepresentation>('/api/auth/invitee/' + invitationUuid);
+  }
+
   loadUser(): Promise<UserRepresentation> {
     return new Promise(resolve => {
       const token = this.auth.getToken();

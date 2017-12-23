@@ -1,4 +1,4 @@
-import {browser, by, protractor} from 'protractor';
+import {browser, protractor} from 'protractor';
 import {AuthenticationDialog, HomePage} from './app.po';
 import {
   BoardViewPage, DepartmentEditPage, DepartmentsPage, PostEditPage, PostNewEditPage, PostsPage, PostViewPage,
@@ -56,8 +56,7 @@ describe('Apply to post', () => {
 
       browser.get(urls[0]);
 
-      authenticationDialog.performRegistration(
-        'student1@test.prism.hr', 'Student1', 'Bishop', '1secret1');
+      authenticationDialog.performRegistration('student1@test.prism.hr', 'Student1', 'Bishop', '1secret1');
 
       postViewPage.assertPostView('Bishop2 Post',
         'Bishop2 summary', 'Bishop2 description', ['Employment', 'Internship'], false);
@@ -93,7 +92,7 @@ describe('Apply to post', () => {
 
     postViewPage.getTabItem('Edit').click();
 
-    postNewEditPage.getRadioButton('applyType','By visiting a web page').click();
+    postNewEditPage.getRadioButton('applyType', 'By visiting a web page').click();
     postNewEditPage.getApplyWebsiteInput().sendKeys('nie.com.pl');
     postEditPage.getButtonByLabel('Save').click();
     postViewPage.getLogoutButton().click();

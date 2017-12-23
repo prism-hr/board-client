@@ -4,6 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {UserService} from '../services/user.service';
 import {ValidationService} from '../validation/validation.service';
 import {ValidationUtils} from '../validation/validation.utils';
+import UserRepresentation = b.UserRepresentation;
 
 @Component({
   templateUrl: './authentication.dialog.html',
@@ -41,7 +42,11 @@ export class AuthenticationDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setView(this.dialogData.showRegister ? 'REGISTER' : 'LOGIN');
+    this.setView(this.dialogData.initialView || 'LOGIN');
+    if(this.dialogData.user) {
+      const emailControl = this.loginForm.get('email');
+      emailControl.setValue(this.dialogData.user.email);
+    }
   }
 
   setView(view: AuthenticationView): void {
@@ -123,9 +128,10 @@ export class AuthenticationDialogComponent implements OnInit {
 
 }
 
-type AuthenticationView = 'LOGIN' | 'REGISTER' | 'FORGOT';
+export type AuthenticationView = 'LOGIN' | 'REGISTER' | 'FORGOT';
 
 export interface AuthenticationDialogData {
-  showRegister?: boolean;
+  initialView?: AuthenticationView;
   uuid?: string;
+  user?: UserRepresentation;
 }

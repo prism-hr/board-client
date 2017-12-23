@@ -4,38 +4,41 @@ import {ActivatedRouteSnapshot, CanActivate, ParamMap, Router} from '@angular/ro
 import {AuthService} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
 import {UserService} from '../services/user.service';
-import {AuthenticationDialogComponent, AuthenticationDialogData} from './authentication.dialog';
+import {AuthenticationDialogComponent, AuthenticationDialogData, AuthenticationView} from './authentication.dialog';
+import UserRepresentation = b.UserRepresentation;
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-
 
   constructor(private router: Router, private dialog: MatDialog, private authService: AuthService, private userService: UserService) {
   }
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-    return this.ensureAuthenticated({modalType: route.data.modalType || 'Login'}).first();
+    return this.ensureAuthenticated({initialView: route.data.modalView}).first();
   }
 
-  ensureAuthenticated(options: { modalType: string, uuid?: string }): Observable<boolean> {
+  ensureAuthenticated(options: { initialView?: AuthenticationView, uuid?: string }): Observable<boolean> {
     if (this.authService.isAuthenticated()) {
       return Observable.of(true);
     } else {
       this.userService.logout();
-      const config = new MatDialogConfig();
-      const dialogData: AuthenticationDialogData = {showRegister: options.modalType === 'Register', uuid: options.uuid};
-      config.data = dialogData;
-      const dialogRef = this.dialog.open(AuthenticationDialogComponent, config);
-      return dialogRef.afterClosed();
+      const inviteeObservable = options.uuid ? this.userService.getInvitee(options.uuid) : Observable.of(null);
+      return inviteeObservable
+        .switchMap(user => {
+          const config = new MatDialogConfig<AuthenticationDialogData>();
+          const initialView = options.initialView || (user && user.registered ? 'LOGIN' : 'REGISTER');
+          config.data = {initialView: initialView, uuid: options.uuid, user};
+          const dialogRef = this.dialog.open(AuthenticationDialogComponent, config);
+          return dialogRef.afterClosed();
+        });
     }
   }
 
   requestSecuredEndpoint<T>(endpointCall: () => Observable<T>, paramMap: ParamMap): Observable<T> {
-    const modalType = paramMap.get('modal');
     return endpointCall()
       .catch((error: Response) => {
         if (error.status === 401) {
-          return this.ensureAuthenticated({modalType})
+          return this.ensureAuthenticated({})
             .mergeMap(loggedIn => {
               if (loggedIn) {
                 return endpointCall();

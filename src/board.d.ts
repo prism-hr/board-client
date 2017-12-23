@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.29.366 on 2017-12-05 09:50:00.
+// Generated using typescript-generator version 1.29.366 on 2017-12-19 18:40:43.
 
 declare namespace b {
 
@@ -45,6 +45,15 @@ declare namespace b {
   interface LoginDTO extends AuthenticateDTO<LoginDTO> {
     email?: string;
     password?: string;
+  }
+
+  interface OAuthAuthorizationDataDTO {
+    client_id?: string;
+    redirect_uri?: string;
+  }
+
+  interface OAuthDataDTO {
+    code?: string;
   }
 
   interface PostDTO extends ResourceDTO<PostDTO> {
@@ -109,9 +118,8 @@ declare namespace b {
   }
 
   interface SigninDTO extends AuthenticateDTO<SigninDTO> {
-    clientId?: string;
-    code?: string;
-    redirectUri?: string;
+    authorizationData?: OAuthAuthorizationDataDTO;
+    oauthData?: OAuthDataDTO;
   }
 
   interface UserDTO {
@@ -322,6 +330,7 @@ declare namespace b {
     scopes?: Scope[];
     defaultOrganizationName?: string;
     defaultLocation?: LocationRepresentation;
+    registered?: boolean;
   }
 
   interface UserRoleRepresentation {
@@ -350,11 +359,11 @@ declare namespace b {
   }
 
   interface LocationDefinition {
-    name?: string;
     domicile?: string;
     googleId?: string;
     latitude?: number;
     longitude?: number;
+    name?: string;
   }
 
   interface Comparable<T> {

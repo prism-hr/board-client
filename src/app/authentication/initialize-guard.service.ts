@@ -12,49 +12,48 @@ import {ResetPasswordDialogComponent} from './reset-password.dialog';
 @Injectable()
 export class InitializeGuard implements CanActivate {
 
-
   constructor(private location: Location, private router: Router, private dialog: MatDialog, private authGuard: AuthGuard,
               private userService: UserService) {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     const params = route.queryParamMap;
-    const modalType = params.get('modal');
     const uuid = params.get('uuid');
+    const resetPasswordUuid = params.get('resetPasswordUuid');
+    const unsubscribeUuid = params.get('unsubscribeUuid');
     let observable: Observable<boolean>;
 
-    if (modalType || uuid) {
+    if (uuid || resetPasswordUuid || unsubscribeUuid) {
+      this.userService.logout();
+    }
+
+    if (uuid || resetPasswordUuid) {
       // removing UUID from URL
-      let path: string = Utils.removeURLParameter(this.location.path(), 'modal');
-      path = Utils.removeURLParameter(path, 'uuid');
+      let path: string = Utils.removeURLParameter(this.location.path(), 'uuid');
+      path = Utils.removeURLParameter(path, 'resetPasswordUuid');
       // we have to replace current state as well as redirect (redirection will happen after current method is finished)
       this.location.replaceState(path);
       state.url = path;
       this.router.navigate([path.slice(1)]);
-    }
-
-    if (modalType) {
-      this.userService.logout();
     } else {
       if (this.userService.isUserInitializationPending()) {
         this.userService.initializeUser();
       }
     }
 
-    if (modalType === 'resetPassword') {
+    if (resetPasswordUuid) {
       const config = new MatDialogConfig();
-      config.data = {uuid};
+      config.data = {resetPasswordUuid};
       const dialogRef = this.dialog.open(ResetPasswordDialogComponent, config);
       observable = dialogRef.afterClosed()
         .flatMap(passwordChanged => {
           if (passwordChanged) {
-            return this.authGuard.ensureAuthenticated({modalType: 'Login'})
+            return this.authGuard.ensureAuthenticated({initialView: 'LOGIN'})
           }
           return Observable.of(true);
         }).map(() => true); // activate no matter if password was successfully changed
-
-    } else if (modalType === 'Register' || modalType === 'Login') {
-      observable = this.authGuard.ensureAuthenticated({modalType, uuid});
+    } else if (uuid) {
+      observable = this.authGuard.ensureAuthenticated({uuid});
     } else {
       observable = Observable.of(true);
     }

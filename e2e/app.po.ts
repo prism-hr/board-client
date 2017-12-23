@@ -68,6 +68,14 @@ export abstract class GenericPage {
       .first().click();
   }
 
+  getAccountButton() {
+    return this.browser.element(by.css('b-header a.btn-user'));
+  }
+
+  getActivitiesButton() {
+    return this.browser.element(by.css('b-header div.activity a'));
+  }
+
   openActivitiesPanel(expectedCount: number) {
     browser.wait(EC.presenceOf(this.getActivitiesButton()));
     if (expectedCount) {
@@ -77,10 +85,6 @@ export abstract class GenericPage {
     }
     this.getActivitiesButton().click();
     expect(this.getActivityItems().count()).toEqual(expectedCount);
-  }
-
-  getActivitiesButton() {
-    return this.browser.element(by.css('b-header div.activity a'));
   }
 
   getActivitiesCountBadge() {
@@ -208,14 +212,31 @@ export class AuthenticationDialog extends GenericPage {
   }
 
   private sendKeysWithRetry(input: ElementFinder, value: string) {
+    input.click();
     input.clear();
     input.sendKeys(value);
     input.getAttribute('value').then(existingValue => {
+      console.log('existing: ' + existingValue + ', value: ' + value);
       if (existingValue !== value) {
         this.sendKeysWithRetry(input, value);
       }
     })
   }
-
 }
 
+export class AccountPage extends GenericPage {
+
+  getNotificationsButton(boardName: string) {
+    this.browser.wait(EC.presenceOf(this.browser.element(by.css('li.board-subscription-item'))));
+    return this.browser.element.all(by.css('li.board-subscription-item'))
+      .filter(li => {
+        return li.element(by.css('h3 a')).getText().then(text => {
+          return text === boardName;
+        });
+      })
+      .first()
+      .element(by.css('p-togglebutton'));
+
+  }
+
+}

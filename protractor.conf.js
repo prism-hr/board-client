@@ -18,7 +18,8 @@ exports.config = {
     './e2e/1setup-department.e2e-spec.ts',
     './e2e/2setup-post.e2e-spec.ts',
     './e2e/3apply-to-post.e2e-spec.ts',
-    './e2e/4change-password.e2e-spec.ts'
+    './e2e/4change-password.e2e-spec.ts',
+    './e2e/5suppress-post-emails.e2e-spec.ts'
   ],
   capabilities: {
     'browserName': 'chrome'

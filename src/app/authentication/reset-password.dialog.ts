@@ -72,7 +72,7 @@ export class ResetPasswordDialogComponent implements OnInit {
       return;
     }
     this.loading = true;
-    const userPasswordDTO: UserPasswordDTO = {password: this.passwordForm.get('password').value, uuid: this.dialogData.uuid};
+    const userPasswordDTO: UserPasswordDTO = {password: this.passwordForm.get('password').value, uuid: this.dialogData.resetPasswordUuid};
     this.userService.patchPassword(userPasswordDTO)
       .subscribe(() => {
           this.dialogRef.close(true);

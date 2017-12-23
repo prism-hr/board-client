@@ -78,7 +78,7 @@ export class PostApplyComponent implements OnInit, OnChanges {
   }
 
   authenticate() {
-    this.authGuard.ensureAuthenticated({modalType: 'Register'}).first() // open dialog if not authenticated
+    this.authGuard.ensureAuthenticated({initialView: 'REGISTER'}).first() // open dialog if not authenticated
       .flatMap(authenticated => {
         if (!authenticated) {
           return Observable.of(null);

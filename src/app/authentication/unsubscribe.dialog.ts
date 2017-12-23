@@ -30,7 +30,7 @@ export class UnsubscribeDialogComponent implements OnInit {
 
   unsubscribed: boolean;
   resource: ResourceRepresentation<any>;
-  uuid: string
+  uuid: string;
 
   constructor(private dialogRef: MatDialogRef<UnsubscribeDialogComponent>, @Inject(MAT_DIALOG_DATA) data: any, private userService: UserService) {
     this.resource = data.resource;
