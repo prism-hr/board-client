@@ -30,13 +30,15 @@ export class TestUtils {
     }), 500);
   }
 
-  static getTestEmails(email, defer) {
+  static getTestEmails(email, defer, expectedLength = 1) {
     setTimeout(() => request(urlResolve(this.getBaseUrl(), 'api/test/emails?email=' + email), {json: true}, (err, resp, body) => {
       if (err) {
         console.log('Error requesting test email ' + err);
         defer.reject(err);
-      } else if (body.length > 0) {
+      } else if (body.length === expectedLength) {
         defer.fulfill(body);
+      } else if (body.length > expectedLength) {
+        throw new Error('' + body.length + ' email found for ' + email + '. Expected: ' + expectedLength);
       } else {
         TestUtils.getTestEmails(email, defer);
       }

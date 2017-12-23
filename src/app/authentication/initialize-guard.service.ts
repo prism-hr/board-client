@@ -33,8 +33,7 @@ export class InitializeGuard implements CanActivate {
       path = Utils.removeURLParameter(path, 'resetPasswordUuid');
       // we have to replace current state as well as redirect (redirection will happen after current method is finished)
       this.location.replaceState(path);
-      state.url = path;
-      this.router.navigate([path.slice(1)]);
+      this.router.navigate([path.slice(1)], {replaceUrl: true, fragment: route.fragment});
     } else {
       if (this.userService.isUserInitializationPending()) {
         this.userService.initializeUser();

@@ -183,7 +183,9 @@ export class AuthenticationDialog extends GenericPage {
     const dialogHeaderElement = this.browser.element(by.css('mat-dialog-container h2'));
     this.browser.wait(EC.textToBePresentInElement(dialogHeaderElement, 'Login'));
     expect(this.getParagraphText()).toEqual('Login');
-    this.sendKeysWithRetry(this.getEmailInput(), email);
+    if (email) {
+      this.sendKeysWithRetry(this.getEmailInput(), email);
+    }
     this.sendKeysWithRetry(this.getPasswordInput(), password);
     this.getSubmitButton().click();
   }

@@ -47,9 +47,6 @@ describe('Suppress post emails', () => {
 
       return defer.promise;
     }).then(function (data: any[]) {
-      if (data.length !== 1) {
-        fail('Expected only one email');
-      }
       const message = data[0];
       const urls: string[] = message.content.match(/\bhttps?:\/\/\S+/gi);
       if (urls.length !== 2) {

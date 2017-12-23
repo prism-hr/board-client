@@ -1,5 +1,5 @@
-import {browser, protractor} from 'protractor';
-import {AuthenticationDialog, HomePage} from './app.po';
+import {browser, by, protractor} from 'protractor';
+import {AccountPage, AuthenticationDialog, HomePage} from './app.po';
 import {
   BoardViewPage, DepartmentEditPage, DepartmentsPage, PostEditPage, PostNewEditPage, PostsPage, PostViewPage,
   ResourceUsersPage
@@ -8,7 +8,7 @@ import {TestUtils} from './test.utils';
 
 const EC = browser.ExpectedConditions;
 
-describe('Change password', () => {
+describe('Suppress post emails', () => {
   let homePage: HomePage;
   let departmentsPage: DepartmentsPage;
   let postsPage: PostsPage;
@@ -19,6 +19,7 @@ describe('Change password', () => {
   let departmentEditPage: DepartmentEditPage;
   let resourceUsersPage: ResourceUsersPage;
   let authenticationDialog: AuthenticationDialog;
+  let accountPage: AccountPage;
 
   beforeAll(() => {
   });
@@ -34,32 +35,32 @@ describe('Change password', () => {
     departmentEditPage = new DepartmentEditPage(browser);
     resourceUsersPage = new ResourceUsersPage(browser);
     authenticationDialog = new AuthenticationDialog(browser);
+    accountPage = new AccountPage(browser);
   });
 
-  it('Should change user password', () => {
-    homePage.navigateTo();
-    homePage.getLoginButton().click();
-
-    authenticationDialog.getForgotPasswordButton().click();
-    authenticationDialog.performForgotPassword('independent-student4@test.prism.hr');
-
+  it('apply to a post as a member', () => {
+    const studentEmail = 'admin2@test.prism.hr';
     const flow = protractor.promise.controlFlow();
     flow.execute(function () {
       const defer = protractor.promise.defer();
-      TestUtils.getTestEmails('independent-student4@test.prism.hr', defer);
+      TestUtils.getTestEmails(studentEmail, defer, 2);
 
       return defer.promise;
     }).then(function (data: any[]) {
       const message = data[0];
       const urls: string[] = message.content.match(/\bhttps?:\/\/\S+/gi);
       if (urls.length !== 1) {
-        fail('Expected only one url');
+        fail('Expected exactly one url');
       }
 
       browser.get(urls[0]);
 
-      authenticationDialog.performResetPassword('2secret2');
-      authenticationDialog.performLogin('independent-student4@test.prism.hr', '2secret2');
+      authenticationDialog.performLogin(null, '1secret1');
+
+      const acceptButton = resourceUsersPage.getButtonByLabel('Accept');
+      browser.wait(EC.presenceOf(acceptButton));
+      acceptButton.click();
+      browser.wait(EC.not(EC.presenceOf(acceptButton)));
     });
   });
 });
