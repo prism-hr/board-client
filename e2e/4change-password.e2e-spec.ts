@@ -38,6 +38,7 @@ describe('Change password', () => {
 
   it('Should change user password', () => {
     homePage.navigateTo();
+    browser.wait(EC.presenceOf(homePage.getLoginButton()));
     homePage.getLoginButton().click();
 
     authenticationDialog.getForgotPasswordButton().click();
