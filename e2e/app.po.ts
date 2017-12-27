@@ -1,4 +1,5 @@
 import {browser, by, ElementFinder, ProtractorBrowser} from 'protractor';
+import {TestUtils} from './test.utils';
 
 const EC = browser.ExpectedConditions;
 
@@ -169,10 +170,13 @@ export class AuthenticationDialog extends GenericPage {
     return this.browser.element(by.css('mat-dialog-container button[label="Submit"]'));
   }
 
-  performRegistration(email: string, givenName: string, surname: string, password: string) {
+  performRegistration(email: string, givenName: string, surname: string, password: string, screenshot?: boolean) {
     this.browser.wait(EC.presenceOf(this.getParagraph()));
     console.log('Registering as ' + email + ' (' + givenName + ' ' + surname + ')');
     expect(this.getParagraph().getText()).toEqual('Register');
+    if (screenshot) {
+      TestUtils.takeScreenshot(this.browser, 'register.png');
+    }
     if (givenName) {
       this.sendKeysWithRetry(this.getGivenNameInput(), givenName);
     }

@@ -42,7 +42,7 @@ describe('Set up post', () => {
 
     boardViewPage.getNewPostButton().click();
     authenticationDialog.performRegistration('post-admin@test.prism.hr', 'Post Admin', 'Bishop',
-      '1secret1');
+      '1secret1', true);
 
     browser.wait(EC.urlContains('/newPost'));
     expect(postNewEditPage.getParagraphText()).toEqual('Create a new Post');

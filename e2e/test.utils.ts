@@ -1,4 +1,5 @@
 import * as dateFormat from 'dateformat';
+import * as fs from 'fs';
 import {resolve as pathResolve} from 'path';
 import {browser, ElementFinder} from 'protractor';
 import * as request from 'request';
@@ -63,6 +64,19 @@ export class TestUtils {
 
   static getBaseUrl() {
     return browser.baseUrl.replace(':80', '');
+  }
+
+  static takeScreenshot(browser, filename) {
+    browser.takeScreenshot().then(function (png) {
+      fs.exists('tmp', exists => {
+        fs.mkdir('tmp', created => {
+          const stream = fs.createWriteStream('tmp/' + filename, {flags: 'w'});
+          stream.write(new Buffer(png, 'base64'));
+          stream.end();
+        });
+      });
+
+    });
   }
 
 }
