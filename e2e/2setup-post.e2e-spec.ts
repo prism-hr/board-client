@@ -1,4 +1,4 @@
-import {browser, by, protractor} from 'protractor';
+import {browser, protractor} from 'protractor';
 import {AuthenticationDialog, HomePage} from './app.po';
 import {BoardViewPage, PostEditPage, PostNewEditPage, PostsPage, PostViewPage} from './resource.po';
 
@@ -41,8 +41,7 @@ describe('Set up post', () => {
     browser2AuthenticationDialog.performLogin('admin2@test.prism.hr', '1secret1');
 
     boardViewPage.getNewPostButton().click();
-    authenticationDialog.performRegistration('post-admin@test.prism.hr', 'Post Admin', 'Bishop',
-      '1secret1', true);
+    authenticationDialog.performRegistration('post-admin@test.prism.hr', 'Post Admin', 'Bishop', '1secret1');
 
     browser.wait(EC.urlContains('/newPost'));
     expect(postNewEditPage.getParagraphText()).toEqual('Create a new Post');
@@ -54,7 +53,7 @@ describe('Set up post', () => {
     postNewEditPage.getOrganizationNameInput().clear();
     postNewEditPage.getOrganizationNameInput().sendKeys('Bielmar');
     postNewEditPage.selectLocation('Bielsko');
-    postNewEditPage.getRadioButton('existingRelation','Employer').click();
+    postNewEditPage.getRadioButton('existingRelation', 'Employer').click();
     postNewEditPage.getExplanationTextarea().sendKeys('Recently hired');
     postNewEditPage.getCheckboxLabel('Research Student').click();
     postNewEditPage.getRadioButton('applyType', 'By visiting a web page').click();

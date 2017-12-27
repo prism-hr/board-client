@@ -91,6 +91,7 @@ describe('Apply to post', () => {
       console.log('Posts loaded');
     });
     postsPage.getPostTitleUrl('Bishop2 Post').click();
+    TestUtils.takeScreenshot(this.browser, 'post.png');
     postViewPage.assertPostView('Bishop2 Post',
       'Bishop2 summary', 'Bishop2 description', ['Employment', 'Internship'], true);
 

@@ -170,15 +170,12 @@ export class AuthenticationDialog extends GenericPage {
     return this.browser.element(by.css('mat-dialog-container button[label="Submit"]'));
   }
 
-  performRegistration(email: string, givenName: string, surname: string, password: string, screenshot?: boolean) {
+  performRegistration(email: string, givenName: string, surname: string, password: string) {
     this.browser.wait(EC.presenceOf(this.getGivenNameInput())).then(() => {
       console.log('Registering as ' + email + ' (' + givenName + ' ' + surname + ')');
     });
 
     expect(this.getParagraph().getText()).toEqual('Register');
-    if (screenshot) {
-      TestUtils.takeScreenshot(this.browser, 'register.png');
-    }
     if (givenName) {
       this.sendKeysWithRetry(this.getGivenNameInput(), givenName);
     }
