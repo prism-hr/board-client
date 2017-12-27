@@ -171,8 +171,10 @@ export class AuthenticationDialog extends GenericPage {
   }
 
   performRegistration(email: string, givenName: string, surname: string, password: string, screenshot?: boolean) {
-    this.browser.wait(EC.presenceOf(this.getParagraph()));
-    console.log('Registering as ' + email + ' (' + givenName + ' ' + surname + ')');
+    this.browser.wait(EC.presenceOf(this.getGivenNameInput())).then(() => {
+      console.log('Registering as ' + email + ' (' + givenName + ' ' + surname + ')');
+    });
+
     expect(this.getParagraph().getText()).toEqual('Register');
     if (screenshot) {
       TestUtils.takeScreenshot(this.browser, 'register.png');
