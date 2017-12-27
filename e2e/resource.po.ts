@@ -234,7 +234,7 @@ export class DepartmentsPage extends GenericPage {
 
 export class PostsPage extends GenericPage {
   waitForLoaded() {
-    this.browser.wait(EC.presenceOf(browser.element(by.tagName('mat-card'))));
+    return this.browser.wait(EC.presenceOf(browser.element(by.tagName('mat-card'))));
   }
 
   getPostCard(name: string) {

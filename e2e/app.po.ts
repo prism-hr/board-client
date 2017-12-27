@@ -194,8 +194,9 @@ export class AuthenticationDialog extends GenericPage {
 
   performLogin(email: string, password: string) {
     const dialogHeaderElement = this.getParagraph();
-    this.browser.wait(EC.textToBePresentInElement(dialogHeaderElement, 'Login'));
-    console.log('Logging in as ' + email);
+    this.browser.wait(EC.textToBePresentInElement(dialogHeaderElement, 'Login')).then(() => {
+      console.log('Logging in as ' + email);
+    });
     expect(this.getParagraph().getText()).toEqual('Login');
     if (email) {
       this.sendKeysWithRetry(this.getEmailInput(), email);
