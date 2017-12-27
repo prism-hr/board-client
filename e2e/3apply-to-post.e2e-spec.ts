@@ -126,7 +126,9 @@ describe('Apply to post', () => {
 
     postViewPage.getSubmitButton().click();
 
+    TestUtils.takeScreenshot(browser, 'apply_link.png');
     browser.wait(EC.presenceOf(postViewPage.getHowToApplyLink()));
+    console.log('Apply link present');
     postViewPage.getLogoutButton().click();
   });
 });
