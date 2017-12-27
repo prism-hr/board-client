@@ -81,8 +81,10 @@ describe('Apply to post', () => {
     authenticationDialog.performLogin('admin2@test.prism.hr', '1secret1');
 
     browser.wait(EC.presenceOf(homePage.getPostsButton()));
+    console.log('Posts button present');
     homePage.getPostsButton().click();
     postsPage.waitForLoaded();
+    console.log('Posts loaded');
     postsPage.getPostTitleUrl('Bishop2 Post').click();
     postViewPage.assertPostView('Bishop2 Post',
       'Bishop2 summary', 'Bishop2 description', ['Employment', 'Internship'], true);

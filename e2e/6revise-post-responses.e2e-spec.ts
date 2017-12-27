@@ -8,7 +8,7 @@ import {TestUtils} from './test.utils';
 
 const EC = browser.ExpectedConditions;
 
-describe('Suppress post emails', () => {
+describe('Revise post responses', () => {
   let homePage: HomePage;
   let departmentsPage: DepartmentsPage;
   let postsPage: PostsPage;
@@ -38,7 +38,7 @@ describe('Suppress post emails', () => {
     accountPage = new AccountPage(browser);
   });
 
-  it('apply to a post as a member', () => {
+  it('should revise post responses', () => {
     const studentEmail = 'admin2@test.prism.hr';
     const flow = protractor.promise.controlFlow();
     flow.execute(function () {

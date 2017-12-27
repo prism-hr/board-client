@@ -38,7 +38,7 @@ describe('Suppress post emails', () => {
     accountPage = new AccountPage(browser);
   });
 
-  it('apply to a post as a member', () => {
+  it('Should suppress post emails', () => {
     const studentEmail = 'student2@test.prism.hr';
     const flow = protractor.promise.controlFlow();
     flow.execute(function () {

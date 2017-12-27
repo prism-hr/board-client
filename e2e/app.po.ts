@@ -171,6 +171,7 @@ export class AuthenticationDialog extends GenericPage {
 
   performRegistration(email: string, givenName: string, surname: string, password: string) {
     this.browser.wait(EC.presenceOf(this.browser.element(by.tagName('mat-dialog-container'))));
+    console.log('Registering as ' + email + ' (' + givenName + ' ' + surname + ')');
     expect(this.getParagraphText()).toEqual('Register');
     if (givenName) {
       this.sendKeysWithRetry(this.getGivenNameInput(), givenName);
@@ -188,6 +189,7 @@ export class AuthenticationDialog extends GenericPage {
   performLogin(email: string, password: string) {
     const dialogHeaderElement = this.browser.element(by.css('mat-dialog-container h2'));
     this.browser.wait(EC.textToBePresentInElement(dialogHeaderElement, 'Login'));
+    console.log('Logging in as ' + email);
     expect(this.getParagraphText()).toEqual('Login');
     if (email) {
       this.sendKeysWithRetry(this.getEmailInput(), email);
@@ -224,7 +226,6 @@ export class AuthenticationDialog extends GenericPage {
     input.clear();
     input.sendKeys(value);
     input.getAttribute('value').then(existingValue => {
-      console.log('existing: ' + existingValue + ', value: ' + value);
       if (existingValue !== value) {
         this.sendKeysWithRetry(input, value);
       }
