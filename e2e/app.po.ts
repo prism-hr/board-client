@@ -172,9 +172,15 @@ export class AuthenticationDialog extends GenericPage {
   performRegistration(email: string, givenName: string, surname: string, password: string) {
     this.browser.wait(EC.presenceOf(this.browser.element(by.tagName('mat-dialog-container'))));
     expect(this.getParagraphText()).toEqual('Register');
-    this.sendKeysWithRetry(this.getGivenNameInput(), givenName);
-    this.sendKeysWithRetry(this.getSurnameInput(), surname);
-    this.sendKeysWithRetry(this.getEmailInput(), email);
+    if (givenName) {
+      this.sendKeysWithRetry(this.getGivenNameInput(), givenName);
+    }
+    if (surname) {
+      this.sendKeysWithRetry(this.getSurnameInput(), surname);
+    }
+    if (email) {
+      this.sendKeysWithRetry(this.getEmailInput(), email);
+    }
     this.sendKeysWithRetry(this.getPasswordInput(), password);
     this.getSubmitButton().click();
   }

@@ -5,7 +5,6 @@ import {AuthService} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
 import {UserService} from '../services/user.service';
 import {AuthenticationDialogComponent, AuthenticationDialogData, AuthenticationView} from './authentication.dialog';
-import UserRepresentation = b.UserRepresentation;
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -28,6 +27,7 @@ export class AuthGuard implements CanActivate {
           const config = new MatDialogConfig<AuthenticationDialogData>();
           const initialView = options.initialView || (user && user.registered ? 'LOGIN' : 'REGISTER');
           config.data = {initialView: initialView, uuid: options.uuid, user};
+          config.disableClose = !!user;
           const dialogRef = this.dialog.open(AuthenticationDialogComponent, config);
           return dialogRef.afterClosed();
         });
