@@ -77,6 +77,7 @@ describe('Apply to post', () => {
 
   it('apply to a post as a stranger', () => {
     homePage.navigateTo();
+    browser.wait(EC.presenceOf(homePage.getLoginButton()));
     homePage.getLoginButton().click();
     authenticationDialog.performLogin('admin2@test.prism.hr', '1secret1');
 
@@ -110,10 +111,7 @@ describe('Apply to post', () => {
     authenticationDialog.performRegistration(
       'independent-student4@test.prism.hr', 'Student1', 'Independent', '1secret1');
 
-    console.log('Independent student registered');
-
     browser.wait(EC.presenceOf(postViewPage.getRadioButton('gender', 'Male')));
-    console.log('Apply controls present');
     postViewPage.getRadioButton('gender', 'Male').click();
     postViewPage.getRadioButton('ageRange', '30 - 39').click();
     postViewPage.selectLocation('Jelesn');
@@ -126,9 +124,7 @@ describe('Apply to post', () => {
 
     postViewPage.getSubmitButton().click();
 
-    TestUtils.takeScreenshot(browser, 'apply_link.png');
     browser.wait(EC.presenceOf(postViewPage.getHowToApplyLink()));
-    console.log('Apply link present');
     postViewPage.getLogoutButton().click();
   });
 });
