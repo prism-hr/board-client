@@ -170,7 +170,7 @@ export class AuthenticationDialog extends GenericPage {
   }
 
   performRegistration(email: string, givenName: string, surname: string, password: string) {
-    this.browser.wait(EC.presenceOf(this.browser.element(by.tagName('mat-dialog-container'))));
+    this.browser.wait(EC.presenceOf(this.browser.element(by.css('mat-dialog-container h2'))));
     console.log('Registering as ' + email + ' (' + givenName + ' ' + surname + ')');
     expect(this.getParagraphText()).toEqual('Register');
     if (givenName) {

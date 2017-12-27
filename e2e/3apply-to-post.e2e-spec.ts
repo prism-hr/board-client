@@ -53,7 +53,7 @@ describe('Apply to post', () => {
 
       browser.get(urls[0]);
 
-      authenticationDialog.performRegistration('student1@test.prism.hr', 'Student1', 'Bishop', '1secret1');
+      authenticationDialog.performRegistration(null, 'Student1', 'Bishop', '1secret1');
 
       postViewPage.assertPostView('Bishop2 Post',
         'Bishop2 summary', 'Bishop2 description', ['Employment', 'Internship'], false);
