@@ -179,11 +179,13 @@ export class BoardViewPage extends GenericResourcePage {
 
 export class PostViewPage extends GenericResourcePage {
   waitForLoaded() {
-    this.browser.wait(EC.presenceOf(this.browser.element(by.css('div.post-content'))));
+    return this.browser.wait(EC.presenceOf(this.browser.element(by.css('div.post-content'))));
   }
 
   assertPostView(name: string, summary: string, description: string, categories: string[], canEdit: boolean) {
-    this.waitForLoaded();
+    this.waitForLoaded().then(() => {
+      console.log('Post view loaded');
+    });
     if (canEdit) {
       expect(this.browser.element(by.css('p-tabMenu')).isPresent()).toBeTruthy();
       expect(this.browser.element(by.css('p-tabMenu li.ui-state-active a span')).getText()).toEqual('View');
