@@ -83,10 +83,6 @@ describe('Apply to post', () => {
     homePage.getLoginButton().click();
     authenticationDialog.performLogin('admin2@test.prism.hr', '1secret1');
 
-    browser.wait(EC.presenceOf(homePage.getPostsButton())).then(() => {
-      console.log('Posts button present');
-    });
-    homePage.getPostsButton().click();
     postsPage.waitForLoaded().then(() => {
       console.log('Posts loaded');
     });
