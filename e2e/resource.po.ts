@@ -183,9 +183,7 @@ export class PostViewPage extends GenericResourcePage {
   }
 
   assertPostView(name: string, summary: string, description: string, categories: string[], canEdit: boolean) {
-    this.waitForLoaded().then(() => {
-      console.log('Post view loaded');
-    });
+    this.waitForLoaded();
     if (canEdit) {
       expect(this.browser.element(by.css('p-tabMenu')).isPresent()).toBeTruthy();
       expect(this.browser.element(by.css('p-tabMenu li.ui-state-active a span')).getText()).toEqual('View');

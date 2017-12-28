@@ -77,17 +77,17 @@ describe('Apply to post', () => {
 
   it('apply to a post as a stranger', () => {
     homePage.navigateTo();
-    browser.wait(EC.presenceOf(homePage.getLoginButton())).then(() => {
-      console.log('Login button present');
-    });
+    browser.wait(EC.presenceOf(homePage.getLoginButton()));
     homePage.getLoginButton().click();
     authenticationDialog.performLogin('admin2@test.prism.hr', '1secret1');
 
-    postsPage.waitForLoaded().then(() => {
-      console.log('Posts loaded');
+    postsPage.waitForLoaded();
+
+    // postsPage.getPostTitleUrl('Bishop2 Post').click();
+    postsPage.getPostTitleUrl('Bishop2 Post').getAttribute('href').then(href => {
+      browser.get(href);
     });
-    postsPage.getPostTitleUrl('Bishop2 Post').click();
-    TestUtils.takeScreenshot(browser, 'post.png');
+
     postViewPage.assertPostView('Bishop2 Post',
       'Bishop2 summary', 'Bishop2 description', ['Employment', 'Internship'], true);
 
