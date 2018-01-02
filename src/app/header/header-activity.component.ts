@@ -103,6 +103,9 @@ import ResourceRepresentation = b.ResourceRepresentation;
               <span *ngSwitchCase="'RESTORE_POST_ACTIVITY'">
                 Your post <b>{{post.name}}</b> has been restored
               </span>
+              <span *ngSwitchCase="'CREATE_TASK_ACTIVITY'">
+                You have pending tasks for your department <b>{{department.name}}</b>
+              </span>
               <p *ngIf="activity.activity != 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' && activity.activity != 'RESPOND_POST_ACTIVITY'">
                 {{activity.createdTimestamp | date: 'short' }}
               </p>

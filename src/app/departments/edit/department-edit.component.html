@@ -6,12 +6,12 @@
           <div class="grid">
             <div class="grid__item one-whole input-holder">
               <label for="name">Department Name</label>
-              <input id="name" pInputText formControlName="name" required>
+              <input id="name" pInputText formControlName="name" id="name" required>
               <control-messages [control]="departmentForm.get('name')"></control-messages>
             </div>
             <div class="grid__item one-whole input-holder">
               <label for="summary">Department Summary</label>
-              <textarea id="summary" pInputTextarea formControlName="summary" rows="6" required
+              <textarea id="summary" pInputTextarea formControlName="summary" rows="6" required id="summary"
                         class="ui-inputtext ui-corner-all ui-state-default ui-widget"></textarea>
               <control-messages [control]="departmentForm.get('summary')"></control-messages>
             </div>

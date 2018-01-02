@@ -1,11 +1,12 @@
+import {HttpClient} from '@angular/common/http';
 import {Injectable, OnInit} from '@angular/core';
-import {RequestOptionsArgs, Response} from '@angular/http';
-import {AuthService, JwtHttp} from 'ng2-ui-auth';
+import {StompRService} from '@stomp/ng2-stompjs';
+import {Message} from '@stomp/stompjs';
+import {AuthService} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {Subscription} from 'rxjs/Subscription';
-import {CustomJwtHttp} from '../authentication/jwt-http.service';
 import {RollbarService} from '../rollbar/rollbar.service';
+import {stompConfig} from './stomp.config';
 import ActivityRepresentation = b.ActivityRepresentation;
 import ResourceRepresentation = b.ResourceRepresentation;
 import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
@@ -18,36 +19,36 @@ export class UserService implements OnInit {
   user$: Observable<UserRepresentation>;
   userSource: ReplaySubject<UserRepresentation>;
   activities$: ReplaySubject<ActivityRepresentation[]>;
-  activitiesSubscription: Subscription;
 
-  constructor(private http: JwtHttp, private rollbar: RollbarService, private auth: AuthService) {
+  constructor(private http: HttpClient, private stompRService: StompRService,
+              private rollbar: RollbarService, private auth: AuthService) {
     this.userSource = new ReplaySubject<UserRepresentation>(1);
     this.user$ = this.userSource.asObservable();
     this.activities$ = new ReplaySubject<ActivityRepresentation[]>(1);
-    (<CustomJwtHttp><any>this.http).getSessionsExpiredSubject()
-      .subscribe(() => {
-        this.logout();
-      });
+    // TODO logout after token expired
+    // (<CustomJwtHttp><any>this.http).getSessionsExpiredSubject()
+    //   .subscribe(() => {
+    //     this.logout();
+    //   });
   }
 
   ngOnInit(): void {
 
   }
 
-  login(user: any, opts?: RequestOptionsArgs): Promise<UserRepresentation> {
-    return this.auth.login(user, opts)
+  login(user: any): Promise<UserRepresentation> {
+    return this.auth.login(user)
       .toPromise()
-      .then((response: Response) => {
-        this.auth.setToken(response.json().token);
+      .then(() => {
         return this.initializeUser();
       });
   }
 
-  signup(user: any, opts?: RequestOptionsArgs): Promise<UserRepresentation> {
-    return this.auth.signup(user, opts)
+  signup(user: any): Promise<UserRepresentation> {
+    return this.auth.signup(user)
       .toPromise()
-      .then((response: Response) => {
-        this.auth.setToken(response.json().token);
+      .then((data) => {
+        this.auth.setToken(data);
         return this.initializeUser();
       });
   }
@@ -55,24 +56,25 @@ export class UserService implements OnInit {
   authenticate(name: string, userData?: any): Promise<UserRepresentation> {
     return this.auth.authenticate(name, userData)
       .toPromise()
-      .then((response: Response) => {
-        this.auth.setToken(response.json().token);
+      .then(() => {
         return this.initializeUser();
       });
   }
 
   logout() {
-    if (this.activitiesSubscription) {
-      this.activitiesSubscription.unsubscribe();
-    }
+    this.stompRService.disconnect();
     this.auth.logout().toPromise()
       .then(() => {
         return this.loadUser();
       });
   }
 
-  resetPassword(email: string): Observable<Response> {
+  resetPassword(email: string) {
     return this.http.post('/api/auth/resetPassword', {email});
+  }
+
+  getInvitee(invitationUuid: string): Observable<UserRepresentation> {
+    return this.http.get<UserRepresentation>('/api/auth/invitee/' + invitationUuid);
   }
 
   loadUser(): Promise<UserRepresentation> {
@@ -80,7 +82,6 @@ export class UserService implements OnInit {
       const token = this.auth.getToken();
       if (token) {
         this.http.get('/api/user')
-          .map(user => user.json())
           .subscribe((user: UserRepresentation) => {
             this.userSource.next(user);
             this.rollbar.configure({
@@ -100,22 +101,21 @@ export class UserService implements OnInit {
 
   patchUser(userPatch: UserPatchDTO): Observable<UserRepresentation> {
     return this.http.patch('/api/user', userPatch)
-      .map(res => res.json())
       .map(user => {
         this.loadUser();
         return user;
       });
   }
 
-  patchPassword(userPasswordDTO: UserPasswordDTO): Observable<Response> {
+  patchPassword(userPasswordDTO: UserPasswordDTO) {
     return this.http.patch('/api/user/password', userPasswordDTO);
   }
 
   getSuppressions(): Observable<UserNotificationSuppressionRepresentation[]> {
-    return this.http.get('/api/user/suppressions').map(res => res.json());
+    return this.http.get<UserNotificationSuppressionRepresentation[]>('/api/user/suppressions');
   }
 
-  setSuppression(resource: ResourceRepresentation<any>, suppressed: boolean, uuid?: string): Observable<Response> {
+  setSuppression(resource: ResourceRepresentation<any>, suppressed: boolean, uuid?: string) {
     const path = '/api/user/suppressions/' + resource.id + (uuid ? '?uuid=' + uuid : '');
     if (suppressed) {
       return this.http.post(path, {});
@@ -123,7 +123,7 @@ export class UserService implements OnInit {
     return this.http.delete(path);
   }
 
-  setAllSuppressions(suppressed: boolean): Observable<Response> {
+  setAllSuppressions(suppressed: boolean) {
     if (suppressed) {
       return this.http.post('/api/user/suppressions', {});
     }
@@ -131,35 +131,35 @@ export class UserService implements OnInit {
   }
 
   viewActivity(activity: ActivityRepresentation) {
-    return this.http.get('/api/user/activities/' + activity.id).map(res => res.json());
+    return this.http.get('/api/user/activities/' + activity.id);
   }
 
   dismissActivity(activity: ActivityRepresentation) {
     return this.http.delete('/api/user/activities/' + activity.id);
   }
 
+  isUserInitializationPending() {
+    return this.stompRService.state.getValue() === 0; // StompState is CLOSED
+  }
+
   initializeUser() {
     return this.loadUser()
       .then(user => {
         if (user) {
-          this.http.get('/api/user/activities')
-            .subscribe(activities => {
-              this.activities$.next(activities.json())
-              this.activitiesSubscription = Observable
-                .interval(50000)
-                .startWith(0)
-                .switchMap(() => this.http.get('/api/user/activities/refresh'))
-                .retryWhen(res => {
-                  return res.map(err => {
-                    if(err.status !== 304) {
-                      throw err;
-                    }
-                  });
-                })
-                .subscribe(activities => this.activities$.next(activities.json()));
-            });
+          const config = {...stompConfig};
+          config.headers = {
+            Authorization: 'Bearer ' + this.auth.getToken()
+          };
+          this.stompRService.config = config;
+          this.stompRService.initAndConnect();
+          let stomp_subscription = this.stompRService.subscribe('/api/user/activities');
+
+          stomp_subscription.subscribe((message: Message) => {
+            this.activities$.next(JSON.parse(message.body));
+          });
         }
         return user;
       });
   }
+
 }

@@ -1,6 +1,6 @@
+import {HttpErrorResponse} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Response} from '@angular/http';
 import {MatDialog} from '@angular/material/dialog';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -68,10 +68,12 @@ export class BoardEditComponent implements OnInit {
       .subscribe(board => {
         Object.assign(this.board, boardPatch);
         this.router.navigate([this.board.department.university.handle, this.board.department.handle, board.handle]);
-      }, (error: Response | any) => {
-        if (error.status === 422) {
-          if (error.json().exceptionCode === 'DUPLICATE_BOARD_HANDLE') {
-            (this.boardForm.controls['handles'] as FormGroup).controls['boardHandle'].setErrors({duplicateHandle: true});
+      }, (error: HttpErrorResponse) => {
+        if (error.status === 409) {
+          if (error.error.exceptionCode === 'DUPLICATE_BOARD') {
+            this.boardForm.get('name').setErrors({duplicateHandle: true});
+          } else if (error.error.exceptionCode === 'DUPLICATE_BOARD_HANDLE') {
+            this.boardForm.get('handle').setErrors({duplicateHandle: true});
           }
         }
       });

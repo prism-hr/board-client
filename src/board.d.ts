@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.29.366 on 2017-11-13 12:11:31.
+// Generated using typescript-generator version 1.29.366 on 2017-12-19 18:40:43.
 
 declare namespace b {
 
@@ -45,6 +45,15 @@ declare namespace b {
   interface LoginDTO extends AuthenticateDTO<LoginDTO> {
     email?: string;
     password?: string;
+  }
+
+  interface OAuthAuthorizationDataDTO {
+    client_id?: string;
+    redirect_uri?: string;
+  }
+
+  interface OAuthDataDTO {
+    code?: string;
   }
 
   interface PostDTO extends ResourceDTO<PostDTO> {
@@ -109,9 +118,8 @@ declare namespace b {
   }
 
   interface SigninDTO extends AuthenticateDTO<SigninDTO> {
-    clientId?: string;
-    code?: string;
-    redirectUri?: string;
+    authorizationData?: OAuthAuthorizationDataDTO;
+    oauthData?: OAuthDataDTO;
   }
 
   interface UserDTO {
@@ -135,6 +143,7 @@ declare namespace b {
     email?: string;
     documentImage?: DocumentDTO;
     documentImageRequestState?: DocumentRequestState;
+    seenWalkThrough?: boolean;
     gender?: Gender;
     ageRange?: AgeRange;
     locationNationality?: LocationDTO;
@@ -163,6 +172,7 @@ declare namespace b {
     badgeType?: BadgeType;
     badgeListType?: BadgeListType;
     postCount?: number;
+    preview?: boolean;
   }
 
   interface ActionRepresentation extends Comparable<ActionRepresentation> {
@@ -198,7 +208,7 @@ declare namespace b {
     boardCount?: number;
     memberCount?: number;
     memberCategories?: MemberCategory[];
-    tasks?: ResourceTask[];
+    tasks?: ResourceTaskRepresentation[];
   }
 
   interface DocumentRepresentation extends DocumentDefinition {
@@ -281,6 +291,19 @@ declare namespace b {
     actions?: ActionRepresentation[];
   }
 
+  interface ResourceTaskRepresentation {
+    id?: number;
+    task?: ResourceTask;
+    completed?: boolean;
+  }
+
+  interface TestEmailMessageRepresentation {
+    recipient?: UserRepresentation;
+    subject?: string;
+    content?: string;
+    attachments?: string[];
+  }
+
   interface UniversityRepresentation extends ResourceRepresentation<UniversityRepresentation> {
     documentLogo?: DocumentRepresentation;
     handle?: string;
@@ -298,6 +321,7 @@ declare namespace b {
     email?: string;
     documentImage?: DocumentRepresentation;
     documentImageRequestState?: DocumentRequestState;
+    seenWalkThrough?: boolean;
     gender?: Gender;
     ageRange?: AgeRange;
     locationNationality?: LocationRepresentation;
@@ -306,6 +330,7 @@ declare namespace b {
     scopes?: Scope[];
     defaultOrganizationName?: string;
     defaultLocation?: LocationRepresentation;
+    registered?: boolean;
   }
 
   interface UserRoleRepresentation {
@@ -329,16 +354,16 @@ declare namespace b {
 
   interface DocumentDefinition {
     fileName?: string;
-    cloudinaryUrl?: string;
     cloudinaryId?: string;
+    cloudinaryUrl?: string;
   }
 
   interface LocationDefinition {
-    name?: string;
     domicile?: string;
     googleId?: string;
     latitude?: number;
     longitude?: number;
+    name?: string;
   }
 
   interface Comparable<T> {
@@ -368,12 +393,12 @@ declare namespace b {
 
   type Scope = 'UNIVERSITY' | 'DEPARTMENT' | 'BOARD' | 'POST';
 
-  type Activity = 'ACCEPT_BOARD_ACTIVITY' | 'ACCEPT_POST_ACTIVITY' | 'CORRECT_POST_ACTIVITY' | 'JOIN_BOARD_ACTIVITY' | 'JOIN_DEPARTMENT_ACTIVITY' | 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' | 'NEW_BOARD_PARENT_ACTIVITY' | 'NEW_POST_PARENT_ACTIVITY' | 'PUBLISH_POST_ACTIVITY' | 'PUBLISH_POST_MEMBER_ACTIVITY' | 'REJECT_BOARD_ACTIVITY' | 'REJECT_POST_ACTIVITY' | 'RESTORE_BOARD_ACTIVITY' | 'RESTORE_POST_ACTIVITY' | 'RETIRE_POST_ACTIVITY' | 'SUSPEND_POST_ACTIVITY' | 'RESPOND_POST_ACTIVITY' | 'TASK_CREATE_ACTIVITY' | 'TASK_UPDATE_ACTIVITY';
-
-  type ResourceTask = 'CREATE_MEMBER' | 'UPDATE_MEMBER' | 'CREATE_INTERNAL_POST' | 'UPDATE_INTERNAL_POST' | 'DEPLOY_BADGE';
+  type Activity = 'ACCEPT_BOARD_ACTIVITY' | 'ACCEPT_POST_ACTIVITY' | 'CORRECT_POST_ACTIVITY' | 'JOIN_BOARD_ACTIVITY' | 'JOIN_DEPARTMENT_ACTIVITY' | 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' | 'NEW_BOARD_PARENT_ACTIVITY' | 'NEW_POST_PARENT_ACTIVITY' | 'PUBLISH_POST_ACTIVITY' | 'PUBLISH_POST_MEMBER_ACTIVITY' | 'REJECT_BOARD_ACTIVITY' | 'REJECT_POST_ACTIVITY' | 'RESTORE_BOARD_ACTIVITY' | 'RESTORE_POST_ACTIVITY' | 'RETIRE_POST_ACTIVITY' | 'SUSPEND_POST_ACTIVITY' | 'RESPOND_POST_ACTIVITY' | 'CREATE_TASK_ACTIVITY' | 'UPDATE_TASK_ACTIVITY';
 
   type ResourceEvent = 'VIEW' | 'REFERRAL' | 'RESPONSE';
 
   type ResourceEventMatch = 'DEFINITE' | 'PROBABLE';
+
+  type ResourceTask = 'CREATE_MEMBER' | 'UPDATE_MEMBER' | 'CREATE_POST' | 'DEPLOY_BADGE';
 
 }

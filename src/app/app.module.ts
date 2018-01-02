@@ -1,24 +1,24 @@
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
 import {MatDialogModule} from '@angular/material/dialog';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {SidebarModule} from 'primeng/components/sidebar/sidebar';
+import {StompRService} from '@stomp/ng2-stompjs';
 import {OverlayPanelModule} from 'primeng/components/overlaypanel/overlaypanel';
+import {SidebarModule} from 'primeng/components/sidebar/sidebar';
 import {TabMenuModule} from 'primeng/components/tabmenu/tabmenu';
 import {environment} from '../environments/environment';
 import {AppComponent} from './app.component';
-import {MyAuthConfig} from './auth.config';
+import {authConfig} from './auth.config';
 import {AuthGuard} from './authentication/auth-guard.service';
 import {AuthenticationDialogComponent} from './authentication/authentication.dialog';
 import {InitializeGuard} from './authentication/initialize-guard.service';
-import {Ng2UiAuthModule} from './authentication/ng2-ui-auth.module';
+import {CustomNg2UiAuthModule} from './authentication/ng2-ui-auth.module';
 import {ResetPasswordDialogComponent} from './authentication/reset-password.dialog';
 import {UnsubscribeDialogComponent} from './authentication/unsubscribe.dialog';
 import {UserImageDialogComponent} from './authentication/user-image.dialog';
@@ -50,7 +50,6 @@ import {PostService} from './posts/post.service';
 import {PostResponsesComponent} from './posts/responses/post-responses.component';
 import {ResourceActionsBoxComponent} from './resource/actions-box/resource-actions-box.component';
 import {ResourceCommentDialogComponent} from './resource/resource-comment.dialog';
-import {RollbarHandler} from './rollbar/rollbar-handler.service';
 import {RollbarConfig} from './rollbar/rollbar.config';
 import {RollbarService} from './rollbar/rollbar.service';
 import './rxjs-extensions';
@@ -130,7 +129,7 @@ import {ValidationService} from './validation/validation.service';
           {
             path: 'newPost',
             loadChildren: 'app/posts/edit/post-edit.module#PostEditModule',
-            data: {modalType: 'Register'},
+            data: {modalView: 'REGISTER'},
             resolve: {
               boards: BoardsResolver
             },
@@ -271,7 +270,6 @@ import {ValidationService} from './validation/validation.service';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -280,7 +278,7 @@ import {ValidationService} from './validation/validation.service';
         deps: [HttpClient]
       }
     }),
-    Ng2UiAuthModule.forRoot(MyAuthConfig)
+    CustomNg2UiAuthModule.forRoot(authConfig)
   ],
   providers: [
     DefinitionsService,
@@ -292,15 +290,17 @@ import {ValidationService} from './validation/validation.service';
     },
     {
       provide: RollbarConfig, useValue: {
-      verbose: true,
-      accessToken: 'da4d675c8c5340819eac1c080f5b1e76',
-      payload: {
-        environment: environment.id
+        enabled: true,
+        verbose: true,
+        accessToken: 'da4d675c8c5340819eac1c080f5b1e76',
+        payload: {
+          environment: environment.id
+        }
       }
-    }
     },
     RollbarService,
-    {provide: ErrorHandler, useClass: RollbarHandler},
+    {provide: ErrorHandler, useClass: RollbarService},
+    StompRService,
     AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService, BoardsResolver,
     DepartmentsResolver, DepartmentService, UserService, ValidationService
   ],

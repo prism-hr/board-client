@@ -9,10 +9,10 @@
 
   <div *ngIf="view === 'LOGIN'" class="login-container">
     <div class="social-login" fxLayout="row" fxLayoutAlign="space-between center">
-      <button pButton (click)="authenticate('linkedin')" class="linkedin" fxFlex="44%" label="linkedin">
+      <button pButton type="button" (click)="authenticate('linkedin')" class="linkedin" fxFlex="44%" label="linkedin">
         <i class="fa-social-linkedin"></i>
       </button>
-      <button pButton (click)="authenticate('facebook')" class="facebook" fxFlex="44%" label="facebook">
+      <button pButton type="button" (click)="authenticate('facebook')" class="facebook" fxFlex="44%" label="facebook">
         <i class="fa-social-facebook"></i>
       </button>
     </div>
@@ -23,20 +23,21 @@
       <div class="grid__item one-whole">
         <form [formGroup]="loginForm" (ngSubmit)="login()">
           <div class="input-holder">
-            <input pInputText type="email" placeholder="Email" formControlName="email">
+            <input pInputText type="email" placeholder="Email" formControlName="email" [readonly]="dialogData.user">
             <control-messages [control]="loginForm.get('email')"></control-messages>
           </div>
           <div class="input-holder">
             <input pInputText type="password" placeholder="Password" formControlName="password">
             <control-messages [control]="loginForm.get('password')"></control-messages>
           </div>
-          <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center" class="actions-holder">
+          <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center"
+               class="actions-holder">
             <button pButton class="ui-button-success" label="Submit" fxFlexOrder.gt-xs="1"></button>
             <div fxLayout.xs="row" fxLayoutAlign.xs="space-between center">
               <button pButton type="button" class="ui-button-secondary" label="Forgot password?"
                       (click)="setView('FORGOT')"></button>
               <button pButton type="button" class="ui-button-secondary" label="Register"
-                      (click)="setView('REGISTER')"></button>
+                      (click)="setView('REGISTER')" *ngIf="!dialogData.user"></button>
             </div>
           </div>
         </form>
@@ -46,11 +47,11 @@
 
   <div *ngIf="view === 'REGISTER'" class="register-container">
     <div class="social-login" fxLayout="row" fxLayoutAlign="space-between center">
-      <button pButton (click)="authenticate('linkedin')" class="linkedin" fxFlex="44%" label="linkedin">
+      <button pButton type="button" (click)="authenticate('linkedin')" class="linkedin" fxFlex="44%" label="linkedin">
         <i class="fa-social-linkedin"></i>
       </button>
 
-      <button pButton (click)="authenticate('facebook')" class="facebook" fxFlex="44%" label="facebook">
+      <button pButton type="button" (click)="authenticate('facebook')" class="facebook" fxFlex="44%" label="facebook">
         <i class="fa-social-facebook"></i>
       </button>
     </div>
@@ -83,7 +84,8 @@
             [closable]="false"></p-messages>
           <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">
             <button pButton class="ui-button-success" label="Submit" fxFlexOrder="1"></button>
-            <button pButton class="ui-button-secondary" label="Already Registered?" (click)="setView('LOGIN')"></button>
+            <button pButton type="button" class="ui-button-secondary" label="Already Registered?"
+                    (click)="setView('LOGIN')"></button>
           </div>
         </form>
       </div>
@@ -98,9 +100,8 @@
       </div>
 
       <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">
-        <button pButton type="submit" class="ui-button-warning full-width" label="Reset Password" fxFlexOrder="1"></button>
-        <button pButton class="ui-button-secondary" label="Back"
-                (click)="setView('LOGIN')"></button>
+        <button pButton class="ui-button-warning full-width" label="Reset Password" fxFlexOrder="1"></button>
+        <button pButton type="button" class="ui-button-secondary" label="Back" (click)="setView('LOGIN')"></button>
       </div>
     </form>
     <div *ngIf="forgottenSent">

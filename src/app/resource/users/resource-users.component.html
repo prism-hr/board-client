@@ -110,9 +110,7 @@
               <i *ngIf="!userRole.user.documentImage" class="fa-user"></i>
             </div>
             <mat-card-title>
-              <h3>
-                {{userRole.user.givenName}} {{userRole.user.surname}}
-              </h3>
+              <h3>{{userRole.user.givenName}} {{userRole.user.surname}}</h3>
               <div class="card-actions">
                 <button pButton class="ui-button-warning small-xs"
                         (click)="respondToMemberRequest(userRole, 'rejected')"

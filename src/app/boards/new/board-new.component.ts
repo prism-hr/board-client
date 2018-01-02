@@ -1,6 +1,6 @@
+import {HttpErrorResponse} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Response} from '@angular/http';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {pick} from 'lodash';
@@ -72,9 +72,9 @@ export class BoardNewComponent implements OnInit {
       })
       .subscribe(saved => {
         this.router.navigate([saved.department.university.handle, saved.department.handle, saved.handle]);
-      }, (error: Response) => {
+      }, (error: HttpErrorResponse) => {
         if (error.status === 409) {
-          if (error.json().exceptionCode === 'DUPLICATE_BOARD') {
+          if (error.error.exceptionCode === 'DUPLICATE_BOARD') {
             this.boardForm.get('name').setErrors({duplicateBoard: true});
           }
         }

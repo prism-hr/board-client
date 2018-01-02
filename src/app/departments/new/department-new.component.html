@@ -11,7 +11,7 @@
 
             <div class="grid__item one-whole input-holder">
               <label for="university">University</label>
-              <p-autoComplete formControlName="university" [suggestions]="universitySuggestions"
+              <p-autoComplete formControlName="university" [suggestions]="universitySuggestions" inputId="university"
                               (completeMethod)="searchUniversities($event)" placeholder="University Name"
                               field="name" (onSelect)="universitySelected($event)" (onBlur)="universityOnBlur()">
                 <ng-template let-university pTemplate="item">
@@ -25,7 +25,7 @@
 
             <div class="grid__item one-whole input-holder">
               <label for="name">Department Name</label>
-              <input id="name" pInputText formControlName="name" required>
+              <input id="name" pInputText formControlName="name" id="name" required>
               <control-messages [control]="departmentForm.get('name')"></control-messages>
             </div>
             <div class="grid__item one-whole input-holder">

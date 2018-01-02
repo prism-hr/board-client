@@ -34,7 +34,7 @@ import PostRepresentation = b.PostRepresentation;
         </div>
         <div class="grid__item one-whole input-holder">
           <label>Your Resume URL</label>
-          <input pInputText type="url" formControlName="websiteResume">
+          <input pInputText type="url" formControlName="websiteResume" id="websiteResume">
           <control-messages [control]="eventForm.get('websiteResume')"></control-messages>
         </div>
         <control-messages [control]="eventForm"></control-messages>

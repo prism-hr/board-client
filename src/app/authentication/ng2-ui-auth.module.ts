@@ -1,44 +1,60 @@
-import {Injector, ModuleWithProviders, NgModule, Type} from '@angular/core';
-import {Http, HttpModule} from '@angular/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import {
   AuthService,
   BrowserStorageService,
+  CONFIG_OPTIONS,
   ConfigService,
-  CustomConfig, JwtHttp,
+  IPartialConfigOptions,
+  IProviders,
   LocalService,
   Oauth1Service,
   Oauth2Service,
   OauthService,
   PopupService,
   SharedService,
-  StorageService
+  StorageService,
+  StorageType
 } from 'ng2-ui-auth';
-import {CustomJwtHttp} from './jwt-http.service';
-/**
- * Created by Ron on 25/12/2015.
- */
+import {CustomJwtInterceptor} from './jwt-interceptor.service';
 
-@NgModule({
-  imports: [HttpModule],
-})
-export class Ng2UiAuthModule {
-  static forRoot(config: Type<CustomConfig>): ModuleWithProviders {
+@NgModule({imports: [HttpClientModule]})
+export class CustomNg2UiAuthModule {
+  static forRoot(configOptions?: IPartialConfigOptions, defaultJwtInterceptor = true): ModuleWithProviders {
     return {
-      ngModule: Ng2UiAuthModule,
+      ngModule: CustomNg2UiAuthModule,
       providers: [
-        {provide: CustomConfig, useClass: config},
-        {provide: ConfigService, useClass: ConfigService, deps: [CustomConfig]},
+        ...configOptions ? [{provide: CONFIG_OPTIONS, useValue: configOptions}] : [],
+        {provide: ConfigService, useClass: ConfigService, deps: [CONFIG_OPTIONS]},
         {provide: StorageService, useClass: BrowserStorageService, deps: [ConfigService]},
         {provide: SharedService, useClass: SharedService, deps: [StorageService, ConfigService]},
-        {provide: JwtHttp, useClass: CustomJwtHttp, deps: [Http, SharedService, ConfigService]},
-        {provide: OauthService, useClass: OauthService, deps: [JwtHttp, Injector, SharedService, ConfigService]},
+        ...defaultJwtInterceptor ? [{
+          provide: HTTP_INTERCEPTORS,
+          useClass: CustomJwtInterceptor,
+          multi: true,
+          deps: [SharedService, ConfigService]
+        }] : [],
+        {provide: OauthService, useClass: OauthService, deps: [HttpClient, SharedService, ConfigService, PopupService]},
         {provide: PopupService, useClass: PopupService, deps: [ConfigService]},
-        {provide: Oauth1Service, useClass: Oauth1Service, deps: [JwtHttp, PopupService, ConfigService]},
-        {provide: Oauth2Service, useClass: Oauth2Service, deps: [JwtHttp, PopupService, StorageService, ConfigService]},
-        {provide: LocalService, useClass: LocalService, deps: [JwtHttp, SharedService, ConfigService]},
+        {provide: LocalService, useClass: LocalService, deps: [HttpClient, SharedService, ConfigService]},
         {provide: AuthService, useClass: AuthService, deps: [SharedService, LocalService, OauthService]},
       ],
     };
   }
 }
 
+export {
+  LocalService,
+  Oauth2Service,
+  Oauth1Service,
+  PopupService,
+  OauthService,
+  SharedService,
+  StorageService, BrowserStorageService,
+  AuthService,
+  ConfigService, IPartialConfigOptions,
+  CustomJwtInterceptor,
+  CONFIG_OPTIONS,
+  IProviders,
+  StorageType,
+};

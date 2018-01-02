@@ -1,6 +1,5 @@
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {URLSearchParams} from '@angular/http';
-import {JwtHttp} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
 import {EntityFilter} from '../general/filter/filter.component';
 import DepartmentRepresentation = b.DepartmentRepresentation;
@@ -11,19 +10,19 @@ import ICustomer = Stripe.customers.ICustomer;
 @Injectable()
 export class DepartmentService {
 
-  constructor(private http: JwtHttp) {
+  constructor(private http: HttpClient) {
   }
 
   respondToMemberRequest(department: DepartmentRepresentation, user: UserRepresentation, state: string) {
-    return this.http.put('/api/departments/' + department.id + '/memberRequests/' + user.id + '/' + state, {}).map(res => res.json());
+    return this.http.put('/api/departments/' + department.id + '/memberRequests/' + user.id + '/' + state, {});
   }
 
   searchPrograms(department: DepartmentRepresentation, filter?: EntityFilter): Observable<string[]> {
-    const params = new URLSearchParams();
+    let params = new HttpParams();
     if (filter && filter.searchTerm) {
-      params.set('searchTerm', filter.searchTerm);
+      params = params.set('searchTerm', filter.searchTerm);
     }
-    return this.http.get('/api/departments/' + department.id + '/programs', {search: params}).map(res => res.json());
+    return this.http.get<string[]>('/api/departments/' + department.id + '/programs', {params});
   }
 
   getPaymentSources(department: DepartmentRepresentation): Observable<ICustomer> {

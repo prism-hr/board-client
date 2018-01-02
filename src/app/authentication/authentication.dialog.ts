@@ -4,6 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {UserService} from '../services/user.service';
 import {ValidationService} from '../validation/validation.service';
 import {ValidationUtils} from '../validation/validation.utils';
+import UserRepresentation = b.UserRepresentation;
 
 @Component({
   templateUrl: './authentication.dialog.html',
@@ -23,15 +24,16 @@ export class AuthenticationDialogComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<AuthenticationDialogComponent>, private fb: FormBuilder,
               @Inject(MAT_DIALOG_DATA) data: AuthenticationDialogData, private userService: UserService, private validationService: ValidationService) {
     this.dialogData = data;
+    const initUser = this.dialogData.user || {};
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, ValidationUtils.emailValidator]],
+      email: [initUser.email, [Validators.required, ValidationUtils.emailValidator]],
       password: ['', [Validators.required, Validators.max(100)]],
       uuid: [data.uuid]
     });
     this.registrationForm = this.fb.group({
-      givenName: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
-      surname: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
-      email: ['', [Validators.required, ValidationUtils.emailValidator]],
+      givenName: [initUser.givenName, [Validators.required, Validators.min(1), Validators.max(100)]],
+      surname: [initUser.surname, [Validators.required, Validators.min(1), Validators.max(100)]],
+      email: [initUser.email, [Validators.required, ValidationUtils.emailValidator]],
       password: ['', [Validators.required, ValidationUtils.passwordValidator]],
       uuid: [data.uuid]
     });
@@ -41,7 +43,7 @@ export class AuthenticationDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setView(this.dialogData.showRegister ? 'REGISTER' : 'LOGIN');
+    this.setView(this.dialogData.initialView || 'LOGIN');
   }
 
   setView(view: AuthenticationView): void {
@@ -123,9 +125,10 @@ export class AuthenticationDialogComponent implements OnInit {
 
 }
 
-type AuthenticationView = 'LOGIN' | 'REGISTER' | 'FORGOT';
+export type AuthenticationView = 'LOGIN' | 'REGISTER' | 'FORGOT';
 
 export interface AuthenticationDialogData {
-  showRegister?: boolean;
+  initialView?: AuthenticationView;
   uuid?: string;
+  user?: UserRepresentation;
 }

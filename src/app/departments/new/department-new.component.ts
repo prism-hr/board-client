@@ -1,6 +1,6 @@
+import {HttpErrorResponse} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Response} from '@angular/http';
 import {MatSnackBar} from '@angular/material';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -64,7 +64,7 @@ export class DepartmentNewComponent implements OnInit {
       return;
     }
 
-    this.authGuard.ensureAuthenticated({modalType: 'register'}).first() // open dialog if not authenticated
+    this.authGuard.ensureAuthenticated({initialView: 'REGISTER'}).first() // open dialog if not authenticated
       .subscribe(authenticated => {
         if (!authenticated) {
           return;
@@ -80,15 +80,17 @@ export class DepartmentNewComponent implements OnInit {
               .then(() => {
                 this.snackBar.open('Department Created!', null, {duration: 3000});
               });
-          }, this.handleErrors);
+          }, (error: HttpErrorResponse) => {
+            this.handleErrors(error);
+          });
       });
 
   }
 
-  private handleErrors(error: Response) {
-    if (error.status === 422) {
-      if (error.json().exceptionCode === 'DUPLICATE_DEPARTMENT') {
-        this.departmentForm.controls['name'].setErrors({duplicateDepartment: true});
+  private handleErrors(error: HttpErrorResponse) {
+    if (error.status === 409) {
+      if (error.error.exceptionCode === 'DUPLICATE_DEPARTMENT') {
+        this.departmentForm.get('name').setErrors({duplicateDepartment: true});
       }
     }
   }

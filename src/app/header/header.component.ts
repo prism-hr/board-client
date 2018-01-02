@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit {
   mobileMenu: false;
   user: UserRepresentation;
   activities: ActivityRepresentation[];
+  newActivitiesCount: number;
   @ViewChild('activitiesPanel') activitiesPanel: OverlayPanel;
 
   constructor(private router: Router, private dialog: MatDialog, private userService: UserService, private authGuard: AuthGuard) {
@@ -27,20 +28,25 @@ export class HeaderComponent implements OnInit {
     this.userService.user$
       .subscribe(user => this.user = user);
     this.userService.activities$
-      .subscribe(activities => this.activities = activities);
+      .subscribe(activities => {
+        this.activities = activities;
+        this.computeNewActivitiesCount();
+      });
   }
 
   activityDismissed(activity: ActivityRepresentation) {
     const idx = this.activities.indexOf(activity);
     this.activities.splice(idx, 1);
+    this.computeNewActivitiesCount();
   }
 
   activityViewed(activity: ActivityRepresentation) {
     this.activitiesPanel.hide();
+    this.computeNewActivitiesCount();
   }
 
   showLogin() {
-    this.authGuard.ensureAuthenticated({modalType: 'Login'}).first() // open dialog if not authenticated
+    this.authGuard.ensureAuthenticated({initialView: 'LOGIN'}).first() // open dialog if not authenticated
       .subscribe(authenticated => {
         if (authenticated) {
           return this.router.navigate(['/']).then(() => {
@@ -57,6 +63,10 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.userService.logout();
     return this.router.navigate(['']);
+  }
+
+  private computeNewActivitiesCount() {
+    this.newActivitiesCount = this.activities.filter(a => !a.viewed).length;
   }
 
 }

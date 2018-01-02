@@ -42,7 +42,7 @@ export class ResourceUsersComponent implements OnInit {
         id: [],
         givenName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
         surname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],
-        email: ['', [Validators.required, ValidationUtils.emailValidator]],
+        email: ['', [Validators.required, ValidationUtils.emailValidator]]
       })
     });
   }
@@ -64,7 +64,6 @@ export class ResourceUsersComponent implements OnInit {
   createNewUser() {
     this.userForm['submitted'] = true;
     if (this.userForm.invalid) {
-      console.log(this.userForm.get('roleGroup').get('memberProgram').valid)
       return;
     }
     this.loading = true;

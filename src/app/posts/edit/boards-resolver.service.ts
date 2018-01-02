@@ -12,8 +12,11 @@ export class BoardsResolver implements Resolve<BoardRepresentation[] | BoardRepr
 
   resolve(route: ActivatedRouteSnapshot): Observable<BoardRepresentation[] | BoardRepresentation> {
     const boardId = route.paramMap.get('boardId');
+    const departmentId = route.paramMap.get('departmentId');
     if (boardId) {
       return this.resourceService.getResource('BOARD', +boardId, {reload: true});
+    } else if (departmentId) {
+      return this.resourceService.getResources('BOARD', {parentId: +departmentId});
     }
     return this.resourceService.getResources('BOARD');
   }

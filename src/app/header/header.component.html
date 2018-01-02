@@ -1,18 +1,21 @@
-<p-sidebar [(visible)]="mobileMenu" [baseZIndex]="10000" >
-<div class="panel-content">
-  <div class="mobile-header">
-    <a class="prism-logo" routerLink="/">
-      <img src="assets/prism.svg">
-    </a>
+<p-sidebar [(visible)]="mobileMenu" [baseZIndex]="10000">
+  <div class="panel-content">
+    <div class="mobile-header">
+      <a class="prism-logo" routerLink="/">
+        <img src="assets/prism.svg">
+      </a>
+    </div>
+    <div *ngIf="user" class="top-nav" fxLayout="column">
+      <a (click)="mobileMenu = false" pButton class="ui-button" routerLink="/" routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact:true}" label="Posts" *ngIf="user.scopes.indexOf('POST') > -1"></a>
+      <a (click)="mobileMenu = false" pButton class="ui-button" routerLink="/boards" routerLinkActive="active"
+         label="Boards" *ngIf="user.scopes.indexOf('BOARD') > -1"></a>
+      <a (click)="mobileMenu = false" pButton class="ui-button" routerLink="/departments" routerLinkActive="active"
+         label="Departments" *ngIf="user.scopes.indexOf('DEPARTMENT') > -1"></a>
+      <button pButton (click)="logout(); mobileMenu = false" class="ui-button-warning btn-logout"
+              label="Log out"></button>
+    </div>
   </div>
-  <div *ngIf="user" class="top-nav" fxLayout="column">
-    <a (click)="mobileMenu = false" pButton class="ui-button" routerLink="/" routerLinkActive="active"
-       [routerLinkActiveOptions]="{exact:true}" label="Posts" *ngIf="user.scopes.indexOf('POST') > -1"></a>
-    <a (click)="mobileMenu = false" pButton class="ui-button" routerLink="/boards" routerLinkActive="active" label="Boards"  *ngIf="user.scopes.indexOf('BOARD') > -1"></a>
-    <a (click)="mobileMenu = false" pButton class="ui-button" routerLink="/departments" routerLinkActive="active" label="Departments"  *ngIf="user.scopes.indexOf('DEPARTMENT') > -1"></a>
-    <button pButton (click)="logout(); mobileMenu = false" class="ui-button-warning btn-logout" label="Log out"></button>
-  </div>
-</div>
 </p-sidebar>
 
 <header class="main-nav">
@@ -30,20 +33,22 @@
         <div *ngIf="user" class="top-nav" fxLayout="row" fxHide.xs>
           <a pButton class="ui-button" routerLink="/" routerLinkActive="active"
              [routerLinkActiveOptions]="{exact:true}" label="Posts" *ngIf="user.scopes.indexOf('POST') > -1"></a>
-          <a pButton class="ui-button" routerLink="/boards" routerLinkActive="active" label="Boards"  *ngIf="user.scopes.indexOf('BOARD') > -1"></a>
-          <a pButton class="ui-button" routerLink="/departments" routerLinkActive="active" label="Departments"  *ngIf="user.scopes.indexOf('DEPARTMENT') > -1"></a>
+          <a pButton class="ui-button" routerLink="/boards" routerLinkActive="active" label="Boards"
+             *ngIf="user.scopes.indexOf('BOARD') > -1"></a>
+          <a pButton class="ui-button" routerLink="/departments" routerLinkActive="active" label="Departments"
+             *ngIf="user.scopes.indexOf('DEPARTMENT') > -1"></a>
         </div>
       </div>
       <nav class="text-right">
         <div *ngIf="!user">
-          <button pButton (click)="showLogin()" class="ui-button-warning" label="Log in"></button>
+          <button pButton (click)="showLogin()" id="loginButton" class="ui-button-warning" label="Log in"></button>
         </div>
         <div *ngIf="user" class="user-header-profile" fxLayout="row">
           <div *ngIf="activities?.length > 0" class="activity">
             <a pButton label="Activities" (click)="activitiesPanel.toggle($event)"
                class="ui-button-info ui-button-icon-only"
                icon="fa-globe"></a>
-            <span class="activity-badge active">{{activities.length}}</span>
+            <span *ngIf="newActivitiesCount" class="activity-badge active">{{newActivitiesCount}}</span>
           </div>
           <a routerLink="/account" class="btn-user">
             <span>{{user.givenName}}</span>
@@ -51,19 +56,21 @@
                      gravity="face" width="150" height="150" radius="max" crop="thumb"></b-image>
             <i *ngIf="!user.documentImage" class="fa-user"></i>
           </a>
-          <button pButton (click)="logout()" class="ui-button-warning" label="Log out" fxHide.xs></button>
-          <button class="ui-button-success ui-button-icon-only btn-menu" type="text" (click)="mobileMenu = true" pButton icon="fa-menu" label="Menu" fxHide.gt-xs></button>
+          <button pButton (click)="logout()" id="logoutButton" class="ui-button-warning" label="Log out"
+                  fxHide.xs></button>
+          <button class="ui-button-success ui-button-icon-only btn-menu" type="text" (click)="mobileMenu = true" pButton
+                  icon="fa-menu" label="Menu" fxHide.gt-xs></button>
         </div>
       </nav>
     </div>
   </div>
 </header>
 
-<p-overlayPanel #activitiesPanel>
+<p-overlayPanel #activitiesPanel id="activitiesPanel">
   <div *ngIf="activities" class="activity-content">
     <div *ngFor="let activity of activities" class="activity-item">
       <b-header-activity [activity]="activity" (dismissed)="activityDismissed(activity)"
-                         (viewed)="activityViewed(activity)"></b-header-activity >
+                         (viewed)="activityViewed(activity)"></b-header-activity>
     </div>
   </div>
   <div *ngIf="!activities">
