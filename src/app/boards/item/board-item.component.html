@@ -42,7 +42,8 @@
       </div>
       <div class="boxes-list__item {{ board.state | lowercase }}" *ngIf="canEdit">
         <div class="title">
-          <i class="fa-{{ board.state | lowercase }}"></i> {{'definitions.state.' + board.state | translate}}
+          <i class="fa-{{ board.state | lowercase }}"></i>
+          {{'definitions.state.' + board.state + '.' + board.scope | translate}}
         </div>
       </div>
     </div>

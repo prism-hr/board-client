@@ -1,10 +1,10 @@
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
+import * as Stripe from 'stripe';
 import {EntityFilter} from '../general/filter/filter.component';
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import UserRepresentation = b.UserRepresentation;
-import * as Stripe from 'stripe';
 import ICustomer = Stripe.customers.ICustomer;
 
 @Injectable()
@@ -26,27 +26,27 @@ export class DepartmentService {
   }
 
   getPaymentSources(department: DepartmentRepresentation): Observable<ICustomer> {
-    return this.http.get('/api/departments/' + department.id + '/paymentSources').map(res => res.json());
+    return this.http.get<ICustomer>('/api/departments/' + department.id + '/paymentSources');
   }
 
   postPaymentSource(department: DepartmentRepresentation, source: string) {
-    return this.http.post('/api/departments/' + department.id + '/paymentSources/' + source, {}).map(res => res.json());
+    return this.http.post('/api/departments/' + department.id + '/paymentSources/' + source, {});
   }
 
   deletePaymentSource(department: DepartmentRepresentation, source: string) {
-    return this.http.delete('/api/departments/' + department.id + '/paymentSources/' + source).map(res => res.json());
+    return this.http.delete('/api/departments/' + department.id + '/paymentSources/' + source);
   }
 
   setPaymentSourceAsDefault(department: DepartmentRepresentation, source: string) {
-    return this.http.post('/api/departments/' + department.id + '/paymentSources/' + source + '/setDefault', {}).map(res => res.json());
+    return this.http.post('/api/departments/' + department.id + '/paymentSources/' + source + '/setDefault', {});
   }
 
   cancelSubscription(department: DepartmentRepresentation) {
-    return this.http.delete('/api/departments/' + department.id + '/subscription').map(res => res.json());
+    return this.http.delete('/api/departments/' + department.id + '/subscription');
   }
 
   restoreSubscription(department: DepartmentRepresentation) {
-    return this.http.put('/api/departments/' + department.id + '/subscription', {}).map(res => res.json());
+    return this.http.put('/api/departments/' + department.id + '/subscription', {});
   }
 
 }

@@ -36,7 +36,7 @@
             <div class="boxes-list__item {{ department.state | lowercase }}">
               <div class="title">
                 <i class="fa-{{ department.state | lowercase }}"></i>
-                {{'definitions.state.' + department.state | translate}}
+                {{'definitions.state.' + department.state + '.' + department.scope | translate}}
               </div>
             </div>
           </div>
