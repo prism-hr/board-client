@@ -80,6 +80,6 @@ export class DepartmentSubscriptionComponent implements OnInit {
 
   private applyCustomer(customer: any) {
     this.customer = customer;
-    this.subscription = customer.subscriptions.data[0];
+    this.subscription = customer && customer.subscriptions.data[0];
   }
 }
