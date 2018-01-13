@@ -14,16 +14,16 @@ import ResourceRepresentation = b.ResourceRepresentation;
       <div *ngSwitchCase="'JOIN_DEPARTMENT_REQUEST_ACTIVITY'" class="activity-inner">
         <a [routerLink]="resourceLink.concat('users')" fragment="memberRequests"
            (click)="activityClicked(activity)" class="activity-w-icon user">
-          <b-image [publicId]="activity.userRole.user.documentImage?.cloudinaryId"
+          <b-image [publicId]="activity.image"
                    gravity="face" width="50" height="50" radius="max" crop="thumb"
-                   *ngIf="activity.userRole.user.documentImage"></b-image>
-          <div class="avatar" *ngIf="!activity.userRole.user.documentImage">
+                   *ngIf="activity.image"></b-image>
+          <div class="avatar" *ngIf="!activity.image">
             <span><i class="fa-user"></i></span>
           </div>
           <div class="activity-copy">
-            <b>{{activity.userRole.user.givenName}} {{activity.userRole.user.surname}}</b>
-            <span>has requested membership of <b>{{resource.name}}</b></span>
-            <p>{{activity.createdTimestamp | date: 'short' }}</p>
+            <b>{{activity.givenName}} {{activity.surname}}</b>
+            <span>has requested membership of <b>{{activity.department}}</b></span>
+            <p>{{activity.created | date: 'short' }}</p>
           </div>
         </a>
         <button pButton type="button" (click)="activityDismissed(activity)" icon="fa-close"></button>
@@ -36,13 +36,11 @@ import ResourceRepresentation = b.ResourceRepresentation;
           </div>
           <div class="activity-copy">
             Someone
-            (<b>{{'definitions.gender.' + activity.resourceEvent.gender | translate}},
-                {{'definitions.ageRange.' + activity.resourceEvent.ageRange | translate}}</b>)
-            <span *ngIf="activity.resourceEvent.locationNationality">
-              from <b>{{activity.resourceEvent.locationNationality.name}}</b>
-            </span>
-            <span>has responded to <b>{{resource.name}}</b></span>
-            <p>{{activity.createdTimestamp | date: 'short' }}</p>
+            (<b>{{'definitions.gender.' + activity.gender | translate}},
+                {{'definitions.ageRange.' + activity.ageRange | translate}}</b>)
+            from <b>{{activity.location}}</b>
+            <span>has responded to <b>{{activity.post}}</b></span>
+            <p>{{activity.created | date: 'short' }}</p>
           </div>
         </a>
         <button pButton type="button" (click)="activityDismissed(activity)" icon="fa-close"></button>
@@ -53,58 +51,58 @@ import ResourceRepresentation = b.ResourceRepresentation;
            class="activity-inner">
         <a [routerLink]="routerLink(resource)" (click)="activityClicked(activity)">
           <div class="activity-w-icon">
-            <div class="logo-holder-activity" [ngClass]="{'default-logo': !documentLogo}">
-              <b-image [publicId]="documentLogo?.cloudinaryId"
+            <div class="logo-holder-activity" [ngClass]="{'default-logo': !activity.image}">
+              <b-image [publicId]="activity.image"
                        gravity="face" width="50" height="50" crop="thumb"></b-image>
             </div>
             <div class="activity-copy">
               <span *ngSwitchCase="'NEW_BOARD_PARENT_ACTIVITY'">
-                New board created in <b>{{department.name}}</b>
+                New board created in <b>{{activity.department}}</b>
               </span>
               <span *ngSwitchCase="'NEW_POST_PARENT_ACTIVITY'">
-                New post <b>'{{post.name}}'</b> in {{department.name}} {{board.name}}
+                New post <b>'{{activity.post}}'</b> in {{activity.department}} {{activity.board}}
               </span>
               <span *ngSwitchCase="'SUSPEND_POST_ACTIVITY'">
-                New revision request for post <b>{{post.name}}</b>
+                New revision request for post <b>{{activity.post}}</b>
               </span>
               <span *ngSwitchCase="'CORRECT_POST_ACTIVITY'">
-                Post <b>{{post.name}}</b> has been revised
+                Post <b>{{activity.post}}</b> has been revised
               </span>
               <span *ngSwitchCase="'JOIN_DEPARTMENT_ACTIVITY'">
-                You have been added as a member of <b>{{department.name}}</b>
+                You have been added as a member of <b>{{activity.department}}</b>
               </span>
               <span *ngSwitchCase="'JOIN_BOARD_ACTIVITY'">
-                You have been added as a member of <b>{{department.name}} {{board.name}}</b>
+                You have been added as a member of <b>{{activity.department}} {{activity.board}}</b>
               </span>
               <span *ngSwitchCase="'ACCEPT_BOARD_ACTIVITY'">
-                Your board <b>{{board.name}}</b> in <b>{{department.name}}</b> has been accepted
+                Your board <b>{{activity.board}}</b> in <b>{{activity.department}}</b> has been accepted
               </span>
               <span *ngSwitchCase="'ACCEPT_POST_ACTIVITY'">
-                Your post <b>{{post.name}}</b> has been accepted
+                Your post <b>{{activity.post}}</b> has been accepted
               </span>
               <span *ngSwitchCase="'PUBLISH_POST_ACTIVITY'">
-                Your post <b>{{post.name}}</b> has been published
+                Your post <b>{{activity.post}}</b> has been published
               </span>
               <span *ngSwitchCase="'RETIRE_POST_ACTIVITY'">
-                Your post <b>{{post.name}}</b> has expired
+                Your post <b>{{activity.post}}</b> has expired
               </span>
               <span *ngSwitchCase="'PUBLISH_POST_MEMBER_ACTIVITY'">
-                New post <b>'{{post.name}}'</b> in <b>{{department.name}} {{board.name}}</b>
+                New post <b>'{{activity.post}}'</b> in <b>{{activity.department}} {{activity.board}}</b>
               </span>
               <span *ngSwitchCase="'REJECT_BOARD_ACTIVITY'">
-                Your board <b>{{board.name}}</b> in <b>{{department.name}}</b> has been rejected
+                Your board <b>{{activity.board}}</b> in <b>{{activity.department}}</b> has been rejected
               </span>
               <span *ngSwitchCase="'RESTORE_BOARD_ACTIVITY'">
-                Your board <b>{{board.name}}</b> in <b>{{department.name}} </b> has been restored
+                Your board <b>{{activity.board}}</b> in <b>{{activity.department}} </b> has been restored
               </span>
               <span *ngSwitchCase="'REJECT_POST_ACTIVITY'">
-                Your post <b>{{post.name}}</b> has been rejected
+                Your post <b>{{activity.post}}</b> has been rejected
               </span>
               <span *ngSwitchCase="'RESTORE_POST_ACTIVITY'">
-                Your post <b>{{post.name}}</b> has been restored
+                Your post <b>{{activity.post}}</b> has been restored
               </span>
               <p>
-                {{activity.createdTimestamp | date: 'short' }}
+                {{activity.created | date: 'short' }}
               </p>
             </div>
           </div>
@@ -126,42 +124,6 @@ export class HeaderActivityComponent implements OnInit {
   resourceLink: any[];
 
   constructor(private userService: UserService, private resourceService: ResourceService) {
-  }
-
-  get resource() {
-    return this.activity.resource;
-  }
-
-  get post(): PostRepresentation {
-    if (this.resource.scope === 'POST') {
-      return this.resource;
-    }
-  }
-
-  get board(): BoardRepresentation {
-    if (this.resource.scope === 'BOARD') {
-      return this.resource;
-    } else if (this.resource.scope === 'POST') {
-      return (<PostRepresentation>this.resource).board;
-    }
-  }
-
-  get department(): DepartmentRepresentation {
-    if (this.resource.scope === 'DEPARTMENT') {
-      return this.resource;
-    } else if (this.resource.scope === 'BOARD') {
-      return (<BoardRepresentation>this.resource).department;
-    } else {
-      return (<PostRepresentation>this.resource).board.department;
-    }
-  }
-
-  get documentLogo() {
-    if (this.board) {
-      return this.board.documentLogo;
-    } else {
-      return this.department.documentLogo;
-    }
   }
 
   ngOnInit(): void {

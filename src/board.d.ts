@@ -170,13 +170,19 @@ declare namespace b {
   }
 
   interface ActivityRepresentation {
-    id?: number;
-    resource?: ResourceRepresentation<any>;
-    userRole?: UserRoleRepresentation;
-    resourceEvent?: ResourceEventRepresentation;
-    activity?: Activity;
-    viewed?: boolean;
-    createdTimestamp?: Date;
+      id?: number;
+      activity?: Activity;
+      image?: string;
+      department?: string;
+      board?: string;
+      post?: string;
+      givenName?: string;
+      surname?: string;
+      gender?: Gender;
+      ageRange?: AgeRange;
+      location?: string;
+      viewed?: boolean;
+      created?: Date;
   }
 
   interface BoardRepresentation extends ResourceRepresentation<BoardRepresentation> {
