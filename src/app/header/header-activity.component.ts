@@ -36,7 +36,7 @@ import ResourceRepresentation = b.ResourceRepresentation;
           </div>
           <div class="activity-copy">
             Someone
-            (<b>{{'definitions.gender.' + activity.resourceEvent.gender | translate}}, 
+            (<b>{{'definitions.gender.' + activity.resourceEvent.gender | translate}},
                 {{'definitions.ageRange.' + activity.resourceEvent.ageRange | translate}}</b>)
             <span *ngIf="activity.resourceEvent.locationNationality">
               from <b>{{activity.resourceEvent.locationNationality.name}}</b>
@@ -103,7 +103,7 @@ import ResourceRepresentation = b.ResourceRepresentation;
               <span *ngSwitchCase="'RESTORE_POST_ACTIVITY'">
                 Your post <b>{{post.name}}</b> has been restored
               </span>
-              <p *ngIf="activity.activity != 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' && activity.activity != 'RESPOND_POST_ACTIVITY'">
+              <p>
                 {{activity.createdTimestamp | date: 'short' }}
               </p>
             </div>
