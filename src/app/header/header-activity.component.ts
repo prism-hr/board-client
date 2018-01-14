@@ -99,16 +99,16 @@ import ActivityRepresentation = b.ActivityRepresentation;
                 Your post <b>{{activity.post}}</b> has been restored
               </span>
               <span *ngSwitchCase="'CREATE_TASK_ACTIVITY'">
-                You have tasks for <b>{{department.name}}</b>
+                You have tasks for <b>{{activity.department}}</b>
               </span>
               <span *ngSwitchCase="'UPDATE_TASK_ACTIVITY'">
-                You have tasks for <b>{{department.name}}</b>
+                You have tasks for <b>{{activity.department}}</b>
               </span>
               <span *ngSwitchCase="'SUBSCRIBE_DEPARTMENT_ACTIVITY'">
-                Your trial period for <b>{{department.name}}</b> is coming to an end
+                Your trial period for <b>{{activity.department}}</b> is coming to an end
               </span>
               <span *ngSwitchCase="'SUSPEND_DEPARTMENT_ACTIVITY'">
-                You missed a payment for <b>{{department.name}}</b>
+                You missed a payment for <b>{{activity.department}}</b>
               </span>
               <p *ngIf="activity.activity != 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' && activity.activity != 'RESPOND_POST_ACTIVITY'">
                 {{activity.createdTimestamp | date: 'short' }}
