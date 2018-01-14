@@ -2,17 +2,13 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ResourceService} from '../services/resource.service';
 import {UserService} from '../services/user.service';
 import ActivityRepresentation = b.ActivityRepresentation;
-import BoardRepresentation = b.BoardRepresentation;
-import DepartmentRepresentation = b.DepartmentRepresentation;
-import PostRepresentation = b.PostRepresentation;
-import ResourceRepresentation = b.ResourceRepresentation;
 
 @Component({
   selector: 'b-header-activity',
   template: `
     <div [ngSwitch]="activity.activity" [ngClass]="{viewed: activity.viewed}">
       <div *ngSwitchCase="'JOIN_DEPARTMENT_REQUEST_ACTIVITY'" class="activity-inner">
-        <a [routerLink]="resourceLink.concat('users')" fragment="memberRequests"
+        <a [routerLink]="resourceLink + '/users'" fragment="memberRequests"
            (click)="activityClicked(activity)" class="activity-w-icon user">
           <b-image [publicId]="activity.image"
                    gravity="face" width="50" height="50" radius="max" crop="thumb"
@@ -29,7 +25,7 @@ import ResourceRepresentation = b.ResourceRepresentation;
         <button pButton type="button" (click)="activityDismissed(activity)" icon="fa-close"></button>
       </div>
       <div *ngSwitchCase="'RESPOND_POST_ACTIVITY'" class="activity-inner">
-        <a [routerLink]="resourceLink.concat('responses')"
+        <a [routerLink]="resourceLink + '/responses'"
            (click)="activityClicked(activity)" class="activity-w-icon user">
           <div class="avatar">
             <span><i class="fa-user"></i></span>
@@ -49,7 +45,7 @@ import ResourceRepresentation = b.ResourceRepresentation;
       <!-- ELSE -->
       <div *ngIf="activity.activity != 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' && activity.activity != 'RESPOND_POST_ACTIVITY'"
            class="activity-inner">
-        <a [routerLink]="routerLink(resource)" (click)="activityClicked(activity)">
+        <a [routerLink]="resourceLink" (click)="activityClicked(activity)">
           <div class="activity-w-icon">
             <div class="logo-holder-activity" [ngClass]="{'default-logo': !activity.image}">
               <b-image [publicId]="activity.image"
@@ -133,14 +129,13 @@ export class HeaderActivityComponent implements OnInit {
   @Input() activity: ActivityRepresentation & {};
   @Output() dismissed: EventEmitter<ActivityRepresentation> = new EventEmitter();
   @Output() viewed: EventEmitter<ActivityRepresentation> = new EventEmitter();
-  resourceLink: any[];
+  resourceLink: string;
 
   constructor(private userService: UserService, private resourceService: ResourceService) {
   }
 
   ngOnInit(): void {
-    const resource = this.activity.resource;
-    this.resourceLink = this.resourceService.routerLink(resource);
+    this.resourceLink = '/' + this.activity.resourceHandle;
   }
 
   activityClicked(activity: ActivityRepresentation) {
@@ -154,9 +149,5 @@ export class HeaderActivityComponent implements OnInit {
     this.userService.dismissActivity(activity).subscribe(() => {
       this.dismissed.emit(activity);
     });
-  }
-
-  routerLink(resource: ResourceRepresentation<any>) {
-    return this.resourceService.routerLink(resource);
   }
 }

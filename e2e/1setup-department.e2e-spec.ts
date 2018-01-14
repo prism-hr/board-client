@@ -66,7 +66,7 @@ describe('Set up department', () => {
     departmentViewPage.clickOverlay();
     departmentViewPage.assertDepartmentView('Bishop department', 'Bishop summary',
       ['Undergraduate Student', 'Master Student', 'Research Student', 'Research Staff']);
-    departmentViewPage.assertTabItems('View', 'Edit', 'Users', 'Badge');
+    departmentViewPage.assertTabItems('View', 'Edit', 'Users', 'Badge', 'Subscription');
   });
 
   it('should add new administrator to a department', () => {
@@ -105,7 +105,7 @@ describe('Set up department', () => {
       departmentViewPage.clickOverlay();
       departmentViewPage.assertDepartmentView('Bishop department', 'Bishop summary',
         ['Undergraduate Student', 'Master Student', 'Research Student', 'Research Staff']);
-      departmentViewPage.assertTabItems('View', 'Edit', 'Users', 'Badge');
+      departmentViewPage.assertTabItems('View', 'Edit', 'Users', 'Badge', 'Subscription');
       TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop-department');
 
       departmentViewPage.openActivitiesPanel(1);

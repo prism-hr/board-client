@@ -121,7 +121,7 @@ export abstract class GenericPage {
 
 export class HomePage extends GenericPage {
   navigateTo() {
-    return browser.get('/');
+    return this.browser.get('/');
   }
 
   getParagraphText() {
