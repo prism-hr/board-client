@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable, NgZone, OnInit} from '@angular/core';
 import {AuthService} from 'ng2-ui-auth';
 import Pusher from 'pusher-js';
 import {Observable} from 'rxjs/Observable';
@@ -20,7 +20,7 @@ export class UserService implements OnInit {
   activities$: ReplaySubject<ActivityRepresentation[]>;
   pusher: Pusher;
 
-  constructor(private http: HttpClient, private rollbar: RollbarService, private auth: AuthService) {
+  constructor(private http: HttpClient, private zone: NgZone, private rollbar: RollbarService, private auth: AuthService) {
     this.userSource = new ReplaySubject<UserRepresentation>(1);
     this.user$ = this.userSource.asObservable();
     this.activities$ = new ReplaySubject<ActivityRepresentation[]>(1);
@@ -30,19 +30,21 @@ export class UserService implements OnInit {
     //     this.logout();
     //   });
 
-    this.pusher = new Pusher('ec7ba70c43883cc8964d', {
-      cluster: 'eu',
-      authorizer: (channel, options) => {
-        return {
-          authorize: (socketId, callback) => {
-            const pusherAuthDTO: PusherAuthenticationDTO = {socket_id: socketId, channel_name: channel.name};
-            this.http.post('/api/pusher/authenticate', pusherAuthDTO)
-              .subscribe(authInfo => {
-                callback(false, authInfo);
-              });
-          }
-        };
-      }
+    this.pusher = this.zone.runOutsideAngular(() => {
+      return new Pusher('ec7ba70c43883cc8964d', {
+        cluster: 'eu',
+        authorizer: (channel, options) => {
+          return {
+            authorize: (socketId, callback) => {
+              const pusherAuthDTO: PusherAuthenticationDTO = {socket_id: socketId, channel_name: channel.name};
+              this.http.post('/api/pusher/authenticate', pusherAuthDTO)
+                .subscribe(authInfo => {
+                  callback(false, authInfo);
+                });
+            }
+          };
+        }
+      });
     });
   }
 
