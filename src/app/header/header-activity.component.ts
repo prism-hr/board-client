@@ -93,13 +93,25 @@ import ResourceRepresentation = b.ResourceRepresentation;
                 Your board <b>{{activity.board}}</b> in <b>{{activity.department}}</b> has been rejected
               </span>
               <span *ngSwitchCase="'RESTORE_BOARD_ACTIVITY'">
-                Your board <b>{{activity.board}}</b> in <b>{{activity.department}} </b> has been restored
+                Your board <b>{{activity.board}}</b> in <b>{{activity.department}}</b> has been restored
               </span>
               <span *ngSwitchCase="'REJECT_POST_ACTIVITY'">
                 Your post <b>{{activity.post}}</b> has been rejected
               </span>
               <span *ngSwitchCase="'RESTORE_POST_ACTIVITY'">
                 Your post <b>{{activity.post}}</b> has been restored
+              </span>
+              <span *ngSwitchCase="'CREATE_TASK_ACTIVITY'">
+                You have new tasks in <b>{{activity.department}}</b>
+              </span>
+              <span *ngSwitchCase="'UPDATE_TASK_ACTIVITY'">
+                You have new tasks in <b>{{activity.department}}</b>
+              </span>
+              <span *ngSwitchCase="'SUBSCRIBE_DEPARTMENT_ACTIVITY'">
+                Your trial period for <b>{{activity.department}}</b> is coming to an end
+              </span>
+              <span *ngSwitchCase="'SUSPEND_DEPARTMENT_ACTIVITY'">
+                You have a failed subscription payment for <b>{{activity.department}}</b>
               </span>
               <p>
                 {{activity.created | date: 'short' }}
