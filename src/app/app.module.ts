@@ -8,7 +8,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {StompRService} from '@stomp/ng2-stompjs';
 import {OverlayPanelModule} from 'primeng/components/overlaypanel/overlaypanel';
 import {SidebarModule} from 'primeng/components/sidebar/sidebar';
 import {TabMenuModule} from 'primeng/components/tabmenu/tabmenu';
@@ -300,7 +299,6 @@ import {ValidationService} from './validation/validation.service';
     },
     RollbarService,
     {provide: ErrorHandler, useClass: RollbarService},
-    StompRService,
     AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService, BoardsResolver,
     DepartmentsResolver, DepartmentService, UserService, ValidationService
   ],
