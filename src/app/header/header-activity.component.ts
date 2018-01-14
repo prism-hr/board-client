@@ -10,16 +10,15 @@ import ActivityRepresentation = b.ActivityRepresentation;
       <div *ngSwitchCase="'JOIN_DEPARTMENT_REQUEST_ACTIVITY'" class="activity-inner">
         <a [routerLink]="resourceLink + '/users'" fragment="memberRequests"
            (click)="activityClicked(activity)" class="activity-w-icon user">
-          <b-image [publicId]="activity.image"
-                   gravity="face" width="50" height="50" radius="max" crop="thumb"
-                   *ngIf="activity.image"></b-image>
+          <b-image *ngIf="activity.image" [publicId]="activity.image"
+                   gravity="face" width="50" height="50" radius="max" crop="thumb"></b-image>
           <div class="avatar" *ngIf="!activity.image">
             <span><i class="fa-user"></i></span>
           </div>
           <div class="activity-copy">
             <b>{{activity.givenName}} {{activity.surname}}</b>
             <span>has requested membership of <b>{{activity.department}}</b></span>
-            <p>{{activity.created | date: 'short' }}</p>
+            <p>{{activity.createdTimestamp | date: 'short' }}</p>
           </div>
         </a>
         <button pButton type="button" (click)="activityDismissed(activity)" icon="fa-close"></button>
@@ -33,10 +32,12 @@ import ActivityRepresentation = b.ActivityRepresentation;
           <div class="activity-copy">
             Someone
             (<b>{{'definitions.gender.' + activity.gender | translate}},
-                {{'definitions.ageRange.' + activity.ageRange | translate}}</b>)
-            from <b>{{activity.location}}</b>
+            {{'definitions.ageRange.' + activity.ageRange | translate}}</b>)
+            <span *ngIf="activity.location">
+              from <b>{{activity.location}}</b>
+            </span>
             <span>has responded to <b>{{activity.post}}</b></span>
-            <p>{{activity.created | date: 'short' }}</p>
+            <p>{{activity.createdTimestamp | date: 'short' }}</p>
           </div>
         </a>
         <button pButton type="button" (click)="activityDismissed(activity)" icon="fa-close"></button>
@@ -89,7 +90,7 @@ import ActivityRepresentation = b.ActivityRepresentation;
                 Your board <b>{{activity.board}}</b> in <b>{{activity.department}}</b> has been rejected
               </span>
               <span *ngSwitchCase="'RESTORE_BOARD_ACTIVITY'">
-                Your board <b>{{activity.board}}</b> in <b>{{activity.department}}</b> has been restored
+                Your board <b>{{activity.board}}</b> in <b>{{activity.department}} </b> has been restored
               </span>
               <span *ngSwitchCase="'REJECT_POST_ACTIVITY'">
                 Your post <b>{{activity.post}}</b> has been rejected
@@ -98,19 +99,10 @@ import ActivityRepresentation = b.ActivityRepresentation;
                 Your post <b>{{activity.post}}</b> has been restored
               </span>
               <span *ngSwitchCase="'CREATE_TASK_ACTIVITY'">
-                You have new tasks in <b>{{activity.department}}</b>
+                You have pending tasks for your department <b>{{activity.department}}</b>
               </span>
-              <span *ngSwitchCase="'UPDATE_TASK_ACTIVITY'">
-                You have new tasks in <b>{{activity.department}}</b>
-              </span>
-              <span *ngSwitchCase="'SUBSCRIBE_DEPARTMENT_ACTIVITY'">
-                Your trial period for <b>{{activity.department}}</b> is coming to an end
-              </span>
-              <span *ngSwitchCase="'SUSPEND_DEPARTMENT_ACTIVITY'">
-                You have a failed subscription payment for <b>{{activity.department}}</b>
-              </span>
-              <p>
-                {{activity.created | date: 'short' }}
+              <p *ngIf="activity.activity != 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' && activity.activity != 'RESPOND_POST_ACTIVITY'">
+                {{activity.createdTimestamp | date: 'short' }}
               </p>
             </div>
           </div>
@@ -135,7 +127,7 @@ export class HeaderActivityComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.resourceLink = '/' + this.activity.resourceHandle;
+    this.resourceLink = '/' + this.activity.handle;
   }
 
   activityClicked(activity: ActivityRepresentation) {

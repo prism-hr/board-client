@@ -190,8 +190,7 @@ declare namespace b {
     id?: number;
     activity?: Activity;
     image?: string;
-    resourceScope?: Scope;
-    resourceHandle?: string;
+    handle?: string;
     department?: string;
     board?: string;
     post?: string;
