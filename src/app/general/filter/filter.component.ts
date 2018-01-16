@@ -110,8 +110,10 @@ export class FilterComponent implements OnInit {
     this.showArchive = show;
     if (!show) {
       this.selectedQuarter = null;
-      this.search();
+    } else {
+      this.selectedQuarter = this.archiveQuarters[0].value;
     }
+    this.search();
   }
 }
 
