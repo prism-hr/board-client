@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.29.366 on 2018-01-14 15:10:42.
+// Generated using typescript-generator version 1.29.366 on 2018-01-28 20:24:38.
 
 declare namespace b {
 
@@ -190,7 +190,8 @@ declare namespace b {
     id?: number;
     activity?: Activity;
     image?: string;
-    handle?: string;
+    resourceScope?: Scope;
+    resourceHandle?: string;
     department?: string;
     board?: string;
     post?: string;

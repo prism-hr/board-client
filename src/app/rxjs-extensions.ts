@@ -12,3 +12,4 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/retryWhen';
 import 'rxjs/add/operator/share';
+import 'rxjs/add/operator/map';

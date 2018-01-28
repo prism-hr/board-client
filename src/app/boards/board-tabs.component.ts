@@ -36,7 +36,7 @@ export class BoardTabsComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.board = data['board'];
-      if (this.board) {
+      if (this.board.id) {
         this.canEdit = this.resourceService.canEdit(this.board);
         const boardPath = ['/', this.board.department.university.handle, this.board.department.handle, this.board.handle];
         this.items = [

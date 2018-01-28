@@ -62,7 +62,6 @@ describe('Set up department', () => {
 
     TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop-department');
 
-    departmentViewPage.followWalkthroughPath();
     departmentViewPage.clickOverlay();
     departmentViewPage.assertDepartmentView('Bishop department', 'Bishop summary',
       ['Undergraduate Student', 'Master Student', 'Research Student', 'Research Staff']);
@@ -101,7 +100,6 @@ describe('Set up department', () => {
       authenticationDialog.performRegistration(
         'admin2@test.prism.hr', 'Admin2', 'Bishop', '1secret1');
       browser.wait(EC.presenceOf(departmentViewPage.getActiveTabItem()));
-      departmentViewPage.followWalkthroughPath();
       departmentViewPage.clickOverlay();
       departmentViewPage.assertDepartmentView('Bishop department', 'Bishop summary',
         ['Undergraduate Student', 'Master Student', 'Research Student', 'Research Staff']);

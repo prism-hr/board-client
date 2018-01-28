@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable, NgZone, OnInit} from '@angular/core';
 import {AuthService} from 'ng2-ui-auth';
-import Pusher from 'pusher-js';
+import * as Pusher from 'pusher-js';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {RollbarService} from '../rollbar/rollbar.service';

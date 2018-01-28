@@ -136,7 +136,7 @@ export class HeaderActivityComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.resourceLink = '/' + this.activity.handle;
+    this.resourceLink = '/' + this.activity.resourceHandle;
   }
 
   activityClicked(activity: ActivityRepresentation) {
