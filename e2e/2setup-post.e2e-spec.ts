@@ -65,6 +65,7 @@ describe('Set up post', () => {
     postViewPage.assertPostView('Bishop Post',
       'Bishop summary', 'Bishop description', ['Employment', 'Volunteering'], true);
 
+    browser2PostViewPage.clickSomewhere(); // for Pusher to force refresh
     browser2PostViewPage.openActivitiesPanel(1);
     browser2PostViewPage.getActivityButton(browser2PostViewPage.getActivityItems().first()).click();
     browser2PostViewPage.assertPostView('Bishop Post',
