@@ -119,7 +119,7 @@ export abstract class GenericPage {
   }
 
   clickSomewhere() {
-    this.browser.element(by.css('b-app-root')).click();
+    this.getDepartmentsButton().click();
   }
 }
 
