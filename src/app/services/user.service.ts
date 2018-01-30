@@ -164,10 +164,12 @@ export class UserService implements OnInit {
               return false;
             })
             .subscribe(() => {
-              const channel = this.pusher.subscribe('presence-activities-' + user.id);
-              channel.bind('activities', activities => {
-                this.zone.run(() => {
-                  this.activities$.next(activities);
+              this.zone.runOutsideAngular(() => {
+                const channel = this.pusher.subscribe('presence-activities-' + user.id);
+                channel.bind('activities', activities => {
+                  this.zone.run(() => {
+                    this.activities$.next(activities);
+                  });
                 });
               });
             });
