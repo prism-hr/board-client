@@ -159,14 +159,16 @@ export class UserService implements OnInit {
       .then(user => {
         if (user) {
           this.http.get('/api/user/activities/')
-            .map((activities: ActivityRepresentation[])=> {
+            .map((activities: ActivityRepresentation[]) => {
               this.activities$.next(activities);
               return false;
             })
             .subscribe(() => {
               const channel = this.pusher.subscribe('presence-activities-' + user.id);
               channel.bind('activities', activities => {
-                this.activities$.next(activities);
+                this.zone.run(() => {
+                  this.activities$.next(activities);
+                });
               });
             });
 

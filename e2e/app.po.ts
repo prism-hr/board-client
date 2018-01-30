@@ -118,9 +118,6 @@ export abstract class GenericPage {
     this.browser.element(by.css('div.ui-widget-overlay')).click();
   }
 
-  clickSomewhere() {
-    this.getDepartmentsButton().click();
-  }
 }
 
 export class HomePage extends GenericPage {

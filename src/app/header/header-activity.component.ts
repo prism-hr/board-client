@@ -132,7 +132,7 @@ export class HeaderActivityComponent implements OnInit {
   @Output() viewed: EventEmitter<ActivityRepresentation> = new EventEmitter();
   resourceLink: string;
 
-  constructor(private userService: UserService, private resourceService: ResourceService) {
+  constructor(private userService: UserService) {
   }
 
   ngOnInit(): void {
