@@ -23,10 +23,10 @@
     <div fxLayout="row" fxLayoutAlign="space-between">
       <div fxLayout="row" fxLayoutAlign="center">
         <div class="logo-holder">
-          <a class="prism-logo" fxHide.xs routerLink="/">
+          <a class="prism-logo" fxHide.xs routerLink="/" *ngIf="user">
             <img src="assets/prism.svg">
           </a>
-          <a class="prism-icon" fxShow.xs fxHide.gt-xs routerLink="/">
+          <a class="prism-icon" fxShow.xs fxHide.gt-xs routerLink="/" *ngIf="user">
             <img src="assets/prism-logo.svg">
           </a>
         </div>
@@ -41,7 +41,7 @@
       </div>
       <nav class="text-right">
         <div *ngIf="!user">
-          <button pButton (click)="showLogin()" id="loginButton" class="ui-button-warning" label="Log in"></button>
+          <button pButton (click)="showLogin()" id="loginButton" class="ui-button-secondary hollow" label="Log in"></button>
         </div>
         <div *ngIf="user" class="user-header-profile" fxLayout="row">
           <div *ngIf="activities?.length > 0" class="activity">

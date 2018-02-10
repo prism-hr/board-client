@@ -1,4 +1,4 @@
-<section>
+<section class="home-create">
   <form [formGroup]="departmentForm" (ngSubmit)="submit()" autocomplete="off" novalidate>
     <mat-card>
       <mat-card-header>
@@ -8,8 +8,7 @@
       </mat-card-header>
       <mat-card-content>
         <div class="grid">
-
-          <div class="grid__item small--one-whole medium-up--one-half">
+          <div class="grid__item small--one-whole medium-up--two-fifths">
             <p-autoComplete formControlName="university" [suggestions]="universitySuggestions"
                             (completeMethod)="searchUniversities($event)" placeholder="University Name"
                             field="name" (onBlur)="universityOnBlur()" inputId="university">
@@ -22,21 +21,17 @@
             <control-messages [control]="departmentForm.get('university')"></control-messages>
           </div>
 
-          <div class="grid__item small--one-whole medium-up--one-half">
+          <div class="grid__item small--one-whole medium-up--two-fifths">
             <input pInputText formControlName="departmentName" placeholder="Department Name" id="departmentName"/>
             <control-messages [control]="departmentForm.get('departmentName')"></control-messages>
+          </div>
+          <div class="grid__item small--one-whole medium-up--one-fifth">
+            <button pButton class="ui-button-warning" type="submit" [disabled]="departmentForm.invalid"
+                    label="Submit"></button>
           </div>
 
         </div>
       </mat-card-content>
-      <mat-card-actions>
-        <div class="grid grid--half-gutters">
-          <div class="grid__item one-whole">
-            <button pButton class="ui-button-warning" type="submit" [disabled]="departmentForm.invalid"
-                    label="Submit"></button>
-          </div>
-        </div>
-      </mat-card-actions>
     </mat-card>
   </form>
 </section>

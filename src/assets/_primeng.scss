@@ -479,7 +479,7 @@ header {
 .ui-button-text-only .ui-button-text {
   padding: 0.3em 0.5em;
   @include media-query($medium-up) {
-    padding: 0.3em 1em;
+    padding: 0.6em;
   }
 }
 
@@ -584,7 +584,6 @@ button.ui-button::-moz-focus-inner {
 .ui-button {
   &.ui-button-secondary {
     &.ui-state-default {
-      background-color: #ffffff;
       border-color: #cccccc;
       color: #373a3c;
     }

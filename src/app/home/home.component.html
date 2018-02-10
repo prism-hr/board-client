@@ -1,5 +1,17 @@
 <section class="section">
-  <h1 class="title" *ngIf="!user">You're seconds away from creating your first board!</h1>
+  <div class="main-title grid">
+    <div class="grid__item small--one-whole medium-up--four-tenths">
+      <img src="assets/prism-logo.svg">
+    </div>
+    <div class="grid__item small--one-whole medium-up--six-tenths">
+      <h1 class="title" *ngIf="!user">You're seconds away from creating your first board!</h1>
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit ins Duis aute irure dolor in reprehenderit in voluptate velit ins Duis aute irure dolor in reprehenderit in voluptate velit ins </p>
+    </div>
+  </div>
+  <div class="main-image">
+    <img src="assets/home-illustration.svg">
+  </div>
+
   <b-home-public *ngIf="!user"></b-home-public>
   <div *ngIf="user">
     <div  class="section-header" fxLayout="row" fxLayoutAlign="space-between center">

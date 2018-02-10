@@ -164,3 +164,11 @@ p-dialog {
     }
   }
 }
+.ui-button.ui-button-secondary.ui-state-default {
+  &.hollow {
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 0;
+    min-width: 110px;
+  }
+}

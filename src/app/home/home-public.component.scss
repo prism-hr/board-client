@@ -1,5 +1,27 @@
 @import '../../assets/variables';
 
+.home-create {
+  margin-top: -80px;
+  background: rgb(255,255,255); /* Old browsers */
+  background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(225,236,239,1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(225,236,239,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(225,236,239,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e1ecef',GradientType=0 ); /* IE6-9 */
+  h2 {
+    color: $uclblue;
+  }
+  .mat-card-header {
+    background: transparent;
+  }
+  .mat-card {
+   box-shadow: none;
+    background: transparent;
+  }
+  button {
+    width: 100%;
+  }
+}
+
 welcome {
   .splash-container {
     padding: 60px 0 40px;

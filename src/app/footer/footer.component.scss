@@ -1,13 +1,11 @@
 @import '../../assets/variables';
 @import '../../assets/grid';
 footer {
-  background: $uclfooter;
+  background: white;
   padding: 10px 0;
-  a {
-    color: white;
-  }
   .prism-icon {
-    display: inline-block;
+    display: flex;
+    align-items: center;
     float: left;
   }
   nav {

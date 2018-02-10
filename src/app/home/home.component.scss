@@ -1,11 +1,18 @@
 @import '../../assets/variables';
 
 .title {
-  margin-bottom:$section-spacing;
-  text-align: center;
+  margin-bottom:$section-spacing-small;
+  margin-top: $section-spacing-small;
+  text-align: left;
   font-weight:400;
+  color: $uclblue;
 }
-
+.main-title {
+  img {
+    width: 80%;
+    margin: 0 0 0 40px;
+  }
+}
 .boards {
   display: inline-block;
   margin-right: 4px;
