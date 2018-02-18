@@ -1,5 +1,4 @@
 import {browser, by, ElementFinder, ProtractorBrowser} from 'protractor';
-import {TestUtils} from './test.utils';
 
 const EC = browser.ExpectedConditions;
 
@@ -149,23 +148,23 @@ export class AuthenticationDialog extends GenericPage {
   }
 
   getGivenNameInput() {
-    return this.browser.element(by.css('input[placeholder="First Name"'));
+    return this.browser.element(by.css('input[placeholder="First Name"]'));
   }
 
   getSurnameInput() {
-    return this.browser.element(by.css('input[placeholder="Last Name"'));
+    return this.browser.element(by.css('input[placeholder="Last Name"]'));
   }
 
   getEmailInput() {
-    return this.browser.element(by.css('input[placeholder="Email"'));
+    return this.browser.element(by.css('input[placeholder="Email"]'));
   }
 
   getPasswordInput() {
-    return this.browser.element(by.css('input[placeholder="Password"'));
+    return this.browser.element(by.css('input[placeholder="Password"]'));
   }
 
   getRepeatPasswordInput() {
-    return this.browser.element(by.css('input[placeholder="Repeat Password"'));
+    return this.browser.element(by.css('input[placeholder="Repeat Password"]'));
   }
 
   getSubmitButton() {
@@ -220,11 +219,11 @@ export class AuthenticationDialog extends GenericPage {
   }
 
   getAlreadyRegisteredButton() {
-    return this.browser.element(by.css('button[label="Already Registered?"'));
+    return this.browser.element(by.css('button[label="Already Registered?"]'));
   }
 
   getForgotPasswordButton() {
-    return this.browser.element(by.css('button[label="Forgot password?"'));
+    return this.browser.element(by.css('button[label="Forgot password?"]'));
   }
 
   private sendKeysWithRetry(input: ElementFinder, value: string) {
