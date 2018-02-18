@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.29.366 on 2018-01-28 20:24:38.
+// Generated using typescript-generator version 1.29.366 on 2018-02-16 21:10:53.
 
 declare namespace b {
 
@@ -190,8 +190,7 @@ declare namespace b {
     id?: number;
     activity?: Activity;
     image?: string;
-    resourceScope?: Scope;
-    resourceHandle?: string;
+    handle?: string;
     department?: string;
     board?: string;
     post?: string;
@@ -201,7 +200,7 @@ declare namespace b {
     ageRange?: AgeRange;
     location?: string;
     viewed?: boolean;
-    created?: string;
+    created?: Date;
   }
 
   interface BoardRepresentation extends ResourceRepresentation<BoardRepresentation> {

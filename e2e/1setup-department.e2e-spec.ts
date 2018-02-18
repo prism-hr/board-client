@@ -106,7 +106,7 @@ describe('Set up department', () => {
       departmentViewPage.assertTabItems('View', 'Edit', 'Users', 'Badge', 'Subscription');
       TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop-department');
 
-      departmentViewPage.openActivitiesPanel(1);
+      departmentViewPage.openActivitiesPanel(1, 1);
       departmentViewPage.getActivityCloseButton(departmentViewPage.getActivityItems().first()).click();
       expect(departmentViewPage.getActivitiesCountBadge().isPresent()).toBeFalsy();
 

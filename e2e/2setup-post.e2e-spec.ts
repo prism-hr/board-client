@@ -65,7 +65,7 @@ describe('Set up post', () => {
     postViewPage.assertPostView('Bishop Post',
       'Bishop summary', 'Bishop description', ['Employment', 'Volunteering'], true);
 
-    browser2PostViewPage.openActivitiesPanel(1);
+    browser2PostViewPage.openActivitiesPanel(1, 1);
     browser2PostViewPage.getActivityButton(browser2PostViewPage.getActivityItems().first()).click();
     browser2PostViewPage.assertPostView('Bishop Post',
       'Bishop summary', 'Bishop description', ['Employment', 'Volunteering'], true);
@@ -80,9 +80,8 @@ describe('Set up post', () => {
     homePage.getLoginButton().click();
     authenticationDialog.performLogin('admin2@test.prism.hr', '1secret1');
 
-    browser.wait(EC.presenceOf(homePage.getActivitiesButton()));
-    homePage.getActivitiesButton().click();
-    homePage.getActivityItems().first().click();
+    homePage.openActivitiesPanel(1);
+    homePage.getActivityButton(homePage.getActivityItems().first()).click();
 
     postViewPage.waitForLoaded();
     expect(postViewPage.getActionButtonLabels()).toEqual(['Review', 'Reject']);

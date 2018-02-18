@@ -77,15 +77,16 @@ export abstract class GenericPage {
     return this.browser.element(by.css('b-header div.activity a'));
   }
 
-  openActivitiesPanel(expectedCount: number) {
+  openActivitiesPanel(expectedCount?: number, expectedNewCount?: number) {
     browser.wait(EC.presenceOf(this.getActivitiesButton()));
-    if (expectedCount) {
-      expect(this.getActivitiesCountBadge().getText()).toEqual('' + expectedCount);
+    if (expectedNewCount) {
+      expect(this.getActivitiesCountBadge().getText()).toEqual('' + expectedNewCount);
     } else {
       expect(this.getActivitiesCountBadge().isPresent()).toBeFalsy();
     }
     this.getActivitiesButton().click();
     expect(this.getActivityItems().count()).toEqual(expectedCount);
+    browser.sleep(1000); // following clicks need this sleep for some reason
   }
 
   getActivitiesCountBadge() {

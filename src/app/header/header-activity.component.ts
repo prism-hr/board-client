@@ -18,7 +18,7 @@ import ActivityRepresentation = b.ActivityRepresentation;
           <div class="activity-copy">
             <b>{{activity.givenName}} {{activity.surname}}</b>
             <span>has requested membership of <b>{{activity.department}}</b></span>
-            <p>{{activity.createdTimestamp | date: 'short' }}</p>
+            <p>{{activity.created | date: 'short' }}</p>
           </div>
         </a>
         <button pButton type="button" (click)="activityDismissed(activity)" icon="fa-close"></button>
@@ -37,7 +37,7 @@ import ActivityRepresentation = b.ActivityRepresentation;
               from <b>{{activity.location}}</b>
             </span>
             <span>has responded to <b>{{activity.post}}</b></span>
-            <p>{{activity.createdTimestamp | date: 'short' }}</p>
+            <p>{{activity.created | date: 'short' }}</p>
           </div>
         </a>
         <button pButton type="button" (click)="activityDismissed(activity)" icon="fa-close"></button>
@@ -111,7 +111,7 @@ import ActivityRepresentation = b.ActivityRepresentation;
                 You missed a payment for <b>{{activity.department}}</b>
               </span>
               <p *ngIf="activity.activity != 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' && activity.activity != 'RESPOND_POST_ACTIVITY'">
-                {{activity.createdTimestamp | date: 'short' }}
+                {{activity.created | date: 'short' }}
               </p>
             </div>
           </div>
@@ -136,7 +136,7 @@ export class HeaderActivityComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.resourceLink = '/' + this.activity.resourceHandle;
+    this.resourceLink = '/' + this.activity.handle;
   }
 
   activityClicked(activity: ActivityRepresentation) {
