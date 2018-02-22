@@ -1,5 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AfterViewInit} from '@angular/core/src/metadata/lifecycle_hooks';
+import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Data} from '@angular/router';
 import {combineLatest} from 'rxjs/observable/combineLatest';
@@ -15,7 +14,7 @@ import UserRepresentation = b.UserRepresentation;
   templateUrl: 'department-view.component.html',
   styleUrls: ['department-view.component.scss']
 })
-export class DepartmentViewComponent implements OnInit, OnDestroy, AfterViewInit {
+export class DepartmentViewComponent implements OnInit {
 
   department: DepartmentRepresentation;
 
