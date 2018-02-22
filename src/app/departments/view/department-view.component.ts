@@ -41,8 +41,7 @@ export class DepartmentViewComponent implements OnInit, OnDestroy, AfterViewInit
 
         if (this.canEdit) {
           setTimeout(() => {
-            this.walkthroughOverlayService.open()
-              .subscribe();
+            this.showWalkthrough();
           });
 
           // if (!this.user.seenWalkThrough) {
@@ -55,13 +54,6 @@ export class DepartmentViewComponent implements OnInit, OnDestroy, AfterViewInit
         }
       });
 
-  }
-
-  ngAfterViewInit(): void {
-
-  }
-
-  ngOnDestroy(): void {
   }
 
   filterApplied(filter: EntityFilter) {
@@ -77,4 +69,8 @@ export class DepartmentViewComponent implements OnInit, OnDestroy, AfterViewInit
     });
   }
 
+  showWalkthrough() {
+    this.walkthroughOverlayService.open()
+      .subscribe();
+  }
 }
