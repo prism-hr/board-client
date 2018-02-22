@@ -1,10 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit} from '@angular/core/src/metadata/lifecycle_hooks';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Data} from '@angular/router';
 import {combineLatest} from 'rxjs/observable/combineLatest';
 import {EntityFilter} from '../../general/filter/filter.component';
 import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
+import {WalkthroughOverlayService} from '../../walkthrough-overlay/walkthrough-overlay.service';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import UserRepresentation = b.UserRepresentation;
@@ -13,7 +15,8 @@ import UserRepresentation = b.UserRepresentation;
   templateUrl: 'department-view.component.html',
   styleUrls: ['department-view.component.scss']
 })
-export class DepartmentViewComponent implements OnInit, OnDestroy {
+export class DepartmentViewComponent implements OnInit, OnDestroy, AfterViewInit {
+
   department: DepartmentRepresentation;
 
   canEdit: boolean;
@@ -23,7 +26,7 @@ export class DepartmentViewComponent implements OnInit, OnDestroy {
   showTasksSidebar: boolean;
 
   constructor(private route: ActivatedRoute, private title: Title, private resourceService: ResourceService,
-              private userService: UserService) {
+              private userService: UserService, private walkthroughOverlayService: WalkthroughOverlayService) {
   }
 
   ngOnInit() {
@@ -37,7 +40,10 @@ export class DepartmentViewComponent implements OnInit, OnDestroy {
         this.loadBoards();
 
         if (this.canEdit) {
-          this.showTasksSidebar = true;
+          setTimeout(() => {
+            this.walkthroughOverlayService.open()
+              .subscribe();
+          });
 
           // if (!this.user.seenWalkThrough) {
           //   setTimeout(() => {
@@ -48,6 +54,11 @@ export class DepartmentViewComponent implements OnInit, OnDestroy {
           // }
         }
       });
+
+  }
+
+  ngAfterViewInit(): void {
+
   }
 
   ngOnDestroy(): void {
@@ -66,6 +77,4 @@ export class DepartmentViewComponent implements OnInit, OnDestroy {
     });
   }
 
-  showWalkthrough() {
-  }
 }

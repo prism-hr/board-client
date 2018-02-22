@@ -11,7 +11,7 @@ import PostRepresentation = b.PostRepresentation;
     <section *ngIf="post" class="section">
       <div *ngIf="!errorStatus">
         <b-post-header [post]="post"></b-post-header>
-        <p-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></p-tabMenu>
+        <b-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></b-tabMenu>
         <router-outlet></router-outlet>
       </div>
       <div *ngIf="errorStatus">

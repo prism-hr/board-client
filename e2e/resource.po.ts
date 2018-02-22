@@ -58,11 +58,11 @@ export class PostNewEditPage extends GenericPage {
 
 export abstract class GenericResourcePage extends GenericPage {
   getActiveTabItem() {
-    return this.browser.element(by.css('p-tabMenu li.ui-state-active a span'));
+    return this.browser.element(by.css('b-tabMenu li.ui-state-active a span'));
   }
 
   getTabItem(label: string) {
-    return this.browser.element.all(by.css('p-tabMenu li a'))
+    return this.browser.element.all(by.css('b-tabMenu li a'))
       .filter(finder => {
         return finder.element(by.css('span')).getText().then(text => {
           return text === label;
@@ -71,7 +71,7 @@ export abstract class GenericResourcePage extends GenericPage {
   }
 
   assertTabItems(...items: string[]) {
-    expect(this.browser.element.all(by.css('p-tabMenu li a span')).getText()).toEqual(items);
+    expect(this.browser.element.all(by.css('b-tabMenu li a span')).getText()).toEqual(items);
   }
 
   getActionButtonLabels() {
@@ -144,7 +144,7 @@ export class DepartmentViewPage extends GenericResourcePage {
   }
 
   assertDepartmentView(name: string, summary: string, categories: string[]) {
-    expect(this.browser.element(by.css('p-tabMenu li.ui-state-active a span')).getText()).toEqual('View');
+    expect(this.browser.element(by.css('b-tabMenu li.ui-state-active a span')).getText()).toEqual('View');
     expect(this.browser.element(by.tagName('h1')).getText()).toEqual(name);
     expect(this.browser.element(by.css('div.summary-holder')).getText()).toEqual(summary);
     expect(this.browser.element.all(by.css('div.category-list span.ui-chips-token')).getText()).toEqual(categories);
@@ -155,9 +155,9 @@ export class DepartmentViewPage extends GenericResourcePage {
 export class BoardViewPage extends GenericResourcePage {
   assertBoardView(name: string, summary: string, categories: string[], canEdit: boolean) {
     if (canEdit) {
-      expect(this.browser.element(by.css('p-tabMenu li.ui-state-active a span')).getText()).toEqual('View');
+      expect(this.browser.element(by.css('b-tabMenu li.ui-state-active a span')).getText()).toEqual('View');
     } else {
-      expect(this.browser.element(by.css('p-tabMenu')).isPresent()).toBeFalsy();
+      expect(this.browser.element(by.css('b-tabMenu')).isPresent()).toBeFalsy();
     }
     expect(this.browser.element(by.tagName('h1')).getText()).toEqual(name);
     expect(this.browser.element(by.css('div.summary-holder')).getText()).toEqual(summary);
@@ -177,10 +177,10 @@ export class PostViewPage extends GenericResourcePage {
   assertPostView(name: string, summary: string, description: string, categories: string[], canEdit: boolean) {
     this.waitForLoaded();
     if (canEdit) {
-      expect(this.browser.element(by.css('p-tabMenu')).isPresent()).toBeTruthy();
-      expect(this.browser.element(by.css('p-tabMenu li.ui-state-active a span')).getText()).toEqual('View');
+      expect(this.browser.element(by.css('b-tabMenu')).isPresent()).toBeTruthy();
+      expect(this.browser.element(by.css('b-tabMenu li.ui-state-active a span')).getText()).toEqual('View');
     } else {
-      expect(this.browser.element(by.css('p-tabMenu')).isPresent()).toBeFalsy();
+      expect(this.browser.element(by.css('b-tabMenu')).isPresent()).toBeFalsy();
     }
     expect(this.browser.element(by.tagName('h1')).getText()).toEqual(name);
     expect(this.browser.element(by.css('div.post-content--excerpt')).getText()).toEqual(summary);

@@ -9,7 +9,7 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
     <section *ngIf="department" class="section">
       <div *ngIf="!errorStatus">
         <b-department-header [department]="department"></b-department-header>
-        <p-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></p-tabMenu>
+        <b-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></b-tabMenu>
         <router-outlet></router-outlet>
       </div>
       <div *ngIf="errorStatus">
@@ -59,6 +59,7 @@ export class DepartmentTabsComponent implements OnInit {
             routerLinkActiveOptions: {exact: true}
           },
           {
+            id: 'walkthrough_badge',
             label: 'Badge',
             title: 'Deploy department badge to your website',
             routerLink: [...departmentPath, 'badge'],

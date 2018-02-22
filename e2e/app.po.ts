@@ -115,7 +115,7 @@ export abstract class GenericPage {
   }
 
   clickOverlay() {
-    this.browser.element(by.css('div.ui-widget-overlay')).click();
+    this.browser.element(by.css('div.cdk-overlay-backdrop')).click();
   }
 
 }
