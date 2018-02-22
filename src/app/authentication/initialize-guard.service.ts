@@ -35,9 +35,7 @@ export class InitializeGuard implements CanActivate {
       this.location.replaceState(path);
       this.router.navigate([path.slice(1)], {replaceUrl: true, fragment: route.fragment});
     } else {
-      if (this.userService.isUserInitializationPending()) {
-        this.userService.initializeUser();
-      }
+      this.userService.initializeUser();
     }
 
     if (resetPasswordUuid) {

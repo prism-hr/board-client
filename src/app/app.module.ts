@@ -8,10 +8,8 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {StompRService} from '@stomp/ng2-stompjs';
 import {OverlayPanelModule} from 'primeng/components/overlaypanel/overlaypanel';
 import {SidebarModule} from 'primeng/components/sidebar/sidebar';
-import {TabMenuModule} from 'primeng/components/tabmenu/tabmenu';
 import {environment} from '../environments/environment';
 import {AppComponent} from './app.component';
 import {authConfig} from './auth.config';
@@ -36,6 +34,7 @@ import {FileUploadModule} from './general/file-upload/file-upload.module';
 import {FilterModule} from './general/filter/filter.module';
 import {ImageModule} from './general/image/image.module';
 import {SharedModule} from './general/shared.module';
+import {TabMenuModule} from './general/tab-menu/tab-menu.component';
 import {HeaderActivityComponent} from './header/header-activity.component';
 import {HeaderComponent} from './header/header.component';
 import {NotFoundComponent} from './not-found.component';
@@ -60,6 +59,8 @@ import {TimeDifferencePipe} from './services/time-difference.pipe';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ValidationService} from './validation/validation.service';
+import {WalkthroughOverlayService} from './walkthrough-overlay/walkthrough-overlay.service';
+import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-tooltip.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import {ValidationService} from './validation/validation.service';
     AboutUsComponent,
     PrivacyComponent,
     TermsComponent,
+    WalkthroughTooltipComponent,
     DisplayDatePipe,
     TimeDifferencePipe
   ],
@@ -176,6 +178,11 @@ import {ValidationService} from './validation/validation.service';
                           {
                             path: 'badge',
                             loadChildren: 'app/resource/badge/resource-badge.module#ResourceBadgeModule',
+                            canActivate: [AuthGuard]
+                          },
+                          {
+                            path: 'subscription',
+                            loadChildren: 'app/departments/subscription/department-subscription.module#DepartmentSubscriptionModule',
                             canActivate: [AuthGuard]
                           }
                         ]
@@ -295,12 +302,11 @@ import {ValidationService} from './validation/validation.service';
     },
     RollbarService,
     {provide: ErrorHandler, useClass: RollbarService},
-    StompRService,
     AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService, BoardsResolver,
-    DepartmentsResolver, DepartmentService, UserService, ValidationService
+    DepartmentsResolver, DepartmentService, UserService, ValidationService, WalkthroughOverlayService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, UnsubscribeDialogComponent, ResourceCommentDialogComponent,
-    UserImageDialogComponent],
+    UserImageDialogComponent, WalkthroughTooltipComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

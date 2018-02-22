@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.29.366 on 2017-12-19 18:40:43.
+// Generated using typescript-generator version 1.29.366 on 2018-02-16 21:10:53.
 
 declare namespace b {
 
@@ -86,6 +86,11 @@ declare namespace b {
     applyEmail?: string;
     liveTimestamp?: Date;
     deadTimestamp?: Date;
+  }
+
+  interface PusherAuthenticationDTO {
+    socket_id?: string;
+    channel_name?: string;
   }
 
   interface RegisterDTO extends AuthenticateDTO<RegisterDTO> {
@@ -183,12 +188,19 @@ declare namespace b {
 
   interface ActivityRepresentation {
     id?: number;
-    resource?: ResourceRepresentation<any>;
-    userRole?: UserRoleRepresentation;
-    resourceEvent?: ResourceEventRepresentation;
     activity?: Activity;
+    image?: string;
+    handle?: string;
+    department?: string;
+    board?: string;
+    post?: string;
+    givenName?: string;
+    surname?: string;
+    gender?: Gender;
+    ageRange?: AgeRange;
+    location?: string;
     viewed?: boolean;
-    createdTimestamp?: Date;
+    created?: Date;
   }
 
   interface BoardRepresentation extends ResourceRepresentation<BoardRepresentation> {
@@ -359,17 +371,17 @@ declare namespace b {
   }
 
   interface LocationDefinition {
+    name?: string;
     domicile?: string;
     googleId?: string;
     latitude?: number;
     longitude?: number;
-    name?: string;
   }
 
   interface Comparable<T> {
   }
 
-  type Action = 'VIEW' | 'PURSUE' | 'EDIT' | 'EXTEND' | 'ACCEPT' | 'SUSPEND' | 'CORRECT' | 'REJECT' | 'PUBLISH' | 'RETIRE' | 'RESTORE' | 'WITHDRAW' | 'ARCHIVE';
+  type Action = 'VIEW' | 'PURSUE' | 'EDIT' | 'SUSPEND' | 'CORRECT' | 'EXTEND' | 'ACCEPT' | 'REJECT' | 'PUBLISH' | 'RETIRE' | 'RESTORE' | 'CONVERT' | 'SUBSCRIBE' | 'UNSUBSCRIBE' | 'WITHDRAW' | 'ARCHIVE';
 
   type State = 'DRAFT' | 'SUSPENDED' | 'PENDING' | 'ACCEPTED' | 'EXPIRED' | 'REJECTED' | 'WITHDRAWN' | 'ARCHIVED' | 'PREVIOUS';
 
@@ -393,7 +405,7 @@ declare namespace b {
 
   type Scope = 'UNIVERSITY' | 'DEPARTMENT' | 'BOARD' | 'POST';
 
-  type Activity = 'ACCEPT_BOARD_ACTIVITY' | 'ACCEPT_POST_ACTIVITY' | 'CORRECT_POST_ACTIVITY' | 'JOIN_BOARD_ACTIVITY' | 'JOIN_DEPARTMENT_ACTIVITY' | 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' | 'NEW_BOARD_PARENT_ACTIVITY' | 'NEW_POST_PARENT_ACTIVITY' | 'PUBLISH_POST_ACTIVITY' | 'PUBLISH_POST_MEMBER_ACTIVITY' | 'REJECT_BOARD_ACTIVITY' | 'REJECT_POST_ACTIVITY' | 'RESTORE_BOARD_ACTIVITY' | 'RESTORE_POST_ACTIVITY' | 'RETIRE_POST_ACTIVITY' | 'SUSPEND_POST_ACTIVITY' | 'RESPOND_POST_ACTIVITY' | 'CREATE_TASK_ACTIVITY' | 'UPDATE_TASK_ACTIVITY';
+  type Activity = 'ACCEPT_BOARD_ACTIVITY' | 'ACCEPT_POST_ACTIVITY' | 'CORRECT_POST_ACTIVITY' | 'JOIN_BOARD_ACTIVITY' | 'JOIN_DEPARTMENT_ACTIVITY' | 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' | 'NEW_BOARD_PARENT_ACTIVITY' | 'NEW_POST_PARENT_ACTIVITY' | 'PUBLISH_POST_ACTIVITY' | 'PUBLISH_POST_MEMBER_ACTIVITY' | 'REJECT_BOARD_ACTIVITY' | 'REJECT_POST_ACTIVITY' | 'RESTORE_BOARD_ACTIVITY' | 'RESTORE_POST_ACTIVITY' | 'RETIRE_POST_ACTIVITY' | 'SUSPEND_POST_ACTIVITY' | 'RESPOND_POST_ACTIVITY' | 'CREATE_TASK_ACTIVITY' | 'UPDATE_TASK_ACTIVITY' | 'SUBSCRIBE_DEPARTMENT_ACTIVITY' | 'SUSPEND_DEPARTMENT_ACTIVITY';
 
   type ResourceEvent = 'VIEW' | 'REFERRAL' | 'RESPONSE';
 

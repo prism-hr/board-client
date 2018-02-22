@@ -1,9 +1,11 @@
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
+import * as Stripe from 'stripe';
 import {EntityFilter} from '../general/filter/filter.component';
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import UserRepresentation = b.UserRepresentation;
+import ICustomer = Stripe.customers.ICustomer;
 
 @Injectable()
 export class DepartmentService {
@@ -23,5 +25,28 @@ export class DepartmentService {
     return this.http.get<string[]>('/api/departments/' + department.id + '/programs', {params});
   }
 
+  getPaymentSources(department: DepartmentRepresentation): Observable<ICustomer> {
+    return this.http.get<ICustomer>('/api/departments/' + department.id + '/paymentSources');
+  }
+
+  postPaymentSource(department: DepartmentRepresentation, source: string) {
+    return this.http.post('/api/departments/' + department.id + '/paymentSources/' + source, {});
+  }
+
+  deletePaymentSource(department: DepartmentRepresentation, source: string) {
+    return this.http.delete('/api/departments/' + department.id + '/paymentSources/' + source);
+  }
+
+  setPaymentSourceAsDefault(department: DepartmentRepresentation, source: string) {
+    return this.http.post('/api/departments/' + department.id + '/paymentSources/' + source + '/setDefault', {});
+  }
+
+  cancelSubscription(department: DepartmentRepresentation) {
+    return this.http.delete('/api/departments/' + department.id + '/subscription');
+  }
+
+  restoreSubscription(department: DepartmentRepresentation) {
+    return this.http.put('/api/departments/' + department.id + '/subscription', {});
+  }
 
 }

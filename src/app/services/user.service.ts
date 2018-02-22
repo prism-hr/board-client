@@ -1,13 +1,12 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable, OnInit} from '@angular/core';
-import {StompRService} from '@stomp/ng2-stompjs';
-import {Message} from '@stomp/stompjs';
+import {Injectable, NgZone, OnInit} from '@angular/core';
 import {AuthService} from 'ng2-ui-auth';
+import * as Pusher from 'pusher-js';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {RollbarService} from '../rollbar/rollbar.service';
-import {stompConfig} from './stomp.config';
 import ActivityRepresentation = b.ActivityRepresentation;
+import PusherAuthenticationDTO = b.PusherAuthenticationDTO;
 import ResourceRepresentation = b.ResourceRepresentation;
 import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
 import UserPasswordDTO = b.UserPasswordDTO;
@@ -19,9 +18,9 @@ export class UserService implements OnInit {
   user$: Observable<UserRepresentation>;
   userSource: ReplaySubject<UserRepresentation>;
   activities$: ReplaySubject<ActivityRepresentation[]>;
+  pusher: Pusher;
 
-  constructor(private http: HttpClient, private stompRService: StompRService,
-              private rollbar: RollbarService, private auth: AuthService) {
+  constructor(private http: HttpClient, private zone: NgZone, private rollbar: RollbarService, private auth: AuthService) {
     this.userSource = new ReplaySubject<UserRepresentation>(1);
     this.user$ = this.userSource.asObservable();
     this.activities$ = new ReplaySubject<ActivityRepresentation[]>(1);
@@ -30,6 +29,23 @@ export class UserService implements OnInit {
     //   .subscribe(() => {
     //     this.logout();
     //   });
+
+    this.pusher = this.zone.runOutsideAngular(() => {
+      return new Pusher('ec7ba70c43883cc8964d', {
+        cluster: 'eu',
+        authorizer: (channel, options) => {
+          return {
+            authorize: (socketId, callback) => {
+              const pusherAuthDTO: PusherAuthenticationDTO = {socket_id: socketId, channel_name: channel.name};
+              this.http.post('/api/pusher/authenticate', pusherAuthDTO)
+                .subscribe(authInfo => {
+                  callback(false, authInfo);
+                });
+            }
+          };
+        }
+      });
+    });
   }
 
   ngOnInit(): void {
@@ -62,7 +78,7 @@ export class UserService implements OnInit {
   }
 
   logout() {
-    this.stompRService.disconnect();
+    this.pusher.subscribeAll();
     this.auth.logout().toPromise()
       .then(() => {
         return this.loadUser();
@@ -138,25 +154,26 @@ export class UserService implements OnInit {
     return this.http.delete('/api/user/activities/' + activity.id);
   }
 
-  isUserInitializationPending() {
-    return this.stompRService.state.getValue() === 0; // StompState is CLOSED
-  }
-
   initializeUser() {
     return this.loadUser()
       .then(user => {
         if (user) {
-          const config = {...stompConfig};
-          config.headers = {
-            Authorization: 'Bearer ' + this.auth.getToken()
-          };
-          this.stompRService.config = config;
-          this.stompRService.initAndConnect();
-          let stomp_subscription = this.stompRService.subscribe('/api/user/activities');
+          this.http.get('/api/user/activities/')
+            .map((activities: ActivityRepresentation[]) => {
+              this.activities$.next(activities);
+              return false;
+            })
+            .subscribe(() => {
+              this.zone.runOutsideAngular(() => {
+                const channel = this.pusher.subscribe('presence-activities-' + user.id);
+                channel.bind('activities', activities => {
+                  this.zone.run(() => {
+                    this.activities$.next(activities);
+                  });
+                });
+              });
+            });
 
-          stomp_subscription.subscribe((message: Message) => {
-            this.activities$.next(JSON.parse(message.body));
-          });
         }
         return user;
       });

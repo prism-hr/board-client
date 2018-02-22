@@ -9,7 +9,7 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
     <section *ngIf="department" class="section">
       <div *ngIf="!errorStatus">
         <b-department-header [department]="department"></b-department-header>
-        <p-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></p-tabMenu>
+        <b-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></b-tabMenu>
         <router-outlet></router-outlet>
       </div>
       <div *ngIf="errorStatus">
@@ -36,33 +36,41 @@ export class DepartmentTabsComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.department = data['department'];
-      this.canEdit = this.resourceService.canEdit(this.department);
-      const departmentPath = ['/', this.department.university.handle, this.department.handle];
-      this.items = [
-        {
-          label: 'View',
-          title: 'View department',
-          routerLink: departmentPath,
-          routerLinkActiveOptions: {exact: true}
-        },
-        {
-          label: 'Edit',
-          title: 'Change department settings',
-          routerLink: [...departmentPath, 'edit'],
-          routerLinkActiveOptions: {exact: true}
-        },
-        {
-          label: 'Users',
-          title: 'Specify department users',
-          routerLink: [...departmentPath, 'users'],
-          routerLinkActiveOptions: {exact: true}
-        },
-        {
-          label: 'Badge',
-          title: 'Deploy department badge to your website',
-          routerLink: [...departmentPath, 'badge'],
-          routerLinkActiveOptions: {exact: true}
-        }];
+      if (this.department.id) {
+        this.canEdit = this.resourceService.canEdit(this.department);
+        const departmentPath = ['/', this.department.university.handle, this.department.handle];
+        this.items = [
+          {
+            label: 'View',
+            title: 'View department',
+            routerLink: departmentPath,
+            routerLinkActiveOptions: {exact: true}
+          },
+          {
+            label: 'Edit',
+            title: 'Change department settings',
+            routerLink: [...departmentPath, 'edit'],
+            routerLinkActiveOptions: {exact: true}
+          },
+          {
+            label: 'Users',
+            title: 'Specify department users',
+            routerLink: [...departmentPath, 'users'],
+            routerLinkActiveOptions: {exact: true}
+          },
+          {
+            id: 'walkthrough_badge',
+            label: 'Badge',
+            title: 'Deploy department badge to your website',
+            routerLink: [...departmentPath, 'badge'],
+            routerLinkActiveOptions: {exact: true}
+          },
+          {
+            label: 'Subscription',
+            routerLink: [...departmentPath, 'subscription'],
+            routerLinkActiveOptions: {exact: true}
+          }];
+      }
     });
   }
 

@@ -9,7 +9,7 @@ import BoardRepresentation = b.BoardRepresentation;
     <section *ngIf="board" class="section">
       <div *ngIf="!errorStatus">
         <b-board-header [board]="board"></b-board-header>
-        <p-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></p-tabMenu>
+        <b-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></b-tabMenu>
         <router-outlet></router-outlet>
       </div>
       <div *ngIf="errorStatus">
@@ -36,7 +36,7 @@ export class BoardTabsComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.board = data['board'];
-      if (this.board) {
+      if (this.board.id) {
         this.canEdit = this.resourceService.canEdit(this.board);
         const boardPath = ['/', this.board.department.university.handle, this.board.department.handle, this.board.handle];
         this.items = [

@@ -35,7 +35,8 @@
       </div>
       <div class="boxes-list__item {{ post.state | lowercase }}" *ngIf="canEdit">
         <div class="title">
-          <i class="fa-{{ post.state | lowercase }}"></i> {{'definitions.state.' + post.state | translate}}
+          <i class="fa-{{ post.state | lowercase }}"></i>
+          {{'definitions.state.' + post.state + '.' + post.scope | translate}}
         </div>
       </div>
       <div class="boxes-list__item" *ngIf="!canEdit" [ngClass]="{'applied': post.response, 'no-applied' : !post.response }">

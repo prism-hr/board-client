@@ -62,11 +62,10 @@ describe('Set up department', () => {
 
     TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop-department');
 
-    departmentViewPage.followWalkthroughPath();
     departmentViewPage.clickOverlay();
     departmentViewPage.assertDepartmentView('Bishop department', 'Bishop summary',
       ['Undergraduate Student', 'Master Student', 'Research Student', 'Research Staff']);
-    departmentViewPage.assertTabItems('View', 'Edit', 'Users', 'Badge');
+    departmentViewPage.assertTabItems('View', 'Edit', 'Users', 'Badge', 'Subscription');
   });
 
   it('should add new administrator to a department', () => {
@@ -101,14 +100,13 @@ describe('Set up department', () => {
       authenticationDialog.performRegistration(
         'admin2@test.prism.hr', 'Admin2', 'Bishop', '1secret1');
       browser.wait(EC.presenceOf(departmentViewPage.getActiveTabItem()));
-      departmentViewPage.followWalkthroughPath();
       departmentViewPage.clickOverlay();
       departmentViewPage.assertDepartmentView('Bishop department', 'Bishop summary',
         ['Undergraduate Student', 'Master Student', 'Research Student', 'Research Staff']);
-      departmentViewPage.assertTabItems('View', 'Edit', 'Users', 'Badge');
+      departmentViewPage.assertTabItems('View', 'Edit', 'Users', 'Badge', 'Subscription');
       TestUtils.assertCurrentUrlEquals('bishop-burton-college/bishop-department');
 
-      departmentViewPage.openActivitiesPanel(1);
+      departmentViewPage.openActivitiesPanel(1, 1);
       departmentViewPage.getActivityCloseButton(departmentViewPage.getActivityItems().first()).click();
       expect(departmentViewPage.getActivitiesCountBadge().isPresent()).toBeFalsy();
 

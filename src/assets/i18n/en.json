@@ -44,14 +44,40 @@
       "RETIRE": "Retire"
     },
     "state": {
-      "DRAFT": "Draft",
-      "PENDING": "Pending",
-      "SUSPENDED": "Revision",
-      "ACCEPTED": "Accepted",
-      "EXPIRED": "Expired",
-      "REJECTED": "Rejected",
-      "WITHDRAWN": "Withdrawn",
-      "PREVIOUS": "Previous"
+      "DRAFT": {
+        "DEPARTMENT": "Trial",
+        "BOARD": "Awaiting moderation",
+        "POST": "Awaiting moderation"
+      },
+      "SUSPENDED": {
+        "DEPARTMENT": "Awaiting payment",
+        "POST": "Awaiting resubmission"
+      },
+      "PENDING": {
+        "DEPARTMENT": "Awaiting subscription",
+        "POST": "Awaiting publication"
+      },
+      "ACCEPTED": {
+        "DEPARTMENT": "Active",
+        "BOARD": "Active",
+        "POST": "Active"
+      },
+      "EXPIRED": {
+        "POST": "Closed"
+      },
+      "REJECTED": {
+        "DEPARTMENT": "Deactivated",
+        "BOARD": "Deactivated",
+        "POST": "Rejected"
+      },
+      "WITHDRAWN": {
+        "POST": "Withdrawn"
+      },
+      "ARCHIVED": {
+        "DEPARTMENT": "Archived",
+        "BOARD": "Archived",
+        "POST": "Archived"
+      }
     },
     "role": {
       "ADMINISTRATOR": "Administrator",

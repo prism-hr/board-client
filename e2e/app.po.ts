@@ -1,5 +1,4 @@
 import {browser, by, ElementFinder, ProtractorBrowser} from 'protractor';
-import {TestUtils} from './test.utils';
 
 const EC = browser.ExpectedConditions;
 
@@ -77,15 +76,16 @@ export abstract class GenericPage {
     return this.browser.element(by.css('b-header div.activity a'));
   }
 
-  openActivitiesPanel(expectedCount: number) {
+  openActivitiesPanel(expectedCount?: number, expectedNewCount?: number) {
     browser.wait(EC.presenceOf(this.getActivitiesButton()));
-    if (expectedCount) {
-      expect(this.getActivitiesCountBadge().getText()).toEqual('' + expectedCount);
+    if (expectedNewCount) {
+      expect(this.getActivitiesCountBadge().getText()).toEqual('' + expectedNewCount);
     } else {
       expect(this.getActivitiesCountBadge().isPresent()).toBeFalsy();
     }
     this.getActivitiesButton().click();
     expect(this.getActivityItems().count()).toEqual(expectedCount);
+    browser.sleep(1000); // following clicks need this sleep for some reason
   }
 
   getActivitiesCountBadge() {
@@ -115,13 +115,14 @@ export abstract class GenericPage {
   }
 
   clickOverlay() {
-    this.browser.element(by.css('div.ui-widget-overlay')).click();
+    this.browser.element(by.css('div.cdk-overlay-backdrop')).click();
   }
+
 }
 
 export class HomePage extends GenericPage {
   navigateTo() {
-    return browser.get('/');
+    return this.browser.get('/');
   }
 
   getParagraphText() {
@@ -147,23 +148,23 @@ export class AuthenticationDialog extends GenericPage {
   }
 
   getGivenNameInput() {
-    return this.browser.element(by.css('input[placeholder="First Name"'));
+    return this.browser.element(by.css('input[placeholder="First Name"]'));
   }
 
   getSurnameInput() {
-    return this.browser.element(by.css('input[placeholder="Last Name"'));
+    return this.browser.element(by.css('input[placeholder="Last Name"]'));
   }
 
   getEmailInput() {
-    return this.browser.element(by.css('input[placeholder="Email"'));
+    return this.browser.element(by.css('input[placeholder="Email"]'));
   }
 
   getPasswordInput() {
-    return this.browser.element(by.css('input[placeholder="Password"'));
+    return this.browser.element(by.css('input[placeholder="Password"]'));
   }
 
   getRepeatPasswordInput() {
-    return this.browser.element(by.css('input[placeholder="Repeat Password"'));
+    return this.browser.element(by.css('input[placeholder="Repeat Password"]'));
   }
 
   getSubmitButton() {
@@ -218,11 +219,11 @@ export class AuthenticationDialog extends GenericPage {
   }
 
   getAlreadyRegisteredButton() {
-    return this.browser.element(by.css('button[label="Already Registered?"'));
+    return this.browser.element(by.css('button[label="Already Registered?"]'));
   }
 
   getForgotPasswordButton() {
-    return this.browser.element(by.css('button[label="Forgot password?"'));
+    return this.browser.element(by.css('button[label="Forgot password?"]'));
   }
 
   private sendKeysWithRetry(input: ElementFinder, value: string) {

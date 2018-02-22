@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Data} from '@angular/router';
-import introJs from 'intro.js/intro.js';
 import {combineLatest} from 'rxjs/observable/combineLatest';
 import {EntityFilter} from '../../general/filter/filter.component';
 import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
+import {WalkthroughOverlayService} from '../../walkthrough-overlay/walkthrough-overlay.service';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import UserRepresentation = b.UserRepresentation;
@@ -14,7 +14,8 @@ import UserRepresentation = b.UserRepresentation;
   templateUrl: 'department-view.component.html',
   styleUrls: ['department-view.component.scss']
 })
-export class DepartmentViewComponent implements OnInit, OnDestroy {
+export class DepartmentViewComponent implements OnInit {
+
   department: DepartmentRepresentation;
 
   canEdit: boolean;
@@ -24,7 +25,7 @@ export class DepartmentViewComponent implements OnInit, OnDestroy {
   showTasksSidebar: boolean;
 
   constructor(private route: ActivatedRoute, private title: Title, private resourceService: ResourceService,
-              private userService: UserService) {
+              private userService: UserService, private walkthroughOverlayService: WalkthroughOverlayService) {
   }
 
   ngOnInit() {
@@ -38,19 +39,20 @@ export class DepartmentViewComponent implements OnInit, OnDestroy {
         this.loadBoards();
 
         if (this.canEdit) {
-          if (!this.user.seenWalkThrough) {
-            setTimeout(() => {
-              this.showWalkthrough();
-            });
-          } else {
-            this.showTasksSidebar = true;
-          }
+          setTimeout(() => {
+            this.showWalkthrough();
+          });
+
+          // if (!this.user.seenWalkThrough) {
+          //   setTimeout(() => {
+          //     this.showWalkthrough();
+          //   });
+          // } else {
+          //   this.showTasksSidebar = true;
+          // }
         }
       });
-  }
 
-  ngOnDestroy(): void {
-    introJs.introJs().exit();
   }
 
   filterApplied(filter: EntityFilter) {
@@ -67,29 +69,7 @@ export class DepartmentViewComponent implements OnInit, OnDestroy {
   }
 
   showWalkthrough() {
-    introJs.introJs()
-      .onexit(() => {
-        this.userService.patchUser({seenWalkThrough: true}).subscribe(() => {
-          this.showTasksSidebar = true;
-        });
-      })
-      .setOptions({
-        disableInteraction: true,
-        exitOnOverlayClick: false,
-        steps: [
-          {
-            element: 'a[title="Specify department users"]',
-            intro: 'Add new members to your department',
-            position: 'bottom'
-          }, {
-            element: '#walkthrough_new_board',
-            intro: 'Add new board',
-            position: 'bottom'
-          }, {
-            element: 'a[title="Deploy department badge to your website"]',
-            intro: 'Deploy department badge to your website',
-            position: 'bottom'
-          }]
-      }).start();
+    this.walkthroughOverlayService.open()
+      .subscribe();
   }
 }

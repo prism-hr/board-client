@@ -1,8 +1,8 @@
 import {Component, forwardRef, Input, NgModule} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {ClipboardModule} from 'ngx-clipboard';
 import {SharedModule} from '../general/shared.module';
-import {ClipboardModule} from 'ngx-clipboard/dist';
 import {ButtonModule} from 'primeng/components/button/button';
 
 @Component({
