@@ -33,6 +33,7 @@ describe('Set up post', () => {
       ['Employment', 'Internship', 'Volunteering'], false);
 
     const browser2 = browser.forkNewDriverInstance(true);
+    browser.forkedInstances['browser2'] = browser2; // used by plugin protractor-jasmine2-screenshot-reporter
     const browser2BoardViewPage = new BoardViewPage(browser2);
     const browser2PostViewPage = new PostViewPage(browser2);
     const browser2AuthenticationDialog = new AuthenticationDialog(browser2);
@@ -71,6 +72,7 @@ describe('Set up post', () => {
       'Bishop summary', 'Bishop description', ['Employment', 'Volunteering'], true);
     expect(browser2PostViewPage.getActivitiesCountBadge().isPresent()).toBeFalsy();
     browser2.close();
+    browser.forkedInstances['browser2'] = null;
 
     postViewPage.getLogoutButton().click();
   });
