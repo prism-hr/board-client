@@ -8,7 +8,6 @@ import {FilterModule} from '../../general/filter/filter.module';
 import {ImageModule} from '../../general/image/image.module';
 import {SharedModule} from '../../general/shared.module';
 import {PostListEmbeddedModule} from '../../posts/list-embedded/post-list-embedded.module';
-import {ResourceTimelineModule} from '../../resource/timeline/resource-timeline.module';
 import {DepartmentViewComponent} from './department-view.component';
 
 @NgModule({
@@ -16,7 +15,6 @@ import {DepartmentViewComponent} from './department-view.component';
     SharedModule,
     ImageModule,
     FilterModule,
-    ResourceTimelineModule,
     BoardItemModule,
     PostListEmbeddedModule,
     SidebarModule,

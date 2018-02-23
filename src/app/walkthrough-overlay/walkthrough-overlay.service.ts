@@ -18,7 +18,6 @@ export class WalkthroughOverlayService {
 
   open() {
     const tooltips: WalkthroughTooltipData[] = [
-      {id: 'walkthrough_new_board', text: 'Start advertising by creating a board', orientation: 'left'},
       {id: 'walkthrough_badge', text: 'Advertise the department on your website', orientation: 'above'}];
 
     const tooltipRefs: WalkthroughTooltipRef[] = [];

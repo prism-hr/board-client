@@ -36,7 +36,6 @@ export class DepartmentViewComponent implements OnInit {
         this.canEdit = this.resourceService.canEdit(this.department);
 
         this.user = user;
-        this.loadBoards();
 
         if (this.canEdit) {
           setTimeout(() => {
@@ -53,19 +52,6 @@ export class DepartmentViewComponent implements OnInit {
         }
       });
 
-  }
-
-  filterApplied(filter: EntityFilter) {
-    this.loadBoards(filter);
-  }
-
-  loadBoards(filter?: EntityFilter) {
-    this.filter = filter || this.filter || {};
-    this.filter.includePublic = !this.user;
-    this.filter.parentId = this.department.id;
-    this.resourceService.getBoards(this.filter).subscribe(boards => {
-      this.boards = boards;
-    });
   }
 
   showWalkthrough() {

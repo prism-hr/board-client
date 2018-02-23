@@ -1,9 +1,6 @@
 <section>
   <div class="grid">
     <div class="grid__item medium-up--three-quarters small-one-whole board">
-      <div class="summary-holder">
-        {{department.summary}}
-      </div>
       <div class="category-list">
       <span class="ui-chips-token ui-corner-all" *ngFor="let category of department.memberCategories">
         {{'definitions.memberCategory.' + category | translate}}
@@ -30,23 +27,26 @@
                  [image]="department.documentLogo?.cloudinaryUrl" [showCount]="true"></share-buttons>
 </section>
 
-<section *ngIf="canEdit">
-  <div fxLayout="row" fxLayoutAlign="space-between top" class="section-header">
-    <h2>Boards</h2>
-    <a pButton [routerLink]="['/newBoard', {departmentId: department.id}]" class="ui-button-success"
-       id="walkthrough_new_board" icon="fa-plus" label="New Board"></a>
-  </div>
-  <b-filter resourceScope="BOARD" (applied)="filterApplied($event)"></b-filter>
-  <div class="list-container">
-    <b-board-item *ngFor="let board of boards" [board]="board" class="list-container__item"></b-board-item>
-  </div>
-</section>
-
-<section>
+<section *ngIf="!canEdit">
   <b-post-list-embedded [resource]="department"></b-post-list-embedded>
 </section>
 
-<b-resource-timeline *ngIf="department" [resource]="department"></b-resource-timeline>
+<!--<b-resource-timeline *ngIf="department" [resource]="department"></b-resource-timeline>-->
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Tasks</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ul>
+      <li *ngFor="let task of department.tasks">
+        <a href="#" [ngClass]="{'checked': task.completed}">
+          <div class="step-title">{{'definitions.task.' + task.task | translate}}</div>
+        </a>
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>
 
 <p-sidebar [(visible)]="showTasksSidebar" position="left">
   <p class="step-block-header">To start with our app please do the following tasks</p>
