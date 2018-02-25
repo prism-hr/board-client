@@ -19,7 +19,7 @@ export class DepartmentSubscriptionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.parent.parent.data
+    this.route.data
       .subscribe((parentData: Data) => {
         this.department = parentData['department'];
         this.departmentService.getPaymentSources(this.department)

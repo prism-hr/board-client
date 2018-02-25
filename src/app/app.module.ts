@@ -254,7 +254,7 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
           },
           {path: '**', component: NotFoundComponent}]
       }
-    ]),
+    ], {paramsInheritanceStrategy: 'always'}),
     // Board modules
     SharedModule,
     FilterModule,

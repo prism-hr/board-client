@@ -48,7 +48,7 @@ export class ResourceUsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.parent.parent.data.subscribe(data => {
+    this.route.data.subscribe(data => {
       const resourceScope = data['resourceScope'];
       this.resource = data[resourceScope];
       this.title.setTitle(this.resource.name + ' - Users');

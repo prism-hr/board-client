@@ -79,7 +79,7 @@ export class PostEditComponent implements OnInit {
       deadTimestamp: []
     });
 
-    combineLatest(this.route.parent.parent.data, this.route.parent.data, this.userService.user$.first())
+    combineLatest(this.route.data, this.route.data, this.userService.user$.first())
       .subscribe(([parentData, data, user]: [Data, Data, UserRepresentation]) => {
         this.board = parentData['board'];
         if (data['boards']) { // of "boards" defined, means new post is being created

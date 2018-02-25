@@ -29,7 +29,7 @@ export class DepartmentViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    combineLatest(this.route.parent.data, this.userService.user$.first())
+    combineLatest(this.route.data, this.userService.user$.first())
       .subscribe(([data, user]: [Data, Data, UserRepresentation]) => {
         this.department = data['department'];
         this.title.setTitle(this.department.name);

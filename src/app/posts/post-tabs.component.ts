@@ -76,7 +76,7 @@ export class PostTabsComponent implements OnInit {
         }
       });
 
-    this.route.parent.data.subscribe(parentData => {
+    this.route.data.subscribe(parentData => {
       this.board = parentData['board'];
     });
   }

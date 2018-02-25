@@ -11,8 +11,8 @@ export class DepartmentResolver implements Resolve<DepartmentRepresentation> {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<DepartmentRepresentation> {
-    const universityHandle = route.parent.params['universityHandle'];
-    const departmentHandle = route.parent.params['departmentHandle'];
+    const universityHandle = route.params['universityHandle'];
+    const departmentHandle = route.params['departmentHandle'];
     return this.resourceService.getResourceByHandle('DEPARTMENT', universityHandle + '/' + departmentHandle);
   }
 

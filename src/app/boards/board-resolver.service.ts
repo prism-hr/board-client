@@ -11,8 +11,8 @@ export class BoardResolver implements Resolve<BoardRepresentation> {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<BoardRepresentation> {
-    const universityHandle = route.parent.params['universityHandle'];
-    const departmentHandle = route.parent.params['departmentHandle'];
+    const universityHandle = route.params['universityHandle'];
+    const departmentHandle = route.params['departmentHandle'];
     const boardHandle = route.params['boardHandle'];
     return this.resourceService.getResourceByHandle('BOARD', universityHandle + '/' + departmentHandle + '/' + boardHandle);
   }
