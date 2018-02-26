@@ -10,6 +10,7 @@ import {combineLatest} from 'rxjs/observable/combineLatest';
 import {ResourceCommentDialogComponent} from '../../resource/resource-comment.dialog';
 import {RollbarService} from '../../rollbar/rollbar.service';
 import {DefinitionsService} from '../../services/definitions.service';
+import {ExternalApisService} from '../../services/external-apis.service';
 import {ResourceActionView, ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
 import {Utils} from '../../services/utils';
@@ -45,7 +46,7 @@ export class PostEditComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private cdf: ChangeDetectorRef,
               private rollbar: RollbarService, private title: Title, private dialog: MatDialog,
               private definitionsService: DefinitionsService, private postService: PostService, private resourceService: ResourceService,
-              private userService: UserService) {
+              private externalApisService: ExternalApisService, private userService: UserService) {
     this.definitions = definitionsService.getDefinitions();
   }
 
@@ -79,7 +80,7 @@ export class PostEditComponent implements OnInit {
       deadTimestamp: []
     });
 
-    combineLatest(this.route.parent.parent.data, this.route.parent.data, this.userService.user$.first())
+    combineLatest(this.route.data, this.route.data, this.userService.user$.first())
       .subscribe(([parentData, data, user]: [Data, Data, UserRepresentation]) => {
         this.board = parentData['board'];
         if (data['boards']) { // of "boards" defined, means new post is being created
@@ -247,7 +248,7 @@ export class PostEditComponent implements OnInit {
   }
 
   searchOrganizations(event) {
-    this.resourceService.lookupOrganizations(event.query).subscribe((organizations: string[]) => {
+    this.externalApisService.lookupOrganizations(event.query).subscribe((organizations: string[]) => {
       this.organizationSuggestions = organizations;
     })
   }

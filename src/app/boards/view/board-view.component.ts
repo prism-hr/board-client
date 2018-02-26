@@ -23,7 +23,7 @@ export class BoardViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    combineLatest(this.route.parent.data, this.route.queryParamMap)
+    combineLatest(this.route.data, this.route.queryParamMap)
       .subscribe(([parentData, queryParamMap]: [Data, ParamMap]) => {
         this.board = parentData['board'];
         this.title.setTitle(this.board.name);

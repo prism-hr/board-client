@@ -43,7 +43,7 @@ export class BoardEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.parent.parent.data.subscribe(data => {
+    this.route.data.subscribe(data => {
       this.board = data['board'];
       this.title.setTitle(this.board.name + ' - Edit');
       const value: any = pick(this.board, this.boardProperties);

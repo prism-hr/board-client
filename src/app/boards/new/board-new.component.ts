@@ -41,7 +41,7 @@ export class BoardNewComponent implements OnInit {
   ngOnInit() {
     this.title.setTitle('New board');
 
-    this.route.parent.data.subscribe(data => {
+    this.route.data.subscribe(data => {
       if (data['departments'] instanceof Array) { // either array or one department can be resolved
         this.departmentOptions = (<DepartmentRepresentation[]>data['departments'])
           .map(b => ({label: b.university.name + ' - ' + b.name, value: b}));

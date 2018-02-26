@@ -20,7 +20,7 @@ export class PostResponsesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.parent.data
+    this.route.data
       .subscribe(parentData => {
         this.post = parentData['post'];
         this.title.setTitle(this.post.name + ' - Responses');

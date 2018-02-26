@@ -54,6 +54,7 @@ import {RollbarService} from './rollbar/rollbar.service';
 import './rxjs-extensions';
 import {DefinitionsLoader, DefinitionsService} from './services/definitions.service';
 import {DisplayDatePipe} from './services/display-date.pipe';
+import {ExternalApisService} from './services/external-apis.service';
 import {ResourceService} from './services/resource.service';
 import {TimeDifferencePipe} from './services/time-difference.pipe';
 import {createTranslateLoader} from './services/translate.service';
@@ -254,7 +255,7 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
           },
           {path: '**', component: NotFoundComponent}]
       }
-    ]),
+    ], {paramsInheritanceStrategy: 'always'}),
     // Board modules
     SharedModule,
     FilterModule,
@@ -303,7 +304,7 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
     RollbarService,
     {provide: ErrorHandler, useClass: RollbarService},
     AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService, BoardsResolver,
-    DepartmentsResolver, DepartmentService, UserService, ValidationService, WalkthroughOverlayService
+    DepartmentsResolver, DepartmentService, UserService, ValidationService, WalkthroughOverlayService, ExternalApisService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, UnsubscribeDialogComponent, ResourceCommentDialogComponent,
     UserImageDialogComponent, WalkthroughTooltipComponent],

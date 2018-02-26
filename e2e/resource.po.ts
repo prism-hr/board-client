@@ -146,7 +146,6 @@ export class DepartmentViewPage extends GenericResourcePage {
   assertDepartmentView(name: string, summary: string, categories: string[]) {
     expect(this.browser.element(by.css('b-tabMenu li.ui-state-active a span')).getText()).toEqual('View');
     expect(this.browser.element(by.tagName('h1')).getText()).toEqual(name);
-    expect(this.browser.element(by.css('div.summary-holder')).getText()).toEqual(summary);
     expect(this.browser.element.all(by.css('div.category-list span.ui-chips-token')).getText()).toEqual(categories);
   }
 

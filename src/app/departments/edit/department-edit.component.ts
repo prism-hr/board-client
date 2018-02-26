@@ -42,7 +42,7 @@ export class DepartmentEditComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.route.parent.parent.data
+    this.route.data
       .subscribe((parentData: Data) => {
         this.department = parentData['department'];
         this.title.setTitle(this.department.name + ' - Edit');
