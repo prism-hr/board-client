@@ -1,9 +1,7 @@
 @import '../../assets/variables';
 
 .resource-header {
-  background: $greyBackground;
-  border-top: 1px solid $fadeGrey;
-  border-bottom: 1px solid $fadeGrey;
+
   padding: 10px;
   .admin-actions {
     font-size: 0.8rem;
@@ -15,7 +13,7 @@
   h1 {
     font-size: 1.5em;
     font-weight: 500;
-    color: $uclred;
+    color: $new-text;
     padding: 7px 0;
     small {
       font-size:80%;

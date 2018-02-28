@@ -8,9 +8,16 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
   template: `
     <section *ngIf="department" class="section">
       <div *ngIf="!errorStatus">
-        <b-department-header [department]="department"></b-department-header>
-        <b-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></b-tabMenu>
-        <router-outlet></router-outlet>
+        <div class="grid">
+          <div class="grid__item medium-up--six-eighths">
+            <b-department-header [department]="department"></b-department-header>
+            <b-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></b-tabMenu>
+            <router-outlet></router-outlet>
+          </div>
+          <div class="grid__item medium-up--two-eighths">
+            <b-image [publicId]="department.documentLogo?.cloudinaryId" height="150" width="200" crop="mfit"></b-image>
+          </div>
+        </div>
       </div>
       <div *ngIf="errorStatus">
         <div *ngIf="errorStatus === 404">

@@ -460,13 +460,14 @@ header {
   .ui-button {
     &.active {
       .ui-button-text {
-        color: $uclred;
-        background: white;
-        border-radius: 2px;
+        color: white;
+        border-bottom: 2px solid $uclred;
+        background: transparent;
       }
     }
     .ui-button-text {
       color: white;
+      border-bottom: 2px solid transparent;
     }
   }
 }
@@ -4159,7 +4160,7 @@ p-selectbutton .ui-button-info {
 
 $fontFamily: 'Roboto';
 $fontSize: 1.1em;
-$borderRadius: 2px;
+$borderRadius: 0px;
 $disabledOpacity: 0.35;
 
 //Header

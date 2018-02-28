@@ -20,7 +20,7 @@
 
 <header class="main-nav">
   <div class="page-width">
-    <div fxLayout="row" fxLayoutAlign="space-between">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
       <div fxLayout="row" fxLayoutAlign="center">
         <div class="logo-holder">
           <a class="prism-logo" fxHide.xs routerLink="/" *ngIf="user">
@@ -47,7 +47,7 @@
           <div *ngIf="activities?.length > 0" class="activity">
             <a pButton label="Activities" (click)="activitiesPanel.toggle($event)"
                class="ui-button-info ui-button-icon-only"
-               icon="fa-globe"></a>
+               icon="icon-bell"></a>
             <span *ngIf="newActivitiesCount" class="activity-badge active">{{newActivitiesCount}}</span>
           </div>
           <a routerLink="/account" class="btn-user">
@@ -56,7 +56,7 @@
                      gravity="face" width="150" height="150" radius="max" crop="thumb"></b-image>
             <i *ngIf="!user.documentImage" class="fa-user"></i>
           </a>
-          <button pButton (click)="logout()" id="logoutButton" class="ui-button-warning" label="Log out"
+          <button pButton (click)="logout()" id="logoutButton" icon="icon-log-out" class="log-out"
                   fxHide.xs></button>
           <button class="ui-button-success ui-button-icon-only btn-menu" type="text" (click)="mobileMenu = true" pButton
                   icon="fa-menu" label="Menu" fxHide.gt-xs></button>

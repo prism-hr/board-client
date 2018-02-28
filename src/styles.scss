@@ -124,9 +124,9 @@ button, a {
 
 .prism-logo {
   width: auto;
-  height: 36px;
+  height: 40px;
   display: block;
-  padding: 4px 0;
+  padding: 4px 0 0 0;
   img {
     height: 100%;
   }
@@ -137,17 +137,14 @@ button, a {
 }
 a.btn-user {
   display: flex;
+  align-items: center;
   margin: 0 15px;
   color: white;
   span {
     display: block;
-    padding: 5px 5px 5px 0;
-    line-height: 24px;
   }
   b-image {
-    margin-top: 4px;
-    margin-right: 5px;
-    margin-left: 5px;
+    margin: 0 0 0 5px
   }
   .fa-user {
     line-height:33px;
@@ -167,7 +164,7 @@ a.btn-user {
     display: block;
     padding: 2px 6px 3px;
     &.active {
-      background: $uclred;
+      background: $newred;
       color: white;
     }
   }

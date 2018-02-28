@@ -1,14 +1,14 @@
 <section class="section">
-  <div class="main-title grid">
+  <div class="main-title grid"  *ngIf="!user">
     <div class="grid__item small--one-whole medium-up--four-tenths">
       <img src="assets/prism-logo.svg">
     </div>
     <div class="grid__item small--one-whole medium-up--six-tenths">
-      <h1 class="title" *ngIf="!user">You're seconds away from creating your first board!</h1>
+      <h1 class="title">You're seconds away from creating your first board!</h1>
       <p>Duis aute irure dolor in reprehenderit in voluptate velit ins Duis aute irure dolor in reprehenderit in voluptate velit ins Duis aute irure dolor in reprehenderit in voluptate velit ins </p>
     </div>
   </div>
-  <div class="main-image">
+  <div class="main-image"  *ngIf="!user">
     <img src="assets/home-illustration.svg">
   </div>
 

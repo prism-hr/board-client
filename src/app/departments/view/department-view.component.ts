@@ -39,7 +39,7 @@ export class DepartmentViewComponent implements OnInit {
 
         if (this.canEdit) {
           setTimeout(() => {
-            this.showWalkthrough();
+            //this.showWalkthrough();
           });
 
           // if (!this.user.seenWalkThrough) {
