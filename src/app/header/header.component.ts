@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {OverlayPanel} from 'primeng/components/overlaypanel/overlaypanel';
 import {AuthGuard} from '../authentication/auth-guard.service';
 import {UserImageDialogComponent} from '../authentication/user-image.dialog';
@@ -19,9 +19,11 @@ export class HeaderComponent implements OnInit {
   user: UserRepresentation;
   activities: ActivityRepresentation[];
   newActivitiesCount: number;
+  resourceScope: string;
   @ViewChild('activitiesPanel') activitiesPanel: OverlayPanel;
 
-  constructor(private router: Router, private dialog: MatDialog, private userService: UserService, private authGuard: AuthGuard) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private dialog: MatDialog, private userService: UserService,
+              private authGuard: AuthGuard) {
   }
 
   ngOnInit(): void {
@@ -32,6 +34,26 @@ export class HeaderComponent implements OnInit {
         this.activities = activities;
         this.computeNewActivitiesCount();
       });
+
+    this.router.events
+      .filter(event => event instanceof NavigationEnd)
+      .map(() => {
+        let child = this.activatedRoute.firstChild;
+        let resourceScope = null;
+        while (child) {
+          if (child.firstChild) {
+            child = child.firstChild;
+            if (child.snapshot.data && child.snapshot.data['resourceScope']) {
+              resourceScope = child.snapshot.data['resourceScope'];
+            }
+          } else {
+            return resourceScope;
+          }
+        }
+        return null;
+      }).subscribe( (resourceScope: string) => {
+      this.resourceScope = resourceScope;
+    });
   }
 
   activityDismissed(activity: ActivityRepresentation) {

@@ -6,11 +6,15 @@
       </a>
     </div>
     <div *ngIf="user" class="top-nav" fxLayout="column">
-      <a (click)="mobileMenu = false" pButton class="ui-button" routerLink="/" routerLinkActive="active"
-         [routerLinkActiveOptions]="{exact:true}" label="Posts" *ngIf="user.scopes.indexOf('POST') > -1"></a>
+      <a (click)="mobileMenu = false" pButton class="ui-button" routerLink="/"
+         routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+         [ngClass]="{active: resourceScope === 'post'}"
+         label="Posts" *ngIf="user.scopes.indexOf('POST') > -1"></a>
       <a (click)="mobileMenu = false" pButton class="ui-button" routerLink="/boards" routerLinkActive="active"
+         [ngClass]="{active: resourceScope === 'board'}"
          label="Boards" *ngIf="user.scopes.indexOf('BOARD') > -1"></a>
       <a (click)="mobileMenu = false" pButton class="ui-button" routerLink="/departments" routerLinkActive="active"
+         [ngClass]="{active: resourceScope === 'department'}"
          label="Departments" *ngIf="user.scopes.indexOf('DEPARTMENT') > -1"></a>
       <button pButton (click)="logout(); mobileMenu = false" class="ui-button-warning btn-logout"
               label="Log out"></button>
@@ -31,17 +35,22 @@
           </a>
         </div>
         <div *ngIf="user" class="top-nav" fxLayout="row" fxHide.xs>
-          <a pButton class="ui-button" routerLink="/" routerLinkActive="active"
-             [routerLinkActiveOptions]="{exact:true}" label="Posts" *ngIf="user.scopes.indexOf('POST') > -1"></a>
-          <a pButton class="ui-button" routerLink="/boards" routerLinkActive="active" label="Boards"
-             *ngIf="user.scopes.indexOf('BOARD') > -1"></a>
-          <a pButton class="ui-button" routerLink="/departments" routerLinkActive="active" label="Departments"
-             *ngIf="user.scopes.indexOf('DEPARTMENT') > -1"></a>
+          <a pButton class="ui-button" routerLink="/"
+             routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+             [ngClass]="{active: resourceScope === 'post'}"
+             label="Posts" *ngIf="user.scopes.indexOf('POST') > -1"></a>
+          <a pButton class="ui-button" routerLink="/boards" routerLinkActive="active"
+             [ngClass]="{active: resourceScope === 'board'}"
+             label="Boards" *ngIf="user.scopes.indexOf('BOARD') > -1"></a>
+          <a pButton class="ui-button" routerLink="/departments" routerLinkActive="active"
+             [ngClass]="{active: resourceScope === 'department'}"
+             label="Departments" *ngIf="user.scopes.indexOf('DEPARTMENT') > -1"></a>
         </div>
       </div>
       <nav class="text-right">
         <div *ngIf="!user">
-          <button pButton (click)="showLogin()" id="loginButton" class="ui-button-secondary hollow" label="Log in"></button>
+          <button pButton (click)="showLogin()" id="loginButton" class="ui-button-secondary hollow"
+                  label="Log in"></button>
         </div>
         <div *ngIf="user" class="user-header-profile" fxLayout="row">
           <div *ngIf="activities?.length > 0" class="activity">

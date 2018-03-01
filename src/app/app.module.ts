@@ -226,6 +226,9 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
                       },
                       {
                         path: ':postId',
+                        data: {
+                          resourceScope: 'post'
+                        },
                         resolve: {
                           post: PostResolver,
                         },
