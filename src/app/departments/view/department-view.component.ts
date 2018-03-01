@@ -24,38 +24,18 @@ export class DepartmentViewComponent implements OnInit {
   filter: EntityFilter;
   showTasksSidebar: boolean;
 
-  constructor(private route: ActivatedRoute, private title: Title, private resourceService: ResourceService,
-              private userService: UserService, private walkthroughOverlayService: WalkthroughOverlayService) {
+  constructor(private route: ActivatedRoute, private title: Title, private resourceService: ResourceService) {
   }
 
   ngOnInit() {
-    combineLatest(this.route.data, this.userService.user$.first())
-      .subscribe(([data, user]: [Data, Data, UserRepresentation]) => {
+    this.route.data
+      .subscribe(data => {
         this.department = data['department'];
         this.title.setTitle(this.department.name);
         this.canEdit = this.resourceService.canEdit(this.department);
-
-        this.user = user;
-
-        if (this.canEdit) {
-          setTimeout(() => {
-            //this.showWalkthrough();
-          });
-
-          // if (!this.user.seenWalkThrough) {
-          //   setTimeout(() => {
-          //     this.showWalkthrough();
-          //   });
-          // } else {
-          //   this.showTasksSidebar = true;
-          // }
-        }
       });
 
   }
 
-  showWalkthrough() {
-    this.walkthroughOverlayService.open()
-      .subscribe();
-  }
+
 }
