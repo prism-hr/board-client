@@ -42,11 +42,15 @@ export class DepartmentService {
   }
 
   cancelSubscription(department: DepartmentRepresentation) {
-    return this.http.delete('/api/departments/' + department.id + '/subscription');
+    return this.http.post('/api/departments/' + department.id + '/subscription', {action: 'cancel'});
   }
 
   restoreSubscription(department: DepartmentRepresentation) {
-    return this.http.put('/api/departments/' + department.id + '/subscription', {});
+    return this.http.post('/api/departments/' + department.id + '/subscription', {action: 'reactivate'});
+  }
+
+  createSubscription(department: DepartmentRepresentation) {
+    return this.http.post('/api/departments/' + department.id + '/subscription', {action: 'create'});
   }
 
 }

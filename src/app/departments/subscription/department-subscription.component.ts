@@ -78,6 +78,11 @@ export class DepartmentSubscriptionComponent implements OnInit {
       .subscribe(customer => this.applyCustomer(customer));
   }
 
+  createSubscription() {
+    this.departmentService.createSubscription(this.department)
+      .subscribe(customer => this.applyCustomer(customer));
+  }
+
   private applyCustomer(customer: any) {
     this.customer = customer;
     this.subscription = customer && customer.subscriptions.data[0];

@@ -18,13 +18,17 @@
   </div>
 
   <div *ngIf="subscription">
+    You have a valid subscription until {{subscription.current_period_end * 1000 | date:'mediumDate'}}
 
-    <div *ngIf="!subscription.cancelAtPeriodEnd">
+    <div *ngIf="!subscription.cancel_at_period_end">
       <button pButton label="Cancel subscription" (click)="cancelSubscription()"></button>
     </div>
-    <div *ngIf="subscription.cancelAtPeriodEnd">
+    <div *ngIf="subscription.cancel_at_period_end">
       <button pButton label="Restore subscription" (click)="restoreSubscription()"></button>
     </div>
+  </div>
 
+  <div *ngIf="!subscription">
+    <button pButton label="Create subscription" (click)="createSubscription()"></button>
   </div>
 </section>
