@@ -57,6 +57,8 @@ describe('Revise post responses', () => {
 
       authenticationDialog.performLogin(null, '1secret1');
 
+      browser.wait(EC.presenceOf(resourceUsersPage.getActiveTabItem()));
+      resourceUsersPage.clickOverlay();
       const acceptButton = resourceUsersPage.getButtonByLabel('Accept');
       browser.wait(EC.presenceOf(acceptButton));
       acceptButton.click();
