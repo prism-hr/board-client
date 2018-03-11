@@ -23,11 +23,11 @@
       <div class="grid__item one-whole">
         <form [formGroup]="loginForm" (ngSubmit)="login()">
           <div class="input-holder">
-            <input pInputText type="email" placeholder="Email" formControlName="email" [readonly]="dialogData.user">
+            <input pInputText type="email" name="email" placeholder="Email" formControlName="email" [readonly]="dialogData.user">
             <control-messages [control]="loginForm.get('email')"></control-messages>
           </div>
           <div class="input-holder">
-            <input pInputText type="password" placeholder="Password" formControlName="password">
+            <input pInputText type="password" name="password" placeholder="Password" formControlName="password">
             <control-messages [control]="loginForm.get('password')"></control-messages>
           </div>
           <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center"
@@ -63,19 +63,19 @@
         <form [formGroup]="registrationForm" (ngSubmit)="register()" autocomplete="off">
           <div class="grid">
             <div class="grid__item small--one-whole medium-up--one-half input-holder">
-              <input pInputText placeholder="First Name" formControlName="givenName">
+              <input pInputText name="givenName" placeholder="First Name" formControlName="givenName">
               <control-messages [control]="registrationForm.get('givenName')"></control-messages>
             </div>
             <div class="grid__item small--one-whole medium-up--one-half input-holder">
-              <input pInputText placeholder="Last Name" formControlName="surname">
+              <input pInputText name="surname" placeholder="Last Name" formControlName="surname">
               <control-messages [control]="registrationForm.get('surname')"></control-messages>
             </div>
             <div class="grid__item one-whole input-holder">
-              <input pInputText type="email" placeholder="Email" formControlName="email">
+              <input pInputText type="email" name="email" placeholder="Email" formControlName="email">
               <control-messages [control]="registrationForm.get('email')"></control-messages>
             </div>
             <div class="grid__item one-whole input-holder">
-              <input pInputText type="password" placeholder="Password" formControlName="password">
+              <input pInputText type="password" name="password" placeholder="Password" formControlName="password">
               <control-messages [control]="registrationForm.get('password')"></control-messages>
             </div>
           </div>
@@ -95,7 +95,7 @@
   <div *ngIf="view === 'FORGOT'" class="forgot-container">
     <form *ngIf="!forgottenSent" [formGroup]="forgotPasswordForm" (ngSubmit)="sendForgotten()" autocomplete="off">
       <div class="index-padding input-holder">
-        <input pInputText type="email" placeholder="Email" formControlName="email">
+        <input pInputText type="email" name="email" placeholder="Email" formControlName="email">
         <control-messages [control]="forgotPasswordForm.get('email')"></control-messages>
       </div>
 

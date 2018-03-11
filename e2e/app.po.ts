@@ -148,23 +148,23 @@ export class AuthenticationDialog extends GenericPage {
   }
 
   getGivenNameInput() {
-    return this.browser.element(by.css('input[placeholder="First Name"]'));
+    return this.browser.element(by.css('input[name="givenName"]'));
   }
 
   getSurnameInput() {
-    return this.browser.element(by.css('input[placeholder="Last Name"]'));
+    return this.browser.element(by.css('input[name="surname"]'));
   }
 
   getEmailInput() {
-    return this.browser.element(by.css('input[placeholder="Email"]'));
+    return this.browser.element(by.css('input[name="email"]'));
   }
 
   getPasswordInput() {
-    return this.browser.element(by.css('input[placeholder="Password"]'));
+    return this.browser.element(by.css('input[name="password"]'));
   }
 
   getRepeatPasswordInput() {
-    return this.browser.element(by.css('input[placeholder="Repeat Password"]'));
+    return this.browser.element(by.css('input[name="repeatPassword"]'));
   }
 
   getSubmitButton() {

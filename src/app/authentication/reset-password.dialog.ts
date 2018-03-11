@@ -21,11 +21,12 @@ import UserPasswordDTO = b.UserPasswordDTO;
         <div class="grid__item one-whole">
           <form [formGroup]="passwordForm" (ngSubmit)="submit()">
             <div class="input-holder">
-              <input pInputText type="password" placeholder="Password" formControlName="password" (change)="passwordChanged()">
+              <input pInputText type="password" name="password" placeholder="Password" formControlName="password"
+                     (change)="passwordChanged()">
               <control-messages [control]="passwordForm.get('password')"></control-messages>
             </div>
             <div class="input-holder">
-              <input pInputText type="password" placeholder="Repeat Password" formControlName="repeatPassword">
+              <input pInputText type="password" name="repeatPassword" placeholder="Repeat Password" formControlName="repeatPassword">
               <control-messages [control]="passwordForm.get('repeatPassword')"></control-messages>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center" class="actions-holder">
