@@ -5,6 +5,7 @@ import * as Pusher from 'pusher-js';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {RollbarService} from '../rollbar/rollbar.service';
+import {ResourceService} from './resource.service';
 import ActivityRepresentation = b.ActivityRepresentation;
 import PusherAuthenticationDTO = b.PusherAuthenticationDTO;
 import ResourceRepresentation = b.ResourceRepresentation;
@@ -12,18 +13,22 @@ import UserNotificationSuppressionRepresentation = b.UserNotificationSuppression
 import UserPasswordDTO = b.UserPasswordDTO;
 import UserPatchDTO = b.UserPatchDTO;
 import UserRepresentation = b.UserRepresentation;
+import DepartmentRepresentation = b.DepartmentRepresentation;
 
 @Injectable()
 export class UserService implements OnInit {
   user$: Observable<UserRepresentation>;
   userSource: ReplaySubject<UserRepresentation>;
   activities$: ReplaySubject<ActivityRepresentation[]>;
+  departments$: ReplaySubject<DepartmentRepresentation[]>;
   pusher: Pusher;
 
-  constructor(private http: HttpClient, private zone: NgZone, private rollbar: RollbarService, private auth: AuthService) {
+  constructor(private http: HttpClient, private zone: NgZone, private rollbar: RollbarService, private auth: AuthService,
+              private resourceService: ResourceService) {
     this.userSource = new ReplaySubject<UserRepresentation>(1);
     this.user$ = this.userSource.asObservable();
     this.activities$ = new ReplaySubject<ActivityRepresentation[]>(1);
+    this.departments$ = new ReplaySubject<DepartmentRepresentation[]>(1);
     // TODO logout after token expired
     // (<CustomJwtHttp><any>this.http).getSessionsExpiredSubject()
     //   .subscribe(() => {
@@ -158,7 +163,11 @@ export class UserService implements OnInit {
     return this.loadUser()
       .then(user => {
         if (user) {
-          this.http.get('/api/user/activities/')
+          this.resourceService.getResources('DEPARTMENT')
+            .flatMap(departments => {
+              this.departments$.next(departments);
+              return this.http.get('/api/user/activities/');
+            })
             .map((activities: ActivityRepresentation[]) => {
               this.activities$.next(activities);
               return false;

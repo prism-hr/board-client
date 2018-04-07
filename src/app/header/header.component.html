@@ -13,9 +13,10 @@
       <a (click)="mobileMenu = false" pButton class="ui-button" routerLink="/boards" routerLinkActive="active"
          [ngClass]="{active: resourceScope === 'board'}"
          label="Boards" *ngIf="user.scopes.indexOf('BOARD') > -1"></a>
-      <a (click)="mobileMenu = false" pButton class="ui-button" routerLink="/departments" routerLinkActive="active"
+      <a *ngIf="departments?.length === 1" pButton class="ui-button" [routerLink]="departmentLink"
          [ngClass]="{active: resourceScope === 'department'}"
-         label="Departments" *ngIf="user.scopes.indexOf('DEPARTMENT') > -1"></a>
+         label="Department"></a>
+      <p-panelMenu [model]="mobileDepartmentsMenuItems" [style]="{'width':'300px'}"></p-panelMenu>
       <button pButton (click)="logout(); mobileMenu = false" class="ui-button-warning btn-logout"
               label="Log out"></button>
     </div>
@@ -42,9 +43,11 @@
           <a pButton class="ui-button" routerLink="/boards" routerLinkActive="active"
              [ngClass]="{active: resourceScope === 'board'}"
              label="Boards" *ngIf="user.scopes.indexOf('BOARD') > -1"></a>
-          <a pButton class="ui-button" routerLink="/departments" routerLinkActive="active"
+          <a *ngIf="departments?.length === 1" pButton class="ui-button" [routerLink]="departmentLink"
              [ngClass]="{active: resourceScope === 'department'}"
-             label="Departments" *ngIf="user.scopes.indexOf('DEPARTMENT') > -1"></a>
+             label="Department"></a>
+          <button *ngIf="departments?.length > 1" type="button" pButton label="Departments"
+                  (click)="menu.toggle($event)"></button>
         </div>
       </div>
       <nav class="text-right">
@@ -74,6 +77,8 @@
     </div>
   </div>
 </header>
+
+<p-menu #menu popup="popup" [model]="departmentsMenuItems"></p-menu>
 
 <p-overlayPanel #activitiesPanel id="activitiesPanel">
   <div *ngIf="activities" class="activity-content">

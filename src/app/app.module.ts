@@ -10,6 +10,8 @@ import {RouterModule} from '@angular/router';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {OverlayPanelModule} from 'primeng/components/overlaypanel/overlaypanel';
 import {SidebarModule} from 'primeng/components/sidebar/sidebar';
+import {MenuModule} from 'primeng/menu';
+import {PanelMenuModule} from 'primeng/primeng';
 import {environment} from '../environments/environment';
 import {AppComponent} from './app.component';
 import {authConfig} from './auth.config';
@@ -265,7 +267,9 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
     ImageModule,
     FileUploadModule,
     // PrimeNG modules
+    MenuModule,
     TabMenuModule,
+    PanelMenuModule,
     SidebarModule,
     OverlayPanelModule,
     // Material modules

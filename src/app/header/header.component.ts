@@ -1,12 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {MenuItem} from 'primeng/api';
 import {OverlayPanel} from 'primeng/components/overlaypanel/overlaypanel';
 import {AuthGuard} from '../authentication/auth-guard.service';
 import {UserImageDialogComponent} from '../authentication/user-image.dialog';
+import {ResourceService} from '../services/resource.service';
 import {UserService} from '../services/user.service';
 import ActivityRepresentation = b.ActivityRepresentation;
 import UserRepresentation = b.UserRepresentation;
+import DepartmentRepresentation = b.DepartmentRepresentation;
 
 @Component({
   selector: 'b-header',
@@ -19,11 +22,15 @@ export class HeaderComponent implements OnInit {
   user: UserRepresentation;
   activities: ActivityRepresentation[];
   newActivitiesCount: number;
+  departments: DepartmentRepresentation[];
+  departmentLink: any[];
+  departmentsMenuItems: MenuItem[];
+  mobileDepartmentsMenuItems: MenuItem[];
   resourceScope: string;
   @ViewChild('activitiesPanel') activitiesPanel: OverlayPanel;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private dialog: MatDialog, private userService: UserService,
-              private authGuard: AuthGuard) {
+              private authGuard: AuthGuard, private resourceService: ResourceService) {
   }
 
   ngOnInit(): void {
@@ -33,6 +40,16 @@ export class HeaderComponent implements OnInit {
       .subscribe(activities => {
         this.activities = activities;
         this.computeNewActivitiesCount();
+      });
+    this.userService.departments$
+      .subscribe(departments => {
+        this.departments = departments;
+        this.departmentsMenuItems = departments
+          .map(department => ({label: department.name, routerLink: this.resourceService.routerLink(department)}));
+        this.mobileDepartmentsMenuItems = [{label: 'Departments', items: this.departmentsMenuItems}];
+        if (departments.length === 1) {
+          this.departmentLink = this.resourceService.routerLink(departments[0]);
+        }
       });
 
     this.router.events
@@ -51,7 +68,7 @@ export class HeaderComponent implements OnInit {
           }
         }
         return null;
-      }).subscribe( (resourceScope: string) => {
+      }).subscribe((resourceScope: string) => {
       this.resourceScope = resourceScope;
     });
   }
