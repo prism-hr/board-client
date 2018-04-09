@@ -22,6 +22,7 @@ import MemberCategory = b.MemberCategory;
 import PostPatchDTO = b.PostPatchDTO;
 import PostRepresentation = b.PostRepresentation;
 import UserRepresentation = b.UserRepresentation;
+import DepartmentRepresentation = b.DepartmentRepresentation;
 
 @Component({
   templateUrl: 'post-edit.component.html',
@@ -29,9 +30,10 @@ import UserRepresentation = b.UserRepresentation;
 })
 export class PostEditComponent implements OnInit {
 
+  departmentOptions: SelectItem[];
   boardOptions: SelectItem[];
   post: PostRepresentation;
-  board: BoardRepresentation;
+  department: BoardRepresentation;
   postForm: FormGroup;
   definitions: { [key: string]: any };
   showExistingRelation: boolean;
@@ -60,6 +62,7 @@ export class PostEditComponent implements OnInit {
 
   ngOnInit() {
     this.postForm = this.fb.group({
+      department: [null, Validators.required],
       board: [null, Validators.required],
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       summary: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
@@ -80,21 +83,16 @@ export class PostEditComponent implements OnInit {
       deadTimestamp: []
     });
 
-    combineLatest(this.route.data, this.route.data, this.userService.user$.first())
-      .subscribe(([parentData, data, user]: [Data, Data, UserRepresentation]) => {
-        this.board = parentData['board'];
-        if (data['boards']) { // of "boards" defined, means new post is being created
-          if (data['boards'] instanceof Array) { // either array or one board can be resolved
-            this.boardOptions = (<BoardRepresentation[]>data['boards'])
-              .map(b => ({label: b.department.name + ' - ' + b.name, value: b}));
-          } else {
-            this.board = data['boards']
-          }
-        }
+    combineLatest(this.route.data, this.userService.user$.first(), this.userService.departments$.first())
+      .subscribe(([data, user, departments]: [Data, UserRepresentation, DepartmentRepresentation[]]) => {
+        this.department = data['department'];
+
+        this.departmentOptions = departments
+          .map(b => ({label: b.name, value: b}));
 
         let postObservable = Observable.of<PostRepresentation>(null);
-        if (parentData['post']) {
-          const postId = (<PostRepresentation>parentData['post']).id;
+        if (data['post']) {
+          const postId = (<PostRepresentation>data['post']).id;
           postObservable = this.resourceService.getResource('POST', postId).first();
         }
 
@@ -106,7 +104,12 @@ export class PostEditComponent implements OnInit {
             this.title.setTitle('New post');
           }
 
-          this.postForm.get('board').setValue(this.board);
+          if (this.department) {
+            this.postForm.get('department').setValue(this.department);
+          } else if (this.departmentOptions.length === 1) {
+            this.postForm.get('department').setValue(this.departmentOptions[0].value);
+          }
+          this.departmentChanged();
 
           if (this.post) {
             const formValue: any = pick(this.post, this.formProperties);
@@ -218,6 +221,32 @@ export class PostEditComponent implements OnInit {
     });
   }
 
+  departmentChanged() {
+    this.boardOptions = [];
+    this.postForm.get('board').setValue(null);
+    const department: DepartmentRepresentation = this.postForm.get('department').value;
+
+    this.availableMemberCategories = department && department.memberCategories.length > 0 ? department.memberCategories : [];
+    const selectedMemberCategories = this.post ? this.post.memberCategories : [];
+    this.postForm.setControl('memberCategories', this.fb.array(
+      this.availableMemberCategories.map(c => [selectedMemberCategories.includes(c)])));
+    if (this.availableMemberCategories) {
+      this.postForm.get('memberCategories').setValidators(this.availableMemberCategories.length > 0 && ValidationUtils.checkboxArrayMin(1));
+    }
+
+    if (department) {
+      this.resourceService.getResources('BOARD', {parentId: department.id})
+        .subscribe(boards => {
+          this.boardOptions = boards
+            .map(b => ({label: b.name, value: b}));
+          if (this.boardOptions.length === 1) {
+            this.postForm.get('board').setValue(this.boardOptions[0].value);
+            this.boardChanged();
+          }
+        });
+    }
+  }
+
   boardChanged() {
     const board = this.postForm.get('board').value;
     this.availablePostCategories = board && board.postCategories.length > 0 ? board.postCategories : [];
@@ -226,14 +255,6 @@ export class PostEditComponent implements OnInit {
       this.availablePostCategories.map(c => [selectedPostCategories.includes(c)])));
     if (this.availablePostCategories) {
       this.postForm.get('postCategories').setValidators(this.availablePostCategories.length > 0 && ValidationUtils.checkboxArrayMin(1));
-    }
-
-    this.availableMemberCategories = board && board.department.memberCategories.length > 0 ? board.department.memberCategories : [];
-    const selectedMemberCategories = this.post ? this.post.memberCategories : [];
-    this.postForm.setControl('memberCategories', this.fb.array(
-      this.availableMemberCategories.map(c => [selectedMemberCategories.includes(c)])));
-    if (this.availableMemberCategories) {
-      this.postForm.get('memberCategories').setValidators(this.availableMemberCategories.length > 0 && ValidationUtils.checkboxArrayMin(1));
     }
 
     // initialize existing relation
@@ -256,8 +277,8 @@ export class PostEditComponent implements OnInit {
   cancelLink() {
     if (this.post) {
       return this.resourceService.routerLink(this.post);
-    } else if (this.board) {
-      return this.resourceService.routerLink(this.board);
+    } else if (this.department) {
+      return this.resourceService.routerLink(this.department);
     }
     return ['/'];
   }

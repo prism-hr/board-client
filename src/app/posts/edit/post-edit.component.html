@@ -6,14 +6,35 @@
     <form [formGroup]="postForm" novalidate>
       <mat-card-content>
         <div class="grid">
-          <div *ngIf="board" class="grid__item one-whole input-holder">
-            <h3>{{board.department.name}} - {{board.name}}</h3>
+          <div *ngIf="department" class="grid__item one-whole input-holder">
+            <h3>{{department.name}}</h3>
           </div>
-          <div *ngIf="!post && !board" class="grid__item one-whole input-holder">
-            <label for="board">Board</label>
+
+          <div *ngIf="!post && !department" class="grid__item one-whole input-holder">
+            <label for="board">Department</label>
+            <div class="ui-corner-all ui-state-default ui-widget dropdown-select">
+              <p-dropdown id="department" formControlName="department" [options]="departmentOptions" (onChange)="departmentChanged($event)"
+                          placeholder="Select a department">
+                <ng-template let-department pTemplate="item">
+                  <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <span>{{department.label}}</span>
+                    <div class="logo-holder-small"
+                         [ngClass]="{'default-logo': !department.value.documentLogo}">
+                      <b-image [publicId]="department.value.documentLogo?.cloudinaryId"
+                               height="45"></b-image>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </div>
+            <control-messages [control]="postForm.get('department')"></control-messages>
+          </div>
+
+          <div *ngIf="!post" class="grid__item one-whole input-holder">
+            <label for="board">Channel</label>
             <div class="ui-corner-all ui-state-default ui-widget dropdown-select">
               <p-dropdown id="board" formControlName="board" [options]="boardOptions" (onChange)="boardChanged($event)"
-                          placeholder="Select a board">
+                          placeholder="Select a channel">
                 <ng-template let-board pTemplate="item">
                   <div fxLayout="row" fxLayoutAlign="space-between center">
                     <span>{{board.label}}</span>

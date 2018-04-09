@@ -43,7 +43,6 @@ import {NotFoundComponent} from './not-found.component';
 import {AboutUsComponent} from './pages/about/about-us.component';
 import {PrivacyComponent} from './pages/privacy/privacy.component';
 import {TermsComponent} from './pages/terms/terms.component';
-import {BoardsResolver} from './posts/edit/boards-resolver.service';
 import {PostHeaderComponent} from './posts/header/post-header.component';
 import {PostResolver} from './posts/post-resolver.service';
 import {PostTabsComponent} from './posts/post-tabs.component';
@@ -136,7 +135,7 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
             loadChildren: 'app/posts/edit/post-edit.module#PostEditModule',
             data: {modalView: 'REGISTER'},
             resolve: {
-              boards: BoardsResolver
+              department: DepartmentResolver
             },
             canActivate: [AuthGuard]
           },
@@ -310,7 +309,7 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
     },
     RollbarService,
     {provide: ErrorHandler, useClass: RollbarService},
-    AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService, BoardsResolver,
+    AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService,
     DepartmentsResolver, DepartmentService, UserService, ValidationService, WalkthroughOverlayService, ExternalApisService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, UnsubscribeDialogComponent, ResourceCommentDialogComponent,
