@@ -1,0 +1,32 @@
+<div *ngIf="post" class="post-title">
+  <div class="post-header-details" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+    <div class="status-box {{ post.state | lowercase }}" *ngIf="canEdit">
+      <div class="title">
+        <i class="fa-{{ post.state | lowercase }}"></i>
+        {{'definitions.state.' + post.state + '.' + post.scope | translate}}
+      </div>
+    </div>
+    <div *ngIf="post.liveTimestamp" class="date">
+      <div *ngIf="(post.liveTimestamp | timeDifference) >= 0">
+        Going live: {{post.liveTimestamp | displayDate}}
+      </div>
+      <div *ngIf="(post.liveTimestamp | timeDifference) < 0">
+        Published: {{post.liveTimestamp | displayDate}}
+      </div>
+    </div>
+    <div *ngIf="post.deadTimestamp" class="date">
+      Deadline: {{post.deadTimestamp | displayDate}}
+    </div>
+  </div>
+  <div class="post-header-details" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between">
+    <div>
+      <h1>{{post.name}}</h1>
+      <h2><em>at</em> {{post.organizationName}} <span class="location"><i class="fa fa-location-pin"></i> {{post.location.name}}</span>
+      </h2>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="space-between flex-end" class="admin-actions">
+      <b-resource-actions-box [resource]="post" fxLayout="row"
+                              fxLayoutAlign="space-between center"></b-resource-actions-box>
+    </div>
+  </div>
+</div>

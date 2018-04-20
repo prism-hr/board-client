@@ -1,47 +1,47 @@
-<section class="section" *ngIf="operations">
-  <div class="section-header">
-    <h2>Timeline</h2>
-  </div>
-  <ul>
-    <li *ngFor="let operation of operations" class="action-{{ operation.action | lowercase }}">
-      <time>
-        <span class="timeline--time">{{operation.createdTimestamp | date:'shortTime'}}</span>
-        <span class="timeline--day">{{operation.createdTimestamp | date:'shortDate'}}</span>
-      </time>
-      <div class="timeline--icon" pTooltip="{{'definitions.action.' + operation.action | translate}}"
-           tooltipPosition="top">
-        <i class="fa fa-{{ operation.action | lowercase }}"></i>
-      </div>
-      <div class="timeline--label" fxLayout="row">
-
-        <div *ngIf="operation.user" class="timeline--user">
-          <div class="timeline--user_image" pTooltip="{{operation.user.email}}" tooltipPosition="top">
-            <b-image [publicId]="operation.user.documentImage?.cloudinaryId"
-                     gravity="face" width="40" height="40" radius="max" crop="thumb"></b-image>
-            <div class="avatar" *ngIf="!operation.user.documentImage">
-              <i class="fa-user"></i>
-            </div>
-          </div>
-          <h5>{{operation.user.givenName}} {{operation.user.surname}}</h5>
+<section class="section timeline" *ngIf="operations">
+  <div class="timeline--content">
+    <h4>Timeline</h4>
+    <ul>
+      <li *ngFor="let operation of operations" class="action-{{ operation.action | lowercase }}">
+        <time>
+          <span class="timeline--time">{{operation.createdTimestamp | date:'shortTime'}}</span>
+          <span class="timeline--day">{{operation.createdTimestamp | date:'shortDate'}}</span>
+        </time>
+        <div class="timeline--icon" pTooltip="{{'definitions.action.' + operation.action | translate}}"
+             tooltipPosition="top">
+          <i class="fa fa-{{ operation.action | lowercase }}"></i>
         </div>
-        <div class="timeline--details">
-          <h4>{{'definitions.action.' + operation.action | translate}}</h4>
-          <h5 *ngIf="operation.comment">Comment: </h5>
-          <p *ngIf="operation.comment">{{operation.comment}}</p>
-          <div *ngIf="operation.changeList">
-            <h5>Changed properties:</h5>
-            <p>
+        <div class="timeline--label" fxLayout="row">
+
+          <div *ngIf="operation.user" class="timeline--user">
+            <div class="timeline--user_image" pTooltip="{{operation.user.email}}" tooltipPosition="top">
+              <b-image [publicId]="operation.user.documentImage?.cloudinaryId"
+                       gravity="face" width="40" height="40" radius="max" crop="thumb"></b-image>
+              <div class="avatar" *ngIf="!operation.user.documentImage">
+                <i class="fa-user"></i>
+              </div>
+            </div>
+            <h5>{{operation.user.givenName}} {{operation.user.surname}}</h5>
+          </div>
+          <div class="timeline--details">
+            <h4>{{'definitions.action.' + operation.action | translate}}</h4>
+            <h5 *ngIf="operation.comment">Comment: </h5>
+            <p *ngIf="operation.comment">{{operation.comment}}</p>
+            <div *ngIf="operation.changeList">
+              <h5>Changed properties:</h5>
+              <p>
               <span *ngFor="let change of operation.changeList; let isLast=last">
                 {{'resourceProperty.' + change.property | translate}}{{isLast ? '' : ', '}}
               </span>
-              <!--<button pButton type="button" class="ui-button-info small-xs" (click)="openChangeDetails(operation)"-->
-                      <!--label="Show more details"></button>-->
-            </p>
+                <!--<button pButton type="button" class="ui-button-info small-xs" (click)="openChangeDetails(operation)"-->
+                <!--label="Show more details"></button>-->
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    </li>
-  </ul>
+      </li>
+    </ul>
+  </div>
 </section>
 
 <!--<p-dialog [(visible)]="showOperationDetails" *ngIf="selectedOperation">-->

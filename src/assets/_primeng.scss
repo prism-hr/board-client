@@ -1010,18 +1010,28 @@ button.ui-button::-moz-focus-inner {
   display: inline-block;
   vertical-align: middle;
   overflow: hidden;
-  padding: .3em .5em;
+  padding: .3em .5em .3em 1.2em;
   white-space: nowrap;
   position: relative;
   margin-right: .5em;
   margin-bottom: 5px;
-  border: 0 none;
-  font-size: 1em;
-  background: $tips;
-  color: white;
+  font-size: 0.8em;
+  border: 1px solid $tips;
+  color: $tips;
   .ui-chips-token-label {
     display: block;
     margin-right: 1.4em;
+  }
+  &:before {
+    content: '';
+    display: inline-block;
+    border: 1px solid $tips;
+    border-radius: 50%;
+    width: 6px;
+    height: 6px;
+    position: absolute;
+    top: 9px;
+    left: 5px;
   }
 }
 
@@ -4644,7 +4654,18 @@ p-checkbox:hover {
 }
 .inside-tabs {
   .ui-tabmenu {
+    background: white;
+    padding: 0 24px;
+    border-bottom: none !important;
     border-bottom: 1px solid $fadeGrey !important;
+  }
+  .ui-widget-header .ui-state-default a, .ui-widget-content .ui-state-default a {
+    background: #e8e8e8;
+    color: #999;
+  }
+  .ui-widget-header .ui-state-active a, .ui-widget-content .ui-state-active a {
+    background: #f7f7f7;
+    color: #4a4a4a;
   }
 }
 .ui-steps {

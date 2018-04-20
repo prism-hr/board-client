@@ -1,80 +1,50 @@
 <section *ngIf="post" class="section">
   <div class="grid">
-    <div class="grid__item medium-up--three-quarters small-one-whole post">
+    <div class="grid__item one-whole post">
       <div class="post-content">
         <div class="post-content--excerpt">
           {{post.summary}}
         </div>
         <div *ngIf="post.description" class="post-content--description ql-editor-view" [innerHtml]="post.description">
         </div>
-      </div>
-      <div class="boxes-list post-view" fxLayout="row" fxLayoutAlign="space-between center">
-        <div class="boxes-list__item views">
-          <div class="title"><i class="fa-eye"></i> Views</div>
-          <span class="number" *ngIf="post.viewCount">{{post.viewCount}}</span>
-          <span class="number" *ngIf="!post.viewCount">0</span>
+        <div class="category-list">
+          <span class="ui-chips-token ui-corner-all" *ngFor="let category of post.postCategories">{{category}}</span>
         </div>
-        <div class="boxes-list__item responses" *ngIf="post.applyEmail">
-          <div class="title"><i class="fa-share-alt"></i> Responses</div>
-          <span class="number" *ngIf="post.responseCount">{{post.responseCount}}</span>
-          <span class="number" *ngIf="!post.responseCount">0</span>
-        </div>
-        <div class="boxes-list__item referral" *ngIf="!post.applyEmail">
-          <div class="title"><i class="fa-share-alt"></i> Referrals</div>
-          <span class="number" *ngIf="post.referralCount">{{post.referralCount}}</span>
-          <span class="number" *ngIf="!post.referralCount">0</span>
-        </div>
-        <div class="boxes-list__item {{ post.state | lowercase }}" *ngIf="canEdit">
-          <div class="title">
-            <i class="fa-{{ post.state | lowercase }}"></i>
-            {{'definitions.state.' + post.state + '.' + post.scope | translate}}
+        <div class="boxes-list post-view">
+          <div class="boxes-list__item views">
+            <div class="title"><i class="fa-eye"></i> Views</div>
+            <span class="number" *ngIf="post.viewCount">{{post.viewCount}}</span>
+            <span class="number" *ngIf="!post.viewCount">0</span>
           </div>
-        </div>
-        <div class="boxes-list__item" *ngIf="!canEdit" [ngClass]="{'applied': post.response, 'no-applied' : !post.response }">
-          <div class="title" *ngIf="post.response">
-            <i class="fa-accepted"></i> Applied
+          <div class="boxes-list__item responses" *ngIf="post.applyEmail">
+            <div class="title"><i class="fa-share-alt"></i> Responses</div>
+            <span class="number" *ngIf="post.responseCount">{{post.responseCount}}</span>
+            <span class="number" *ngIf="!post.responseCount">0</span>
           </div>
-          <div class="title" *ngIf="!post.response">
-            <i class="fa-edit"></i> Not Applied
+          <div class="boxes-list__item referral" *ngIf="!post.applyEmail">
+            <div class="title"><i class="fa-share-alt"></i> Referrals</div>
+            <span class="number" *ngIf="post.referralCount">{{post.referralCount}}</span>
+            <span class="number" *ngIf="!post.referralCount">0</span>
           </div>
-          <span class="number" *ngIf="post.response">{{post.response.createdTimestamp | date : 'shortDate'}}</span>
-        </div>
-      </div>
-      <div *ngIf="post.state === 'ACCEPTED'">
-        <b-post-apply [post]="post"></b-post-apply>
 
-        <share-buttons [title]="post.name" [description]="post.summary"
-                       [include]="['facebook','twitter','linkedin','google']"
-                       [image]="post.board.documentLogo?.cloudinaryUrl" [showCount]="true"></share-buttons>
-      </div>
-
-    </div>
-    <div class="grid__item medium-up--one-quarter small-one-whole publisher">
-      <mat-card>
-        <mat-card-content>
-          <div class="grid">
-            <div class="grid__item one-whole">
-              <div *ngIf="post.board.documentLogo" mat-card-avatar>
-                <b-image [publicId]="post.board.documentLogo?.cloudinaryId"
-                         gravity="north_west" height="150" width="200" crop="mfit"></b-image>
-              </div>
-              <h3>
-                <a [routerLink]="['/', post.board.department.university.handle, post.board.department.handle, post.board.handle]">
-                  {{post.board.name}}
-                </a>
-                <small>from</small>
-                <a [routerLink]="['/', post.board.department.university.handle, post.board.department.handle]">
-                  {{post.board.department.name}}
-                </a>
-              </h3>
+          <div class="boxes-list__item" *ngIf="!canEdit" [ngClass]="{'applied': post.response, 'no-applied' : !post.response }">
+            <div class="title" *ngIf="post.response">
+              <i class="fa-accepted"></i> Applied
             </div>
+            <div class="title" *ngIf="!post.response">
+              <i class="fa-edit"></i> Not Applied
+            </div>
+            <span class="number" *ngIf="post.response">{{post.response.createdTimestamp | date : 'shortDate'}}</span>
           </div>
-        </mat-card-content>
-      </mat-card>
-      <div class="category-list">
-        <span class="ui-chips-token ui-corner-all" *ngFor="let category of post.postCategories">{{category}}</span>
-      </div>
+        </div>
+        <div *ngIf="post.state === 'ACCEPTED'">
+          <b-post-apply [post]="post"></b-post-apply>
 
+          <share-buttons [title]="post.name" [description]="post.summary"
+                         [include]="['facebook','twitter','linkedin','google']"
+                         [image]="post.board.documentLogo?.cloudinaryUrl" [showCount]="true"></share-buttons>
+        </div>
+      </div>
     </div>
   </div>
 </section>

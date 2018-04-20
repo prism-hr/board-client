@@ -1,8 +1,8 @@
 <section class="section" [ngClass]="{'edit-post':post}">
   <b-filter (applied)="responsesFilterApplied($event)"></b-filter>
-  <mat-card *ngIf="responses">
-    <mat-card-content>
-      <h2 class="title">Responses <span class="ui-chips-token ui-corner-all">{{responses.length}}</span></h2>
+  <div *ngIf="responses">
+    <div>
+      <h4 class="title">Responses <span class="tag">{{responses.length}}</span></h4>
       <div *ngIf="responses.length > 0" class="grid">
         <div *ngFor="let response of responses" class="grid__item small--one-whole medium-up--one-third application-item">
           <div class="application-item__inner">
@@ -49,6 +49,6 @@
           </div>
         </div>
       </div>
-    </mat-card-content>
-  </mat-card>
+    </div>
+  </div>
 </section>

@@ -37,6 +37,7 @@ body {
   min-height: 100vh;
   flex-direction: column;
   color: $fontColor2;
+  background: #f9fbfb;
 }
 b-app-root {
   display: flex;
@@ -187,10 +188,7 @@ section {
   //  padding-bottom: $section-spacing;
   //}
   &.edit-post {
-    padding-top:0;
-    @include media-query($medium-up) {
-      padding-top:0;
-    }
+    padding:24px;
   }
   b-resource-timeline > section {
     padding-top: 0;
@@ -201,11 +199,14 @@ section {
 }
 
 .main-content {
+  section {
+    background: white;
+  }
   display: block;
   padding-top: $section-spacing-small;
 
   @include media-query($medium-up) {
-    padding-top: $section-spacing;
+    padding-top: 0;
   }
 }
 
@@ -272,4 +273,17 @@ control-messages {
 
 .walkthrough-highlight {
   z-index: 1002;
+}
+.view-template {
+  .main-content {
+    flex: 1;
+  }
+  .logo-content {
+    margin-top: 20px;
+    margin-left: 20px;
+    flex: 0 1 200px;
+    h3 {
+      font-size: 1rem;
+    }
+  }
 }

@@ -19,7 +19,12 @@ ul {
     position: relative;
   }
 }
-
+.timeline {
+  margin-top: 30px;
+  .timeline--content {
+    padding: 24px 24px 1px 24px;
+  }
+}
 time {
   display: block;
   width: 20%;

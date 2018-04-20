@@ -10,9 +10,29 @@ import PostRepresentation = b.PostRepresentation;
   template: `
     <section *ngIf="post" class="section">
       <div *ngIf="!errorStatus">
-        <b-post-header [post]="post"></b-post-header>
-        <b-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></b-tabMenu>
-        <router-outlet></router-outlet>
+        <div class="grid__flex view-template">
+          <div class="main-content">
+            <b-post-header [post]="post"></b-post-header>
+            <b-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></b-tabMenu>
+            <router-outlet></router-outlet>
+          </div>
+          <div class="logo-content">
+            <!--// TODO kuba check why logo it's not showing-->
+            <div *ngIf="post.board.documentLogo" mat-card-avatar>
+              <b-image [publicId]="post.board.documentLogo?.cloudinaryId"
+                       gravity="north_west" height="150" width="200" crop="mfit"></b-image>
+            </div>
+            <h3>
+              <a [routerLink]="['/', post.board.department.university.handle, post.board.department.handle, post.board.handle]">
+                {{post.board.name}}
+              </a>
+              <small>from</small>
+              <a [routerLink]="['/', post.board.department.university.handle, post.board.department.handle]">
+                {{post.board.department.name}}
+              </a>
+            </h3>
+          </div>
+        </div>
       </div>
       <div *ngIf="errorStatus">
         <div *ngIf="errorStatus === 403">

@@ -199,11 +199,11 @@ b-file-upload[type=avatar].avatar {
   margin-bottom: -4px;
 }
 .boxes-list {
-  margin-bottom:-10px !important;
-  margin-top:-2px !important;
+  margin-bottom:-10px;
+  margin-top:-2px;
   &.post-view {
-    margin-top: -25px;
-    margin-bottom: 35px !important;
+    margin-top: 10px;
+    margin-bottom: 0;
   }
   flex-wrap: wrap;
   .boxes-list__item {

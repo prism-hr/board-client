@@ -2,15 +2,15 @@
 
 .post {
   .post-content {
-    padding: 0 10px 45px;
+    padding: 24px;
     .rte {
       line-height: 1.5rem;
     }
   }
   .post-content--excerpt {
-    font-size: 110%;
     font-weight: 500;
-    line-height: 1.6rem;
+    font-size: 14px;
+    line-height: 1.2rem;
     margin-bottom: 15px;
   }
   .post-content--description {
