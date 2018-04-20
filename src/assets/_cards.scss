@@ -18,10 +18,19 @@ mat-card.mat-card>:first-child {
   margin-top: -24px;
 }
 .mat-card-content {
-  padding-top: $section-spacing-small;
-  padding-bottom: $section-spacing-small / 2;
+  padding-top: 16px;
+  padding-bottom: 5px;
+  font-size: 12px;
 }
 mat-card.mat-card {
+  &.post {
+    border: 1px solid $uclred;
+    h3 a{
+      font-size: 19px;
+      font-weight: 400;
+      color: $new-text;
+    }
+  }
   margin-bottom:15px;
   .mat-input-placeholder, .mat-input-placeholder-wrapper {
     padding-top:0.6em;
@@ -37,12 +46,12 @@ mat-card.mat-card {
     @include media-query($medium-up){
       margin: -24px -24px 0 -24px ;
     }
-    background: $fadeGrey;
+    background: transparent;
     height: auto;
   }
   .mat-card-header-text {
     height: auto;
-    padding: 15px 0;
+    padding: 15px 0 0 0;
     margin: 0 22px;
     mat-card-title {
       margin-bottom:0;
@@ -54,7 +63,6 @@ mat-card.mat-card {
     }
   }
   .mat-card-actions {
-    background: $greyBackground;
     text-align: right;
     margin: 0 -16px -24px -16px ;
     @include media-query($medium-up){
@@ -78,6 +86,9 @@ mat-card.mat-card {
   }
   .mat-card-subtitle {
     margin-bottom:0;
+    h6 {
+      font-weight: 300;
+    }
   }
   .mat-card-header .mat-card-subtitle:not(:first-child), .mat-card>.mat-card-xl-image:first-child {
     margin-top:4px;
@@ -170,16 +181,33 @@ b-file-upload[type=avatar].avatar {
   margin-bottom: 15px;
   font-size: 1.1em;
 }
+.status-box {
+  margin-bottom: 6px;
+  &.expired {
+    color: $newred;
+  }
+  &.pending {
+    color: $employmentColor;
+  }
+  &.withdrawn {
+    color: $uclred;
+  }
+}
+.bottom-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: -4px;
+}
 .boxes-list {
   margin-bottom:-10px !important;
+  margin-top:-2px !important;
   &.post-view {
     margin-top: -25px;
     margin-bottom: 35px !important;
   }
   flex-wrap: wrap;
   .boxes-list__item {
-    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
-    text-align: center;
+    text-align: left;
     border-radius: 2px;
     overflow: hidden;
     margin-bottom: 10px;
@@ -188,98 +216,83 @@ b-file-upload[type=avatar].avatar {
     }
     .number {
       display: inline-block;
-      line-height: 1.9em;
+      line-height: 1em;
       font-size: 14px;
       font-weight: bold;
-      padding: 0 10px 0 9px;
+      padding: 0;
     }
     .title {
       display: inline-block;
       font-size: 15px;
-      line-height: 1.9em;
-      padding: 0 10px 0 9px;
+      line-height: 1.4em;
+      padding: 0 4px 0 9px;
       font-weight: 400;
-      background: $fadeGrey;
-      color: white;
     }
     &.boards {
       .title {
-        background: $uclred;
+        color: $uclred;
       }
     }
     &.posts {
       .title {
-        background: $uclblue;
+        color: $uclblue;
       }
     }
     &.draft {
       .title {
-        background: $uclblue2;
+        color: $uclblue2;
       }
     }
     &.members {
       .title {
-        background: $uclfooter;
+        color: $uclfooter;
       }
     }
     &.authors, &.applied  {
       .title {
-        background: $uclblue3;
+        color: $uclblue3;
       }
     }
     &.reports {
       .title {
-        background: $programColor;
+        color: $programColor;
       }
     }
-    &.views {
-      .title {
-        background: $goldColor;
-      }
-    }
-    &.responses {
-      .title {
-        background: $fundingColor;
-      }
-    }
-    &.referral {
-      .title {
-        background: $programColor;
-      }
-    }
+
+
     &.extend {
       .title {
-        background: $goldColor;
+        color: $goldColor;
       }
     }
     &.accepted, &.no-applied {
       .title {
-        background: $uclgreen;
+        color: $uclgreen;
       }
     }
     &.correct {
       .title {
-        background: $qualificationsColor;
+        color: $qualificationsColor;
       }
     }
     &.rejected, &.expired {
       .title {
-        background: $error;
+        color: $error;
       }
     }
     &.suspended {
       .title {
-        background: $programColor;
+        color: $programColor;
       }
     }
     &.restored {
       .title {
-        background: $fundingColor;
+        color: $fundingColor;
       }
     }
     &.withdrawn {
       .title {
-        background: $uclred;
+        color: $uclred;
       }
     }
   }
@@ -383,5 +396,28 @@ mat-dialog-actions {
 mat-dialog-container.mat-dialog-container {
   @include media-query($small) {
     overflow-x: scroll !important;
+  }
+}
+/*================ Responsive display fullsize screen Helper ================*/
+@mixin responsive-display-full($breakpoint: '') {
+  // sass-lint:disable no-important
+  .#{$breakpoint}inner-full {
+    margin: auto calc(-50vw + 50%);
+  }
+
+  .#{$breakpoint}but-half {
+    margin: auto calc(-25vw + 25%);
+  }
+}
+.post-list {
+  flex: 1 auto;
+  @include media-query($medium-up){
+    flex: 1;
+  }
+}
+.post-new {
+  @include media-query($medium-up){
+    margin-left: 20px;
+    flex: 0;
   }
 }

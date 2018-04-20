@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="mat-elevation-z post">
   <mat-card-header fxLayout.xs="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between flex-top">
     <div mat-card-avatar class="logo-holder-small"
          [ngClass]="{'default-logo': !post.board.department.documentLogo}">
@@ -7,6 +7,12 @@
       </b-image>
     </div>
     <mat-card-title>
+      <div class="status-box {{ post.state | lowercase }}" *ngIf="canEdit">
+        <div class="title">
+          <i class="fa-{{ post.state | lowercase }}"></i>
+          {{'definitions.state.' + post.state + '.' + post.scope | translate}}
+        </div>
+      </div>
       <h3>
         <a [routerLink]="['/', post.board.department.university.handle, post.board.department.handle, post.board.handle, post.id]">{{post.name}}</a>
       </h3>
@@ -17,42 +23,39 @@
     <div class="general-card-summary">
       {{post.summary}}
     </div>
-    <div class="boxes-list" fxLayout="row" fxLayoutAlign="space-between center">
-      <div class="boxes-list__item views">
-        <div class="title"><i class="fa-eye"></i> Views</div>
-        <span class="number" *ngIf="post.viewCount">{{post.viewCount}}</span>
-        <span class="number" *ngIf="!post.viewCount">0</span>
-      </div>
-      <div class="boxes-list__item responses" *ngIf="post.applyEmail">
-        <div class="title"><i class="fa-share-alt"></i> Responses</div>
-        <span class="number" *ngIf="post.responseCount">{{post.responseCount}}</span>
-        <span class="number" *ngIf="!post.responseCount">0</span>
-      </div>
-      <div class="boxes-list__item referral" *ngIf="!post.applyEmail">
-        <div class="title"><i class="fa-share-alt"></i> Referrals</div>
-        <span class="number" *ngIf="post.referralCount">{{post.referralCount}}</span>
-        <span class="number" *ngIf="!post.referralCount">0</span>
-      </div>
-      <div class="boxes-list__item {{ post.state | lowercase }}" *ngIf="canEdit">
-        <div class="title">
-          <i class="fa-{{ post.state | lowercase }}"></i>
-          {{'definitions.state.' + post.state + '.' + post.scope | translate}}
-        </div>
-      </div>
-      <div class="boxes-list__item" *ngIf="!canEdit" [ngClass]="{'applied': post.response, 'no-applied' : !post.response }">
-        <div class="title" *ngIf="post.response">
-          <i class="fa-accepted"></i> Applied
-        </div>
-        <div class="title" *ngIf="!post.response">
-          <i class="fa-edit"></i> Not Applied
-        </div>
-        <span class="number" *ngIf="post.response">{{post.response.createdTimestamp | date : 'shortDate'}}</span>
-      </div>
-    </div>
   </mat-card-content>
   <mat-card-actions>
-    <a pButton [routerLink]="['/', post.board.department.university.handle, post.board.department.handle, post.board.handle, post.id]"
-       class="ui-button-secondary "
-       label="Go to post"></a>
+    <div class="bottom-actions">
+      <div class="boxes-list">
+        <div class="boxes-list__item views">
+          <div class="title"><i class="fa-eye"></i> Views</div>
+          <span class="number" *ngIf="post.viewCount">{{post.viewCount}}</span>
+          <span class="number" *ngIf="!post.viewCount">0</span>
+        </div>
+        <div class="boxes-list__item responses" *ngIf="post.applyEmail">
+          <div class="title"><i class="fa-share-alt"></i> Responses</div>
+          <span class="number" *ngIf="post.responseCount">{{post.responseCount}}</span>
+          <span class="number" *ngIf="!post.responseCount">0</span>
+        </div>
+        <div class="boxes-list__item referral" *ngIf="!post.applyEmail">
+          <div class="title"><i class="fa-share-alt"></i> Referrals</div>
+          <span class="number" *ngIf="post.referralCount">{{post.referralCount}}</span>
+          <span class="number" *ngIf="!post.referralCount">0</span>
+        </div>
+
+        <div class="boxes-list__item" *ngIf="!canEdit" [ngClass]="{'applied': post.response, 'no-applied' : !post.response }">
+          <div class="title" *ngIf="post.response">
+            <i class="fa-accepted"></i> Applied
+          </div>
+          <div class="title" *ngIf="!post.response">
+            <i class="fa-edit"></i> Not Applied
+          </div>
+          <span class="number" *ngIf="post.response">{{post.response.createdTimestamp | date : 'shortDate'}}</span>
+        </div>
+      </div>
+      <a pButton [routerLink]="['/', post.board.department.university.handle, post.board.department.handle, post.board.handle, post.id]"
+         class="ui-button-secondary ui-button-post"
+         label="Go to post"></a>
+    </div>
   </mat-card-actions>
 </mat-card>

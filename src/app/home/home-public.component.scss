@@ -1,7 +1,10 @@
 @import '../../assets/variables';
+@import '../../assets/grid';
 
 .home-create {
-  margin-top: -80px;
+  @include media-query($medium-up) {
+    margin-top: -80px;
+  }
   background: rgb(255,255,255); /* Old browsers */
   background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(225,236,239,1) 100%); /* FF3.6-15 */
   background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(225,236,239,1) 100%); /* Chrome10-25,Safari5.1-6 */

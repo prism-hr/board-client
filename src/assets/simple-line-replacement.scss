@@ -84,6 +84,7 @@ $simple-line-icon-prefix: "fa-" !default;
   &arrow-down-circle,
   &check,
   &clock,
+  &pending,
   &plus,
   &minus,
   &close,
@@ -397,7 +398,7 @@ $simple-line-icon-prefix: "fa-" !default;
   content: "\e080";
 }
 
-.#{$simple-line-icon-prefix}clock:before, .#{$simple-line-icon-prefix}expired:before{
+.#{$simple-line-icon-prefix}clock:before, .#{$simple-line-icon-prefix}expired:before, .#{$simple-line-icon-prefix}pending:before{
   content: "\e081";
 }
 

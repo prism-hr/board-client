@@ -3625,10 +3625,11 @@ p-splitbutton.ui-button-info .ui-buttonset {
 }
 p-selectbutton .ui-button-info {
   .ui-state-default {
-    border-color: #999;
-    background: white;
-    color: $uclred;
+    border-color: transparent;
+    background: transparent;
+    color: $uclblue;
     cursor: pointer;
+    font-size: 0.8em;
   }
   .ui-state-active {
     background-color: $uclblue;
@@ -3643,7 +3644,7 @@ p-selectbutton .ui-button-info {
       color: #ffffff;
     }
   }
-  font-size: 0.9em;
+
 }
 
 /** TabMenu **/

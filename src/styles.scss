@@ -179,13 +179,13 @@ a.btn-user {
 }
 
 section {
-  padding-top: $section-spacing-small;
-  padding-bottom: $section-spacing-small;
-
-  @include media-query($medium-up) {
-    padding-top: $section-spacing;
-    padding-bottom: $section-spacing;
-  }
+  //padding-top: $section-spacing-small;
+  //padding-bottom: $section-spacing-small;
+  //
+  //@include media-query($medium-up) {
+  //  padding-top: $section-spacing;
+  //  padding-bottom: $section-spacing;
+  //}
   &.edit-post {
     padding-top:0;
     @include media-query($medium-up) {
@@ -271,5 +271,5 @@ control-messages {
 }
 
 .walkthrough-highlight {
-  z-index: 9999;
+  z-index: 1002;
 }

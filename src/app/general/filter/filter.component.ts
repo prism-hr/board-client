@@ -12,11 +12,6 @@ import State = b.State;
   template: `
     <div class="search-filter">
       <form fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center" (submit)="search()">
-        <div class="input-holder" fxLayout="row" fxLayoutAlign="flex-start center">
-          <input name="text-filter" [(ngModel)]="searchTerm" placeholder="Search" class="ui-inputtext">
-          <button pButton icon="fa-magnifier" class="ui-button-success"></button>
-          <button pButton icon="fa-close" type="button" *ngIf="searchTerm" (click)="clear()" class="ui-button-warning"></button>
-        </div>
         <div *ngIf="isStaffMember">
           <div *ngIf="!showArchive">
             <div *ngIf="states">
@@ -37,6 +32,11 @@ import State = b.State;
             <button *ngIf="archiveQuarters && archiveQuarters.length > 0" pButton type="button" label="Search archives"
                     (click)="setShowArchive(true)" class="ui-button-warning"></button>
           </div>
+        </div>
+        <div class="input-holder" fxLayout="row" fxLayoutAlign="flex-start center">
+          <input name="text-filter" [(ngModel)]="searchTerm" placeholder="Search" class="ui-inputtext">
+          <button pButton icon="fa-magnifier" class="ui-button-success"></button>
+          <button pButton icon="fa-close" type="button" *ngIf="searchTerm" (click)="clear()" class="ui-button-warning"></button>
         </div>
       </form>
     </div>

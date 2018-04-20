@@ -1,16 +1,26 @@
 @import '../../assets/variables';
+@import '../../assets/grid';
 
 .title {
   margin-bottom:$section-spacing-small;
   margin-top: $section-spacing-small;
-  text-align: left;
+  text-align: center;
   font-weight:400;
   color: $uclblue;
+  @include media-query($medium-up) {
+    text-align: left;
+  }
 }
 .main-title {
+  margin-top: 40px;
+  text-align: center;
   img {
-    width: 80%;
-    margin: 0 0 0 40px;
+    width: 50%;
+    margin: auto;
+    @include media-query($medium-up) {
+      width: 70%;
+      margin: 0 0 0 40px;
+    }
   }
 }
 .boards {

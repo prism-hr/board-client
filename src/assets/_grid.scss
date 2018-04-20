@@ -405,8 +405,8 @@ textarea {
     - Default column widths: $grid-breakpoint-has-widths: ($small, $medium-up);
     - Default is no push classes
 ==============================================================================*/
-$grid-breakpoint-has-widths: ($small, $medium-up);
-$grid-breakpoint-has-push: ($small, $medium-up);
+$grid-breakpoint-has-widths: ($small, $medium-up, $large-up);
+$grid-breakpoint-has-push: ($small, $medium-up, $large-up);
 
 
 /*============================================================================
@@ -751,6 +751,7 @@ $grid-breakpoints: (
     flex-direction: column;
     justify-content: space-between;
     .mat-card-content {
+      margin-bottom: 0;
       flex:1 0 auto;
       display: flex;
       flex-direction: column ;
@@ -764,4 +765,8 @@ b-post-item {
   .mat-card-avatar {
     margin-top:16px;
   }
+}
+.grid__flex {
+  display: flex;
+  flex-wrap: wrap;
 }
