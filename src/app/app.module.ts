@@ -26,6 +26,7 @@ import {BoardResolver} from './boards/board-resolver.service';
 import {BoardTabsComponent} from './boards/board-tabs.component';
 import {BoardHeaderComponent} from './boards/header/board-header.component';
 import {DepartmentsResolver} from './boards/new/departments-resolver.service';
+import {DepartmentDashboardResolver} from './departments/department-dashboard-resolver.service';
 import {DepartmentResolver} from './departments/department-resolver.service';
 import {DepartmentTabsComponent} from './departments/department-tabs.component';
 import {DepartmentService} from './departments/department.service';
@@ -165,7 +166,10 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
                         children: [
                           {
                             path: '',
-                            loadChildren: 'app/departments/view/department-view.module#DepartmentViewModule'
+                            loadChildren: 'app/departments/view/department-view.module#DepartmentViewModule',
+                            resolve: {
+                              dashboard: DepartmentDashboardResolver,
+                            },
                           },
                           {
                             path: 'edit',
@@ -309,8 +313,8 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
     },
     RollbarService,
     {provide: ErrorHandler, useClass: RollbarService},
-    AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService,
-    DepartmentsResolver, DepartmentService, UserService, ValidationService, WalkthroughOverlayService, ExternalApisService
+    AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService, DepartmentsResolver,
+    DepartmentDashboardResolver, DepartmentService, UserService, ValidationService, WalkthroughOverlayService, ExternalApisService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, UnsubscribeDialogComponent, ResourceCommentDialogComponent,
     UserImageDialogComponent, WalkthroughTooltipComponent],

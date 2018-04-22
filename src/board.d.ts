@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.29.366 on 2018-02-16 21:10:53.
+// Generated using typescript-generator version 1.29.366 on 2018-04-22 20:34:38.
 
 declare namespace b {
 
@@ -12,24 +12,22 @@ declare namespace b {
   }
 
   interface BoardDTO extends ResourceDTO<BoardDTO> {
-    type?: BoardType;
-    documentLogo?: DocumentDTO;
     postCategories?: string[];
   }
 
   interface BoardPatchDTO extends ResourcePatchDTO<BoardPatchDTO> {
-    documentLogo?: DocumentDTO;
     handle?: string;
     postCategories?: string[];
   }
 
   interface DepartmentDTO extends ResourceDTO<DepartmentDTO> {
-    id?: number;
+    summary?: string;
     documentLogo?: DocumentDTO;
     memberCategories?: MemberCategory[];
   }
 
   interface DepartmentPatchDTO extends ResourcePatchDTO<DepartmentPatchDTO> {
+    summary?: string;
     documentLogo?: DocumentDTO;
     handle?: string;
     memberCategories?: MemberCategory[];
@@ -57,9 +55,10 @@ declare namespace b {
   }
 
   interface PostDTO extends ResourceDTO<PostDTO> {
+    summary?: string;
     description?: string;
-    internal?: boolean;
     organizationName?: string;
+    organizationLogo?: string;
     location?: LocationDTO;
     existingRelation?: ExistingRelation;
     existingRelationExplanation?: { [index: string]: any };
@@ -73,9 +72,10 @@ declare namespace b {
   }
 
   interface PostPatchDTO extends ResourcePatchDTO<PostPatchDTO> {
+    summary?: string;
     description?: string;
-    internal?: boolean;
     organizationName?: string;
+    organizationLogo?: string;
     location?: LocationDTO;
     existingRelation?: ExistingRelation;
     existingRelationExplanation?: { [index: string]: any };
@@ -106,7 +106,6 @@ declare namespace b {
 
   interface ResourceDTO<T> {
     name?: string;
-    summary?: string;
   }
 
   interface ResourceEventDTO {
@@ -118,7 +117,6 @@ declare namespace b {
 
   interface ResourcePatchDTO<T> {
     name?: string;
-    summary?: string;
     comment?: string;
   }
 
@@ -166,13 +164,6 @@ declare namespace b {
     expiryDate?: Date;
   }
 
-  interface UserRolePatchDTO {
-    user?: UserDTO;
-    memberCategory?: MemberCategory;
-    memberProgram?: string;
-    memberYear?: number;
-  }
-
   interface WidgetOptionsDTO extends ResourceDTO<any> {
     badgeType?: BadgeType;
     badgeListType?: BadgeListType;
@@ -204,23 +195,34 @@ declare namespace b {
   }
 
   interface BoardRepresentation extends ResourceRepresentation<BoardRepresentation> {
-    type?: BoardType;
-    documentLogo?: DocumentRepresentation;
     handle?: string;
     department?: DepartmentRepresentation;
     postCategories?: string[];
-    postCount?: number;
-    authorCount?: number;
+  }
+
+  interface DemographicDataStatusRepresentation {
+    requireUserDemographicData?: boolean;
+    requireUserRoleDemographicData?: boolean;
+    userRole?: UserRoleRepresentation;
+    ready?: boolean;
+  }
+
+  interface DepartmentDashboardRepresentation {
+    tasks?: ResourceTaskRepresentation[];
+    boards?: BoardRepresentation[];
+    memberStatistics?: StatisticsRepresentation<any>;
+    organizations?: OrganizationRepresentation[];
+    postStatistics?: PostStatisticsRepresentation;
+    invoices?: any[];
   }
 
   interface DepartmentRepresentation extends ResourceRepresentation<DepartmentRepresentation> {
+    summary?: string;
     university?: UniversityRepresentation;
     documentLogo?: DocumentRepresentation;
     handle?: string;
-    boardCount?: number;
-    memberCount?: number;
     memberCategories?: MemberCategory[];
-    tasks?: ResourceTaskRepresentation[];
+    customerId?: string;
   }
 
   interface DocumentRepresentation extends DocumentDefinition {
@@ -230,10 +232,21 @@ declare namespace b {
   interface LocationRepresentation extends LocationDefinition {
   }
 
+  interface OrganizationRepresentation {
+    name?: string;
+    logo?: string;
+    postCount?: number;
+    mostRecentPost?: Date;
+    postViewCount?: number;
+    postReferralCount?: number;
+    postResponseCount?: number;
+  }
+
   interface PostRepresentation extends ResourceRepresentation<PostRepresentation> {
+    summary?: string;
     description?: string;
-    internal?: boolean;
     organizationName?: string;
+    organizationLogo?: string;
     location?: LocationRepresentation;
     existingRelation?: ExistingRelation;
     existingRelationExplanation?: { [index: string]: any };
@@ -251,16 +264,24 @@ declare namespace b {
     lastViewTimestamp?: Date;
     lastReferralTimestamp?: Date;
     lastResponseTimestamp?: Date;
-    responseReadiness?: PostResponseReadinessRepresentation;
+    responseReadiness?: DemographicDataStatusRepresentation;
     referral?: ResourceEventRepresentation;
     response?: ResourceEventRepresentation;
   }
 
-  interface PostResponseReadinessRepresentation {
-    requireUserDemographicData?: boolean;
-    requireUserRoleDemographicData?: boolean;
-    userRole?: UserRoleRepresentation;
-    ready?: boolean;
+  interface PostStatisticsRepresentation extends StatisticsRepresentation<PostStatisticsRepresentation> {
+    viewCountLive?: number;
+    viewCountThisYear?: number;
+    viewCountAllTime?: number;
+    mostRecentView?: Date;
+    referralCountLive?: number;
+    referralCountThisYear?: number;
+    referralCountAllTime?: number;
+    mostRecentReferral?: Date;
+    responseCountLive?: number;
+    responseCountThisYear?: number;
+    responseCountAllTime?: number;
+    mostRecentResponse?: Date;
   }
 
   interface ResourceEventRepresentation {
@@ -296,7 +317,6 @@ declare namespace b {
     id?: number;
     scope?: Scope;
     name?: string;
-    summary?: string;
     state?: State;
     createdTimestamp?: Date;
     updatedTimestamp?: Date;
@@ -309,6 +329,13 @@ declare namespace b {
     completed?: boolean;
   }
 
+  interface StatisticsRepresentation<T> {
+    countLive?: number;
+    countThisYear?: number;
+    countAllTime?: number;
+    mostRecent?: Date;
+  }
+
   interface TestEmailMessageRepresentation {
     recipient?: UserRepresentation;
     subject?: string;
@@ -317,6 +344,7 @@ declare namespace b {
   }
 
   interface UniversityRepresentation extends ResourceRepresentation<UniversityRepresentation> {
+    homepage?: string;
     documentLogo?: DocumentRepresentation;
     handle?: string;
   }
@@ -355,6 +383,8 @@ declare namespace b {
     state?: State;
     expiryDate?: Date;
     viewed?: boolean;
+    createdTimestamp?: Date;
+    updatedTimestamp?: Date;
   }
 
   interface UserRolesRepresentation {
@@ -385,8 +415,6 @@ declare namespace b {
 
   type State = 'DRAFT' | 'SUSPENDED' | 'PENDING' | 'ACCEPTED' | 'EXPIRED' | 'REJECTED' | 'WITHDRAWN' | 'ARCHIVED' | 'PREVIOUS';
 
-  type BoardType = 'RESEARCH' | 'CAREER' | 'CUSTOM';
-
   type MemberCategory = 'UNDERGRADUATE_STUDENT' | 'MASTER_STUDENT' | 'RESEARCH_STUDENT' | 'RESEARCH_STAFF';
 
   type ExistingRelation = 'STAFF' | 'STUDENT' | 'COLLABORATOR' | 'EMPLOYER' | 'OTHER';
@@ -405,7 +433,7 @@ declare namespace b {
 
   type Scope = 'UNIVERSITY' | 'DEPARTMENT' | 'BOARD' | 'POST';
 
-  type Activity = 'ACCEPT_BOARD_ACTIVITY' | 'ACCEPT_POST_ACTIVITY' | 'CORRECT_POST_ACTIVITY' | 'JOIN_BOARD_ACTIVITY' | 'JOIN_DEPARTMENT_ACTIVITY' | 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' | 'NEW_BOARD_PARENT_ACTIVITY' | 'NEW_POST_PARENT_ACTIVITY' | 'PUBLISH_POST_ACTIVITY' | 'PUBLISH_POST_MEMBER_ACTIVITY' | 'REJECT_BOARD_ACTIVITY' | 'REJECT_POST_ACTIVITY' | 'RESTORE_BOARD_ACTIVITY' | 'RESTORE_POST_ACTIVITY' | 'RETIRE_POST_ACTIVITY' | 'SUSPEND_POST_ACTIVITY' | 'RESPOND_POST_ACTIVITY' | 'CREATE_TASK_ACTIVITY' | 'UPDATE_TASK_ACTIVITY' | 'SUBSCRIBE_DEPARTMENT_ACTIVITY' | 'SUSPEND_DEPARTMENT_ACTIVITY';
+  type Activity = 'ACCEPT_POST_ACTIVITY' | 'CORRECT_POST_ACTIVITY' | 'JOIN_DEPARTMENT_ACTIVITY' | 'JOIN_DEPARTMENT_REQUEST_ACTIVITY' | 'NEW_POST_PARENT_ACTIVITY' | 'PUBLISH_POST_ACTIVITY' | 'PUBLISH_POST_MEMBER_ACTIVITY' | 'REJECT_POST_ACTIVITY' | 'RESTORE_POST_ACTIVITY' | 'RETIRE_POST_ACTIVITY' | 'SUSPEND_POST_ACTIVITY' | 'RESPOND_POST_ACTIVITY' | 'CREATE_TASK_ACTIVITY' | 'UPDATE_TASK_ACTIVITY' | 'SUBSCRIBE_DEPARTMENT_ACTIVITY' | 'SUSPEND_DEPARTMENT_ACTIVITY';
 
   type ResourceEvent = 'VIEW' | 'REFERRAL' | 'RESPONSE';
 

@@ -3,9 +3,11 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import * as Stripe from 'stripe';
 import {EntityFilter} from '../general/filter/filter.component';
+import {DepartmentDashboardResolver} from './department-dashboard-resolver.service';
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import UserRepresentation = b.UserRepresentation;
 import ICustomer = Stripe.customers.ICustomer;
+import DepartmentDashboardRepresentation = b.DepartmentDashboardRepresentation;
 
 @Injectable()
 export class DepartmentService {
@@ -23,6 +25,10 @@ export class DepartmentService {
       params = params.set('searchTerm', filter.searchTerm);
     }
     return this.http.get<string[]>('/api/departments/' + department.id + '/programs', {params});
+  }
+
+  getDashboard(department: DepartmentRepresentation): Observable<DepartmentDashboardRepresentation> {
+    return this.http.get<DepartmentDashboardRepresentation>('/api/departments/' + department.id + '/dashboard');
   }
 
   getPaymentSources(department: DepartmentRepresentation): Observable<ICustomer> {

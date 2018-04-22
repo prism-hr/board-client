@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
-import {ActivatedRoute, Data} from '@angular/router';
-import {combineLatest} from 'rxjs/observable/combineLatest';
+import {ActivatedRoute} from '@angular/router';
 import {EntityFilter} from '../../general/filter/filter.component';
 import {ResourceService} from '../../services/resource.service';
-import {UserService} from '../../services/user.service';
-import {WalkthroughOverlayService} from '../../walkthrough-overlay/walkthrough-overlay.service';
 import BoardRepresentation = b.BoardRepresentation;
+import DepartmentDashboardRepresentation = b.DepartmentDashboardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import UserRepresentation = b.UserRepresentation;
 
@@ -17,6 +15,7 @@ import UserRepresentation = b.UserRepresentation;
 export class DepartmentViewComponent implements OnInit {
 
   department: DepartmentRepresentation;
+  dashboard: DepartmentDashboardRepresentation;
 
   canEdit: boolean;
   boards: BoardRepresentation[];
@@ -31,6 +30,7 @@ export class DepartmentViewComponent implements OnInit {
     this.route.data
       .subscribe(data => {
         this.department = data['department'];
+        this.dashboard = data['dashboard'];
         this.title.setTitle(this.department.name);
         this.canEdit = this.resourceService.canEdit(this.department);
       });
