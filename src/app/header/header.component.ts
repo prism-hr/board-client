@@ -86,9 +86,13 @@ export class HeaderComponent implements OnInit {
 
   showLogin() {
     this.authGuard.ensureAuthenticated({initialView: 'LOGIN'}).first() // open dialog if not authenticated
-      .subscribe(authenticated => {
-        if (authenticated) {
-          return this.router.navigate(['/']).then(() => {
+      .subscribe(authenticationOutcome => {
+        if (authenticationOutcome) {
+          let link = ['/'];
+          if(authenticationOutcome.departments && authenticationOutcome.departments.length >= 1) {
+            link = this.resourceService.routerLink(authenticationOutcome.departments[0]);
+          }
+          return this.router.navigate(link).then(() => {
             this.userService.user$.first().subscribe(user => {
               if (!user.documentImage && user.documentImageRequestState !== 'DISPLAY_NEVER') {
                 this.dialog.open(UserImageDialogComponent, {disableClose: true});

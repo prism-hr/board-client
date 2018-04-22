@@ -3,6 +3,8 @@ import {Injectable, NgZone, OnInit} from '@angular/core';
 import {AuthService} from 'ng2-ui-auth';
 import * as Pusher from 'pusher-js';
 import {Observable} from 'rxjs/Observable';
+import {combineLatest} from 'rxjs/observable/combineLatest';
+import {of} from 'rxjs/observable/of';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {RollbarService} from '../rollbar/rollbar.service';
 import {ResourceService} from './resource.service';
@@ -57,7 +59,7 @@ export class UserService implements OnInit {
 
   }
 
-  login(user: any): Promise<UserRepresentation> {
+  login(user: any): Promise<UserAuthenticationOutcome> {
     return this.auth.login(user)
       .toPromise()
       .then(() => {
@@ -65,7 +67,7 @@ export class UserService implements OnInit {
       });
   }
 
-  signup(user: any): Promise<UserRepresentation> {
+  signup(user: any): Promise<UserAuthenticationOutcome> {
     return this.auth.signup(user)
       .toPromise()
       .then((data) => {
@@ -74,12 +76,16 @@ export class UserService implements OnInit {
       });
   }
 
-  authenticate(name: string, userData?: any): Promise<UserRepresentation> {
+  authenticate(name: string, userData?: any): Promise<UserAuthenticationOutcome> {
     return this.auth.authenticate(name, userData)
       .toPromise()
       .then(() => {
         return this.initializeUser();
       });
+  }
+
+  isAuthenticated() {
+    return this.auth.isAuthenticated();
   }
 
   logout() {
@@ -159,33 +165,37 @@ export class UserService implements OnInit {
     return this.http.delete('/api/user/activities/' + activity.id);
   }
 
-  initializeUser() {
+  initializeUser(): Promise<UserAuthenticationOutcome> {
     return this.loadUser()
       .then(user => {
         if (user) {
-          this.resourceService.getResources('DEPARTMENT')
-            .flatMap(departments => {
+          const initialUserData = combineLatest(this.resourceService.getResources('DEPARTMENT'), this.http.get<ActivityRepresentation[]>('/api/user/activities/'))
+            .map(([departments, activities]) => {
               this.departments$.next(departments);
-              return this.http.get('/api/user/activities/');
-            })
-            .map((activities: ActivityRepresentation[]) => {
               this.activities$.next(activities);
-              return false;
-            })
-            .subscribe(() => {
-              this.zone.runOutsideAngular(() => {
-                const channel = this.pusher.subscribe('presence-activities-' + user.id);
-                channel.bind('activities', activities => {
-                  this.zone.run(() => {
-                    this.activities$.next(activities);
-                  });
+              return {departments, activities, user};
+            }).share();
+
+          initialUserData.subscribe(() => {
+            this.zone.runOutsideAngular(() => {
+              const channel = this.pusher.subscribe('presence-activities-' + user.id);
+              channel.bind('activities', activities => {
+                this.zone.run(() => {
+                  this.activities$.next(activities);
                 });
               });
             });
-
+          });
+          return initialUserData.toPromise();
         }
-        return user;
+        return Promise.resolve({user});
       });
   }
 
+}
+
+export interface UserAuthenticationOutcome {
+  user: UserRepresentation;
+  departments?: DepartmentRepresentation[];
+  activities?: ActivityRepresentation[];
 }

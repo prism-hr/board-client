@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {UserService} from '../services/user.service';
+import {UserAuthenticationOutcome, UserService} from '../services/user.service';
 import {ValidationService} from '../validation/validation.service';
 import {ValidationUtils} from '../validation/validation.utils';
 import UserRepresentation = b.UserRepresentation;
@@ -21,7 +21,7 @@ export class AuthenticationDialogComponent implements OnInit {
   forgottenSent: boolean;
   dialogData: AuthenticationDialogData;
 
-  constructor(private dialogRef: MatDialogRef<AuthenticationDialogComponent>, private fb: FormBuilder,
+  constructor(private dialogRef: MatDialogRef<AuthenticationDialogComponent, UserAuthenticationOutcome>, private fb: FormBuilder,
               @Inject(MAT_DIALOG_DATA) data: AuthenticationDialogData, private userService: UserService, private validationService: ValidationService) {
     this.dialogData = data;
     const initUser = this.dialogData.user || {};
@@ -59,8 +59,8 @@ export class AuthenticationDialogComponent implements OnInit {
     }
     this.loading = true;
     this.userService.login(this.loginForm.value)
-      .then(() => {
-          this.afterAuthenticated();
+      .then(authenticationOutcome => {
+          this.afterAuthenticated(authenticationOutcome);
         },
         (response: any) => {
           this.afterError(response);
@@ -75,8 +75,8 @@ export class AuthenticationDialogComponent implements OnInit {
     }
     this.loading = true;
     this.userService.signup(this.registrationForm.value)
-      .then(() => {
-          this.afterAuthenticated();
+      .then(authenticationOutcome => {
+          this.afterAuthenticated(authenticationOutcome);
         },
         (response: any) => {
           this.afterError(response);
@@ -87,8 +87,8 @@ export class AuthenticationDialogComponent implements OnInit {
     this.error = null;
     this.loading = true;
     this.userService.authenticate(name, {uuid: this.dialogData.uuid})
-      .then(() => {
-          this.afterAuthenticated();
+      .then(authenticationOutcome => {
+          this.afterAuthenticated(authenticationOutcome);
         },
         (response: any) => {
           this.afterError(response);
@@ -115,8 +115,8 @@ export class AuthenticationDialogComponent implements OnInit {
       });
   }
 
-  private afterAuthenticated() {
-    this.dialogRef.close(true);
+  private afterAuthenticated(userAuthenticationOutcome: UserAuthenticationOutcome) {
+    this.dialogRef.close(userAuthenticationOutcome);
   }
 
   private afterError(response) {

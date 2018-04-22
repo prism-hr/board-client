@@ -122,7 +122,7 @@ export class PostApplyRequestMembershipComponent implements OnInit {
     this.tomorrow = new Date();
     this.tomorrow.setDate(this.tomorrow.getDate() + 1);
     this.translate.get('definitions.memberCategory').subscribe(categoryTranslations => {
-      this.memberCategoryOptions = this.department.memberCategories.map(c => ({label: categoryTranslations[c], value: c}));
+      this.memberCategoryOptions = this.post.memberCategories.map(c => ({label: categoryTranslations[c], value: c}));
     });
 
     this.canPursue = this.resourceService.canPursue(this.post);

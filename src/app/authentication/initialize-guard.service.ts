@@ -4,7 +4,7 @@ import {MatDialogConfig} from '@angular/material';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import {UserService} from '../services/user.service';
+import {UserAuthenticationOutcome, UserService} from '../services/user.service';
 import {Utils} from '../services/utils';
 import {AuthGuard} from './auth-guard.service';
 import {ResetPasswordDialogComponent} from './reset-password.dialog';
@@ -21,7 +21,7 @@ export class InitializeGuard implements CanActivate {
     const uuid = params.get('uuid');
     const resetPasswordUuid = params.get('resetPasswordUuid');
     const unsubscribeUuid = params.get('unsubscribeUuid');
-    let observable: Observable<boolean>;
+    let observable: Observable<boolean | UserAuthenticationOutcome>;
 
     if (uuid || resetPasswordUuid || unsubscribeUuid) {
       this.userService.logout();
@@ -34,8 +34,6 @@ export class InitializeGuard implements CanActivate {
       // we have to replace current state as well as redirect (redirection will happen after current method is finished)
       this.location.replaceState(path);
       this.router.navigate([path.slice(1)], {replaceUrl: true, fragment: route.fragment});
-    } else {
-      this.userService.initializeUser();
     }
 
     if (resetPasswordUuid) {
@@ -47,14 +45,14 @@ export class InitializeGuard implements CanActivate {
           if (passwordChanged) {
             return this.authGuard.ensureAuthenticated({initialView: 'LOGIN'})
           }
-          return Observable.of(true);
         }).map(() => true); // activate no matter if password was successfully changed
     } else if (uuid) {
       observable = this.authGuard.ensureAuthenticated({uuid});
     } else {
-      observable = Observable.of(true);
+      observable = Observable.fromPromise(this.userService.initializeUser());
     }
-    return observable;
+    return observable
+      .map(result => !!result);
   }
 
 }

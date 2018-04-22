@@ -1,24 +1,25 @@
 import {Injectable} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {ActivatedRouteSnapshot, CanActivate, ParamMap, Router} from '@angular/router';
-import {AuthService} from 'ng2-ui-auth';
 import {Observable} from 'rxjs/Observable';
-import {UserService} from '../services/user.service';
+import {first} from 'rxjs/operators';
+import {UserAuthenticationOutcome, UserService} from '../services/user.service';
 import {AuthenticationDialogComponent, AuthenticationDialogData, AuthenticationView} from './authentication.dialog';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router, private dialog: MatDialog, private authService: AuthService, private userService: UserService) {
+  constructor(private router: Router, private dialog: MatDialog, private userService: UserService) {
   }
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-    return this.ensureAuthenticated({initialView: route.data.modalView}).first();
+    return this.ensureAuthenticated({initialView: route.data.modalView}).first()
+      .map(outcome => !!outcome);
   }
 
-  ensureAuthenticated(options: { initialView?: AuthenticationView, uuid?: string }): Observable<boolean> {
-    if (this.authService.isAuthenticated()) {
-      return Observable.of(true);
+  ensureAuthenticated(options: { initialView?: AuthenticationView, uuid?: string }): Observable<UserAuthenticationOutcome> {
+    if (this.userService.isAuthenticated()) {
+      return this.userService.user$.map(user => ({user})).pipe(first());
     } else {
       this.userService.logout();
       const inviteeObservable = options.uuid ? this.userService.getInvitee(options.uuid) : Observable.of(null);
@@ -34,7 +35,7 @@ export class AuthGuard implements CanActivate {
     }
   }
 
-  requestSecuredEndpoint<T>(endpointCall: () => Observable<T>, paramMap: ParamMap): Observable<T> {
+  requestSecuredEndpoint<T>(endpointCall: () => Observable<T>): Observable<T> {
     return endpointCall()
       .catch((error: Response) => {
         if (error.status === 401) {
