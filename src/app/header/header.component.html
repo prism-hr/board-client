@@ -10,9 +10,6 @@
          routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
          [ngClass]="{active: resourceScope === 'post'}"
          label="Posts" *ngIf="user.scopes.indexOf('POST') > -1"></a>
-      <a (click)="mobileMenu = false" pButton class="ui-button" routerLink="/boards" routerLinkActive="active"
-         [ngClass]="{active: resourceScope === 'board'}"
-         label="Boards" *ngIf="user.scopes.indexOf('BOARD') > -1"></a>
       <a *ngIf="departments?.length === 1" pButton class="ui-button" [routerLink]="departmentLink"
          [ngClass]="{active: resourceScope === 'department'}"
          label="Department"></a>
@@ -40,13 +37,10 @@
              routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
              [ngClass]="{active: resourceScope === 'post'}"
              label="Posts" *ngIf="user.scopes.indexOf('POST') > -1"></a>
-          <a pButton class="ui-button" routerLink="/boards" routerLinkActive="active"
-             [ngClass]="{active: resourceScope === 'board'}"
-             label="Boards" *ngIf="user.scopes.indexOf('BOARD') > -1"></a>
           <a *ngIf="departments?.length === 1" pButton class="ui-button" [routerLink]="departmentLink"
              [ngClass]="{active: resourceScope === 'department'}"
              label="Department"></a>
-          <button *ngIf="departments?.length > 1" type="button" pButton label="Departments"
+          <button *ngIf="departments?.length > 1" type="button" pButton label="Departments ({{departments.length}})"
                   (click)="menu.toggle($event)"></button>
         </div>
       </div>

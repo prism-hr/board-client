@@ -17,16 +17,11 @@ import PostRepresentation = b.PostRepresentation;
             <router-outlet></router-outlet>
           </div>
           <div class="logo-content">
-            <!--// TODO kuba check why logo it's not showing-->
-            <div *ngIf="post.board.documentLogo" mat-card-avatar>
-              <b-image [publicId]="post.board.documentLogo?.cloudinaryId"
+            <div *ngIf="post.board.department.documentLogo" mat-card-avatar>
+              <b-image [publicId]="post.board.department.documentLogo.cloudinaryId"
                        gravity="north_west" height="150" width="200" crop="mfit"></b-image>
             </div>
             <h3>
-              <a [routerLink]="['/', post.board.department.university.handle, post.board.department.handle, post.board.handle]">
-                {{post.board.name}}
-              </a>
-              <small>from</small>
               <a [routerLink]="['/', post.board.department.university.handle, post.board.department.handle]">
                 {{post.board.department.name}}
               </a>

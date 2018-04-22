@@ -50,4 +50,9 @@ export class PostService {
     return this.http.get<ResourceEventRepresentation[]>('/api/posts/' + post.id + '/responses', {params});
   }
 
+  lookupOrganizations(text: string) {
+    let params = new HttpParams().set('query', text);
+    return this.http.get('/api/posts/organizations', {params});
+  }
+
 }

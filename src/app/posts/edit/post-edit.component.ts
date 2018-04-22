@@ -269,7 +269,7 @@ export class PostEditComponent implements OnInit {
   }
 
   searchOrganizations(event) {
-    this.externalApisService.lookupOrganizations(event.query).subscribe((organizations: string[]) => {
+    this.postService.lookupOrganizations(event.query).subscribe((organizations: string[]) => {
       this.organizationSuggestions = organizations;
     })
   }
