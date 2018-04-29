@@ -1,0 +1,99 @@
+<mat-card *ngIf="department && !bulkMode">
+  <form [formGroup]="userForm" (ngSubmit)="createNewUser()" autocomplete="off" novalidate>
+    <mat-card-content>
+      <h4>New Member</h4>
+      <div formGroupName="user" class="grid">
+        <b-user-lookup [parentForm]="userForm.get('user')" [resource]="department"></b-user-lookup>
+      </div>
+      <div class="grid">
+        <b-department-member-form-part [department]="department" [parentForm]="userForm">
+        </b-department-member-form-part>
+      </div>
+    </mat-card-content>
+    <mat-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+      <button pButton type="button" class="ui-button-secondary" (click)="bulkMode = true" label="Add members in bulk">
+      </button>
+      <button pButton type="submit" class="ui-button-success" label="Add user" fxFlexOrder="1"></button>
+    </mat-card-actions>
+  </form>
+</mat-card>
+
+<b-department-members-bulk *ngIf="bulkMode" [resource]="department" (close)="closeBulkMode($event)">
+</b-department-members-bulk>
+
+<div class="section-header users-headers" fxLayout="row" fxLayoutAlign="space-between center">
+  <h1>Members</h1>
+  <b-filter (applied)="filterApplied($event)"></b-filter>
+</div>
+
+<p-tabView [activeIndex]="usersTabIndex" (onChange)="usersTabChanged($event)">
+  <p-tabPanel header="Members">
+    <div *ngIf="users">
+      <div class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
+        <div *ngFor="let member of users.members" class="grid__item small--one-whole medium-up--one-third">
+          <mat-card class="no-content users">
+            <mat-card-header fxLayout="row" fxLayoutAlign="flex-start center"
+                             (click)="openUserSettings(member)">
+              <div mat-card-avatar class="avatar"
+                   [ngClass]="{'no-background': member.user.documentImage}">
+                <b-image [publicId]="member.user.documentImage?.cloudinaryId"
+                         gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec"
+                         *ngIf="member.user.documentImage"></b-image>
+                <i *ngIf="!member.user.documentImage" class="fa-user"></i>
+              </div>
+              <mat-card-title>
+                <div>
+                  <h3>
+                    {{member.user.givenName}} {{member.user.surname}}
+                  </h3>
+                  <div class="role-item-container">
+                    <div class="role-indicator member"
+                         [ngClass]="{'expire' : member.expiryDate}">
+                    <span class="role-item"
+                          pTooltip="{{'definitions.role.' + 'MEMBER' | translate}} - {{'definitions.memberCategory.' + member.memberCategory | translate}}"
+                          tooltipPosition="top"></span>
+                      <span class="role-expire" *ngIf="member.expiryDate"
+                            pTooltip="Expiry date: {{member.expiryDate | date : 'shortDate'}}"
+                            tooltipPosition="bottom"></span>
+                    </div>
+                  </div>
+                </div>
+              </mat-card-title>
+            </mat-card-header>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel *ngIf="!users || users.memberRequests.length > 0" header="Membership Requests">
+    <div *ngIf="users" class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
+      <div *ngFor="let memberRequest of users.memberRequests" class="grid__item small--one-whole medium-up--one-third">
+        <mat-card class="no-content users no-popup">
+          <mat-card-header fxLayout="row" fxLayoutAlign="flex-start center">
+            <div mat-card-avatar class="avatar"
+                 [ngClass]="{'no-background': memberRequest.user.documentImage}">
+              <b-image [publicId]="memberRequest.user.documentImage?.cloudinaryId"
+                       gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec"
+                       *ngIf="memberRequest.user.documentImage"></b-image>
+              <i *ngIf="!memberRequest.user.documentImage" class="fa-user"></i>
+            </div>
+            <mat-card-title>
+              <h3>{{memberRequest.user.givenName}} {{memberRequest.user.surname}}</h3>
+              <div class="card-actions">
+                <button pButton class="ui-button-warning small-xs"
+                        (click)="respondToMemberRequest(memberRequest, 'rejected')"
+                        label="Reject"></button>
+                <button pButton class="ui-button-success small-xs"
+                        (click)="respondToMemberRequest(memberRequest, 'accepted')"
+                        label="Accept"></button>
+              </div>
+            </mat-card-title>
+          </mat-card-header>
+        </mat-card>
+      </div>
+    </div>
+  </p-tabPanel>
+</p-tabView>
+
+
+

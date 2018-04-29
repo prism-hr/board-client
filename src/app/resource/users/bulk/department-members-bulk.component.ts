@@ -1,22 +1,22 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {pick} from 'lodash';
 import {PapaParseService} from 'ngx-papaparse';
 import {UploadInput, UploadOutput} from 'ngx-uploader';
 import {MessageService} from 'primeng/components/common/messageservice';
-import {ResourceService} from '../../services/resource.service';
-import {ValidationUtils} from '../../validation/validation.utils';
+import {ResourceService} from '../../../services/resource.service';
+import {ValidationUtils} from '../../../validation/validation.utils';
+import {DepartmentMemberFormPartComponent} from '../role-form-part/department-member-form-part.component';
+import MemberDTO = b.MemberDTO;
 import UserDTO = b.UserDTO;
-import UserRoleDTO = b.UserRoleDTO;
 
 @Component({
-  selector: 'b-resource-users-bulk',
-  templateUrl: 'resource-users-bulk.component.html',
-  styleUrls: ['resource-users-bulk.component.scss'],
+  selector: 'b-department-members-bulk',
+  templateUrl: 'department-members-bulk.component.html',
+  styleUrls: ['department-members-bulk.component.scss'],
   providers: [MessageService]
 })
-export class ResourceUsersBulkComponent implements OnInit {
+export class DepartmentMembersBulkComponent implements OnInit {
 
   csvText: string;
   usersForm: FormGroup;
@@ -27,6 +27,7 @@ export class ResourceUsersBulkComponent implements OnInit {
   @Input() resource: any;
   @Output() close: EventEmitter<any> = new EventEmitter();
   @ViewChild('csvUploaderInput') uploadElRef: ElementRef;
+  @ViewChild(DepartmentMemberFormPartComponent) memberFormPartComponent: DepartmentMemberFormPartComponent;
 
   constructor(private fb: FormBuilder, private papa: PapaParseService, private snackBar: MatSnackBar,
               private resourceService: ResourceService) {
@@ -109,14 +110,14 @@ export class ResourceUsersBulkComponent implements OnInit {
     if (this.usersForm.invalid) {
       return;
     }
-    const roleDef = this.usersForm.get('roleGroup').value;
-    const userRoles: UserRoleDTO[] = this.users.map(user => {
-      const userRoleDTO: UserRoleDTO = pick(roleDef, ['role', 'expiryDate', 'memberCategory', 'memberProgram', 'memberYear']);
-      userRoleDTO.user = user;
-      return userRoleDTO;
+    const members: MemberDTO[] = this.users.map(user => {
+      const memberDTO: MemberDTO = Object.assign({}, this.memberFormPartComponent.getMemberDTO());
+      memberDTO.type = 'MEMBER';
+      memberDTO.user = user;
+      return memberDTO;
     });
 
-    this.resourceService.addUsersInBulk(this.resource, userRoles)
+    this.resourceService.addUsersInBulk(this.resource, members)
       .subscribe(() => {
         this.snackBar.open('You have successfully uploaded users. It might take some time until they will be processed.',
           null, {duration: 10000});

@@ -13,6 +13,7 @@ import Gender = b.Gender;
 import PostRepresentation = b.PostRepresentation;
 import UserDTO = b.UserDTO;
 import UserRoleDTO = b.UserRoleDTO;
+import MemberDTO = b.MemberDTO;
 
 @Component({
   selector: 'b-post-apply-request-membership',
@@ -126,15 +127,15 @@ export class PostApplyRequestMembershipComponent implements OnInit {
     });
 
     this.canPursue = this.resourceService.canPursue(this.post);
-    const oldUserRole = this.post.responseReadiness.userRole;
+    const readiness = this.post.responseReadiness;
     this.membershipForm = this.fb.group({
       gender: [null, this.requireUserDemographicData && Validators.required],
       ageRange: [null, this.requireUserDemographicData && Validators.required],
       locationNationality: [null, this.requireUserDemographicData && Validators.required],
-      memberCategory: [oldUserRole && oldUserRole.memberCategory, this.requireUserRoleDemographicData && Validators.required],
-      memberProgram: [oldUserRole && oldUserRole.memberProgram, this.requireUserRoleDemographicData && Validators.required],
-      memberYear: [oldUserRole && oldUserRole.memberYear, this.requireUserRoleDemographicData && Validators.required],
-      expiryDate: [oldUserRole && oldUserRole.expiryDate, this.requireUserRoleDemographicData && Validators.required]
+      memberCategory: [readiness.memberCategory, this.requireUserRoleDemographicData && Validators.required],
+      memberProgram: [readiness.memberProgram, this.requireUserRoleDemographicData && Validators.required],
+      memberYear: [readiness.memberYear, this.requireUserRoleDemographicData && Validators.required],
+      expiryDate: [readiness.expiryDate, this.requireUserRoleDemographicData && Validators.required]
     });
   }
 
@@ -143,11 +144,11 @@ export class PostApplyRequestMembershipComponent implements OnInit {
   }
 
   get requireUserRoleDemographicData() {
-    return this.post.responseReadiness.requireUserRoleDemographicData;
+    return this.post.responseReadiness.requireMemberData;
   }
 
   get requireUserDemographicData() {
-    return this.post.responseReadiness.requireUserDemographicData;
+    return this.post.responseReadiness.requireUserData;
   }
 
   get expiryLabel() {
@@ -171,11 +172,11 @@ export class PostApplyRequestMembershipComponent implements OnInit {
     }
 
     const userDTO: UserDTO = pick(form.value, ['gender', 'ageRange', 'locationNationality']);
-    const userRoleDTO: UserRoleDTO = {
+    const memberDTO: MemberDTO = {
       user: userDTO,
       ...pick(form.value, ['memberCategory', 'memberProgram', 'memberYear', 'expiryDate'])
     };
-    this.postService.requestDepartmentMembership(this.department, userRoleDTO, this.canPursue).subscribe(() => {
+    this.postService.requestDepartmentMembership(this.department, memberDTO, this.canPursue).subscribe(() => {
       this.requested.emit(true);
     });
   }

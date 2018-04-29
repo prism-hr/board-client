@@ -134,17 +134,17 @@ export class ResourceService {
       }));
   }
 
-  updateResourceUser(resource: ResourceRepresentation<any>, user: UserRepresentation, userRoleDTO: UserRoleDTO): Observable<UserRoleRepresentation> {
+  updateResourceUser(resource: ResourceRepresentation<any>, user: UserRepresentation, userRoleDTO: UserRoleDTO<any>): Observable<UserRoleRepresentation<any>> {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
     return this.http.put('/api/' + resourceCol + '/' + resource.id + '/users/' + user.id, userRoleDTO);
   }
 
-  addUser(resource: ResourceRepresentation<any>, user: UserRoleDTO): Observable<UserRoleRepresentation> {
+  addUser(resource: ResourceRepresentation<any>, user: UserRoleDTO<any>): Observable<UserRoleRepresentation<any>> {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
     return this.http.post('/api/' + resourceCol + '/' + resource.id + '/users', user);
   }
 
-  addUsersInBulk(resource: ResourceRepresentation<any>, users: UserRoleDTO[]): Observable<number> {
+  addUsersInBulk(resource: ResourceRepresentation<any>, users: UserRoleDTO<any>[]): Observable<number> {
     const resourceCol = (<any>resource.scope).toLowerCase() + 's';
     return this.http.post<number>('/api/' + resourceCol + '/' + resource.id + '/users/bulk', users);
   }

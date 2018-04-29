@@ -18,9 +18,11 @@ import {ImageModule} from '../../general/image/image.module';
 import {SharedModule} from '../../general/shared.module';
 import {UserLookupComponent} from '../../general/user-lookup';
 import {ResourceUserEditDialogComponent} from './resource-user-edit-dialog.component';
-import {ResourceUserRoleFormPartComponent} from './resource-user-role-form-part.component';
-import {ResourceUsersBulkComponent} from './resource-users-bulk.component';
-import {ResourceUsersComponent} from './resource-users.component';
+import {DepartmentMembersBulkComponent} from './bulk/department-members-bulk.component';
+import {DepartmentMembersComponent} from './members/department-members.component';
+import {DepartmentMemberFormPartComponent} from './role-form-part/department-member-form-part.component';
+import {DepartmentStaffFormPartComponent} from './role-form-part/department-staff-form-part.component';
+import {DepartmentStaffComponent} from './staff/department-staff.component';
 
 @NgModule({
   imports: [
@@ -41,13 +43,17 @@ import {ResourceUsersComponent} from './resource-users.component';
     ImageModule,
     TranslateModule.forChild({}),
     RouterModule.forChild([
-      {path: '', component: ResourceUsersComponent}
+      {path: 'members', component: DepartmentMembersComponent},
+      {path: 'staff', component: DepartmentStaffComponent},
+      {path: '', redirectTo: 'members'}
     ])
   ],
   declarations: [
-    ResourceUsersBulkComponent,
-    ResourceUsersComponent,
-    ResourceUserRoleFormPartComponent,
+    DepartmentMembersBulkComponent,
+    DepartmentMembersComponent,
+    DepartmentStaffComponent,
+    DepartmentMemberFormPartComponent,
+    DepartmentStaffFormPartComponent,
     ResourceUserEditDialogComponent,
     UserLookupComponent
   ],

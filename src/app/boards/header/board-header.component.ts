@@ -17,8 +17,4 @@ export class BoardHeaderComponent implements OnChanges {
     this.canEdit = this.board && this.resourceService.canEdit(this.board);
   }
 
-  logoChanged() {
-    this.resourceService.patchBoard(this.board.id, {documentLogo: this.board.documentLogo})
-      .subscribe();
-  }
 }

@@ -1,10 +1,13 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {pick} from 'lodash';
 import {ResourceService} from '../../services/resource.service';
 import {ValidationUtils} from '../../validation/validation.utils';
+import {DepartmentMemberFormPartComponent} from './role-form-part/department-member-form-part.component';
+import {DepartmentStaffFormPartComponent} from './role-form-part/department-staff-form-part.component';
+import MemberDTO = b.MemberDTO;
 import ResourceRepresentation = b.ResourceRepresentation;
+import StaffDTO = b.StaffDTO;
 import UserRoleDTO = b.UserRoleDTO;
 import UserRoleRepresentation = b.UserRoleRepresentation;
 
@@ -32,8 +35,15 @@ import UserRoleRepresentation = b.UserRoleRepresentation;
             </div>
           </div>
 
-          <b-resource-user-role-form-part [resource]="resource" [parentForm]="userForm" [roleType]="roleType"
-                                          [userRole]="userRole" [lastAdminRole]="lastAdminRole"></b-resource-user-role-form-part>
+          <div *ngIf="userRole.roleType === 'STAFF'">
+            <b-department-staff-form-part [department]="resource" [parentForm]="userForm"
+                                          [staff]="userRole" [lastAdminRole]="lastAdminRole"></b-department-staff-form-part>
+          </div>
+
+          <div *ngIf="userRole.roleType === 'MEMBER'">
+            <b-department-member-form-part [department]="resource" [parentForm]="userForm"
+                                           [member]="userRole"></b-department-member-form-part>
+          </div>
         </div>
       </mat-dialog-content>
 
@@ -52,10 +62,11 @@ import UserRoleRepresentation = b.UserRoleRepresentation;
 export class ResourceUserEditDialogComponent implements OnInit {
 
   resource: ResourceRepresentation<any>;
-  userRole: UserRoleRepresentation;
+  userRole: UserRoleRepresentation<any>;
   userForm: FormGroup;
   lastAdminRole: boolean;
-  roleType: 'STAFF' | 'MEMBER';
+  @ViewChild(DepartmentStaffFormPartComponent) staffFormPartComponent: DepartmentStaffFormPartComponent;
+  @ViewChild(DepartmentMemberFormPartComponent) memberFormPartComponent: DepartmentMemberFormPartComponent;
   progress: boolean;
 
   constructor(private dialogRef: MatDialogRef<ResourceUserEditDialogComponent>, private fb: FormBuilder,
@@ -63,7 +74,6 @@ export class ResourceUserEditDialogComponent implements OnInit {
     this.resource = data.resource;
     this.userRole = data.userRole;
     this.lastAdminRole = data.lastAdminRole;
-    this.roleType = data.roleType;
     this.userForm = this.fb.group({
       email: [data.userRole.email, [ValidationUtils.emailValidator]],
     });
@@ -78,10 +88,15 @@ export class ResourceUserEditDialogComponent implements OnInit {
       return;
     }
     this.progress = true;
-    const roleDef = this.userForm.get('roleGroup').value;
-    const userRoleDTO: UserRoleDTO = pick(roleDef,
-      ['role', 'expiryDate', 'memberCategory', 'memberProgram', 'memberYear']);
-    userRoleDTO.email = this.userForm.get('email').value;
+    const roleType = this.userRole.roleType;
+    const userRoleDTO: UserRoleDTO<any> = {type: roleType, user: Object.assign({}, this.userRole.user)};
+    userRoleDTO.user.email = this.userForm.get('email').value;
+
+    if (roleType === 'STAFF') {
+      Object.assign(userRoleDTO, this.staffFormPartComponent.getStaffDTO());
+    } else {
+      Object.assign(userRoleDTO, this.memberFormPartComponent.getMemberDTO());
+    }
     this.resourceService.updateResourceUser(this.resource, this.userRole.user, userRoleDTO)
       .subscribe(userRole => {
         this.progress = false;
@@ -89,7 +104,7 @@ export class ResourceUserEditDialogComponent implements OnInit {
       });
   }
 
-  removeUser(resourceUser: UserRoleRepresentation) {
+  removeUser(resourceUser: UserRoleRepresentation<any>) {
     this.progress = true;
     this.resourceService.removeUser(this.resource, resourceUser.user)
       .subscribe(() => {

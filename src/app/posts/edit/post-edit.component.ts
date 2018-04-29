@@ -18,11 +18,11 @@ import {ValidationUtils} from '../../validation/validation.utils';
 import {PostService} from '../post.service';
 import Action = b.Action;
 import BoardRepresentation = b.BoardRepresentation;
+import DepartmentRepresentation = b.DepartmentRepresentation;
 import MemberCategory = b.MemberCategory;
 import PostPatchDTO = b.PostPatchDTO;
 import PostRepresentation = b.PostRepresentation;
 import UserRepresentation = b.UserRepresentation;
-import DepartmentRepresentation = b.DepartmentRepresentation;
 
 @Component({
   templateUrl: 'post-edit.component.html',
@@ -42,7 +42,7 @@ export class PostEditComponent implements OnInit {
   organizationSuggestions: string[];
   availablePostCategories: string[];
   availableMemberCategories: MemberCategory[];
-  formProperties = ['name', 'summary', 'description', 'organizationName', 'location', 'existingRelation',
+  formProperties = ['name', 'summary', 'description', 'organization', 'location', 'existingRelation',
     'liveTimestamp', 'deadTimestamp', 'applyWebsite', 'applyDocument', 'applyEmail'];
 
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private cdf: ChangeDetectorRef,
@@ -67,7 +67,7 @@ export class PostEditComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       summary: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
       description: [''],
-      organizationName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      organization: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
       location: [null, Validators.required],
       existingRelation: [],
       existingRelationExplanation: [],
@@ -126,7 +126,7 @@ export class PostEditComponent implements OnInit {
             this.postForm.patchValue({
               hideLiveTimestamp: true,
               deadTimestamp: deadTimestamp.toISOString(),
-              organizationName: user.defaultOrganizationName,
+              organization: user.defaultOrganization,
               location: user.defaultLocation
             });
           }

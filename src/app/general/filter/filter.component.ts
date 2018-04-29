@@ -77,7 +77,7 @@ export class FilterComponent implements OnInit {
     });
 
     this.userService.user$.subscribe(user => {
-      this.isStaffMember = user && (user.scopes.includes('BOARD') || user.scopes.includes('DEPARTMENT'));
+      this.isStaffMember = user && (user.postCreator || user.departmentAdministrator);
       if (this.isStaffMember && this.resourceScope) {
         this.resourceService.getArchiveQuarters(this.resourceScope)
           .subscribe(quarters => {

@@ -218,11 +218,6 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
                             canActivate: [AuthGuard]
                           },
                           {
-                            path: 'users',
-                            loadChildren: 'app/resource/users/resource-users.module#ResourceUsersModule',
-                            canActivate: [AuthGuard]
-                          },
-                          {
                             path: 'badge',
                             loadChildren: 'app/resource/badge/resource-badge.module#ResourceBadgeModule',
                             canActivate: [AuthGuard]

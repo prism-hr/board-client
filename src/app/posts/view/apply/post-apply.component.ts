@@ -102,7 +102,7 @@ export class PostApplyComponent implements OnInit, OnChanges {
 
   get responseReady() {
     const readiness = this.post.responseReadiness;
-    return !readiness.requireUserDemographicData && !readiness.requireUserRoleDemographicData;
+    return !readiness.requireUserData && !readiness.requireMemberData;
   }
 
   private reloadPost() {

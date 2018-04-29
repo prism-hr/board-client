@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.29.366 on 2018-04-22 20:34:38.
+// Generated using typescript-generator version 1.29.366 on 2018-04-28 18:48:45.
 
 declare namespace b {
 
@@ -45,6 +45,14 @@ declare namespace b {
     password?: string;
   }
 
+  interface MemberDTO extends UserRoleDTO<MemberDTO> {
+    email?: string;
+    memberCategory?: MemberCategory;
+    memberProgram?: string;
+    memberYear?: number;
+    expiryDate?: Date;
+  }
+
   interface OAuthAuthorizationDataDTO {
     client_id?: string;
     redirect_uri?: string;
@@ -54,11 +62,16 @@ declare namespace b {
     code?: string;
   }
 
+  interface OrganizationDTO {
+    id?: number;
+    name?: string;
+    logo?: string;
+  }
+
   interface PostDTO extends ResourceDTO<PostDTO> {
     summary?: string;
     description?: string;
-    organizationName?: string;
-    organizationLogo?: string;
+    organization?: OrganizationDTO;
     location?: LocationDTO;
     existingRelation?: ExistingRelation;
     existingRelationExplanation?: { [index: string]: any };
@@ -74,8 +87,7 @@ declare namespace b {
   interface PostPatchDTO extends ResourcePatchDTO<PostPatchDTO> {
     summary?: string;
     description?: string;
-    organizationName?: string;
-    organizationLogo?: string;
+    organization?: OrganizationDTO;
     location?: LocationDTO;
     existingRelation?: ExistingRelation;
     existingRelationExplanation?: { [index: string]: any };
@@ -125,6 +137,10 @@ declare namespace b {
     oauthData?: OAuthDataDTO;
   }
 
+  interface StaffDTO extends UserRoleDTO<StaffDTO> {
+    roles?: Role[];
+  }
+
   interface UserDTO {
     id?: number;
     givenName?: string;
@@ -154,14 +170,9 @@ declare namespace b {
     websiteResume?: string;
   }
 
-  interface UserRoleDTO {
+  interface UserRoleDTO<T> {
+    type?: RoleType;
     user?: UserDTO;
-    email?: string;
-    role?: Role;
-    memberCategory?: MemberCategory;
-    memberProgram?: string;
-    memberYear?: number;
-    expiryDate?: Date;
   }
 
   interface WidgetOptionsDTO extends ResourceDTO<any> {
@@ -201,17 +212,19 @@ declare namespace b {
   }
 
   interface DemographicDataStatusRepresentation {
-    requireUserDemographicData?: boolean;
-    requireUserRoleDemographicData?: boolean;
-    userRole?: UserRoleRepresentation;
-    ready?: boolean;
+    requireUserData?: boolean;
+    requireMemberData?: boolean;
+    memberCategory?: MemberCategory;
+    memberProgram?: string;
+    memberYear?: number;
+    expiryDate?: Date;
   }
 
   interface DepartmentDashboardRepresentation {
     tasks?: ResourceTaskRepresentation[];
     boards?: BoardRepresentation[];
     memberStatistics?: StatisticsRepresentation<any>;
-    organizations?: OrganizationRepresentation[];
+    organizationStatistics?: OrganizationStatisticsRepresentation[];
     postStatistics?: PostStatisticsRepresentation;
     invoices?: any[];
   }
@@ -232,9 +245,23 @@ declare namespace b {
   interface LocationRepresentation extends LocationDefinition {
   }
 
-  interface OrganizationRepresentation {
+  interface MemberRepresentation extends UserRoleRepresentation<MemberRepresentation> {
+    email?: string;
+    memberCategory?: MemberCategory;
+    memberProgram?: string;
+    memberYear?: number;
+    state?: State;
+    expiryDate?: Date;
+    viewed?: boolean;
+  }
+
+  interface OrganizationRepresentation<T> {
+    id?: number;
     name?: string;
     logo?: string;
+  }
+
+  interface OrganizationStatisticsRepresentation extends OrganizationRepresentation<OrganizationStatisticsRepresentation> {
     postCount?: number;
     mostRecentPost?: Date;
     postViewCount?: number;
@@ -245,8 +272,7 @@ declare namespace b {
   interface PostRepresentation extends ResourceRepresentation<PostRepresentation> {
     summary?: string;
     description?: string;
-    organizationName?: string;
-    organizationLogo?: string;
+    organization?: OrganizationRepresentation<any>;
     location?: LocationRepresentation;
     existingRelation?: ExistingRelation;
     existingRelationExplanation?: { [index: string]: any };
@@ -300,9 +326,7 @@ declare namespace b {
     websiteResume?: string;
     coveringNote?: string;
     createdTimestamp?: Date;
-    match?: ResourceEventMatch;
     viewed?: boolean;
-    history?: ResourceEventRepresentation[];
   }
 
   interface ResourceOperationRepresentation {
@@ -327,6 +351,10 @@ declare namespace b {
     id?: number;
     task?: ResourceTask;
     completed?: boolean;
+  }
+
+  interface StaffRepresentation extends UserRoleRepresentation<StaffRepresentation> {
+    roles?: Role[];
   }
 
   interface StatisticsRepresentation<T> {
@@ -367,30 +395,22 @@ declare namespace b {
     locationNationality?: LocationRepresentation;
     documentResume?: DocumentRepresentation;
     websiteResume?: string;
-    scopes?: Scope[];
-    defaultOrganizationName?: string;
+    departmentAdministrator?: boolean;
+    postCreator?: boolean;
+    defaultOrganization?: OrganizationRepresentation<any>;
     defaultLocation?: LocationRepresentation;
     registered?: boolean;
   }
 
-  interface UserRoleRepresentation {
+  interface UserRoleRepresentation<T> {
+    roleType?: RoleType;
     user?: UserRepresentation;
-    email?: string;
-    role?: Role;
-    memberCategory?: MemberCategory;
-    memberProgram?: string;
-    memberYear?: number;
-    state?: State;
-    expiryDate?: Date;
-    viewed?: boolean;
-    createdTimestamp?: Date;
-    updatedTimestamp?: Date;
   }
 
   interface UserRolesRepresentation {
-    users?: UserRoleRepresentation[];
-    members?: UserRoleRepresentation[];
-    memberRequests?: UserRoleRepresentation[];
+    staff?: StaffRepresentation[];
+    members?: MemberRepresentation[];
+    memberRequests?: MemberRepresentation[];
     memberToBeUploadedCount?: number;
   }
 
@@ -402,10 +422,10 @@ declare namespace b {
 
   interface LocationDefinition {
     name?: string;
-    domicile?: string;
     googleId?: string;
     latitude?: number;
     longitude?: number;
+    domicile?: string;
   }
 
   interface Comparable<T> {
@@ -417,15 +437,17 @@ declare namespace b {
 
   type MemberCategory = 'UNDERGRADUATE_STUDENT' | 'MASTER_STUDENT' | 'RESEARCH_STUDENT' | 'RESEARCH_STAFF';
 
+  type RoleType = 'STAFF' | 'MEMBER' | 'PUBLIC';
+
   type ExistingRelation = 'STAFF' | 'STUDENT' | 'COLLABORATOR' | 'EMPLOYER' | 'OTHER';
+
+  type Role = 'ADMINISTRATOR' | 'AUTHOR' | 'MEMBER' | 'PUBLIC';
 
   type Gender = 'FEMALE' | 'MALE' | 'UNDEFINED';
 
   type AgeRange = 'ZERO_EIGHTEEN' | 'NINETEEN_TWENTYFOUR' | 'TWENTYFIVE_TWENTYNINE' | 'THIRTY_THIRTYNINE' | 'FORTY_FORTYNINE' | 'FIFTY_SIXTYFOUR' | 'SIXTYFIVE_PLUS';
 
   type DocumentRequestState = 'DISPLAY_FIRST' | 'DISPLAY_AGAIN' | 'DISPLAY_NEVER';
-
-  type Role = 'ADMINISTRATOR' | 'AUTHOR' | 'MEMBER' | 'PUBLIC';
 
   type BadgeType = 'SIMPLE' | 'LIST';
 
@@ -437,8 +459,8 @@ declare namespace b {
 
   type ResourceEvent = 'VIEW' | 'REFERRAL' | 'RESPONSE';
 
-  type ResourceEventMatch = 'DEFINITE' | 'PROBABLE';
-
   type ResourceTask = 'CREATE_MEMBER' | 'UPDATE_MEMBER' | 'CREATE_POST' | 'DEPLOY_BADGE';
+
+  type UserRoleDTOUnion = StaffDTO | MemberDTO;
 
 }

@@ -12,6 +12,7 @@ import PostRepresentation = b.PostRepresentation;
 import ResourceEventDTO = b.ResourceEventDTO;
 import ResourceEventRepresentation = b.ResourceEventRepresentation;
 import UserRoleDTO = b.UserRoleDTO;
+import MemberDTO = b.MemberDTO;
 
 @Injectable()
 export class PostService {
@@ -34,11 +35,11 @@ export class PostService {
     return this.http.post('/api/posts/' + post.id + '/respond', eventDTO);
   }
 
-  requestDepartmentMembership(department: DepartmentRepresentation, userRoleDTO: UserRoleDTO, canPursue: boolean) {
+  requestDepartmentMembership(department: DepartmentRepresentation, memberDTO: MemberDTO, canPursue: boolean) {
     if (canPursue) {
-      return this.http.put('/api/departments/' + department.id + '/memberRequests', userRoleDTO);
+      return this.http.put('/api/departments/' + department.id + '/memberRequests', memberDTO);
     } else {
-      return this.http.post('/api/departments/' + department.id + '/memberRequests', userRoleDTO);
+      return this.http.post('/api/departments/' + department.id + '/memberRequests', memberDTO);
     }
   }
 

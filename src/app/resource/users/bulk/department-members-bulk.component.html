@@ -42,8 +42,8 @@
           <div class="grid__item one-whole">
             <label>Apply the following roles to all users:</label>
           </div>
-          <b-resource-user-role-form-part [resource]="resource" [parentForm]="usersForm"
-                                          roleType="MEMBER"></b-resource-user-role-form-part>
+          <b-department-member-form-part [department]="resource" [parentForm]="userForm">
+          </b-department-member-form-part>
         </div>
 
       </div>

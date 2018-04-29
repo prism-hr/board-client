@@ -94,10 +94,10 @@
 
 
           <div class="grid__item small--one-whole medium-up--one-half input-holder">
-            <label for="organizationName">Your organization</label>
-            <p-autoComplete inputId="organizationName" formControlName="organizationName"
+            <label for="organization">Your organization</label>
+            <p-autoComplete inputId="organization" formControlName="organization"
                             [suggestions]="organizationSuggestions" field="name"
-                            (completeMethod)="searchOrganizations($event)" placeholder="Organization Name">
+                            (completeMethod)="searchOrganizations($event)" placeholder="Organization">
               <ng-template let-organization pTemplate="item">
                 <div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">
                   <img src="{{organization.logo}}" style="width:32px;display:inline-block;margin:5px 0 2px 5px"/>
@@ -105,8 +105,10 @@
                 </div>
               </ng-template>
             </p-autoComplete>
-            <control-messages [control]="postForm.get('organizationName')"></control-messages>
+            <control-messages [control]="postForm.get('organization')"></control-messages>
           </div>
+
+          {{postForm.get('organization').value | json}}
 
           <div class="grid__item small--one-whole medium-up--one-half input-holder">
             <label>Location</label>

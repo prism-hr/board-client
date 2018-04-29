@@ -60,9 +60,15 @@ export class DepartmentTabsComponent implements OnInit {
             routerLinkActiveOptions: {exact: true}
           },
           {
-            label: 'Users',
-            title: 'Specify department users',
-            routerLink: [...departmentPath, 'users'],
+            label: 'Staff',
+            title: 'Specify staff members',
+            routerLink: [...departmentPath, 'users', 'staff'],
+            routerLinkActiveOptions: {exact: true}
+          },
+          {
+            label: 'Members',
+            title: 'Specify members',
+            routerLink: [...departmentPath, 'users', 'members'],
             routerLinkActiveOptions: {exact: true}
           },
           {

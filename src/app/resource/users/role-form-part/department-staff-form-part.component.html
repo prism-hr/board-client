@@ -1,0 +1,10 @@
+<div [formGroup]="parentForm">
+  <div formGroupName="roleGroup" class="grid__item one-whole">
+
+    <span *ngFor="let role of ['ADMINISTRATOR', 'AUTHOR']">
+      <p-checkbox [value]="role" [label]="'definitions.role.' + role | translate"
+                  formControlName="roles" binary="true"></p-checkbox>
+    </span>
+
+  </div>
+</div>

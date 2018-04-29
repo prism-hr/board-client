@@ -1,0 +1,51 @@
+<mat-card *ngIf="department">
+  <form [formGroup]="userForm" (ngSubmit)="createNewUser()" autocomplete="off" novalidate>
+    <mat-card-content>
+      <h4>New Staff Member</h4>
+      <div formGroupName="user" class="grid">
+        <b-user-lookup [parentForm]="userForm.get('user')" [resource]="department"></b-user-lookup>
+      </div>
+      <div class="grid">
+        <b-department-staff-form-part [department]="department" [parentForm]="userForm"></b-department-staff-form-part>
+      </div>
+    </mat-card-content>
+    <mat-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+      <button pButton type="submit" class="ui-button-success" label="Add user" fxFlexOrder="1"></button>
+    </mat-card-actions>
+  </form>
+</mat-card>
+
+<div class="section-header users-headers" fxLayout="row" fxLayoutAlign="space-between center">
+  <h1>Staff Members</h1>
+  <b-filter (applied)="filterApplied($event)"></b-filter>
+</div>
+
+<div *ngIf="users" class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
+  <div *ngFor="let staff of users.staff" class="grid__item small--one-whole medium-up--one-third"
+       [ngClass]="{'last-admin': lastAdminRole && staff.role === 'ADMINISTRATOR'}">
+    <mat-card class="no-content users">
+      <mat-card-header fxLayout="row" fxLayoutAlign="flex-start center"
+                       (click)="openUserSettings(staff)">
+        <div mat-card-avatar class="avatar"
+             [ngClass]="{'no-background': staff.user.documentImage}">
+          <b-image [publicId]="staff.user.documentImage?.cloudinaryId"
+                   gravity="face" width="150" height="150" radius="max" crop="thumb" background="ececec"
+                   *ngIf="staff.user.documentImage"></b-image>
+          <i *ngIf="!staff.user.documentImage" class="fa-user"></i>
+        </div>
+        <mat-card-title>
+          <div>
+            <h3>{{staff.user.givenName}} {{staff.user.surname}}</h3>
+            <div class="role-item-container">
+              <div *ngFor="let role of staff.roles" class="role-indicator {{ role | lowercase}}">
+                    <span class="role-item" pTooltip="{{'definitions.role.' + role | translate}}"
+                          tooltipPosition="top"></span>
+              </div>
+            </div>
+          </div>
+        </mat-card-title>
+      </mat-card-header>
+    </mat-card>
+  </div>
+
+
