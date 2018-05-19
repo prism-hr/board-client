@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.29.366 on 2018-04-28 18:48:45.
+// Generated using typescript-generator version 1.29.366 on 2018-05-12 10:08:44.
 
 declare namespace b {
 
@@ -422,16 +422,16 @@ declare namespace b {
 
   interface LocationDefinition {
     name?: string;
+    domicile?: string;
     googleId?: string;
     latitude?: number;
     longitude?: number;
-    domicile?: string;
   }
 
   interface Comparable<T> {
   }
 
-  type Action = 'VIEW' | 'PURSUE' | 'EDIT' | 'SUSPEND' | 'CORRECT' | 'EXTEND' | 'ACCEPT' | 'REJECT' | 'PUBLISH' | 'RETIRE' | 'RESTORE' | 'CONVERT' | 'SUBSCRIBE' | 'UNSUBSCRIBE' | 'WITHDRAW' | 'ARCHIVE';
+  type Action = 'VIEW' | 'EDIT' | 'PURSUE' | 'CORRECT' | 'EXTEND' | 'ACCEPT' | 'SUSPEND' | 'REJECT' | 'PUBLISH' | 'RETIRE' | 'RESTORE' | 'CONVERT' | 'SUBSCRIBE' | 'UNSUBSCRIBE' | 'WITHDRAW' | 'ARCHIVE';
 
   type State = 'DRAFT' | 'SUSPENDED' | 'PENDING' | 'ACCEPTED' | 'EXPIRED' | 'REJECTED' | 'WITHDRAWN' | 'ARCHIVED' | 'PREVIOUS';
 

@@ -4,18 +4,18 @@ import {AuthService} from 'ng2-ui-auth';
 import * as Pusher from 'pusher-js';
 import {Observable} from 'rxjs/Observable';
 import {combineLatest} from 'rxjs/observable/combineLatest';
-import {of} from 'rxjs/observable/of';
+import {distinctUntilChanged} from 'rxjs/operators';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {RollbarService} from '../rollbar/rollbar.service';
 import {ResourceService} from './resource.service';
 import ActivityRepresentation = b.ActivityRepresentation;
+import DepartmentRepresentation = b.DepartmentRepresentation;
 import PusherAuthenticationDTO = b.PusherAuthenticationDTO;
 import ResourceRepresentation = b.ResourceRepresentation;
 import UserNotificationSuppressionRepresentation = b.UserNotificationSuppressionRepresentation;
 import UserPasswordDTO = b.UserPasswordDTO;
 import UserPatchDTO = b.UserPatchDTO;
 import UserRepresentation = b.UserRepresentation;
-import DepartmentRepresentation = b.DepartmentRepresentation;
 
 @Injectable()
 export class UserService implements OnInit {
@@ -28,7 +28,7 @@ export class UserService implements OnInit {
   constructor(private http: HttpClient, private zone: NgZone, private rollbar: RollbarService, private auth: AuthService,
               private resourceService: ResourceService) {
     this.userSource = new ReplaySubject<UserRepresentation>(1);
-    this.user$ = this.userSource.asObservable();
+    this.user$ = this.userSource.asObservable().pipe(distinctUntilChanged());
     this.activities$ = new ReplaySubject<ActivityRepresentation[]>(1);
     this.departments$ = new ReplaySubject<DepartmentRepresentation[]>(1);
     // TODO logout after token expired
@@ -90,8 +90,8 @@ export class UserService implements OnInit {
 
   logout() {
     this.pusher.subscribeAll();
-    this.auth.logout().toPromise()
-      .then(() => {
+    this.auth.logout()
+      .subscribe(() => {
         return this.loadUser();
       });
   }

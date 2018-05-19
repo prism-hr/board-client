@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
+import {first} from 'rxjs/operators';
 import {ResourceService} from '../services/resource.service';
 import DepartmentRepresentation = b.DepartmentRepresentation;
 
@@ -16,9 +17,9 @@ export class DepartmentResolver implements Resolve<DepartmentRepresentation> {
     const universityHandle = route.params['universityHandle'];
     const departmentHandle = route.params['departmentHandle'];
     if (departmentId) {
-      return this.resourceService.getResource('DEPARTMENT', departmentId);
+      return this.resourceService.getResource('DEPARTMENT', departmentId).pipe(first());
     } else if (universityHandle && departmentHandle) {
-      return this.resourceService.getResourceByHandle('DEPARTMENT', universityHandle + '/' + departmentHandle);
+      return this.resourceService.getResourceByHandle('DEPARTMENT', universityHandle + '/' + departmentHandle).pipe(first());
     }
     return of(null);
   }

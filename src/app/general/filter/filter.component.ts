@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {SelectItem} from 'primeng/components/common/selectitem';
+import {Subscription} from 'rxjs/Subscription';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
@@ -43,7 +44,7 @@ import State = b.State;
   `,
   styles: []
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent implements OnInit, OnDestroy {
 
   @Input() resourceScope: Scope & string;
   @Output() applied: EventEmitter<EntityFilter> = new EventEmitter();
@@ -58,6 +59,7 @@ export class FilterComponent implements OnInit {
   archiveQuarters: SelectItem[];
   selectedQuarter: string;
   isStaffMember: boolean;
+  subscription: Subscription = new Subscription();
 
   constructor(private translate: TranslateService, private definitionsService: DefinitionsService,
               private resourceService: ResourceService, private userService: UserService) {
@@ -70,26 +72,29 @@ export class FilterComponent implements OnInit {
       POST: ['DRAFT', 'SUSPENDED', 'PENDING', 'ACCEPTED', 'EXPIRED', 'REJECTED', 'WITHDRAWN']
     };
 
-    this.translate.get('definitions.state').subscribe(stateTranslations => {
+    this.subscription.add(this.translate.get('definitions.state').subscribe(stateTranslations => {
       if (states[this.resourceScope]) {
         this.states = states[this.resourceScope].map(state => ({value: state, label: stateTranslations[state][this.resourceScope]}));
       }
-    });
+    }));
 
-    this.userService.user$.subscribe(user => {
+    this.subscription.add(this.userService.user$.subscribe(user => {
       this.isStaffMember = user && (user.postCreator || user.departmentAdministrator);
       if (this.isStaffMember && this.resourceScope) {
-        this.resourceService.getArchiveQuarters(this.resourceScope)
+        this.subscription.add(this.resourceService.getArchiveQuarters(this.resourceScope)
           .subscribe(quarters => {
             this.archiveQuarters = quarters.map(quarter => {
               const year = quarter.slice(0, 4);
               const quarterDigit = quarter[4];
               return {value: quarter, label: year + '/' + quarterDigit}
             });
-          })
+          }));
       }
-    });
+    }));
+  }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   clear() {

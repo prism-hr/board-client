@@ -60,6 +60,7 @@ export class ResourceService {
   getResource(scope: Scope, id: number, options: { reload?: boolean } = {}): Observable<ResourceRepresentation<any>> {
     const subjects = this.resourceSubjects[scope];
     if (!subjects[id]) {
+      options.reload = true;
       subjects[id] = new ReplaySubject(1);
     }
     let directObservable;

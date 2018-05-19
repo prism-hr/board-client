@@ -79,7 +79,7 @@ export class HeaderComponent implements OnInit {
     this.computeNewActivitiesCount();
   }
 
-  activityViewed(activity: ActivityRepresentation) {
+  activityViewed() {
     this.activitiesPanel.hide();
     this.computeNewActivitiesCount();
   }
