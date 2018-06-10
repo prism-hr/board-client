@@ -5,8 +5,8 @@ import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Data, Router} from '@angular/router';
 import {get, pick, upperFirst} from 'lodash';
 import {SelectItem} from 'primeng/components/common/selectitem';
-import {Observable} from 'rxjs/Observable';
-import {combineLatest} from 'rxjs/observable/combineLatest';
+import {combineLatest, of} from 'rxjs';
+import {first} from 'rxjs/operators';
 import {ResourceCommentDialogComponent} from '../../resource/resource-comment.dialog';
 import {RollbarService} from '../../rollbar/rollbar.service';
 import {DefinitionsService} from '../../services/definitions.service';
@@ -83,17 +83,17 @@ export class PostEditComponent implements OnInit {
       deadTimestamp: []
     });
 
-    combineLatest(this.route.data, this.userService.user$.first(), this.userService.departments$.first())
+    combineLatest(this.route.data, this.userService.user$.pipe(first()), this.userService.departments$.pipe(first()))
       .subscribe(([data, user, departments]: [Data, UserRepresentation, DepartmentRepresentation[]]) => {
         this.department = data['department'];
 
         this.departmentOptions = departments
           .map(b => ({label: b.name, value: b}));
 
-        let postObservable = Observable.of<PostRepresentation>(null);
+        let postObservable = of<PostRepresentation>(null);
         if (data['post']) {
           const postId = (<PostRepresentation>data['post']).id;
-          postObservable = this.resourceService.getResource('POST', postId).first();
+          postObservable = this.resourceService.getResource('POST', postId).pipe(first());
         }
 
         postObservable.subscribe(post => {

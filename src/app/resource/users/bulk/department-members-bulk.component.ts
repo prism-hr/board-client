@@ -1,7 +1,8 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {PapaParseService} from 'ngx-papaparse';
+// import {PapaParseService} from 'ngx-papaparse';
+import * as Papa from 'papaparse';
 import {UploadInput, UploadOutput} from 'ngx-uploader';
 import {MessageService} from 'primeng/components/common/messageservice';
 import {ResourceService} from '../../../services/resource.service';
@@ -29,7 +30,7 @@ export class DepartmentMembersBulkComponent implements OnInit {
   @ViewChild('csvUploaderInput') uploadElRef: ElementRef;
   @ViewChild(DepartmentMemberFormPartComponent) memberFormPartComponent: DepartmentMemberFormPartComponent;
 
-  constructor(private fb: FormBuilder, private papa: PapaParseService, private snackBar: MatSnackBar,
+  constructor(private fb: FormBuilder, /*private papa: PapaParseService,*/ private snackBar: MatSnackBar,
               private resourceService: ResourceService) {
     this.usersForm = this.fb.group({
       firstLineHeader: [true]
@@ -60,7 +61,7 @@ export class DepartmentMembersBulkComponent implements OnInit {
   computeUsers() {
     this.userErrors = [];
     this.users = [];
-    const result = this.papa.parse(this.csvText || '');
+    const result = Papa.parse(this.csvText || '');
 
     if (result.errors.length > 0) {
       this.userErrors = [{message: 'Could not parse given CSV file.'}];

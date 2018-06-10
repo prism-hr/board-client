@@ -1,5 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {of} from 'rxjs';
+import {first, switchMap} from 'rxjs/internal/operators';
 import {AuthGuard} from '../../../authentication/auth-guard.service';
 import {ResourceService} from '../../../services/resource.service';
 import {UserService} from '../../../services/user.service';
@@ -25,33 +26,33 @@ import UserRepresentation = b.UserRepresentation;
           <div *ngIf="!post.response">
             <div *ngIf="canPursue">
               <div *ngIf="responseReady">
-                
+
                 <div *ngIf="post.applyEmail">
                   <b-post-apply-form [post]="post" (applied)="postApplied()"></b-post-apply-form>
                 </div>
-                
+
                 <div *ngIf="!post.applyEmail">
                   <a pButton type="button" href="{{'api/posts/referrals/' + post.referral.referral}}" target="_blank"
                      class="ui-button-success small" (click)="referralCodeUsed()" label="How to Apply"></a>
                 </div>
-                
+
               </div>
-              
+
               <div *ngIf="!responseReady">
                 <b-post-apply-request-membership
                   [post]="post" (requested)="membershipRequested()">
                 </b-post-apply-request-membership>
               </div>
-              
+
             </div>
-            
+
             <div *ngIf="!canPursue && post.responseReadiness">
               <b-post-apply-request-membership
                 [post]="post" (requested)="membershipRequested()">
               </b-post-apply-request-membership>
             </div>
           </div>
-          
+
         </div>
       </div>
     </div>
@@ -78,13 +79,14 @@ export class PostApplyComponent implements OnInit, OnChanges {
   }
 
   authenticate() {
-    this.authGuard.ensureAuthenticated({initialView: 'REGISTER'}).first() // open dialog if not authenticated
-      .flatMap(authenticated => {
+    this.authGuard.ensureAuthenticated({initialView: 'REGISTER'}).pipe(
+      first(),
+      switchMap(authenticated => {
         if (!authenticated) {
-          return Observable.of(null);
+          return of(null);
         }
         return this.reloadPost();
-      })
+      })) // open dialog if not authenticated
       .subscribe();
   }
 

@@ -3,7 +3,7 @@ import {OriginConnectionPosition, OverlayConnectionPosition} from '@angular/cdk/
 import {ComponentPortal, PortalInjector} from '@angular/cdk/portal';
 import {ScrollDispatcher} from '@angular/cdk/scrolling';
 import {ComponentRef, ElementRef, Injectable, Injector, NgZone} from '@angular/core';
-import {AsyncSubject} from 'rxjs/AsyncSubject';
+import {AsyncSubject} from 'rxjs';
 import {WALKTHROUGH_COMPONENT_DIALOG_DATA} from './walkthrough-overlay.tokens';
 import {WalkthroughTooltipRef} from './walkthrough-tooltip-ref';
 import {WalkthroughTooltipComponent, WalkthroughTooltipData} from './walkthrough-tooltip.component';

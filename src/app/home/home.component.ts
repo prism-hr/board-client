@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {ResourceService} from '../services/resource.service';
 import {UserService} from '../services/user.service';
 import BoardRepresentation = b.BoardRepresentation;

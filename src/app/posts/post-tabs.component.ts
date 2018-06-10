@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MenuItem} from 'primeng/components/common/menuitem';
-import {Observable} from 'rxjs/Observable';
+import {of} from 'rxjs';
+import {switchMap} from 'rxjs/internal/operators';
 import {ResourceService} from '../services/resource.service';
 import BoardRepresentation = b.BoardRepresentation;
 import PostRepresentation = b.PostRepresentation;
@@ -63,9 +64,9 @@ export class PostTabsComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap
-      .flatMap(params => {
-        return params.get('postId') ? this.resourceService.getResource('POST', +params.get('postId')) : Observable.of(null);
-      })
+      .pipe(switchMap(params => {
+        return params.get('postId') ? this.resourceService.getResource('POST', +params.get('postId')) : of(null);
+      }))
       .subscribe(post => {
         this.post = post;
         if (this.post.id) {

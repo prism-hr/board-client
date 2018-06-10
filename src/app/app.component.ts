@@ -1,6 +1,7 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
+import {filter, map} from 'rxjs/operators';
 import {BoardListComponent} from './boards/list/board-list.component';
 
 @Component({
@@ -29,30 +30,30 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.router.events
-      .filter(event => event instanceof NavigationEnd)
-      .map(() => {
-        let child = this.activatedRoute.firstChild;
-        let resourceScope = null;
-        while (child) {
-          if (child.firstChild) {
-            child = child.firstChild;
-            const component = child.snapshot.component;
-            if (component && component['name'] === 'HomeComponent') {
-              return 'post';
-            } else if (component && component['name'] === 'BoardListComponent') {
-              return 'board';
-            } else if (component && component['name'] === 'DepartmentListComponent') {
-              return 'department';
+      .pipe(filter(event => event instanceof NavigationEnd),
+        map(() => {
+          let child = this.activatedRoute.firstChild;
+          let resourceScope = null;
+          while (child) {
+            if (child.firstChild) {
+              child = child.firstChild;
+              const component = child.snapshot.component;
+              if (component && component['name'] === 'HomeComponent') {
+                return 'post';
+              } else if (component && component['name'] === 'BoardListComponent') {
+                return 'board';
+              } else if (component && component['name'] === 'DepartmentListComponent') {
+                return 'department';
+              }
+              if (child.snapshot.data && child.snapshot.data['resourceScope']) {
+                resourceScope = child.snapshot.data['resourceScope'];
+              }
+            } else {
+              return resourceScope;
             }
-            if (child.snapshot.data && child.snapshot.data['resourceScope']) {
-              resourceScope = child.snapshot.data['resourceScope'];
-            }
-          } else {
-            return resourceScope;
           }
-        }
-        return null;
-      })
+          return null;
+        }))
       .subscribe((resourceScope: string) => {
         this.resourceScope = resourceScope || 'generic';
         window.scrollTo(0, 0);

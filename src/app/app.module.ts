@@ -8,6 +8,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {ClipboardModule} from 'ngx-clipboard';
 import {OverlayPanelModule} from 'primeng/components/overlaypanel/overlaypanel';
 import {SidebarModule} from 'primeng/components/sidebar/sidebar';
 import {MenuModule} from 'primeng/menu';
@@ -52,7 +53,6 @@ import {ResourceActionsBoxComponent} from './resource/actions-box/resource-actio
 import {ResourceCommentDialogComponent} from './resource/resource-comment.dialog';
 import {RollbarConfig} from './rollbar/rollbar.config';
 import {RollbarService} from './rollbar/rollbar.service';
-import './rxjs-extensions';
 import {DefinitionsLoader, DefinitionsService} from './services/definitions.service';
 import {DisplayDatePipe} from './services/display-date.pipe';
 import {ExternalApisService} from './services/external-apis.service';
@@ -98,21 +98,21 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
         path: '',
         canActivate: [InitializeGuard],
         children: [
-          {path: '', loadChildren: 'app/home/home.module#HomeModule'},
-          {path: 'home', loadChildren: 'app/home/home.module#HomeModule'},
+          {path: '', loadChildren: './home/home.module#HomeModule'},
+          {path: 'home', loadChildren: './home/home.module#HomeModule'},
           {
             path: 'boards',
-            loadChildren: 'app/boards/list/board-list.module#BoardListModule',
+            loadChildren: './boards/list/board-list.module#BoardListModule',
             canActivate: [AuthGuard]
           },
           {path: 'departments', component: DepartmentListComponent, canActivate: [AuthGuard]},
           {
             path: 'newDepartment',
-            loadChildren: 'app/departments/new/department-new.module#DepartmentNewModule'
+            loadChildren: './departments/new/department-new.module#DepartmentNewModule'
           },
           {
             path: 'newBoard',
-            loadChildren: 'app/boards/new/board-new.module#BoardNewModule',
+            loadChildren: './boards/new/board-new.module#BoardNewModule',
             resolve: {
               departments: DepartmentsResolver
             },
@@ -132,7 +132,7 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
           },
           {
             path: 'newPost',
-            loadChildren: 'app/posts/edit/post-edit.module#PostEditModule',
+            loadChildren: './posts/edit/post-edit.module#PostEditModule',
             data: {modalView: 'REGISTER'},
             resolve: {
               department: DepartmentResolver
@@ -141,7 +141,7 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
           },
           {
             path: 'account',
-            loadChildren: 'app/account/account.module#AccountModule',
+            loadChildren: './account/account.module#AccountModule',
             canActivate: [AuthGuard]
           },
           {
@@ -165,26 +165,26 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
                         children: [
                           {
                             path: '',
-                            loadChildren: 'app/departments/view/department-view.module#DepartmentViewModule'
+                            loadChildren: './departments/view/department-view.module#DepartmentViewModule'
                           },
                           {
                             path: 'edit',
-                            loadChildren: 'app/departments/edit/department-edit.module#DepartmentEditModule',
+                            loadChildren: './departments/edit/department-edit.module#DepartmentEditModule',
                             canActivate: [AuthGuard]
                           },
                           {
                             path: 'users',
-                            loadChildren: 'app/resource/users/resource-users.module#ResourceUsersModule',
+                            loadChildren: './resource/users/resource-users.module#ResourceUsersModule',
                             canActivate: [AuthGuard]
                           },
                           {
                             path: 'badge',
-                            loadChildren: 'app/resource/badge/resource-badge.module#ResourceBadgeModule',
+                            loadChildren: './resource/badge/resource-badge.module#ResourceBadgeModule',
                             canActivate: [AuthGuard]
                           },
                           {
                             path: 'subscription',
-                            loadChildren: 'app/departments/subscription/department-subscription.module#DepartmentSubscriptionModule',
+                            loadChildren: './departments/subscription/department-subscription.module#DepartmentSubscriptionModule',
                             canActivate: [AuthGuard]
                           }
                         ]
@@ -206,16 +206,16 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
                         children: [
                           {
                             path: '',
-                            loadChildren: 'app/boards/view/board-view.module#BoardViewModule'
+                            loadChildren: './boards/view/board-view.module#BoardViewModule'
                           },
                           {
                             path: 'edit',
-                            loadChildren: 'app/boards/edit/board-edit.module#BoardEditModule',
+                            loadChildren: './boards/edit/board-edit.module#BoardEditModule',
                             canActivate: [AuthGuard]
                           },
                           {
                             path: 'badge',
-                            loadChildren: 'app/resource/badge/resource-badge.module#ResourceBadgeModule',
+                            loadChildren: './resource/badge/resource-badge.module#ResourceBadgeModule',
                             canActivate: [AuthGuard]
                           }
                         ]
@@ -232,11 +232,11 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
                         children: [
                           {
                             path: '',
-                            loadChildren: 'app/posts/view/post-view.module#PostViewModule'
+                            loadChildren: './posts/view/post-view.module#PostViewModule'
                           },
                           {
                             path: 'edit',
-                            loadChildren: 'app/posts/edit/post-edit.module#PostEditModule',
+                            loadChildren: './posts/edit/post-edit.module#PostEditModule',
                             canActivate: [AuthGuard]
                           },
                           {
@@ -282,7 +282,8 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
         deps: [HttpClient]
       }
     }),
-    CustomNg2UiAuthModule.forRoot(authConfig)
+    CustomNg2UiAuthModule.forRoot(authConfig),
+    ClipboardModule // TODO remove when https://github.com/maxisam/ngx-clipboard/issues/133 is fixed
   ],
   providers: [
     DefinitionsService,

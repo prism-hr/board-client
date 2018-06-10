@@ -17,6 +17,7 @@ export class TestUtils {
   }
 
   static removeTestData(defer) {
+    console.log('Requesting: ' + urlResolve(this.getBaseUrl(), 'api/user/test'));
     setTimeout(() => request(urlResolve(this.getBaseUrl(), 'api/user/test'), {json: true, method: 'DELETE'}, (err, resp, body) => {
       if (err) {
         console.log('Unexpected error when deleting test data ' + err);

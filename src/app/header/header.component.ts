@@ -3,13 +3,14 @@ import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {MenuItem} from 'primeng/api';
 import {OverlayPanel} from 'primeng/components/overlaypanel/overlaypanel';
+import {filter, first, map} from 'rxjs/operators';
 import {AuthGuard} from '../authentication/auth-guard.service';
 import {UserImageDialogComponent} from '../authentication/user-image.dialog';
 import {ResourceService} from '../services/resource.service';
 import {UserService} from '../services/user.service';
 import ActivityRepresentation = b.ActivityRepresentation;
-import UserRepresentation = b.UserRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
+import UserRepresentation = b.UserRepresentation;
 
 @Component({
   selector: 'b-header',
@@ -53,22 +54,23 @@ export class HeaderComponent implements OnInit {
       });
 
     this.router.events
-      .filter(event => event instanceof NavigationEnd)
-      .map(() => {
-        let child = this.activatedRoute.firstChild;
-        let resourceScope = null;
-        while (child) {
-          if (child.firstChild) {
-            child = child.firstChild;
-            if (child.snapshot.data && child.snapshot.data['resourceScope']) {
-              resourceScope = child.snapshot.data['resourceScope'];
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        map(() => {
+          let child = this.activatedRoute.firstChild;
+          let resourceScope = null;
+          while (child) {
+            if (child.firstChild) {
+              child = child.firstChild;
+              if (child.snapshot.data && child.snapshot.data['resourceScope']) {
+                resourceScope = child.snapshot.data['resourceScope'];
+              }
+            } else {
+              return resourceScope;
             }
-          } else {
-            return resourceScope;
           }
-        }
-        return null;
-      }).subscribe((resourceScope: string) => {
+          return null;
+        })).subscribe((resourceScope: string) => {
       this.resourceScope = resourceScope;
     });
   }
@@ -85,15 +87,15 @@ export class HeaderComponent implements OnInit {
   }
 
   showLogin() {
-    this.authGuard.ensureAuthenticated({initialView: 'LOGIN'}).first() // open dialog if not authenticated
+    this.authGuard.ensureAuthenticated({initialView: 'LOGIN'}).pipe(first()) // open dialog if not authenticated
       .subscribe(authenticationOutcome => {
         if (authenticationOutcome) {
           let link = ['/'];
-          if(authenticationOutcome.departments && authenticationOutcome.departments.length >= 1) {
+          if (authenticationOutcome.departments && authenticationOutcome.departments.length >= 1) {
             link = this.resourceService.routerLink(authenticationOutcome.departments[0]);
           }
           return this.router.navigate(link).then(() => {
-            this.userService.user$.first().subscribe(user => {
+            this.userService.user$.pipe(first()).subscribe(user => {
               if (!user.documentImage && user.documentImageRequestState !== 'DISPLAY_NEVER') {
                 this.dialog.open(UserImageDialogComponent, {disableClose: true});
               }

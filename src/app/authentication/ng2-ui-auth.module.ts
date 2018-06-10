@@ -5,7 +5,6 @@ import {
   BrowserStorageService,
   CONFIG_OPTIONS,
   ConfigService,
-  IPartialConfigOptions,
   IProviders,
   LocalService,
   Oauth1Service,
@@ -16,6 +15,7 @@ import {
   StorageService,
   StorageType
 } from 'ng2-ui-auth';
+import {IPartialConfigOptions} from 'ng2-ui-auth/lib/config-interfaces';
 import {CustomJwtInterceptor} from './jwt-interceptor.service';
 
 @NgModule({imports: [HttpClientModule]})

@@ -1,4 +1,4 @@
-import {IPartialConfigOptions} from 'ng2-ui-auth';
+import {IPartialConfigOptions} from 'ng2-ui-auth/lib/config-interfaces';
 
 export let authConfig: IPartialConfigOptions = {
   // defaultHeaders: {'Content-Type': 'application/json'},

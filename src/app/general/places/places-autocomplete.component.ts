@@ -1,7 +1,7 @@
 import {Component, forwardRef, NgZone, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
+import {Observable, Subject} from 'rxjs';
+import {debounceTime, switchMap} from 'rxjs/operators';
 import {GooglePlacesProvider} from './places-google-provider.service';
 import LocationDTO = b.LocationDTO;
 import AutocompletePrediction = google.maps.places.AutocompletePrediction;
@@ -33,27 +33,27 @@ export class PlacesAutocompleteComponent implements ControlValueAccessor, OnInit
 
   ngOnInit() {
     this.search$
-      .debounceTime(300)
-      .switchMap((input: string) => {
-        if (!input || input.trim() === '') {
-          return [];
-        }
-        return this.googlePlacesProvider.getPlacesServices()
-          .switchMap(services => {
-            const autocompleteService: google.maps.places.AutocompleteService = services.autocomplete;
-            const subject = new Subject<AutocompletePrediction[]>();
-            this.zone.runOutsideAngular(() => {
-              autocompleteService.getPlacePredictions({input, types: ['(cities)']}, places => {
-                this.zone.run(() => {
-                  subject.next(places || []);
-                  subject.complete();
+      .pipe(debounceTime(300),
+        switchMap((input: string) => {
+          if (!input || input.trim() === '') {
+            return [];
+          }
+          return this.googlePlacesProvider.getPlacesServices()
+            .pipe(switchMap(services => {
+              const autocompleteService: google.maps.places.AutocompleteService = services.autocomplete;
+              const subject = new Subject<AutocompletePrediction[]>();
+              this.zone.runOutsideAngular(() => {
+                autocompleteService.getPlacePredictions({input, types: ['(cities)']}, places => {
+                  this.zone.run(() => {
+                    subject.next(places || []);
+                    subject.complete();
+                  });
                 });
-              });
 
-            });
-            return subject.asObservable();
-          });
-      })
+              });
+              return subject.asObservable();
+            }));
+        }))
       .subscribe((results: any[]) => {
         results.forEach(r => {
           r.name = r.description;
@@ -67,12 +67,12 @@ export class PlacesAutocompleteComponent implements ControlValueAccessor, OnInit
   }
 
   locationSelected() {
-    if(typeof this.model === 'string') {
+    if (typeof this.model === 'string') {
       this.onChange(null);
       return;
     }
     this.googlePlacesProvider.getPlacesServices()
-      .switchMap(services => {
+      .pipe(switchMap(services => {
         const placesService: google.maps.places.PlacesService = services.places;
         return Observable.create(observer => {
           this.zone.runOutsideAngular(() => {
@@ -85,7 +85,7 @@ export class PlacesAutocompleteComponent implements ControlValueAccessor, OnInit
 
           });
         });
-      })
+      }))
       .subscribe((placeDetails: google.maps.places.PlaceResult) => {
         this.onChange(this.placeResultToLocation(placeDetails));
       });

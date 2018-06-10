@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
-import {ShareButtonsModule} from 'ngx-sharebuttons';
 import {NgxStripeModule} from 'ngx-stripe';
 import {SharedModule} from '../../general/shared.module';
 import {DepartmentSubscriptionComponent} from './department-subscription.component';
@@ -16,7 +15,7 @@ import {DepartmentSubscriptionComponent} from './department-subscription.compone
         component: DepartmentSubscriptionComponent
       }
     ]),
-    ShareButtonsModule.forRoot(),
+    // ShareButtonsModule.forRoot(),
     NgxStripeModule.forRoot('pk_test_ppjNqHYxyoqYgn0z7qMenMRZ')
   ],
   declarations: [

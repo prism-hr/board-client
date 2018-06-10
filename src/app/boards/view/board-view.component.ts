@@ -3,7 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Data, ParamMap} from '@angular/router';
-import {combineLatest} from 'rxjs/observable/combineLatest';
+import {combineLatest} from 'rxjs';
 import {UnsubscribeDialogComponent} from '../../authentication/unsubscribe.dialog';
 import {ResourceService} from '../../services/resource.service';
 import {Utils} from '../../services/utils';

@@ -1,10 +1,8 @@
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {difference} from 'lodash';
-import {Observable} from 'rxjs/Observable';
-import {tap} from 'rxjs/operators';
-import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {Subject} from 'rxjs/Subject';
+import {Observable, of, ReplaySubject, Subject} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
 import {EntityFilter} from '../general/filter/filter.component';
 import {Utils} from './utils';
 import Action = b.Action;
@@ -40,21 +38,21 @@ export class ResourceService {
   getResourceByHandle(scope: Scope, handle: string): Observable<ResourceRepresentation<any>> {
     const params = new HttpParams().set('handle', handle);
     return this.http.get<ResourceRepresentation<any>>('/api/' + scope.toLowerCase() + 's/', {params})
-      .catch((error: HttpErrorResponse) => {
-        if (error.status === 403 || error.status === 404) {
-          return Observable.of(<ResourceRepresentation<any>>{errorStatus: error.status});
-        }
-        throw error;
-      })
       .pipe(tap(resource => {
-        if (resource) {
-          const subjects = this.resourceSubjects[scope];
-          if (!subjects[resource.id]) {
-            subjects[resource.id] = new ReplaySubject(1);
+          if (resource) {
+            const subjects = this.resourceSubjects[scope];
+            if (!subjects[resource.id]) {
+              subjects[resource.id] = new ReplaySubject(1);
+            }
+            subjects[resource.id].next(resource);
           }
-          subjects[resource.id].next(resource);
-        }
-      }));
+        }),
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 403 || error.status === 404) {
+            return of(<ResourceRepresentation<any>>{errorStatus: error.status});
+          }
+          throw error;
+        }));
   }
 
   getResource(scope: Scope, id: number, options: { reload?: boolean } = {}): Observable<ResourceRepresentation<any>> {
@@ -66,15 +64,15 @@ export class ResourceService {
     let directObservable;
     if (options.reload) {
       directObservable = this.http.get<ResourceRepresentation<any>>('/api/' + scope.toLowerCase() + 's/' + id)
-        .catch((error: Response) => {
-          if (error.status === 403 || error.status === 404) {
-            return Observable.of(<ResourceRepresentation<any>>{errorStatus: error.status});
-          }
-          throw error;
-        })
         .pipe(tap(resource => {
-          subjects[id].next(resource);
-        }));
+            subjects[id].next(resource);
+          }),
+          catchError((error: Response) => {
+            if (error.status === 403 || error.status === 404) {
+              return of(<ResourceRepresentation<any>>{errorStatus: error.status});
+            }
+            throw error;
+          }));
     } else {
       directObservable = subjects[id].asObservable();
     }

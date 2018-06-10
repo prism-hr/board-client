@@ -4,9 +4,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {pick} from 'lodash';
-import {Observable} from 'rxjs/Observable';
-import {interval} from 'rxjs/observable/interval';
-import {Subscription} from 'rxjs/Subscription';
+import {interval, Observable, Subscription} from 'rxjs';
+import {switchMap, take} from 'rxjs/internal/operators';
 import {DepartmentService} from '../../../departments/department.service';
 import {EntityFilter} from '../../../general/filter/filter.component';
 import {ResourceService} from '../../../services/resource.service';
@@ -143,8 +142,9 @@ export class DepartmentMembersComponent implements OnInit {
     let observable: Observable<UserRolesRepresentation>;
     if (delay) {
       observable = interval(delay || 0)
-        .take(1)
-        .flatMap(() => this.resourceService.getResourceUsers(this.department, this.filter));
+        .pipe(
+          take(1),
+          switchMap(() => this.resourceService.getResourceUsers(this.department, this.filter)));
     } else {
       observable = this.resourceService.getResourceUsers(this.department, this.filter);
     }

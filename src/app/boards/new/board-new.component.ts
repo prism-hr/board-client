@@ -5,7 +5,7 @@ import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {pick} from 'lodash';
 import {SelectItem} from 'primeng/components/common/selectitem';
-import {AuthGuard} from '../../authentication/auth-guard.service';
+import {switchMap} from 'rxjs/operators';
 import {DefinitionsService} from '../../services/definitions.service';
 import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
@@ -26,8 +26,7 @@ export class BoardNewComponent implements OnInit {
   user: UserRepresentation;
 
   constructor(private router: Router, private route: ActivatedRoute, private title: Title, private resourceService: ResourceService,
-              private fb: FormBuilder, private definitionsService: DefinitionsService, private userService: UserService,
-              private authGuard: AuthGuard) {
+              private fb: FormBuilder, private definitionsService: DefinitionsService, private userService: UserService) {
     this.applicationUrl = this.definitionsService.getDefinitions()['applicationUrl'];
     this.boardForm = this.fb.group({
       department: [null, Validators.required],
@@ -67,9 +66,9 @@ export class BoardNewComponent implements OnInit {
     const department: DepartmentRepresentation = this.boardForm.get('department').value;
 
     this.resourceService.postBoard(department, board)
-      .flatMap(savedBoard => {
+      .pipe(switchMap(savedBoard => {
         return this.userService.loadUser().then(() => savedBoard);
-      })
+      }))
       .subscribe(saved => {
         this.router.navigate([saved.department.university.handle, saved.department.handle, saved.handle]);
       }, (error: HttpErrorResponse) => {

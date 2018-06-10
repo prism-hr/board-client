@@ -3,7 +3,6 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
-import {PapaParseModule} from 'ngx-papaparse';
 import {NgUploaderModule} from 'ngx-uploader';
 import {AutoCompleteModule} from 'primeng/components/autocomplete/autocomplete';
 import {CalendarModule} from 'primeng/components/calendar/calendar';
@@ -36,7 +35,7 @@ import {DepartmentStaffComponent} from './staff/department-staff.component';
     CalendarModule,
     DropdownModule,
     MatDialogModule,
-    PapaParseModule,
+    // PapaParseModule,
     AutoCompleteModule,
     SharedModule,
     FilterModule,

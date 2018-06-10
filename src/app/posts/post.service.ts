@@ -1,18 +1,17 @@
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {EntityFilter} from '../general/filter/filter.component';
 import {ResourceService} from '../services/resource.service';
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
+import MemberDTO = b.MemberDTO;
 import PostDTO = b.PostDTO;
 import PostPatchDTO = b.PostPatchDTO;
 import PostRepresentation = b.PostRepresentation;
 import ResourceEventDTO = b.ResourceEventDTO;
 import ResourceEventRepresentation = b.ResourceEventRepresentation;
-import UserRoleDTO = b.UserRoleDTO;
-import MemberDTO = b.MemberDTO;
 
 @Injectable()
 export class PostService {

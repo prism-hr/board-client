@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
-import {ShareButtonsModule} from 'ngx-sharebuttons';
 import {ImageModule} from '../../general/image/image.module';
 import {SharedModule} from '../../general/shared.module';
 import {PostListEmbeddedModule} from '../../posts/list-embedded/post-list-embedded.module';
@@ -20,8 +19,7 @@ import {BoardViewComponent} from './board-view.component';
         path: '',
         component: BoardViewComponent
       }
-    ]),
-    ShareButtonsModule.forRoot()
+    ])
   ],
   declarations: [
     BoardViewComponent

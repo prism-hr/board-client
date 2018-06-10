@@ -1,9 +1,8 @@
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import * as Stripe from 'stripe';
 import {EntityFilter} from '../general/filter/filter.component';
-import {DepartmentDashboardResolver} from './department-dashboard-resolver.service';
 import DepartmentRepresentation = b.DepartmentRepresentation;
 import UserRepresentation = b.UserRepresentation;
 import ICustomer = Stripe.customers.ICustomer;

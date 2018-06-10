@@ -2,10 +2,8 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable, NgZone, OnInit} from '@angular/core';
 import {AuthService} from 'ng2-ui-auth';
 import * as Pusher from 'pusher-js';
-import {Observable} from 'rxjs/Observable';
-import {combineLatest} from 'rxjs/observable/combineLatest';
-import {distinctUntilChanged} from 'rxjs/operators';
-import {ReplaySubject} from 'rxjs/ReplaySubject';
+import {combineLatest, Observable, ReplaySubject} from 'rxjs';
+import {distinctUntilChanged, map, share} from 'rxjs/operators';
 import {RollbarService} from '../rollbar/rollbar.service';
 import {ResourceService} from './resource.service';
 import ActivityRepresentation = b.ActivityRepresentation;
@@ -128,10 +126,10 @@ export class UserService implements OnInit {
 
   patchUser(userPatch: UserPatchDTO): Observable<UserRepresentation> {
     return this.http.patch('/api/user', userPatch)
-      .map(user => {
+      .pipe(map(user => {
         this.loadUser();
         return user;
-      });
+      }));
   }
 
   patchPassword(userPasswordDTO: UserPasswordDTO) {
@@ -170,11 +168,12 @@ export class UserService implements OnInit {
       .then(user => {
         if (user) {
           const initialUserData = combineLatest(this.resourceService.getResources('DEPARTMENT'), this.http.get<ActivityRepresentation[]>('/api/user/activities/'))
-            .map(([departments, activities]) => {
-              this.departments$.next(departments);
-              this.activities$.next(activities);
-              return {departments, activities, user};
-            }).share();
+            .pipe(map(([departments, activities]) => {
+                this.departments$.next(departments);
+                this.activities$.next(activities);
+                return {departments, activities, user};
+              }),
+              share());
 
           initialUserData.subscribe(() => {
             this.zone.runOutsideAngular(() => {

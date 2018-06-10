@@ -9,7 +9,6 @@ import {PostApplyFormComponent} from './apply/post-apply-form.component';
 import {PostApplyRequestMembershipComponent} from './apply/post-apply-request-membership.component';
 import {PostApplyComponent} from './apply/post-apply.component';
 import {PostViewComponent} from './post-view.component';
-import {ShareButtonsModule} from 'ngx-sharebuttons';
 import {ResourceTimelineModule} from '../../resource/timeline/resource-timeline.module';
 import {FileUploadModule} from '../../general/file-upload/file-upload.module';
 import {EditorModule} from 'primeng/components/editor/editor';
@@ -38,8 +37,8 @@ import {CalendarModule} from 'primeng/components/calendar/calendar';
         path: '',
         component: PostViewComponent
       }
-    ]),
-    ShareButtonsModule.forRoot()
+    ])
+    // ShareButtonsModule.forRoot()
   ],
   declarations: [
     PostViewComponent,

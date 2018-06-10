@@ -2,7 +2,6 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/app",
-    "baseUrl": "./",
     "paths": {
       "@stomp/ng2-stompjs": ["../node_modules/@stomp/ng2-stompjs"]
     },
@@ -12,7 +11,7 @@
     ]
   },
   "exclude": [
-    "test.ts",
+    "src/test.ts",
     "**/*.spec.ts"
   ]
 }

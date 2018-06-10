@@ -1,4 +1,4 @@
-  {
+{
   "rulesDirectory": [
     "node_modules/codelyzer"
   ],
@@ -18,7 +18,6 @@
     "forin": true,
     "import-blacklist": [
       true,
-      "rxjs",
       "rxjs/Rx"
     ],
     "import-spacing": true,
@@ -90,6 +89,7 @@
     ],
     "radix": true,
     "semicolon": [
+      true,
       "always"
     ],
     "triple-equals": [
@@ -115,18 +115,6 @@
       "check-operator",
       "check-separator",
       "check-type"
-    ],
-    "directive-selector": [
-      true,
-      "attribute",
-      "b",
-      "camelCase"
-    ],
-    "component-selector": [
-      true,
-      "element",
-      "b",
-      "kebab-case"
     ],
     "no-output-on-prefix": true,
     "use-input-property-decorator": true,

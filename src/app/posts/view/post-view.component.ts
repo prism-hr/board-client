@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
+import {Title} from '@angular/platform-browser';
 import {ActivatedRoute} from '@angular/router';
+import {switchMap} from 'rxjs/internal/operators';
 import {ResourceService} from '../../services/resource.service';
 import PostRepresentation = b.PostRepresentation;
 import ResourceOperationRepresentation = b.ResourceOperationRepresentation;
-import {Title} from '@angular/platform-browser';
 
 @Component({
   templateUrl: 'post-view.component.html',
@@ -23,9 +24,10 @@ export class PostViewComponent implements OnInit {
   ngOnInit() {
     this.today = new Date();
     this.route.paramMap
-      .flatMap(map => {
-        return this.resourceService.getResource('POST', +map.get('postId'));
-      })
+      .pipe(
+        switchMap(map => {
+          return this.resourceService.getResource('POST', +map.get('postId'));
+        }))
       .subscribe(post => {
         this.post = post;
         this.title.setTitle(this.post.name);

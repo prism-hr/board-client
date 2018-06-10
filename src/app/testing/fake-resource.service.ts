@@ -1,6 +1,6 @@
 import BoardRepresentation = b.BoardRepresentation;
 import DepartmentRepresentation = b.DepartmentRepresentation;
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 
 export class FakeResourceService {
 
@@ -13,7 +13,7 @@ export class FakeResourceService {
   }
 
   patchDepartment(id: number, department: b.DepartmentPatchDTO): Observable<DepartmentRepresentation> {
-    return Observable.of({});
+    return of({});
   }
 
 }

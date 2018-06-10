@@ -3,7 +3,9 @@ import {Injectable} from '@angular/core';
 import {MatDialogConfig} from '@angular/material';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
+import {from, Observable} from 'rxjs';
+import {switchMap} from 'rxjs/internal/operators';
+import {map} from 'rxjs/operators';
 import {UserAuthenticationOutcome, UserService} from '../services/user.service';
 import {Utils} from '../services/utils';
 import {AuthGuard} from './auth-guard.service';
@@ -41,18 +43,20 @@ export class InitializeGuard implements CanActivate {
       config.data = {resetPasswordUuid};
       const dialogRef = this.dialog.open(ResetPasswordDialogComponent, config);
       observable = dialogRef.afterClosed()
-        .flatMap(passwordChanged => {
-          if (passwordChanged) {
-            return this.authGuard.ensureAuthenticated({initialView: 'LOGIN'})
-          }
-        }).map(() => true); // activate no matter if password was successfully changed
+        .pipe(
+          switchMap(passwordChanged => {
+            if (passwordChanged) {
+              return this.authGuard.ensureAuthenticated({initialView: 'LOGIN'})
+            }
+          }),
+          map(() => true)); // activate no matter if password was successfully changed
     } else if (uuid) {
       observable = this.authGuard.ensureAuthenticated({uuid});
     } else {
-      observable = Observable.fromPromise(this.userService.initializeUser());
+      observable = from(this.userService.initializeUser());
     }
     return observable
-      .map(result => !!result);
+      .pipe(map(result => !!result));
   }
 
 }

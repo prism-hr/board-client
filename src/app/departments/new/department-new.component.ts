@@ -5,6 +5,7 @@ import {MatSnackBar} from '@angular/material';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {pick} from 'lodash';
+import {first, switchMap} from 'rxjs/internal/operators';
 import {AuthGuard} from '../../authentication/auth-guard.service';
 import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
@@ -64,7 +65,7 @@ export class DepartmentNewComponent implements OnInit {
       return;
     }
 
-    this.authGuard.ensureAuthenticated({initialView: 'REGISTER'}).first() // open dialog if not authenticated
+    this.authGuard.ensureAuthenticated({initialView: 'REGISTER'}).pipe(first()) // open dialog if not authenticated
       .subscribe(authenticationOutcome => {
         if (!authenticationOutcome) {
           return;
@@ -72,9 +73,11 @@ export class DepartmentNewComponent implements OnInit {
 
         const university = this.departmentForm.get('university').value;
         this.resourceService.postDepartment(university, pick(this.departmentForm.value, ['name', 'summary', 'documentLogo']))
-          .flatMap(savedDepartment => {
-            return this.userService.loadUser().then(() => savedDepartment);
-          })
+          .pipe(
+            switchMap(savedDepartment => {
+              return this.userService.loadUser().then(() => savedDepartment);
+            })
+          )
           .subscribe(department => {
             this.router.navigate(this.resourceService.routerLink(department))
               .then(() => {
@@ -102,7 +105,7 @@ export class DepartmentNewComponent implements OnInit {
   }
 
   universitySelected(value: UniversityRepresentation) {
-    if(!this.customLogoUploaded) {
+    if (!this.customLogoUploaded) {
       this.departmentForm.get('documentLogo').setValue(value.documentLogo);
     }
   }

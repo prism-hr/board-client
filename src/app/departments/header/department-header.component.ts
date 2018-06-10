@@ -1,4 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {first} from 'rxjs/internal/operators';
 import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
 import {WalkthroughOverlayService} from '../../walkthrough-overlay/walkthrough-overlay.service';
@@ -19,7 +20,7 @@ export class DepartmentHeaderComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.canEdit = this.department && this.resourceService.canEdit(this.department);
-    this.userService.user$.first().
+    this.userService.user$.pipe(first()).
       subscribe(user => {
       if (this.canEdit) {
         if (!user.seenWalkThrough) {

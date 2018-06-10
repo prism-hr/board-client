@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {ConfigService} from 'ng2-ui-auth';
-import {IOauth2Options} from 'ng2-ui-auth/config.service';
+import {IOauth2Options} from 'ng2-ui-auth/lib/config-interfaces';
 
 @Injectable()
 export class DefinitionsService {
