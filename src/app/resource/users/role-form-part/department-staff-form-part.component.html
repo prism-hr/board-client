@@ -3,7 +3,7 @@
 
     <span *ngFor="let role of ['ADMINISTRATOR', 'AUTHOR']">
       <p-checkbox [value]="role" [label]="'definitions.role.' + role | translate"
-                  formControlName="roles" binary="true"></p-checkbox>
+                  [formControl]="parentForm.controls['roleGroup'].controls['roles']" name="roles"></p-checkbox>
     </span>
 
   </div>

@@ -62,8 +62,8 @@ export class PostEditComponent implements OnInit {
 
   ngOnInit() {
     this.postForm = this.fb.group({
-      department: [null, Validators.required],
-      board: [null, Validators.required],
+      department: [],
+      board: [],
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       summary: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(1000)]],
       description: [''],
@@ -71,8 +71,8 @@ export class PostEditComponent implements OnInit {
       location: [null, Validators.required],
       existingRelation: [],
       existingRelationExplanation: [],
-      postCategories: this.fb.array([]),
-      memberCategories: this.fb.array([]),
+      postCategories: [],
+      memberCategories: [],
       applyType: [null, Validators.required],
       applyWebsite: [null, Validators.maxLength(255)],
       applyDocument: [],
@@ -104,15 +104,22 @@ export class PostEditComponent implements OnInit {
             this.title.setTitle('New post');
           }
 
-          if (this.department) {
-            this.postForm.get('department').setValue(this.department);
-          } else if (this.departmentOptions.length === 1) {
-            this.postForm.get('department').setValue(this.departmentOptions[0].value);
+          if (post) {
+            this.postForm.get('board').setValue(post.board);
+            const department = post.board.department;
+            this.setupMemberCategories(department);
+            this.setupBoards(department);
+          } else {
+            this.postForm.get('department').setValidators(Validators.required);
+            if (this.department) {
+              this.postForm.get('department').setValue(this.department);
+            } else if (this.departmentOptions.length === 1) {
+              this.postForm.get('department').setValue(this.departmentOptions[0].value);
+            }
           }
-          this.departmentChanged();
 
-          if (this.post) {
-            const formValue: any = pick(this.post, this.formProperties);
+          if (post) {
+            const formValue: any = pick(post, this.formProperties);
             formValue.applyType = formValue.applyWebsite ? 'website' :
               (formValue.applyDocument ? 'document' : (formValue.applyEmail ? 'email' : null));
             formValue.hideLiveTimestamp = !formValue.liveTimestamp;
@@ -226,39 +233,17 @@ export class PostEditComponent implements OnInit {
     this.postForm.get('board').setValue(null);
     const department: DepartmentRepresentation = this.postForm.get('department').value;
 
-    this.availableMemberCategories = department && department.memberCategories.length > 0 ? department.memberCategories : [];
-    const selectedMemberCategories = this.post ? this.post.memberCategories : [];
-    this.postForm.setControl('memberCategories', this.fb.array(
-      this.availableMemberCategories.map(c => [selectedMemberCategories.includes(c)])));
-    if (this.availableMemberCategories) {
-      this.postForm.get('memberCategories').setValidators(this.availableMemberCategories.length > 0 && ValidationUtils.checkboxArrayMin(1));
-    }
-
-    if (department) {
-      this.resourceService.getResources('BOARD', {parentId: department.id})
-        .subscribe(boards => {
-          this.boardOptions = boards
-            .map(b => ({label: b.name, value: b}));
-          if (this.boardOptions.length === 1) {
-            this.postForm.get('board').setValue(this.boardOptions[0].value);
-            this.boardChanged();
-          }
-        });
-    }
+    this.setupMemberCategories(department);
+    this.setupBoards(department);
   }
 
   boardChanged() {
     const board = this.postForm.get('board').value;
-    this.availablePostCategories = board && board.postCategories.length > 0 ? board.postCategories : [];
-    const selectedPostCategories = this.post ? this.post.postCategories : [];
-    this.postForm.setControl('postCategories', this.fb.array(
-      this.availablePostCategories.map(c => [selectedPostCategories.includes(c)])));
-    if (this.availablePostCategories) {
-      this.postForm.get('postCategories').setValidators(this.availablePostCategories.length > 0 && ValidationUtils.checkboxArrayMin(1));
-    }
+
+    this.setupPostCategories(board);
 
     // initialize existing relation
-    const extendAction = board && board.actions
+    const extendAction = board && board.actions && board.actions
       .find(a => (a.action as any as string) === 'EXTEND' && a.scope === 'POST');
     const creatingNewPostAsUntrustedPerson = !this.post && extendAction && extendAction.state === 'DRAFT';
     this.showExistingRelation = creatingNewPostAsUntrustedPerson || !!get(this.post, 'existingRelation');
@@ -281,6 +266,32 @@ export class PostEditComponent implements OnInit {
       return this.resourceService.routerLink(this.department);
     }
     return ['/'];
+  }
+
+  private setupMemberCategories(department: b.DepartmentRepresentation) {
+    this.availableMemberCategories = department && department.memberCategories.length > 0 ? department.memberCategories : [];
+    const selectedMemberCategories = this.post ? this.post.memberCategories : [];
+    this.postForm.get('memberCategories').setValidators(this.availableMemberCategories.length > 0 && Validators.required);
+    this.postForm.get('memberCategories').setValue(selectedMemberCategories);
+  }
+
+  private setupPostCategories(board) {
+    this.availablePostCategories = board && board.postCategories.length > 0 ? board.postCategories : [];
+    const selectedPostCategories = this.post ? this.post.postCategories : [];
+    this.postForm.get('postCategories').setValidators(this.availablePostCategories.length > 0 && Validators.required);
+    this.postForm.get('postCategories').setValue(selectedPostCategories);
+  }
+
+  private setupBoards(department: b.DepartmentRepresentation) {
+    this.resourceService.getResources('BOARD', {parentId: department.id})
+      .subscribe(boards => {
+        this.boardOptions = boards
+          .map(b => ({label: b.name, value: b}));
+        if (this.boardOptions.length === 1) {
+          this.postForm.get('board').setValue(this.boardOptions[0].value);
+          this.boardChanged();
+        }
+      });
   }
 
   private setDefaultDeadTimestamp() {

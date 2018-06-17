@@ -3,7 +3,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
-import {NgUploaderModule} from 'ngx-uploader';
+import {NgxUploaderModule} from 'ngx-uploader';
 import {AutoCompleteModule} from 'primeng/components/autocomplete/autocomplete';
 import {CalendarModule} from 'primeng/components/calendar/calendar';
 import {CheckboxModule} from 'primeng/components/checkbox/checkbox';
@@ -26,7 +26,7 @@ import {DepartmentStaffComponent} from './staff/department-staff.component';
 @NgModule({
   imports: [
     ReactiveFormsModule,
-    NgUploaderModule,
+    NgxUploaderModule,
     CheckboxModule,
     DataTableModule,
     TabViewModule,
