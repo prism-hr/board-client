@@ -17,7 +17,7 @@ import ActivityRepresentation = b.ActivityRepresentation;
           </div>
           <div class="activity-copy">
             <b>{{activity.givenName}} {{activity.surname}}</b>
-            <span>has requested membership of <b>{{activity.department}}</b></span>
+            <span> has requested membership of <b>{{activity.department}}</b></span>
             <p>{{activity.created | date: 'short' }}</p>
           </div>
         </a>

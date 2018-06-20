@@ -43,7 +43,7 @@ export class PostEditComponent implements OnInit {
   availablePostCategories: string[];
   availableMemberCategories: MemberCategory[];
   formProperties = ['name', 'summary', 'description', 'organization', 'location', 'existingRelation',
-    'liveTimestamp', 'deadTimestamp', 'applyWebsite', 'applyDocument', 'applyEmail'];
+    'liveTimestamp', 'deadTimestamp', 'applyWebsite', 'applyDocument', 'applyEmail', 'postCategories', 'memberCategories'];
 
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private cdf: ChangeDetectorRef,
               private rollbar: RollbarService, private title: Title, private dialog: MatDialog,
@@ -313,10 +313,6 @@ export class PostEditComponent implements OnInit {
 
   private generatePostRequestBody(): PostPatchDTO {
     const post: PostPatchDTO = pick(this.postForm.value, this.formProperties);
-    post.postCategories = Utils
-      .checkboxFromFormFormat(this.availablePostCategories, this.postForm.get('postCategories').value);
-    post.memberCategories = Utils
-      .checkboxFromFormFormat(this.availableMemberCategories, this.postForm.get('memberCategories').value);
     post.applyWebsite = this.postForm.value.applyType === 'website' ? this.postForm.value.applyWebsite : null;
     post.applyDocument = this.postForm.value.applyType === 'document' ? this.postForm.value.applyDocument : null;
     post.applyEmail = this.postForm.value.applyType === 'email' ? this.postForm.value.applyEmail : null;
