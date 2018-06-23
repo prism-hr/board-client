@@ -186,11 +186,14 @@ b-file-upload[type=avatar].avatar {
   &.expired {
     color: $newred;
   }
-  &.pending {
+  &.pending, &.archived {
     color: $employmentColor;
   }
   &.withdrawn {
     color: $uclred;
+  }
+  &.accepted {
+    color: $uclgreen;
   }
 }
 .bottom-actions {

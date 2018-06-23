@@ -48,7 +48,7 @@ form, .form {
     }
   }
   label:not(.ui-dropdown-label) {
-    font-size:110%;
+    font-size:1rem;
     margin-bottom:6px;
     display: inline-block;
   }
@@ -169,14 +169,14 @@ p-dialog {
     }
   }
   .small {
-    font-size: 0.8rem;
+    font-size: 0.8rem !important;
   }
   .boards {
     display: inline-block;
     margin-right: 4px;
     margin-bottom:4px;
     a {
-      font-size: 0.8rem;
+      font-size: 0.8rem !important;
     }
   }
 }
@@ -194,7 +194,7 @@ p-dialog {
   width: 100px;
   height: 100px;
   &:hover {
-    background: lighten($uclred, 10%);
+    background: lighten($uclred, 10%) !important;
     .ui-button-text {
       color: white;
     }

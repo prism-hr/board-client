@@ -20,7 +20,7 @@
   <b-filter (applied)="filterApplied($event)"></b-filter>
 </div>
 
-<div *ngIf="users" class="grid grid--half-gutters" fxLayout="row" fxLayoutWrap="wrap">
+<div *ngIf="users" class="grid grid--half-gutters" fxLayout="row wrap">
   <div *ngFor="let staff of users.staff" class="grid__item small--one-whole medium-up--one-third"
        [ngClass]="{'last-admin': lastAdminRole && staff.role === 'ADMINISTRATOR'}">
     <mat-card class="no-content users">

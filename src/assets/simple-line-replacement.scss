@@ -139,6 +139,7 @@ $simple-line-icon-prefix: "fa-" !default;
   &feed,
   &drop,
   &drawer,
+  &archived,
   &docs,
   &reject,
   &rejected,
@@ -610,7 +611,7 @@ $simple-line-icon-prefix: "fa-" !default;
   content: "\e03e";
 }
 
-.#{$simple-line-icon-prefix}drawer:before {
+.#{$simple-line-icon-prefix}drawer:before, .#{$simple-line-icon-prefix}archived:before  {
   content: "\e03f";
 }
 

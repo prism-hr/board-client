@@ -692,7 +692,7 @@ button.ui-button::-moz-focus-inner {
 /* Datepicker */
 
 .ui-datepicker {
-  width: 16em;
+  width: 21em;
   padding: .2em;
   display: none;
   &.ui-widget-content {
@@ -740,7 +740,7 @@ button.ui-button::-moz-focus-inner {
     line-height: 1.8em;
     text-align: center;
     select {
-      font-size: 1em;
+      font-size: 0.9rem !important;
       margin: .125em 0;
     }
   }
@@ -1624,6 +1624,7 @@ button.ui-button::-moz-focus-inner {
   }
   .ui-dropdown-item {
     font-weight: normal;
+    font-size: 1.1rem;
     border: 0 none;
     cursor: pointer;
     margin: 1px 0;
@@ -2816,6 +2817,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 .ui-messages-error {
+  display: block;
   color: #ffffff;
   background-color: $error;
   border-color: $error;
@@ -3639,7 +3641,7 @@ p-selectbutton .ui-button-info {
     background: transparent;
     color: $uclblue;
     cursor: pointer;
-    font-size: 0.8em;
+    font-size: 0.8em !important;
   }
   .ui-state-active {
     background-color: $uclblue;
@@ -3671,7 +3673,7 @@ p-selectbutton .ui-button-info {
     white-space: nowrap;
     display: block;
     top: 0px;
-    font-size:16px;
+    font-size:16px !important;
     border:none;
     a {
       float: left;
@@ -4170,7 +4172,7 @@ p-selectbutton .ui-button-info {
 // prime theme
 
 $fontFamily: 'Roboto';
-$fontSize: 1.1em;
+$fontSize: 1rem;
 $borderRadius: 0px;
 $disabledOpacity: 0.35;
 
@@ -4273,15 +4275,18 @@ p-checkbox:hover {
     }
   }
 }
+
+.ui-inputtext, .ui-button {
+  font-size: $fontSize !important;
+}
 .ui-widget {
   font-family: $fontFamily;
-  font-size: $fontSize;
   @include media-query($small) {
     font-size:1rem;
   }
   input, select, textarea, button {
     font-family: $fontFamily;
-    font-size: $fontSize;
+    font-size: $fontSize !important;
   }
 
   :active {
@@ -5073,4 +5078,26 @@ div.ui-overlaypanel.ui-widget.ui-widget-content.ui-corner-all.ui-shadow {
     left: 15px !important;
     top: 52px !important;
   }
+}
+.ui-widget-header .ui-button, .ui-widget-content .ui-button, .ui-widget.ui-button, .ui-button {
+  background: transparent;
+  border-color: transparent;
+}
+.ui-widget-header .ui-button:enabled:hover, .ui-widget-header .ui-button:focus, .ui-widget-content .ui-button:enabled:hover, .ui-widget-content .ui-button:focus, .ui-widget.ui-button:enabled:hover, .ui-widget.ui-button:focus, .ui-button:enabled:hover, .ui-button:focus {
+  border-color: transparent;
+  background: transparent;
+}
+p-menu {
+  .ui-widget-content {
+    width: 300px;
+    font-size: 1rem !important;
+  }
+}
+.ui-button.ui-button-warning:enabled:hover, .ui-button.ui-button-warning:focus, .ui-button.withdraw:enabled:hover, .ui-button.withdraw:focus {
+  background-color: #ef723a;
+  color: #ffffff;
+}
+.ui-button.ui-button-success:enabled:hover, .ui-button.ui-button-success:focus, .ui-button.accept:enabled:hover, .ui-button.accept:focus, .ui-button.restore:enabled:hover, .ui-button.restore:focus {
+  background-color: #4a823b !important;
+  border-color: #4a823b !important;
 }
