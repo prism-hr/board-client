@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {TranslateModule} from '@ngx-translate/core';
 import {SharedModule} from '../../general/shared.module';
-import {PostListEmbeddedComponent} from './post-list-embedded.component';
+import {PostListComponent} from './post-list.component';
 import {PostItemModule} from '../item/post-item.module';
 import {RouterModule} from '@angular/router';
 import {FilterModule} from '../../general/filter/filter.module';
@@ -15,13 +15,13 @@ import {FilterModule} from '../../general/filter/filter.module';
     TranslateModule.forChild({})
   ],
   declarations: [
-    PostListEmbeddedComponent
+    PostListComponent
   ],
   exports: [
-    PostListEmbeddedComponent
+    PostListComponent
   ],
   providers: [],
   entryComponents: []
 })
-export class PostListEmbeddedModule {
+export class  PostListModule {
 }

@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Data} from '@angular/router';
 import {ElementOptions, StripeCardComponent, StripeService} from 'ngx-stripe';
+import {switchMap} from 'rxjs/internal/operators';
 import {DepartmentService} from '../department.service';
 import DepartmentRepresentation = b.DepartmentRepresentation;
 
@@ -45,11 +46,27 @@ export class DepartmentSubscriptionComponent implements OnInit {
 
   submitCard() {
     this.stripeService
-      .createToken(this.card.getCard(), {name})
+      .createSource(this.card.getCard())
+      // .pipe(
+      //   switchMap(result => {
+      //     return this.stripeService
+      //       .createSource(<any>{
+      //         type: 'three_d_secure',
+      //         amount: 2999,
+      //         currency: 'gbp',
+      //         three_d_secure: {
+      //           card: result.source.id
+      //         },
+      //         redirect: {
+      //           return_url: 'https://pudelek.pl'
+      //         }
+      //       });
+      //   })
+      // )
       .subscribe(result => {
-        this.card.getCard().clear();
-        if (result.token) {
-          this.departmentService.postPaymentSource(this.department, result.token.id)
+        // this.card.getCard().clear();
+        if (result.source) {
+          this.departmentService.postPaymentSource(this.department, result.source.id)
             .subscribe(customer => this.applyCustomer(customer));
         } else if (result.error) {
           // Error creating the token

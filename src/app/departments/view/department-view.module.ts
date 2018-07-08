@@ -6,7 +6,7 @@ import {BoardItemModule} from '../../boards/item/board-item.module';
 import {FilterModule} from '../../general/filter/filter.module';
 import {ImageModule} from '../../general/image/image.module';
 import {SharedModule} from '../../general/shared.module';
-import {PostListEmbeddedModule} from '../../posts/list-embedded/post-list-embedded.module';
+import {PostListModule} from '../../posts/list/post-list.module';
 import {DepartmentViewComponent} from './department-view.component';
 
 @NgModule({
@@ -15,7 +15,7 @@ import {DepartmentViewComponent} from './department-view.component';
     ImageModule,
     FilterModule,
     BoardItemModule,
-    PostListEmbeddedModule,
+    PostListModule,
     SidebarModule,
     TranslateModule.forChild({}),
     RouterModule.forChild([

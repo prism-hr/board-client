@@ -3,7 +3,6 @@ import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
 import {ImageModule} from '../../general/image/image.module';
 import {SharedModule} from '../../general/shared.module';
-import {PostListEmbeddedModule} from '../../posts/list-embedded/post-list-embedded.module';
 import {ResourceTimelineModule} from '../../resource/timeline/resource-timeline.module';
 import {BoardViewComponent} from './board-view.component';
 
@@ -12,7 +11,6 @@ import {BoardViewComponent} from './board-view.component';
     SharedModule,
     ImageModule,
     ResourceTimelineModule,
-    PostListEmbeddedModule,
     TranslateModule.forChild({}),
     RouterModule.forChild([
       {

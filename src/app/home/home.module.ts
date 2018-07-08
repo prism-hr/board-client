@@ -7,6 +7,7 @@ import {FilterModule} from '../general/filter/filter.module';
 import {ImageModule} from '../general/image/image.module';
 import {SharedModule} from '../general/shared.module';
 import {PostItemModule} from '../posts/item/post-item.module';
+import {PostListModule} from '../posts/list/post-list.module';
 import {EmployerLogoComponent} from './employer-logo.component';
 import {HomePublicComponent} from './home-public.component';
 import {HomeComponent} from './home.component';
@@ -20,7 +21,7 @@ import {UniLogoComponent} from './uni-logo.component';
     ImageModule,
     SharedModule,
     PostItemModule,
-    FilterModule,
+    PostListModule,
     TranslateModule.forChild({}),
     RouterModule.forChild([
       {
