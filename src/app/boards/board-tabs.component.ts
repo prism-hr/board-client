@@ -9,7 +9,7 @@ import BoardRepresentation = b.BoardRepresentation;
     <section *ngIf="board" class="section">
       <div *ngIf="!errorStatus">
         <b-board-header [board]="board"></b-board-header>
-        <b-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></b-tabMenu>
+        <p-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></p-tabMenu>
         <router-outlet></router-outlet>
       </div>
       <div *ngIf="errorStatus">

@@ -167,11 +167,6 @@ export class ResourceService {
     return this.http.get('/api/posts/organizations?query=' + query);
   }
 
-  getArchiveQuarters(scope: Scope): Observable<string[]> {
-    const resourceCol = scope.toLowerCase() + 's';
-    return this.http.get<string[]>('/api/' + resourceCol + '/archiveQuarters');
-  }
-
   canEdit(resource: ResourceRepresentation<any>) {
     return !!resource.actions.find(a => a.action === 'EDIT');
   }

@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {SelectItem} from 'primeng/components/common/selectitem';
-import {Subscription} from 'rxjs';
+import {Subject} from 'rxjs/index';
+import {takeUntil} from 'rxjs/operators';
+import {PostService} from '../../posts/post.service';
 import {DefinitionsService} from '../../services/definitions.service';
-import {ResourceService} from '../../services/resource.service';
 import {UserService} from '../../services/user.service';
-import Scope = b.Scope;
 import State = b.State;
 
 @Component({
@@ -23,15 +23,10 @@ import State = b.State;
         </div>
         <div *ngIf="isStaffMember">
           <div *ngIf="showArchive" class="archives" fxLayout="row" fxLayoutAlign="space-between center">
-            <button pButton type="button" label="Back" (click)="setShowArchive(false)" class="ui-button-warning"></button>
             <div class="dropdown-select">
               <p-dropdown [options]="archiveQuarters" [(ngModel)]="selectedQuarter"
                           (onChange)="search()" name="quarter"></p-dropdown>
             </div>
-          </div>
-          <div *ngIf="!showArchive">
-            <button *ngIf="archiveQuarters && archiveQuarters.length > 0" pButton type="button" label="Search archives"
-                    (click)="setShowArchive(true)" class="ui-button-warning"></button>
           </div>
         </div>
         <div class="input-holder" fxLayout="row" fxLayoutAlign="flex-start center">
@@ -44,9 +39,9 @@ import State = b.State;
   `,
   styles: []
 })
-export class FilterComponent implements OnInit, OnDestroy {
+export class FilterComponent implements OnInit, OnChanges, OnDestroy {
 
-  @Input() resourceScope: Scope & string;
+  @Input() stateCategory: string;
   @Output() applied: EventEmitter<EntityFilter> = new EventEmitter();
   searchTerm: string;
 
@@ -59,42 +54,49 @@ export class FilterComponent implements OnInit, OnDestroy {
   archiveQuarters: SelectItem[];
   selectedQuarter: string;
   isStaffMember: boolean;
-  subscription: Subscription = new Subscription();
+  destroyStreams$ = new Subject();
 
   constructor(private translate: TranslateService, private definitionsService: DefinitionsService,
-              private resourceService: ResourceService, private userService: UserService) {
+              private postService: PostService, private userService: UserService) {
     this.definitions = definitionsService.getDefinitions();
   }
 
   ngOnInit(): void {
-    const states = {
-      BOARD: ['DRAFT', 'ACCEPTED', 'REJECTED'],
-      POST: ['DRAFT', 'SUSPENDED', 'PENDING', 'ACCEPTED', 'EXPIRED', 'REJECTED', 'WITHDRAWN']
-    };
-
-    this.subscription.add(this.translate.get('definitions.state').subscribe(stateTranslations => {
-      if (states[this.resourceScope]) {
-        this.states = states[this.resourceScope].map(state => ({value: state, label: stateTranslations[state][this.resourceScope]}));
-      }
-    }));
-
-    this.subscription.add(this.userService.user$.subscribe(user => {
-      this.isStaffMember = user && (user.postCreator || user.departmentAdministrator);
-      if (this.isStaffMember && this.resourceScope) {
-        this.subscription.add(this.resourceService.getArchiveQuarters(this.resourceScope)
-          .subscribe(quarters => {
-            this.archiveQuarters = quarters.map(quarter => {
-              const year = quarter.slice(0, 4);
-              const quarterDigit = quarter[4];
-              return {value: quarter, label: year + '/' + quarterDigit}
+    this.userService.user$
+      .pipe(takeUntil(this.destroyStreams$))
+      .subscribe(user => {
+        this.isStaffMember = user && (user.postCreator || user.departmentAdministrator);
+        if (this.isStaffMember && this.stateCategory) {
+          this.postService.getArchiveQuarters()
+            .pipe(takeUntil(this.destroyStreams$))
+            .subscribe(quarters => {
+              this.archiveQuarters = quarters.map(quarter => {
+                const year = quarter.slice(0, 4);
+                const quarterDigit = quarter[4];
+                return {value: quarter, label: year + '/' + quarterDigit}
+              });
             });
-          }));
-      }
-    }));
+        }
+      });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.selectedState = null;
+    this.showArchive = this.stateCategory === 'ARCHIVED';
+    this.selectedQuarter = this.showArchive ? this.archiveQuarters[0].value : null;
+    this.translate.get('definitions.state').subscribe(stateTranslations => {
+      const availableStates = stateFilterConfigurations[this.stateCategory].states;
+      this.states = availableStates && availableStates.map(state => ({
+        value: state,
+        label: stateTranslations[state].POST
+      }));
+      this.selectedState = availableStates ? availableStates[0] : null;
+      this.search();
+    });
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.destroyStreams$.next();
   }
 
   clear() {
@@ -111,13 +113,6 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.applied.emit({searchTerm: this.searchTerm, state: this.selectedState, quarter: this.selectedQuarter});
   }
 
-  setShowArchive(show) {
-    this.showArchive = show;
-    if (!show) {
-      this.selectedQuarter = null;
-      this.search();
-    }
-  }
 }
 
 export interface EntityFilter {
@@ -127,3 +122,25 @@ export interface EntityFilter {
   includePublic?: boolean;
   parentId?: number;
 }
+
+export const stateFilterConfigurations: { [index: string]: { label: string, states: State[] } } = {
+  ACTIVE: {
+    label: 'Active',
+    states: [
+      'ACCEPTED', 'PENDING'
+    ]
+  },
+  REVIEW: {
+    label: 'Under Review',
+    states: [
+      'DRAFT', 'SUSPENDED'
+    ]
+  },
+  INACTIVE: {
+    label: 'Inactive',
+    states: [
+      'EXPIRED', 'REJECTED', 'WITHDRAWN'
+    ]
+  },
+  ARCHIVED: {label: 'Archived', states: null}
+};

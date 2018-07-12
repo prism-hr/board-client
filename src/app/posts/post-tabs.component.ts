@@ -14,7 +14,7 @@ import PostRepresentation = b.PostRepresentation;
         <div class="grid__flex view-template">
           <div class="main-content">
             <b-post-header [post]="post"></b-post-header>
-            <b-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></b-tabMenu>
+            <p-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></p-tabMenu>
             <router-outlet></router-outlet>
           </div>
           <div class="logo-content">

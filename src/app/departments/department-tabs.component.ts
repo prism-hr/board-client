@@ -11,7 +11,7 @@ import DepartmentRepresentation = b.DepartmentRepresentation;
         <div class="grid">
           <div class="grid__item medium-up--six-eighths">
             <b-department-header [department]="department"></b-department-header>
-            <b-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></b-tabMenu>
+            <p-tabMenu *ngIf="canEdit" [model]="items" class="inside-tabs"></p-tabMenu>
             <router-outlet></router-outlet>
           </div>
           <div class="grid__item medium-up--two-eighths">

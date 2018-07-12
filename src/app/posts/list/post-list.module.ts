@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {TranslateModule} from '@ngx-translate/core';
+import {TabMenuModule} from 'primeng/primeng';
 import {SharedModule} from '../../general/shared.module';
 import {PostListComponent} from './post-list.component';
 import {PostItemModule} from '../item/post-item.module';
@@ -12,6 +13,7 @@ import {FilterModule} from '../../general/filter/filter.module';
     FilterModule,
     PostItemModule,
     RouterModule,
+    TabMenuModule,
     TranslateModule.forChild({})
   ],
   declarations: [

@@ -55,4 +55,7 @@ export class PostService {
     return this.http.get('/api/posts/organizations', {params});
   }
 
+  getArchiveQuarters(): Observable<string[]> {
+    return this.http.get<string[]>('/api/posts/archiveQuarters');
+  }
 }
