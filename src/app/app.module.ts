@@ -60,8 +60,6 @@ import {TimeDifferencePipe} from './services/time-difference.pipe';
 import {createTranslateLoader} from './services/translate.service';
 import {UserService} from './services/user.service';
 import {ValidationService} from './validation/validation.service';
-import {WalkthroughOverlayService} from './walkthrough-overlay/walkthrough-overlay.service';
-import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-tooltip.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +85,6 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
     AboutUsComponent,
     PrivacyComponent,
     TermsComponent,
-    WalkthroughTooltipComponent,
     DisplayDatePipe,
     TimeDifferencePipe
   ],
@@ -169,6 +166,11 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
                           {
                             path: 'edit',
                             loadChildren: './departments/edit/department-edit.module#DepartmentEditModule',
+                            canActivate: [AuthGuard]
+                          },
+                          {
+                            path: 'posts',
+                            loadChildren: './departments/posts/department-posts.module#DepartmentPostsModule',
                             canActivate: [AuthGuard]
                           },
                           {
@@ -271,8 +273,6 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
     MatProgressBarModule,
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -305,10 +305,10 @@ import {WalkthroughTooltipComponent} from './walkthrough-overlay/walkthrough-too
     RollbarService,
     {provide: ErrorHandler, useClass: RollbarService},
     AuthGuard, InitializeGuard, ResourceService, DepartmentResolver, BoardResolver, PostResolver, PostService, DepartmentsResolver,
-    DepartmentService, UserService, ValidationService, WalkthroughOverlayService, ExternalApisService
+    DepartmentService, UserService, ValidationService, ExternalApisService
   ],
   entryComponents: [AuthenticationDialogComponent, ResetPasswordDialogComponent, UnsubscribeDialogComponent, ResourceCommentDialogComponent,
-    UserImageDialogComponent, WalkthroughTooltipComponent],
+    UserImageDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

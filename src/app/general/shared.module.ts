@@ -1,5 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ButtonModule} from 'primeng/components/button/button';
 import {CheckboxModule} from 'primeng/components/checkbox/checkbox';
 import {InputTextModule} from 'primeng/components/inputtext/inputtext';
@@ -13,6 +14,8 @@ import {MatCardModule} from '@angular/material/card';
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     TooltipModule,
     ButtonModule,
     InputTextModule,
@@ -27,6 +30,8 @@ import {MatCardModule} from '@angular/material/card';
   ],
   exports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     TooltipModule,
     ButtonModule,
     InputTextModule,

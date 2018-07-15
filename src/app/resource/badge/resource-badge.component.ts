@@ -4,8 +4,8 @@ import {ActivatedRoute} from '@angular/router';
 import {DefinitionsService} from '../../services/definitions.service';
 import BadgeListType = b.BadgeListType;
 import BadgeType = b.BadgeType;
+import DepartmentBadgeOptionsDTO = b.DepartmentBadgeOptionsDTO;
 import ResourceRepresentation = b.ResourceRepresentation;
-import WidgetOptionsDTO = b.WidgetOptionsDTO;
 
 @Component({
   templateUrl: 'resource-badge.component.html',
@@ -19,7 +19,7 @@ export class ResourceBadgeComponent implements OnInit {
   badgeListType: BadgeListType = 'STATIC';
   postCount = 2;
   @ViewChild('badgePreview') badgePreview: ElementRef;
-  widgetOptionsStringified: string;
+  badgeOptionsStringified: string;
   resourceStringified: string;
 
   constructor(private route: ActivatedRoute, private title: Title, private definitionsService: DefinitionsService) {
@@ -36,12 +36,12 @@ export class ResourceBadgeComponent implements OnInit {
 
   refreshSnippet() {
     const widgetsUrlPrefix = this.definitionsService.getDefinitions()['applicationUrl'];
-    const widgetOptions: WidgetOptionsDTO = {badgeType: this.badgeType, preview: true};
+    const badgeOptions: DepartmentBadgeOptionsDTO = {badgeType: this.badgeType, preview: true};
     if (this.badgeType === 'LIST') {
-      widgetOptions.badgeListType = this.badgeListType;
-      widgetOptions.postCount = this.postCount;
+      badgeOptions.badgeListType = this.badgeListType;
+      badgeOptions.postCount = this.postCount;
     }
-    this.widgetOptionsStringified = JSON.stringify(widgetOptions);
+    this.badgeOptionsStringified = JSON.stringify(badgeOptions);
     const resourceStringified = this.resource.scope.toLowerCase() + '#' + this.resource.id;
     this.resourceStringified = resourceStringified;
     this.badgeSnippet =
@@ -54,12 +54,14 @@ js.src = "${widgetsUrlPrefix}/assets/widgets.js";
 fjs.parentNode.insertBefore(js, fjs);
 }
 </script>
-<div data-prism-widget="badge" data-resource="${resourceStringified}" data-options='${JSON.stringify(widgetOptions)}'></div>`;
+<div data-prism-widget="badge" data-resource="${resourceStringified}" data-options='${JSON.stringify(badgeOptions)}'></div>`;
 
-    const badgePreview = this.badgePreview;
-    window['alumeniPrismJQuery'](document).ready(function ($) {
-      $(badgePreview.nativeElement).prismInitializeWidget();
-    });
+    setTimeout(() => {
+      const badgePreview = this.badgePreview;
+      window['alumeniPrismJQuery'](document).ready(function ($) {
+        $(badgePreview.nativeElement).prismInitializeWidget();
+      });
+    }, 1000);
   }
 
 }

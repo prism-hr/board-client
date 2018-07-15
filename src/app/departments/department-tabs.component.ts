@@ -60,6 +60,12 @@ export class DepartmentTabsComponent implements OnInit {
             routerLinkActiveOptions: {exact: true}
           },
           {
+            label: 'Posts',
+            title: 'View posts',
+            routerLink: [...departmentPath, 'posts'],
+            routerLinkActiveOptions: {exact: true}
+          },
+          {
             label: 'Staff',
             title: 'Specify staff members',
             routerLink: [...departmentPath, 'users', 'staff'],
@@ -72,7 +78,6 @@ export class DepartmentTabsComponent implements OnInit {
             routerLinkActiveOptions: {exact: true}
           },
           {
-            id: 'walkthrough_badge',
             label: 'Badge',
             title: 'Deploy department badge to your website',
             routerLink: [...departmentPath, 'badge'],

@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 1.29.366 on 2018-05-12 10:08:44.
+// Generated using typescript-generator version 1.29.366 on 2018-07-15 19:05:50.
 
 declare namespace b {
 
@@ -18,6 +18,13 @@ declare namespace b {
   interface BoardPatchDTO extends ResourcePatchDTO<BoardPatchDTO> {
     handle?: string;
     postCategories?: string[];
+  }
+
+  interface DepartmentBadgeOptionsDTO {
+    badgeType?: BadgeType;
+    badgeListType?: BadgeListType;
+    postCount?: number;
+    preview?: boolean;
   }
 
   interface DepartmentDTO extends ResourceDTO<DepartmentDTO> {
@@ -173,13 +180,6 @@ declare namespace b {
   interface UserRoleDTO<T> {
     type?: RoleType;
     user?: UserDTO;
-  }
-
-  interface WidgetOptionsDTO extends ResourceDTO<any> {
-    badgeType?: BadgeType;
-    badgeListType?: BadgeListType;
-    postCount?: number;
-    preview?: boolean;
   }
 
   interface ActionRepresentation extends Comparable<ActionRepresentation> {
@@ -435,6 +435,10 @@ declare namespace b {
 
   type State = 'DRAFT' | 'SUSPENDED' | 'PENDING' | 'ACCEPTED' | 'EXPIRED' | 'REJECTED' | 'WITHDRAWN' | 'ARCHIVED' | 'PREVIOUS';
 
+  type BadgeType = 'SIMPLE' | 'LIST';
+
+  type BadgeListType = 'STATIC' | 'SLIDER';
+
   type MemberCategory = 'UNDERGRADUATE_STUDENT' | 'MASTER_STUDENT' | 'RESEARCH_STUDENT' | 'RESEARCH_STAFF';
 
   type RoleType = 'STAFF' | 'MEMBER' | 'PUBLIC';
@@ -448,10 +452,6 @@ declare namespace b {
   type AgeRange = 'ZERO_EIGHTEEN' | 'NINETEEN_TWENTYFOUR' | 'TWENTYFIVE_TWENTYNINE' | 'THIRTY_THIRTYNINE' | 'FORTY_FORTYNINE' | 'FIFTY_SIXTYFOUR' | 'SIXTYFIVE_PLUS';
 
   type DocumentRequestState = 'DISPLAY_FIRST' | 'DISPLAY_AGAIN' | 'DISPLAY_NEVER';
-
-  type BadgeType = 'SIMPLE' | 'LIST';
-
-  type BadgeListType = 'STATIC' | 'SLIDER';
 
   type Scope = 'UNIVERSITY' | 'DEPARTMENT' | 'BOARD' | 'POST';
 
